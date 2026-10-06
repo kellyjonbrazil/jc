@@ -1,0 +1,23 @@
+# Hand-written from the Oracle Net Services connect descriptor syntax, not
+# captured from an Oracle client. Covers a comma-separated alias list, a
+# single-address ADDRESS_LIST, and a single-entry DESCRIPTION_LIST.
+
+ORCL, ORCL.WORLD =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = orcl1-svr)(PORT = 1521))
+    )
+    (CONNECT_DATA =
+      (SERVICE_NAME = orcl.example.com)
+    )
+  )
+
+REPORTS, REPORTS.WORLD, RPT =
+  (DESCRIPTION_LIST =
+    (DESCRIPTION =
+      (ADDRESS = (PROTOCOL = tcps)(HOST = rpt1-svr)(PORT = 2484))
+      (CONNECT_DATA =
+        (SERVICE_NAME = reports.example.com)
+      )
+    )
+  )

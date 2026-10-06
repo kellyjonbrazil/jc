@@ -1,26 +1,20 @@
 r"""jc - JSON Convert Oracle `tnsnames.ora` file parser
 
-The `tnsnames.ora` file maps net service names to connect descriptors. Each
-top-level `name = (DESCRIPTION = ...)` assignment becomes one item, with the
-net service name in `name` and the connect descriptor merged in beside it.
-`IFILE` includes become items with the path in `ifile` and `name` set to
-null. Included files are not read, since the parser only sees the file it is
-given.
+Parses `tnsnames.ora` files into one item per net service name. `name` is the
+first name in a comma-separated alias list, `aliases` holds the full list, and
+the connect descriptor is merged in beside them. `IFILE` includes become items
+with the path in `ifile` and `name` set to null; the included files are not
+read.
 
-Container names and nesting stay as written and parameter names are
-lower-cased. Values keep the case they are written in. A parameter that
-appears more than once in the same container becomes a list, so a container
-such as `address` is an object when it holds one protocol address and a list
-when it holds several. A container with no parameter of its own, such as the
-`((SHARDING_KEY=...)(SUPER_SHARDING_KEY=...))` form, has its contents merged
-into the enclosing container.
-
-`#` starts a comment that runs to the end of the line unless it is inside
-quotation marks, and the quotation marks around a value are removed. Only the
-parameters that hold a number (`port`, `sdu`, `recv_buf_size`, ...) are
-converted to integers, so a numeric-looking `sid` or `service_name` stays a
-string. Values that contain a closing parenthesis, such as a `SHARDING_KEY_B64`
-value, are not handled.
+Container names and nesting are kept from the file, with parameter names
+lower-cased. `#` starts a comment unless it is quoted and the quotation marks
+around a value are removed. `address` and a `description` under a
+`DESCRIPTION_LIST` are always lists, since both can repeat. Only these
+parameters are converted to integers: `port`, `sdu`, `recv_buf_size`,
+`send_buf_size`, `queuesize`, `retry_count`, `transport_connect_timeout`,
+`connect_timeout`, `retries`, `delay`, and `server_wait_timeout`. Values that
+contain a closing parenthesis, such as a `SHARDING_KEY_B64` value, are not
+handled.
 
 Usage (cli):
 
@@ -36,24 +30,36 @@ Schema:
     [
       {
         "name":                       string,
-        "description": {                            # [0]
-          "address_list": {                         # [0]
+        "aliases": [
+                                      string        # [0]
+        ],
+        "description": {                            # [1]
+          "address_list": {                         # [1]
             "load_balance":           string,
             "failover":               string,
             "address": [
-                                      { ... }       # [0]
+                                      { ... }       # [1]
             ]
           },
-          "connect_data": { ... },                  # [0]
-          ...                                       # [0]
+          "connect_data": { ... },                  # [1]
+          ...                                       # [1]
         },
-        "ifile":                      string        # [1]
+        "description_list": {                       # [1]
+          "description": [
+                                      { ... }       # [1]
+          ]
+        },
+        "ifile":                      string        # [2]
       }
     ]
 
-    [0] Connect descriptor containers keep the names and nesting from the
-        file. A parameter that appears more than once becomes a list.
-    [1] `IFILE` items have no net service name, so `name` is null.
+    [0] `name` is the first name in a comma-separated alias list and `aliases`
+        holds every name, so an entry with one name has one alias.
+    [1] Connect descriptor containers keep the names and nesting from the
+        file. `address` and a `description` under a `DESCRIPTION_LIST` are
+        always lists, since both can repeat.
+    [2] `IFILE` items have no net service name, so `name` is null and
+        `aliases` is empty.
 
 Examples:
 
@@ -61,6 +67,9 @@ Examples:
     [
       {
         "name": "SALES",
+        "aliases": [
+          "SALES"
+        ],
         "description": {
           "address_list": {
             "load_balance": "on",
@@ -96,6 +105,9 @@ Examples:
     [
       {
         "name": "SALES",
+        "aliases": [
+          "SALES"
+        ],
         "description": {
           "address_list": {
             "load_balance": "on",
@@ -200,6 +212,28 @@ def _strip_comments(data: str) -> str:
     return '\n'.join(lines)
 
 
+def _normalize_lists(value: Any, key: str = '') -> None:
+    """Make the repeatable `address` and `description` parameters lists.
+
+    `address` can repeat anywhere in a connect descriptor and `description`
+    repeats under a `DESCRIPTION_LIST`. Both are lists even when a file only
+    has one, so jq paths don't change from one file to the next.
+    """
+    if isinstance(value, dict):
+        for child_key, child_value in value.items():
+            repeatable = child_key == 'address' \
+                or (child_key == 'description' and key == 'description_list')
+
+            if repeatable and not isinstance(child_value, list):
+                child_value = [child_value]
+                value[child_key] = child_value
+
+            _normalize_lists(child_value, child_key)
+    elif isinstance(value, list):
+        for item in value:
+            _normalize_lists(item, key)
+
+
 class _Parser():
     """Recursive-descent parser over the parenthesized file."""
 
@@ -220,6 +254,34 @@ class _Parser():
             self.pos += 1
 
         return self.text[start:self.pos]
+
+    def _names(self) -> List[str]:
+        """Read the comma-separated net service names up to the `=`."""
+        names: List[str] = []
+
+        while True:
+            self._skip_ws()
+            start = self.pos
+
+            while self.pos < len(self.text) \
+                    and self.text[self.pos] not in '=,()' \
+                    and not self.text[self.pos].isspace():
+                self.pos += 1
+
+            name = self._clean(self.text[start:self.pos])
+
+            if name:
+                names.append(name)
+
+            self._skip_ws()
+
+            if self.pos < len(self.text) and self.text[self.pos] == ',':
+                self.pos += 1
+                continue
+
+            break
+
+        return names
 
     def _scalar(self) -> str:
         """Read a value up to the closing parenthesis of the current container."""
@@ -314,27 +376,32 @@ class _Parser():
                 self.group()
                 continue
 
-            key = self._keyword()
+            names = self._names()
             self._skip_ws()
 
-            if not key or self.pos >= len(self.text) or self.text[self.pos] != '=':
+            if not names or self.pos >= len(self.text) or self.text[self.pos] != '=':
+                # not a parameter; step over it so a stray token cannot loop
                 self.pos += 1
                 continue
 
             self.pos += 1
             self._skip_ws()
 
-            if key.lower() == 'ifile':
+            if names[0].lower() == 'ifile':
                 start = self.pos
 
                 while self.pos < len(self.text) and self.text[self.pos] != '\n':
                     self.pos += 1
 
-                found.append({'name': None, 'ifile': self._clean(self.text[start:self.pos])})
+                found.append({
+                    'name': None,
+                    'aliases': [],
+                    'ifile': self._clean(self.text[start:self.pos])
+                })
                 continue
 
             if self.pos < len(self.text) and self.text[self.pos] == '(':
-                found.append({'name': key, **self.groups()})
+                found.append({'name': names[0], 'aliases': names, **self.groups()})
                 continue
 
             # a top-level scalar that is not IFILE; keep it under its own name
@@ -343,7 +410,11 @@ class _Parser():
             while self.pos < len(self.text) and self.text[self.pos] != '\n':
                 self.pos += 1
 
-            found.append({'name': None, key.lower(): self._clean(self.text[start:self.pos])})
+            found.append({
+                'name': None,
+                'aliases': [],
+                names[0].lower(): self._clean(self.text[start:self.pos])
+            })
 
         return found
 
@@ -407,5 +478,6 @@ def parse(
 
     if jc.utils.has_data(data):
         raw_output = _Parser(_strip_comments(data)).entries()
+        _normalize_lists(raw_output)
 
     return raw_output if raw else _process(raw_output)
