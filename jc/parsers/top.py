@@ -45,23 +45,31 @@ All `-` values are converted to `null`
         "cpu_hardware":                                 float,
         "cpu_software":                                 float,
         "cpu_steal":                                    float,
-        "mem_total":                                    float,    # [0]
-        "mem_free":                                     float,    # [0]
-        "mem_used":                                     float,    # [0]
-        "mem_buff_cache":                               float,    # [0]
-        "swap_total":                                   float,    # [0]
-        "swap_free":                                    float,    # [0]
-        "swap_used":                                    float,    # [0]
-        "mem_available":                                float,    # [0]
+        "mem_unit":                                     string,
+        "mem_total":                                    float,
+        "mem_free":                                     float,
+        "mem_used":                                     float,
+        "mem_buff_cache":                               float,
+        "swap_unit":                                    string,
+        "swap_total":                                   float,
+        "swap_free":                                    float,
+        "swap_used":                                    float,
+        "mem_available":                                float,
         "processes": [
           {
             "pid":                                      integer,
             "user":                                     string,
             "priority":                                 integer,
             "nice":                                     integer,
-            "virtual_mem":                              float,    # [1]
-            "resident_mem":                             float,    # [1]
-            "shared_mem":                               float,    # [1]
+            "virtual_mem":                              float,
+            "virtual_mem_bytes":                        integer,
+            "virtual_mem_unit":                         string,
+            "resident_mem":                             float,
+            "resident_mem_bytes":                       integer,
+            "resident_mem_unit":                        string,
+            "shared_mem":                               float,
+            "shared_mem_bytes":                         integer,
+            "shared_mem_unit":                          string,
             "status":                                   string,
             "percent_cpu":                              float,
             "percent_mem":                              float,
@@ -82,9 +90,15 @@ All `-` values are converted to `null`
             "thread_count":                             integer,
             "last_used_processor":                      integer,
             "time":                                     string,
-            "swap":                                     float,    # [1]
-            "code":                                     float,    # [1]
-            "data":                                     float,    # [1]
+            "swap":                                     float,
+            "swap_bytes":                               integer,
+            "swap_unit":                                string,
+            "code":                                     float,
+            "code_bytes":                               integer,
+            "code_unit":                                string,
+            "data":                                     float,
+            "data_bytes":                               integer,
+            "data_unit":                                string,
             "major_page_fault_count":                   integer,
             "minor_page_fault_count":                   integer,
             "dirty_pages_count":                        integer,
@@ -103,7 +117,9 @@ All `-` values are converted to `null`
             ]
             "major_page_fault_count_delta":             integer,
             "minor_page_fault_count_delta":             integer,
-            "used":                                     float,    # [1]
+            "used":                                     float,
+            "used_bytes":                               integer,
+            "used_unit":                                string,
             "ipc_namespace_inode":                      integer,
             "mount_namespace_inode":                    integer,
             "net_namespace_inode":                      integer,
@@ -123,9 +139,6 @@ All `-` values are converted to `null`
         ]
       }
     ]
-
-    [0] Values are in the units output by `top`
-    [1] Unit suffix stripped during float conversion
 
 Examples:
 
@@ -316,7 +329,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`top -b` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -440,13 +453,25 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
         'mem_available', 'virtual_mem', 'resident_mem', 'shared_mem', 'swap', 'code', 'data', 'used'
     }
 
+    bytes_list: Set = {
+        'mem_total', 'mem_free', 'mem_used', 'mem_available', 'mem_buff_cache',
+        'swap_total', 'swap_free', 'swap_used', 'virtual_mem', 'resident_mem',
+        'shared_mem', 'swap', 'code', 'data', 'used'
+    }
+
     for idx, item in enumerate(proc_data):
-        for key in item:
+        for key in item.copy():
             # root truncation warnings
             if isinstance(item[key], str) and item[key].endswith('+') and not quiet:
                 jc.utils.warning_message([f'item[{idx}]["{key}"] was truncated by top'])
 
             # root int and float conversions
+            if key in bytes_list:
+                if key.startswith('mem_'):
+                    item[key + '_bytes'] = jc.utils.convert_size_to_int(item[key] + item['mem_unit'])
+                if key.startswith('swap_'):
+                    item[key + '_bytes'] = jc.utils.convert_size_to_int(item[key] + item['swap_unit'])
+
             if key in int_list:
                 item[key] = jc.utils.convert_to_int(item[key])
 
@@ -463,7 +488,8 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
                     jc.utils.warning_message([f'Unknown field detected at item[{idx}]["processes"]: {old_key}'])
 
             # cleanup values
-            for key in proc.keys():
+            proc_copy = proc.copy()
+            for key in proc_copy.keys():
 
                 # set dashes to nulls
                 if proc[key] == '-':
@@ -482,6 +508,13 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
 
                 # do int/float conversions for the process objects
                 if proc[key]:
+                    if key in bytes_list:
+                        if proc[key][-1] not in ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'):
+                            proc[key + '_unit'] = proc[key][-1]
+                        else:
+                            proc[key + '_unit'] = 'b'
+                        proc[key + '_bytes'] = jc.utils.convert_size_to_int(proc[key], posix_mode=True)
+
                     if key in int_list:
                         proc[key] = jc.utils.convert_to_int(proc[key])
 
@@ -604,6 +637,7 @@ def parse(
                 line_list = line.split()
                 item_obj.update(
                     {
+                        'mem_unit': line_list[0],
                         'mem_total': line_list[3],
                         'mem_free': line_list[5],
                         'mem_used': line_list[7],
@@ -617,6 +651,7 @@ def parse(
                 line_list = line.split()
                 item_obj.update(
                     {
+                        'swap_unit': line_list[0],
                         'swap_total': line_list[2],
                         'swap_free': line_list[4],
                         'swap_used': line_list[6],

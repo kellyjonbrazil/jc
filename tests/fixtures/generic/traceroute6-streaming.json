@@ -1,0 +1,438 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "52.22.122.82",
+    "destination_name": "alexa.com",
+    "max_hops": 30,
+    "data_bytes": 40
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "130.185.80.253",
+        "name": "130.185.80.253",
+        "rtt": 0.374
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "130.185.80.253",
+        "name": "130.185.80.253",
+        "rtt": 0.474
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "94.46.128.26",
+        "name": "94.46.128.26",
+        "rtt": 0.44
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "94.46.128.26",
+        "name": "94.46.128.26",
+        "rtt": 0.457
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "94.46.128.26",
+        "name": "94.46.128.26",
+        "rtt": 0.459
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.49",
+        "name": "ix-xe-1-3-0-0.tcore1.pv9-lisbon.as6453.net",
+        "rtt": 0.436
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.49",
+        "name": "ix-xe-1-3-0-0.tcore1.pv9-lisbon.as6453.net",
+        "rtt": 0.436
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.49",
+        "name": "ix-xe-1-3-0-0.tcore1.pv9-lisbon.as6453.net",
+        "rtt": 0.446
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.30",
+        "name": "if-ae-1-3.tcore1.sv8-highbridge.as6453.net",
+        "rtt": 100.3
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.30",
+        "name": "if-ae-1-3.tcore1.sv8-highbridge.as6453.net",
+        "rtt": 100.346
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.158.30",
+        "name": "if-ae-1-3.tcore1.sv8-highbridge.as6453.net",
+        "rtt": 100.362
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.1",
+        "name": "if-ae-2-2.tcore2.sv8-highbridge.as6453.net",
+        "rtt": 100.737
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.1",
+        "name": "if-ae-2-2.tcore2.sv8-highbridge.as6453.net",
+        "rtt": 100.787
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.1",
+        "name": "if-ae-2-2.tcore2.sv8-highbridge.as6453.net",
+        "rtt": 100.863
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.42",
+        "name": "if-ae-11-2.tcore1.l78-london.as6453.net",
+        "rtt": 94.576
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.42",
+        "name": "if-ae-11-2.tcore1.l78-london.as6453.net",
+        "rtt": 94.647
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.139.42",
+        "name": "if-ae-11-2.tcore1.l78-london.as6453.net",
+        "rtt": 94.631
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.130.106",
+        "name": "if-ae-66-2.tcore2.nto-new-york.as6453.net",
+        "rtt": 104.775
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.130.106",
+        "name": "if-ae-66-2.tcore2.nto-new-york.as6453.net",
+        "rtt": 105.059
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "80.231.130.106",
+        "name": "if-ae-66-2.tcore2.nto-new-york.as6453.net",
+        "rtt": 105.146
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.5",
+        "name": "if-ae-12-2.tcore1.n75-new-york.as6453.net",
+        "rtt": 100.043
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.5",
+        "name": "if-ae-12-2.tcore1.n75-new-york.as6453.net",
+        "rtt": 100.096
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.5",
+        "name": "if-ae-12-2.tcore1.n75-new-york.as6453.net",
+        "rtt": 100.089
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.157",
+        "name": "66.110.96.157",
+        "rtt": 101.514
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.157",
+        "name": "66.110.96.157",
+        "rtt": 101.055
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "66.110.96.157",
+        "name": "66.110.96.157",
+        "rtt": 101.058
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 10,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.31.33",
+        "name": "52.93.31.33",
+        "rtt": 100.489
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.31.33",
+        "name": "52.93.31.33",
+        "rtt": 100.113
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.31.33",
+        "name": "52.93.31.33",
+        "rtt": 100.065
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 11,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.4.0",
+        "name": "52.93.4.0",
+        "rtt": 93.575
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.4.0",
+        "name": "52.93.4.0",
+        "rtt": 93.473
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.4.0",
+        "name": "52.93.4.0",
+        "rtt": 93.491
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 12,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 13,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "54.240.229.143",
+        "name": "54.240.229.143",
+        "rtt": 94.307
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "54.240.229.143",
+        "name": "54.240.229.143",
+        "rtt": 94.732
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "54.240.229.143",
+        "name": "54.240.229.143",
+        "rtt": 94.683
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 14,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 15,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 16,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 17,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 18,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 19,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 20,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 21,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 22,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 23,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 24,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 25,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.28.172",
+        "name": "52.93.28.172",
+        "rtt": 94.27
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.28.172",
+        "name": "52.93.28.172",
+        "rtt": 94.296
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "52.93.28.172",
+        "name": "52.93.28.172",
+        "rtt": 94.294
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 26,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 27,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 28,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 29,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 30,
+    "probes": []
+  }
+]

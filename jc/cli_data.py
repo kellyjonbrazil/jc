@@ -16,7 +16,8 @@ long_options_map: Dict[str, List[str]] = {
     '--version': ['v', 'version info'],
     '--yaml-out': ['y', 'YAML output'],
     '--bash-comp': ['B', 'gen Bash completion: jc -B > /etc/bash_completion.d/jc'],
-    '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"']
+    '--zsh-comp': ['Z', 'gen Zsh completion: jc -Z > "${fpath[1]}/_jc"'],
+    '--xonsh-comp': ['X', 'gen Xonsh completion: jc -X > ~/.config/xonsh/rc.d/jc.py']
 }
 
 new_pygments_colors: Dict[str, str] = {
@@ -62,52 +63,52 @@ jc converts the output of many commands, file-types, and strings to JSON or YAML
 
 Usage:
 
-    Standard syntax:
+  Standard syntax:
 
-        COMMAND | jc [SLICE] [OPTIONS] PARSER
+    COMMAND | jc [SLICE] [OPTIONS] PARSER
 
-        cat FILE | jc [SLICE] [OPTIONS] PARSER
+    cat FILE | jc [SLICE] [OPTIONS] PARSER
 
-        echo STRING | jc [SLICE] [OPTIONS] PARSER
+    echo STRING | jc [SLICE] [OPTIONS] PARSER
 
-    Magic syntax:
+  Magic syntax:
 
-        jc [SLICE] [OPTIONS] COMMAND
+    jc [SLICE] [OPTIONS] COMMAND
 
-        jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
+    jc [SLICE] [OPTIONS] /proc/<path-to-procfile>
 
 Parsers:
 '''
 
 slicetext_string: str = '''\
 Slice:
-    [start]:[end]
+  [start]:[end]
 
-        start: [[-]index] - Zero-based start line, negative index for
-                counting from the end
+    start: [[-]index] - Zero-based start line, negative index for
+            counting from the end
 
-        end:   [[-]index] - Zero-based end line (excluding the index),
-                negative index for counting from the end
+    end:   [[-]index] - Zero-based end line (excluding the index),
+            negative index for counting from the end
 '''
 
 helptext_end_string: str = '''\
 Examples:
-    Standard Syntax:
-        $ dig www.google.com | jc --pretty --dig
-        $ cat /proc/meminfo | jc --pretty --proc
+  Standard Syntax:
+    $ dig www.google.com | jc --pretty --dig
+    $ cat /proc/meminfo | jc --pretty --proc
 
-    Magic Syntax:
-        $ jc --pretty dig www.google.com
-        $ jc --pretty /proc/meminfo
+  Magic Syntax:
+    $ jc --pretty dig www.google.com
+    $ jc --pretty /proc/meminfo
 
-    Line Slicing:
-        $ cat output.txt | jc 4:15 --parser    # Parse from line 4 to 14
-                                                 with parser (zero-based)
+  Line Slicing:
+    $ cat output.txt | jc 4:15 --<PARSER>   # Parse from line 4 to 14
+                                            # with <PARSER> (zero-based)
 
-    Parser Documentation:
-        $ jc --help --dig
+  Parser Documentation:
+    $ jc --help --dig
 
-    More Help:
-        $ jc -hh          # show hidden parsers
-        $ jc -hhh         # list parsers by category tags
+  More Help:
+    $ jc -hh          # show hidden parsers
+    $ jc -hhh         # list parsers by category tags
 '''

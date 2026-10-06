@@ -8,7 +8,7 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 try:
     import ruamel.yaml
     RUAMELYAML_INSTALLED = True
-except:
+except ImportError:
     RUAMELYAML_INSTALLED = False
 
 
@@ -54,6 +54,14 @@ class MyTests(unittest.TestCase):
         """
         data = 'deploymentTime: 2022-04-18T11:12:47'
         expected = [{"deploymentTime":"2022-04-18T11:12:47"}]
+        self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
+
+    def test_yaml_equalsign(self):
+        """
+        Test yaml file with a value that starts with a literal equal sign "=" (should convert to a string)
+        """
+        data = 'key: ='
+        expected = [{"key":"="}]
         self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
 
 

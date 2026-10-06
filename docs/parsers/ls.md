@@ -8,6 +8,15 @@ jc - JSON Convert `ls` and `vdir` command output parser
 Options supported:
 - `lbaR1`
 - `--time-style=full-iso`
+- `--time-style=long-iso`
+
+Block (`b`) and character (`c`) device entries report `major_number` and
+`minor_number` instead of `size`, since `ls` prints the device's major and
+minor numbers in that column rather than a byte count.
+
+`--time-style=iso` is not supported since its date field is a different
+width depending on how old each file is, which this parser cannot detect
+reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
 
 > Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly
 > parse filenames that include newline characters. Since `ls` does not
@@ -46,14 +55,18 @@ Schema:
         "owner":        string,
         "group":        string,
         "size":         integer,
+        "major_number": integer,     # [0]
+        "minor_number": integer,     # [0]
         "date":         string,
-        "epoch":        integer,     # [0]
-        "epoch_utc":    integer      # [1]
+        "epoch":        integer,     # [1]
+        "epoch_utc":    integer      # [2]
       }
     ]
 
-    [0] naive timestamp if date field exists and can be converted.
-    [1] timezone aware timestamp if date field is in UTC and can
+    [0] only exists for block (b) and character (c) device entries,
+        in place of size.
+    [1] naive timestamp if date field exists and can be converted.
+    [2] timezone aware timestamp if date field is in UTC and can
         be converted.
 
 Examples:
@@ -117,6 +130,21 @@ Examples:
       ...
     ]
 
+    $ ls -l /dev | jc --ls -p
+    [
+      {
+        "filename": "null",
+        "flags": "crw-rw-rw-",
+        "links": 1,
+        "owner": "root",
+        "group": "root",
+        "major_number": 1,
+        "minor_number": 3,
+        "date": "Sep 16 08:00"
+      },
+      ...
+    ]
+
 <a id="jc.parsers.ls.parse"></a>
 
 ### parse
@@ -142,4 +170,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/ls.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls.py)
 
-Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)

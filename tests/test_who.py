@@ -30,6 +30,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/who-login-screen.out'), 'r', encoding='utf-8') as f:
         generic_who_login_screen = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian13/who.out'), 'r', encoding='utf-8') as f:
+        debian13_who = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/who.json'), 'r', encoding='utf-8') as f:
         centos_7_7_who_json = json.loads(f.read())
@@ -51,6 +54,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/who-login-screen.json'), 'r', encoding='utf-8') as f:
         generic_who_login_screen_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/debian13/who.json'), 'r', encoding='utf-8') as f:
+        debian13_who_json = json.loads(f.read())
 
 
     def test_who_nodata(self):
@@ -100,6 +106,12 @@ class MyTests(unittest.TestCase):
         Test 'who' with (login screen) as remote
         """
         self.assertEqual(jc.parsers.who.parse(self.generic_who_login_screen, quiet=True), self.generic_who_login_screen_json)
+
+    def test_who_debian13(self):
+        """
+        Test 'who' on Debian13
+        """
+        self.assertEqual(jc.parsers.who.parse(self.debian13_who, quiet=True), self.debian13_who_json)
 
 if __name__ == '__main__':
     unittest.main()

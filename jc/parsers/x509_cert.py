@@ -413,7 +413,7 @@ from jc.parsers.asn1crypto import pem, x509, jc_global
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -453,8 +453,8 @@ def _b2a(byte_string: bytes) -> str:
       return binascii.hexlify(byte_string, ':').decode('utf-8')
     except TypeError:
       hex_string = binascii.hexlify(byte_string).decode('utf-8')
-      colon_seperated = ':'.join(hex_string[i:i+2] for i in range(0, len(hex_string), 2))
-      return colon_seperated
+      colon_separated = ':'.join(hex_string[i:i+2] for i in range(0, len(hex_string), 2))
+      return colon_separated
 
 
 def _fix_objects(obj):

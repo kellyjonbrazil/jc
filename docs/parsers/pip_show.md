@@ -31,7 +31,10 @@ Schema:
         "license":          string,
         "location":         string,
         "requires":         string,
-        "required_by":      string
+        "required_by":      string,
+        "files": [
+                            string
+        ]
       }
     ]
 
@@ -90,4 +93,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/pip_show.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/pip_show.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

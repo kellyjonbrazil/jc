@@ -113,6 +113,37 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.time.parse(self.osx_10_14_6_time_lp, quiet=True), self.osx_10_14_6_time_lp_json)
 
+    def test_time_no_centiseconds(self):
+        """
+        Test 'time' output with no centiseconds data
+        """
+        data = '''        Command being timed: "echo"
+        User time (seconds): 5156.20
+        System time (seconds): 0.05
+        Percent of CPU this job got: 99%
+        Elapsed (wall clock) time (h:mm:ss or m:ss): 1:25:56
+        Average shared text size (kbytes): 0
+        Average unshared data size (kbytes): 0
+        Average stack size (kbytes): 0
+        Average total size (kbytes): 0
+        Maximum resident set size (kbytes): 21760
+        Average resident set size (kbytes): 0
+        Major (requiring I/O) page faults: 0
+        Minor (reclaiming a frame) page faults: 4975
+        Voluntary context switches: 1
+        Involuntary context switches: 8159
+        Swaps: 0
+        File system inputs: 0
+        File system outputs: 6272
+        Socket messages sent: 0
+        Socket messages received: 0
+        Signals delivered: 0
+        Page size (bytes): 4096
+        Exit status: 0'''
+
+        expected = {"command_being_timed":"echo","user_time":5156.2,"system_time":0.05,"cpu_percent":99,"elapsed_time":"1:25:56","average_shared_text_size":0,"average_unshared_data_size":0,"average_stack_size":0,"average_total_size":0,"maximum_resident_set_size":21760,"average_resident_set_size":0,"major_pagefaults":0,"minor_pagefaults":4975,"voluntary_context_switches":1,"involuntary_context_switches":8159,"swaps":0,"block_input_operations":0,"block_output_operations":6272,"messages_sent":0,"messages_received":0,"signals_delivered":0,"page_size":4096,"exit_status":0,"elapsed_time_hours":1,"elapsed_time_minutes":25,"elapsed_time_seconds":56,"elapsed_time_centiseconds":0,"elapsed_time_total_seconds":5156.0}
+        self.assertEqual(jc.parsers.time.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

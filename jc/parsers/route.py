@@ -111,8 +111,6 @@ Examples:
     ]
 """
 import jc.utils
-import jc.parsers.universal
-
 
 class info():
     """Provides parser metadata (version, author, etc.)"""

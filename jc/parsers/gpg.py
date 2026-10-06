@@ -226,7 +226,7 @@ def parse(
                 # - Field 4 :: signcount - The number of signatures seen.
                 # - Field 5 :: encrcount - The number of encryptions done.
                 # - Field 6 :: policy - A string with the policy
-                # - Field 7 :: signture-first-seen - a timestamp or 0 if not known.
+                # - Field 7 :: signature-first-seen - a timestamp or 0 if not known.
                 # - Field 8 :: signature-most-recent-seen - a timestamp or 0 if not known.
                 # - Field 9 :: encryption-first-done - a timestamp or 0 if not known.
                 # - Field 10 :: encryption-most-recent-done - a timestamp or 0 if not known.

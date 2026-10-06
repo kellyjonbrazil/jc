@@ -17,46 +17,53 @@ Schema:
 
     [
       {
-        "name":         string,
-        "maj_min":      string,
-        "rm":           boolean,
-        "size":         string,
-        "ro":           boolean,
-        "type":         string,
-        "mountpoint":   string,
-        "kname":        string,
-        "fstype":       string,
-        "label":        string,
-        "uuid":         string,
-        "partlabel":    string,
-        "partuuid":     string,
-        "ra":           integer,
-        "model":        string,
-        "serial":       string,
-        "state":        string,
-        "owner":        string,
-        "group":        string,
-        "mode":         string,
-        "alignment":    integer,
-        "min_io":       integer,
-        "opt_io":       integer,
-        "phy_sec":      integer,
-        "log_sec":      integer,
-        "rota":         boolean,
-        "sched":        string,
-        "rq_size":      integer,
-        "disc_aln":     integer,
-        "disc_gran":    string,
-        "disc_max":     string,
-        "disc_zero":    boolean,
-        "wsame":        string,
-        "wwn":          string,
-        "rand":         boolean,
-        "pkname":       string,
-        "hctl":         string,
-        "tran":         string,
-        "rev":          string,
-        "vendor":       string
+        "name":             string,
+        "maj_min":          string,
+        "rm":               boolean,
+        "size":             string,
+        "size_bytes":       integer
+        "ro":               boolean,
+        "type":             string,
+        "mountpoint":       string,
+        "mountpoints": [
+                            string
+        ],
+        "kname":            string,
+        "fstype":           string,
+        "label":            string,
+        "uuid":             string,
+        "partlabel":        string,
+        "partuuid":         string,
+        "ra":               integer,
+        "model":            string,
+        "serial":           string,
+        "state":            string,
+        "owner":            string,
+        "group":            string,
+        "mode":             string,
+        "alignment":        integer,
+        "min_io":           integer,
+        "opt_io":           integer,
+        "phy_sec":          integer,
+        "log_sec":          integer,
+        "rota":             boolean,
+        "sched":            string,
+        "rq_size":          integer,
+        "disc_aln":         integer,
+        "disc_gran":        string,
+        "disc_gran_bytes":  integer,
+        "disc_max":         string,
+        "disc_max_bytes":   integer,
+        "disc_zero":        boolean,
+        "wsame":            string,
+        "wsame_bytes":      integer,
+        "wwn":              string,
+        "rand":             boolean,
+        "pkname":           string,
+        "hctl":             string,
+        "tran":             string,
+        "rev":              string,
+        "vendor":           string
       }
     ]
 
@@ -69,6 +76,7 @@ Examples:
         "maj_min": "8:0",
         "rm": false,
         "size": "20G",
+        "size_bytes": 20000000000,
         "ro": false,
         "type": "disk",
         "mountpoint": null
@@ -78,6 +86,7 @@ Examples:
         "maj_min": "8:1",
         "rm": false,
         "size": "1G",
+        "size_bytes": 1000000000
         "ro": false,
         "type": "part",
         "mountpoint": "/boot"
@@ -95,6 +104,7 @@ Examples:
         "maj_min": "8:0",
         "rm": false,
         "size": "20G",
+        "size_bytes": 20000000000,
         "ro": false,
         "type": "disk",
         "mountpoint": null,
@@ -121,9 +131,12 @@ Examples:
         "rq_size": 128,
         "disc_aln": 0,
         "disc_gran": "0B",
+        "disc_gran_bytes": 0,
         "disc_max": "0B",
+        "disc_max_bytes": 0,
         "disc_zero": false,
         "wsame": "32M",
+        "wsame_bytes": 32000000,
         "wwn": null,
         "rand": true,
         "pkname": null,
@@ -137,6 +150,7 @@ Examples:
         "maj_min": "8:1",
         "rm": false,
         "size": "1G",
+        "size_bytes": 1000000000
         "ro": false,
         "type": "part",
         "mountpoint": "/boot",
@@ -163,9 +177,12 @@ Examples:
         "rq_size": 128,
         "disc_aln": 0,
         "disc_gran": "0B",
+        "disc_gran_bytes": 0,
         "disc_max": "0B",
+        "disc_max_bytes": 0,
         "disc_zero": false,
         "wsame": "32M",
+        "wsame_bytes": 32000000,
         "wwn": null,
         "rand": true,
         "pkname": "sda",
@@ -187,6 +204,7 @@ Examples:
         "maj_min": "8:0",
         "rm": "0",
         "size": "20G",
+        "size_bytes": 20000000000,
         "ro": "0",
         "type": "disk",
         "mountpoint": null,
@@ -213,9 +231,12 @@ Examples:
         "rq_size": "128",
         "disc_aln": "0",
         "disc_gran": "0B",
+        "disc_gran_bytes": 0,
         "disc_max": "0B",
+        "disc_max_bytes": 0,
         "disc_zero": "0",
         "wsame": "32M",
+        "wsame_bytes": 32000000,
         "wwn": null,
         "rand": "1",
         "pkname": null,
@@ -229,6 +250,7 @@ Examples:
         "maj_min": "8:1",
         "rm": "0",
         "size": "1G",
+        "size_bytes": 1000000000
         "ro": "0",
         "type": "part",
         "mountpoint": "/boot",
@@ -255,9 +277,12 @@ Examples:
         "rq_size": "128",
         "disc_aln": "0",
         "disc_gran": "0B",
+        "disc_gran_bytes": 0,
         "disc_max": "0B",
+        "disc_max_bytes": 0,
         "disc_zero": "0",
         "wsame": "32M",
+        "wsame_bytes": 32000000,
         "wwn": null,
         "rand": "1",
         "pkname": "sda",
@@ -275,7 +300,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`lsblk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -304,13 +329,18 @@ def _process(proc_data):
     int_list = {'ra', 'alignment', 'min_io', 'opt_io', 'phy_sec', 'log_sec',
                 'rq_size', 'disc_aln'}
 
+    size_list = {'size', 'disc_gran', 'disc_max', 'wsame'}
+
     for entry in proc_data:
-        for key in entry:
+        for key in entry.copy():
             if key in bool_list:
                 entry[key] = jc.utils.convert_to_bool(entry[key])
 
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
+            if key in size_list:
+                entry[key + '_bytes'] = jc.utils.convert_size_to_int(entry[key], posix_mode=True)
 
     return proc_data
 
@@ -335,6 +365,7 @@ def parse(data, raw=False, quiet=False):
     # Clear any blank lines
     cleandata = list(filter(None, data.splitlines()))
     raw_output = []
+    new_list = []
 
     if jc.utils.has_data(data):
 
@@ -346,11 +377,23 @@ def parse(data, raw=False, quiet=False):
 
         raw_output = jc.parsers.universal.sparse_table_parse(cleandata)
 
-        # clean up non-ascii characters, if any
+        # find multiple mount points and add to a single entry
         for entry in raw_output:
-            entry['name'] = entry['name'].encode('ascii', errors='ignore').decode()
+            if entry['name']:
+                if 'mountpoints' in entry:
+                    if entry['mountpoints']:
+                        entry['mountpoints'] = [entry['mountpoints']]
+                    else:
+                        entry['mountpoints'] = []
+                new_list.append(entry)
+            elif 'mountpoints' in entry and entry['mountpoints']:
+                new_list[-1]['mountpoints'].append(entry['mountpoints'])
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+        # clean up tree characters, if any
+        for entry in new_list:
+            tree_chars = ['`-', '|-', '├─', '└─']
+            for chars in tree_chars:
+                if entry['name'][0:2] == chars:
+                    entry['name'] = entry['name'][2:]
+
+    return new_list if raw else _process(new_list)

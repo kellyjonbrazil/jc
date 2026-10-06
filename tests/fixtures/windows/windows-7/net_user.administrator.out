@@ -1,0 +1,25 @@
+User name                    Administrator
+Full Name
+Comment                      Built-in account for administering the computer/domain
+User's comment
+Country code                 000 (System Default)
+Account active               No
+Account expires              Never
+
+Password last set            7/14/2009 12:13:36 AM
+Password expires             Never
+Password changeable          7/15/2009 12:13:36 AM
+Password required            Yes
+User may change password     Yes
+
+Workstations allowed         All
+Logon script
+User profile
+Home directory
+Last logon                   7/14/2009 12:08:59 AM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Administrators
+Global Group memberships     *None
+The command completed successfully.

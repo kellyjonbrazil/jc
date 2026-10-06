@@ -23,8 +23,9 @@ jc - JSON Convert streaming utils
 def add_jc_meta(func: ~F) -> ~F
 ```
 
-Decorator for streaming parsers to add stream_success and stream_error
-objects. This simplifies the yield lines in the streaming parsers.
+Decorator for streaming parsers to add `stream_success` and
+`stream_error` objects. This simplifies the `yield` lines in the
+streaming parsers.
 
 With the decorator on parse():
 
@@ -58,7 +59,7 @@ In all cases above:
                   successfully parse.
 
     ignore_exceptions:  (bool)  continue processing lines and ignore
-                        exceptions if True.
+                        exceptions if `True`.
 
 <a id="jc.streaming.raise_or_yield"></a>
 
@@ -69,8 +70,8 @@ def raise_or_yield(ignore_exceptions: bool, e: BaseException,
                    line: str) -> Tuple[BaseException, str]
 ```
 
-Return the exception object and line string if ignore_exceptions is
-True. Otherwise, re-raise the exception from the exception object with
+Return the exception object and line string if `ignore_exceptions` is
+`True`. Otherwise, re-raise the exception from the exception object with
 an annotation.
 
 <a id="jc.streaming.stream_error"></a>

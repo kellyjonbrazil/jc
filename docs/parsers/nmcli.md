@@ -10,6 +10,7 @@ Supports the following `nmcli` subcommands:
 - `nmcli general permissions`
 - `nmcli connection`
 - `nmcli connection show <device_name>`
+- `nmcli -t device wifi list`
 - `nmcli device`
 - `nmcli device show`
 - `nmcli device show <device_name>`
@@ -41,6 +42,8 @@ These are documented below.
     [
       {
         "<key>":                  string/integer/float,   # [0]
+        "team_config":            object/null,
+        "team_port_config":       object/null,
         "dhcp4_option_x": {
           "name":                 string,
           "value":                string/integer/float,
@@ -64,6 +67,22 @@ These are documented below.
     ]
 
     [0] all values of `---` are converted to null
+
+For `nmcli -t device wifi list` output, the schema is:
+
+    [
+      {
+        "in_use":                 string,
+        "bssid":                  string,
+        "ssid":                   string,
+        "mode":                   string,
+        "chan":                   integer,
+        "rate":                   string,
+        "signal":                 integer,
+        "bars":                   string,
+        "security":               string/null
+      }
+    ]
 
 Examples:
 
@@ -170,4 +189,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/nmcli.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nmcli.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

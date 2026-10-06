@@ -25,6 +25,7 @@ Schema:
         "user":            string,
         "event":           string,
         "writeable_tty":   string,
+        "process":         string,
         "tty":             string,
         "time":            string,
         "epoch":           integer,     # [0]
@@ -136,7 +137,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`who` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -254,6 +255,12 @@ def parse(data, raw=False, quiet=False):
                 raw_output.append(output_line)
                 continue
 
+            # some output contains process name between the username and pts
+            # pull the process name for use later if we can find it
+            user_process = None
+            if re.match(r'^\S+\s+[^ +-]+\s+pts\/\d+\s', line):
+                user_process = linedata.pop(1)
+
             # user logins
             output_line['user'] = linedata.pop(0)
 
@@ -261,6 +268,9 @@ def parse(data, raw=False, quiet=False):
                 output_line['writeable_tty'] = linedata.pop(0)
 
             output_line['tty'] = linedata.pop(0)
+
+            if user_process:
+                output_line['process'] = user_process
 
             # mac
             if re.match(r'[JFMASOND][aepuco][nbrynlgptvc]', linedata[0]):

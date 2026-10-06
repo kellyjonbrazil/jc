@@ -48,6 +48,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.out'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump2 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iptables-filter.json'), 'r', encoding='utf-8') as f:
         centos_7_7_iptables_filter_json = json.loads(f.read())
@@ -87,6 +90,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump.json'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_no_jump2_json = json.loads(f.read())
 
 
     def test_iptables_nodata(self):
@@ -173,6 +179,12 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump, quiet=True), self.generic_iptables_no_jump_json)
 
+    def test_iptables_no_jump2_generic(self):
+        """
+        Test 'sudo iptables' with no jump target and verbose output
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump2, quiet=True), self.generic_iptables_no_jump2_json)
+
     def test_iptables_x_option_format(self):
         """
         Test iptables -x
@@ -200,7 +212,7 @@ class MyTests(unittest.TestCase):
 128627559125 172804718595966 INPUT_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0
    26599  1082920 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
     1761    79571 REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited'''
-        expected = [{"chain":"INPUT","rules":[{"pkts":11291792498,"bytes":217331852907122,"target":"ACCEPT","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"ctstate RELATED,ESTABLISHED"},{"pkts":555958,"bytes":33533576,"target":"ACCEPT","prot":"all","opt":None,"in":"lo","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128628404869,"bytes":172804745659762,"target":"INPUT_direct","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128627559128,"bytes":172804718596050,"target":"INPUT_ZONES_SOURCE","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":128627559125,"bytes":172804718595966,"target":"INPUT_ZONES","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"},{"pkts":26599,"bytes":1082920,"target":"DROP","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"ctstate INVALID"},{"pkts":1761,"bytes":79571,"target":"REJECT","prot":"all","opt":None,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0","options":"reject-with icmp-host-prohibited"}]}]
+        expected = [{'chain': 'INPUT', 'default_policy': 'ACCEPT', 'default_packets': 0, 'default_bytes': 0, 'rules': [{'pkts': 11291792498, 'bytes': 217331852907122, 'target': 'ACCEPT', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0', 'options': 'ctstate RELATED,ESTABLISHED'}, {'pkts': 555958, 'bytes': 33533576, 'target': 'ACCEPT', 'prot': 'all', 'opt': None, 'in': 'lo', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0'}, {'pkts': 128628404869, 'bytes': 172804745659762, 'target': 'INPUT_direct', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0'}, {'pkts': 128627559128, 'bytes': 172804718596050, 'target': 'INPUT_ZONES_SOURCE', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0'}, {'pkts': 128627559125, 'bytes': 172804718595966, 'target': 'INPUT_ZONES', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0'}, {'pkts': 26599, 'bytes': 1082920, 'target': 'DROP', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0', 'options': 'ctstate INVALID'}, {'pkts': 1761, 'bytes': 79571, 'target': 'REJECT', 'prot': 'all', 'opt': None, 'in': '*', 'out': '*', 'source': '0.0.0.0/0', 'destination': '0.0.0.0/0', 'options': 'reject-with icmp-host-prohibited'}]}]
         self.assertEqual(jc.parsers.iptables.parse(data, quiet=True), expected)
 
 

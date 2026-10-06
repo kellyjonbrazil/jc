@@ -93,7 +93,7 @@ Schema:
       "kbdinteractiveauthentication":             string,
       "kerberosauthentication":                   string,
       "kerberosorlocalpasswd":                    string,
-      "kerberosticketcleanup":                    sttring,
+      "kerberosticketcleanup":                    string,
       "kexalgorithms": [
                                                   string
       ],

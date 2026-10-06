@@ -1,0 +1,68 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "151.101.129.67",
+    "destination_name": "cnn.com",
+    "max_hops": 64,
+    "data_bytes": 52
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 4.478
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 3.907
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice",
+        "rtt": 4.849
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 23.53
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 26.518
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 23.48
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  }
+]

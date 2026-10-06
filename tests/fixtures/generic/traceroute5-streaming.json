@@ -1,0 +1,230 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "104.18.42.178",
+    "destination_name": "10xhostings.com",
+    "max_hops": 30,
+    "data_bytes": 40
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 0.894
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 0.89
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": null,
+        "name": null,
+        "rtt": 0.876
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.25",
+        "name": "204.141.42.25",
+        "rtt": 2.818
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.25",
+        "name": "204.141.42.25",
+        "rtt": 2.825
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.25",
+        "name": "204.141.42.25",
+        "rtt": 2.825
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.9",
+        "name": "204.141.42.9",
+        "rtt": 1.014
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.9",
+        "name": "204.141.42.9",
+        "rtt": 1.017
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "204.141.42.9",
+        "name": "204.141.42.9",
+        "rtt": 1.082
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "128.241.1.145",
+        "name": "xe-0-0-46-2.a00.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 30.105
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "128.241.1.145",
+        "name": "xe-0-0-46-2.a00.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 30.125
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "128.241.1.145",
+        "name": "xe-0-0-46-2.a00.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 30.125
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.117",
+        "name": "ae-9.r04.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 32.346
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.117",
+        "name": "ae-9.r04.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 31.946
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.117",
+        "name": "ae-9.r04.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 31.96
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.86",
+        "name": "ae-0.a01.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 32.836
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.86",
+        "name": "ae-0.a01.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 32.749
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "129.250.5.86",
+        "name": "ae-0.a01.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 32.743
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "131.103.117.86",
+        "name": "ae-0.cloudflare.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 44.601
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "131.103.117.86",
+        "name": "ae-0.cloudflare.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 42.886
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "131.103.117.86",
+        "name": "ae-0.cloudflare.sttlwa01.us.bb.gin.ntt.net",
+        "rtt": 42.874
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "104.18.42.178",
+        "name": "104.18.42.178",
+        "rtt": 29.614
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "104.18.42.178",
+        "name": "104.18.42.178",
+        "rtt": 29.69
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "104.18.42.178",
+        "name": "104.18.42.178",
+        "rtt": 30.461
+      }
+    ]
+  }
+]

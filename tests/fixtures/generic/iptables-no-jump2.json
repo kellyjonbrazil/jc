@@ -1,0 +1,1 @@
+[{"chain":"INPUT","default_policy":"ACCEPT","default_packets":0,"default_bytes":0,"rules":[{"pkts":17,"bytes":1172,"target":null,"prot":"all","opt":null,"in":"*","out":"*","source":"0.0.0.0/0","destination":"0.0.0.0/0"}]}]

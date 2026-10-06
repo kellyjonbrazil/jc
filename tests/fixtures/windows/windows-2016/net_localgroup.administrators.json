@@ -1,0 +1,18 @@
+{
+  "account_origin": null,
+  "domain": null,
+  "comment": null,
+  "groups": [
+    {
+      "name": "Administrators",
+      "members": [
+        "Administrator",
+        "SOMECOMPANY\\ansible",
+        "SOMECOMPANY\\da",
+        "SOMECOMPANY\\Domain Admins",
+        "SOMECOMPANY\\localadmin",
+        "user1"
+      ]
+    }
+  ]
+}

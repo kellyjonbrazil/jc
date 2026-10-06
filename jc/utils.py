@@ -9,7 +9,7 @@ from numbers import Number
 from datetime import datetime, timezone
 from textwrap import TextWrapper
 from functools import lru_cache
-from typing import Any, List, Dict, Iterable, Union, Optional, TextIO
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO, Set, Tuple
 from .jc_types import TimeStampFormatType
 
 CLI_QUIET = False
@@ -100,7 +100,7 @@ def error_message(message_lines: List[str]) -> None:
 
     Returns:
 
-        None - just prints output to STDERR
+        None - just prints output to `STDERR`
     """
     columns = shutil.get_terminal_size().columns
 
@@ -148,7 +148,7 @@ def compatibility(mod_name: str, compatible: List[str], quiet: bool = False) -> 
                       the parser. compatible options:
                       linux, darwin, cygwin, win32, aix, freebsd
 
-        quiet:        (bool) suppress compatibility message if True
+        quiet:        (bool) suppress compatibility message if `True`
 
     Returns:
 
@@ -169,7 +169,7 @@ def has_data(data: Union[str, bytes]) -> bool:
     Checks if the string input contains data. If there are any
     non-whitespace characters then return `True`, else return `False`.
 
-    For bytes, returns True if there is any data.
+    For bytes, returns `True` if there is any data.
 
     Parameters:
 
@@ -177,9 +177,9 @@ def has_data(data: Union[str, bytes]) -> bool:
 
     Returns:
 
-        Boolean      True if input string (data) contains non-whitespace
-                     characters, otherwise False. For bytes data, returns
-                     True if there is any data, otherwise False.
+        Boolean      `True` if input string (data) contains non-whitespace
+                     characters, otherwise `False`. For bytes data, returns
+                     `True` if there is any data, otherwise `False`.
     """
     if isinstance(data, str):
         return bool(data and not data.isspace())
@@ -682,9 +682,10 @@ class timestamp:
 
                 If the conversion completely fails, all fields will be None.
         """
-        formats: tuple[TimeStampFormatType, ...] = (
+        formats: Tuple[TimeStampFormatType, ...] = (
             {'id': 1000, 'format': '%a %b %d %H:%M:%S %Y', 'locale': None},  # manual C locale format conversion: Tue Mar 23 16:12:11 2021 or Tue Mar 23 16:12:11 IST 2021
             {'id': 1100, 'format': '%a %b %d %H:%M:%S %Y %z', 'locale': None}, # git date output: Thu Mar 5 09:17:40 2020 -0800
+            {'id': 1200, 'format': '%a %b %d %I:%M:%S %p %Y', 'locale': None},  # 12-hour twin of 1000, for locales where `date` prints AM/PM: Thu Sep 10 11:10:44 AM 2026
             {'id': 1300, 'format': '%Y-%m-%dT%H:%M:%S.%f%Z', 'locale': None}, # ISO Format with UTC (found in syslog 5424): 2003-10-11T22:14:15.003Z
             {'id': 1310, 'format': '%Y-%m-%dT%H:%M:%S.%f', 'locale': None}, # ISO Format without TZ (found in syslog 5424): 2003-10-11T22:14:15.003
             {'id': 1400, 'format': '%b %d %Y %H:%M:%S.%f UTC', 'locale': None}, # CEF Format with UTC: Nov 08 2022 12:30:00.111 UTC
@@ -703,6 +704,7 @@ class timestamp:
             {'id': 1800, 'format': '%d/%b/%Y:%H:%M:%S %z', 'locale': None},  # Common Log Format: 10/Oct/2000:13:55:36 -0700
             {'id': 2000, 'format': '%a %d %b %Y %I:%M:%S %p %Z', 'locale': None},  # en_US.UTF-8 local format (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM UTC
             {'id': 3000, 'format': '%a %d %b %Y %I:%M:%S %p', 'locale': None},  # en_US.UTF-8 local format with non-UTC tz (found in upower cli output): Tue 23 Mar 2021 04:12:11 PM IST
+            {'id': 3100, 'format': '%a %d %b %Y %I:%M:%S %p %z', 'locale': None},  # pacman format - append 00 to end to make it work: # Sat 11 May 2024 06:14:19 AM +0800
             {'id': 3500, 'format': '%a, %d %b %Y %H:%M:%S %Z', 'locale': None},  # HTTP header time format (always GMT so assume UTC): Wed, 31 Jan 2024 00:39:28 GMT
             {'id': 4000, 'format': '%A %d %B %Y %I:%M:%S %p %Z', 'locale': None},  # European-style local format (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM UTC
             {'id': 5000, 'format': '%A %d %B %Y %I:%M:%S %p', 'locale': None},  # European-style local format with non-UTC tz (found in upower cli output): Tuesday 01 October 2019 12:50:41 PM IST
@@ -721,9 +723,15 @@ class timestamp:
             {'id': 9000, 'format': '%c', 'locale': ''}  # locally configured locale format conversion: Could be anything :) this is a last-gasp attempt
         )
 
+        # fixup for behavior changes in python 3.15
+        # add any formats that need to be removed to `remove_ids`
+        if sys.version_info >= (3, 15, 0):
+            remove_ids = {7250}
+            formats = tuple((x for x in formats if x['id'] not in remove_ids))
+
         # from https://www.timeanddate.com/time/zones/
         # only removed UTC & GMT timezones and added known non-UTC offsets
-        tz_abbr: set[str] = {
+        tz_abbr: Set[str] = {
             'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
             'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
             'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
@@ -751,7 +759,7 @@ class timestamp:
             'UTC+1345', 'UTC+1400'
         }
 
-        offset_suffixes: tuple[str, ...] = (
+        offset_suffixes: Tuple[str, ...] = (
             '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
             '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
             '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
@@ -831,18 +839,23 @@ class timestamp:
         remaining_formats = [fmt for fmt in formats if not fmt['id'] in format_hint]
         optimized_formats = hint_obj_list + remaining_formats
 
-        for fmt in optimized_formats:
-            try:
-                locale.setlocale(locale.LC_TIME, fmt['locale'])
-                dt = datetime.strptime(normalized_datetime, fmt['format'])
-                timestamp_obj['format'] = fmt['id']
-                timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
-                iso_string = dt.replace(tzinfo=None).isoformat()
-                locale.setlocale(locale.LC_TIME, None)
-                break
-            except Exception:
-                locale.setlocale(locale.LC_TIME, None)
-                continue
+        # save the original LC_TIME so it can be restored on every exit path.
+        # (setlocale with None is a query and does not restore anything)
+        original_lc_time = locale.setlocale(locale.LC_TIME)
+
+        try:
+            for fmt in optimized_formats:
+                try:
+                    locale.setlocale(locale.LC_TIME, fmt['locale'])
+                    dt = datetime.strptime(normalized_datetime, fmt['format'])
+                    timestamp_obj['format'] = fmt['id']
+                    timestamp_naive = int(dt.replace(tzinfo=None).timestamp())
+                    iso_string = dt.replace(tzinfo=None).isoformat()
+                    break
+                except Exception:
+                    continue
+        finally:
+            locale.setlocale(locale.LC_TIME, original_lc_time)
 
         if dt and utc_tz:
             dt_utc = dt.replace(tzinfo=timezone.utc)

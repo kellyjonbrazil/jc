@@ -84,16 +84,20 @@ Examples:
 ```python
 def parse(data: Union[str, bytes],
           raw: bool = False,
-          quiet: bool = False) -> List[Dict[str, Any]]
+          quiet: bool = False,
+          implicit_header: bool = False,
+          tsv: bool = False) -> List[Dict[str, Any]]
 ```
 
 Main text parsing function
 
 Parameters:
 
-    data:        (string)  text data to parse
-    raw:         (boolean) unprocessed output if True
-    quiet:       (boolean) suppress warning messages if True
+    data:               (string)  text data to parse
+    raw:                (boolean) unprocessed output if True
+    quiet:              (boolean) suppress warning messages if True
+    implicit_header:    (boolean) data has no header, generate column names
+    tsv:                (boolean) force TSV delimiter
 
 Returns:
 
@@ -104,4 +108,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/csv.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/csv.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

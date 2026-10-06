@@ -44,7 +44,7 @@ Parameters:
                   the parser. compatible options:
                   linux, darwin, cygwin, win32, aix, freebsd
 
-    quiet:        (bool) suppress compatibility message if True
+    quiet:        (bool) suppress compatibility message if `True`
 
 Returns:
 
@@ -181,7 +181,7 @@ Parameters:
 
 Returns:
 
-    None - just prints output to STDERR
+    None - just prints output to `STDERR`
 
 <a id="jc.utils.has_data"></a>
 
@@ -194,7 +194,7 @@ def has_data(data: Union[str, bytes]) -> bool
 Checks if the string input contains data. If there are any
 non-whitespace characters then return `True`, else return `False`.
 
-For bytes, returns True if there is any data.
+For bytes, returns `True` if there is any data.
 
 Parameters:
 
@@ -202,9 +202,9 @@ Parameters:
 
 Returns:
 
-    Boolean      True if input string (data) contains non-whitespace
-                 characters, otherwise False. For bytes data, returns
-                 True if there is any data, otherwise False.
+    Boolean      `True` if input string (data) contains non-whitespace
+                 characters, otherwise `False`. For bytes data, returns
+                 `True` if there is any data, otherwise `False`.
 
 <a id="jc.utils.input_type_check"></a>
 

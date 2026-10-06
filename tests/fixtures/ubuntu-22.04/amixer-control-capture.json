@@ -1,0 +1,1 @@
+{"control_name": "Capture", "capabilities": ["cvolume", "cswitch"], "limits": {"playback_min": "0", "playback_max": "63"}, "front_left": {"playback_value": "63", "percentage": "100%", "db": "30.00db", "status": "on"}, "front_right": {"playback_value": "63", "percentage": "100%", "db": "30.00db", "status": "on"}}

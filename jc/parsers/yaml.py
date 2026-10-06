@@ -87,7 +87,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -111,7 +111,6 @@ def _process(proc_data):
 
         List of Dictionaries. Each dictionary represents a YAML document.
     """
-
     # No further processing
     return proc_data
 
@@ -148,17 +147,20 @@ def parse(data, raw=False, quiet=False):
         # plugin code is incompatible with the pyoxidizer packager
         YAML.official_plug_ins = lambda a: []
 
-        yaml = YAML(typ='safe')
+        # use the default `typ` to correctly load values that start with a literal "="
+        yaml = YAML(typ=None)
 
         # modify the timestamp constructor to output datetime objects as
         # strings since JSON does not support datetime objects
         yaml.constructor.yaml_constructors['tag:yaml.org,2002:timestamp'] = \
             yaml.constructor.yaml_constructors['tag:yaml.org,2002:str']
 
+        # modify the value constructor to output values starting with a
+        # literal "=" as a string.
+        yaml.constructor.yaml_constructors['tag:yaml.org,2002:value'] =  \
+            yaml.constructor.yaml_constructors['tag:yaml.org,2002:str']
+
         for document in yaml.load_all(data):
             raw_output.append(document)
 
-    if raw:
-        return raw_output
-    else:
-        return _process(raw_output)
+    return raw_output if raw else _process(raw_output)

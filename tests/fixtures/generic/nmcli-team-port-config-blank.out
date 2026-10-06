@@ -1,0 +1,47 @@
+connection.id:                          team1
+connection.uuid:                        a85e0eba-7140-4963-963d-ca9a0f6516ed
+connection.stable-id:                   --
+connection.type:                        802-3-ethernet
+connection.interface-name:              --
+connection.autoconnect:                 yes
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   0
+connection.read-only:                   no
+connection.permissions:                 --
+connection.zone:                        --
+connection.master:                      d229f048-5c75-40f4-a7ff-61174546c506
+connection.slave-type:                  team
+connection.autoconnect-slaves:          -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.dns-over-tls:                -1 (default)
+connection.wait-device-timeout:         -1
+802-3-ethernet.port:                    --
+802-3-ethernet.speed:                   0
+802-3-ethernet.duplex:                  --
+802-3-ethernet.auto-negotiate:          no
+802-3-ethernet.mac-address:             --
+802-3-ethernet.cloned-mac-address:      --
+802-3-ethernet.generate-mac-address-mask:--
+802-3-ethernet.mac-address-blacklist:   --
+802-3-ethernet.mtu:                     auto
+802-3-ethernet.s390-subchannels:        --
+802-3-ethernet.s390-nettype:            --
+802-3-ethernet.s390-options:            --
+802-3-ethernet.wake-on-lan:             default
+802-3-ethernet.wake-on-lan-password:    --
+802-3-ethernet.accept-all-mac-addresses:-1 (default)
+team-port.config:                       --
+team-port.queue-id:                     0 (default)
+team-port.prio:                         0 (unset)
+team-port.sticky:                       no
+team-port.lacp-prio:                    0
+team-port.lacp-key:                     0 (default)
+team-port.link-watchers:                --

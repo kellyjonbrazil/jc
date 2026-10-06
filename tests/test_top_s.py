@@ -7,7 +7,7 @@ from jc.exceptions import ParseError
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # To create streaming output use:
-# $ cat top.out | jc --top-s | jello -c > top-streaming.json
+# $ cat top.out | jc --top-s | jq -cs > top-streaming.json
 
 
 class MyTests(unittest.TestCase):

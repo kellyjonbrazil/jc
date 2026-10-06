@@ -1,0 +1,116 @@
+connection.id:                          Team connection 1
+connection.uuid:                        258e02c2-d9f9-44bb-8d27-887e11aa1828
+connection.stable-id:                   --
+connection.type:                        team
+connection.interface-name:              team0
+connection.autoconnect:                 yes
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         -1 (default)
+connection.multi-connect:               0 (default)
+connection.auth-retries:                -1
+connection.timestamp:                   0
+connection.read-only:                   no
+connection.permissions:                 --
+connection.zone:                        --
+connection.master:                      --
+connection.slave-type:                  --
+connection.autoconnect-slaves:          -1 (default)
+connection.secondaries:                 --
+connection.gateway-ping-timeout:        0
+connection.metered:                     unknown
+connection.lldp:                        default
+connection.mdns:                        -1 (default)
+connection.llmnr:                       -1 (default)
+connection.dns-over-tls:                -1 (default)
+connection.wait-device-timeout:         -1
+ipv4.method:                            auto
+ipv4.dns:                               --
+ipv4.dns-search:                        --
+ipv4.dns-options:                       --
+ipv4.dns-priority:                      0
+ipv4.addresses:                         --
+ipv4.gateway:                           --
+ipv4.routes:                            --
+ipv4.route-metric:                      -1
+ipv4.route-table:                       0 (unspec)
+ipv4.routing-rules:                     --
+ipv4.ignore-auto-routes:                no
+ipv4.ignore-auto-dns:                   no
+ipv4.dhcp-client-id:                    --
+ipv4.dhcp-iaid:                         --
+ipv4.dhcp-timeout:                      0 (default)
+ipv4.dhcp-send-hostname:                yes
+ipv4.dhcp-hostname:                     --
+ipv4.dhcp-fqdn:                         --
+ipv4.dhcp-hostname-flags:               0x0 (none)
+ipv4.never-default:                     no
+ipv4.may-fail:                          yes
+ipv4.required-timeout:                  -1 (default)
+ipv4.dad-timeout:                       -1 (default)
+ipv4.dhcp-vendor-class-identifier:      --
+ipv4.dhcp-reject-servers:               --
+ipv6.method:                            auto
+ipv6.dns:                               --
+ipv6.dns-search:                        --
+ipv6.dns-options:                       --
+ipv6.dns-priority:                      0
+ipv6.addresses:                         --
+ipv6.gateway:                           --
+ipv6.routes:                            --
+ipv6.route-metric:                      -1
+ipv6.route-table:                       0 (unspec)
+ipv6.routing-rules:                     --
+ipv6.ignore-auto-routes:                no
+ipv6.ignore-auto-dns:                   no
+ipv6.never-default:                     no
+ipv6.may-fail:                          yes
+ipv6.required-timeout:                  -1 (default)
+ipv6.ip6-privacy:                       -1 (unknown)
+ipv6.addr-gen-mode:                     stable-privacy
+ipv6.ra-timeout:                        0 (default)
+ipv6.dhcp-duid:                         --
+ipv6.dhcp-iaid:                         --
+ipv6.dhcp-timeout:                      0 (default)
+ipv6.dhcp-send-hostname:                yes
+ipv6.dhcp-hostname:                     --
+ipv6.dhcp-hostname-flags:               0x0 (none)
+ipv6.token:                             --
+team.config:                            {
+    "runner": {
+        "name": "roundrobin"
+    },
+    "link_watch": {
+        "name": "ethtool"
+    }
+}
+team.notify-peers-count:                -1 (unset)
+team.notify-peers-interval:             -1 (unset)
+team.mcast-rejoin-count:                -1 (unset)
+team.mcast-rejoin-interval:             -1 (unset)
+team.runner:                            roundrobin
+team.runner-hwaddr-policy:              --
+team.runner-tx-hash:                    --
+team.runner-tx-balancer:                --
+team.runner-tx-balancer-interval:       -1 (unset)
+team.runner-active:                     yes
+team.runner-fast-rate:                  no
+team.runner-sys-prio:                   -1 (unset)
+team.runner-min-ports:                  -1 (unset)
+team.runner-agg-select-policy:          --
+team.link-watchers:                     name=ethtool
+team-port.config:                       {
+    "queue_id": 0,
+    "prio": 0,
+    "lacp_prio": 0,
+    "lacp_key": 0
+}
+team-port.queue-id:                     0 (default)
+team-port.prio:                         0 (unset)
+team-port.sticky:                       no
+team-port.lacp-prio:                    0
+team-port.lacp-key:                     0 (default)
+team-port.link-watchers:                --
+proxy.method:                           none
+proxy.browser-only:                     no
+proxy.pac-url:                          --
+proxy.pac-script:                       --

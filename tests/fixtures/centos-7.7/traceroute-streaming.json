@@ -1,0 +1,291 @@
+[
+  {
+    "type": "header",
+    "destination_ip": "151.101.197.67",
+    "destination_name": "www.cnn.com",
+    "max_hops": 30,
+    "data_bytes": 60
+  },
+  {
+    "type": "hop",
+    "hop": 1,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 4.024
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 3.683
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "192.168.1.254",
+        "name": "dsldevice.attlocal.net",
+        "rtt": 3.706
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 2,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 24.038
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 23.911
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "76.220.24.1",
+        "name": "76-220-24-1.lightspeed.sntcca.sbcglobal.net",
+        "rtt": 23.724
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 3,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 4,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 42.273
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 42.213
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.149.186",
+        "name": "12.122.149.186",
+        "rtt": 42.083
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 5,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.77",
+        "name": "12.122.2.77",
+        "rtt": 36.789
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.77",
+        "name": "12.122.2.77",
+        "rtt": 43.691
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.77",
+        "name": "12.122.2.77",
+        "rtt": 36.597
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 6,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.94",
+        "name": "sd2ca21crs.ip.att.net",
+        "rtt": 41.587
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.94",
+        "name": "sd2ca21crs.ip.att.net",
+        "rtt": 40.24
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.122.2.94",
+        "name": "sd2ca21crs.ip.att.net",
+        "rtt": 44.659
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 7,
+    "probes": [
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.123.215.161",
+        "name": "12.123.215.161",
+        "rtt": 37.858
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.123.215.161",
+        "name": "12.123.215.161",
+        "rtt": 37.321
+      },
+      {
+        "annotation": null,
+        "asn": null,
+        "ip": "12.123.215.161",
+        "name": "12.123.215.161",
+        "rtt": 37.092
+      }
+    ]
+  },
+  {
+    "type": "hop",
+    "hop": 8,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 9,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 10,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 11,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 12,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 13,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 14,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 15,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 16,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 17,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 18,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 19,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 20,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 21,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 22,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 23,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 24,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 25,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 26,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 27,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 28,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 29,
+    "probes": []
+  },
+  {
+    "type": "hop",
+    "hop": 30,
+    "probes": []
+  }
+]

@@ -9,6 +9,8 @@ Supports the `-i` or `--itemize-changes` options with all levels of
 verbosity. This parser will process the `STDOUT` output or a log file
 generated with the `--log-file` option.
 
+The `--stats` or `--info=stats[1-3]` options are also supported.
+
 Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync
@@ -42,7 +44,21 @@ Schema:
           "false_alarms":                     integer,
           "data":                             integer,
           "bytes_sec":                        float,
-          "speedup":                          float
+          "speedup":                          float,
+          "total_files":                      integer,
+          "regular_files":                    integer,
+          "dir_files":                        integer,
+          "total_created_files":              integer,
+          "created_regular_files":            integer,
+          "created_dir_files":                integer,
+          "deleted_files":                    integer,
+          "transferred_files":                integer,
+          "transferred_file_size":            integer,
+          "literal_data":                     integer,
+          "matched_data":                     integer,
+          "file_list_size":                   integer,
+          "file_list_generation_time":        float,
+          "file_list_transfer_time":          float,
         },
         "files": [
           {
@@ -66,6 +82,8 @@ Schema:
         ]
       }
     ]
+
+    Size values are in bytes.
 
     [0] 'file sent', 'file received', 'local change or creation',
         'hard link', 'not updated', 'message'
@@ -159,4 +177,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/rsync.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/rsync.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,0 +1,5 @@
+Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess
+tcp   LISTEN 0      5            0.0.0.0:19007      0.0.0.0:*    users:(("plain",pid=3241,fd=3)) ino:2436021 sk:2006 cgroup:/ <->
+tcp   LISTEN 0      5            0.0.0.0:19008      0.0.0.0:*    users:(("plain",pid=3242,fd=3))     ino:2436022 sk:2007 cgroup:/ <->
+tcp   LISTEN 0      5            0.0.0.0:19009      0.0.0.0:*    users:(("my proc:x",pid=3243,fd=3))  ino:2445406 sk:2008 cgroup:/system.slice/app.service <->
+tcp   LISTEN 0      5            0.0.0.0:19010      0.0.0.0:*    timer:(keepalive,7.20sec,0) users:(("svc(1",pid=3245,fd=3))     ino:2384691 sk:2009 cgroup:/ <->

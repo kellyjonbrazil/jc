@@ -1,0 +1,337 @@
+adduser	3.152	passwd (>= 1:4.17.2-5)	Debian Adduser Developers <adduser@packages.debian.org>
+amazon-ec2-utils	2.1.0-1.1	python3, curl	Debian Cloud Team <debian-cloud@lists.debian.org>
+apparmor	4.1.0-1	debconf, debconf (>= 0.5) | debconf-2.0, libc6 (>= 2.38)	Debian AppArmor Team <pkg-apparmor-team@lists.alioth.debian.org>
+apt	3.0.3	base-passwd (>= 3.6.1) | adduser, sqv (>= 1.3.0), libapt-pkg7.0 (>= 3.0.3), debian-archive-keyring, libc6 (>= 2.38), libgcc-s1 (>= 3.0), libseccomp2 (>= 2.4.2), libssl3t64 (>= 3.0.0), libstdc++6 (>= 13.1), libsystemd0	APT Development Team <deity@lists.debian.org>
+apt-listchanges	4.8	apt, python3-apt, python3-debconf, sensible-utils, ucf, debconf (>= 0.5) | debconf-2.0, python3:any	Jonathan Kamens <jik@kamens.us>
+apt-utils	3.0.3	apt (= 3.0.3), libapt-pkg7.0 (>= 2.9.27+exp1), libc6 (>= 2.34), libdb5.3t64, libgcc-s1 (>= 3.0), libstdc++6 (>= 13.1)	APT Development Team <deity@lists.debian.org>
+awscli	2.23.6-1	groff-base, python3, python3-pyasn1, python3-awscrt (>= 0.23.4), python3-colorama, python3-cryptography (>= 40.0.0), python3-dateutil, python3-distro, python3-docutils, python3-jmespath, python3-prompt-toolkit, python3-ruamel.yaml, python3-ruamel.yaml.clib, python3-urllib3, python3-zipp, python3:any	Debian Cloud Team <debian-cloud@lists.debian.org>
+base-files	13.8+deb13u4		Santiago Vila <sanvila@debian.org>
+base-passwd	3.6.7	libc6 (>= 2.34), libdebconfclient0 (>= 0.145), libselinux1 (>= 3.1~)	Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+bash	5.2.37-2+b8	base-files (>= 2.1.12), debianutils (>= 5.6-0.1)	Matthias Klose <doko@debian.org>
+bash-completion	1:2.16.0-7		Gabriel F. T. Gomes <gabriel@debian.org>
+bind9-host	1:9.20.18-1~deb13u1	bind9-libs (= 1:9.20.18-1~deb13u1), libc6 (>= 2.38), libidn2-0 (>= 2.0.0)	Debian DNS Team <team+dns@tracker.debian.org>
+bind9-libs:amd64	1:9.20.18-1~deb13u1	libc6 (>= 2.38), libfstrm0 (>= 0.2.0), libgssapi-krb5-2 (>= 1.17), libjemalloc2 (>= 4.0.0), libjson-c5 (>= 0.15), libkrb5-3 (>= 1.6.dfsg.2), liblmdb0 (>= 0.9.7), libmaxminddb0 (>= 1.3.0), libnghttp2-14 (>= 1.12.0), libprotobuf-c1 (>= 1.0.1), libssl3t64 (>= 3.4.0), liburcu8t64 (>= 0.13.0), libuv1t64 (>= 1.38.0), libxml2 (>= 2.7.4), zlib1g (>= 1:1.1.4)	Debian DNS Team <team+dns@tracker.debian.org>
+bsdextrautils	2.41-5	libc6 (>= 2.38), libsmartcols1 (= 2.41-5), libtinfo6 (>= 6)	Chris Hofstaedtler <zeha@debian.org>
+bsdutils	1:2.41-5		Chris Hofstaedtler <zeha@debian.org>
+ca-certificates	20250419	openssl (>= 1.1.1), debconf (>= 0.5) | debconf-2.0	Julien Cristau <jcristau@debian.org>
+cloud-guest-utils	0.33-1	e2fsprogs, fdisk, python3:any	Debian Cloud Team <debian-cloud@lists.debian.org>
+cloud-image-utils	0.33-1	ca-certificates, e2fsprogs, file, genisoimage, qemu-utils, wget, python3:any	Debian Cloud Team <debian-cloud@lists.debian.org>
+cloud-init	25.1.4-1+deb13u1	eject, fdisk | util-linux (<< 2.29.2-3~), gdisk, dhcpcd-base | udhcpc | isc-dhcp-client, locales, lsb-release, netcat-openbsd, procps, python3-configobj, python3-jinja2, python3-jsonpatch, python3-jsonschema, python3-oauthlib, python3-requests, python3-yaml, python3:any	Debian Cloud Team <debian-cloud@lists.debian.org>
+cloud-initramfs-growroot	0.18.debian14	cloud-utils (>= 0.26-2~), initramfs-tools, fdisk | util-linux (<< 2.29.2-3~)	Debian Cloud <debian-cloud@lists.debian.org>
+cloud-utils	0.33-1	cloud-guest-utils, cloud-image-utils	Debian Cloud Team <debian-cloud@lists.debian.org>
+coreutils	9.7-3		Michael Stone <mstone@debian.org>
+cpio	2.15+dfsg-2	libc6 (>= 2.38)	Anibal Monsalve Salazar <anibal@debian.org>
+curl	8.14.1-2+deb13u2	libc6 (>= 2.34), libcurl4t64 (= 8.14.1-2+deb13u2), zlib1g (>= 1:1.1.4)	Debian Curl Maintainers <team+curl@tracker.debian.org>
+dash	0.5.12-12	debianutils (>= 5.6-0.1)	Andrej Shadura <andrewsh@debian.org>
+dbus	1.16.2-2	dbus-bin (= 1.16.2-2), dbus-daemon (= 1.16.2-2), dbus-system-bus-common (>= 1.16.2-2), base-files (>= 13.4~), libc6 (>= 2.34), libdbus-1-3 (= 1.16.2-2), libexpat1 (>= 2.1~beta3), libsystemd0	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+dbus-bin	1.16.2-2	libc6 (>= 2.38), libdbus-1-3 (= 1.16.2-2)	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+dbus-daemon	1.16.2-2	dbus-bin (= 1.16.2-2), dbus-session-bus-common (>= 1.16.2-2), libapparmor1 (>= 2.8.94), libaudit1 (>= 1:2.2.1), libc6 (>= 2.34), libcap-ng0 (>= 0.7.9), libdbus-1-3 (= 1.16.2-2), libexpat1 (>= 2.1~beta3), libselinux1 (>= 3.1~), libsystemd0	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+dbus-session-bus-common	1.16.2-2		Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+dbus-system-bus-common	1.16.2-2	adduser (>= 3.130) | systemd-sysusers	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+debconf	1.5.91		Debconf Developers <debconf-devel@lists.alioth.debian.org>
+debian-archive-keyring	2025.1		Debian Release Team <packages@release.debian.org>
+debianutils	5.23.2		Ileana Dumitrescu <ileanadumitrescu95@gmail.com>
+dhcpcd-base	1:10.1.0-11+deb13u2	adduser, libc6 (>= 2.38), libssl3t64 (>= 3.0.0), libudev1 (>= 183)	Martin-Éric Racine <martin-eric.racine@iki.fi>
+diffutils	1:3.10-4		Santiago Vila <sanvila@debian.org>
+distro-info-data	0.66+deb13u1		Benjamin Drung <bdrung@debian.org>
+dmsetup	2:1.02.205-2	libc6 (>= 2.38), libdevmapper1.02.1 (>= 2:1.02.197)	Debian LVM Team <team+lvm@tracker.debian.org>
+docutils-common	0.21.2+dfsg-2	sgml-base (>= 1.28), xml-core (>= 0.14)	Debian Python Team <team+python@tracker.debian.org>
+dosfstools	4.2-1.2	libc6 (>= 2.38)	Andreas Bombe <aeb@debian.org>
+dpkg	1.22.22	tar (>= 1.28-1)	Dpkg Developers <debian-dpkg@lists.debian.org>
+dracut-install	106-6	libc6 (>= 2.38), libkmod2 (>= 33~)	Thomas Lange <lange@debian.org>
+e2fsprogs	1.47.2-3+b10	logsave	Theodore Y. Ts'o <tytso@mit.edu>
+eject	2.41-5	libc6 (>= 2.38), libmount1 (= 2.41-5)	Chris Hofstaedtler <zeha@debian.org>
+ethtool	1:6.14.2-1	libc6 (>= 2.34), libmnl0 (>= 1.0.3-4~)	Debian Kernel Team <debian-kernel@lists.debian.org>
+fdisk	2.41-5	libc6 (>= 2.38), libfdisk1 (= 2.41-5), libmount1 (= 2.41-5), libncursesw6 (>= 6), libreadline8t64 (>= 6.0), libsmartcols1 (= 2.41-5), libtinfo6 (>= 6)	Chris Hofstaedtler <zeha@debian.org>
+file	1:5.46-5	libc6 (>= 2.38), libmagic1t64 (= 1:5.46-5)	Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
+findutils	4.10.0-3		Andreas Metzler <ametzler@debian.org>
+gcc-14-base:amd64	14.2.0-19		Debian GCC Maintainers <debian-gcc@lists.debian.org>
+gdisk	1.0.10-2	libc6 (>= 2.38), libgcc-s1 (>= 3.0), libncursesw6 (>= 6), libpopt0 (>= 1.14), libstdc++6 (>= 13.1), libtinfo6 (>= 6), libuuid1 (>= 2.16)	Jonathan Carter <jcc@debian.org>
+genisoimage	9:1.1.11-4	libbz2-1.0, libc6 (>= 2.38), libmagic1t64 (>= 5.12), zlib1g (>= 1:1.1.4)	Joerg Jaspert <joerg@debian.org>
+gettext-base	0.23.1-2	libc6 (>= 2.38)	Santiago Vila <sanvila@debian.org>
+grep	3.11-4		Anibal Monsalve Salazar <anibal@debian.org>
+groff-base	1.23.0-9	libc6 (>= 2.38), libgcc-s1 (>= 4.0), libstdc++6 (>= 4.1.1), libuchardet0 (>= 0.0.1)	Colin Watson <cjwatson@debian.org>
+grub-cloud-amd64	0.1.1	grub2-common (>= 2.02+dfsg1-7), grub-efi-amd64-bin, grub-efi-amd64-signed, grub-pc-bin, shim-signed	Debian Cloud Team <debian-cloud@lists.debian.org>
+grub-common	2.12-9+deb13u1	libc6 (>= 2.38), libdevmapper1.02.1 (>= 2:1.02.197), libefiboot1t64 (>= 38), libefivar1t64 (>= 38), libfreetype6 (>= 2.2.1), libfuse3-4 (>= 3.17.2), liblzma5 (>= 5.1.1alpha+20120614), gettext-base	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+grub-efi-amd64-bin	2.12-9+deb13u1	grub-common (= 2.12-9+deb13u1), grub-efi-amd64-unsigned	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+grub-efi-amd64-signed	1+2.12+9+deb13u1	grub-common (= 2.12-9+deb13u1)	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+grub-efi-amd64-unsigned	2.12-9+deb13u1	grub-common (= 2.12-9+deb13u1)	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+grub-pc-bin	2.12-9+deb13u1	libc6 (>= 2.38), libdevmapper1.02.1 (>= 2:1.02.197), grub-common (= 2.12-9+deb13u1)	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+grub2-common	2.12-9+deb13u1	grub-common (= 2.12-9+deb13u1), dpkg (>= 1.15.4), libc6 (>= 2.38), libdevmapper1.02.1 (>= 2:1.02.197), libefiboot1t64 (>= 38), libefivar1t64 (>= 38), liblzma5 (>= 5.1.1alpha+20120614)	GRUB Maintainers <pkg-grub-devel@alioth-lists.debian.net>
+gzip	1.13-1		Milan Kupcevic <milan@debian.org>
+hostname	3.25		Michael Meskes <meskes@debian.org>
+init	1.69~deb13u1		Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+init-system-helpers	1.69~deb13u1		Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+initramfs-tools	0.148.3	initramfs-tools-core (= 0.148.3), linux-base	Debian kernel team <debian-kernel@lists.debian.org>
+initramfs-tools-bin	0.148.3	libc6 (>= 2.34)	Debian kernel team <debian-kernel@lists.debian.org>
+initramfs-tools-core	0.148.3	coreutils (>= 8.24), cpio (>= 2.12), dracut-install, initramfs-tools-bin (>= 0.148.3), klibc-utils (>= 2.0.4-8~), kmod, logsave | e2fsprogs (<< 1.45.3-1~), udev	Debian kernel team <debian-kernel@lists.debian.org>
+iproute2	6.15.0-1	debconf (>= 0.5) | debconf-2.0, libbpf1 (>= 1:0.6.0), libc6 (>= 2.38), libcap2 (>= 1:2.10), libdb5.3t64, libelf1t64 (>= 0.131), libmnl0 (>= 1.0.3-4~), libselinux1 (>= 3.1~), libtirpc3t64 (>= 1.0.2), libxtables12 (>= 1.6.0+snapshot20161117), libcap2-bin	Debian Kernel Team <debian-kernel@lists.debian.org>
+iptables	1.8.11-2	libip4tc2 (= 1.8.11-2), libip6tc2 (= 1.8.11-2), libxtables12 (= 1.8.11-2), netbase (>= 6.0), libc6 (>= 2.38), libmnl0 (>= 1.0.3-4~), libnetfilter-conntrack3 (>= 1.0.6), libnfnetlink0 (>= 1.0.2), libnftnl11 (>= 1.1.6)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+iputils-ping	3:20240905-3	libc6 (>= 2.38), libcap2 (>= 1:2.10), libidn2-0 (>= 0.6)	Noah Meyerhans <noahm@debian.org>
+klibc-utils	2.0.14-1	libklibc (= 2.0.14-1)	Debian Kernel Team <debian-kernel@lists.debian.org>
+kmod	34.2-2	libc6 (>= 2.38), libssl3t64 (>= 3.0.0), libkmod2 (= 34.2-2)	Marco d'Itri <md@linux.it>
+less	668-1	libc6 (>= 2.34), libtinfo6 (>= 6)	Milan Kupcevic <milan@debian.org>
+libacl1:amd64	2.3.2-2+b1	libc6 (>= 2.38)	Guillem Jover <guillem@debian.org>
+libaio1t64:amd64	0.3.113-8+b1	libc6 (>= 2.4)	Guillem Jover <guillem@debian.org>
+libapparmor1:amd64	4.1.0-1	libc6 (>= 2.38)	Debian AppArmor Team <pkg-apparmor-team@lists.alioth.debian.org>
+libapt-pkg7.0:amd64	3.0.3	libbz2-1.0, libc6 (>= 2.38), libgcc-s1 (>= 3.0), liblz4-1 (>= 0.0~r127), liblzma5 (>= 5.1.1alpha+20120614), libssl3t64 (>= 3.0.0), libstdc++6 (>= 14), libsystemd0 (>= 221), libudev1 (>= 183), libxxhash0 (>= 0.8), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.2.2.3)	APT Development Team <deity@lists.debian.org>
+libatomic1:amd64	14.2.0-19	gcc-14-base (= 14.2.0-19), libc6 (>= 2.14)	Debian GCC Maintainers <debian-gcc@lists.debian.org>
+libattr1:amd64	1:2.5.2-3	libc6 (>= 2.4)	Guillem Jover <guillem@debian.org>
+libaudit-common	1:4.0.2-2		Laurent Bigonville <bigon@debian.org>
+libaudit1:amd64	1:4.0.2-2+b2	libaudit-common (>= 1:4.0.2-2), libc6 (>= 2.38), libcap-ng0 (>= 0.7.9)	Laurent Bigonville <bigon@debian.org>
+libblkid1:amd64	2.41-5	libc6 (>= 2.38)	Chris Hofstaedtler <zeha@debian.org>
+libbpf1:amd64	1:1.5.0-3	libc6 (>= 2.38), libelf1t64 (>= 0.144), zlib1g (>= 1:1.2.3.3)	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+libbrotli1:amd64	1.1.0-2+b7	libc6 (>= 2.29)	Tomasz Buchert <tomasz@debian.org>
+libbsd0:amd64	0.12.2-2	libc6 (>= 2.38), libmd0 (>= 1.0.3-2)	Guillem Jover <guillem@debian.org>
+libbz2-1.0:amd64	1.0.8-6	libc6 (>= 2.4)	Anibal Monsalve Salazar <anibal@debian.org>
+libc-bin	2.41-12+deb13u2	libc6 (>> 2.41), libc6 (<< 2.42)	GNU Libc Maintainers <debian-glibc@lists.debian.org>
+libc-l10n	2.41-12+deb13u2		GNU Libc Maintainers <debian-glibc@lists.debian.org>
+libc6:amd64	2.41-12+deb13u2	libgcc-s1	GNU Libc Maintainers <debian-glibc@lists.debian.org>
+libcap-ng0:amd64	0.8.5-4+b1	libc6 (>= 2.38)	Håvard F. Aasen <havard.f.aasen@pfft.no>
+libcap2:amd64	1:2.75-10+b8	libc6 (>= 2.38)	Christian Kastner <ckk@debian.org>
+libcap2-bin	1:2.75-10+b8	libc6 (>= 2.38), libcap2 (>= 1:2.63)	Christian Kastner <ckk@debian.org>
+libcbor0.10:amd64	0.10.2-2	libc6 (>= 2.14)	Vincent Bernat <bernat@debian.org>
+libcom-err2:amd64	1.47.2-3+b10	libc6 (>= 2.38)	Theodore Y. Ts'o <tytso@mit.edu>
+libcrypt1:amd64	1:4.4.38-1	libc6 (>= 2.38)	Marco d'Itri <md@linux.it>
+libcurl4t64:amd64	8.14.1-2+deb13u2	libbrotli1 (>= 0.6.0), libc6 (>= 2.38), libgssapi-krb5-2 (>= 1.17), libidn2-0 (>= 2.0.0), libldap2 (>= 2.6.2), libnghttp2-14 (>= 1.50.0), libnghttp3-9 (>= 0.15.0), libpsl5t64 (>= 0.16.0), librtmp1 (>= 2.3), libssh2-1t64 (>= 1.11.1), libssl3t64 (>= 3.3.0), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.2.3.4)	Debian Curl Maintainers <team+curl@tracker.debian.org>
+libdb5.3t64:amd64	5.3.28+dfsg2-9	libc6 (>= 2.38)	Debian QA Group <packages@qa.debian.org>
+libdbus-1-3:amd64	1.16.2-2	libc6 (>= 2.38), libsystemd0	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+libdebconfclient0:amd64	0.280	libc6 (>= 2.38)	Debian Install System Team <debian-boot@lists.debian.org>
+libdevmapper1.02.1:amd64	2:1.02.205-2	libc6 (>= 2.38), libselinux1 (>= 3.1~), libudev1 (>= 183), dmsetup (>= 2:1.02.205-2~)	Debian LVM Team <team+lvm@tracker.debian.org>
+libduktape207:amd64	2.7.0-2+b2	libc6 (>= 2.38)	Debian IoT Maintainers <debian-iot-maintainers@lists.alioth.debian.org>
+libedit2:amd64	3.1-20250104-1	libbsd0 (>= 0.1.3), libc6 (>= 2.38), libtinfo6 (>= 6)	LLVM Packaging Team <pkg-llvm-team@lists.alioth.debian.org>
+libefiboot1t64:amd64	38-3.1+b1	libc6 (>= 2.38), libefivar1t64 (>= 38)	Debian UEFI Maintainers <debian-efi@lists.debian.org>
+libefivar1t64:amd64	38-3.1+b1	libc6 (>= 2.38)	Debian UEFI Maintainers <debian-efi@lists.debian.org>
+libelf1t64:amd64	0.192-4	libc6 (>= 2.38), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.1.4)	Debian Elfutils Maintainers <debian-gcc@lists.debian.org>
+libexpat1:amd64	2.7.1-2		Laszlo Boszormenyi (GCS) <gcs@debian.org>
+libext2fs2t64:amd64	1.47.2-3+b10	libc6 (>= 2.38)	Theodore Y. Ts'o <tytso@mit.edu>
+libfdisk1:amd64	2.41-5	libblkid1 (= 2.41-5), libc6 (>= 2.38), libuuid1 (= 2.41-5)	Chris Hofstaedtler <zeha@debian.org>
+libffi8:amd64	3.4.8-2	libc6 (>= 2.34)	Debian GCC Maintainers <debian-gcc@lists.debian.org>
+libfido2-1:amd64	1.15.0-1+b1	libc6 (>= 2.38), libcbor0.10 (>= 0.10.2), libssl3t64 (>= 3.0.0), libudev1 (>= 183), zlib1g (>= 1:1.1.4)	Debian Authentication Maintainers <pkg-auth-maintainers@lists.alioth.debian.org>
+libfreetype6:amd64	2.13.3+dfsg-1	libbrotli1 (>= 0.6.0), libbz2-1.0, libc6 (>= 2.33), libpng16-16t64 (>= 1.6.2), zlib1g (>= 1:1.1.4)	Hugh McMaster <hmc@debian.org>
+libfstrm0:amd64	0.6.1-1+b3	libc6 (>= 2.38)	Robert Edmonds <edmonds@debian.org>
+libfuse3-4:amd64	3.17.2-3	libc6 (>= 2.38)	Laszlo Boszormenyi (GCS) <gcs@debian.org>
+libgcc-s1:amd64	14.2.0-19	gcc-14-base (= 14.2.0-19), libc6 (>= 2.35)	Debian GCC Maintainers <debian-gcc@lists.debian.org>
+libgdbm6t64:amd64	1.24-2	libc6 (>= 2.34)	Nicolas Mora <babelouest@debian.org>
+libglib2.0-0t64:amd64	2.84.4-3~deb13u2	libatomic1 (>= 4.8), libc6 (>= 2.38), libffi8 (>= 3.4), libmount1 (>= 2.40~rc2), libpcre2-8-0 (>= 10.22), libselinux1 (>= 3.1~), zlib1g (>= 1:1.2.2)	Debian GNOME Maintainers <pkg-gnome-maintainers@lists.alioth.debian.org>
+libgmp10:amd64	2:6.3.0+dfsg-3	libc6 (>= 2.38)	Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
+libgnutls30t64:amd64	3.8.9-3+deb13u2	libc6 (>= 2.38), libgmp10 (>= 2:6.3.0+dfsg), libhogweed6t64 (>= 3.10), libidn2-0 (>= 2.0.0), libnettle8t64 (>= 3.10), libp11-kit0 (>= 0.25.1), libtasn1-6 (>= 4.14), libunistring5 (>= 1.1)	Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
+libgpm2:amd64	1.20.7-11+b2	libc6 (>= 2.38)	Axel Beckert <abe@debian.org>
+libgssapi-krb5-2:amd64	1.21.3-5	libkrb5-3 (= 1.21.3-5), libc6 (>= 2.38), libcom-err2 (>= 1.43.9), libk5crypto3 (>= 1.20), libkrb5support0 (= 1.21.3-5)	Sam Hartman <hartmans@debian.org>
+libhogweed6t64:amd64	3.10.1-1	libc6 (>= 2.14), libgmp10 (>= 2:6.3.0+dfsg), libnettle8t64	Magnus Holmgren <holmgren@debian.org>
+libidn2-0:amd64	2.3.8-2	libc6 (>= 2.14), libunistring5 (>= 1.1)	Debian Libidn team <help-libidn@gnu.org>
+libip4tc2:amd64	1.8.11-2	libc6 (>= 2.14)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libip6tc2:amd64	1.8.11-2	libc6 (>= 2.14)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libjemalloc2:amd64	5.3.0-3	libc6 (>= 2.34), libgcc-s1 (>= 3.3), libstdc++6 (>= 4.4)	Faidon Liambotis <paravoid@debian.org>
+libjson-c5:amd64	0.18+ds-1	libc6 (>= 2.38)	Nicolas Mora <babelouest@debian.org>
+libk5crypto3:amd64	1.21.3-5	libc6 (>= 2.38), libkrb5support0 (= 1.21.3-5)	Sam Hartman <hartmans@debian.org>
+libkeyutils1:amd64	1.6.3-6	libc6 (>= 2.14)	Christian Kastner <ckk@debian.org>
+libklibc:amd64	2.0.14-1		Debian Kernel Team <debian-kernel@lists.debian.org>
+libkmod2:amd64	34.2-2	libc6 (>= 2.38), libssl3t64 (>= 3.0.0)	Marco d'Itri <md@linux.it>
+libkrb5-3:amd64	1.21.3-5	libkrb5support0 (= 1.21.3-5), libc6 (>= 2.38), libcom-err2 (>= 1.43.9), libk5crypto3 (>= 1.20), libkeyutils1 (>= 1.5.9), libssl3t64 (>= 3.0.0)	Sam Hartman <hartmans@debian.org>
+libkrb5support0:amd64	1.21.3-5	libc6 (>= 2.38)	Sam Hartman <hartmans@debian.org>
+liblastlog2-2:amd64	2.41-5	libc6 (>= 2.38), libsqlite3-0 (>= 3.5.9)	Chris Hofstaedtler <zeha@debian.org>
+libldap2:amd64	2.6.10+dfsg-1	libc6 (>= 2.38), libsasl2-2 (>= 2.1.28+dfsg1), libssl3t64 (>= 3.0.0)	Debian OpenLDAP Maintainers <pkg-openldap-devel@lists.alioth.debian.org>
+liblmdb0:amd64	0.9.31-1+b2	libc6 (>= 2.38)	LMDB <lmdb@packages.debian.org>
+liblz4-1:amd64	1.10.0-4	libc6 (>= 2.14), libxxhash0 (>= 0.6.5)	Nobuhiro Iwamatsu <iwamatsu@debian.org>
+liblzma5:amd64	5.8.1-1	libc6 (>= 2.34)	Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+libmagic-mgc	1:5.46-5		Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
+libmagic1t64:amd64	1:5.46-5	libbz2-1.0, libc6 (>= 2.38), liblzma5 (>= 5.1.1alpha+20120614), zlib1g (>= 1:1.1.4), libmagic-mgc (= 1:5.46-5)	Christoph Biedl <debian.axhn@manchmal.in-ulm.de>
+libmaxminddb0:amd64	1.12.2-1	libc6 (>= 2.33)	Faidon Liambotis <paravoid@debian.org>
+libmd0:amd64	1.1.0-2+b1	libc6 (>= 2.33)	Guillem Jover <guillem@debian.org>
+libmnl0:amd64	1.0.5-3	libc6 (>= 2.14)	Debian Netfilter Packaging Team <pkg-netfilter-team@lists.alioth.debian.org>
+libmount1:amd64	2.41-5	libblkid1 (= 2.41-5), libc6 (>= 2.38), libselinux1 (>= 3.1~)	Chris Hofstaedtler <zeha@debian.org>
+libncursesw6:amd64	6.5+20250216-2	libtinfo6 (= 6.5+20250216-2), libc6 (>= 2.34)	Ncurses Maintainers <ncurses@packages.debian.org>
+libnetfilter-conntrack3:amd64	1.1.0-1	libc6 (>= 2.14), libmnl0 (>= 1.0.3-4~), libnfnetlink0 (>= 1.0.2)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libnetplan1:amd64	1.1.2-7	libc6 (>= 2.38), libglib2.0-0t64 (>= 2.76.0), libuuid1 (>= 2.16), libyaml-0-2	Debian Networking Team <team+networking@tracker.debian.org>
+libnettle8t64:amd64	3.10.1-1	libc6 (>= 2.17)	Magnus Holmgren <holmgren@debian.org>
+libnewt0.52:amd64	0.52.25-1	libc6 (>= 2.38), libslang2 (>= 2.2.4)	Alastair McKinstry <mckinstry@debian.org>
+libnfnetlink0:amd64	1.0.2-3	libc6 (>= 2.14)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libnftnl11:amd64	1.2.9-1	libc6 (>= 2.34), libmnl0 (>= 1.0.3-4~)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libnghttp2-14:amd64	1.64.0-1.1	libc6 (>= 2.17)	Tomasz Buchert <tomasz@debian.org>
+libnghttp3-9:amd64	1.8.0-1	libc6 (>= 2.14)	Debian Curl Maintainers <team+curl@tracker.debian.org>
+libnss-myhostname:amd64	257.9-1~deb13u1	libc6 (>= 2.38), libcap2 (>= 1:2.10)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libnss-resolve:amd64	257.9-1~deb13u1	libc6 (>= 2.39), libcap2 (>= 1:2.10), systemd-resolved (= 257.9-1~deb13u1)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libnuma1:amd64	2.0.19-1	libc6 (>= 2.38)	Ian Wienand <ianw@debian.org>
+libp11-kit0:amd64	0.25.5-3	libc6 (>= 2.38), libffi8 (>= 3.4)	Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
+libpam-modules:amd64	1.7.0-5		Sam Hartman <hartmans@debian.org>
+libpam-modules-bin	1.7.0-5	libaudit1 (>= 1:2.2.1), libc6 (>= 2.38), libcrypt1 (>= 1:4.3.0), libpam0g (>= 0.99.7.1), libselinux1 (>= 3.1~), libsystemd0 (>= 254)	Sam Hartman <hartmans@debian.org>
+libpam-runtime	1.7.0-5	debconf (>= 0.5) | debconf-2.0, debconf (>= 1.5.19) | cdebconf, libpam-modules (>= 1.0.1-6)	Sam Hartman <hartmans@debian.org>
+libpam-systemd:amd64	257.9-1~deb13u1	libc6 (>= 2.39), libcap2 (>= 1:2.10), libpam0g (>= 0.99.7.1), systemd (= 257.9-1~deb13u1), libpam-runtime, default-dbus-system-bus | dbus-system-bus, systemd-sysv	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libpam0g:amd64	1.7.0-5	libaudit1 (>= 1:2.2.1), libc6 (>= 2.34), debconf (>= 0.5) | debconf-2.0	Sam Hartman <hartmans@debian.org>
+libpcap0.8t64:amd64	1.10.5-2	libc6 (>= 2.38), libdbus-1-3 (>= 1.10)	Debian Security Tools <team+pkg-security@tracker.debian.org>
+libpci3:amd64	1:3.13.0-2	libc6 (>= 2.38), libudev1 (>= 196), zlib1g (>= 1:1.1.4), pci.ids (>= 0.0~2019.11.10-2)	Guillem Jover <guillem@debian.org>
+libpcre2-8-0:amd64	10.46-1~deb13u1	libc6 (>= 2.34)	Matthew Vernon <matthew@debian.org>
+libpipeline1:amd64	1.5.8-1	libc6 (>= 2.34)	Colin Watson <cjwatson@debian.org>
+libpng16-16t64:amd64	1.6.48-1+deb13u3	libc6 (>= 2.29), zlib1g (>= 1:1.2.3.4)	Maintainers of libpng1.6 packages <libpng1.6@packages.debian.org>
+libpolkit-agent-1-0:amd64	126-2	libc6 (>= 2.38), libglib2.0-0t64 (>= 2.80.0), libpolkit-gobject-1-0 (= 126-2)	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+libpolkit-gobject-1-0:amd64	126-2	libc6 (>= 2.38), libglib2.0-0t64 (>= 2.80.0), libsystemd0 (>= 213)	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+libpopt0:amd64	1.19+dfsg-2	libc6 (>= 2.38)	Håvard F. Aasen <havard.f.aasen@pfft.no>
+libproc2-0:amd64	2:4.0.4-9	libc6 (>= 2.38), libsystemd0	Craig Small <csmall@debian.org>
+libprotobuf-c1:amd64	1.5.1-1	libc6 (>= 2.14)	Robert Edmonds <edmonds@debian.org>
+libpsl5t64:amd64	0.21.2-1.1+b1	libidn2-0 (>= 0.16), libc6 (>= 2.33), libunistring5 (>= 1.1)	Tim Rühsen <tim.ruehsen@gmx.de>
+libpython3-stdlib:amd64	3.13.5-1	libpython3.13-stdlib (>= 3.13.5-1~)	Matthias Klose <doko@debian.org>
+libpython3.13-minimal:amd64	3.13.5-2	libc6 (>= 2.14), libssl3t64 (>= 3.4.0)	Matthias Klose <doko@debian.org>
+libpython3.13-stdlib:amd64	3.13.5-2	libpython3.13-minimal (= 3.13.5-2), media-types | mime-support, netbase, tzdata, libbz2-1.0, libc6 (>= 2.38), libdb5.3t64, libffi8 (>= 3.4), liblzma5 (>= 5.1.1alpha+20120614), libncursesw6 (>= 6.1), libreadline8t64 (>= 7.0~beta), libsqlite3-0 (>= 3.36.0), libtinfo6 (>= 6), libuuid1 (>= 2.20.1)	Matthias Klose <doko@debian.org>
+libreadline8t64:amd64	8.2-6	readline-common, libc6 (>= 2.38), libtinfo6 (>= 6)	Matthias Klose <doko@debian.org>
+librtmp1:amd64	2.4+20151223.gitfa8646d.1-2+b5	libc6 (>= 2.34), libgmp10 (>= 2:6.3.0+dfsg), libgnutls30t64 (>= 3.8.1), libhogweed6t64, libnettle8t64, zlib1g (>= 1:1.1.4)	Debian Multimedia Maintainers <debian-multimedia@lists.debian.org>
+libsasl2-2:amd64	2.1.28+dfsg1-9	libsasl2-modules-db (>= 2.1.28+dfsg1-9), libc6 (>= 2.38), libssl3t64 (>= 3.0.0)	Debian Cyrus Team <team+cyrus@tracker.debian.org>
+libsasl2-modules-db:amd64	2.1.28+dfsg1-9	libc6 (>= 2.14), libdb5.3t64	Debian Cyrus Team <team+cyrus@tracker.debian.org>
+libseccomp2:amd64	2.6.0-2	libc6 (>= 2.14)	Kees Cook <kees@debian.org>
+libselinux1:amd64	3.8.1-1	libc6 (>= 2.38), libpcre2-8-0 (>= 10.22)	Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
+libsemanage-common	3.8.1-1		Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
+libsemanage2:amd64	3.8.1-1	libsemanage-common (>= 3.8.1-1), libaudit1 (>= 1:2.2.1), libbz2-1.0, libc6 (>= 2.38), libselinux1 (>= 3.8.1), libsepol2 (>= 3.8.1)	Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
+libsepol2:amd64	3.8.1-1	libc6 (>= 2.38)	Debian SELinux maintainers <selinux-devel@lists.alioth.debian.org>
+libslang2:amd64	2.3.3-5+b2	libc6 (>= 2.38)	Alastair McKinstry <mckinstry@debian.org>
+libsmartcols1:amd64	2.41-5	libc6 (>= 2.38)	Chris Hofstaedtler <zeha@debian.org>
+libsodium23:amd64	1.0.18-1+deb13u1	libc6 (>= 2.34)	Laszlo Boszormenyi (GCS) <gcs@debian.org>
+libsqlite3-0:amd64	3.46.1-7+deb13u1	libc6 (>= 2.38)	Laszlo Boszormenyi (GCS) <gcs@debian.org>
+libss2:amd64	1.47.2-3+b10	libcom-err2, libc6 (>= 2.34)	Theodore Y. Ts'o <tytso@mit.edu>
+libssh2-1t64:amd64	1.11.1-1	libc6 (>= 2.25), libssl3t64 (>= 3.0.0), zlib1g (>= 1:1.1.4)	Nicolas Mora <babelouest@debian.org>
+libssl3t64:amd64	3.5.5-1~deb13u1	libc6 (>= 2.38), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.1.4), openssl-provider-legacy	Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>
+libstdc++6:amd64	14.2.0-19	gcc-14-base (= 14.2.0-19), libc6 (>= 2.38), libgcc-s1 (>= 4.3)	Debian GCC Maintainers <debian-gcc@lists.debian.org>
+libsystemd-shared:amd64	257.9-1~deb13u1	libacl1 (>= 2.2.23), libaudit1 (>= 1:2.2.1), libblkid1 (>= 2.30.2), libc6 (>= 2.39), libcap2 (>= 1:2.10), libcrypt1 (>= 1:4.4.0), libmount1 (>= 2.30), libpam0g (>= 0.99.7.1), libseccomp2 (>= 2.4.1), libselinux1 (>= 3.1~), libssl3t64 (>= 3.4.0)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libsystemd0:amd64	257.9-1~deb13u1	libc6 (>= 2.39), libcap2 (>= 1:2.10)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libtasn1-6:amd64	4.20.0-2	libc6 (>= 2.38)	Debian GnuTLS Maintainers <pkg-gnutls-maint@lists.alioth.debian.org>
+libtext-charwidth-perl:amd64	0.04-11+b4	libc6 (>= 2.4), perl-base (>= 5.40.0-6), perlapi-5.40.0	Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+libtext-wrapi18n-perl	0.06-10	libtext-charwidth-perl	Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+libtinfo6:amd64	6.5+20250216-2	libc6 (>= 2.34)	Ncurses Maintainers <ncurses@packages.debian.org>
+libtirpc-common	1.3.6+ds-1		Josue Ortega <josue@debian.org>
+libtirpc3t64:amd64	1.3.6+ds-1	libc6 (>= 2.38), libgssapi-krb5-2 (>= 1.17), libtirpc-common (>= 1.3.6+ds-1)	Josue Ortega <josue@debian.org>
+libuchardet0:amd64	0.0.8-1+b2	libc6 (>= 2.14), libgcc-s1 (>= 3.0), libstdc++6 (>= 4.1.1)	James Cowgill <jcowgill@debian.org>
+libudev1:amd64	257.9-1~deb13u1	libc6 (>= 2.38), libcap2 (>= 1:2.10)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+libunistring5:amd64	1.3-2	libc6 (>= 2.34)	Jörg Frings-Fürst <debian@jff.email>
+liburcu8t64:amd64	0.15.2-2	libc6 (>= 2.38)	Jon Bernard <jbernard@debian.org>
+liburing2:amd64	2.9-1	libc6 (>= 2.4)	Guillem Jover <guillem@debian.org>
+libuuid1:amd64	2.41-5	libc6 (>= 2.38)	Chris Hofstaedtler <zeha@debian.org>
+libuv1t64:amd64	1.50.0-2	libc6 (>= 2.38)	Dominique Dumont <dod@debian.org>
+libwrap0:amd64	7.6.q-36	libc6 (>= 2.33)	Marco d'Itri <md@linux.it>
+libwtmpdb0:amd64	0.73.0-3+deb13u1	libc6 (>= 2.38), libsqlite3-0 (>= 3.5.9)	Andrew Bower <andrew@bower.uk>
+libxml2:amd64	2.12.7+dfsg+really2.9.14-2.1+deb13u2	libc6 (>= 2.38), liblzma5 (>= 5.1.1alpha+20120614), zlib1g (>= 1:1.2.3.3)	Debian XML/SGML Group <debian-xml-sgml-pkgs@lists.alioth.debian.org>
+libxtables12:amd64	1.8.11-2	libc6 (>= 2.34)	Debian Netfilter Packaging Team <team+pkg-netfilter-team@tracker.debian.org>
+libxxhash0:amd64	0.8.3-2	libc6 (>= 2.14)	Josue Ortega <josue@debian.org>
+libyaml-0-2:amd64	0.2.5-2	libc6 (>= 2.14)	Florian Ernst <florian@debian.org>
+libzstd1:amd64	1.5.7+dfsg-1	libc6 (>= 2.34)	RPM packaging team <team+pkg-rpm@tracker.debian.org>
+linux-base	4.12.1	debconf (>= 0.5) | debconf-2.0	Debian Kernel Team <debian-kernel@lists.debian.org>
+linux-image-6.12.74+deb13+1-cloud-amd64	6.12.74-2	kmod, initramfs-tools (>= 0.120+deb8u2) | linux-initramfs-tool	Debian Kernel Team <debian-kernel@lists.debian.org>
+linux-image-cloud-amd64	6.12.74-2	linux-image-6.12.74+deb13+1-cloud-amd64 (= 6.12.74-2)	Debian Kernel Team <debian-kernel@lists.debian.org>
+linux-sysctl-defaults	4.12.1		Debian Kernel Team <debian-kernel@lists.debian.org>
+locales	2.41-12+deb13u2	libc-bin (>> 2.41), libc-l10n (>> 2.41), debconf (>= 0.5) | debconf-2.0	GNU Libc Maintainers <debian-glibc@lists.debian.org>
+login	1:4.16.0-2+really2.41-5	libpam-modules, libpam-runtime, libaudit1 (>= 1:2.2.1), libc6 (>= 2.38), libcrypt1 (>= 1:4.1.0), libpam0g (>= 0.99.7.1)	Chris Hofstaedtler <zeha@debian.org>
+login.defs	1:4.17.4-2		Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+logsave	1.47.2-3+b10	libc6 (>= 2.34)	Theodore Y. Ts'o <tytso@mit.edu>
+lsb-release	12.1-1		Gioele Barabucci <gioele@svario.it>
+man-db	2.13.1-1	bsdextrautils | bsdmainutils (<< 12.1.1~), groff-base, debconf (>= 0.5) | debconf-2.0, libc6 (>= 2.38), libgdbm6t64 (>= 1.16), libpipeline1 (>= 1.5.0), libseccomp2 (>= 2.1.0), zlib1g (>= 1:1.1.4)	Colin Watson <cjwatson@debian.org>
+manpages	6.9.1-1		Dr. Tobias Quathamer <toddy@debian.org>
+mawk	1.3.4.20250131-1	libc6 (>= 2.38)	Boyuan Yang <byang@debian.org>
+media-types	13.0.0		Mime-Support Packagers <team+debian-mimesupport-packagers@tracker.debian.org>
+mokutil	0.7.2-1	libc6 (>= 2.34), libcrypt1 (>= 1:4.1.0), libefivar1t64 (>= 38), libkeyutils1 (>= 1.5.9), libssl3t64 (>= 3.0.0)	Debian UEFI Maintainers <debian-efi@lists.debian.org>
+mount	2.41-5		Chris Hofstaedtler <zeha@debian.org>
+nano	8.4-1	libc6 (>= 2.38), libncursesw6 (>= 6), libtinfo6 (>= 6)	Jordi Mallach <jordi@debian.org>
+ncurses-base	6.5+20250216-2		Ncurses Maintainers <ncurses@packages.debian.org>
+ncurses-bin	6.5+20250216-2		Ncurses Maintainers <ncurses@packages.debian.org>
+netbase	6.5		Marco d'Itri <md@linux.it>
+netcat-openbsd	1.229-1	libbsd0 (>= 0.2.0), libc6 (>= 2.38)	Guilhem Moulin <guilhem@debian.org>
+netplan-generator	1.1.2-7	libc6 (>= 2.34), libglib2.0-0t64 (>= 2.70.0), libnetplan1 (= 1.1.2-7), systemd (>= 248~)	Debian Networking Team <team+networking@tracker.debian.org>
+netplan.io	1.1.2-7	python3:any, libc6 (>= 2.34), libglib2.0-0t64 (>= 2.70.0), libnetplan1 (= 1.1.2-7), libsystemd0 (>= 243), ethtool, iproute2, netplan-generator, python3-netplan, python3-yaml, systemd (>= 248~), udev	Debian Networking Team <team+networking@tracker.debian.org>
+openssh-client	1:10.0p1-7+deb13u1	adduser, init-system-helpers (>= 1.66~), passwd, libc6 (>= 2.38), libedit2 (>= 2.11-20080614-0), libfido2-1 (>= 1.8.0), libgssapi-krb5-2 (>= 1.17), libselinux1 (>= 3.1~), libssl3t64 (>= 3.0.0), zlib1g (>= 1:1.1.4)	Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
+openssh-server	1:10.0p1-7+deb13u1	libpam-modules, libpam-runtime, lsb-base, openssh-client (= 1:10.0p1-7+deb13u1), openssh-sftp-server, procps, ucf, debconf (>= 0.5) | debconf-2.0, runit-helper (>= 2.14.0~), systemd | systemd-standalone-sysusers | systemd-sysusers, libaudit1 (>= 1:2.2.1), libc6 (>= 2.38), libcom-err2 (>= 1.43.9), libcrypt1 (>= 1:4.1.0), libgssapi-krb5-2 (>= 1.17), libkrb5-3 (>= 1.13~alpha1+dfsg), libpam0g (>= 0.99.7.1), libselinux1 (>= 3.1~), libssl3t64 (>= 3.0.0), libwrap0 (>= 7.6-4~), libwtmpdb0 (>= 0.13.0), zlib1g (>= 1:1.1.4)	Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
+openssh-sftp-server	1:10.0p1-7+deb13u1	openssh-client (= 1:10.0p1-7+deb13u1), libc6 (>= 2.38)	Debian OpenSSH Maintainers <debian-ssh@lists.debian.org>
+openssl	3.5.5-1~deb13u1	libc6 (>= 2.34), libssl3t64 (>= 3.5.0)	Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>
+openssl-provider-legacy	3.5.5-1~deb13u1	libc6 (>= 2.14), libssl3t64 (>= 3.0.3)	Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>
+passwd	1:4.17.4-2	base-passwd (>= 3.6.4), libpam-modules, login.defs, libacl1 (>= 2.2.23), libattr1 (>= 1:2.4.44), libaudit1 (>= 1:2.2.1), libbsd0 (>= 0.11.0), libc6 (>= 2.38), libcrypt1 (>= 1:4.1.0), libpam0g (>= 0.99.7.1), libselinux1 (>= 3.1~), libsemanage2 (>= 2.0.32)	Shadow package maintainers <pkg-shadow-devel@lists.alioth.debian.org>
+pci.ids	0.0~2025.06.09-1		Guillem Jover <guillem@debian.org>
+pciutils	1:3.13.0-2	libc6 (>= 2.34), libkmod2 (>= 5~), libpci3 (= 1:3.13.0-2)	Guillem Jover <guillem@debian.org>
+perl-base	5.40.1-6		Niko Tyni <ntyni@debian.org>
+polkitd	126-2	adduser | systemd-sysusers, default-dbus-system-bus | dbus-system-bus, default-logind | logind, xml-core (>= 0.14), libc6 (>= 2.38), libduktape207 (>= 2.0.3), libexpat1 (>= 2.0.1), libglib2.0-0t64 (>= 2.80.0), libpam0g (>= 0.99.7.1), libpolkit-agent-1-0 (= 126-2), libpolkit-gobject-1-0 (= 126-2), libsystemd0 (>= 253)	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+procps	2:4.0.4-9	libc6 (>= 2.38), libncursesw6 (>= 6), libproc2-0 (>= 2:4.0.4), libsystemd0 (>= 254), libtinfo6 (>= 6), init-system-helpers (>= 1.29~)	Craig Small <csmall@debian.org>
+psmisc	23.7-2	libc6 (>= 2.38), libtinfo6 (>= 6)	Craig Small <csmall@debian.org>
+python-apt-common	3.0.0		APT Development Team <deity@lists.debian.org>
+python3	3.13.5-1	python3.13 (>= 3.13.5-1~), libpython3-stdlib (= 3.13.5-1)	Matthias Klose <doko@debian.org>
+python3-apt	3.0.0	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libapt-pkg7.0 (>= 2.9.27+exp1), libc6 (>= 2.33), libgcc-s1 (>= 3.0), libstdc++6 (>= 13.1), python-apt-common, distro-info-data	APT Development Team <deity@lists.debian.org>
+python3-attr	25.3.0-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-awscrt	0.24.0+dfsg-1	python3 (>= 3~), python3:any, libc6 (>= 2.38), libssl3t64 (>= 3.4.0)	Debian Cloud Team <debian-cloud@lists.debian.org>
+python3-bcrypt	4.2.0-2.1+b1	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.34), libgcc-s1 (>= 4.2)	Debian Python Team <team+python@tracker.debian.org>
+python3-blinker	1.9.0-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-certifi	2025.1.31+ds-1	ca-certificates, python3:any	Sebastien Delafond <seb@debian.org>
+python3-cffi-backend:amd64	1.17.1-3	python3 (<< 3.14), python3 (>= 3.13~), libc6 (>= 2.38), libffi8 (>= 3.4)	Debian Python Team <team+python@tracker.debian.org>
+python3-chardet	5.2.0+dfsg-2	python3:any	Piotr Ożarowski <piotr@debian.org>
+python3-charset-normalizer	3.4.2-1	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.14)	Debian Python Team <team+python@tracker.debian.org>
+python3-colorama	0.4.6-4	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-configobj	5.0.9-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-cryptography	43.0.0-3+deb13u1	python3-bcrypt, python3 (>= 3~), python3-cffi-backend-api-min (<= 9729), python3-cffi-backend-api-max (>= 9729), python3:any, libc6 (>= 2.34), libgcc-s1 (>= 4.2), libssl3t64 (>= 3.0.0)	Debian Python Team <team+python@tracker.debian.org>
+python3-dateutil	2.9.0-4	python3:any, tzdata	Debian Python Team <team+python@tracker.debian.org>
+python3-dbus	1.4.0-1	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.4), libdbus-1-3 (>= 1.10), libglib2.0-0t64 (>= 2.16.0)	Utopia Maintenance Team <pkg-utopia-maintainers@lists.alioth.debian.org>
+python3-debconf	1.5.91	debconf (= 1.5.91), python3:any	Debconf Developers <debconf-devel@lists.alioth.debian.org>
+python3-debian	1.0.1	python3-charset-normalizer, python3:any	Debian python-debian Maintainers <pkg-python-debian-maint@lists.alioth.debian.org>
+python3-debianbts	4.1.1	python3:any	Bastian Venthur <venthur@debian.org>
+python3-distro	1.9.0-1	lsb-release, python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-distro-info	1.13	distro-info-data (>= 0.46), python3:any	Benjamin Drung <bdrung@debian.org>
+python3-docutils	0.21.2+dfsg-2	docutils-common (= 0.21.2+dfsg-2), python3-roman, python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-idna	3.10-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-jinja2	3.1.6-1	python3-markupsafe (>= 2.0), python3:any	Piotr Ożarowski <piotr@debian.org>
+python3-jmespath	1.0.1-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-json-pointer	2.4-3	python3:any	Debian OpenStack <team+openstack@tracker.debian.org>
+python3-jsonpatch	1.32-5	python3-json-pointer, python3:any	Debian OpenStack <team+openstack@tracker.debian.org>
+python3-jsonschema	4.19.2-6	python3-attr, python3-jsonschema-specifications, python3-referencing, python3-rpds-py, python3:any	Debian OpenStack <team+openstack@tracker.debian.org>
+python3-jsonschema-specifications	2023.12.1-2	python3-referencing, python3-rpds-py, python3-importlib-resources | python3-supported-min (>= 3.9), python3:any	Debian OpenStack <team+openstack@tracker.debian.org>
+python3-jwt	2.10.1-2	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-markupsafe	2.1.5-1+b3	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.14)	Piotr Ożarowski <piotr@debian.org>
+python3-minimal	3.13.5-1	dpkg (>= 1.13.20)	Matthias Klose <doko@debian.org>
+python3-netplan	1.1.2-7	python3 (>= 3~), python3:any, libc6 (>= 2.4), libnetplan1 (= 1.1.2-7), python3-cffi-backend	Debian Networking Team <team+networking@tracker.debian.org>
+python3-oauthlib	3.2.2-3	python3:any, python3-blinker, python3-cryptography, python3-jwt	Debian Python Team <team+python@tracker.debian.org>
+python3-prompt-toolkit	3.0.51-2	python3-wcwidth, python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-pyasn1	0.6.1-1+deb13u1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-referencing	0.36.2-1	python3-attr, python3-rpds-py, python3-typing-extensions | python3-supported-min (>= 3.13), python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-reportbug	13.2.0	apt, file, python3-apt, python3-debian, python3-debianbts (>= 2.10), python3-requests, sensible-utils, python3:any	Reportbug Maintainers <debian-reportbug@lists.debian.org>
+python3-requests	2.32.3+dfsg-5+deb13u1	python3-certifi, python3-charset-normalizer, python3-idna, python3-urllib3 (>= 1.21.1), python3:any, ca-certificates, python3-chardet (>= 3.0.2)	Debian Python Team <team+python@tracker.debian.org>
+python3-roman	5.0-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-rpds-py	0.21.0-2+b1	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.34), libgcc-s1 (>= 4.2)	Debian Python Team <team+python@tracker.debian.org>
+python3-ruamel.yaml	0.18.10+ds-1	python3-ruamel.yaml.clib (>= 0.2.8-2), python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-ruamel.yaml.clib	0.2.12+ds-1+b1	python3 (<< 3.14), python3 (>= 3.13~), libc6 (>= 2.14)	Debian Python Team <team+python@tracker.debian.org>
+python3-urllib3	2.3.0-3+deb13u1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-wcwidth	0.2.13+dfsg1-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3-yaml	6.0.2-1+b2	python3 (<< 3.14), python3 (>= 3.13~), python3:any, libc6 (>= 2.14), libyaml-0-2	Debian Python Team <team+python@tracker.debian.org>
+python3-zipp	3.21.0-1	python3:any	Debian Python Team <team+python@tracker.debian.org>
+python3.13	3.13.5-2	python3.13-minimal (= 3.13.5-2), libpython3.13-stdlib (= 3.13.5-2), media-types | mime-support, tzdata	Matthias Klose <doko@debian.org>
+python3.13-minimal	3.13.5-2	libpython3.13-minimal (= 3.13.5-2), libexpat1 (>= 2.6.0), zlib1g (>= 1:1.2.0)	Matthias Klose <doko@debian.org>
+qemu-utils	1:10.0.8+ds-0+deb13u1+b1	libaio1t64 (>= 0.3.93), libc6 (>= 2.38), libfuse3-4 (>= 3.17.2), libglib2.0-0t64 (>= 2.78.0), libgmp10 (>= 2:6.3.0+dfsg), libgnutls30t64 (>= 3.8.2), libhogweed6t64, libnettle8t64 (>= 3.9~), libnuma1 (>= 2.0.11), libselinux1 (>= 3.1~), liburing2 (>= 2.3), libzstd1 (>= 1.5.5), zlib1g (>= 1:1.1.4)	Debian QEMU Team <pkg-qemu-devel@lists.alioth.debian.org>
+readline-common	8.2-6		Matthias Klose <doko@debian.org>
+reportbug	13.2.0	apt, python3-reportbug (= 13.2.0), sensible-utils, python3:any	Reportbug Maintainers <debian-reportbug@lists.debian.org>
+runit-helper	2.16.4		Lorenzo Puliti <plorenzo@disroot.org>
+screen	4.9.1-3	libc6 (>= 2.38), libcrypt1 (>= 1:4.1.0), libpam0g (>= 0.99.7.1), libtinfo6 (>= 6), debianutils (>= 5.3-1~)	Axel Beckert <abe@debian.org>
+sed	4.9-2		Clint Adams <clint@debian.org>
+sensible-utils	0.0.25		Anibal Monsalve Salazar <anibal@debian.org>
+sgml-base	1.31+nmu1		Debian QA Group <packages@qa.debian.org>
+shim-helpers-amd64-signed	1+15.8+1	shim-unsigned (>= 15.8-1)	Debian EFI team <debian-efi@lists.debian.org>
+shim-signed:amd64	1.47+15.8-1	shim-signed-common (>= 1.47), grub-efi-amd64-bin | systemd-boot, shim-helpers-amd64-signed (>= 1+15.8+1), grub2-common (>= 2.06-6) | systemd-boot	Debian EFI Team <debian-efi@lists.debian.org>
+shim-signed-common	1.47+15.8-1	debconf (>= 0.5) | debconf-2.0, mokutil, openssl, kmod	Debian EFI Team <debian-efi@lists.debian.org>
+shim-unsigned:amd64	15.8-1		Debian EFI team <debian-efi@lists.debian.org>
+socat	1.8.0.3-1	libc6 (>= 2.38), libssl3t64 (>= 3.0.0), libwrap0 (>= 7.6-4~)	Laszlo Boszormenyi (GCS) <gcs@debian.org>
+sqv	1.3.0-3+b2	libc6 (>= 2.38), libgcc-s1 (>= 4.2), libgmp10 (>= 2:6.3.0+dfsg), libhogweed6t64, libnettle8t64 (>= 3.9~)	Debian Rust Maintainers <pkg-rust-maintainers@alioth-lists.debian.net>
+ssh-import-id	5.10-3	ca-certificates, openssh-client, python3-requests (>= 1.1.0), python3-distro, wget, python3:any	Andrew Starr-Bochicchio <asb@debian.org>
+sudo	1.9.16p2-3+deb13u1	libapparmor1 (>= 2.7.0~beta1+bzr1772), libaudit1 (>= 1:2.2.1), libc6 (>= 2.38), libpam0g (>= 0.99.7.1), libselinux1 (>= 3.1~), libssl3t64 (>= 3.0.0), zlib1g (>= 1:1.2.0.2), libpam-modules	Debian Sudo Maintainers <sudo@packages.debian.org>
+systemd	257.9-1~deb13u1	libacl1 (>= 2.2.23), libapparmor1 (>= 2.13), libc6 (>= 2.41), libmount1 (>= 2.30), libpam0g (>= 0.99.7.1), libseccomp2 (>= 2.3.1), libselinux1 (>= 3.1~), libssl3t64 (>= 3.4.0), libsystemd0 (= 257.9-1~deb13u1), mount	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+systemd-resolved	257.9-1~deb13u1	libc6 (>= 2.39), libssl3t64 (>= 3.0.0), libsystemd-shared (= 257.9-1~deb13u1), systemd (= 257.9-1~deb13u1), default-dbus-system-bus | dbus-system-bus	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+systemd-sysv	257.9-1~deb13u1	systemd (= 257.9-1~deb13u1)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+systemd-timesyncd	257.9-1~deb13u1	libc6 (>= 2.34), libsystemd-shared (= 257.9-1~deb13u1), systemd	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+sysvinit-utils	3.14-4	libc6 (>= 2.38)	Debian sysvinit maintainers <debian-init-diversity@chiark.greenend.org.uk>
+tar	1.35+dfsg-3.1		Janos Lenart <ocsi@debian.org>
+tcpdump	4.99.5-2	adduser, libc6 (>= 2.38), libpcap0.8t64 (>= 1.9.1), libssl3t64 (>= 3.0.0)	Debian Security Tools <team+pkg-security@tracker.debian.org>
+traceroute	1:2.1.6-1	libc6 (>= 2.38)	Laszlo Boszormenyi (GCS) <gcs@debian.org>
+tzdata	2026a-0+deb13u1	debconf (>= 0.5) | debconf-2.0	GNU Libc Maintainers <debian-glibc@lists.debian.org>
+ucf	3.0052	debconf (>= 0.5) | debconf-2.0, libtext-wrapi18n-perl, procps, sensible-utils	Mark Hindley <leepen@debian.org>
+udev	257.9-1~deb13u1	libblkid1 (>= 2.37.2), libc6 (>= 2.38), libsystemd-shared (= 257.9-1~deb13u1), systemd | systemd-standalone-sysusers | systemd-sysusers, libkmod2, libudev1 (= 257.9-1~deb13u1)	Debian systemd Maintainers <pkg-systemd-maintainers@lists.alioth.debian.org>
+unattended-upgrades	2.12	debconf (>= 0.5) | debconf-2.0, debconf, python3, python3-apt (>= 1.9.6~), python3-dbus, python3-distro-info, ucf, lsb-release, lsb-base, xz-utils	Michael Vogt <mvo@debian.org>
+util-linux	2.41-5		Chris Hofstaedtler <zeha@debian.org>
+uuid-runtime	2.41-5	adduser, systemd | systemd-standalone-sysusers | systemd-sysusers, libc6 (>= 2.38), libsmartcols1 (= 2.41-5), libsystemd0, libuuid1 (= 2.41-5)	Chris Hofstaedtler <zeha@debian.org>
+vim	2:9.1.1230-2	vim-common (= 2:9.1.1230-2), vim-runtime (= 2:9.1.1230-2), libacl1 (>= 2.2.23), libc6 (>= 2.38), libgpm2 (>= 1.20.7), libselinux1 (>= 3.1~), libsodium23 (>= 1.0.14), libtinfo6 (>= 6)	Debian Vim Maintainers <team+vim@tracker.debian.org>
+vim-common	2:9.1.1230-2		Debian Vim Maintainers <team+vim@tracker.debian.org>
+vim-runtime	2:9.1.1230-2		Debian Vim Maintainers <team+vim@tracker.debian.org>
+vim-tiny	2:9.1.1230-2	vim-common (= 2:9.1.1230-2), libacl1 (>= 2.2.23), libc6 (>= 2.34), libselinux1 (>= 3.1~), libtinfo6 (>= 6)	Debian Vim Maintainers <team+vim@tracker.debian.org>
+wget	1.25.0-2	libc6 (>= 2.38), libgnutls30t64 (>= 3.8.1), libidn2-0 (>= 0.6), libnettle8t64, libpcre2-8-0 (>= 10.22), libpsl5t64 (>= 0.16.0), libuuid1 (>= 2.16), zlib1g (>= 1:1.1.4)	Noël Köthe <noel@debian.org>
+whiptail	0.52.25-1	libc6 (>= 2.38), libnewt0.52 (>= 0.52.25), libpopt0 (>= 1.14), libslang2 (>= 2.2.4)	Alastair McKinstry <mckinstry@debian.org>
+xml-core	0.19	sed (>= 4.1.2-8), sgml-base (>= 1.28)	Debian QA Group <packages@qa.debian.org>
+xz-utils	5.8.1-1	libc6 (>= 2.34), liblzma5 (>= 5.6.2)	Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+zlib1g:amd64	1:1.3.dfsg+really1.3.1-1+b1	libc6 (>= 2.14)	Mark Brown <broonie@debian.org>
+zstd	1.5.7+dfsg-1	libc6 (>= 2.34), libgcc-s1 (>= 3.0), liblz4-1 (>= 1.8.0), liblzma5 (>= 5.1.1alpha+20120614), libstdc++6 (>= 14), zlib1g (>= 1:1.1.4)	RPM packaging team <team+pkg-rpm@tracker.debian.org>

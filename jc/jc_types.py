@@ -3,6 +3,7 @@
 import sys
 from typing import Any, Dict, List, Tuple, Iterator, Optional, Union
 
+CustomColorType = Dict[Any, str]
 JSONDictType = Dict[str, Any]
 StreamingOutputType = Iterator[Union[JSONDictType, Tuple[BaseException, str]]]
 
@@ -42,11 +43,3 @@ if sys.version_info >= (3, 8):
 else:
     ParserInfoType = Dict
     TimeStampFormatType = Dict
-
-
-try:
-    from pygments.token import (Name, Number, String, Keyword)
-    CustomColorType = Dict[Union[Name.Tag, Number, String, Keyword], str]
-
-except Exception:
-    CustomColorType = Dict  # type: ignore
