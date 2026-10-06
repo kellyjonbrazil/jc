@@ -1,28 +1,15 @@
 r"""jc - JSON Convert `nftables` command output parser
 
-Parses the text output of `nft list ruleset`, `nft list tables`, and
-`nft list table <family> <name>`. The `-a` option is supported, which adds
-the `handle` of each table, chain, set, map, and rule.
+Parses `nft list ruleset`, `nft list tables`, and `nft list table <family>
+<name>`, with or without the `-a` option. The result is a list with one
+object per table, each holding its `chains`, `sets`, and `maps` lists.
 
-The output is a tree, so the top level is a list with one object per table.
-Each table object holds its `chains`, `sets`, and `maps` lists, and each
-chain holds its `rules` list.
-
-A rule keeps the expression text exactly as `nft` prints it. Verdicts
-(`accept`, `drop`, `jump <chain>`, `dnat to ...`), anonymous sets
-(`{ 22, 80 }`), and counters (both inline `counter packets N bytes N` and
-named `counter name "x"` references) are not split out and stay inside the
-`rule` string. Only the handle is removed from the rule text, since `nft`
-prints it as a trailing `# handle N` comment.
-
-Set and map `elements` are kept as the element strings `nft` prints, so
-concatenated keys (`10.0.0.1 . 22`) and map values (`22 : accept`) keep their
-original syntax.
-
-Named `counter`, `quota`, `flowtable`, and `ct` blocks at the table level are
-not captured and their contents are skipped. The `-j`/`--json` input and
-output, `nft monitor`, and the reverse JSON-to-conf direction are not
-supported.
+A rule keeps the expression text exactly as `nft` prints it, minus the
+trailing `# handle N` comment, so verdicts, anonymous sets, and counters
+stay inside the `rule` string. Set and map `elements` are also kept as
+printed. Named `counter`, `quota`, `flowtable`, and `ct` blocks are
+skipped, and `-j`/`--json` input and output, `nft monitor`, and JSON-to-conf
+are not supported.
 
 Usage (cli):
 
@@ -43,20 +30,25 @@ Schema:
       {
         "family":     string,
         "name":       string,
-        "handle":     integer,        # null unless -a
+        "handle":     integer,        # [0]
+        "comment":    string,         # [1]
+        "flags": [
+                        string
+        ],
         "chains": [
           {
             "name":       string,
-            "handle":     integer,    # null unless -a
-            "type":       string,     # null for a regular chain
-            "hook":       string,     # null for a regular chain
-            "device":     string,     # null unless the chain sets one
-            "priority":   string,     # null for a regular chain
-            "policy":     string,     # null if not set
+            "handle":     integer,    # [0]
+            "type":       string,     # [2]
+            "hook":       string,     # [1]
+            "device":     string,     # [1]
+            "priority":   string,     # [1]
+            "policy":     string,     # [1]
+            "comment":    string,     # [1]
             "rules": [
               {
                 "rule":     string,
-                "handle":   integer   # null unless -a
+                "handle":   integer   # [0]
               }
             ]
           }
@@ -64,16 +56,18 @@ Schema:
         "sets": [
           {
             "name":         string,
-            "handle":       integer,
-            "type":         string,
+            "handle":       integer,  # [0]
+            "type":         string,   # [3]
             "flags": [
                             string
             ],
-            "timeout":      string,   # null if not set
-            "gc_interval":  string,   # null if not set
-            "size":         integer,  # null if not set
-            "policy":       string,   # null if not set
+            "timeout":      string,   # [1]
+            "gc_interval":  string,   # [1]
+            "size":         integer,  # [1]
+            "policy":       string,   # [1]
             "auto_merge":   boolean,
+            "counter":      boolean,
+            "comment":      string,   # [1]
             "elements": [
                             string
             ]
@@ -81,25 +75,18 @@ Schema:
         ],
         "maps": [
           {
-            "name":         string,
-            "handle":       integer,
-            "type":         string,
-            "value_type":   string,
-            "flags": [
-                            string
-            ],
-            "timeout":      string,
-            "gc_interval":  string,
-            "size":         integer,
-            "policy":       string,
-            "auto_merge":   boolean,
-            "elements": [
-                            string
-            ]
+            # same fields as sets, plus:
+            "value_type":   string   # [3]
           }
         ]
       }
     ]
+
+    [0] null unless `-a` was used
+    [1] null if not set
+    [2] null for a regular chain
+    [3] the `typeof` expression when the set or map is declared with
+        `typeof` instead of `type`
 
 Examples:
 
@@ -109,6 +96,8 @@ Examples:
         "family": "inet",
         "name": "filter",
         "handle": 1,
+        "comment": null,
+        "flags": [],
         "chains": [
           {
             "name": "input",
@@ -118,6 +107,7 @@ Examples:
             "device": null,
             "priority": "filter",
             "policy": "drop",
+            "comment": null,
             "rules": [
               {
                 "rule": "ct state established,related accept",
@@ -142,6 +132,8 @@ Examples:
         "family": "inet",
         "name": "filter",
         "handle": null,
+        "comment": null,
+        "flags": [],
         "chains": [],
         "sets": [],
         "maps": []
@@ -262,12 +254,19 @@ def _statements(data: str) -> Iterator[Tuple[str, Optional[str]]]:
             pending = ''
 
 
+def _comment_value(statement: str) -> str:
+    """Return the text of a `comment "..."` statement without the quotes."""
+    return statement[len('comment '):].strip().strip('"')
+
+
 def _new_table(family: str, name: str, handle: Optional[str]) -> JSONDictType:
     """Create an empty table object."""
     return {
         'family': family,
         'name': name,
         'handle': handle,
+        'comment': None,
+        'flags': [],
         'chains': [],
         'sets': [],
         'maps': []
@@ -284,6 +283,7 @@ def _new_chain(name: str, handle: Optional[str]) -> JSONDictType:
         'device': None,
         'priority': None,
         'policy': None,
+        'comment': None,
         'rules': []
     }
 
@@ -306,6 +306,8 @@ def _new_set(name: str, handle: Optional[str], is_map: bool) -> JSONDictType:
         'size': None,
         'policy': None,
         'auto_merge': False,
+        'counter': False,
+        'comment': None,
         'elements': []
     })
 
@@ -342,9 +344,13 @@ def _split_elements(statement: str) -> List[str]:
 def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]) -> None:
     """
     Parse a line inside a chain block. The chain header line starts with
-    `type` and carries the hook, priority, and policy; everything else is a
-    rule.
+    `type` and carries the hook, priority, and policy; a standalone `comment`
+    line is the chain comment; everything else is a rule.
     """
+    if statement.startswith('comment '):
+        chain['comment'] = _comment_value(statement)
+        return
+
     if statement.startswith('type ') and ' hook ' in statement:
         type_match = _chain_type_pattern.match(statement)
         hook_match = _hook_pattern.search(statement)
@@ -380,8 +386,8 @@ def _parse_set_line(entry: JSONDictType, statement: str, is_map: bool) -> None:
     Parse a property line inside a set or map block. Unrecognized properties
     are ignored.
     """
-    if statement.startswith('type '):
-        value = statement[len('type '):].strip()
+    if statement.startswith('type ') or statement.startswith('typeof '):
+        value = statement.split(' ', 1)[1].strip()
 
         if is_map and ' : ' in value:
             key_type, value_type = value.split(' : ', 1)
@@ -392,6 +398,12 @@ def _parse_set_line(entry: JSONDictType, statement: str, is_map: bool) -> None:
 
     elif statement.startswith('flags '):
         entry['flags'] = [flag.strip() for flag in statement[len('flags '):].split(',') if flag.strip()]
+
+    elif statement == 'counter':
+        entry['counter'] = True
+
+    elif statement.startswith('comment '):
+        entry['comment'] = _comment_value(statement)
 
     elif statement.startswith('elements = '):
         entry['elements'] = _split_elements(statement)
@@ -410,6 +422,18 @@ def _parse_set_line(entry: JSONDictType, statement: str, is_map: bool) -> None:
 
     elif statement == 'auto-merge':
         entry['auto_merge'] = True
+
+
+def _parse_table_line(table: JSONDictType, statement: str) -> None:
+    """
+    Parse a property line inside a table block. Only the table `comment` and
+    `flags` are captured; anything else is ignored.
+    """
+    if statement.startswith('comment '):
+        table['comment'] = _comment_value(statement)
+
+    elif statement.startswith('flags '):
+        table['flags'] = [flag.strip() for flag in statement[len('flags '):].split(',') if flag.strip()]
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -522,7 +546,10 @@ def parse(
 
             kind, current = stack[-1]
 
-            if kind == 'chain':
+            if kind == 'table':
+                _parse_table_line(current, statement)
+
+            elif kind == 'chain':
                 _parse_chain_line(current, statement, handle)
 
             elif kind == 'set':
