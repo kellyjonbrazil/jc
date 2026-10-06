@@ -1,0 +1,30 @@
+# IFILE includes are resolved by Oracle Net, not by this parser
+IFILE = /etc/oracle/network/admin/tnsnames_shared.ora
+IFILE=/etc/oracle/network/admin/tnsnames_cloud.ora
+
+CLOUD_APP =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = TCPS)(HOST = adb.us-ashburn-1.oraclecloud.com)(PORT = 1522))
+    (CONNECT_DATA =
+      (SERVICE_NAME = app_high.adb.oraclecloud.com)
+      (SID = app1)
+    )
+    (SECURITY =
+      (SSL_SERVER_DN_MATCH = yes)
+      (SSL_SERVER_CERT_DN = "CN=adb.us-ashburn-1.oraclecloud.com, O=Oracle Corporation, L=Redwood City, ST=California, C=US")
+    )
+  )
+
+CMAN_ROUTE =
+  (DESCRIPTION =
+    (SOURCE_ROUTE = yes)
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = host1)(PORT = 1630))    # first hop
+      (ADDRESS_LIST =
+        (FAILOVER = on)
+        (LOAD_BALANCE = off)
+        (ADDRESS = (PROTOCOL = tcp)(HOST = host2a)(PORT = 1630))
+        (ADDRESS = (PROTOCOL = tcp)(HOST = host2b)(PORT = 1630)))
+      (ADDRESS = (PROTOCOL = tcp)(HOST = host3)(PORT = 1521)))
+    (CONNECT_DATA =
+      (SERVICE_NAME = sales.us.example.com)))
