@@ -53,6 +53,64 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.crontab.parse(self.generic_crontab_var_fix, quiet=True), self.generic_crontab_var_fix_json)
 
+    def test_whitespace_only_lines(self):
+        command = 'echo "a  b\tc"'
+        entry = {
+            'minute': '0,15',
+            'hour': '*',
+            'day_of_month': '*',
+            'month': '*',
+            'day_of_week': '*',
+            'command': command,
+        }
+        shortcut = {'occurrence': 'reboot', 'command': command}
+        lines = [
+            ' \t# comment',
+            'MAILTO = "cron@example.com"',
+            '0,15 * * * * ' + command,
+            '@reboot ' + command,
+        ]
+        for raw in (False, True):
+            expected_entry = dict(entry)
+            if not raw:
+                fields = ('minute', 'hour', 'day_of_month',
+                          'month', 'day_of_week')
+                for field in fields:
+                    expected_entry[field] = expected_entry[field].split(',')
+            expected = {
+                'variables': [
+                    {'name': 'MAILTO', 'value': '"cron@example.com"'}
+                ],
+                'schedule': [expected_entry, shortcut],
+            }
+            for blank in ('', '   ', '\t', ' \t '):
+                for position in range(len(lines) + 1):
+                    with self.subTest(raw=raw, blank=blank, position=position):
+                        data = '\n'.join(
+                            lines[:position] + [blank] + lines[position:]
+                        ) + '\n'
+                        self.assertEqual(
+                            jc.parsers.crontab.parse(
+                                data, raw=raw, quiet=True
+                            ),
+                            expected,
+                        )
+
+    def test_blank_and_comment_input(self):
+        for raw in (False, True):
+            for data in ('', '\n', '   ', '\t', ' \t\n\t \n'):
+                with self.subTest(raw=raw, data=data):
+                    self.assertEqual(
+                        jc.parsers.crontab.parse(data, raw=raw, quiet=True),
+                        {},
+                    )
+            for data in ('# comment\n', ' \t\n \t# comment\n\t \n'):
+                with self.subTest(raw=raw, data=data):
+                    self.assertEqual(
+                        jc.parsers.crontab.parse(data, raw=raw, quiet=True),
+                        {'variables': [], 'schedule': []},
+                    )
+
 
 if __name__ == '__main__':
     unittest.main()
