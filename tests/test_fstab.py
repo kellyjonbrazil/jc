@@ -55,5 +55,14 @@ class MyTests(unittest.TestCase):
                          self.generic_fstab_optional_fields_json)
 
 
+
+    def test_fstab_whitespace_only_lines(self):
+        """
+        Test 'cat /etc/fstab' with whitespace-only lines (issue #771)
+        """
+        self.assertEqual(jc.parsers.fstab.parse('rootfs / ext4 defaults 0 0\n   \n', quiet=True),
+                         [{'fs_spec': 'rootfs', 'fs_file': '/', 'fs_vfstype': 'ext4',
+                           'fs_mntops': 'defaults', 'fs_freq': 0, 'fs_passno': 0}])
+
 if __name__ == '__main__':
     unittest.main()

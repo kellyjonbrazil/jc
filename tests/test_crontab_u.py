@@ -77,5 +77,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_var_fix, quiet=True), self.generic_crontab_u_var_fix_json)
 
+
+    def test_crontab_u_whitespace_only_lines(self):
+        """
+        Test 'crontab -u' with whitespace-only lines: no empty schedule entries (issue #779)
+        """
+        out = jc.parsers.crontab_u.parse('   \n* * * * * root /bin/true\n', quiet=True)
+        self.assertNotIn({}, out.get('schedule', []))
+
 if __name__ == '__main__':
     unittest.main()

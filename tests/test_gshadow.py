@@ -42,5 +42,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.gshadow.parse(self.ubuntu_18_4_gshadow, quiet=True), self.ubuntu_18_4_gshadow_json)
 
 
+
+    def test_gshadow_whitespace_only_lines(self):
+        """
+        Test 'cat /etc/gshadow' with whitespace-only lines (issue #771)
+        """
+        self.assertEqual(jc.parsers.gshadow.parse('root:*::\n   \n', quiet=True),
+                         [{'group_name': 'root', 'password': '*', 'administrators': [],
+                           'members': []}])
+
 if __name__ == '__main__':
     unittest.main()

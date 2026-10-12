@@ -227,8 +227,8 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
     cleandata = data.splitlines()
 
-    # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    # Clear any blank and whitespace-only lines
+    cleandata = [line for line in cleandata if line.strip()]
 
     if jc.utils.has_data(data):
 

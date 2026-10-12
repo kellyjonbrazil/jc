@@ -41,5 +41,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.shadow.parse(self.ubuntu_18_4_shadow, quiet=True), self.ubuntu_18_4_shadow_json)
 
 
+
+    def test_shadow_whitespace_only_lines(self):
+        """
+        Test 'cat /etc/shadow' with whitespace-only lines (issue #771)
+        """
+        self.assertEqual(jc.parsers.shadow.parse('root:!:19000:0:99999:7:::\n   \n', quiet=True),
+                         [{'username': 'root', 'password': '!', 'last_changed': 19000,
+                           'minimum': 0, 'maximum': 99999, 'warn': 7, 'inactive': None,
+                           'expire': None}])
+
 if __name__ == '__main__':
     unittest.main()

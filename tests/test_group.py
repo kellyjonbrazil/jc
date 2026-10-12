@@ -54,5 +54,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.group.parse(self.osx_10_14_6_group, quiet=True), self.osx_10_14_6_group_json)
 
 
+
+    def test_group_whitespace_only_lines(self):
+        """
+        Test 'cat /etc/group' with whitespace-only lines (issue #771)
+        """
+        self.assertEqual(jc.parsers.group.parse('root:x:0:\n   \n', quiet=True),
+                         [{'group_name': 'root', 'password': 'x', 'gid': 0, 'members': []}])
+
 if __name__ == '__main__':
     unittest.main()

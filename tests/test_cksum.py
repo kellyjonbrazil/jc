@@ -65,5 +65,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.cksum.parse(self.osx_10_14_6_sum, quiet=True), self.osx_10_14_6_sum_json)
 
 
+
+    def test_cksum_stdin_no_filename(self):
+        """
+        Test cksum/sum output with no filename, as piped through stdin (issue #775)
+        """
+        self.assertEqual(jc.parsers.cksum.parse('3794832967 6\n', quiet=True),
+                         [{'checksum': 3794832967, 'blocks': 6}])
+
 if __name__ == '__main__':
     unittest.main()

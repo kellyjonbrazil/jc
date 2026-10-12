@@ -54,5 +54,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.passwd.parse(self.osx_10_14_6_passwd, quiet=True), self.osx_10_14_6_passwd_json)
 
 
+
+    def test_passwd_whitespace_only_lines(self):
+        """
+        Test 'cat /etc/passwd' with whitespace-only lines (issue #771)
+        """
+        self.assertEqual(jc.parsers.passwd.parse('root:x:0:0:root:/root:/bin/bash\n   \n', quiet=True),
+                         [{'username': 'root', 'password': 'x', 'uid': 0, 'gid': 0,
+                           'comment': 'root', 'home': '/root', 'shell': '/bin/bash'}])
+
 if __name__ == '__main__':
     unittest.main()
