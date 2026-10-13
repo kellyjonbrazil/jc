@@ -50,6 +50,7 @@ Schema:
         "orig_id":           integer,       # [7]
         "orig_packets":      integer,       # [8]
         "orig_bytes":        integer,       # [8]
+        "orig_zone":         integer,       # [9]
         "reply_src":         string,
         "reply_dst":         string,
         "reply_sport":       integer,       # [5]
@@ -61,6 +62,7 @@ Schema:
         "reply_id":          integer,       # [7]
         "reply_packets":     integer,       # [8]
         "reply_bytes":       integer,       # [8]
+        "reply_zone":        integer,       # [9]
         "mark":              integer,
         "use":               integer,
         "zone":              integer,       # [9]
@@ -89,8 +91,9 @@ Schema:
     [6] only for GRE; converted from hexadecimal
     [7] only for ICMP and ICMPv6
     [8] only with the `net.netfilter.nf_conntrack_acct` sysctl
-    [9] only when the flow is in a conntrack zone; a line carrying the
-        per-tuple `zone-orig`/`zone-reply` fields is skipped
+    [9] `zone` is the flow-wide zone; `orig_zone`/`reply_zone` are the
+        per-tuple `zone-orig=`/`zone-reply=` fields, which conntrack prints
+        when the zone applies to a single direction
     [10] only when the kernel provides a security context (SELinux)
     [11] only when an SELinux secmark is set
     [12] only when a conntrack helper is attached
@@ -180,6 +183,10 @@ _events = ('NEW', 'UPDATE', 'DESTROY')
 # conntrack prints the reply tuple with the same field names as the original
 # tuple, so the second `src` marks the start of the reply direction
 _first_tuple_key = 'src'
+
+# a per-tuple zone is printed inside the tuple it belongs to, as `zone-orig=` /
+# `zone-reply=`, rather than as the trailing `zone=` field
+_tuple_zone_keys = {'zone_orig': 'orig_zone', 'zone_reply': 'reply_zone'}
 
 # fields that are always numeric when conntrack prints them. Everything else
 # in a tuple (addresses, security contexts, labels, ...) stays a string.
@@ -354,6 +361,19 @@ def _parse_line(line: str) -> Optional[Dict]:
         else:
             return None
 
+    # a per-tuple zone sits inside the tuple it belongs to, so pull it out
+    # before the reply tuple is compared with the original
+    tuple_zones: Dict[str, str] = {}
+    tuple_fields: List[Tuple[str, str]] = []
+
+    for key, value in fields:
+        if key in _tuple_zone_keys:
+            tuple_zones[key] = value
+        else:
+            tuple_fields.append((key, value))
+
+    fields = tuple_fields
+
     if not fields or fields[0][0] != _first_tuple_key:
         return None
 
@@ -386,7 +406,11 @@ def _parse_line(line: str) -> Optional[Dict]:
     }
 
     entry.update({f'orig_{key}': value for key, value in orig})
+    if 'zone_orig' in tuple_zones:
+        entry['orig_zone'] = tuple_zones['zone_orig']
     entry.update({f'reply_{key}': value for key, value in reply})
+    if 'zone_reply' in tuple_zones:
+        entry['reply_zone'] = tuple_zones['zone_reply']
     entry.update({key: value for key, value in extra})
 
     return entry
