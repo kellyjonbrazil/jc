@@ -18,6 +18,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-var-fix.out'), 'r', encoding='utf-8') as f:
         generic_crontab_var_fix = f.read()
 
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-lines.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines = f.read()
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-only.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_only = f.read()
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-comments.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_comments = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/crontab.json'), 'r', encoding='utf-8') as f:
         centos_7_7_crontab_json = json.loads(f.read())
@@ -28,6 +46,29 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-var-fix.json'), 'r', encoding='utf-8') as f:
         generic_crontab_var_fix_json = json.loads(f.read())
 
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-lines.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-lines-raw.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines_raw_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-only.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_only_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-whitespace-comments.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_comments_json = json.loads(f.read())
 
     def test_crontab_nodata(self):
         """
@@ -53,63 +94,52 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.crontab.parse(self.generic_crontab_var_fix, quiet=True), self.generic_crontab_var_fix_json)
 
-    def test_whitespace_only_lines(self):
-        command = 'echo "a  b\tc"'
-        entry = {
-            'minute': '0,15',
-            'hour': '*',
-            'day_of_month': '*',
-            'month': '*',
-            'day_of_week': '*',
-            'command': command,
-        }
-        shortcut = {'occurrence': 'reboot', 'command': command}
-        lines = [
-            ' \t# comment',
-            'MAILTO = "cron@example.com"',
-            '0,15 * * * * ' + command,
-            '@reboot ' + command,
-        ]
-        for raw in (False, True):
-            expected_entry = dict(entry)
-            if not raw:
-                fields = ('minute', 'hour', 'day_of_month',
-                          'month', 'day_of_week')
-                for field in fields:
-                    expected_entry[field] = expected_entry[field].split(',')
-            expected = {
-                'variables': [
-                    {'name': 'MAILTO', 'value': '"cron@example.com"'}
-                ],
-                'schedule': [expected_entry, shortcut],
-            }
-            for blank in ('', '   ', '\t', ' \t '):
-                for position in range(len(lines) + 1):
-                    with self.subTest(raw=raw, blank=blank, position=position):
-                        data = '\n'.join(
-                            lines[:position] + [blank] + lines[position:]
-                        ) + '\n'
-                        self.assertEqual(
-                            jc.parsers.crontab.parse(
-                                data, raw=raw, quiet=True
-                            ),
-                            expected,
-                        )
+    def test_crontab_nodata_raw(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse('', raw=True, quiet=True), {}
+        )
 
-    def test_blank_and_comment_input(self):
-        for raw in (False, True):
-            for data in ('', '\n', '   ', '\t', ' \t\n\t \n'):
-                with self.subTest(raw=raw, data=data):
-                    self.assertEqual(
-                        jc.parsers.crontab.parse(data, raw=raw, quiet=True),
-                        {},
-                    )
-            for data in ('# comment\n', ' \t\n \t# comment\n\t \n'):
-                with self.subTest(raw=raw, data=data):
-                    self.assertEqual(
-                        jc.parsers.crontab.parse(data, raw=raw, quiet=True),
-                        {'variables': [], 'schedule': []},
-                    )
+    def test_crontab_whitespace_lines(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(self.whitespace_lines, quiet=True),
+            self.whitespace_lines_json
+        )
+
+    def test_crontab_whitespace_lines_raw(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(
+                self.whitespace_lines, raw=True, quiet=True
+            ),
+            self.whitespace_lines_raw_json
+        )
+
+    def test_crontab_whitespace_only(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(self.whitespace_only, quiet=True),
+            self.whitespace_only_json
+        )
+
+    def test_crontab_whitespace_only_raw(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(
+                self.whitespace_only, raw=True, quiet=True
+            ),
+            self.whitespace_only_json
+        )
+
+    def test_crontab_whitespace_comments(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(self.whitespace_comments, quiet=True),
+            self.whitespace_comments_json
+        )
+
+    def test_crontab_whitespace_comments_raw(self):
+        self.assertEqual(
+            jc.parsers.crontab.parse(
+                self.whitespace_comments, raw=True, quiet=True
+            ),
+            self.whitespace_comments_json
+        )
 
 
 if __name__ == '__main__':
