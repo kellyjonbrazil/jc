@@ -1,0 +1,13 @@
+# Truncated mid-entry: the BROKEN container is never closed.
+
+OK =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = ok-svr)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = ok.example.com)
+    )
+  )
+
+BROKEN =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = broken-svr)(PORT = 1521))
