@@ -7,9 +7,9 @@ object per table, each holding its `chains`, `sets`, and `maps` lists.
 A rule keeps the expression text exactly as `nft` prints it, minus the
 trailing `# handle N` comment, so verdicts, anonymous sets, and counters
 stay inside the `rule` string. Set and map `elements` are also kept as
-printed. Named `counter`, `quota`, `flowtable`, and `ct` blocks are
-skipped, and `-j`/`--json` input and output, `nft monitor`, and JSON-to-conf
-are not supported.
+printed. Named `counter`, `quota`, `flowtable`, `limit`, `secmark`,
+`synproxy`, and `ct` blocks are skipped, and `-j`/`--json` input and output,
+`nft monitor`, and JSON-to-conf are not supported.
 
 Usage (cli):
 
@@ -41,7 +41,9 @@ Schema:
             "handle":     integer,    # [0]
             "type":       string,     # [2]
             "hook":       string,     # [1]
-            "device":     string,     # [1]
+            "devices": [
+                            string
+            ],
             "priority":   string,     # [1]
             "policy":     string,     # [1]
             "comment":    string,     # [1]
@@ -104,15 +106,11 @@ Examples:
             "handle": 1,
             "type": "filter",
             "hook": "input",
-            "device": null,
+            "devices": [],
             "priority": "filter",
             "policy": "drop",
             "comment": null,
             "rules": [
-              {
-                "rule": "ct state established,related accept",
-                "handle": 4
-              },
               {
                 "rule": "tcp dport 8080 counter packets 12 bytes 720 accept",
                 "handle": 8
@@ -122,23 +120,7 @@ Examples:
         ],
         "sets": [],
         "maps": []
-      },
-      ...
-    ]
-
-    $ nft list tables | jc --nftables -p
-    [
-      {
-        "family": "inet",
-        "name": "filter",
-        "handle": null,
-        "comment": null,
-        "flags": [],
-        "chains": [],
-        "sets": [],
-        "maps": []
-      },
-      ...
+      }
     ]
 """
 import re
@@ -150,7 +132,7 @@ import jc.utils
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = '`nftables` command parser'
+    description = '`nft` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
     compatible = ['linux']
@@ -169,7 +151,7 @@ _ct_block_pattern = re.compile(r'^ct\s+(?:helper|timeout|expectation)\s+\S+\s*\{
 
 _chain_type_pattern = re.compile(r'^type\s+(?P<type>\S+)')
 _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
-_device_pattern = re.compile(r'\bdevice\s+(?P<device>"[^"]*"|\S+)')
+_device_pattern = re.compile(r'\bdevices?\s*=?\s*(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
 
@@ -259,6 +241,11 @@ def _comment_value(statement: str) -> str:
     return statement[len('comment '):].strip().strip('"')
 
 
+def _flag_list(statement: str) -> List[str]:
+    """Return the flag names from a `flags` statement."""
+    return [flag.strip() for flag in statement[len('flags '):].split(',') if flag.strip()]
+
+
 def _new_table(family: str, name: str, handle: Optional[str]) -> JSONDictType:
     """Create an empty table object."""
     return {
@@ -280,7 +267,7 @@ def _new_chain(name: str, handle: Optional[str]) -> JSONDictType:
         'handle': handle,
         'type': None,
         'hook': None,
-        'device': None,
+        'devices': [],
         'priority': None,
         'policy': None,
         'comment': None,
@@ -365,7 +352,12 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
             chain['hook'] = hook_match.group('hook')
 
         if device_match:
-            chain['device'] = device_match.group('device').strip('"')
+            devices = device_match.group('devices')
+
+            if devices.startswith('{'):
+                chain['devices'] = [device.strip('"') for device in _split_elements(devices)]
+            else:
+                chain['devices'] = [devices.strip('"')]
 
         if priority_match:
             chain['priority'] = priority_match.group('priority').strip()
@@ -397,7 +389,7 @@ def _parse_set_line(entry: JSONDictType, statement: str, is_map: bool) -> None:
             entry['type'] = value
 
     elif statement.startswith('flags '):
-        entry['flags'] = [flag.strip() for flag in statement[len('flags '):].split(',') if flag.strip()]
+        entry['flags'] = _flag_list(statement)
 
     elif statement == 'counter':
         entry['counter'] = True
@@ -433,7 +425,7 @@ def _parse_table_line(table: JSONDictType, statement: str) -> None:
         table['comment'] = _comment_value(statement)
 
     elif statement.startswith('flags '):
-        table['flags'] = [flag.strip() for flag in statement[len('flags '):].split(',') if flag.strip()]
+        table['flags'] = _flag_list(statement)
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -487,6 +479,7 @@ def parse(
 
     raw_output: List[JSONDictType] = []
     stack: List[Tuple[str, JSONDictType]] = []
+    skipped = False
 
     if jc.utils.has_data(data):
 
@@ -509,6 +502,7 @@ def parse(
                 continue
 
             if not stack:
+                skipped = True
                 continue
 
             named_match = _named_block_pattern.match(statement)
@@ -557,5 +551,11 @@ def parse(
 
             elif kind == 'map':
                 _parse_set_line(current, statement, is_map=True)
+
+        if stack:
+            skipped = True
+
+        if skipped and not quiet:
+            jc.utils.warning_message(['Some input was skipped. The input may not be valid nft output.'])
 
     return raw_output if raw else _process(raw_output)
