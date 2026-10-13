@@ -1,19 +1,18 @@
 r"""jc - JSON Convert `conntrack` command output parser
 
-Parses the default `conntrack -L` connection table and the `conntrack -E`
-event log. The `expect`, `dying`, and `unconfirmed` tables and the `-o xml`
-and `-o save` output formats are not supported.
+Parses the `conntrack -L` connection table and the `conntrack -E` event log.
+Each line becomes one item: tuple fields keep the names conntrack prints,
+prefixed with `orig_` or `reply_`, bracket flags go in `status`, and the
+footnotes below mark the fields that depend on the protocol or an output
+option.
 
-Each line becomes one item. The original and reply tuples use the field names
-conntrack prints, prefixed with `orig_` or `reply_`; non-directional trailing
-fields keep their own name and the bracket flags go in `status`. Hyphens in
-field names become underscores, so `delta-time` becomes `delta_time`. A field
-is only included when conntrack prints it, and the footnotes below mark the
-ones that depend on the protocol or on an output option.
+The `expect`, `dying`, and `unconfirmed` tables and the `-o xml` and `-o save`
+output formats are not supported.
 
 Usage (cli):
 
     $ conntrack -L | jc --conntrack
+    $ timeout 10 conntrack -E | jc --conntrack
 
 or
 
@@ -76,7 +75,7 @@ Schema:
         "stop":              string,        # [14]
         "stop_epoch":        integer,       # [14]
         "id":                integer,       # [15]
-        "portid":            integer,       # [16]
+        "portid":            integer        # [16]
       }
     ]
 
@@ -130,31 +129,6 @@ Examples:
         "reply_dport": 65479,
         "mark": 0,
         "use": 1
-      }
-    ]
-
-    $ conntrack -E | jc --conntrack -p
-    [
-      {
-        "event": "NEW",
-        "event_timestamp": null,
-        "family": null,
-        "family_number": null,
-        "protocol": "tcp",
-        "protocol_number": 6,
-        "timeout": 120,
-        "state": "SYN_SENT",
-        "status": [
-          "UNREPLIED"
-        ],
-        "orig_src": "10.42.0.1",
-        "orig_dst": "10.42.0.18",
-        "orig_sport": 56474,
-        "orig_dport": 8080,
-        "reply_src": "10.42.0.18",
-        "reply_dst": "10.42.0.1",
-        "reply_sport": 8080,
-        "reply_dport": 56474
       }
     ]
 """
