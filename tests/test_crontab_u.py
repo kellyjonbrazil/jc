@@ -119,17 +119,26 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_var_fix, quiet=True), self.generic_crontab_u_var_fix_json)
 
     def test_crontab_u_nodata_raw(self):
+        """
+        Test 'crontab-u' with no data in raw mode
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse('', raw=True, quiet=True), {}
         )
 
     def test_crontab_u_whitespace_lines(self):
+        """
+        Test 'crontab-u' with whitespace-only lines
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(self.whitespace_lines, quiet=True),
             self.whitespace_lines_json
         )
 
     def test_crontab_u_whitespace_lines_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only lines in raw mode
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(
                 self.whitespace_lines, raw=True, quiet=True
@@ -138,12 +147,18 @@ class MyTests(unittest.TestCase):
         )
 
     def test_crontab_u_whitespace_only(self):
+        """
+        Test 'crontab-u' with whitespace-only input
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(self.whitespace_only, quiet=True),
             self.whitespace_only_json
         )
 
     def test_crontab_u_whitespace_only_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only input in raw mode
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(
                 self.whitespace_only, raw=True, quiet=True
@@ -152,12 +167,18 @@ class MyTests(unittest.TestCase):
         )
 
     def test_crontab_u_whitespace_comments(self):
+        """
+        Test 'crontab-u' with whitespace-only lines and comments
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(self.whitespace_comments, quiet=True),
             self.whitespace_comments_json
         )
 
     def test_crontab_u_whitespace_comments_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only lines and comments in raw mode
+        """
         self.assertEqual(
             jc.parsers.crontab_u.parse(
                 self.whitespace_comments, raw=True, quiet=True
