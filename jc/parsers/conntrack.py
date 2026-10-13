@@ -445,5 +445,7 @@ def parse(
 
             if entry is not None:
                 raw_output.append(entry)
+            elif line.strip() and not quiet:
+                jc.utils.warning_message([f'Unparsable line found: {line}'])
 
     return raw_output if raw else _process(raw_output)
