@@ -21,7 +21,7 @@ Schema:
 
     [
       {
-        "filename":     string,
+        "filename":     string/null,
         "checksum":     integer,
         "blocks":       integer
       }
@@ -54,7 +54,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`cksum` and `sum` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
