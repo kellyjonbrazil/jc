@@ -181,6 +181,11 @@ _hex_keys = {'srckey', 'dstkey'}
 # bracketed token can contain spaces and a line cannot be split on whitespace
 _token_re = re.compile(r'\[[^\]]*\]|\S+')
 
+# conntrack writes a trailing `N flow entries have been shown.` summary to
+# stderr, which lands in the data with `2>&1` or in saved output. It is not a
+# tuple, so skip it rather than warning about it
+_summary_re = re.compile(r'flow (entries|events) have been shown')
+
 
 def _convert_hex(value: str) -> Optional[int]:
     """Convert a hex value such as GRE's `srckey=0x1a2b` to an integer."""
@@ -236,8 +241,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 def _parse_line(line: str) -> Optional[Dict]:
     """
     Parse a single `conntrack -L` or `conntrack -E` line. Returns `None` if
-    the line is not a conntrack tuple, such as the trailing
-    `N flow entries have been shown.` summary.
+    the line is not a conntrack tuple.
     """
     tokens = _token_re.findall(line)
 
@@ -415,6 +419,9 @@ def parse(
 
     if jc.utils.has_data(data):
         for line in data.splitlines():
+            if _summary_re.search(line):
+                continue
+
             entry = _parse_line(line)
 
             if entry is not None:
