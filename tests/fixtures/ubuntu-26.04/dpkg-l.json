@@ -1,0 +1,21 @@
+[
+  {
+    "codes": "ii",
+    "name": "3cpio",
+    "version": "0.14.0-1ubuntu1",
+    "architecture": "amd64",
+    "description": "Manage initrd cpio archives",
+    "desired": "install",
+    "status": "installed"
+  },
+  {
+    "codes": "uWR",
+    "name": "acpi",
+    "version": "1.7-1.1",
+    "architecture": "amd64",
+    "description": "displays information on ACPI devices",
+    "desired": "unknown",
+    "status": "trigger await",
+    "error": "reinstall required"
+  }
+]

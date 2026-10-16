@@ -53,6 +53,35 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.dpkg_l.parse(self.ubuntu_18_4_dpkg_l_codes, quiet=True), self.ubuntu_18_4_dpkg_l_codes_json)
 
+    def test_dpkg_l_unicode_header_ubuntu_26_4(self):
+        """Test Unicode status headers in Ubuntu 26.04 dpkg output."""
+        fixture_dir = os.path.join(THIS_DIR, 'fixtures/ubuntu-26.04')
+        with open(os.path.join(fixture_dir, 'dpkg-l.out'),
+                  encoding='utf-8') as f:
+            data = f.read()
+        with open(os.path.join(fixture_dir, 'dpkg-l.json'),
+                  encoding='utf-8') as f:
+            expected = json.load(f)
+
+        self.assertEqual(jc.parsers.dpkg_l.parse(data, quiet=True), expected)
+
+    def test_dpkg_l_unicode_header_raw_ubuntu_26_4(self):
+        """Raw output retains codes without adding decoded status fields."""
+        fixture_dir = os.path.join(THIS_DIR, 'fixtures/ubuntu-26.04')
+        with open(os.path.join(fixture_dir, 'dpkg-l.out'),
+                  encoding='utf-8') as f:
+            data = f.read()
+        with open(os.path.join(fixture_dir, 'dpkg-l.json'),
+                  encoding='utf-8') as f:
+            expected = json.load(f)
+        for entry in expected:
+            for field in ('desired', 'status', 'error'):
+                entry.pop(field, None)
+
+        self.assertEqual(
+            jc.parsers.dpkg_l.parse(data, raw=True, quiet=True), expected
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -222,10 +222,11 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, data.splitlines()):
             if 'Architecture' in line:
                 header_found = True
-                working_list.append(line.lower().replace('||/', 'codes'))
+                header = line.lower().replace('||/', 'codes')
+                working_list.append(header.replace('│││', 'codes'))
                 continue
 
-            if '=========' in line:
+            if '=========' in line or '═════════' in line:
                 continue
 
             if header_found:
