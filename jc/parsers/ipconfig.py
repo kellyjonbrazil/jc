@@ -438,7 +438,7 @@ class info():
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
-    compatible = ['windows']
+    compatible = ['win32']
     magic_commands = ['ipconfig']
     tags = ['command']
 
