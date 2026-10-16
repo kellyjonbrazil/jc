@@ -7,15 +7,5 @@
     "description": "Manage initrd cpio archives",
     "desired": "install",
     "status": "installed"
-  },
-  {
-    "codes": "uWR",
-    "name": "acpi",
-    "version": "1.7-1.1",
-    "architecture": "amd64",
-    "description": "displays information on ACPI devices",
-    "desired": "unknown",
-    "status": "trigger await",
-    "error": "reinstall required"
   }
 ]

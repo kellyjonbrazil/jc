@@ -1,7 +1,6 @@
 ── Desired=Unknown/Install/Remove/Purge/Hold
 │┌─ Status=Not/Inst/Conf-files/Unpacked/halF-conf/Half-inst/trig-aWait/Trig-pend
 ││┌ Err?=(none)/Reinst-required (Status,Err: uppercase=bad)
-│││ Name          Version           Architecture Description
-├┼┼─═════════════─═════════════════─════════════─══════════════════════════════════
-ii  3cpio         0.14.0-1ubuntu1    amd64        Manage initrd cpio archives
-uWR acpi          1.7-1.1           amd64        displays information on ACPI devices
+│││ Name                                                     Version                                     Architecture Description
+├┼┼─════════════════════════════════════════════════════════─═══════════════════════════════════════════─════════════─═════════════════════════════════════════════════════════════════════════════════════════════════════════════════════>
+ii  3cpio                                                    0.14.0-1ubuntu1                             amd64        Manage initrd cpio archives
