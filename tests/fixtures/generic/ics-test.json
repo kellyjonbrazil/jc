@@ -1,0 +1,53 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "standup-42@example.com",
+    "summary": "Team standup",
+    "description": "Agenda, in order: 1. blockers; 2. demo\nbring a laptop",
+    "location": "Room 3",
+    "url": "https://example.com/meet/42",
+    "status": "CONFIRMED",
+    "dtstart": "2026-10-15T09:00:00",
+    "dtend": "2026-10-15T09:15:00",
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "sequence": 2,
+    "categories": [
+      "MEETING",
+      "WORK"
+    ],
+    "organizer": "Alice Smith <alice@example.com>",
+    "attendees": [
+      "Bob <bob@example.com>",
+      "carol@example.com"
+    ],
+    "rrule": "FREQ=WEEKLY;BYDAY=TH",
+    "rdate": [
+      "2026-10-22T09:00:00"
+    ],
+    "exdate": [
+      "2026-10-29T09:00:00"
+    ],
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "trigger": "-PT15M",
+        "description": "Reminder"
+      }
+    ]
+  },
+  {
+    "type": "VTODO",
+    "uid": "todo-7@example.com",
+    "summary": "Send the report",
+    "status": "NEEDS-ACTION",
+    "due": "2026-10-20",
+    "dtstamp": "2026-10-14T08:00:00Z"
+  },
+  {
+    "type": "VJOURNAL",
+    "uid": "note-1@example.com",
+    "summary": "Note",
+    "description": "Journal entry",
+    "dtstamp": "2026-10-14T08:00:00Z"
+  }
+]

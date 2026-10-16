@@ -74,6 +74,7 @@ parsers: List[str] = [
     'host',
     'hosts',
     'http-headers',
+    'ics',
     'id',
     'ifconfig',
     'iftop',
