@@ -65,5 +65,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.lsattr.parse(self.ubuntu_20_4_lsattr_spaces, quiet=True), self.ubuntu_20_4_lsattr_spaces_json)
 
 
+    def test_lsattr_e2fsprogs_1_47(self):
+        """
+        Test 'lsattr' with 22-character attribute field (e2fsprogs 1.47+)
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsattr-e2fsprogs-1.47.out'), 'r', encoding='utf-8') as f:
+            data = f.read()
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsattr-e2fsprogs-1.47.json'), 'r', encoding='utf-8') as f:
+            expected = json.loads(f.read())
+        self.assertEqual(jc.parsers.lsattr.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
