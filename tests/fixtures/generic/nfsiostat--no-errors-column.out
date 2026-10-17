@@ -1,0 +1,20 @@
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+           2.110           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)
+                   0.008           7.942         980.310        2 (0.3%)           6.000           6.300           0.300
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)
+                   0.002           2.371        1024.176        0 (0.0%)          13.000          14.000           0.450
+
+nas01.example.com:/volume1/archive mounted on /mnt/archive:
+
+           ops/s       rpc bklog
+          53.469           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)
+                   0.292         286.208         981.285        9 (0.9%)           6.067           6.400           0.300
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)
+                   0.075          76.813        1024.176        0 (0.0%)          13.259          14.259           0.437

@@ -1,0 +1,15 @@
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+           2.110           0.000
+
+getattr:           ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.105           0.047           0.453        0 (0.0%)           0.400           0.431           0.005        0 (0.0%)
+access:            ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.015           0.005           0.354        0 (0.0%)           0.400           0.441           0.005        0 (0.0%)
+
+4410 VFS opens
+1520 inoderevalidates (forced GETATTRs)
+31 page cache invalidations
+210 attribute cache invalidations
