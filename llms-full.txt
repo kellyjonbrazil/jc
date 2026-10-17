@@ -10,6 +10,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--airport](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport.md): `airport -I` command parser (magic: `airport -I`; platforms: darwin)
 - [--airport-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport_s.md): `airport -s` command parser (magic: `airport -s`; platforms: darwin)
 - [--amixer](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/amixer.md): `amixer` command parser (magic: `amixer`; platforms: linux)
+- [--apachectl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apachectl.md): `apachectl -S` command parser (magic: `apachectl -S`, `apache2ctl -S`, `apache2 -S`, `httpd -S`)
 - [--apt-cache-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_cache_show.md): `apt-cache show` command parser (magic: `apt-cache show`; platforms: linux)
 - [--apt-get-sqq](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_get_sqq.md): `apt-get -sqq` command parser (magic: `apt-get -sqq`; platforms: linux)
 - [--arp](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/arp.md): `arp` command parser (magic: `arp`; platforms: linux, aix, freebsd, darwin)

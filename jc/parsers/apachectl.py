@@ -37,14 +37,14 @@ Schema:
       "server_root":                     string,
       "main_document_root":              string,
       "main_error_log":                  string,
-      "scoreboard_file":                 string,     # omitted if not printed
+      "scoreboard_file":                 string,     # [0]
       "mutexes": [
         {
           "name":                        string,
           "using_defaults":              boolean,
           "none":                        boolean,
-          "directory":                   string,     # null unless configured
-          "mechanism":                   string,     # null unless configured
+          "directory":                   string,     # [1]
+          "mechanism":                   string,     # [1]
           "omit_pid":                    boolean
         }
       ],
@@ -62,12 +62,12 @@ Schema:
         "id":                            integer,
         "not_used":                      boolean
       },
-      "chroot_dir":                      string,     # omitted if not printed
+      "chroot_dir":                      string,     # [0]
       "virtual_hosts": [
         {
-          "address":                     string,     # '*' for a wildcard address
-          "port":                        string,     # '*' for a wildcard port
-          "port_num":                    integer,    # omitted when port is '*'
+          "address":                     string,     # [2]
+          "port":                        string,     # [2]
+          "port_num":                    integer,    # [3]
           "name":                        string,
           "default":                     boolean,
           "aliases": [
@@ -81,6 +81,11 @@ Schema:
         }
       ]
     }
+
+    [0] omitted if not printed
+    [1] null unless configured
+    [2] '*' for a wildcard
+    [3] omitted when port is '*'
 
 Examples:
 

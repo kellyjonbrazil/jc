@@ -1,6 +1,7 @@
 jc changelog
 
 20261017 v1.26.1
+- Add `apachectl` command parser
 - Fix `cksum` parser for lines with no filename
 - Fix `crontab` standard and streaming parsers to ignore whitespace-only lines
 - Fix `dpkg` parser for Unicode table header
