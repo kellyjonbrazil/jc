@@ -28,57 +28,57 @@ Schema:
 
     [
       {
-        "family":     string,
-        "name":       string,
-        "handle":     integer,        # [0]
-        "comment":    string,         # [1]
+        "family":                   string,
+        "name":                     string,
+        "handle":                   integer,    # [0]
+        "comment":                  string,     # [1]
         "flags": [
-                        string
+                                    string
         ],
         "chains": [
           {
-            "name":       string,
-            "handle":     integer,    # [0]
-            "type":       string,     # [2]
-            "hook":       string,     # [1]
+            "name":                 string,
+            "handle":               integer,    # [0]
+            "type":                 string,     # [2]
+            "hook":                 string,     # [1]
             "devices": [
-                            string
+                                    string
             ],
-            "priority":   string,     # [1]
-            "policy":     string,     # [1]
-            "comment":    string,     # [1]
+            "priority":             string,     # [1]
+            "policy":               string,     # [1]
+            "comment":              string,     # [1]
             "rules": [
               {
-                "rule":     string,
-                "handle":   integer   # [0]
+                "rule":             string,
+                "handle":           integer     # [0]
               }
             ]
           }
         ],
         "sets": [
           {
-            "name":         string,
-            "handle":       integer,  # [0]
-            "type":         string,   # [3]
+            "name":                 string,
+            "handle":               integer,    # [0]
+            "type":                 string,     # [3]
             "flags": [
-                            string
+                                    string
             ],
-            "timeout":      string,   # [1]
-            "gc_interval":  string,   # [1]
-            "size":         integer,  # [1]
-            "policy":       string,   # [1]
-            "auto_merge":   boolean,
-            "counter":      boolean,
-            "comment":      string,   # [1]
+            "timeout":              string,     # [1]
+            "gc_interval":          string,     # [1]
+            "size":                 integer,    # [1]
+            "policy":               string,     # [1]
+            "auto_merge":           boolean,
+            "counter":              boolean,
+            "comment":              string,     # [1]
             "elements": [
-                            string
+                                    string
             ]
           }
         ],
         "maps": [
           {
             # same fields as sets, plus:
-            "value_type":   string   # [3]
+            "value_type":           string      # [3]
           }
         ]
       }
