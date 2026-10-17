@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-spaces.out'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr_spaces = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsattr-e2fsprogs-1.47.out'), 'r', encoding='utf-8') as f:
+        generic_lsattr_e2fsprogs_1_47 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-error.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr_error_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/lsattr-spaces.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_lsattr_spaces_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsattr-e2fsprogs-1.47.json'), 'r', encoding='utf-8') as f:
+        generic_lsattr_e2fsprogs_1_47_json = json.loads(f.read())
 
     def test_lsattr_nodata(self):
         """
@@ -63,6 +69,12 @@ class MyTests(unittest.TestCase):
         Test 'lsattr' with filenames containing spaces
         """
         self.assertEqual(jc.parsers.lsattr.parse(self.ubuntu_20_4_lsattr_spaces, quiet=True), self.ubuntu_20_4_lsattr_spaces_json)
+
+    def test_lsattr_e2fsprogs_1_47(self):
+        """
+        Test 'lsattr' with 22-character attribute field (e2fsprogs 1.47+)
+        """
+        self.assertEqual(jc.parsers.lsattr.parse(self.generic_lsattr_e2fsprogs_1_47, quiet=True), self.generic_lsattr_e2fsprogs_1_47_json)
 
 
 if __name__ == '__main__':
