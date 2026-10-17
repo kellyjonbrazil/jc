@@ -1,0 +1,7 @@
+table netdev nd {
+	chain ingress {
+		type filter hook ingress devices = { "eth0", "eth1" } priority filter; policy accept;
+		tcp dport 22 accept
+		udp dport 53 drop
+	}
+}
