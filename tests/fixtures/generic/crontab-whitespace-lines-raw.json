@@ -1,0 +1,22 @@
+{
+  "variables": [
+    {
+      "name": "MAILTO",
+      "value": "\"cron@example.com\""
+    }
+  ],
+  "schedule": [
+    {
+      "minute": "0,15",
+      "hour": "*",
+      "day_of_month": "*",
+      "month": "*",
+      "day_of_week": "*",
+      "command": "echo \"a  b\tc\""
+    },
+    {
+      "occurrence": "reboot",
+      "command": "echo \"a  b\tc\""
+    }
+  ]
+}

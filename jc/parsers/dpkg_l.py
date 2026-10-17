@@ -132,7 +132,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -219,13 +219,14 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         # clean up headers
-        for line in filter(None, data.splitlines()):
-            if 'Architecture' in line:
+        lines = iter(filter(None, data.splitlines()))
+        for line in lines:
+            if not header_found and 'Architecture' in line:
                 header_found = True
-                working_list.append(line.lower().replace('||/', 'codes'))
-                continue
-
-            if '=========' in line:
+                header = 'codes ' + line.split(maxsplit=1)[1].lower()
+                working_list.append(header)
+                # The next nonempty line is the table divider.
+                next(lines, None)
                 continue
 
             if header_found:
