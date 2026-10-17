@@ -69,7 +69,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--ini-dup](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ini_dup.md): INI with duplicate key file parser
 - [--iostat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iostat.md): `iostat` command parser (magic: `iostat`; platforms: linux)
 - [--ip-address](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ip_address.md): IPv4 and IPv6 Address string parser (supports `--slurp`)
-- [--ipconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ipconfig.md): `ipconfig` Windows command parser (magic: `ipconfig`; platforms: windows)
+- [--ipconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ipconfig.md): `ipconfig` Windows command parser (magic: `ipconfig`; platforms: win32)
 - [--iptables](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iptables.md): `iptables` command parser (magic: `iptables`; platforms: linux)
 - [--ip-route](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ip_route.md): `ip route` command parser (magic: `ip route`; platforms: linux)
 - [--iw-scan](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iw_scan.md): `iw dev [device] scan` command parser (magic: `iw dev`; platforms: linux)
