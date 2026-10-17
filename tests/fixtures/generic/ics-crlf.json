@@ -5,7 +5,10 @@
     "description": "firstsecond",
     "dtstart": "2026-10-15",
     "attendees": [
-      "Doe: Jane <jane@example.com>"
+      {
+        "name": "Doe: Jane",
+        "address": "jane@example.com"
+      }
     ]
   }
 ]

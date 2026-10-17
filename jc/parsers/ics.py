@@ -8,20 +8,20 @@ Parses iCalendar (RFC 5545) files.
 - Folded lines (a line continued with a leading space or tab) are unfolded,
   `TEXT` escapes (`\n`, `\,`, `\;`, `\\`) are resolved, and the `VALUE=DATE`,
   `VALUE=DATE-TIME` and `TZID` forms of the date properties are supported.
-- `RRULE` is passed through, not expanded into occurrences, and properties
-  that are not in the schema are dropped.
+- `RRULE` is passed through, not expanded into occurrences.
+- Only the properties in the schema below are read. Anything else - including
+  the `X-` properties - is dropped, and the components that are not
+  `VEVENT`, `VTODO`, `VJOURNAL` or `VALARM` (`VTIMEZONE`, `VFREEBUSY`,
+  `STANDARD`, `DAYLIGHT`, ...) and the `VCALENDAR`-level properties
+  (`VERSION`, `PRODID`, `CALSCALE`, `METHOD`) are ignored.
 
-> Note: Date and time values are normalized to ISO 8601 in the output. Use the
-> `-r` command-line argument or the `raw=True` argument in `parse()` to keep
-> the original iCalendar values.
+> Note: Date and time values are normalized to ISO 8601 in the processed
+> output. Use the `-r` command-line argument or the `raw=True` argument in
+> `parse()` to keep the original iCalendar values.
 
 Usage (cli):
 
     $ cat calendar.ics | jc --ics
-
-or
-
-    $ jc calendar.ics
 
 Usage (module):
 
@@ -32,44 +32,80 @@ Schema:
 
     [
       {
-        "type":             string,   # VEVENT, VTODO or VJOURNAL
-        "uid":              string,
-        "summary":          string,
-        "description":      string,
-        "location":         string,
-        "url":              string,
-        "status":           string,
-        "dtstart":          string,   # ISO 8601
-        "dtend":            string,
-        "due":              string,
-        "duration":         string,
-        "dtstamp":          string,
-        "created":          string,
-        "last_modified":    string,
-        "sequence":         integer,
-        "categories":       [
-                              string
-                            ],
-        "organizer":        string,   # [CN] <address>
-        "attendees":        [
-                              string
-                            ],
-        "rrule":            string,
-        "rdate":            [
-                              string
-                            ],
-        "exdate":           [
-                              string
-                            ],
-        "alarms":           [
-                              {
-                                "action":       string,
-                                "trigger":      string,
-                                "description":  string
-                              }
-                            ]
+        "type":                string,   # [0]
+        "uid":                 string,
+        "summary":             string,
+        "description":         string,
+        "location":            string,
+        "url":                 string,
+        "status":              string,
+        "class":               string,
+        "transp":              string,
+        "geo":                 string,
+        "dtstart":             string,   # [1]
+        "dtstart_tzid":        string,   # [2]
+        "dtend":               string,   # [1]
+        "dtend_tzid":          string,   # [2]
+        "due":                 string,   # [1]
+        "due_tzid":            string,   # [2]
+        "recurrence_id":       string,   # [1]
+        "recurrence_id_tzid":  string,   # [2]
+        "dtstamp":             string,   # [1]
+        "created":             string,   # [1]
+        "last_modified":       string,   # [1]
+        "completed":           string,   # [1]
+        "duration":            string,
+        "sequence":            integer,
+        "priority":            integer,
+        "percent_complete":    integer,
+        "categories":          [
+                                 string
+                               ],
+        "organizer":           {
+                                 "name":       string,   # [3]
+                                 "address":    string,
+                                 "role":       string,   # [3]
+                                 "partstat":   string,   # [3]
+                                 "rsvp":       string    # [3]
+                               },
+        "attendees":           [
+                                 {
+                                   "name":     string,   # [3]
+                                   "address":  string,
+                                   "role":     string,   # [3]
+                                   "partstat": string,   # [3]
+                                   "rsvp":     string    # [3]
+                                 }
+                               ],
+        "rrule":               string,
+        "rdate":               [
+                                 string    # [1]
+                               ],
+        "rdate_tzid":          string,   # [2]
+        "exdate":              [
+                                 string    # [1]
+                               ],
+        "exdate_tzid":         string,   # [2]
+        "alarms":              [
+                                 {
+                                   "action":       string,
+                                   "trigger":      string,   # [4]
+                                   "description":  string
+                                 }
+                               ]
       }
     ]
+
+    [0] one of `VEVENT`, `VTODO` or `VJOURNAL`
+    [1] normalized to ISO 8601 in the processed output; `raw=True` keeps the
+        original iCalendar value
+    [2] only when the property carries a `TZID` parameter. `rdate_tzid` and
+        `exdate_tzid` hold the `TZID` of the last property that carried one, so
+        a `RDATE` or `EXDATE` list that mixes zones keeps only the last one
+    [3] `name` only when the property carries a `CN` parameter; `role`,
+        `partstat` and `rsvp` only when those parameters are present
+    [4] the `DATE-TIME` form is normalized to ISO 8601 in the processed
+        output, while a duration such as `-PT15M` is passed through
 
 Examples:
 
@@ -109,25 +145,49 @@ _TEXT_PROPS = {
     'LOCATION': 'location',
     'URL': 'url',
     'STATUS': 'status',
+    'CLASS': 'class',
+    'TRANSP': 'transp',
+    'GEO': 'geo',
     'DURATION': 'duration',
 }
 
-# Dates and times, kept as strings in the output.
+# Dates and times, kept as strings in the output, with their TZID.
 _DATE_PROPS = {
     'DTSTART': 'dtstart',
     'DTEND': 'dtend',
     'DUE': 'due',
+    'RECURRENCE-ID': 'recurrence_id',
     'DTSTAMP': 'dtstamp',
     'CREATED': 'created',
     'LAST-MODIFIED': 'last_modified',
+    'COMPLETED': 'completed',
 }
 
 _DATE_KEYS = tuple(_DATE_PROPS.values())
 
+# Properties whose value is a list of dates, with their TZID.
+_DATE_LIST_PROPS = {'RDATE': 'rdate', 'EXDATE': 'exdate'}
+
+# Integer properties.
+_INT_PROPS = {
+    'SEQUENCE': 'sequence',
+    'PRIORITY': 'priority',
+    'PERCENT-COMPLETE': 'percent_complete',
+}
+
+_INT_KEYS = tuple(_INT_PROPS.values())
+
+# Parameters of an address that are carried into the output.
+_ADDRESS_PARAMS = (('ROLE', 'role'), ('PARTSTAT', 'partstat'), ('RSVP', 'rsvp'))
+
 _ESCAPES = {'n': '\n', 'N': '\n', ',': ',', ';': ';', '\\': '\\'}
 
-_DATE_RE = re.compile(r'^(\d{4})(\d{2})(\d{2})$')
-_DATETIME_RE = re.compile(r'^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z|[+-]\d{4})?$')
+_DATE_RE = re.compile(r'^(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})$')
+_DATETIME_RE = re.compile(
+    r'^(?P<year>\d{4})(?P<month>\d{2})(?P<day>\d{2})'
+    r'T(?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})'
+    r'(?P<tz>Z|[+-]\d{4})?$'
+)
 
 
 class info():
@@ -187,26 +247,40 @@ def _split_list(value: str) -> List[str]:
     return [item for item in items if item]
 
 
-def _address(params: Dict[str, str], value: str) -> str:
+def _address(params: Dict[str, str], value: str) -> JSONDictType:
     """
-    Return a calendar address as `address` or `CN <address>`.
+    Return a calendar address as an object with its name and parameters.
     """
     address = value[7:] if value.upper().startswith('MAILTO:') else value
-    cn = params.get('CN')
+    result: JSONDictType = {}
 
-    return f'{cn} <{address}>' if cn else address
+    if params.get('CN'):
+        result['name'] = params['CN']
+
+    result['address'] = address
+
+    for param, key in _ADDRESS_PARAMS:
+        if param in params:
+            result[key] = params[param]
+
+    return result
 
 
 def _iso(value: str) -> str:
     """
     Normalize an iCalendar `DATE` or `DATE-TIME` value to ISO 8601.
     """
-    if match := _DATE_RE.match(value):
-        return f'{match[1]}-{match[2]}-{match[3]}'
+    match = _DATE_RE.match(value)
+    if match:
+        return f'{match.group("year")}-{match.group("month")}-{match.group("day")}'
 
-    if match := _DATETIME_RE.match(value):
-        result = f'{match[1]}-{match[2]}-{match[3]}T{match[4]}:{match[5]}:{match[6]}'
-        tz = match[7]
+    match = _DATETIME_RE.match(value)
+    if match:
+        result = (
+            f'{match.group("year")}-{match.group("month")}-{match.group("day")}'
+            f'T{match.group("hour")}:{match.group("minute")}:{match.group("second")}'
+        )
+        tz = match.group('tz')
         if tz == 'Z':
             return result + 'Z'
         if tz:
@@ -270,7 +344,7 @@ def _split_property(line: str) -> Optional[Tuple[str, Dict[str, str], str]]:
     return name, params, value
 
 
-def _components(lines: List[str]) -> List[Dict[str, Any]]:
+def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
     """
     Collect the components of the calendar, with their alarms.
     """
@@ -278,8 +352,14 @@ def _components(lines: List[str]) -> List[Dict[str, Any]]:
     stack: List[Dict[str, Any]] = []
 
     for line in lines:
+        if not line.strip():
+            continue
+
         prop = _split_property(line)
         if prop is None:
+            if not quiet:
+                jc.utils.warning_message(
+                    [f'Skipping a line with no property/value separator: {line}'])
             continue
 
         name, params, value = prop
@@ -289,8 +369,25 @@ def _components(lines: List[str]) -> List[Dict[str, Any]]:
             continue
 
         if name == 'END':
-            if not stack:
+            kind = value.upper()
+            if kind not in [component['kind'] for component in stack]:
+                if not quiet:
+                    jc.utils.warning_message([f'END:{kind} without a matching BEGIN'])
                 continue
+            if stack[-1]['kind'] != kind and not quiet:
+                jc.utils.warning_message([
+                    f'END:{kind} does not match the open BEGIN:{stack[-1]["kind"]}'])
+            # a mismatched END closes the components above the one it names;
+            # one that was never closed is dropped like any unterminated
+            # component, and named in a warning of its own
+            while stack[-1]['kind'] != kind:
+                above = stack.pop()
+                if above['kind'] == _ALARM:
+                    if stack:
+                        stack[-1]['alarms'].append(above)
+                elif above['kind'] in _ENTITIES and not quiet:
+                    jc.utils.warning_message([
+                        f'Unterminated BEGIN:{above["kind"]}: no END for the component'])
             component = stack.pop()
             if component['kind'] == _ALARM:
                 if stack:
@@ -301,6 +398,12 @@ def _components(lines: List[str]) -> List[Dict[str, Any]]:
 
         if stack:
             stack[-1]['lines'].append((name, params, value))
+
+    if not quiet:
+        for component in stack:
+            if component['kind'] in _ENTITIES:
+                jc.utils.warning_message([
+                    f'Unterminated BEGIN:{component["kind"]}: no END for the component'])
 
     return components
 
@@ -328,19 +431,28 @@ def _component(component: Dict[str, Any]) -> JSONDictType:
     """
     text: Dict[str, str] = {}
     dates: Dict[str, str] = {}
+    tzids: Dict[str, str] = {}
+    numbers: Dict[str, str] = {}
     lists: Dict[str, List[str]] = {
         'categories': [], 'attendees': [], 'rdate': [], 'exdate': []}
-    sequence: Optional[str] = None
-    organizer: Optional[str] = None
+    organizer: Optional[JSONDictType] = None
     rrule: Optional[str] = None
 
     for name, params, value in component['lines']:
         if name in _TEXT_PROPS:
             text[_TEXT_PROPS[name]] = _unescape_text(value)
         elif name in _DATE_PROPS:
-            dates[_DATE_PROPS[name]] = value
-        elif name == 'SEQUENCE':
-            sequence = value
+            key = _DATE_PROPS[name]
+            dates[key] = value
+            if params.get('TZID'):
+                tzids[key] = params['TZID']
+        elif name in _DATE_LIST_PROPS:
+            key = _DATE_LIST_PROPS[name]
+            lists[key].extend(_split_list(value))
+            if params.get('TZID'):
+                tzids[key] = params['TZID']
+        elif name in _INT_PROPS:
+            numbers[_INT_PROPS[name]] = value
         elif name == 'CATEGORIES':
             lists['categories'].extend(
                 _unescape_text(item) for item in _split_list(value)
@@ -349,28 +461,28 @@ def _component(component: Dict[str, Any]) -> JSONDictType:
             organizer = _address(params, value)
         elif name == 'ATTENDEE':
             lists['attendees'].append(_address(params, value))
-        elif name == 'RDATE':
-            lists['rdate'].extend(_split_list(value))
-        elif name == 'EXDATE':
-            lists['exdate'].extend(_split_list(value))
         elif name == 'RRULE':
             rrule = value
 
     out: JSONDictType = {'type': component['kind']}
 
-    for key in ('uid', 'summary', 'description', 'location', 'url', 'status'):
+    for key in ('uid', 'summary', 'description', 'location', 'url', 'status',
+                'class', 'transp', 'geo'):
         if key in text:
             out[key] = text[key]
 
     for key in _DATE_KEYS:
         if key in dates:
             out[key] = dates[key]
+            if key in tzids:
+                out[f'{key}_tzid'] = tzids[key]
 
     if 'duration' in text:
         out['duration'] = text['duration']
 
-    if sequence is not None:
-        out['sequence'] = sequence
+    for key in _INT_KEYS:
+        if key in numbers:
+            out[key] = numbers[key]
 
     if lists['categories']:
         out['categories'] = lists['categories']
@@ -387,6 +499,8 @@ def _component(component: Dict[str, Any]) -> JSONDictType:
     for key in ('rdate', 'exdate'):
         if lists[key]:
             out[key] = lists[key]
+            if key in tzids:
+                out[f'{key}_tzid'] = tzids[key]
 
     alarms = [_alarm(alarm) for alarm in component['alarms']]
     if alarms:
@@ -408,8 +522,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         List of Dictionaries. Structured to conform to the schema.
     """
     for component in proc_data:
-        if 'sequence' in component:
-            component['sequence'] = jc.utils.convert_to_int(component['sequence'])
+        for key in _INT_KEYS:
+            if key in component:
+                component[key] = jc.utils.convert_to_int(component[key])
 
         for key in _DATE_KEYS + ('rdate', 'exdate'):
             if key not in component:
@@ -418,6 +533,10 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 component[key] = [_iso(value) for value in component[key]]
             else:
                 component[key] = _iso(component[key])
+
+        for alarm in component.get('alarms', []):
+            if 'trigger' in alarm:
+                alarm['trigger'] = _iso(alarm['trigger'])
 
     return proc_data
 
@@ -446,6 +565,8 @@ def parse(
     raw_output: List[JSONDictType] = []
 
     if jc.utils.has_data(data):
-        raw_output = [_component(component) for component in _components(_unfold(data))]
+        raw_output = [
+            _component(component) for component in _components(_unfold(data), quiet)
+        ]
 
     return raw_output if raw else _process(raw_output)

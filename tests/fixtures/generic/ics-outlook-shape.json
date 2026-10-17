@@ -1,0 +1,38 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "040000008200E00074C5B7101A82E00800000000A1B2C3D4E5F60708",
+    "summary": "Weekly sync",
+    "description": "Weekly sync: bring the numbers and the deck up\n\nMaria will join remotely.\n",
+    "status": "CONFIRMED",
+    "class": "PUBLIC",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-21T14:00:00",
+    "dtstart_tzid": "W. Europe Standard Time",
+    "dtend": "2026-10-21T14:30:00",
+    "dtend_tzid": "W. Europe Standard Time",
+    "dtstamp": "2026-10-13T09:00:00Z",
+    "sequence": 0,
+    "priority": 5,
+    "organizer": {
+      "name": "Alice Smith",
+      "address": "alice@example.com"
+    },
+    "attendees": [
+      {
+        "name": "Bob Jones",
+        "address": "bob@example.com",
+        "role": "REQ-PARTICIPANT",
+        "partstat": "ACCEPTED",
+        "rsvp": "TRUE"
+      }
+    ],
+    "alarms": [
+      {
+        "trigger": "-PT15M",
+        "action": "DISPLAY",
+        "description": "Reminder"
+      }
+    ]
+  }
+]
