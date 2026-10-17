@@ -1,6 +1,7 @@
 jc changelog
 
 20261005 v1.26.1
+- Fix `dpkg` parser for Unicode table header
 - Fix `fstab` parser to ignore whitespace-only lines
 - Fix `group` parser to ignore whitespace-only lines
 - Fix `gshadow` parser to ignore whitespace-only lines
