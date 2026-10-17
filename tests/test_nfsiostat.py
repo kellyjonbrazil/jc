@@ -10,12 +10,7 @@ sys.path.pop()
 
 import jc.parsers.nfsiostat
 
-FIXTURES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'fixtures/generic')
-
-
-def _read_fixture(name):
-    with open(os.path.join(FIXTURES_DIR, name), 'r', encoding='utf-8') as f:
-        return f.read()
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 def _parse_capturing_stderr(data, quiet=False):
@@ -27,6 +22,22 @@ def _parse_capturing_stderr(data, quiet=False):
 
 
 class MyTests(unittest.TestCase):
+
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--malformed.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_malformed = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--attr.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_attr = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--dir.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_dir = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--page.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_page = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--no-mounts.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_no_mounts = f.read()
 
     def test_nfsiostat_nodata(self):
         """
@@ -44,7 +55,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'nfsiostat' warns about lines it can't parse
         """
-        _, stderr = _parse_capturing_stderr(_read_fixture('nfsiostat--malformed.out'))
+        _, stderr = _parse_capturing_stderr(self.generic_nfsiostat_malformed)
         self.assertIn('/home: unexpected number of fields: 2.110', stderr)
         self.assertIn('/home: skipping unknown operation table: commit', stderr)
         self.assertIn('/home: could not parse write values', stderr)
@@ -54,7 +65,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'nfsiostat' does not turn an unknown table name into a key
         """
-        result, _ = _parse_capturing_stderr(_read_fixture('nfsiostat--malformed.out'))
+        result, _ = _parse_capturing_stderr(self.generic_nfsiostat_malformed)
         self.assertNotIn('commit', result[0])
         self.assertIn('read', result[0])
 
@@ -62,16 +73,34 @@ class MyTests(unittest.TestCase):
         """
         Test 'nfsiostat' does not warn about the -a, -d, and -p summary lines
         """
-        for name in ('nfsiostat--attr.out', 'nfsiostat--dir.out', 'nfsiostat--page.out'):
+        for name, data in (('attr', self.generic_nfsiostat_attr),
+                           ('dir', self.generic_nfsiostat_dir),
+                           ('page', self.generic_nfsiostat_page)):
             with self.subTest(fixture=name):
-                _, stderr = _parse_capturing_stderr(_read_fixture(name))
+                _, stderr = _parse_capturing_stderr(data)
                 self.assertEqual(stderr, '')
 
     def test_nfsiostat_malformed_quiet(self):
         """
         Test 'nfsiostat' prints nothing with quiet=True
         """
-        _, stderr = _parse_capturing_stderr(_read_fixture('nfsiostat--malformed.out'), quiet=True)
+        _, stderr = _parse_capturing_stderr(self.generic_nfsiostat_malformed, quiet=True)
+        self.assertEqual(stderr, '')
+
+    def test_nfsiostat_no_mount_blocks_warns(self):
+        """
+        Test 'nfsiostat' warns when the input has no mount blocks
+        """
+        result, stderr = _parse_capturing_stderr('Usage: iostat [ options ] [ <interval> [ <count> ] ]\n')
+        self.assertEqual(result, [])
+        self.assertIn('No NFS mount blocks found', stderr)
+
+    def test_nfsiostat_no_mounts_message_does_not_warn(self):
+        """
+        Test 'nfsiostat' returns [] without a warning for "No NFS mount points were found"
+        """
+        result, stderr = _parse_capturing_stderr(self.generic_nfsiostat_no_mounts)
+        self.assertEqual(result, [])
         self.assertEqual(stderr, '')
 
 

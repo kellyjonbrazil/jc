@@ -220,6 +220,7 @@ OP_HEADER_RE = re.compile(r'^(?P<op>[a-z]+):\s+ops/s\s')
 COLUMN_SPLIT_RE = re.compile(r'\s{2,}|\t')
 
 SKIP = '<skip>'
+NO_MOUNTS_MESSAGE = 'No NFS mount points were found'
 KNOWN_OPS = {'read', 'write', 'getattr', 'access', 'lookup', 'readdir', 'readdirplus'}
 
 COLUMN_KEYS = {
@@ -390,5 +391,8 @@ def parse(
             # anything else (the -a, -d, and -p cache summary lines) is skipped
 
         end_of_mount_block()
+
+        if not raw_output and NO_MOUNTS_MESSAGE not in data:
+            warn('No NFS mount blocks found')
 
     return raw_output if raw else _process(raw_output)
