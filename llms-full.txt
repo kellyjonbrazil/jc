@@ -100,6 +100,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--netstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/netstat.md): `netstat` command parser (magic: `netstat`; platforms: linux, darwin, freebsd, win32)
 - [--net-localgroup](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/net_localgroup.md): `net localgroup` command parser (magic: `net localgroup`; platforms: win32)
 - [--net-user](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/net_user.md): `net user` command parser (magic: `net user`; platforms: win32)
+- [--nfsiostat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nfsiostat.md): `nfsiostat` command parser (magic: `nfsiostat`; platforms: linux)
 - [--nftables](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nftables.md): `nft` command parser (magic: `nft`; platforms: linux)
 - [--nmcli](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nmcli.md): `nmcli` command parser (magic: `nmcli`; platforms: linux)
 - [--nsd-control](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nsd_control.md): `nsd-control` command parser (magic: `nsd-control`)
