@@ -46,6 +46,8 @@ used to define field names
         "inline_data":                    Optional[boolean],
         "project_hierarchy":              Optional[boolean],
         "verity":                         Optional[boolean],
+        "dax":                            Optional[boolean],
+        "dont_compress":                  Optional[boolean]
       }
     ]
 
@@ -67,7 +69,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`lsattr` command parser'
     author = 'Mark Rotner'
     author_email = 'rotner.mr@gmail.com'
@@ -79,9 +81,10 @@ class info():
 __version__ = info.version
 
 
-LINE_RE = re.compile(r'(?P<attributes>[BZXsuSDiadAcEjItTeCFNPV-]{20}) (?P<filename>.*)')
+LINE_RE = re.compile(r'(?P<attributes>[BZXsuSDiadAcEjItTeCFNPVxm-]{20,}) (?P<filename>.*)')
 
 # https://github.com/mirror/busybox/blob/2d4a3d9e6c1493a9520b907e07a41aca90cdfd94/e2fsprogs/e2fs_lib.c#L40
+# https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git/tree/lib/e2p/pf.c
 # https://github.com/landley/toybox/blob/f1682dc79fd75f64042b5438918fe5a507977e1c/toys/other/lsattr.c#L97
 ATTRIBUTES = {
     "B": "compressed_file",
@@ -107,6 +110,8 @@ ATTRIBUTES = {
     "N": "inline_data",
     "P": "project_hierarchy",
     "V": "verity",
+    "x": "dax",
+    "m": "dont_compress",
 }
 
 
