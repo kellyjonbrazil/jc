@@ -1,0 +1,1 @@
+[{"filesystem": "192.168.1.10:/export/home", "mount": "/home", "read": {"ops_sec": 0.008, "kb_sec": 7.942, "kb_op": 980.31, "retrans": 2, "retrans_percent": 0.3, "avg_rtt_ms": 6.0, "avg_exe_ms": 6.3, "avg_queue_ms": 0.3, "errors": 0, "errors_percent": 0.0}}, {"filesystem": "nas01.example.com:/volume1/archive", "mount": "/mnt/archive", "ops_sec": 53.469, "rpc_bklog": 0.0}]

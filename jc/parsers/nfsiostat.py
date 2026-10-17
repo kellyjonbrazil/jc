@@ -6,15 +6,11 @@ Each report is converted to one object per mount point. When `nfsiostat`
 is run with an interval and count (e.g. `nfsiostat 1 5`) the reports are
 returned in order as a flat list.
 
-Every RPC operation table in the report (`read` and `write` by default, or
-`getattr`, `access`, `lookup`, `readdir`, and `readdirplus` with the `-a`
-and `-d` options) is converted to an object named after the operation.
+With an interval, the first report for each mount covers the time since
+the file system was mounted, and later reports cover each interval.
+
 The cache summary lines printed by the `-a`, `-d`, and `-p` options are not
 parsed.
-
-The `errors` and `errors_percent` fields are only present when `nfsiostat`
-prints the `errors` column, which needs a kernel that reports per-operation
-error counts.
 
 Usage (cli):
 
@@ -37,20 +33,97 @@ Schema:
         "mount":                    string,
         "ops_sec":                  float,
         "rpc_bklog":                float,
-        "<operation>": {            # read, write, getattr, lookup, etc.
-          "ops_s":                  float,
-          "kb_s":                   float,
+        "read": {
+          "ops_sec":                float,
+          "kb_sec":                 float,
           "kb_op":                  float,
           "retrans":                integer,
           "retrans_percent":        float,
           "avg_rtt_ms":             float,
           "avg_exe_ms":             float,
           "avg_queue_ms":           float,
-          "errors":                 integer,
-          "errors_percent":         float
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "write": {
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "getattr": {                # [0]
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "access": {                 # [0]
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "lookup": {                 # [1]
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "readdir": {                # [1]
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
+        },
+        "readdirplus": {            # [1]
+          "ops_sec":                float,
+          "kb_sec":                 float,
+          "kb_op":                  float,
+          "retrans":                integer,
+          "retrans_percent":        float,
+          "avg_rtt_ms":             float,
+          "avg_exe_ms":             float,
+          "avg_queue_ms":           float,
+          "errors":                 integer,    # [2]
+          "errors_percent":         float       # [2]
         }
       }
     ]
+
+    [0] only with the `-a` option
+    [1] only with the `-d` option. `readdirplus` only appears for NFS
+        versions that have a READDIRPLUS operation (NFSv3)
+    [2] only present when the kernel reports per-operation error counts
 
 Examples:
 
@@ -62,8 +135,8 @@ Examples:
         "ops_sec": 4.234,
         "rpc_bklog": 0.0,
         "read": {
-          "ops_s": 0.0,
-          "kb_s": 0.0,
+          "ops_sec": 0.0,
+          "kb_sec": 0.0,
           "kb_op": 0.335,
           "retrans": 0,
           "retrans_percent": 0.0,
@@ -74,8 +147,8 @@ Examples:
           "errors_percent": 0.0
         },
         "write": {
-          "ops_s": 0.0,
-          "kb_s": 0.0,
+          "ops_sec": 0.0,
+          "kb_sec": 0.0,
           "kb_op": 0.0,
           "retrans": 0,
           "retrans_percent": 0.0,
@@ -96,8 +169,8 @@ Examples:
         "ops_sec": "4.234",
         "rpc_bklog": "0.000",
         "read": {
-          "ops_s": "0.000",
-          "kb_s": "0.000",
+          "ops_sec": "0.000",
+          "kb_sec": "0.000",
           "kb_op": "0.335",
           "retrans": "0",
           "retrans_percent": "0.0",
@@ -108,8 +181,8 @@ Examples:
           "errors_percent": "0.0"
         },
         "write": {
-          "ops_s": "0.000",
-          "kb_s": "0.000",
+          "ops_sec": "0.000",
+          "kb_sec": "0.000",
           "kb_op": "0.000",
           "retrans": "0",
           "retrans_percent": "0.0",
@@ -142,13 +215,16 @@ class info():
 __version__ = info.version
 
 
-MOUNT_RE = re.compile(r'^(?P<filesystem>\S.*) mounted on (?P<mount>.+):$')
+MOUNT_RE = re.compile(r'^(?P<filesystem>\S+) mounted on (?P<mount>.+):$')
 OP_HEADER_RE = re.compile(r'^(?P<op>[a-z]+):\s+ops/s\s')
 COLUMN_SPLIT_RE = re.compile(r'\s{2,}|\t')
 
+SKIP = '<skip>'
+KNOWN_OPS = {'read', 'write', 'getattr', 'access', 'lookup', 'readdir', 'readdirplus'}
+
 COLUMN_KEYS = {
-    'ops/s': 'ops_s',
-    'kB/s': 'kb_s',
+    'ops/s': 'ops_sec',
+    'kB/s': 'kb_sec',
     'kB/op': 'kb_op',
     'retrans': 'retrans',
     'avg RTT (ms)': 'avg_rtt_ms',
@@ -233,13 +309,28 @@ def parse(
 
     raw_output: List[Dict] = []
     mount: Dict = {}
-    # what the next values line belongs to: 'mount' or an operation name
+    # what the next values line belongs to: 'mount', an operation name, or
+    # SKIP for the values line of an unknown operation table
     section: Optional[str] = None
     columns: List[str] = []
 
+    def warn(message: str) -> None:
+        if not quiet:
+            jc.utils.warning_message([message])
+
+    def end_of_mount_block() -> None:
+        if not mount:
+            return
+
+        if section is not None:
+            warn(f'{mount["mount"]}: missing the values line after a header line')
+
+        if not any(isinstance(value, dict) for value in mount.values()):
+            warn(f'{mount["mount"]}: no operation statistics found (truncated input?)')
+
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in data.splitlines():
             stripped = line.strip()
 
             if not stripped:
@@ -247,6 +338,7 @@ def parse(
 
             mount_match = MOUNT_RE.match(stripped)
             if mount_match:
+                end_of_mount_block()
                 mount = {
                     'filesystem': mount_match.group('filesystem'),
                     'mount': mount_match.group('mount')
@@ -264,14 +356,25 @@ def parse(
 
             op_match = OP_HEADER_RE.match(stripped)
             if op_match:
-                section = op_match.group('op')
-                columns = COLUMN_SPLIT_RE.split(stripped.split(':', maxsplit=1)[1].strip())
+                op = op_match.group('op')
+                if op in KNOWN_OPS:
+                    section = op
+                    columns = COLUMN_SPLIT_RE.split(stripped.split(':', maxsplit=1)[1].strip())
+                else:
+                    warn(f'{mount["mount"]}: skipping unknown operation table: {op}')
+                    section = SKIP
                 continue
 
             if section == 'mount':
                 values = stripped.split()
                 if len(values) == 2:
                     mount['ops_sec'], mount['rpc_bklog'] = values
+                else:
+                    warn(f'{mount["mount"]}: unexpected number of fields: {stripped}')
+                section = None
+                continue
+
+            if section == SKIP:
                 section = None
                 continue
 
@@ -279,9 +382,13 @@ def parse(
                 op_stats = _parse_op_values(columns, stripped)
                 if op_stats:
                     mount[section] = op_stats
+                else:
+                    warn(f'{mount["mount"]}: could not parse {section} values: {stripped}')
                 section = None
                 continue
 
             # anything else (the -a, -d, and -p cache summary lines) is skipped
+
+        end_of_mount_block()
 
     return raw_output if raw else _process(raw_output)
