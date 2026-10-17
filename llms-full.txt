@@ -25,6 +25,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--chage](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/chage.md): `chage --list` command parser (magic: `chage --list`, `chage -l`; platforms: linux)
 - [--cksum](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/cksum.md): `cksum` and `sum` command parser (magic: `cksum`, `sum`; platforms: linux, darwin, cygwin, aix, freebsd)
 - [--clf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/clf.md): Common and Combined Log Format file parser
+- [--conntrack](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/conntrack.md): `conntrack` command parser (magic: `conntrack`; platforms: linux)
 - [--crontab](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/crontab.md): `crontab` command and file parser (magic: `crontab`; platforms: linux, darwin, aix, freebsd)
 - [--crontab-u](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/crontab_u.md): `crontab` file parser with user support (platforms: linux, darwin, aix, freebsd)
 - [--csv](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/csv.md): CSV file parser
