@@ -34,6 +34,7 @@ parsers: List[str] = [
     'cksum',
     'clf',
     'clf-s',
+    'conntrack',
     'crontab',
     'crontab-u',
     'csv',

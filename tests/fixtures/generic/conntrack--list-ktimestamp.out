@@ -1,0 +1,3 @@
+udp      17 4 src=10.0.0.5 dst=10.0.0.9 sport=52641 dport=53 packets=1 bytes=68 src=10.0.0.9 dst=10.0.0.5 sport=53 dport=52641 packets=1 bytes=155 mark=0 delta-time=26 [start=Sun Sep 20 15:32:30 2026] use=1
+tcp      6 86396 ESTABLISHED src=172.18.0.1 dst=172.18.0.2 sport=51814 dport=6379 packets=9 bytes=540 src=172.18.0.2 dst=172.18.0.1 sport=6379 dport=51814 packets=7 bytes=420 [ASSURED] mark=0 delta-time=1200 [start=Wed Sep  2 08:01:05 2026] [stop=Wed Sep  2 08:21:05 2026] use=1
+conntrack v1.4.8 (conntrack-tools): 2 flow entries have been shown.
