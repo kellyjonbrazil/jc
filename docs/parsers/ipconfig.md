@@ -454,8 +454,8 @@ Returns:
     Parsed dictionary. The raw and processed data structures are the same.
 
 ### Parser Information
-Compatibility:  windows
+Compatibility:  win32
 
 Source: [`jc/parsers/ipconfig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ipconfig.py)
 
-Version 1.1 by joehacksalot (joehacksalot@gmail.com)
+Version 1.2 by joehacksalot (joehacksalot@gmail.com)

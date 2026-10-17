@@ -53,6 +53,45 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.dpkg_l.parse(self.ubuntu_18_4_dpkg_l_codes, quiet=True), self.ubuntu_18_4_dpkg_l_codes_json)
 
+    def setUp(self):
+        fixture_dir = os.path.join(THIS_DIR, 'fixtures/ubuntu-26.04')
+        with open(os.path.join(fixture_dir, 'dpkg-l.out'),
+                  encoding='utf-8') as f:
+            self.ubuntu_26_4_dpkg_l = f.read()
+        with open(os.path.join(fixture_dir, 'dpkg-l.json'),
+                  encoding='utf-8') as f:
+            self.ubuntu_26_4_dpkg_l_json = json.load(f)
+
+    def test_dpkg_l_unicode_header_ubuntu_26_4(self):
+        """Test the reporter's Ubuntu 26.04 Unicode header capture."""
+        self.assertEqual(
+            jc.parsers.dpkg_l.parse(self.ubuntu_26_4_dpkg_l, quiet=True),
+            self.ubuntu_26_4_dpkg_l_json
+        )
+
+    def test_dpkg_l_unicode_header_raw_ubuntu_26_4(self):
+        """Raw output retains codes without adding decoded status fields."""
+        expected = self.ubuntu_26_4_dpkg_l_json
+        for entry in expected:
+            for field in ('desired', 'status', 'error'):
+                entry.pop(field, None)
+
+        self.assertEqual(
+            jc.parsers.dpkg_l.parse(
+                self.ubuntu_26_4_dpkg_l, raw=True, quiet=True
+            ), expected
+        )
+
+    def test_dpkg_l_synthetic_header_marker(self):
+        """Synthetic markers and dividers need not use current dpkg glyphs."""
+        lines = self.ubuntu_26_4_dpkg_l.splitlines()
+        lines[3] = lines[3].replace('│││', '|||', 1)
+        lines[4] = 'synthetic divider without box-drawing characters'
+        self.assertEqual(
+            jc.parsers.dpkg_l.parse('\n'.join(lines), quiet=True),
+            self.ubuntu_26_4_dpkg_l_json
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
