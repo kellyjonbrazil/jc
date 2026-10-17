@@ -1,0 +1,20 @@
+
+192.168.128.220:/mnt/warm/archivedb mounted on /archive:
+
+           ops/s       rpc bklog
+           4.234           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.000           0.000           0.335        0 (0.0%)           6.013           6.239           0.013        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.000           0.000           0.000        0 (0.0%)           0.000           0.000           0.000        0 (0.0%)
+
+192.168.128.221:/mnt/secondmount mounted on /blah:
+
+           ops/s       rpc bklog
+           3.215           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.000           0.000           0.335        0 (0.0%)           6.013           4.231           0.011        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.000           0.000           0.000        0 (0.0%)           0.000           0.000           0.000        0 (0.0%)
