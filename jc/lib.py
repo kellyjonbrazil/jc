@@ -116,6 +116,7 @@ parsers: List[str] = [
     'net-localgroup',
     'net-user',
     'nfsiostat',
+    'nfsiostat-s',
     'nftables',
     'nmcli',
     'nsd-control',
