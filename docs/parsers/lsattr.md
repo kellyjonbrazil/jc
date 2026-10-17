@@ -51,6 +51,8 @@ used to define field names
         "inline_data":                    Optional[boolean],
         "project_hierarchy":              Optional[boolean],
         "verity":                         Optional[boolean],
+        "dax":                            Optional[boolean],
+        "dont_compress":                  Optional[boolean]
       }
     ]
 
@@ -90,4 +92,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lsattr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsattr.py)
 
-Version 1.1 by Mark Rotner (rotner.mr@gmail.com)
+Version 1.2 by Mark Rotner (rotner.mr@gmail.com)

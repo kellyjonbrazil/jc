@@ -1,0 +1,25 @@
+
+
+   
+	
+ 	 
+ 	# comment
+
+   
+	
+ 	 
+MAILTO = "cron@example.com"
+
+   
+	
+ 	 
+0,15 * * * * echo "a  b	c"
+
+   
+	
+ 	 
+@reboot echo "a  b	c"
+
+   
+	
+ 	 

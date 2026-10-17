@@ -1,0 +1,12 @@
+VirtualHost configuration:
+192.168.1.10:80        site1.example.com (/etc/httpd/conf.d/site1.conf:1)
+192.168.1.11:443       site2.example.com (/etc/httpd/conf.d/site2.conf:1)
+ServerRoot: "/etc/httpd"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/etc/httpd/logs/error_log"
+Mutex default: dir="/run/httpd/" mechanism=default 
+PidFile: "/run/httpd/httpd.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="apache" id=48 not_used
+Group: name="apache" id=48 not_used

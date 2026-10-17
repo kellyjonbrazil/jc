@@ -1,9 +1,16 @@
 jc changelog
 
-20261005 v1.26.1
+20261017 v1.26.1
+- Add `apachectl` command parser
+- Add `nftables` `nft` command parser
+- Fix `cksum` parser for lines with no filename
+- Fix `crontab` standard and streaming parsers to ignore whitespace-only lines
+- Fix `dpkg` parser for Unicode table header
 - Fix `fstab` parser to ignore whitespace-only lines
 - Fix `group` parser to ignore whitespace-only lines
 - Fix `gshadow` parser to ignore whitespace-only lines
+- Fix `ipconfig` parser to not warn for incompatibility on Windows
+- Fix `lsattr` parser to support e2fsprogs and support `x` and `m` flags
 - Fix `passwd` parser to ignore whitespace-only lines
 - Fix `plist` parser for deprecation warning for codecs.open()
 - Fix `shadow` parser to ignore whitespace-only lines
