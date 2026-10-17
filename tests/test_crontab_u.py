@@ -24,6 +24,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-var-fix.out'), 'r', encoding='utf-8') as f:
         generic_crontab_u_var_fix = f.read()
 
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-lines.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines = f.read()
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-only.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_only = f.read()
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-comments.out'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_comments = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/crontab-u.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_crontab_u_json = json.loads(f.read())
@@ -40,6 +58,29 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-var-fix.json'), 'r', encoding='utf-8') as f:
         generic_crontab_u_var_fix_json = json.loads(f.read())
 
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-lines.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-lines-raw.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_lines_raw_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-only.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_only_json = json.loads(f.read())
+
+    with open(os.path.join(
+        THIS_DIR, os.pardir,
+        'tests/fixtures/generic/crontab-u-whitespace-comments.json'
+    ), 'r', encoding='utf-8') as f:
+        whitespace_comments_json = json.loads(f.read())
 
     def test_crontab_u_nodata(self):
         """
@@ -76,6 +117,75 @@ class MyTests(unittest.TestCase):
         Test 'crontab' with wildcard schedule should not generate variables from command line section
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_var_fix, quiet=True), self.generic_crontab_u_var_fix_json)
+
+    def test_crontab_u_nodata_raw(self):
+        """
+        Test 'crontab-u' with no data in raw mode
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse('', raw=True, quiet=True), {}
+        )
+
+    def test_crontab_u_whitespace_lines(self):
+        """
+        Test 'crontab-u' with whitespace-only lines
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(self.whitespace_lines, quiet=True),
+            self.whitespace_lines_json
+        )
+
+    def test_crontab_u_whitespace_lines_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only lines in raw mode
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(
+                self.whitespace_lines, raw=True, quiet=True
+            ),
+            self.whitespace_lines_raw_json
+        )
+
+    def test_crontab_u_whitespace_only(self):
+        """
+        Test 'crontab-u' with whitespace-only input
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(self.whitespace_only, quiet=True),
+            self.whitespace_only_json
+        )
+
+    def test_crontab_u_whitespace_only_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only input in raw mode
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(
+                self.whitespace_only, raw=True, quiet=True
+            ),
+            self.whitespace_only_json
+        )
+
+    def test_crontab_u_whitespace_comments(self):
+        """
+        Test 'crontab-u' with whitespace-only lines and comments
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(self.whitespace_comments, quiet=True),
+            self.whitespace_comments_json
+        )
+
+    def test_crontab_u_whitespace_comments_raw(self):
+        """
+        Test 'crontab-u' with whitespace-only lines and comments in raw mode
+        """
+        self.assertEqual(
+            jc.parsers.crontab_u.parse(
+                self.whitespace_comments, raw=True, quiet=True
+            ),
+            self.whitespace_comments_json
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

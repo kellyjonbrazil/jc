@@ -159,6 +159,7 @@ option.
 |       `--airport` | `airport -I` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport)        |
 |     `--airport-s` | `airport -s` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s)      |
 |        `--amixer` | `amixer` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/amixer)         |
+|     `--apachectl` | `apachectl -S` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apachectl)      |
 | `--apt-cache-show` | `apt-cache show` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_cache_show) |
 |   `--apt-get-sqq` | `apt-get -sqq` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_get_sqq)    |
 |           `--arp` | `arp` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/arp)            |
