@@ -5,7 +5,7 @@ jc changelog
 - Add `conntrack` command parser
 - Add `nftables` `nft` command parser
 - Fix `cksum` parser for lines with no filename
-- Fix `crontab` standard and streaming parsers to ignore whitespace-only lines
+- Fix `crontab` and `crontab_u` parsers to ignore whitespace-only lines
 - Fix `dpkg` parser for Unicode table header
 - Fix `fstab` parser to ignore whitespace-only lines
 - Fix `group` parser to ignore whitespace-only lines
