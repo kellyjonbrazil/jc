@@ -1,0 +1,22 @@
+table netdev nd {
+	chain ingress {
+		type filter hook ingress device "lo" priority filter; policy accept;
+	}
+}
+table inet prio {
+	chain c1 {
+		type filter hook input priority filter; policy accept;
+	}
+
+	chain c2 {
+		type filter hook input priority filter + 10; policy accept;
+	}
+
+	chain c3 {
+		type filter hook forward priority -100; policy drop;
+	}
+
+	chain regular {
+		counter packets 0 bytes 0 accept
+	}
+}

@@ -1,5 +1,27 @@
 jc changelog
 
+20261018 v1.26.1
+- Add `apachectl` command parser
+- Add `ics` file parser
+- Add `conntrack` command parser
+- Add `nfsiostat` command parser
+- Add `nfsiostat-s` streaming command parser
+- Add `nftables` `nft` command parser
+- Fix `cksum` parser for lines with no filename
+- Fix `crontab` and `crontab_u` parsers to ignore whitespace-only lines
+- Fix `dpkg` parser for Unicode table header
+- Fix `fstab` parser to ignore whitespace-only lines
+- Fix `group` parser to ignore whitespace-only lines
+- Fix `gshadow` parser to ignore whitespace-only lines
+- Fix `ipconfig` parser to not warn for incompatibility on Windows
+- Fix `lsattr` parser to support e2fsprogs and support `x` and `m` flags
+- Fix `passwd` parser to ignore whitespace-only lines
+- Fix `plist` parser for deprecation warning for codecs.open()
+- Fix `shadow` parser to ignore whitespace-only lines
+- Binary builds for linux and macOS (x86_64 and ARM) now include the
+  python 3.14 runtime. Those executable files are now significantly smaller.
+  Windows builds still use python 3.10 runtime
+
 20260919 v1.26.0
 - Add `authorized-keys` file parser for `~/.ssh/authorized_keys` files
 - Add `getfacl` command parser

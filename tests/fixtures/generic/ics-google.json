@@ -1,0 +1,124 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "7ip613vetlfquhh6pi4ag5tvnl@google.com",
+    "summary": "Test travel event",
+    "description": "test traveling for a few days",
+    "location": "New York, NY, USA",
+    "status": "CONFIRMED",
+    "transp": "TRANSPARENT",
+    "dtstart": "2026-10-20",
+    "dtend": "2026-10-23",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:49:04Z",
+    "last_modified": "2026-10-17T18:49:04Z",
+    "sequence": 0
+  },
+  {
+    "type": "VEVENT",
+    "uid": "20h1kej0kc3mufqa3or1r2v55p@google.com",
+    "summary": "Different timezone test event",
+    "location": "Crazy Pizza Rome, Via Vittorio Veneto, 167, 00187 Roma RM, Italy",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-26T12:00:00Z",
+    "dtend": "2026-10-26T13:00:00Z",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:55:21Z",
+    "last_modified": "2026-10-17T18:55:21Z",
+    "sequence": 0
+  },
+  {
+    "type": "VEVENT",
+    "uid": "2lrlr72o4auo0lme4dc19925eq@google.com",
+    "summary": "Test timed recurring event",
+    "description": "This time looks good",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-23T08:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtend": "2026-10-23T09:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "recurrence_id": "2026-10-23T10:00:00",
+    "recurrence_id_tzid": "America/Los_Angeles",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:57:51Z",
+    "last_modified": "2026-10-17T18:58:13Z",
+    "sequence": 1
+  },
+  {
+    "type": "VEVENT",
+    "uid": "1tfkhphh29jltg5evnigcpmjao@google.com",
+    "summary": "Test recurring event",
+    "description": "This event repeats every Friday",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-23",
+    "dtend": "2026-10-24",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:49:54Z",
+    "last_modified": "2026-10-17T18:49:56Z",
+    "sequence": 0,
+    "rrule": "FREQ=WEEKLY;BYDAY=FR"
+  },
+  {
+    "type": "VEVENT",
+    "uid": "3d8rihj3m2imff4lbsv1vqrocr@google.com",
+    "summary": "test event 2",
+    "description": "this is my test google meeting\n\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-\nJoin with Google Meet: https://meet.google.com/gva-wcva-kpy\n\nLearn more about Meet at: https://support.google.com/a/users/answer/9282720\n\nPlease do not edit this section.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-19T13:15:00Z",
+    "dtend": "2026-10-19T18:00:00Z",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:48:14Z",
+    "last_modified": "2026-10-17T18:48:15Z",
+    "sequence": 0,
+    "organizer": {
+      "name": "e1feede1dc8e4707133dac6c9769a4a9040292e0fdc7287af6465052e4b2a0dd@group.calendar.google.com",
+      "address": "e1feede1dc8e4707133dac6c9769a4a9040292e0fdc7287af6465052e4b2a0dd@group.calendar.google.com"
+    },
+    "attendees": [
+      {
+        "name": "john@example.com",
+        "address": "john@example.com",
+        "role": "REQ-PARTICIPANT",
+        "partstat": "NEEDS-ACTION"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "6hp5mqtgrr0q7tpu8heo4ejb68@google.com",
+    "summary": "test event 1",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-17T19:00:00Z",
+    "dtend": "2026-10-17T20:00:00Z",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:47:30Z",
+    "last_modified": "2026-10-17T18:47:30Z",
+    "sequence": 0
+  },
+  {
+    "type": "VEVENT",
+    "uid": "2lrlr72o4auo0lme4dc19925eq@google.com",
+    "summary": "Test timed recurring event",
+    "description": "This time looks good",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-16T10:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtend": "2026-10-16T11:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtstamp": "2026-10-17T18:59:05Z",
+    "created": "2026-10-17T18:57:51Z",
+    "last_modified": "2026-10-17T18:58:13Z",
+    "sequence": 0,
+    "rrule": "FREQ=WEEKLY;BYDAY=FR",
+    "exdate": [
+      "2026-11-06T10:00:00"
+    ],
+    "exdate_tzid": "America/Los_Angeles"
+  }
+]

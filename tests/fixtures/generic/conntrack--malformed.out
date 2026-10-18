@@ -1,0 +1,7 @@
+tcp      6 431982 ESTABLISHED src=192.168.2.100 dst=123.59.27.117 sport=34846 dport=993 src=123.59.27.117 dst=192.168.2.100 sport=993 dport=34846 [ASSURED] mark=0 use=1
+tcp      6 431982 ESTABLISHED src=192.168.2.100 dst=123.59.27.117 sport=34846 dport=993
+tcp      6 100 ESTABLISHED src=1.2.3.4 dst=5.6.7.8 sport=1 dport=2 src=5.6.7.8 dst=1.2.3.4 sport=2
+this is not conntrack output
+tcp      ESTABLISHED src=192.168.2.100 dst=123.59.27.117
+udp      17 30 src=192.168.2.100 dst=192.168.2.1 sport=57767 dport=53 [UNREPLIED] src=192.168.2.1 dst=192.168.2.100 sport=53 dport=57767 mark=0 use=1
+conntrack v1.4.9 (conntrack-tools): 2 flow entries have been shown.

@@ -1,0 +1,4 @@
+tcp      6 57 ESTABLISHED src=10.9.9.31 dst=10.9.9.32 sport=12345 dport=80 zone-orig=1 [UNREPLIED] src=10.9.9.32 dst=10.9.9.31 sport=80 dport=12345 mark=0 use=1
+tcp      6 57 ESTABLISHED src=10.9.9.33 dst=10.9.9.34 sport=12345 dport=80 [UNREPLIED] src=10.9.9.34 dst=10.9.9.33 sport=80 dport=12345 zone-reply=2 mark=0 use=1
+tcp      6 57 ESTABLISHED src=10.9.9.11 dst=10.9.9.12 sport=23456 dport=443 [UNREPLIED] src=10.9.9.12 dst=10.9.9.11 sport=443 dport=23456 [ASSURED] mark=0 zone=7 use=1
+conntrack v1.4.9 (conntrack-tools): 3 flow entries have been shown.

@@ -1,0 +1,16 @@
+VirtualHost configuration:
+*:80                   is a NameVirtualHost
+         default server example.com (/etc/httpd/conf.d/example.conf:1)
+         port 80 namevhost example.com (/etc/httpd/conf.d/example.conf:1)
+         port 80 namevhost broken entry with no definition
+not a virtual host line at all
+192.168.0.1:8080       backend.example.com (/etc/httpd/conf.d/backend.conf:5)
+ServerRoot: "/etc/httpd"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/etc/httpd/logs/error_log"
+Mutex default: dir="/run/httpd/" mechanism=default 
+PidFile: "/run/httpd/httpd.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="apache" id=48
+Group: name="apache" id=48

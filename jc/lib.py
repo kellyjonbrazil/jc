@@ -10,13 +10,14 @@ from jc import appdirs
 from jc import utils
 
 
-__version__ = '1.26.0'
+__version__ = '1.26.1'
 
 parsers: List[str] = [
     'acpi',
     'airport',
     'airport-s',
     'amixer',
+    'apachectl',
     'apt-cache-show',
     'apt-get-sqq',
     'arp',
@@ -33,6 +34,7 @@ parsers: List[str] = [
     'cksum',
     'clf',
     'clf-s',
+    'conntrack',
     'crontab',
     'crontab-u',
     'csv',
@@ -74,6 +76,7 @@ parsers: List[str] = [
     'host',
     'hosts',
     'http-headers',
+    'ics',
     'id',
     'ifconfig',
     'iftop',
@@ -113,6 +116,9 @@ parsers: List[str] = [
     'netstat',
     'net-localgroup',
     'net-user',
+    'nfsiostat',
+    'nfsiostat-s',
+    'nftables',
     'nmcli',
     'nsd-control',
     'ntpq',

@@ -1,4 +1,4 @@
-.TH jc 1 2026-09-19 1.26.0 "JSON Convert"
+.TH jc 1 2026-10-18 1.26.1 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -56,6 +56,11 @@ Parsers:
 .B
 \fB--amixer\fP
 `amixer` command parser
+
+.TP
+.B
+\fB--apachectl\fP
+`apachectl -S` command parser
 
 .TP
 .B
@@ -136,6 +141,11 @@ Common and Combined Log Format file parser
 .B
 \fB--clf-s\fP
 Common and Combined Log Format file streaming parser
+
+.TP
+.B
+\fB--conntrack\fP
+`conntrack` command parser
 
 .TP
 .B
@@ -344,6 +354,11 @@ HTTP headers parser
 
 .TP
 .B
+\fB--ics\fP
+`ics` file parser
+
+.TP
+.B
 \fB--id\fP
 `id` command parser
 
@@ -536,6 +551,21 @@ M3U and M3U8 file parser
 .B
 \fB--net-user\fP
 `net user` command parser
+
+.TP
+.B
+\fB--nfsiostat\fP
+`nfsiostat` command parser
+
+.TP
+.B
+\fB--nfsiostat-s\fP
+`nfsiostat` command streaming parser
+
+.TP
+.B
+\fB--nftables\fP
+`nft` command parser
 
 .TP
 .B

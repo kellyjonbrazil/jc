@@ -35,6 +35,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.group.parse('', quiet=True), [])
 
+    def test_group_whitespace_only_line(self):
+        """
+        Test 'cat /etc/group' with a whitespace-only line
+        """
+        data = ' \t \nwheel:x:10:jdoe\n'
+        expected = [{'group_name': 'wheel', 'password': 'x', 'gid': 10, 'members': ['jdoe']}]
+        self.assertEqual(jc.parsers.group.parse(data, quiet=True), expected)
+
     def test_group_centos_7_7(self):
         """
         Test 'cat /etc/group' on Centos 7.7

@@ -35,6 +35,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.passwd.parse('', quiet=True), [])
 
+    def test_passwd_whitespace_only_line(self):
+        """
+        Test 'cat /etc/passwd' with a whitespace-only line
+        """
+        data = ' \t \njdoe:x:1000:1000:test-user:/home/jdoe:/bin/bash\n'
+        expected = [{'username': 'jdoe', 'password': 'x', 'uid': 1000, 'gid': 1000, 'comment': 'test-user', 'home': '/home/jdoe', 'shell': '/bin/bash'}]
+        self.assertEqual(jc.parsers.passwd.parse(data, quiet=True), expected)
+
     def test_passwd_centos_7_7(self):
         """
         Test 'cat /etc/passwd' on Centos 7.7
