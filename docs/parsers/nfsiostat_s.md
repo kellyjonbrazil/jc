@@ -8,23 +8,20 @@ jc - JSON Convert `nfsiostat` command output streaming parser
 > This streaming parser outputs JSON Lines (cli) or returns an Iterable of
 > Dictionaries (module)
 
-Parses the per-mount reports printed by `nfsiostat` from `nfs-utils`. This
-is useful with an interval and no count (e.g. `nfsiostat 1`), since
-`nfsiostat` does not exit in that case.
+Parses the per-mount reports printed by `nfsiostat` from `nfs-utils`. Use
+it with an interval and no count (e.g. `nfsiostat 1`), which runs until it
+is stopped.
 
-One object is output per mount point per report, with the same fields as
-the `nfsiostat` parser. A mount object is output when the next mount header
-is read or the input ends, so with an interval the last mount of each
-report is output when the next report starts.
+Each report is converted to one object per mount point. A mount object is
+output when the next mount header is read or the input ends, so with an
+interval the last mount of each report is output when the next report
+starts.
 
 With an interval, the first report for each mount covers the time since
 the file system was mounted, and later reports cover each interval.
 
 The cache summary lines printed by the `-a`, `-d`, and `-p` options are not
-parsed. Tables for unknown operations are skipped with a warning. A values
-line that cannot be parsed is a parsing error, and with `-qq` (or
-`ignore_exceptions=True`) it is output as an error object while the rest of
-the mount is still parsed.
+parsed.
 
 Usage (cli):
 
