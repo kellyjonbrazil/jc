@@ -1,7 +1,8 @@
 jc changelog
 
-20261017 v1.26.1
+20261018 v1.26.1
 - Add `apachectl` command parser
+- Add `ics` file parser
 - Add `conntrack` command parser
 - Add `nfsiostat` command parser
 - Add `nftables` `nft` command parser
