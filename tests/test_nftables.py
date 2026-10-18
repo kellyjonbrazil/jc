@@ -73,6 +73,32 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(stderr.getvalue(), '')
 
+    def test_nftables_rule_counters(self):
+        """
+        Test 'nftables' pulls inline rule counters into their own fields and
+        ignores counter-like text in quoted strings, named counter references,
+        and counters inside braces
+        """
+        data = (
+            'table inet filter {\n'
+            '\tchain input {\n'
+            '\t\ttcp dport 8080 counter packets 12 bytes 720 accept\n'
+            '\t\ttcp dport 22 accept\n'
+            '\t\taccept comment "counter packets 1 bytes 2"\n'
+            '\t\ttcp dport 443 counter name "https" accept\n'
+            '\t\tadd @seen { ip saddr counter packets 3 bytes 4 } accept\n'
+            '\t}\n'
+            '}\n'
+        )
+        expected = [(12, 720), (None, None), (None, None), (None, None), (None, None)]
+
+        rules = jc.parse('nftables', data, quiet=True)[0]['chains'][0]['rules']
+        self.assertEqual([(r['counter_packets'], r['counter_bytes']) for r in rules], expected)
+        self.assertEqual(rules[0]['rule'], 'tcp dport 8080 counter packets 12 bytes 720 accept')
+
+        raw_rules = jc.parse('nftables', data, raw=True, quiet=True)[0]['chains'][0]['rules']
+        self.assertEqual((raw_rules[0]['counter_packets'], raw_rules[0]['counter_bytes']), ('12', '720'))
+
 
 if __name__ == '__main__':
     unittest.main()

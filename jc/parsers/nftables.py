@@ -50,7 +50,9 @@ Schema:
             "rules": [
               {
                 "rule":             string,
-                "handle":           integer     # [0]
+                "handle":           integer,    # [0]
+                "counter_packets":  integer,    # [1]
+                "counter_bytes":    integer     # [1]
               }
             ]
           }
@@ -113,7 +115,42 @@ Examples:
             "rules": [
               {
                 "rule": "tcp dport 8080 counter packets 12 bytes 720 accept",
-                "handle": 8
+                "handle": 8,
+                "counter_packets": 12,
+                "counter_bytes": 720
+              }
+            ]
+          }
+        ],
+        "sets": [],
+        "maps": []
+      }
+    ]
+
+    $ nft -a list ruleset | jc --nftables -p -r
+    [
+      {
+        "family": "inet",
+        "name": "filter",
+        "handle": "1",
+        "comment": null,
+        "flags": [],
+        "chains": [
+          {
+            "name": "input",
+            "handle": "1",
+            "type": "filter",
+            "hook": "input",
+            "devices": [],
+            "priority": "filter",
+            "policy": "drop",
+            "comment": null,
+            "rules": [
+              {
+                "rule": "tcp dport 8080 counter packets 12 bytes 720 accept",
+                "handle": "8",
+                "counter_packets": "12",
+                "counter_bytes": "720"
               }
             ]
           }
@@ -154,6 +191,12 @@ _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
 _device_pattern = re.compile(r'\bdevices?\s*=?\s*(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
+
+# an inline rule counter. Matched with quoted strings blanked out so a
+# comment that happens to contain the same words is not picked up.
+# Counters inside `{ }` (e.g. a set update) belong to the set element.
+_counter_pattern = re.compile(r'\bcounter\s+packets\s+(?P<packets>\d+)\s+bytes\s+(?P<bytes>\d+)\b')
+_quoted_pattern = re.compile(r'"[^"]*"')
 
 
 def _split_handle(statement: str) -> Tuple[str, Optional[str]]:
@@ -367,9 +410,18 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
 
         return
 
+    unquoted = _quoted_pattern.sub('""', statement)
+    counter_match = next(
+        (match for match in _counter_pattern.finditer(unquoted)
+         if _brace_depth(unquoted[:match.start()]) == 0),
+        None
+    )
+
     chain['rules'].append({
         'rule': statement,
-        'handle': handle
+        'handle': handle,
+        'counter_packets': counter_match.group('packets') if counter_match else None,
+        'counter_bytes': counter_match.group('bytes') if counter_match else None
     })
 
 
@@ -448,6 +500,8 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
             for rule in chain['rules']:
                 rule['handle'] = jc.utils.convert_to_int(rule['handle'])
+                rule['counter_packets'] = jc.utils.convert_to_int(rule['counter_packets'])
+                rule['counter_bytes'] = jc.utils.convert_to_int(rule['counter_bytes'])
 
         for entry in table['sets'] + table['maps']:
             entry['handle'] = jc.utils.convert_to_int(entry['handle'])
