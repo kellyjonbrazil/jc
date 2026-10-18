@@ -1,24 +1,5 @@
 r"""jc - JSON Convert `ics` file parser
 
-Parses iCalendar (RFC 5545) files.
-
-- `VEVENT`, `VTODO` and `VJOURNAL` components are converted; other components
-  are ignored.
-- `VALARM` blocks are read as part of the component they belong to.
-- Folded lines (a line continued with a leading space or tab) are unfolded,
-  `TEXT` escapes (`\n`, `\,`, `\;`, `\\`) are resolved, and the `VALUE=DATE`,
-  `VALUE=DATE-TIME` and `TZID` forms of the date properties are supported.
-- `RRULE` is passed through, not expanded into occurrences.
-- Only the properties in the schema below are read. Anything else - including
-  the `X-` properties - is dropped, and the components that are not
-  `VEVENT`, `VTODO`, `VJOURNAL` or `VALARM` (`VTIMEZONE`, `VFREEBUSY`,
-  `STANDARD`, `DAYLIGHT`, ...) and the `VCALENDAR`-level properties
-  (`VERSION`, `PRODID`, `CALSCALE`, `METHOD`) are ignored.
-
-> Note: Date and time values are normalized to ISO 8601 in the processed
-> output. Use the `-r` command-line argument or the `raw=True` argument in
-> `parse()` to keep the original iCalendar values.
-
 Usage (cli):
 
     $ cat calendar.ics | jc --ics
@@ -77,7 +58,7 @@ Schema:
             "rsvp":                 boolean   # [5]
           }
         ],
-        "rrule":                    string,
+        "rrule":                    string,   # [6]
         "rdate": [
                                     string    # [1]
         ],
@@ -109,6 +90,7 @@ Schema:
     [5] only when the property carries an `RSVP` parameter. Converted to a
         boolean in the processed output, while `raw=True` keeps the
         iCalendar `TRUE`/`FALSE` value
+    [6] passed through, not expanded into occurrences
 
 Examples:
 
@@ -196,7 +178,7 @@ _DATETIME_RE = re.compile(
 class info():
     """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'iCalendar (.ics) file parser'
+    description = '`ics` file parser'
     author = 'Paolo Valletta'
     author_email = 'paolovalletta@hotmail.it'
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
