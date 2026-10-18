@@ -19,10 +19,14 @@ class MyTests(unittest.TestCase):
         generic_ics_crlf = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google-shape.ics'), 'r', encoding='utf-8') as f:
-        generic_ics_google = f.read()
+        generic_ics_google_shape = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-outlook-shape.ics'), 'r', encoding='utf-8') as f:
         generic_ics_outlook = f.read()
+
+    # newline='' keeps the CRLF line endings of the export
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.ics'), 'r', encoding='utf-8', newline='') as f:
+        generic_ics_google_export = f.read()
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-test.json'), 'r', encoding='utf-8') as f:
@@ -38,10 +42,13 @@ class MyTests(unittest.TestCase):
         generic_ics_crlf_raw_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google-shape.json'), 'r', encoding='utf-8') as f:
-        generic_ics_google_json = json.loads(f.read())
+        generic_ics_google_shape_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-outlook-shape.json'), 'r', encoding='utf-8') as f:
         generic_ics_outlook_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.json'), 'r', encoding='utf-8') as f:
+        generic_ics_google_json = json.loads(f.read())
 
 
     def test_ics_nodata(self):
@@ -98,8 +105,8 @@ class MyTests(unittest.TestCase):
         properties, and a duration alarm
         """
         self.assertEqual(
-            jc.parsers.ics.parse(self.generic_ics_google, quiet=True),
-            self.generic_ics_google_json
+            jc.parsers.ics.parse(self.generic_ics_google_shape, quiet=True),
+            self.generic_ics_google_shape_json
         )
 
 
@@ -114,6 +121,42 @@ class MyTests(unittest.TestCase):
             jc.parsers.ics.parse(self.generic_ics_outlook, quiet=True),
             self.generic_ics_outlook_json
         )
+
+
+    def test_ics_google_export(self):
+        """
+        Test a file exported from Google Calendar, with names and addresses
+        scrubbed: CRLF line endings, a line folded mid-word, X- and
+        calendar-level X-WR- properties, a lowercase `mailto:`, escaped commas
+        in LOCATION, TZID/RECURRENCE-ID/EXDATE and two VEVENTs sharing a uid
+        """
+        self.assertIn('\r\n', self.generic_ics_google_export)
+
+        self.assertEqual(
+            jc.parsers.ics.parse(self.generic_ics_google_export, quiet=True),
+            self.generic_ics_google_json
+        )
+
+
+    def test_ics_rsvp_is_boolean(self):
+        """
+        Test that the RSVP parameter is a boolean in the processed output and
+        the iCalendar value in the raw output
+        """
+        data = (
+            'BEGIN:VEVENT\n'
+            'ATTENDEE;RSVP=TRUE:mailto:bob@example.com\n'
+            'ATTENDEE;RSVP=FALSE:mailto:carol@example.com\n'
+            'END:VEVENT\n'
+        )
+
+        result = jc.parsers.ics.parse(data, quiet=True)
+        self.assertIs(result[0]['attendees'][0]['rsvp'], True)
+        self.assertIs(result[0]['attendees'][1]['rsvp'], False)
+
+        raw = jc.parsers.ics.parse(data, raw=True, quiet=True)
+        self.assertEqual(raw[0]['attendees'][0]['rsvp'], 'TRUE')
+        self.assertEqual(raw[0]['attendees'][1]['rsvp'], 'FALSE')
 
 
     def test_ics_tzid_floating_and_utc(self):
@@ -274,6 +317,46 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['uid'], '42')
         self.assertNotIn('summary', result[0])
         self.assertIn('no property/value separator', err.getvalue())
+
+
+    def test_ics_not_a_calendar_warns(self):
+        """
+        Test that input with no BEGIN:VCALENDAR is reported and that quiet
+        suppresses the warning
+        """
+        data = 'Host: example.com\nContent-Type: text/plain\n'
+
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            result = jc.parsers.ics.parse(data)
+
+        self.assertEqual(result, [])
+        self.assertIn('No BEGIN:VCALENDAR', err.getvalue())
+
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            result = jc.parsers.ics.parse(data, quiet=True)
+
+        self.assertEqual(result, [])
+        self.assertEqual(err.getvalue(), '')
+
+
+    def test_ics_no_components_warns(self):
+        """
+        Test that a calendar with no supported components is reported
+        """
+        data = (
+            'BEGIN:VCALENDAR\n'
+            'VERSION:2.0\n'
+            'BEGIN:VTIMEZONE\n'
+            'TZID:America/New_York\n'
+            'END:VTIMEZONE\n'
+            'END:VCALENDAR\n'
+        )
+
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            result = jc.parsers.ics.parse(data)
+
+        self.assertEqual(result, [])
+        self.assertIn('No VEVENT, VTODO or VJOURNAL components found', err.getvalue())
 
 
     def test_ics_valid_input_does_not_warn(self):

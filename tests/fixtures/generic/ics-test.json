@@ -30,7 +30,7 @@
         "address": "bob@example.com",
         "role": "REQ-PARTICIPANT",
         "partstat": "ACCEPTED",
-        "rsvp": "TRUE"
+        "rsvp": true
       },
       {
         "address": "carol@example.com"

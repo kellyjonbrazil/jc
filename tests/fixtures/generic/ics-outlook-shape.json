@@ -24,7 +24,7 @@
         "address": "bob@example.com",
         "role": "REQ-PARTICIPANT",
         "partstat": "ACCEPTED",
-        "rsvp": "TRUE"
+        "rsvp": true
       }
     ],
     "alarms": [

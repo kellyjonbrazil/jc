@@ -25,14 +25,14 @@
         "address": "bob@example.com",
         "role": "REQ-PARTICIPANT",
         "partstat": "ACCEPTED",
-        "rsvp": "TRUE"
+        "rsvp": true
       },
       {
         "name": "Carol White",
         "address": "carol@example.com",
         "role": "OPT-PARTICIPANT",
         "partstat": "NEEDS-ACTION",
-        "rsvp": "TRUE"
+        "rsvp": true
       }
     ],
     "rrule": "FREQ=WEEKLY;WKST=MO;UNTIL=20261231T225959Z;BYDAY=TU",

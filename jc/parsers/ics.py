@@ -66,7 +66,7 @@ Schema:
                                  "address":    string,
                                  "role":       string,   # [3]
                                  "partstat":   string,   # [3]
-                                 "rsvp":       string    # [3]
+                                 "rsvp":       boolean   # [5]
                                },
         "attendees":           [
                                  {
@@ -74,7 +74,7 @@ Schema:
                                    "address":  string,
                                    "role":     string,   # [3]
                                    "partstat": string,   # [3]
-                                   "rsvp":     string    # [3]
+                                   "rsvp":     boolean   # [5]
                                  }
                                ],
         "rrule":               string,
@@ -102,10 +102,13 @@ Schema:
     [2] only when the property carries a `TZID` parameter. `rdate_tzid` and
         `exdate_tzid` hold the `TZID` of the last property that carried one, so
         a `RDATE` or `EXDATE` list that mixes zones keeps only the last one
-    [3] `name` only when the property carries a `CN` parameter; `role`,
-        `partstat` and `rsvp` only when those parameters are present
+    [3] `name` only when the property carries a `CN` parameter; `role` and
+        `partstat` only when those parameters are present
     [4] the `DATE-TIME` form is normalized to ISO 8601 in the processed
         output, while a duration such as `-PT15M` is passed through
+    [5] only when the property carries an `RSVP` parameter. Converted to a
+        boolean in the processed output, while `raw=True` keeps the
+        iCalendar `TRUE`/`FALSE` value
 
 Examples:
 
@@ -350,6 +353,8 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
     """
     components: List[Dict[str, Any]] = []
     stack: List[Dict[str, Any]] = []
+    calendar = False
+    entity = False
 
     for line in lines:
         if not line.strip():
@@ -365,7 +370,10 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
         name, params, value = prop
 
         if name == 'BEGIN':
-            stack.append({'kind': value.upper(), 'lines': [], 'alarms': []})
+            kind = value.upper()
+            calendar = calendar or kind == 'VCALENDAR'
+            entity = entity or kind in _ENTITIES
+            stack.append({'kind': kind, 'lines': [], 'alarms': []})
             continue
 
         if name == 'END':
@@ -404,6 +412,13 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             if component['kind'] in _ENTITIES:
                 jc.utils.warning_message([
                     f'Unterminated BEGIN:{component["kind"]}: no END for the component'])
+
+        if not calendar:
+            jc.utils.warning_message([
+                'No BEGIN:VCALENDAR found: the input does not look like iCalendar data'])
+        elif not components and not entity:
+            jc.utils.warning_message([
+                'No VEVENT, VTODO or VJOURNAL components found'])
 
     return components
 
@@ -533,6 +548,14 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 component[key] = [_iso(value) for value in component[key]]
             else:
                 component[key] = _iso(component[key])
+
+        addresses = list(component.get('attendees', []))
+        if 'organizer' in component:
+            addresses.append(component['organizer'])
+
+        for address in addresses:
+            if 'rsvp' in address:
+                address['rsvp'] = address['rsvp'].upper() == 'TRUE'
 
         for alarm in component.get('alarms', []):
             if 'trigger' in alarm:
