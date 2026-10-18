@@ -168,7 +168,8 @@ from jc.streaming import (
 from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
 from jc.parsers.nfsiostat import (
-    MOUNT_RE, OP_HEADER_RE, COLUMN_SPLIT_RE, KNOWN_OPS, NO_MOUNTS_MESSAGE, _parse_op_values
+    MOUNT_RE, OP_HEADER_RE, COLUMN_SPLIT_RE, KNOWN_OPS, NO_MOUNTS_MESSAGE, _parse_op_values,
+    _process as _process_list
 )
 
 
@@ -201,21 +202,7 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
 
         Dictionary. Structured data to conform to the schema.
     """
-    int_list = {'retrans', 'errors'}
-
-    for key in ('ops_sec', 'rpc_bklog'):
-        if key in proc_data:
-            proc_data[key] = jc.utils.convert_to_float(proc_data[key])
-
-    for value in proc_data.values():
-        if isinstance(value, dict):
-            for key in value:
-                if key in int_list:
-                    value[key] = jc.utils.convert_to_int(value[key])
-                else:
-                    value[key] = jc.utils.convert_to_float(value[key])
-
-    return proc_data
+    return _process_list([proc_data])[0]
 
 
 @add_jc_meta
