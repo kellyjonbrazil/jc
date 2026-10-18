@@ -58,7 +58,7 @@ Returns:
 def convert_size_to_int(size: str,
                         binary: bool = False,
                         posix_mode: bool = False,
-                        decimal_bias: bool = False) -> Optional[int]
+                        decimal_bias: bool = False) -> int | None
 ```
 
 Parse a human readable data size and return the number of bytes.
@@ -130,7 +130,7 @@ Returns:
 ### convert_to_float
 
 ```python
-def convert_to_float(value: object) -> Optional[float]
+def convert_to_float(value: object) -> float | None
 ```
 
 Converts string and int input to float. Strips all non-numeric
@@ -149,7 +149,7 @@ Returns:
 ### convert_to_int
 
 ```python
-def convert_to_int(value: object) -> Optional[int]
+def convert_to_int(value: object) -> int | None
 ```
 
 Converts string and float input to int. Strips all non-numeric
@@ -188,7 +188,7 @@ Returns:
 ### has_data
 
 ```python
-def has_data(data: Union[str, bytes]) -> bool
+def has_data(data: str | bytes) -> bool
 ```
 
 Checks if the string input contains data. If there are any
@@ -232,10 +232,10 @@ Returns True if the parser is compatible with the running OS platform.
 
 ```python
 def line_slice(
-    data: Union[str, Iterable[str], TextIO, bytes, NoneType],
-    slice_start: Optional[int] = None,
-    slice_end: Optional[int] = None
-) -> Union[str, Iterable[str], TextIO, bytes, NoneType]
+    data: str | Iterable[str] | TextIO | bytes | None,
+    slice_start: int | None = None,
+    slice_end: int | None = None
+) -> str | Iterable[str] | TextIO | bytes | None
 ```
 
 Slice input data by lines - lazily, if possible.

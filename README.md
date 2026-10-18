@@ -218,6 +218,7 @@ option.
 |          `--host` | `host` command parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/host)           |
 |         `--hosts` | `/etc/hosts` file parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/hosts)          |
 |  `--http-headers` | HTTP headers parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/http_headers)   |
+|           `--ics` | `ics` file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ics)            |
 |            `--id` | `id` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/id)             |
 |      `--ifconfig` | `ifconfig` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ifconfig)       |
 |         `--iftop` | `iftop` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/iftop)          |

@@ -1,0 +1,14 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "crlf-1",
+    "description": "firstsecond",
+    "dtstart": "20261015",
+    "attendees": [
+      {
+        "name": "Doe: Jane",
+        "address": "jane@example.com"
+      }
+    ]
+  }
+]
