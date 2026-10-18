@@ -339,6 +339,20 @@ class MyTests(unittest.TestCase):
         self.assertEqual(err.getvalue(), '')
 
 
+    def test_ics_bare_component_does_not_warn(self):
+        """
+        Test that a component without the VCALENDAR wrapper parses without
+        a warning
+        """
+        data = 'BEGIN:VEVENT\nUID:42\nSUMMARY:Standup\nEND:VEVENT\n'
+
+        with contextlib.redirect_stderr(io.StringIO()) as err:
+            result = jc.parsers.ics.parse(data)
+
+        self.assertEqual(result, [{'type': 'VEVENT', 'uid': '42', 'summary': 'Standup'}])
+        self.assertEqual(err.getvalue(), '')
+
+
     def test_ics_no_components_warns(self):
         """
         Test that a calendar with no supported components is reported

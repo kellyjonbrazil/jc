@@ -32,67 +32,67 @@ Schema:
 
     [
       {
-        "type":                string,   # [0]
-        "uid":                 string,
-        "summary":             string,
-        "description":         string,
-        "location":            string,
-        "url":                 string,
-        "status":              string,
-        "class":               string,
-        "transp":              string,
-        "geo":                 string,
-        "dtstart":             string,   # [1]
-        "dtstart_tzid":        string,   # [2]
-        "dtend":               string,   # [1]
-        "dtend_tzid":          string,   # [2]
-        "due":                 string,   # [1]
-        "due_tzid":            string,   # [2]
-        "recurrence_id":       string,   # [1]
-        "recurrence_id_tzid":  string,   # [2]
-        "dtstamp":             string,   # [1]
-        "created":             string,   # [1]
-        "last_modified":       string,   # [1]
-        "completed":           string,   # [1]
-        "duration":            string,
-        "sequence":            integer,
-        "priority":            integer,
-        "percent_complete":    integer,
-        "categories":          [
-                                 string
-                               ],
-        "organizer":           {
-                                 "name":       string,   # [3]
-                                 "address":    string,
-                                 "role":       string,   # [3]
-                                 "partstat":   string,   # [3]
-                                 "rsvp":       boolean   # [5]
-                               },
-        "attendees":           [
-                                 {
-                                   "name":     string,   # [3]
-                                   "address":  string,
-                                   "role":     string,   # [3]
-                                   "partstat": string,   # [3]
-                                   "rsvp":     boolean   # [5]
-                                 }
-                               ],
-        "rrule":               string,
-        "rdate":               [
-                                 string    # [1]
-                               ],
-        "rdate_tzid":          string,   # [2]
-        "exdate":              [
-                                 string    # [1]
-                               ],
-        "exdate_tzid":         string,   # [2]
-        "alarms":              [
-                                 {
-                                   "action":       string,
-                                   "trigger":      string,   # [4]
-                                   "description":  string
-                                 }
-                               ]
+        "type":                     string,   # [0]
+        "uid":                      string,
+        "summary":                  string,
+        "description":              string,
+        "location":                 string,
+        "url":                      string,
+        "status":                   string,
+        "class":                    string,
+        "transp":                   string,
+        "geo":                      string,
+        "dtstart":                  string,   # [1]
+        "dtstart_tzid":             string,   # [2]
+        "dtend":                    string,   # [1]
+        "dtend_tzid":               string,   # [2]
+        "due":                      string,   # [1]
+        "due_tzid":                 string,   # [2]
+        "recurrence_id":            string,   # [1]
+        "recurrence_id_tzid":       string,   # [2]
+        "dtstamp":                  string,   # [1]
+        "created":                  string,   # [1]
+        "last_modified":            string,   # [1]
+        "completed":                string,   # [1]
+        "duration":                 string,
+        "sequence":                 integer,
+        "priority":                 integer,
+        "percent_complete":         integer,
+        "categories": [
+                                    string
+        ],
+        "organizer": {
+          "name":                   string,   # [3]
+          "address":                string,
+          "role":                   string,   # [3]
+          "partstat":               string,   # [3]
+          "rsvp":                   boolean   # [5]
+        },
+        "attendees": [
+          {
+            "name":                 string,   # [3]
+            "address":              string,
+            "role":                 string,   # [3]
+            "partstat":             string,   # [3]
+            "rsvp":                 boolean   # [5]
+          }
+        ],
+        "rrule":                    string,
+        "rdate": [
+                                    string    # [1]
+        ],
+        "rdate_tzid":               string,   # [2]
+        "exdate": [
+                                    string    # [1]
+        ],
+        "exdate_tzid":              string,   # [2]
+        "alarms": [
+          {
+            "action":               string,
+            "trigger":              string,   # [4]
+            "description":          string
+          }
+        ]
       }
     ]
 
@@ -413,7 +413,9 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
                 jc.utils.warning_message([
                     f'Unterminated BEGIN:{component["kind"]}: no END for the component'])
 
-        if not calendar:
+        # a bare component (an event pasted without its VCALENDAR wrapper)
+        # parses fine, so only warn when nothing calendar-like was found
+        if not calendar and not entity:
             jc.utils.warning_message([
                 'No BEGIN:VCALENDAR found: the input does not look like iCalendar data'])
         elif not components and not entity:
