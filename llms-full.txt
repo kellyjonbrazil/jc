@@ -197,6 +197,7 @@ These process input line by line and output JSON Lines instead of a single JSON 
 - [--iostat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iostat_s.md): `iostat` command streaming parser (platforms: linux)
 - [--ls-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ls_s.md): `ls` command streaming parser (platforms: linux, darwin, cygwin, aix, freebsd)
 - [--mpstat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/mpstat_s.md): `mpstat` command streaming parser (platforms: linux)
+- [--nfsiostat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/nfsiostat_s.md): `nfsiostat` command streaming parser (platforms: linux)
 - [--pidstat-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pidstat_s.md): `pidstat -H` command streaming parser (platforms: linux)
 - [--ping-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ping_s.md): `ping` and `ping6` command streaming parser (platforms: linux, darwin, freebsd)
 - [--rsync-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/rsync_s.md): `rsync` command streaming parser (platforms: linux, darwin, freebsd)

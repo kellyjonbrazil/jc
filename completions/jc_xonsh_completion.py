@@ -244,6 +244,7 @@ jc_parsers = {
     '--net-localgroup': '`net localgroup` command parser',
     '--net-user': '`net user` command parser',
     '--nfsiostat': '`nfsiostat` command parser',
+    '--nfsiostat-s': '`nfsiostat` command streaming parser',
     '--nftables': '`nft` command parser',
     '--nmcli': '`nmcli` command parser',
     '--nsd-control': '`nsd-control` command parser',

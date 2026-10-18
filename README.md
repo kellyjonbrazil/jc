@@ -259,6 +259,7 @@ option.
 | `--net-localgroup` | `net localgroup` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_localgroup) |
 |      `--net-user` | `net user` command parser                               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/net_user)       |
 |     `--nfsiostat` | `nfsiostat` command parser                              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nfsiostat)      |
+|   `--nfsiostat-s` | `nfsiostat` command streaming parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nfsiostat_s)    |
 |      `--nftables` | `nft` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nftables)       |
 |         `--nmcli` | `nmcli` command parser                                  | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nmcli)          |
 |   `--nsd-control` | `nsd-control` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/nsd_control)    |

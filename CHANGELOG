@@ -5,6 +5,7 @@ jc changelog
 - Add `ics` file parser
 - Add `conntrack` command parser
 - Add `nfsiostat` command parser
+- Add `nfsiostat-s` streaming command parser
 - Add `nftables` `nft` command parser
 - Fix `cksum` parser for lines with no filename
 - Fix `crontab` and `crontab_u` parsers to ignore whitespace-only lines
