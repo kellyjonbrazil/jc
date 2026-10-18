@@ -319,12 +319,15 @@ def parse(
         if not quiet:
             jc.utils.warning_message([message])
 
+    def warn_if_values_line_missing() -> None:
+        if section is not None:
+            warn(f'{mount["mount"]}: missing the values line after a header line')
+
     def end_of_mount_block() -> None:
         if not mount:
             return
 
-        if section is not None:
-            warn(f'{mount["mount"]}: missing the values line after a header line')
+        warn_if_values_line_missing()
 
         if not any(isinstance(value, dict) for value in mount.values()):
             warn(f'{mount["mount"]}: no operation statistics found (truncated input?)')
@@ -352,11 +355,13 @@ def parse(
                 continue
 
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
+                warn_if_values_line_missing()
                 section = 'mount'
                 continue
 
             op_match = OP_HEADER_RE.match(stripped)
             if op_match:
+                warn_if_values_line_missing()
                 op = op_match.group('op')
                 if op in KNOWN_OPS:
                     section = op

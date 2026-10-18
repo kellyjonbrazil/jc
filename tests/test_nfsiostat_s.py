@@ -207,6 +207,38 @@ class MyTests(unittest.TestCase):
         self.assertEqual([item['mount'] for item in result], ['/home', '/data'])
         self.assertIn('/home: missing the values line after a header line', stderr)
 
+    def test_nfsiostat_s_mount_header_followed_by_op_header_warns(self):
+        """
+        Test 'nfsiostat' warns when the "ops/s rpc bklog" header is followed by an operation header
+        """
+        data = [
+            '192.168.1.10:/export/home mounted on /home:',
+            '           ops/s       rpc bklog',
+            'read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)',
+            '                   0.008           7.942         980.310        2 (0.3%)           6.000           6.300           0.300'
+        ]
+        result, stderr = _parse_capturing_stderr(data)
+        self.assertNotIn('ops_sec', result[0])
+        self.assertIn('read', result[0])
+        self.assertEqual(stderr.count('/home: missing the values line after a header line'), 1)
+
+    def test_nfsiostat_s_op_header_followed_by_op_header_warns(self):
+        """
+        Test 'nfsiostat' warns when an operation header is followed by another operation header
+        """
+        data = [
+            '192.168.1.10:/export/home mounted on /home:',
+            '           ops/s       rpc bklog',
+            '           2.110           0.000',
+            'read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)',
+            'write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)',
+            '                   0.002           2.371        1024.176        0 (0.0%)          10.000          10.200           0.100'
+        ]
+        result, stderr = _parse_capturing_stderr(data)
+        self.assertNotIn('read', result[0])
+        self.assertIn('write', result[0])
+        self.assertEqual(stderr.count('/home: missing the values line after a header line'), 1)
+
     def test_nfsiostat_s_summary_lines_do_not_warn(self):
         """
         Test 'nfsiostat' does not warn about the -a, -d, and -p summary lines

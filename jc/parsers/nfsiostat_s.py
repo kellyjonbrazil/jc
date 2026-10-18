@@ -254,9 +254,12 @@ def parse(
         if not quiet:
             jc.utils.warning_message([message])
 
-    def end_of_mount_block() -> None:
+    def warn_if_values_line_missing() -> None:
         if section is not None:
             warn(f'{output_line["mount"]}: missing the values line after a header line')
+
+    def end_of_mount_block() -> None:
+        warn_if_values_line_missing()
 
         if not any(isinstance(value, dict) for value in output_line.values()):
             warn(f'{output_line["mount"]}: no operation statistics found (truncated input?)')
@@ -292,11 +295,13 @@ def parse(
                 raise ParseError('Not nfsiostat data')
 
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
+                warn_if_values_line_missing()
                 section = 'mount'
                 continue
 
             op_match = OP_HEADER_RE.match(stripped)
             if op_match:
+                warn_if_values_line_missing()
                 op = op_match.group('op')
                 if op in KNOWN_OPS:
                     section = op
