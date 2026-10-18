@@ -170,7 +170,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -228,7 +228,7 @@ def parse(data, raw=False, quiet=False):
     cleandata = data.splitlines()
 
     # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    cleandata = [line for line in cleandata if line.strip()]
 
     if jc.utils.has_data(data):
 

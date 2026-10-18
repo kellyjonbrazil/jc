@@ -1,0 +1,60 @@
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+           2.110           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.008           7.942         980.310        2 (0.3%)           6.000           6.300           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.002           2.371        1024.176        0 (0.0%)          13.000          14.000           0.450        0 (0.0%)
+
+nas01.example.com:/volume1/archive mounted on /mnt/archive:
+
+           ops/s       rpc bklog
+          53.469           0.000
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.292         286.208         981.285        9 (0.9%)           6.067           6.400           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.075          76.813        1024.176        0 (0.0%)          13.259          14.259           0.437        1 (0.4%)
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+        1450.000           0.008
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                  50.000       49161.766         983.235        1 (2.0%)           6.200           6.600           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                  10.000       10241.758        1024.176        0 (0.0%)          14.000          15.000           0.400       1 (10.0%)
+
+nas01.example.com:/volume1/archive mounted on /mnt/archive:
+
+           ops/s       rpc bklog
+        4350.000           0.008
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                 150.000      147485.297         983.235        3 (2.0%)           6.200           6.600           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                  30.000       30725.273        1024.176        0 (0.0%)          14.000          15.000           0.400        0 (0.0%)
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+        2900.000           0.008
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                 100.000       98323.531         983.235        2 (2.0%)           6.200           6.600           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                  20.000       20483.516        1024.176        0 (0.0%)          14.000          15.000           0.400        0 (0.0%)
+
+nas01.example.com:/volume1/archive mounted on /mnt/archive:
+
+           ops/s       rpc bklog
+        8700.000           0.008
+
+read:              ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                 300.000      294970.594         983.235        6 (2.0%)           6.200           6.600           0.300        0 (0.0%)
+write:             ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                  60.000       61450.547        1024.176        0 (0.0%)          14.000          15.000           0.400        0 (0.0%)
