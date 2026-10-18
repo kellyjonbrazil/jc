@@ -1,0 +1,99 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "standup-42@example.com",
+    "summary": "Team standup",
+    "description": "Agenda, in order: 1. blockers; 2. demo\nbring a laptop",
+    "location": "Room 3",
+    "url": "https://example.com/meet/42",
+    "status": "CONFIRMED",
+    "class": "PUBLIC",
+    "transp": "OPAQUE",
+    "geo": "41.9028;12.4964",
+    "dtstart": "2026-10-15T09:00:00",
+    "dtstart_tzid": "Europe/Rome",
+    "dtend": "2026-10-15T09:15:00",
+    "dtend_tzid": "Europe/Rome",
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "sequence": 2,
+    "categories": [
+      "MEETING",
+      "WORK"
+    ],
+    "organizer": {
+      "name": "Alice Smith",
+      "address": "alice@example.com"
+    },
+    "attendees": [
+      {
+        "name": "Bob",
+        "address": "bob@example.com",
+        "role": "REQ-PARTICIPANT",
+        "partstat": "ACCEPTED",
+        "rsvp": true
+      },
+      {
+        "address": "carol@example.com"
+      }
+    ],
+    "rrule": "FREQ=WEEKLY;BYDAY=TH",
+    "rdate": [
+      "2026-10-22T09:00:00"
+    ],
+    "rdate_tzid": "Europe/Rome",
+    "exdate": [
+      "2026-10-29T09:00:00"
+    ],
+    "exdate_tzid": "Europe/Rome",
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "trigger": "-PT15M",
+        "description": "Reminder"
+      },
+      {
+        "action": "DISPLAY",
+        "trigger": "2026-10-15T08:00:00Z",
+        "description": "Second reminder"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "standup-42@example.com",
+    "summary": "Team standup (later)",
+    "status": "CONFIRMED",
+    "dtstart": "2026-10-22T10:00:00",
+    "dtstart_tzid": "Europe/Rome",
+    "dtend": "2026-10-22T10:15:00",
+    "dtend_tzid": "Europe/Rome",
+    "recurrence_id": "2026-10-22T09:00:00",
+    "recurrence_id_tzid": "Europe/Rome",
+    "dtstamp": "2026-10-14T08:00:00Z"
+  },
+  {
+    "type": "VEVENT",
+    "uid": "floating-1@example.com",
+    "summary": "Floating time",
+    "dtstart": "2026-10-16T10:00:00",
+    "dtstamp": "2026-10-14T08:00:00Z"
+  },
+  {
+    "type": "VTODO",
+    "uid": "todo-7@example.com",
+    "summary": "Send the report",
+    "status": "NEEDS-ACTION",
+    "due": "2026-10-20",
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "completed": "2026-10-14T12:00:00Z",
+    "priority": 5,
+    "percent_complete": 40
+  },
+  {
+    "type": "VJOURNAL",
+    "uid": "note-1@example.com",
+    "summary": "Note",
+    "description": "Journal entry",
+    "dtstamp": "2026-10-14T08:00:00Z"
+  }
+]

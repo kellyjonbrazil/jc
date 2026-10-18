@@ -1,0 +1,47 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d@google.com",
+    "summary": "Sprint review",
+    "description": "Join with Google Meet: https://meet.google.com/abc-defg-hij\n\nAgenda:\n1. Progress\n2. Demos",
+    "location": "Meeting room",
+    "status": "CONFIRMED",
+    "transp": "OPAQUE",
+    "dtstart": "2026-10-20T10:00:00",
+    "dtstart_tzid": "Europe/Rome",
+    "dtend": "2026-10-20T11:00:00",
+    "dtend_tzid": "Europe/Rome",
+    "dtstamp": "2026-10-12T07:30:00Z",
+    "created": "2026-10-01T12:00:00Z",
+    "last_modified": "2026-10-05T15:12:30Z",
+    "sequence": 1,
+    "organizer": {
+      "name": "Alice Smith",
+      "address": "alice@example.com"
+    },
+    "attendees": [
+      {
+        "name": "Bob Jones",
+        "address": "bob@example.com",
+        "role": "REQ-PARTICIPANT",
+        "partstat": "ACCEPTED",
+        "rsvp": true
+      },
+      {
+        "name": "Carol White",
+        "address": "carol@example.com",
+        "role": "OPT-PARTICIPANT",
+        "partstat": "NEEDS-ACTION",
+        "rsvp": true
+      }
+    ],
+    "rrule": "FREQ=WEEKLY;WKST=MO;UNTIL=20261231T225959Z;BYDAY=TU",
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "This is an event reminder",
+        "trigger": "-P0DT0H10M0S"
+      }
+    ]
+  }
+]
