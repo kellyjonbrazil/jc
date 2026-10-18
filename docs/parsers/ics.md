@@ -5,25 +5,6 @@
 
 jc - JSON Convert `ics` file parser
 
-Parses iCalendar (RFC 5545) files.
-
-- `VEVENT`, `VTODO` and `VJOURNAL` components are converted; other components
-  are ignored.
-- `VALARM` blocks are read as part of the component they belong to.
-- Folded lines (a line continued with a leading space or tab) are unfolded,
-  `TEXT` escapes (`\n`, `\,`, `\;`, `\\`) are resolved, and the `VALUE=DATE`,
-  `VALUE=DATE-TIME` and `TZID` forms of the date properties are supported.
-- `RRULE` is passed through, not expanded into occurrences.
-- Only the properties in the schema below are read. Anything else - including
-  the `X-` properties - is dropped, and the components that are not
-  `VEVENT`, `VTODO`, `VJOURNAL` or `VALARM` (`VTIMEZONE`, `VFREEBUSY`,
-  `STANDARD`, `DAYLIGHT`, ...) and the `VCALENDAR`-level properties
-  (`VERSION`, `PRODID`, `CALSCALE`, `METHOD`) are ignored.
-
-> Note: Date and time values are normalized to ISO 8601 in the processed
-> output. Use the `-r` command-line argument or the `raw=True` argument in
-> `parse()` to keep the original iCalendar values.
-
 Usage (cli):
 
     $ cat calendar.ics | jc --ics
@@ -37,67 +18,67 @@ Schema:
 
     [
       {
-        "type":                string,   # [0]
-        "uid":                 string,
-        "summary":             string,
-        "description":         string,
-        "location":            string,
-        "url":                 string,
-        "status":              string,
-        "class":               string,
-        "transp":              string,
-        "geo":                 string,
-        "dtstart":             string,   # [1]
-        "dtstart_tzid":        string,   # [2]
-        "dtend":               string,   # [1]
-        "dtend_tzid":          string,   # [2]
-        "due":                 string,   # [1]
-        "due_tzid":            string,   # [2]
-        "recurrence_id":       string,   # [1]
-        "recurrence_id_tzid":  string,   # [2]
-        "dtstamp":             string,   # [1]
-        "created":             string,   # [1]
-        "last_modified":       string,   # [1]
-        "completed":           string,   # [1]
-        "duration":            string,
-        "sequence":            integer,
-        "priority":            integer,
-        "percent_complete":    integer,
-        "categories":          [
-                                 string
-                               ],
-        "organizer":           {
-                                 "name":       string,   # [3]
-                                 "address":    string,
-                                 "role":       string,   # [3]
-                                 "partstat":   string,   # [3]
-                                 "rsvp":       boolean   # [5]
-                               },
-        "attendees":           [
-                                 {
-                                   "name":     string,   # [3]
-                                   "address":  string,
-                                   "role":     string,   # [3]
-                                   "partstat": string,   # [3]
-                                   "rsvp":     boolean   # [5]
-                                 }
-                               ],
-        "rrule":               string,
-        "rdate":               [
-                                 string    # [1]
-                               ],
-        "rdate_tzid":          string,   # [2]
-        "exdate":              [
-                                 string    # [1]
-                               ],
-        "exdate_tzid":         string,   # [2]
-        "alarms":              [
-                                 {
-                                   "action":       string,
-                                   "trigger":      string,   # [4]
-                                   "description":  string
-                                 }
-                               ]
+        "type":                     string,   # [0]
+        "uid":                      string,
+        "summary":                  string,
+        "description":              string,
+        "location":                 string,
+        "url":                      string,
+        "status":                   string,
+        "class":                    string,
+        "transp":                   string,
+        "geo":                      string,
+        "dtstart":                  string,   # [1]
+        "dtstart_tzid":             string,   # [2]
+        "dtend":                    string,   # [1]
+        "dtend_tzid":               string,   # [2]
+        "due":                      string,   # [1]
+        "due_tzid":                 string,   # [2]
+        "recurrence_id":            string,   # [1]
+        "recurrence_id_tzid":       string,   # [2]
+        "dtstamp":                  string,   # [1]
+        "created":                  string,   # [1]
+        "last_modified":            string,   # [1]
+        "completed":                string,   # [1]
+        "duration":                 string,
+        "sequence":                 integer,
+        "priority":                 integer,
+        "percent_complete":         integer,
+        "categories": [
+                                    string
+        ],
+        "organizer": {
+          "name":                   string,   # [3]
+          "address":                string,
+          "role":                   string,   # [3]
+          "partstat":               string,   # [3]
+          "rsvp":                   boolean   # [5]
+        },
+        "attendees": [
+          {
+            "name":                 string,   # [3]
+            "address":              string,
+            "role":                 string,   # [3]
+            "partstat":             string,   # [3]
+            "rsvp":                 boolean   # [5]
+          }
+        ],
+        "rrule":                    string,   # [6]
+        "rdate": [
+                                    string    # [1]
+        ],
+        "rdate_tzid":               string,   # [2]
+        "exdate": [
+                                    string    # [1]
+        ],
+        "exdate_tzid":              string,   # [2]
+        "alarms": [
+          {
+            "action":               string,
+            "trigger":              string,   # [4]
+            "description":          string
+          }
+        ]
       }
     ]
 
@@ -114,6 +95,7 @@ Schema:
     [5] only when the property carries an `RSVP` parameter. Converted to a
         boolean in the processed output, while `raw=True` keeps the
         iCalendar `TRUE`/`FALSE` value
+    [6] passed through, not expanded into occurrences
 
 Examples:
 

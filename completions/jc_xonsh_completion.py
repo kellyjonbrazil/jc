@@ -203,7 +203,7 @@ jc_parsers = {
     '--host': '`host` command parser',
     '--hosts': '`/etc/hosts` file parser',
     '--http-headers': 'HTTP headers parser',
-    '--ics': 'iCalendar (.ics) file parser',
+    '--ics': '`ics` file parser',
     '--id': '`id` command parser',
     '--ifconfig': '`ifconfig` command parser',
     '--iftop': '`iftop` command parser',

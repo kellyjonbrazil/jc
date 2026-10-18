@@ -64,7 +64,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--host](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/host.md): `host` command parser (magic: `host`)
 - [--hosts](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/hosts.md): `/etc/hosts` file parser
 - [--http-headers](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/http_headers.md): HTTP headers parser
-- [--ics](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ics.md): iCalendar (.ics) file parser
+- [--ics](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ics.md): `ics` file parser
 - [--id](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/id.md): `id` command parser (magic: `id`; platforms: linux, darwin, aix, freebsd; supports `--slurp`)
 - [--ifconfig](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ifconfig.md): `ifconfig` command parser (magic: `ifconfig`; platforms: linux, aix, freebsd, darwin)
 - [--iftop](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/iftop.md): `iftop` command parser (platforms: linux)
