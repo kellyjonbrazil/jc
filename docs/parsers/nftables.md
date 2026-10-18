@@ -6,15 +6,13 @@
 jc - JSON Convert `nftables` command output parser
 
 Parses `nft list ruleset`, `nft list tables`, and `nft list table <family>
-<name>`, with or without the `-a` option. The result is a list with one
-object per table, each holding its `chains`, `sets`, and `maps` lists.
+<name>`, with or without `-a`.
 
-A rule keeps the expression text exactly as `nft` prints it, minus the
-trailing `# handle N` comment, so verdicts, anonymous sets, and counters
-stay inside the `rule` string. Set and map `elements` are also kept as
-printed. Named `counter`, `quota`, `flowtable`, `limit`, `secmark`,
-`synproxy`, and `ct` blocks are skipped, and `-j`/`--json` input and output,
-`nft monitor`, and JSON-to-conf are not supported.
+Rules and set/map `elements` are kept as `nft` prints them, minus the
+`# handle N` comment. Inline rule counters are also copied into
+`counter_packets` and `counter_bytes`. Named `counter`, `quota`,
+`flowtable`, `limit`, `secmark`, `synproxy`, and `ct` blocks are skipped.
+`nft -j` and `nft monitor` output are not supported.
 
 Usage (cli):
 
@@ -55,7 +53,9 @@ Schema:
             "rules": [
               {
                 "rule":             string,
-                "handle":           integer     # [0]
+                "handle":           integer,    # [0]
+                "counter_packets":  integer,    # [1]
+                "counter_bytes":    integer     # [1]
               }
             ]
           }
@@ -118,7 +118,42 @@ Examples:
             "rules": [
               {
                 "rule": "tcp dport 8080 counter packets 12 bytes 720 accept",
-                "handle": 8
+                "handle": 8,
+                "counter_packets": 12,
+                "counter_bytes": 720
+              }
+            ]
+          }
+        ],
+        "sets": [],
+        "maps": []
+      }
+    ]
+
+    $ nft -a list ruleset | jc --nftables -p -r
+    [
+      {
+        "family": "inet",
+        "name": "filter",
+        "handle": "1",
+        "comment": null,
+        "flags": [],
+        "chains": [
+          {
+            "name": "input",
+            "handle": "1",
+            "type": "filter",
+            "hook": "input",
+            "devices": [],
+            "priority": "filter",
+            "policy": "drop",
+            "comment": null,
+            "rules": [
+              {
+                "rule": "tcp dport 8080 counter packets 12 bytes 720 accept",
+                "handle": "8",
+                "counter_packets": "12",
+                "counter_bytes": "720"
               }
             ]
           }
