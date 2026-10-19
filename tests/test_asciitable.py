@@ -1,5 +1,6 @@
 import os
 import unittest
+from unittest.mock import patch
 from jc.exceptions import ParseError
 import jc.parsers.asciitable
 
@@ -458,6 +459,147 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
         ]
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
+    def test_asciitable_columns_no_header(self):
+        """
+        Test 'asciitable' with a table that has no header row and column names
+        supplied with the columns argument
+        """
+        input = '''
+            aaaaaa   xyz
+            bbbbb    uvw
+        '''
+
+        expected = [
+            {
+                "a": "aaaaaa",
+                "b": "xyz"
+            },
+            {
+                "a": "bbbbb",
+                "b": "uvw"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, columns=['a', 'b'], quiet=True), expected)
+
+    def test_asciitable_columns_with_separator(self):
+        """
+        Test 'asciitable' with a single-space separated table that has no
+        header row and column names supplied with the columns argument
+        """
+        input = '''nginx 1.24.0
+redis 7.2.4
+'''
+
+        expected = [
+            {
+                "name": "nginx",
+                "version": "1.24.0"
+            },
+            {
+                "name": "redis",
+                "version": "7.2.4"
+            }
+        ]
+
+        self.assertEqual(
+            jc.parsers.asciitable.parse(input, columns=['name', 'version'], separator=' ', quiet=True),
+            expected
+        )
+
+    @patch.dict(os.environ, {'JC_ASCIITABLE_COLS': 'name,version', 'JC_ASCIITABLE_SEPARATOR': ' '})
+    def test_asciitable_columns_from_env(self):
+        """
+        Test 'asciitable' with column names and the separator supplied with
+        environment variables
+        """
+        input = '''nginx 1.24.0
+redis 7.2.4
+'''
+
+        expected = [
+            {
+                "name": "nginx",
+                "version": "1.24.0"
+            },
+            {
+                "name": "redis",
+                "version": "7.2.4"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
+    def test_asciitable_columns_are_snake_cased(self):
+        """
+        Test 'asciitable' with column names that need to be converted to
+        snake-case
+        """
+        input = '1,2\n3,\n'
+
+        expected = [
+            {
+                "col_a": "1",
+                "my_value": "2"
+            },
+            {
+                "col_a": "3",
+                "my_value": None
+            }
+        ]
+
+        self.assertEqual(
+            jc.parsers.asciitable.parse(input, columns=['Col A', 'My-Value'], separator=',', quiet=True),
+            expected
+        )
+
+    def test_asciitable_columns_no_header_no_lower_raw(self):
+        """
+        Test 'asciitable' with column names that have uppercase characters and
+        raw output
+        """
+        input = '1,2\n'
+
+        expected = [
+            {
+                "Col_A": "1",
+                "My_Value": "2"
+            }
+        ]
+
+        self.assertEqual(
+            jc.parsers.asciitable.parse(
+                input, columns=['Col A', 'My-Value'], separator=',', raw=True, quiet=True
+            ),
+            expected
+        )
+
+    def test_asciitable_columns_outer_separators(self):
+        """
+        Test 'asciitable' with a table that has no header row and a leading and
+        trailing separator on each row
+        """
+        input = '''| 1 | 2 |
+|-------|-------|
+| 3 |   |
+'''
+
+        expected = [
+            {
+                "x": "1",
+                "y": "2"
+            },
+            {
+                "x": "3",
+                "y": None
+            }
+        ]
+
+        self.assertEqual(
+            jc.parsers.asciitable.parse(input, columns=['x', 'y'], separator='|', quiet=True),
+            expected
+        )
 
 
 if __name__ == '__main__':
