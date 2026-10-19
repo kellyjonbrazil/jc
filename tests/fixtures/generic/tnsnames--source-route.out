@@ -1,0 +1,25 @@
+# A source route is followed in file order, so the ADDRESS order is the route.
+# ROUTE_LATE puts SOURCE_ROUTE after the addresses on purpose.
+
+ROUTE_DIRECT =
+  (DESCRIPTION =
+    (SOURCE_ROUTE = yes)
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = hop1)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = tcp)(HOST = hop2)(PORT = 1521))
+      (ADDRESS = (PROTOCOL = tcp)(HOST = hop3)(PORT = 1521)))
+    (CONNECT_DATA =
+      (SERVICE_NAME = route.example.com)))
+
+ROUTE_LATE =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = hop1)(PORT = 1521))
+      (ADDRESS_LIST =
+        (LOAD_BALANCE = on)
+        (ADDRESS = (PROTOCOL = tcp)(HOST = hop2a)(PORT = 1521))
+        (ADDRESS = (PROTOCOL = tcp)(HOST = hop2b)(PORT = 1521)))
+      (ADDRESS = (PROTOCOL = tcp)(HOST = hop3)(PORT = 1521)))
+    (SOURCE_ROUTE = yes)
+    (CONNECT_DATA =
+      (SERVICE_NAME = route.example.com)))

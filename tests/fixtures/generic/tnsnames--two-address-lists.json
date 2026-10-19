@@ -1,0 +1,1 @@
+[{"name": "DUAL", "aliases": ["DUAL"], "description": {"address_list": [{"address": [{"protocol": "tcp", "host": "dual1-svr", "port": 1521}]}, {"address": [{"protocol": "tcp", "host": "dual2-svr", "port": 1521}]}], "connect_data": {"service_name": "dual.example.com"}}}]

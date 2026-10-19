@@ -223,6 +223,7 @@ parsers: List[str] = [
     'time',
     'timedatectl',
     'timestamp',
+    'tnsnames',
     'toml',
     'top',
     'top-s',
