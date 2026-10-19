@@ -10,6 +10,18 @@ automatically.
 Row separators are optional and are ignored. Each non-row-separator line is
 considered a separate row in the table.
 
+Tables without a header row are also supported. Since there are no headers to
+detect, the column names must be supplied with the `columns` argument (Python
+library) or the `JC_ASCIITABLE_COLS` environment variable (cli) as a
+comma-separated list. When column names are supplied, every row in the input
+is treated as a data row.
+
+Values without a header row are split on two or more spaces. Use the
+`separator` argument or the `JC_ASCIITABLE_SEPARATOR` environment variable to
+split on an explicit string instead. This is useful for single-space,
+comma, or tab separated data. Rows that contain more values than there are
+column names keep only the first values that fit.
+
 For example:
 
     ╒══════════╤═════════╤════════╕
@@ -61,10 +73,18 @@ Usage (cli):
 
     $ cat table.txt | jc --asciitable
 
+    or for tables without a header row:
+
+    $ cat table.txt | JC_ASCIITABLE_COLS='name,version' jc --asciitable
+
 Usage (module):
 
     import jc
     result = jc.parse('asciitable', asciitable_string)
+
+    or for tables without a header row:
+
+    result = jc.parse('asciitable', asciitable_string, columns=['name', 'version'])
 
 Schema:
 
@@ -115,17 +135,31 @@ Examples:
         "baz": "3.14"
       }
     ]
+
+    $ printf 'nginx 1.24.0\nredis 7.2.4\n' | JC_ASCIITABLE_COLS='name,version' \
+    >   JC_ASCIITABLE_SEPARATOR=' ' jc --asciitable -p
+    [
+      {
+        "name": "nginx",
+        "version": "1.24.0"
+      },
+      {
+        "name": "redis",
+        "version": "7.2.4"
+      }
+    ]
 """
+import os
 import re
 from functools import lru_cache
-from typing import List, Dict
+from typing import List, Dict, Optional, Union
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -304,28 +338,82 @@ def _normalize_rows(table: str) -> List[str]:
     return result
 
 
+def _fixup_header_name(name: str) -> str:
+    """remove the replacement char, consecutive underscores, and trailing underscores"""
+    name = name.replace('�', '')
+    # remove consecutive underscores
+    name = re.sub(r'__+', '_', name)
+    # remove trailing underscores
+    name = re.sub(r'_+$', '', name)
+    return name
+
+
 def _fixup_headers(table: List[Dict]) -> List[Dict]:
     """remove consecutive underscores and any trailing underscores"""
     new_table = []
     for row in table:
         new_row = row.copy()
         for k in row:
-            # remove replacement character
-            k_new = k.replace('�', '')
-            # remove consecutive underscores
-            k_new = re.sub(r'__+', '_', k_new)
-            # remove trailing underscores
-            k_new = re.sub(r'_+$', '', k_new)
-            new_row[k_new] = new_row.pop(k)
+            new_row[_fixup_header_name(k)] = new_row.pop(k)
         new_table.append(new_row)
 
     return new_table
 
 
+def _columns_from_env() -> List[str]:
+    """get the header names from the JC_ASCIITABLE_COLS environment variable"""
+    columns = os.environ.get('JC_ASCIITABLE_COLS', '')
+    return [column.strip() for column in columns.split(',') if column.strip()]
+
+
+def _split_row(line: str, separator: Optional[str]) -> List[str]:
+    """split a headerless row into stripped values"""
+    if separator:
+        values = line.split(separator)
+        # ignore a leading and trailing separator (e.g. the outer pipes of a
+        # Markdown table)
+        if values and not values[0].strip():
+            values = values[1:]
+        if values and not values[-1].strip():
+            values = values[:-1]
+        return [value.strip() for value in values]
+
+    return [value.strip() for value in re.split(r'\s{2,}', line.strip())]
+
+
+def _parse_headerless(data: str, columns: List[str], separator: Optional[str]) -> List[Dict]:
+    """
+    Create the table for input that has no header row. Every non-blank and
+    non-separator line is a data row. Missing values are set to None.
+    """
+    result: List[Dict] = []
+
+    for line in data.splitlines():
+        # skip blank lines
+        if not line.strip():
+            continue
+
+        # skip separators
+        if _is_separator(line):
+            continue
+
+        values = _split_row(line, separator)
+        row: Dict[str, Optional[str]] = {}
+        for index, column in enumerate(columns):
+            value = values[index] if index < len(values) else ''
+            row[column] = value if value else None
+
+        result.append(row)
+
+    return result
+
+
 def parse(
     data: str,
     raw: bool = False,
-    quiet: bool = False
+    quiet: bool = False,
+    columns: Optional[Union[List[str], str]] = None,
+    separator: Optional[str] = None
 ) -> List[Dict]:
     """
     Main text parsing function
@@ -335,6 +423,14 @@ def parse(
         data:        (string)  text data to parse
         raw:         (boolean) unprocessed output if True
         quiet:       (boolean) suppress warning messages if True
+        columns:     (list)    header names for tables without a header row.
+                               A comma-separated string is also accepted.
+                               Overrides the JC_ASCIITABLE_COLS environment
+                               variable.
+        separator:   (string)  value separator for tables without a header
+                               row. Default is two or more spaces. Overrides
+                               the JC_ASCIITABLE_SEPARATOR environment
+                               variable.
 
     Returns:
 
@@ -348,8 +444,17 @@ def parse(
     if jc.utils.has_data(data):
         data = _remove_ansi(data)
         data = _strip(data)
-        data_list = _normalize_rows(data)
-        raw_table = sparse_table_parse(data_list)
-        raw_output = _fixup_headers(raw_table)
+
+        column_names = columns if columns is not None else _columns_from_env()
+        if isinstance(column_names, str):
+            column_names = [column.strip() for column in column_names.split(',') if column.strip()]
+        if column_names:
+            separator = separator if separator is not None else os.environ.get('JC_ASCIITABLE_SEPARATOR')
+            headers = [_fixup_header_name(_snake_case(column.strip())) for column in column_names]
+            raw_output = _parse_headerless(data, headers, separator)
+        else:
+            data_list = _normalize_rows(data)
+            raw_table = sparse_table_parse(data_list)
+            raw_output = _fixup_headers(raw_table)
 
     return raw_output if raw else _process(raw_output)
