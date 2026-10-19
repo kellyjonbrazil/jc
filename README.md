@@ -77,6 +77,8 @@ Schemas for each parser can be found at the documentation link beside each
 
 Release notes can be found in the [Releases section](https://github.com/kellyjonbrazil/jc/releases) on Github.
 
+[![Live demo by Demoshell](https://build.demoshell.com/v1/embed/badge.svg)](https://build.demoshell.com/launch?snapshot=demoshell%2Ftui%3Ajc&utm_source=badge)
+
 ## Why Would Anyone Do This!?
 For more information on the motivations for this project, please see my blog
 post on [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/) and my [interview with Console](https://console.substack.com/p/console-89).
