@@ -531,6 +531,25 @@ redis 7.2.4
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    @patch.dict(os.environ, {'JC_ASCIITABLE_COLS': 'env_a,env_b', 'JC_ASCIITABLE_SEPARATOR': ' '})
+    def test_asciitable_empty_columns_ignores_env(self):
+        """
+        Test 'asciitable' with an empty columns list. The environment variables
+        must not be used when column names are passed explicitly.
+        """
+        input = '''foo   bar
+1     2
+'''
+
+        expected = [
+            {
+                "foo": "1",
+                "bar": "2"
+            }
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, columns=[], quiet=True), expected)
+
     def test_asciitable_columns_are_snake_cased(self):
         """
         Test 'asciitable' with column names that need to be converted to

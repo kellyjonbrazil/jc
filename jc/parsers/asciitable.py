@@ -75,7 +75,7 @@ Usage (cli):
 
     or for tables without a header row:
 
-    $ JC_ASCIITABLE_COLS='name,version' cat table.txt | jc --asciitable
+    $ cat table.txt | JC_ASCIITABLE_COLS='name,version' jc --asciitable
 
 Usage (module):
 
@@ -445,7 +445,7 @@ def parse(
         data = _remove_ansi(data)
         data = _strip(data)
 
-        column_names = columns if columns else _columns_from_env()
+        column_names = columns if columns is not None else _columns_from_env()
         if isinstance(column_names, str):
             column_names = [column.strip() for column in column_names.split(',') if column.strip()]
         if column_names:
