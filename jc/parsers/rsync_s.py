@@ -9,6 +9,9 @@ generated with the `--log-file` option.
 
 The `--stats` or `--info=stats[1-3]` options are also supported.
 
+The `--progress` and `--info=progress2` options are supported, as well:
+each progress update line yields an object of type `progress`.
+
 Usage (cli):
 
     $ rsync -i -a source/ dest | jc --rsync-s
@@ -57,6 +60,12 @@ Schema:
       "acl_different":                  bool/null,
       "extended_attribute_different":   bool/null,
       "epoch":                          integer,      # [2]
+      "filename":                      string/null,  # [3]
+      "bytes":                          integer,      # [4]
+      "percent":                        integer,      # [4]
+      "speed":                          string,       # [4]
+      "transfer_number":                integer/null, # [4]
+      "check":                          string/null   # [4] [5]
 
       # below object only exists if using -qq or ignore_exceptions=True
       "_jc_meta": {
@@ -72,6 +81,11 @@ Schema:
         'hard link', 'not updated', 'message'
     [1] 'file', 'directory', 'symlink', 'device', 'special file'
     [2] naive timestamp if time and date fields exist and can be converted.
+    [3] progress objects only: the filename of the most recent file line (null
+        for --info=progress2 totals lines, which have no per-file lines).
+    [4] progress objects only (`--progress` or `--info=progress2`). One object
+        is emitted per progress update line.
+    [5] raw to-chk= / ir-chk= value, e.g. 'to-chk=5/7'.
 
 Examples:
 
@@ -92,7 +106,7 @@ from jc.streaming import (
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`rsync` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -121,7 +135,8 @@ def _process(proc_data: Dict) -> Dict:
         'false_alarms', 'data', 'total_files', 'regular_files', 'dir_files',
         'total_created_files', 'created_regular_files', 'created_dir_files',
         'deleted_files', 'transferred_files', 'transferred_file_size',
-        'literal_data', 'matched_data', 'file_list_size'
+        'literal_data', 'matched_data', 'file_list_size',
+        'bytes', 'percent', 'transfer_number'
     }
 
     float_list = {
@@ -130,7 +145,7 @@ def _process(proc_data: Dict) -> Dict:
     }
 
     for key in proc_data.copy():
-        if key in int_list:
+        if key in int_list and proc_data[key] is not None:
             proc_data[key] = jc.utils.convert_size_to_int(proc_data[key])
 
         if key in float_list:
@@ -191,6 +206,7 @@ def parse(
     summary: Dict = {}
     process: str = ''
     last_process: str = ''
+    last_filename: Union[str, None] = None
 
     update_type = {
         '<': 'file sent',
@@ -289,7 +305,18 @@ def parse(
 
     stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
     stat2_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+(?P<bytes_sec>[\d,.]+)\s+bytes/sec')
-    stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
+    stat3_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+total\s+size\s+is\s+(?P<total_size>[\d,]+)\s+speedup\s+is\s+(?P<speedup>[\d,.]+)')
+
+    # progress update lines emitted by --progress / --info=progress2, e.g.
+    # '      3,000,000 100%  217.67MB/s    0:00:00 (xfr#1, to-chk=5/7)'
+    # or an intermediate update without the trailing parenthetical, e.g.
+    # '         32,768   1%    0.00kB/s    0:00:00'
+    progress_line_re = re.compile(
+        r'\s*(?P<bytes>[\d,]+)\s+(?P<percent>\d+)%\s+(?P<speed>\S+/s)\s+'
+        r'(?P<time>\d+:\d\d:\d\d)\s*'
+        r'(?:\(xfr#(?P<transfer_number>\d+)'
+        r'(?:,\s+(?P<check>(?:to|ir)-chk=[\d/]+))?\))?\s*$'
+    )
 
     stat_ex_files_number_re = re.compile(r'Number\sof\sfiles:\s(?P<files_total>[,0123456789]+)\s\(reg:\s(?P<files_regular>[,0123456789]+),\sdir:\s(?P<files_dir>[,0123456789]+)\)$')
     stat_ex_files_created_re = re.compile(r'Number\sof\screated\sfiles:\s(?P<files_created_total>[,0123456789]+)\s\(reg:\s(?P<files_created_regular>[,0123456789]+),\sdir:\s(?P<files_created_dir>[,0123456789]+)\)$')
@@ -315,6 +342,7 @@ def parse(
             if file_line:
                 filename = file_line.group('name')
                 meta = file_line.group('meta')
+                last_filename = filename
 
                 output_line = {
                     'type': 'file',
@@ -339,6 +367,7 @@ def parse(
             if file_line_mac:
                 filename = file_line_mac.group('name')
                 meta = file_line_mac.group('meta')
+                last_filename = filename
 
                 output_line = {
                     'type': 'file',
@@ -370,6 +399,7 @@ def parse(
                 time = file_line_log.group('time')
                 process = file_line_log.group('process')
                 meta = file_line_log.group('meta')
+                last_filename = filename
 
                 output_line = {
                     'type': 'file',
@@ -406,6 +436,7 @@ def parse(
                 time = file_line_log_mac.group('time')
                 process = file_line_log_mac.group('process')
                 meta = file_line_log_mac.group('meta')
+                last_filename = filename
 
                 output_line = {
                     'type': 'file',
@@ -497,6 +528,25 @@ def parse(
             if stat3_line_log_v:
                 summary['total_size'] = stat3_line_log_v.group('total_size')
                 summary['speedup'] = stat3_line_log_v.group('speedup')
+                continue
+
+            # progress update lines when using --progress or --info=progress2.
+            # one object is emitted per update; 'filename' is the most recent
+            # file line (null for --info=progress2 totals).
+            progress_line = progress_line_re.match(line)
+            if progress_line:
+                output_line = {
+                    'type': 'progress',
+                    'filename': last_filename,
+                    'bytes': progress_line.group('bytes'),
+                    'percent': progress_line.group('percent'),
+                    'speed': progress_line.group('speed'),
+                    'time': progress_line.group('time'),
+                    'transfer_number': progress_line.group('transfer_number'),
+                    'check': progress_line.group('check')
+                }
+
+                yield output_line if raw else _process(output_line)
                 continue
 
             # extra stats lines when using rsync --stats or --info=stats[1-3]

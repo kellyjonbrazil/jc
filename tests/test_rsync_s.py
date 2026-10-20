@@ -52,6 +52,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats.out'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-progress.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_progress = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-progress2.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_progress2 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_rsync_i_streaming_json = json.loads(f.read())
@@ -91,6 +97,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats-streaming.json'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-progress-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_progress_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-progress2-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_progress2_streaming_json = json.loads(f.read())
 
 
     def test_rsync_s_nodata(self):
@@ -188,6 +200,18 @@ total size is 221.79G  speedup is 25,388.23
         Test 'rsync -i --stats' or 'rsync -i --info=stats[1-3]'
         """
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_stats.splitlines(), quiet=True)), self.generic_rsync_i_stats_streaming_json)
+
+    def test_rsync_s_i_progress(self):
+        """
+        Test 'rsync -i --progress'
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_progress.splitlines(), quiet=True)), self.generic_rsync_i_progress_streaming_json)
+
+    def test_rsync_s_progress2(self):
+        """
+        Test 'rsync --info=progress2'
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_progress2.splitlines(), quiet=True)), self.generic_rsync_progress2_streaming_json)
 
 
 if __name__ == '__main__':
