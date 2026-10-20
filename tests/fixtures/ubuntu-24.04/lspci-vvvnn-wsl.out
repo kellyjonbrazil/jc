@@ -1,0 +1,22 @@
+13d4:00:00.0 3D controller [0302]: Microsoft Corporation Basic Render Driver [1414:008e]
+	Physical Slot: 726833533
+	Control: I/O+ Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0
+	NUMA node: 0
+	Capabilities: <access denied>
+	Kernel driver in use: dxgkrnl
+
+5582:00:00.0 SCSI storage controller [0100]: Red Hat, Inc. Virtio 1.0 console [1af4:1043] (rev 01)
+	Subsystem: Red Hat, Inc. Virtio 1.0 console [1af4:0040]
+	Physical Slot: 3300344309
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx+
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 64
+	NUMA node: 0
+	Region 0: Memory at c00000000 (64-bit, non-prefetchable) [size=4K]
+	Region 2: Memory at c00001000 (64-bit, non-prefetchable) [size=4K]
+	Region 4: Memory at c00002000 (64-bit, non-prefetchable) [size=4K]
+	Capabilities: <access denied>
+	Kernel driver in use: virtio-pci
+
