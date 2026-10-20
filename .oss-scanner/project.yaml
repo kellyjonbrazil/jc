@@ -1,0 +1,8 @@
+# jc (JSON Convert): converts the output of popular CLI tools, file types, and strings to JSON/YAML.
+repo: https://github.com/kellyjonbrazil/jc#master
+primary_contact: kellyjonbrazil@gmail.com
+homepage: https://kellyjonbrazil.github.io/jc/
+disabled: false
+dockerfile: .oss-scanner/Dockerfile
+threat_model: .oss-scanner/threat_model.md
+
