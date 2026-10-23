@@ -452,6 +452,11 @@ def parse(data, raw=False, quiet=False):
 
         header_list = header_text.split()
         extra_opts = False
+        # `ss -t` and `ss -u` filter to a single socket family, and iproute2
+        # drops the Netid column in that case. Everything below the header is
+        # still column aligned, so the same rows parse; only the field names
+        # shift by one.
+        has_netid = bool(header_list) and header_list[0] == 'netid'
 
         for entry in cleandata[1:]:
             output_line = {}
@@ -460,7 +465,8 @@ def parse(data, raw=False, quiet=False):
                 entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
 
                 # fix weird ss bug where first two columns have no space between them sometimes
-                entry = entry[:5] + '  ' + entry[5:]
+                if has_netid:
+                    entry = entry[:5] + '  ' + entry[5:]
 
                 # A process name may contain spaces, and both splits below are
                 # space-based, so the users: block is shielded first and put
@@ -480,19 +486,35 @@ def parse(data, raw=False, quiet=False):
                     entry_list = re.split(TWO_OR_MORE_SPACES_PATTERN, entry.strip())
                     extra_opts = True
 
-                if entry_list[0] in contains_colon and ':' in entry_list[4]:
-                    l_field = entry_list[4].rsplit(':', maxsplit=1)
-                    l_address = l_field[0]
-                    l_port = l_field[1]
-                    entry_list[4] = l_address
-                    entry_list.insert(5, l_port)
+                if has_netid:
+                    if entry_list[0] in contains_colon and ':' in entry_list[4]:
+                        l_field = entry_list[4].rsplit(':', maxsplit=1)
+                        l_address = l_field[0]
+                        l_port = l_field[1]
+                        entry_list[4] = l_address
+                        entry_list.insert(5, l_port)
 
-                if entry_list[0] in contains_colon and ':' in entry_list[6]:
-                    p_field = entry_list[6].rsplit(':', maxsplit=1)
-                    p_address = p_field[0]
-                    p_port = p_field[1]
-                    entry_list[6] = p_address
-                    entry_list.insert(7, p_port)
+                    if entry_list[0] in contains_colon and ':' in entry_list[6]:
+                        p_field = entry_list[6].rsplit(':', maxsplit=1)
+                        p_address = p_field[0]
+                        p_port = p_field[1]
+                        entry_list[6] = p_address
+                        entry_list.insert(7, p_port)
+                else:
+                    # No Netid column: the header already names both port
+                    # columns, so confirm the entry has enough fields first and
+                    # split the address columns in place.
+                    for address_field in ('local_address', 'peer_address'):
+                        try:
+                            field_index = header_list.index(address_field)
+                        except ValueError:
+                            continue
+                        if field_index >= len(entry_list):
+                            continue
+                        if ':' in entry_list[field_index]:
+                            addr_field = entry_list[field_index].rsplit(':', maxsplit=1)
+                            entry_list[field_index] = addr_field[0]
+                            entry_list.insert(field_index + 1, addr_field[1])
 
                 # The options region is one logical field, but it can itself
                 # contain runs of two or more spaces: newer iproute2 pads after
@@ -522,7 +544,7 @@ def parse(data, raw=False, quiet=False):
                 output_line['local_address'] = i_field[0]
                 output_line['interface'] = i_field[1]
 
-            if output_line['netid'] == 'nl':
+            if output_line.get('netid') == 'nl':
                 channel = output_line.pop('local_address')
                 channel = channel + ':' + output_line.pop('local_port')
                 if '/' in channel:
@@ -532,11 +554,11 @@ def parse(data, raw=False, quiet=False):
 
                 output_line['channel'] = channel
 
-            if output_line['netid'] == 'p_raw':
+            if output_line.get('netid') == 'p_raw':
                 output_line['link_layer'] = output_line.pop('local_address')
                 output_line['interface'] = output_line.pop('local_port')
 
-            if output_line['netid'] not in contains_colon:
+            if 'netid' in output_line and output_line['netid'] not in contains_colon:
                 output_line['path'] = output_line.pop('local_address')
 
             raw_output.append(output_line)
