@@ -30,6 +30,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.out'), 'r', encoding='utf-8') as f:
         ss_padded_opts = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-tln.out'), 'r', encoding='utf-8') as f:
+        ss_tln = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-tan.out'), 'r', encoding='utf-8') as f:
+        ss_tan = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -51,6 +57,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.json'), 'r', encoding='utf-8') as f:
         ss_padded_opts_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-tln.json'), 'r', encoding='utf-8') as f:
+        ss_tln_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-tan.json'), 'r', encoding='utf-8') as f:
+        ss_tan_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -128,6 +140,24 @@ class MyTests(unittest.TestCase):
                          padded['process_id']['3242']['user'])
         self.assertEqual(unpadded['cgroup'], padded['cgroup'])
         self.assertEqual(sorted(unpadded), sorted(padded))
+
+
+    def test_ss_tln(self):
+        """
+        Test 'ss -tln', which omits the Netid column
+
+        iproute2 prints the Netid column only when more than one socket family
+        is selected, so filtering to TCP drops it. Before the fix every row
+        raised KeyError: 'netid' and the parser reported no data at all.
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_tln, quiet=True), self.ss_tln_json)
+
+    def test_ss_tan(self):
+        """
+        Test 'ss -tan', whose header is one column wider because it holds
+        TIME-WAIT, and whose rows carry peer ports and non-listening states
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_tan, quiet=True), self.ss_tan_json)
 
 
 if __name__ == '__main__':
