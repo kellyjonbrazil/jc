@@ -434,7 +434,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -627,7 +627,10 @@ def _parse(data):
 
 def _is_adapter_start_line(line):
     # Detect adapter start lines, e.g., "Ethernet adapter Ethernet:"
-    return re.match(r"^[^\s].*adapter.*:", line, re.IGNORECASE)
+    # Match the text before the last colon so the pattern does not need a
+    # second open-ended `.*` after `adapter`
+    prefix, colon, _ = line.rpartition(":")
+    return bool(colon) and re.match(r"^[^\s].*adapter", prefix, re.IGNORECASE)
 
 
 def _initialize_adapter(adapter_name):
