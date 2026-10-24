@@ -81,7 +81,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False) -> List[Dict[str, Any]]
 ```
@@ -103,4 +103,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/tsv.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/tsv.py)
 
-Version 1.0 by Gary Gurlaskie (https://github.com/garyg1)
+Version 1.1 by Gary Gurlaskie (https://github.com/garyg1)

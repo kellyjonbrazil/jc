@@ -131,4 +131,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/asciitable_m.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/asciitable_m.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

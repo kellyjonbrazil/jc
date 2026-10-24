@@ -383,4 +383,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lsusb.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsusb.py)
 
-Version 2.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 2.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -18,6 +18,7 @@
   * [line_slice](#jc.utils.line_slice)
   * [normalize_key](#jc.utils.normalize_key)
   * [remove_quotes](#jc.utils.remove_quotes)
+  * [splitlines](#jc.utils.splitlines)
   * [warning_message](#jc.utils.warning_message)
 
 jc - JSON Convert utils
@@ -301,6 +302,36 @@ Parameters:
 Returns:
 
     string
+
+<a id="jc.utils.splitlines"></a>
+
+### splitlines
+
+```python
+def splitlines(text: str,
+               keepends: bool = False,
+               split_cr: bool = False) -> List[str]
+```
+
+Split text into lines on LF and CRLF only (optionally also on a lone CR).
+
+Unlike `str.splitlines()`, this does not treat VT, FF, FS, GS, RS,
+NEL (U+0085), LINE SEPARATOR (U+2028) or PARAGRAPH SEPARATOR (U+2029)
+as line terminators, so those characters stay inside the line. By
+default a lone CR also stays inside the line.
+
+Parameters:
+
+    text:        (string)  text to split
+    keepends:    (boolean) keep the line terminators if True
+    split_cr:    (boolean) also treat a lone CR as a line terminator
+                           if True (for files that may use CR-only
+                           line endings)
+
+Returns:
+
+    List of strings. Like `str.splitlines()`, a trailing line terminator
+    does not produce an empty final line.
 
 <a id="jc.utils.warning_message"></a>
 
