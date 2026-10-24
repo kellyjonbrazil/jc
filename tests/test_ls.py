@@ -443,6 +443,27 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ls.parse(self.osx_10_14_6_ls_lR_empty_folder, quiet=True), self.osx_10_14_6_ls_lR_empty_folder_json)
 
+    def test_ls_lR_empty_folder_keeps_previous_filename(self):
+        """
+        Test 'ls -lR' with an empty directory between two populated ones.
+        The blank line that ls prints after an empty directory must not
+        cost the previous filename its final character.
+        """
+        data = (
+            './one:\n'
+            'total 4\n'
+            '-rw-r--r--  1 user  group  1 Jan  3 14:46 file\n'
+            '\n'
+            './empty:\n'
+            '\n'
+            './two:\n'
+            'total 4\n'
+            '-rw-r--r--  1 user  group  2 Jan  3 14:46 other\n'
+        )
+        self.assertEqual(
+            [entry['filename'] for entry in jc.parsers.ls.parse(data, quiet=True)],
+            ['file', 'other'])
+
     def test_ls_l_iso_ubuntu_18_4(self):
         """
         Test 'ls -l --time-style=full-iso' for files with convertible dates on Ubuntu 18.4
