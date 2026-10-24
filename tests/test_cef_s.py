@@ -45,5 +45,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(jc.parsers.cef_s.parse(self.cef_unescaped_equals.splitlines(), quiet=True)), self.cef_unescaped_equals_streaming_json)
 
 
+    def test_cef_s_crlf_lines(self):
+        """
+        Test cef with CRLF line endings, split on LF or with line endings kept
+        """
+        crlf_data = self.cef.replace('\n', '\r\n')
+        self.assertEqual(list(jc.parsers.cef_s.parse(crlf_data.split('\n'), quiet=True)), self.cef_streaming_json)
+        self.assertEqual(list(jc.parsers.cef_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.cef_streaming_json)
+
+
 if __name__ == '__main__':
     unittest.main()

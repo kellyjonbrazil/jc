@@ -46,5 +46,20 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_clf_s_crlf_lines(self):
+        """
+        Test 'clf-s' with CRLF line endings, split on LF or with line endings kept
+        """
+        crlf_data = self.f_in['clf_s'].replace('\n', '\r\n')
+        self.assertEqual(
+            list(parse(crlf_data.split('\n'), quiet=True)),
+            self.f_json['clf_s']
+        )
+        self.assertEqual(
+            list(parse(crlf_data.splitlines(keepends=True), quiet=True)),
+            self.f_json['clf_s']
+        )
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -20,7 +20,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('iostat_s', iostat_command_output.splitlines())
+    result = jc.parse('iostat_s', iostat_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -173,7 +173,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True

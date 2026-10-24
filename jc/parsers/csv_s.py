@@ -18,7 +18,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('csv_s', csv_output.splitlines())
+    result = jc.parse('csv_s', csv_output.split('\n'))
     for item in result:
         # do something
 
@@ -65,7 +65,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,7 +110,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -134,7 +134,7 @@ def parse(
 
     # check for Python bug that does not split on `\r` newlines from sys.stdin correctly
     # https://bugs.python.org/issue45617
-    if len(temp_list) == 1:
+    if len(temp_list) == 1 and temp_list[0]:
         raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
     # remove BOM bytes from first row, if present

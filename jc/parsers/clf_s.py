@@ -28,7 +28,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('clf_s', common_log_file_output.splitlines())
+    result = jc.parse('clf_s', common_log_file_output.split('\n'))
     for item in result:
         # do something
 
@@ -90,7 +90,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Common and Combined Log Format file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -148,7 +148,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -196,6 +196,10 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
+                line = line[:-1]
             output_line: Dict = {}
 
             if not line.strip():

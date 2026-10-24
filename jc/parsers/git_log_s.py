@@ -30,7 +30,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('git_log_s', git_log_command_output.splitlines())
+    result = jc.parse('git_log_s', git_log_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -106,7 +106,7 @@ patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -176,7 +176,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -200,6 +200,10 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
+                line = line[:-1]
 
             if line == '' or line == '\n':
                 continue

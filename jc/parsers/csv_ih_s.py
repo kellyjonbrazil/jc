@@ -18,7 +18,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('csv_ih', csv_output.splitlines())
+    result = jc.parse('csv_ih_s', csv_output.split('\n'))
 
 Schema:
 
