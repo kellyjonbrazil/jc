@@ -119,7 +119,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ldd` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -136,7 +136,7 @@ _NAME_AND_ADDRESS = re.compile(r'^(?P<name>\S+)\s*\((?P<address>0x[0-9a-fA-F]+)\
 _VERSION_INFO_HEADER = 'Version information:'
 _VERSION_OBJECT = re.compile(r'^(?P<obj>\S+):$')
 _VERSION_REQUIREMENT = re.compile(r'^(?P<name>\S+)\s*\((?P<version>[^)]+)\)\s*=>\s*(?P<path>\S+)$')
-_FILE_HEADER = re.compile(r'^(?P<file>\S+):$')
+_FILE_HEADER = re.compile(r'^(?P<file>.+):$')
 
 
 def _process(proc_data):
@@ -185,7 +185,7 @@ def parse(data, raw=False, quiet=False):
         return current_file
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             stripped = line.strip()
 
             if not stripped:
