@@ -144,7 +144,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`apachectl -S` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -172,8 +172,8 @@ _name_vhost = re.compile(
     r'\((?P<path>.+):(?P<line>\d+)\)\s*$'
 )
 
-_wild_alias = re.compile(r'^\s*wild alias\s+(?P<name>\S+)\s*$')
-_alias = re.compile(r'^\s*alias\s+(?P<name>\S+)\s*$')
+_wild_alias = re.compile(r'^\s*wild alias\s+(?P<name>\S.*?)\s*$')
+_alias = re.compile(r'^\s*alias\s+(?P<name>\S.*?)\s*$')
 
 _quoted_value = re.compile(
     r'^[A-Za-z][A-Za-z ]*:\s*"(?P<value>[^"]*)"(?P<not_used>\s+not_used)?\s*$'
@@ -390,7 +390,7 @@ def parse(
         current_vhost: Optional[JSONDictType] = None
         default_key: Optional[Tuple[str, str, str]] = None
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if _vhost_marker.match(line):
                 in_vhosts = True
                 address = None
