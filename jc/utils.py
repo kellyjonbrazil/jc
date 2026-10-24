@@ -556,7 +556,7 @@ def splitlines(
 
 
 def _lazy_splitlines(text: str) -> Iterable[str]:
-    NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+    NEWLINES_PATTERN: str = r'\r?\n'
     NEWLINES_RE = re.compile(NEWLINES_PATTERN)
     start = 0
     for m in NEWLINES_RE.finditer(text):

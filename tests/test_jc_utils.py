@@ -412,6 +412,12 @@ line5
         expected = ['line2', '', 'line4']
         self.assertEqual(list(jc.utils.line_slice(data, 1, 4)), expected)
 
+    def test_utils_line_slice_string_lone_cr(self):
+        data = 'a\rb\nc\r\nd\ne'
+        self.assertEqual(jc.utils.line_slice(data, 1, 3), 'c\nd')
+        self.assertEqual(jc.utils.line_slice(data, 0, 2), 'a\rb\nc')
+        self.assertEqual(jc.utils.line_slice(data, -2, None), 'd\ne')
+
     def test_remove_quotes(self):
         for char in ["'", '"']:
             with self.subTest(f'Quote character: {char}'):
