@@ -23,7 +23,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('tsv_ih_s', tsv_output.splitlines())
+    result = jc.parse('tsv_ih_s', tsv_output.split('\n'))
 
 Schema:
 

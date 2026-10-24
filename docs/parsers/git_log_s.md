@@ -35,7 +35,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('git_log_s', git_log_command_output.splitlines())
+    result = jc.parse('git_log_s', git_log_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -109,7 +109,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -125,4 +125,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_log_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_log_s.py)
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
