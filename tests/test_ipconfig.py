@@ -44,5 +44,16 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.parsers.ipconfig.parse(in_var, quiet=True), out_var)
 
 
+    def test_ipconfig_line_separator(self):
+        """
+        Test 'ipconfig' with a line-break character other than LF inside a field
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/ipconfig.out'), 'r', encoding='utf-8') as f:
+            data = f.read().replace('adapter Ethernet 2:', 'adapter Ethernet\u20282:')
+        result = jc.parsers.ipconfig.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result['adapters']], ['Tailscale', 'Ethernet\u20282', 'Bluetooth Network Connection'])
+        self.assertEqual(result['adapters'][0]['physical_address'], None)
+
+
 if __name__ == "__main__":
     unittest.main()

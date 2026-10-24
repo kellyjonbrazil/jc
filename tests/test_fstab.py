@@ -63,5 +63,14 @@ class MyTests(unittest.TestCase):
                          self.generic_fstab_optional_fields_json)
 
 
+    def test_fstab_line_separator(self):
+        """
+        Test 'fstab' with a line-break character other than LF inside a field
+        """
+        data = '# disabled:\x0ctmpfs /tmp tmpfs rw,noexec,nosuid,nodev 0 0\n/dev/sda1 / ext4 defaults 0 1\n'
+        expected = [{'fs_spec': '/dev/sda1', 'fs_file': '/', 'fs_vfstype': 'ext4', 'fs_mntops': 'defaults', 'fs_freq': 0, 'fs_passno': 1}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -50,5 +50,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.gshadow.parse(self.ubuntu_18_4_gshadow, quiet=True), self.ubuntu_18_4_gshadow_json)
 
 
+    def test_gshadow_line_separator(self):
+        """
+        Test 'gshadow' with a line-break character other than LF inside a field
+        """
+        data = 'ops:!::alice,\u2028#y,carol\nstaff:!::alice\u2028sudo::bob:bob\n'
+        result = jc.parsers.gshadow.parse(data, quiet=True)
+        self.assertEqual([x['group_name'] for x in result], ['ops', 'staff'])
+        self.assertEqual(result[0]['members'], ['alice', '\u2028#y', 'carol'])
+        self.assertEqual(result[1]['members'], ['alice\u2028sudo'])
+
+
 if __name__ == '__main__':
     unittest.main()

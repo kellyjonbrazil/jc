@@ -78,7 +78,7 @@ import re
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.01'
+    version = '0.2'
     description = 'Java MANIFEST.MF file parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
@@ -126,7 +126,7 @@ def parse(data, raw=False, quiet=False):
     archives = []
 
     if jc.utils.has_data(data):
-        datalines = data.splitlines()
+        datalines = jc.utils.splitlines(data, split_cr=True)
 
         # remove last line of multi-archive output since it is not needed
         if datalines[-1].endswith('archives were successfully processed.'):

@@ -308,7 +308,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'HTTP headers parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -477,7 +477,7 @@ def parse(
     if jc.utils.has_data(data):
 
         # Clear any blank lines
-        cleandata = [line for line in data.splitlines() if line.strip()]
+        cleandata = [line for line in jc.utils.splitlines(data) if line.strip()]
 
         for line in cleandata:
 

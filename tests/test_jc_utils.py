@@ -307,6 +307,49 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.utils.input_type_check('abc'), None)
 
 
+    def test_utils_splitlines(self):
+        data = 'line1\nline2\r\nline3\u2028still line3\rstill line3\x0cstill line3\n'
+        expected = ['line1', 'line2', 'line3\u2028still line3\rstill line3\x0cstill line3']
+        self.assertEqual(jc.utils.splitlines(data), expected)
+
+
+    def test_utils_splitlines_keepends(self):
+        data = 'line1\nline2\r\nline3\u2028still line3'
+        expected = ['line1\n', 'line2\r\n', 'line3\u2028still line3']
+        self.assertEqual(jc.utils.splitlines(data, keepends=True), expected)
+
+
+    def test_utils_splitlines_other_separators_stay_in_line(self):
+        for sep in ('\x0b', '\x0c', '\x1c', '\x1d', '\x1e', '\x85', '\u2028', '\u2029'):
+            data = 'a' + sep + 'b\nc\n'
+            self.assertEqual(jc.utils.splitlines(data), ['a' + sep + 'b', 'c'])
+            self.assertEqual(jc.utils.splitlines(data, split_cr=True), ['a' + sep + 'b', 'c'])
+
+
+    def test_utils_splitlines_same_as_str_splitlines(self):
+        for data in ('', '\n', 'a', 'a\n', 'a\n\nb', 'a\r\n\r\nb\r\n', '\n\na\n\n'):
+            for keepends in (False, True):
+                self.assertEqual(jc.utils.splitlines(data, keepends=keepends), data.splitlines(keepends))
+                self.assertEqual(jc.utils.splitlines(data, keepends=keepends, split_cr=True), data.splitlines(keepends))
+
+
+    def test_utils_splitlines_split_cr(self):
+        data = 'line1\rline2\r\nline3\nline4\u2028still line4\x0cstill line4\r'
+        expected = ['line1', 'line2', 'line3', 'line4\u2028still line4\x0cstill line4']
+        self.assertEqual(jc.utils.splitlines(data, split_cr=True), expected)
+
+
+    def test_utils_splitlines_split_cr_keepends(self):
+        data = 'line1\rline2\r\nline3\nline4\u2028still line4'
+        expected = ['line1\r', 'line2\r\n', 'line3\n', 'line4\u2028still line4']
+        self.assertEqual(jc.utils.splitlines(data, keepends=True, split_cr=True), expected)
+
+
+    def test_utils_splitlines_split_cr_blank_lines(self):
+        data = 'a\r\rb\r\n\r\nc\r'
+        self.assertEqual(jc.utils.splitlines(data, split_cr=True), ['a', '', 'b', '', 'c'])
+
+
     def test_utils_line_slice_string_positive_slice(self):
         data = '''line1
 line2

@@ -493,6 +493,68 @@ def input_type_check(data: object) -> None:
         raise TypeError("Input data must be a 'str' object.")
 
 
+_LF_LINE_END_RE = re.compile(r'\r?\n')
+_CR_LF_LINE_END_RE = re.compile(r'\r\n|\r|\n')
+
+
+def splitlines(
+    text: str,
+    keepends: bool = False,
+    split_cr: bool = False
+) -> List[str]:
+    """
+    Split text into lines on LF and CRLF only (optionally also on a lone CR).
+
+    Unlike `str.splitlines()`, this does not treat VT, FF, FS, GS, RS,
+    NEL (U+0085), LINE SEPARATOR (U+2028) or PARAGRAPH SEPARATOR (U+2029)
+    as line terminators, so those characters stay inside the line. By
+    default a lone CR also stays inside the line.
+
+    Parameters:
+
+        text:        (string)  text to split
+        keepends:    (boolean) keep the line terminators if True
+        split_cr:    (boolean) also treat a lone CR as a line terminator
+                               if True (for files that may use CR-only
+                               line endings)
+
+    Returns:
+
+        List of strings. Like `str.splitlines()`, a trailing line terminator
+        does not produce an empty final line.
+    """
+    lines: List[str]
+
+    # fast path: str.split() is much faster than iterating regex matches
+    if not keepends:
+        if split_cr:
+            text = text.replace('\r\n', '\n').replace('\r', '\n')
+
+        lines = text.split('\n')
+        tail = lines.pop()
+
+        if not split_cr:
+            lines = [line[:-1] if line.endswith('\r') else line for line in lines]
+
+        if tail:
+            lines.append(tail)
+
+        return lines
+
+    line_end = _CR_LF_LINE_END_RE if split_cr else _LF_LINE_END_RE
+    lines = []
+    start = 0
+
+    for match in line_end.finditer(text):
+        lines.append(text[start:match.end()])
+        start = match.end()
+
+    if start < len(text):
+        lines.append(text[start:])
+
+    return lines
+
+
 def _lazy_splitlines(text: str) -> Iterable[str]:
     NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
     NEWLINES_RE = re.compile(NEWLINES_PATTERN)

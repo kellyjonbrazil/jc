@@ -419,7 +419,7 @@ def parse(
     raw_output: List = []
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             try:
                 raw_output.append(_pycef_parse(line))
             except Exception:

@@ -49,5 +49,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.shadow.parse(self.ubuntu_18_4_shadow, quiet=True), self.ubuntu_18_4_shadow_json)
 
 
+    def test_shadow_line_separator(self):
+        """
+        Test 'shadow' with a line-break character other than LF inside a field
+        """
+        data = 'alice:!:19000:0:99999:7:::\n# note\x0ctoor::19000:0:99999:7:::\n'
+        result = jc.parsers.shadow.parse(data, quiet=True)
+        self.assertEqual([x['username'] for x in result], ['alice'])
+        self.assertEqual(result, [{'username': 'alice', 'password': '!', 'last_changed': 19000, 'minimum': 0, 'maximum': 99999, 'warn': 7, 'inactive': None, 'expire': None}])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -460,5 +460,15 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
 
+    def test_asciitable_line_separator(self):
+        """
+        Test 'asciitable' with a line-break character other than LF inside a field
+        """
+        data = 'id  role   comment\n1   guest  hello\u20289   admin  hello\n2   guest  intern\n'
+        result = jc.parsers.asciitable.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]['comment'], 'hello\u20289   admin  hello')
+
+
 if __name__ == '__main__':
     unittest.main()

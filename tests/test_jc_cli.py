@@ -508,6 +508,15 @@ class MyTests(unittest.TestCase):
         cli.create_slurp_output()
         self.assertEqual(cli.data_out, expected)
 
+    def test_slurp_line_separator(self):
+        cli = JcCli()
+        cli.parser_module = url_parser
+        cli.data_in = 'https://a.example/a\nhttps://b.example/x\u2028https://c.example/y\r\nhttps://d.example/d\rhttps://e.example/e\n'
+        expected = ['https://a.example/a', 'https://b.example/x\u2028https://c.example/y', 'https://d.example/d', 'https://e.example/e']
+        cli.create_slurp_output()
+        self.assertEqual(cli.inputlist, expected)
+        self.assertEqual(len(cli.data_out), 4)
+
     def test_slurp_standard_with_meta_out(self):
         cli = JcCli()
         cli.meta_out = True

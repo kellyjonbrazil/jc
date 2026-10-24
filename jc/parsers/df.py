@@ -101,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.1'
+    version = '2.2'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -215,7 +215,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # remove blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     fix_data = []
     raw_output = []

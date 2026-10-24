@@ -521,5 +521,18 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.windows_netstat_aonb, quiet=True), self.windows_netstat_aonb_json)
 
+
+    def test_netstat_line_separator(self):
+        """
+        Test 'netstat' with a line-break character other than LF inside a field
+        """
+        data = 'Active UNIX domain sockets (only servers)\nProto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\nunix  2      [ ACC ]     STREAM     LISTENING     55555    31337/prog           @x\x1eunix  2      [ ACC ]     STREAM     LISTENING     99999    1/init               /run/other.sock\n'
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['inode'], 55555)
+        self.assertEqual(result[0]['pid'], 31337)
+        self.assertEqual(result[0]['path'], '@x\x1eunix  2        ACC       STREAM     LISTENING     99999    1/init               /run/other.sock')
+
+
 if __name__ == '__main__':
     unittest.main()

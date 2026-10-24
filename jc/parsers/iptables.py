@@ -173,7 +173,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -259,7 +259,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in list(filter(None, data.splitlines())):
+        for line in list(filter(None, jc.utils.splitlines(data))):
 
             if line.startswith('Chain'):
                 if chain:

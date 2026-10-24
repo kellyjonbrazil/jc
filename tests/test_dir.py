@@ -115,5 +115,17 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['parent'], 'D:\\Users\\testuser')
 
 
+    def test_dir_line_separator(self):
+        """
+        Test 'dir' with a line-break character other than LF inside a field
+        """
+        data = ' Directory of C:\\Shared\r\n\r\n03/24/2021  03:15 PM                 0 a.txt\u2028 Directory of other\r\n03/24/2021  03:16 PM            54,784 payroll.xlsx\r\n'
+        result = jc.parsers.dir.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual([x['parent'] for x in result], ['C:\\Shared', 'C:\\Shared'])
+        self.assertEqual(result[0]['size'], 0)
+        self.assertEqual(result[1]['filename'], 'payroll.xlsx')
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -58,5 +58,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.http_headers.parse(data, quiet=True), expected)
 
 
+    def test_http_headers_line_separator(self):
+        """
+        Test 'http_headers' with a line-break character other than LF inside a field
+        """
+        data = 'HTTP/1.1 200 OK\r\nContent-Disposition: attachment; filename="a"\u2028HTTP/1.1 302 Found\u2028Location: https://example.com/\r\nContent-Length: 0\r\n\r\n'
+        result = jc.parsers.http_headers.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['_response_status'], 200)
+        self.assertEqual(result[0]['content-disposition'], 'attachment; filename="a"\u2028HTTP/1.1 302 Found\u2028Location: https://example.com/')
+
+
 if __name__ == '__main__':
     unittest.main()

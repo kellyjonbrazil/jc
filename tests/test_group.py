@@ -62,5 +62,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.group.parse(self.osx_10_14_6_group, quiet=True), self.osx_10_14_6_group_json)
 
 
+    def test_group_line_separator(self):
+        """
+        Test 'group' with a line-break character other than LF inside a field
+        """
+        data = 'sudo:x:27:joeuser,x\x0c#,www-data\n'
+        result = jc.parsers.group.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['members'], ['joeuser', 'x\x0c#', 'www-data'])
+
+
 if __name__ == '__main__':
     unittest.main()

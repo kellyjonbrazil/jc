@@ -108,5 +108,17 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_net_user_line_separator(self):
+        """
+        Test 'net_user' with a line-break character other than LF inside a field
+        """
+        data = "User name                    Administrator\r\nUser's comment               x\x0cAccount active               No\x0cThe command completed\x0cUser name                    svc_backup\r\nAccount active               Yes\r\nThe command completed successfully.\r\n"
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result['user_accounts']), 1)
+        self.assertEqual(result['user_accounts'][0]['user_name'], 'Administrator')
+        self.assertEqual(result['user_accounts'][0]['account_active'], True)
+        self.assertEqual(result['user_accounts'][0]['users_comment'], 'x\x0cAccount active               No\x0cThe command completed\x0cUser name                    svc_backup')
+
+
 if __name__ == '__main__':
     unittest.main()

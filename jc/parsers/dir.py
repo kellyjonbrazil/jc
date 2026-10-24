@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -182,7 +182,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if line.startswith(" Directory of "):
                 parent_dir = line[len(" Directory of "):]
                 continue

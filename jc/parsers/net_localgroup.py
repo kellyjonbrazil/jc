@@ -54,7 +54,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`net localgroup` command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -140,7 +140,7 @@ def _parse_net_localgroup_list(line_iter, expect_asterisk):
 
 
 def _parse(data):
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     parse_type = None  # Can be 'groups_list' or 'members'
 
     result = {
@@ -151,7 +151,7 @@ def _parse(data):
     }
 
     group_name = ""
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     lines = [line.rstrip() for line in lines if line.strip() != ""]
 
     line_iter = _PushbackIterator(iter(lines))

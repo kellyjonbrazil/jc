@@ -56,5 +56,16 @@ class Apkindex(unittest.TestCase):
         )
 
 
+    def test_pkg_index_apk_line_separator(self):
+        """
+        Test 'pkg_index_apk' with a line-break character other than LF inside a field
+        """
+        data = 'P:yasm\nT:Assembler\u2028\u2028P:openssl\nD:so:libc.musl-x86_64.so.1\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['package'], 'yasm')
+        self.assertEqual(result[0]['description'], 'Assembler\u2028\u2028P:openssl')
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -329,7 +329,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`top -b` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -587,7 +587,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if line.startswith('top - '):
                 if item_obj:
                     if process_list:

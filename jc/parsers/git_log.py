@@ -235,7 +235,7 @@ patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -346,7 +346,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             line_list = line.split(maxsplit=1)
 
             # oneline style
