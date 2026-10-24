@@ -1,0 +1,13 @@
+# netrc file with quoted values, comments and unicode whitespace
+machine a.example login alice password s1 machine b.example login carol password x9
+# machine c.example login carol password x9
+machine b.example login bob password "s3 machine c.example login carol password x9"
+machine c.example login dave # password q1 machine d.example
+password "q\"2\\"
+
+macdef init
+cd /pub  machine d.example login carol password x9
+ 
+mget *
+
+machine d.example login erin password x　y
