@@ -213,5 +213,25 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_simple_double_quote_csv, quiet=True), self.generic_tsv_simple_double_quote_json)
 
 
+    def test_csv_line_separator(self):
+        """
+        Test 'csv' with a line-break character other than LF inside a field
+        """
+        data = 'id,role,name,note\n1,admin,alice,x\n2,user,bob\x0c99,admin\n'
+        result = jc.parsers.csv.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[1]['name'], 'bob\x0c99')
+
+    def test_csv_cr_line_endings(self):
+        """
+        Test 'csv-insurance.csv' with CR-only line endings (file read without newline translation)
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8', newline='') as f:
+            data = f.read()
+        self.assertIn('\r', data)
+        self.assertNotIn('\n', data)
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), self.generic_csv_insurance_json)
+
+
 if __name__ == '__main__':
     unittest.main()

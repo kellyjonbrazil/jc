@@ -434,7 +434,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -578,7 +578,7 @@ def _parse(data):
         "extras": []  # To store unrecognized fields
     }
 
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     lines = [line.rstrip() for line in lines if line.strip() != ""]
 
     line_iter = _PushbackIterator(iter(lines))

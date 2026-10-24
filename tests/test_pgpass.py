@@ -43,5 +43,13 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_pgpass_line_separator(self):
+        """
+        Test 'pgpass' with a line-break character other than LF inside a field
+        """
+        data = '# rotated 2024-01\x0c*:*:*:postgres:secret\n'
+        self.assertEqual(parse(data, quiet=True), [])
+
+
 if __name__ == '__main__':
     unittest.main()

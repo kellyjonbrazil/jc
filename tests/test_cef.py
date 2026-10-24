@@ -55,5 +55,15 @@ class MyTests(unittest.TestCase):
             self.assertEqual(result[0]['dst'], '2.1.2.2')
 
 
+    def test_cef_line_separator(self):
+        """
+        Test 'cef' with a line-break character other than LF inside a field
+        """
+        data = 'CEF:0|V|P|1|100|name|5|msg=hi\u2028CEF:0|V|P|1|999|other|10|msg=x\n'
+        result = jc.parsers.cef.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['deviceEventClassId'], '100')
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -87,6 +87,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.out'), 'r', encoding='utf-8') as f:
         git_log_fuller_stat_patch = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-line-separator.out'), 'r', encoding='utf-8') as f:
+        git_log_line_separator = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.json'), 'r', encoding='utf-8') as f:
         git_log_json = json.loads(f.read())
@@ -165,6 +168,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.json'), 'r', encoding='utf-8') as f:
         git_log_fuller_stat_patch_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-line-separator.json'), 'r', encoding='utf-8') as f:
+        git_log_line_separator_json = json.loads(f.read())
 
 
     def test_git_log_nodata(self):
@@ -334,6 +340,13 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=fuller --stat --patch'
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_stat_patch, quiet=True), self.git_log_fuller_stat_patch_json)
+
+    def test_git_log_line_separator(self):
+        """
+        Test 'git_log' with a commit message containing U+2028 (LINE
+        SEPARATOR) followed by a fake commit header: still a single commit
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_line_separator, quiet=True), self.git_log_line_separator_json)
 
 
 if __name__ == '__main__':

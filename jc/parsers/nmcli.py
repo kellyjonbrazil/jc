@@ -169,7 +169,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -349,7 +349,7 @@ def _is_wifi_list_line(line: str) -> bool:
 def _wifi_list_parse(data: str) -> List[Dict]:
     raw_output = []
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         values = _split_terse_line(line)
         if len(values) != len(_WIFI_HEADERS):
             raise ParseError(
@@ -369,7 +369,7 @@ def _device_show_parse(data: str) -> List[Dict]:
     item: Dict = {}
     current_item = ''
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         key, value = line.split(':', maxsplit=1)
         key_n = _normalize_key(key)
         value_n = _normalize_value(value)
@@ -405,7 +405,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
     in_team_config: bool = False
     team_config_value: List = []
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
 
         # fix for team.config and team-port.config, which are multi-line JSON
         if line.startswith('team.config:') or line.startswith('team-port.config:'):
@@ -461,7 +461,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
 def _general_permissions_parse(data: str) -> List[Dict]:
     raw_output = []
     output_dict = {}
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         key, value = line.split()
         key_n = _normalize_key(key)
         output_dict[key_n] = value
@@ -473,7 +473,7 @@ def _general_permissions_parse(data: str) -> List[Dict]:
 
 
 def _table_parse(data: str) -> List[Dict]:
-    data_list = list(filter(None, data.splitlines()))
+    data_list = list(filter(None, jc.utils.splitlines(data)))
     data_list[0] = _normalize_header(data_list[0])
     raw_output = sparse_table_parse(data_list)
 
@@ -509,7 +509,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        data_lines = data.splitlines()
+        data_lines = jc.utils.splitlines(data)
         first_line = next(line for line in data_lines if line.strip())
 
         # nmcli -t device wifi list

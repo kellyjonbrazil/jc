@@ -163,5 +163,15 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_crontab_line_separator(self):
+        """
+        Test 'crontab' with a line-break character other than LF inside a field
+        """
+        data = '0 3 * * * /usr/bin/backup;\x0c#$(/usr/bin/other)\n'
+        result = jc.parsers.crontab.parse(data, quiet=True)
+        self.assertEqual(len(result['schedule']), 1)
+        self.assertEqual(result['schedule'][0]['command'], '/usr/bin/backup;\x0c#$(/usr/bin/other)')
+
+
 if __name__ == '__main__':
     unittest.main()

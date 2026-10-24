@@ -50,5 +50,23 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.hosts.parse(self.ubuntu_18_4_hosts, quiet=True), self.ubuntu_18_4_hosts_json)
 
 
+    def test_hosts_line_separator(self):
+        """
+        Test 'hosts' with a line-break character other than LF inside a field
+        """
+        data = '203.0.113.66\tmirror.example.net\x0c10.0.0.5\tupdates.example.com\n'
+        result = jc.parsers.hosts.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['ip'], '203.0.113.66')
+
+    def test_hosts_cr_line_endings(self):
+        """
+        Test 'hosts' with CR-only line endings
+        """
+        data = '127.0.0.1\tlocalhost\r10.0.0.1\thost1 h1\r'
+        expected = [{'ip': '127.0.0.1', 'hostname': ['localhost']}, {'ip': '10.0.0.1', 'hostname': ['host1', 'h1']}]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

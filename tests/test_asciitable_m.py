@@ -391,5 +391,15 @@ class MyTests(unittest.TestCase):
         self.assertRaises(ParseError, jc.parsers.asciitable_m.parse, input, quiet=True)
 
 
+    def test_asciitable_m_line_separator(self):
+        """
+        Test 'asciitable_m' with a line-break character other than LF inside a field
+        """
+        data = '+---------+-------+-------------+\n| user    | role  | note        |\n+---------+-------+-------------+\n| alice   | admin | on call     |\n+---------+-------+-------------+\n| carol   | guest | hi\u2028+-+\u2028root |\n+---------+-------+-------------+\n| bob     | guest | intern      |\n+---------+-------+-------------+\n'
+        result = jc.parsers.asciitable_m.parse(data, quiet=True)
+        self.assertEqual([x['user'] for x in result], ['alice', 'carol', 'bob'])
+        self.assertEqual(result[1]['note'], 'hi\u2028+-+\u2028root')
+
+
 if __name__ == '__main__':
     unittest.main()

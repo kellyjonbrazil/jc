@@ -125,7 +125,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -164,7 +164,7 @@ def _remove_ansi(string: str) -> str:
 
 def _lstrip(string: str) -> str:
     """find the leftmost non-whitespace character and lstrip to that index"""
-    lstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    lstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     start_points = (len(x) - len(x.lstrip()) for x in lstrip_list)
     min_point = min(start_points)
     new_lstrip_list = (x[min_point:] for x in lstrip_list)
@@ -173,7 +173,7 @@ def _lstrip(string: str) -> str:
 
 def _rstrip(string: str) -> str:
     """find the rightmost non-whitespace character and rstrip and pad to that index"""
-    rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
     new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
@@ -250,7 +250,7 @@ def _normalize_rows(table: str) -> List[str]:
     returns a List of row strings. Header is snake-cased
     """
     result: List[str] = []
-    for line in table.splitlines():
+    for line in jc.utils.splitlines(table):
         # skip blank lines
         if not line.strip():
             continue

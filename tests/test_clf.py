@@ -43,5 +43,16 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_clf_line_separator(self):
+        """
+        Test 'clf' with a line-break character other than LF inside a field
+        """
+        data = '1.2.3.4 - - [01/Jan/2026:00:00:00 +0000] "GET / HTTP/1.1" 200 1 "-" "ua\u20289.9.9.9 - admin [01/Jan/2026:00:00:00 +0000] "GET /admin HTTP/1.1" 200 1 "-" "x"\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['host'], '1.2.3.4')
+        self.assertIn('\u2028', result[0]['user_agent'])
+
+
 if __name__ == '__main__':
     unittest.main()

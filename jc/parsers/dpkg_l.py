@@ -132,7 +132,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`dpkg -l` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -219,7 +219,7 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         # clean up headers
-        lines = iter(filter(None, data.splitlines()))
+        lines = iter(filter(None, jc.utils.splitlines(data)))
         for line in lines:
             if not header_found and 'Architecture' in line:
                 header_found = True

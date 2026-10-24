@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`blkid` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -186,7 +186,7 @@ def parse(data, raw=False, quiet=False):
 
         # if the first field is a device, use normal parsing:
         if data.split(maxsplit=1)[0][-1] == ':':
-            linedata = data.splitlines()
+            linedata = jc.utils.splitlines(data)
 
             for line in linedata:
                 output_line = {}
@@ -202,7 +202,7 @@ def parse(data, raw=False, quiet=False):
 
         # else use key/value per line parsing
         else:
-            linedata = data.splitlines()
+            linedata = jc.utils.splitlines(data)
             output_line = {}
             for line in linedata:
                 if line == '':

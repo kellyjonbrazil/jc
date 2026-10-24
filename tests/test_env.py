@@ -64,5 +64,17 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.env.parse(self.env_multiline, quiet=True, raw=True), self.env_multiline_raw_json)
 
 
+    def test_env_line_separator(self):
+        """
+        Test 'env' with a line-break character other than LF inside a field
+        """
+        data = 'PATH=/usr/bin:/bin\nUSER=root\nREF=x\u2028PATH=/tmp/other\u2028USER=nobody\n'
+        result = jc.parsers.env.parse(data, quiet=True)
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0]['value'], '/usr/bin:/bin')
+        self.assertEqual(result[1]['value'], 'root')
+        self.assertEqual(result[2]['value'], 'x\u2028PATH=/tmp/other\u2028USER=nobody')
+
+
 if __name__ == '__main__':
     unittest.main()

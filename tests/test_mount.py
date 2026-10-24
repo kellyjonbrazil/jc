@@ -115,5 +115,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.mount.parse(self.generic_mount_parens_in_filesystem, quiet=True), self.generic_mount_parens_in_filesystem_json)
 
 
+    def test_mount_line_separator(self):
+        """
+        Test 'mount' with a line-break character other than LF inside a field
+        """
+        data = 'none on /tmp/usb type vfat (rw)\u2028/dev/sdb1 on /mnt/backup type ext4 (rw,nosuid,nodev,noexec)\u2028none on /tmp/usb type tmpfs (rw,relatime,inode64)\n'
+        result = jc.parsers.mount.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -62,5 +62,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.passwd.parse(self.osx_10_14_6_passwd, quiet=True), self.osx_10_14_6_passwd_json)
 
 
+    def test_passwd_line_separator(self):
+        """
+        Test 'passwd' with a line-break character other than LF inside a field
+        """
+        data = 'alice:x:1000:1000::/home/alice:/bin/sh\n# note\x0ctoor::0:0::/root:/bin/sh\n'
+        result = jc.parsers.passwd.parse(data, quiet=True)
+        self.assertEqual([x['username'] for x in result], ['alice'])
+
+
 if __name__ == '__main__':
     unittest.main()

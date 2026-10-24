@@ -137,5 +137,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.blkid.parse(self.ubuntu_18_4_blkid_ip_udev_multi, quiet=True), self.ubuntu_18_4_blkid_ip_udev_multi_json)
 
 
+    def test_blkid_line_separator(self):
+        """
+        Test 'blkid' with a line-break character other than LF inside a field
+        """
+        data = 'ID_FS_LABEL=\x1eID_FS_TYPE=xfs\x1e\nID_FS_UUID=6666\nID_FS_TYPE=ext4\n'
+        result = jc.parsers.blkid.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['id_fs_label'], '\x1eID_FS_TYPE=xfs\x1e')
+        self.assertEqual(result[0]['id_fs_type'], 'ext4')
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -127,7 +127,7 @@ import jc.parsers.rpm_qi as rpm_qi
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'Debian Package Index file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

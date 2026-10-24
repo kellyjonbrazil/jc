@@ -186,7 +186,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`net user` command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -340,7 +340,7 @@ def _parse(data):
         "user_accounts": []
     }
 
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     lines = [line.rstrip() for line in lines if line.strip() != ""]
 
     line_iter = _PushbackIterator(iter(lines))
@@ -373,7 +373,7 @@ def _parse(data):
                         continue  # Skip empty lines
 
                     match = kv_pattern.match(line)
-                    if "The command completed" in line:
+                    if line.startswith("The command completed"):
                         break
                     elif match:
                         key_raw = match.group(1).strip()
