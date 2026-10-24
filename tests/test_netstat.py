@@ -538,7 +538,7 @@ class MyTests(unittest.TestCase):
         Test 'netstat' UNIX sockets with tab and non-ASCII whitespace in the program name
         """
         header = 'Active UNIX domain sockets (servers and established)\nProto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\n'
-        for name in ('ab\t/dev/log', 'a\t/dev/log', 'ab\xa0/dev/log', 'ab\x1f/dev/log', 'ab　/dev/log'):
+        for name in ('ab\t/dev/log', 'a\t/dev/log', 'ab\xa0/dev/log', 'ab\x1f/dev/log', 'ab\u3000/dev/log'):
             data = header + 'unix  2      [ ]         DGRAM                    34693    1898/' + name + '     /run/user/1000/systemd/notify\n'
             result = jc.parsers.netstat.parse(data, quiet=True)
             self.assertEqual(len(result), 1)

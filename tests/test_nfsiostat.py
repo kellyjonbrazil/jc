@@ -160,10 +160,10 @@ class MyTests(unittest.TestCase):
         with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--two-mounts.out'), 'r', encoding='utf-8') as f:
             data = f.read()
 
-        for old, new in (('/mnt/secondmount', '/mnt/second　mount'),
+        for old, new in (('/mnt/secondmount', '/mnt/second\u3000mount'),
                          ('/mnt/secondmount', '/mnt/second\xa0mount'),
                          ('/mnt/secondmount', '/mnt/second\x1fmount'),
-                         ('192.168.128.221:/mnt/secondmount', 'other:/x 192.168.128.221:/export')):
+                         ('192.168.128.221:/mnt/secondmount', 'other:/x\u2028192.168.128.221:/export')):
             result = jc.parsers.nfsiostat.parse(data.replace(old, new), quiet=True)
             self.assertEqual([(x['filesystem'], x['mount']) for x in result],
                              [('192.168.128.220:/mnt/warm/archivedb', '/archive'),

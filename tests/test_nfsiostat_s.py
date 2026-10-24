@@ -271,7 +271,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'nfsiostat' with non-ASCII whitespace in a mount header
         """
-        for ch in ('　', '\xa0', '\x1f'):
+        for ch in ('\u3000', '\xa0', '\x1f'):
             data = self.f_in['two_mounts'].replace('/mnt/secondmount', '/mnt/second' + ch + 'mount')
             result = list(parse(data.splitlines(), quiet=True))
             self.assertEqual([(x['filesystem'], x['mount']) for x in result],
