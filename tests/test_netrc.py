@@ -107,33 +107,37 @@ class MyTests(unittest.TestCase):
         expected = [{'machine': 'a.example', 'login': 'alice', 'password': 'p1', 'account': None, 'macdef': None, 'definition': None}]
         self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
 
-    def test_netrc_comment_positions(self):
+    def test_netrc_comments(self):
         """
-        Test that comments are recognized at the same positions as Python's netrc module
+        Test that a token starting with '#' comments out the rest of its line
         """
-        # a '#word' token outside of a machine block only skips itself
-        data = '#note machine a.example login alice\n'
-        expected = [{'machine': 'a.example', 'login': 'alice', 'password': None, 'account': None, 'macdef': None, 'definition': None}]
+        entry_a = {'machine': 'a.example', 'login': 'alice', 'password': None, 'account': None, 'macdef': None, 'definition': None}
+
+        # comment lines, with or without a space after '#', anywhere in the file
+        for data in (
+            '#note machine b.example login bob\nmachine a.example login alice\n',
+            '# machine b.example login bob\nmachine a.example login alice\n',
+            'machine a.example login alice\n#note machine b.example login bob\n',
+            'machine a.example login alice\n\n# machine b.example login bob\n',
+            'machine a.example login alice "quoted"\n# machine b.example login bob\n',
+            '   # machine b.example login bob\nmachine a.example login alice\n'
+        ):
+            self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), [entry_a], msg=repr(data))
+
+        # an inline comment skips only the rest of its own line
+        data = 'machine a.example login alice # machine b.example\npassword p1\n'
+        expected = [dict(entry_a, password='p1')]
         self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
 
-        # a comment inside a machine block skips the rest of its line
-        data = 'machine a.example login alice\n#note machine b.example login bob\n'
-        expected = [{'machine': 'a.example', 'login': 'alice', 'password': None, 'account': None, 'macdef': None, 'definition': None}]
-        self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
-
-        # '#' is not a comment when a newline is read before it in the same token lookup
-        data = 'machine a.example login alice\n\n# machine b.example login bob\n'
-        expected = [
-            {'machine': 'a.example', 'login': 'alice', 'password': None, 'account': None, 'macdef': None, 'definition': None},
-            {'machine': 'b.example', 'login': 'bob', 'password': None, 'account': None, 'macdef': None, 'definition': None}
-        ]
+        # a '#' at the end of a line does not comment out the next line
+        data = 'machine b.example login bob #\nmachine a.example login alice\n'
+        expected = [dict(entry_a, machine='b.example', login='bob'), entry_a]
         self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
 
         # a value starting with '#' is not a comment
         data = 'machine a.example login alice password #pw\n'
-        expected = [{'machine': 'a.example', 'login': 'alice', 'password': '#pw', 'account': None, 'macdef': None, 'definition': None}]
+        expected = [dict(entry_a, password='#pw')]
         self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
-
 
 if __name__ == '__main__':
     unittest.main()

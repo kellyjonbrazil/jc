@@ -204,16 +204,14 @@ def parse(
         lexer = _Lexer('\n'.join(lines) + '\n')
 
         while True:
-            start_lineno = lexer.lineno
             tok = lexer.get_token()
             if tok is None:
                 break
 
-            # a comment skips the rest of its line only when no newline was
-            # read while getting the token, and outside of a machine block
-            # only when the token is a bare '#' (same as Python's netrc module)
+            # a token starting with '#' comments out the rest of its line.
+            # If the newline after the token was already read, the line is done.
             if tok.startswith('#'):
-                if lexer.lineno == start_lineno and (entry is not None or len(tok) == 1):
+                if lexer.lineno == lexer.token_end_lineno:
                     lexer.skip_line()
                 continue
 
