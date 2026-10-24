@@ -267,5 +267,26 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(consumed), second_header + 1)
 
 
+    def test_nfsiostat_s_other_whitespace_in_filesystem(self):
+        """
+        Test 'nfsiostat' with non-ASCII whitespace in a mount header
+        """
+        for ch in ('\u3000', '\xa0', '\x1f'):
+            data = self.f_in['two_mounts'].replace('/mnt/secondmount', '/mnt/second' + ch + 'mount')
+            result = list(parse(data.splitlines(), quiet=True))
+            self.assertEqual([(x['filesystem'], x['mount']) for x in result],
+                             [('192.168.128.220:/mnt/warm/archivedb', '/archive'),
+                              ('192.168.128.221:/mnt/second' + ch + 'mount', '/blah')])
+            self.assertEqual(result[1]['ops_sec'], 3.215)
+
+    def test_nfsiostat_s_second_ops_line_raises(self):
+        """
+        Test 'nfsiostat' raises when a mount block has more than one ops/s line
+        """
+        data = self.f_in['two_mounts'].replace('192.168.128.221:/mnt/secondmount mounted on /blah:', 'unrecognized header')
+        with self.assertRaises(ParseError):
+            list(parse(data.splitlines(), quiet=True))
+
+
 if __name__ == '__main__':
     unittest.main()

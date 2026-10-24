@@ -215,11 +215,20 @@ def _pycef_parse(str_input):
         # The ugly, gnarly regex here finds a single key=value pair,
         # taking into account multiple whitespaces, escaped '=' and '|'
         # chars.  It returns an iterator of tuples.
-        spl = re.findall(r'([^=\s]+)=((?:[\\]=|[^=])+)(?:\s|$)', extension)
+        #
+        # Keys can only start at a token boundary and runs of escaped '='
+        # are consumed in one pass so long tokens are not rescanned.
+        # Empty values are skipped below.
+        spl = re.findall(
+            r'(?:^|(?<=[\s=]))([^=\s]+)='
+            r'(?:((?:[\\]=|[^=])+)(?:\s|$)|(?:[^=\s]*[\\]=)*)',
+            extension
+        )
 
         for i in spl:
             # Split the tuples and put them into the dictionary
-            values[i[0]] = i[1]
+            if i[1]:
+                values[i[0]] = i[1]
 
     else:
         raise ParseError('Could not parse record. Is it valid CEF format?')

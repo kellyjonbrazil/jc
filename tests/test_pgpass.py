@@ -47,8 +47,9 @@ class MyTests(unittest.TestCase):
         """
         Test 'pgpass' with a line-break character other than LF inside a field
         """
-        data = '# rotated 2024-01\x0c*:*:*:postgres:secret\n'
-        self.assertEqual(parse(data, quiet=True), [])
+        data = '# rotated 2024-01\x0c*:*:*:postgres:secret\ndb.example.com:5432:app:alice:pw\n'
+        expected = [{'hostname': 'db.example.com', 'port': '5432', 'database': 'app', 'username': 'alice', 'password': 'pw'}]
+        self.assertEqual(parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

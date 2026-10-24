@@ -1,0 +1,5 @@
+CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 msg=cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc= dst=2.1.2.2 spt=1232
+CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 cs1=QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB== dst=2.1.2.2 spt=1232
+CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 request=http://example.com/cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc?a=b&c=d dst=2.1.2.2 spt=1232
+CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|src=10.0.0.1 msg=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\=a\== dst=2.1.2.2 spt=1232
+CEF:0|Security|threatmanager|1.0|100|worm successfully stopped|10|cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

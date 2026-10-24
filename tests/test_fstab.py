@@ -67,8 +67,26 @@ class MyTests(unittest.TestCase):
         """
         Test 'fstab' with a line-break character other than LF inside a field
         """
-        data = '# disabled:\x0ctmpfs /tmp tmpfs rw,noexec,nosuid,nodev 0 0\n'
-        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), [])
+        data = '# disabled:\x0ctmpfs /tmp tmpfs rw,noexec,nosuid,nodev 0 0\n/dev/sda1 / ext4 defaults 0 1\n'
+        expected = [{'fs_spec': '/dev/sda1', 'fs_file': '/', 'fs_vfstype': 'ext4', 'fs_mntops': 'defaults', 'fs_freq': 0, 'fs_passno': 1}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
+
+
+    def test_fstab_other_whitespace_in_field(self):
+        """
+        Test 'fstab' splits fields on space and tab only
+        """
+        data = 'tmpfs\xa0/mnt/scratch\xa0tmpfs\xa0rw,noexec,nosuid,nodev\xa00\xa00 /usr/local/bin tmpfs rw,exec,suid,dev 0 0\n'
+        expected = [{'fs_spec': 'tmpfs\xa0/mnt/scratch\xa0tmpfs\xa0rw,noexec,nosuid,nodev\xa00\xa00', 'fs_file': '/usr/local/bin', 'fs_vfstype': 'tmpfs', 'fs_mntops': 'rw,exec,suid,dev', 'fs_freq': 0, 'fs_passno': 0}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
+
+    def test_fstab_other_whitespace_before_hash(self):
+        """
+        Test 'fstab' only skips leading space and tab before a comment character
+        """
+        data = '\xa0#tmpfs /usr/local/bin tmpfs rw,exec,suid,dev 0 0\n \t# comment\n'
+        expected = [{'fs_spec': '\xa0#tmpfs', 'fs_file': '/usr/local/bin', 'fs_vfstype': 'tmpfs', 'fs_mntops': 'rw,exec,suid,dev', 'fs_freq': 0, 'fs_passno': 0}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

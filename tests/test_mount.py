@@ -122,6 +122,10 @@ class MyTests(unittest.TestCase):
         data = 'none on /tmp/usb type vfat (rw)\u2028/dev/sdb1 on /mnt/backup type ext4 (rw,nosuid,nodev,noexec)\u2028none on /tmp/usb type tmpfs (rw,relatime,inode64)\n'
         result = jc.parsers.mount.parse(data, quiet=True)
         self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['filesystem'], 'none on /tmp/usb type vfat (rw)\u2028/dev/sdb1 on /mnt/backup type ext4 (rw,nosuid,nodev,noexec)\u2028none')
+        self.assertEqual(result[0]['mount_point'], '/tmp/usb')
+        self.assertEqual(result[0]['type'], 'tmpfs')
+        self.assertEqual(result[0]['options'], ['rw', 'relatime', 'inode64'])
 
 
 if __name__ == '__main__':

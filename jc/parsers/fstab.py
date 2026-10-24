@@ -146,10 +146,10 @@ def parse(data, raw=False, quiet=False):
         for line in cleandata:
             output_line = {}
             # ignore commented lines
-            if line.strip().startswith('#'):
+            if line.strip(' \t').startswith('#'):
                 continue
 
-            line_list = line.split(maxsplit=6)
+            line_list = [field for field in line.replace('\t', ' ').split(' ') if field]
 
             # fs_freq and fs_passno are optional and default to 0 (man 5 fstab)
             if len(line_list) in (4, 5):

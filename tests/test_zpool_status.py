@@ -100,6 +100,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['pool'], 'tank')
         self.assertEqual(result[0]['state'], 'DEGRADED')
+        self.assertEqual(result[0]['errors'], 'Permanent errors have been detected in the following files:\n/tank/home/u/report.txt\u2028state: ONLINE\u2028errors: No known data errors\u2028pool: backup\u2028state: FAULTED')
 
 
 if __name__ == '__main__':

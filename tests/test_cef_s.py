@@ -19,6 +19,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-streaming.json'), 'r', encoding='utf-8') as f:
         cef_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-unescaped-equals.out'), 'r', encoding='utf-8') as f:
+        cef_unescaped_equals = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-unescaped-equals-streaming.json'), 'r', encoding='utf-8') as f:
+        cef_unescaped_equals_streaming_json = json.loads(f.read())
+
     def test_cef_s_nodata(self):
         """
         Test 'cef' with no data
@@ -30,6 +36,13 @@ class MyTests(unittest.TestCase):
         Test with sample cef log
         """
         self.assertEqual(list(jc.parsers.cef_s.parse(self.cef.splitlines(), quiet=True)), self.cef_streaming_json)
+
+    def test_cef_s_unescaped_equals(self):
+        """
+        Test cef lines with tokens that are not part of a key=value pair
+        (unescaped '=' in values, no '=' at all)
+        """
+        self.assertEqual(list(jc.parsers.cef_s.parse(self.cef_unescaped_equals.splitlines(), quiet=True)), self.cef_unescaped_equals_streaming_json)
 
 
 if __name__ == '__main__':

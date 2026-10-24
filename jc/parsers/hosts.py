@@ -69,6 +69,7 @@ Examples:
       }
     ]
 """
+import re
 import jc.utils
 
 
@@ -132,10 +133,9 @@ def parse(data, raw=False, quiet=False):
             if line.strip().startswith('#'):
                 continue
 
-            line_list = line.split(maxsplit=1)
+            line_list = re.findall(r'\S+', line, flags=re.ASCII)
             ip = line_list[0]
-            hosts = line_list[1]
-            hosts_list = hosts.split()
+            hosts_list = line_list[1:]
 
             comment_found = False
             for i, item in enumerate(hosts_list):

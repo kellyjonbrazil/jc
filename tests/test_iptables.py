@@ -224,6 +224,8 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.iptables.parse(data, quiet=True)
         self.assertEqual(len(result[0]['rules']), 1)
         self.assertEqual(result[0]['rules'][0]['target'], 'DROP')
+        self.assertEqual(result[0]['rules'][0]['source'], '203.0.113.7')
+        self.assertEqual(result[0]['rules'][0]['options'], '/* note */\u2028ACCEPT     all  --  anywhere             anywhere             /* ticket 4711 */')
 
 
 if __name__ == '__main__':
