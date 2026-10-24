@@ -1,5 +1,13 @@
 jc changelog
 
+20261023 v1.26.2
+- Fix many parsers to split lines only on LF and CRLF line endings so other
+  line-break characters inside a field no longer split a record. This also
+  applies to `--slurp` input
+- Fix several parsers to split fields only on spaces and tabs, and enhance the
+  `netrc` parser to support quoted values, escapes, comments, and the `user`
+  keyword
+
 20261018 v1.26.1
 - Add `apachectl` command parser
 - Add `ics` file parser
