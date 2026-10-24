@@ -449,6 +449,13 @@ class MyTests(unittest.TestCase):
         alpine_linux_3_13_ping_hostname_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.out'), 'r', encoding='utf-8') as f:
+        generic_ping_long_digits = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.json'), 'r', encoding='utf-8') as f:
+        generic_ping_long_digits_json = json.loads(f.read())
+
+
     def test_ping_nodata(self):
         """
         Test 'ping' with no data
@@ -874,6 +881,12 @@ class MyTests(unittest.TestCase):
         Test 'ping' with missing hostname on linux
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_missing_hostname, quiet=True), self.centos_7_7_ping_missing_hostname_json)
+
+    def test_ping_long_digits(self):
+        """
+        Test 'ping' with a long run of digits in the statistics section
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.generic_ping_long_digits, quiet=True), self.generic_ping_long_digits_json)
 
 
 if __name__ == '__main__':
