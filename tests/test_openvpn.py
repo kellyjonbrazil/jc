@@ -51,6 +51,8 @@ class MyTests(unittest.TestCase):
         result = parse(data, quiet=True)
         self.assertEqual(len(result['clients']), 1)
         self.assertEqual(result['clients'][0]['common_name'], 'foo@example.com')
+        self.assertEqual(result['clients'][0]['real_address'], '10.0.0.5')
+        self.assertEqual(result['clients'][0]['connected_since'], 'Thu Jun 18 08:00:00 2015\u2028x,203.0.113.9:40000,3512,3801,Thu Jun 18 08:11:00 2015')
 
 
 if __name__ == '__main__':

@@ -97,6 +97,7 @@ class MyTests(unittest.TestCase):
         data = 'pos:\t0\nflags:\t02000002\nmnt_id:\t15\nino:\t19946\nUserFiles:\t1\n    0: r\x0cino:1\x0cmnt_id:1\x0cpos:7\nUserBufs:\t0\n'
         result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
         self.assertEqual((result['pos'], result['mnt_id'], result['ino']), (0, 15, 19946))
+        self.assertEqual(result['0'], 'r\x0cino:1\x0cmnt_id:1\x0cpos:7')
 
 
 if __name__ == '__main__':

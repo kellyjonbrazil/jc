@@ -58,6 +58,7 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.hosts.parse(data, quiet=True)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['ip'], '203.0.113.66')
+        self.assertEqual(result[0]['hostname'], ['mirror.example.net', '10.0.0.5', 'updates.example.com'])
 
     def test_hosts_cr_line_endings(self):
         """

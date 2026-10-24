@@ -170,6 +170,8 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['device'], '002')
         self.assertIn('iSerial', result[0]['device_descriptor'])
+        self.assertEqual(result[0]['device_descriptor']['iProduct']['value'], '2')
+        self.assertEqual(result[0]['device_descriptor']['iProduct']['description'], 'Mouse\x0cBus 009 Device 099: ID 046d:c31c Logitech, Inc. Keyboard K120\x0cDevice Descriptor:')
 
 
 if __name__ == '__main__':

@@ -531,6 +531,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['inode'], 55555)
         self.assertEqual(result[0]['pid'], 31337)
+        self.assertEqual(result[0]['path'], '@x\x1eunix  2        ACC       STREAM     LISTENING     99999    1/init               /run/other.sock')
 
 
 if __name__ == '__main__':

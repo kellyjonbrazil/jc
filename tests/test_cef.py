@@ -38,6 +38,14 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.cef.parse(data, quiet=True)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['deviceEventClassId'], '100')
+        self.assertEqual(result[0]['agentSeverity'], '5')
+        self.assertEqual(result[0]['name'], 'name')
+
+        data = 'CEF:0|V|P|1|100|name|5|msg=hi\u2028there src=1.2.3.4\n'
+        result = jc.parsers.cef.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['msg'], 'hi\u2028there')
+        self.assertEqual(result[0]['src'], '1.2.3.4')
 
 
 if __name__ == '__main__':
