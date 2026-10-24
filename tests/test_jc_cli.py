@@ -1,7 +1,11 @@
 import contextlib
 import io
+import json
 import os
+import sys
+import tempfile
 import unittest
+from unittest import mock
 from datetime import datetime, timezone
 
 try:
@@ -20,6 +24,7 @@ except ImportError:
 from jc.cli import JcCli
 import jc.parsers.url as url_parser
 import jc.parsers.proc as proc_parser
+import jc.parsers.ls_s as ls_s_parser
 
 
 class MyTests(unittest.TestCase):
@@ -704,6 +709,71 @@ power management:
         for path, expected in paths.items():
             self.assertEqual(expected, JcCli.is_proc_path(path), path)
 
+    def test_magic_open_text_file_no_newline_translation(self):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'wb') as f:
+                f.write(b'1 (a\rb) S 0\nc\r\n')
+            self.assertEqual('1 (a\rb) S 0\nc\r\n', JcCli.open_text_file(path))
+        finally:
+            os.remove(path)
+
+    def test_magic_run_user_command_no_newline_translation(self):
+        code = ("import sys; "
+                "sys.stdout.buffer.write(b'a\\rb\\r\\nc\\n'); "
+                "sys.stderr.buffer.write(b'e\\rf\\n')")
+        cli = JcCli()
+        cli.magic_run_command = [sys.executable, '-c', code]
+        cli.run_user_command()
+        self.assertEqual('a\rb\r\nc\n', cli.magic_stdout)
+        self.assertEqual('e\rf\n', cli.magic_stderr)
+        self.assertEqual(0, cli.magic_returncode)
+
+    def test_magic_run_user_command_empty_output(self):
+        cli = JcCli()
+        cli.magic_run_command = [sys.executable, '-c', 'pass']
+        cli.run_user_command()
+        self.assertEqual('\n', cli.magic_stdout)
+        self.assertEqual('', cli.magic_stderr)
+        self.assertEqual(0, cli.magic_returncode)
+
+
+    def test_stdin_lines(self):
+        stdin = io.TextIOWrapper(io.BytesIO(b'a\r\nb\rc\nd'), encoding='utf-8', errors='strict')
+        self.assertEqual(['a\n', 'b\rc\n', 'd'], list(JcCli.stdin_lines(stdin)))
+
+    def test_stdin_lines_no_buffer(self):
+        stdin = io.StringIO('a\nb\n')
+        self.assertEqual(['a\n', 'b\n'], list(JcCli.stdin_lines(stdin)))
+
+    def _streaming_ls_records(self, data):
+        stdin = io.TextIOWrapper(io.BytesIO(data), encoding='utf-8', errors='strict')
+        cli = JcCli()
+        cli.parser_module = ls_s_parser
+        cli.mono = True
+        cli.quiet = True
+        cli.ignore_exceptions = True
+        f = io.StringIO()
+        with mock.patch('sys.stdin', stdin), contextlib.redirect_stdout(f):
+            cli.streaming_parse_and_print()
+        records = [json.loads(x) for x in f.getvalue().splitlines()]
+        return records
+
+    def test_streaming_line_endings(self):
+        data = (b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n'
+                b'-rw-r--r-- 1 root root 0 Jan  1 00:00 m\rmm\n'
+                b'-rw-r--r-- 1 root root 0 Jan  1 00:00 zzz\r\n')
+        records = self._streaming_ls_records(data)
+        self.assertEqual(['aaa', 'm\rmm', 'zzz'], [x['filename'] for x in records])
+        self.assertTrue(all(x['_jc_meta']['success'] for x in records))
+
+    def test_streaming_non_utf8(self):
+        data = (b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n'
+                b'-rw-r--r-- 1 root root 0 Jan  1 00:00 mmm\xff\n'
+                b'-rw-r--r-- 1 root root 0 Jan  1 00:00 zzz\n')
+        records = self._streaming_ls_records(data)
+        self.assertEqual(['aaa', 'mmm\\xff', 'zzz'], [x['filename'] for x in records])
+        self.assertTrue(all(x['_jc_meta']['success'] for x in records))
 
 if __name__ == '__main__':
     unittest.main()

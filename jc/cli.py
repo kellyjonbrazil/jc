@@ -517,7 +517,7 @@ class JcCli():
 
     @staticmethod
     def open_text_file(path_string: str) -> str:
-        with open(path_string, 'r') as f:
+        with open(path_string, 'r', newline='') as f:
             return f.read()
 
     def run_user_command(self) -> None:
@@ -530,12 +530,13 @@ class JcCli():
                 self.magic_run_command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                close_fds=False,           # Allows inheriting file descriptors
-                universal_newlines=True,   # which is useful for process substitution
-                encoding='UTF-8'
+                close_fds=False  # Allows inheriting file descriptors
+                                 # which is useful for process substitution
             )
 
-            self.magic_stdout, self.magic_stderr = proc.communicate()
+            stdout_bytes, stderr_bytes = proc.communicate()
+            self.magic_stdout = stdout_bytes.decode('utf-8')
+            self.magic_stderr = stderr_bytes.decode('utf-8')
             self.magic_stdout = self.magic_stdout or '\n'
             self.magic_returncode = proc.returncode
 
@@ -787,9 +788,36 @@ class JcCli():
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
 
+    @staticmethod
+    def stdin_lines(stdin: TextIO) -> Iterable[str]:
+        """
+        Lazily yield UTF-8 lines from the binary buffer of stdin. Lines end
+        at LF or CRLF only, and a CRLF ending is yielded as LF. Bytes that
+        cannot be decoded are shown as backslash escapes. Falls back to
+        iterating stdin directly if it has no binary buffer.
+        """
+        buffer = getattr(stdin, 'buffer', None)
+        if buffer is None:
+            yield from stdin
+            return
+
+        text = io.TextIOWrapper(buffer, encoding='utf-8',
+                                errors='backslashreplace', newline='\n')
+        try:
+            for line in text:
+                if line.endswith('\r\n'):
+                    line = line[:-2] + '\n'
+                yield line
+        finally:
+            # leave the underlying buffer open
+            try:
+                text.detach()
+            except ValueError:
+                pass
+
     def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
-        self.data_in = sys.stdin
+        self.data_in = self.stdin_lines(sys.stdin)
         self.slicer()
 
         if self.parser_module:
