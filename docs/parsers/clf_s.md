@@ -93,7 +93,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
+) -> Iterator[Dict[str, Any] | Tuple[BaseException, str]]
 ```
 
 Main text parsing generator function. Returns an iterable object.

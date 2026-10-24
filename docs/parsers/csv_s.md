@@ -65,13 +65,13 @@ Examples:
 
 ```python
 def parse(
-    data: Iterable[str],
-    raw: bool = False,
-    quiet: bool = False,
-    ignore_exceptions: bool = False,
-    implicit_header: bool = False,
-    tsv: bool = False
-) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
+        data: Iterable[str],
+        raw: bool = False,
+        quiet: bool = False,
+        ignore_exceptions: bool = False,
+        implicit_header: bool = False,
+        tsv: bool = False
+) -> Iterator[Dict[str, Any] | Tuple[BaseException, str]]
 ```
 
 Main text parsing generator function. Returns an iterable object.

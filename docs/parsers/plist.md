@@ -54,9 +54,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
-          raw: bool = False,
-          quiet: bool = False) -> Dict
+def parse(data: str | bytes, raw: bool = False, quiet: bool = False) -> Dict
 ```
 
 Main text parsing function

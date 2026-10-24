@@ -71,7 +71,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> Union[Dict[str, Any], List[Dict[str, Any]]]
+          quiet: bool = False) -> Dict[str, Any] | List[Dict[str, Any]]
 ```
 
 Main text parsing function

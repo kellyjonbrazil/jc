@@ -129,7 +129,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> Union[List[Dict], Dict]
+          quiet: bool = False) -> List[Dict] | Dict
 ```
 
 Main text parsing function

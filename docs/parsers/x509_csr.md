@@ -259,7 +259,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False) -> List[Dict]
 ```

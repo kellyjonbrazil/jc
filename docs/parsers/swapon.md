@@ -50,7 +50,7 @@ Example:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[Dict[str, Union[str, int]]]
+          quiet: bool = False) -> List[Dict[str, str | int]]
 ```
 
 Main text parsing function

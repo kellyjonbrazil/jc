@@ -60,7 +60,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False,
           ignore_exceptions: bool = False) -> List[Dict[str, Any]]
