@@ -175,5 +175,14 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_net_localgroup_line_separator(self):
+        """
+        Test 'net_localgroup' with a line-break character other than LF inside a field
+        """
+        data = 'Alias name     Administrators\r\nComment\r\n\r\nMembers\r\n\r\n-------------------------------------------------------------------------------\r\nAdministrator\r\nCORP\\aa\u2028The command completed successfully.\u2028x\r\nCORP\\Domain Admins\r\nuser1\r\nThe command completed successfully.\r\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result['groups'][0]['members'], ['Administrator', 'CORP\\aa\u2028The command completed successfully.\u2028x', 'CORP\\Domain Admins', 'user1'])
+
+
 if __name__ == '__main__':
     unittest.main()

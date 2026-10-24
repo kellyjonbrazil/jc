@@ -33,6 +33,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_shasum = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/sha256sum-line-separator.out'), 'r', encoding='utf-8') as f:
+        generic_sha256sum_line_separator = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/md5sum.json'), 'r', encoding='utf-8') as f:
         centos_7_7_md5sum_json = json.loads(f.read())
@@ -81,6 +84,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/shasum-raw.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_shasum_raw_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/sha256sum-line-separator.json'), 'r', encoding='utf-8') as f:
+        generic_sha256sum_line_separator_json = json.loads(f.read())
 
 
     def test_hashsum_nodata(self):
@@ -202,6 +208,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             jc.parsers.hashsum.parse(self.osx_10_14_6_shasum, quiet=True, raw=True),
             self.osx_10_14_6_shasum_raw_json)
+
+    def test_sha256sum_line_separator(self):
+        """
+        Test 'sha256sum' with a filename containing U+2028 (LINE SEPARATOR):
+        the line must stay a single record
+        """
+        self.assertEqual(jc.parsers.hashsum.parse(self.generic_sha256sum_line_separator, quiet=True), self.generic_sha256sum_line_separator_json)
 
 if __name__ == '__main__':
     unittest.main()

@@ -80,7 +80,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -142,7 +142,7 @@ def parse(
     data = data.decode('utf-8-sig')
 
     raw_output = []
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data, split_cr=True)
 
     # Clear any blank lines
     cleandata = list(filter(None, cleandata))

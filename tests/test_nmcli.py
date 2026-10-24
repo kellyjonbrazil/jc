@@ -258,5 +258,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_device_wifi_list, quiet=True), self.generic_nmcli_device_wifi_list_json)
 
 
+    def test_nmcli_line_separator(self):
+        """
+        Test 'nmcli' with a line-break character other than LF inside a field
+        """
+        data = 'GENERAL.DEVICE:      wlan0\nGENERAL.CONNECTION:  Cafe\x0cGENERAL.DEVICE:tun0\nIP4.ADDRESS[1]:      10.0.0.5/24\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['device'], 'wlan0')
+        self.assertEqual(result[0]['connection'], 'Cafe\x0cGENERAL.DEVICE:tun0')
+
+
 if __name__ == '__main__':
     unittest.main()

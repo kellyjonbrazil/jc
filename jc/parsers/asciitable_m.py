@@ -110,7 +110,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'multi-line ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,7 +149,7 @@ def _remove_ansi(string: str) -> str:
 
 def _lstrip(string: str) -> str:
     """find the leftmost non-whitespace character and lstrip to that index"""
-    lstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    lstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     start_points = (len(x) - len(x.lstrip()) for x in lstrip_list)
     min_point = min(start_points)
     new_lstrip_list = (x[min_point:] for x in lstrip_list)
@@ -158,7 +158,7 @@ def _lstrip(string: str) -> str:
 
 def _rstrip(string: str) -> str:
     """find the rightmost non-whitespace character and rstrip and pad to that index"""
-    rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
     new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
@@ -174,7 +174,7 @@ def _strip(string: str) -> str:
 def _table_sniff(string: str) -> str:
     """find the table-type via heuristics"""
     # pretty tables
-    for line in string.splitlines():
+    for line in jc.utils.splitlines(string):
         line = line.strip()
         if any((
             line.startswith('╞') and line.endswith('╡'),
@@ -194,7 +194,7 @@ def _table_sniff(string: str) -> str:
             return 'pretty'
 
     # markdown tables
-    second_line = string.splitlines()[1]
+    second_line = jc.utils.splitlines(string)[1]
     if second_line.startswith('|-') and second_line.endswith('-|'):
         return 'markdown'
 
@@ -432,7 +432,7 @@ def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[st
 
 
 def _parse_pretty(string: str, quiet: bool =False) -> List[Dict[str, Optional[str]]]:
-    string_lines: List[str] = string.splitlines()
+    string_lines: List[str] = jc.utils.splitlines(string)
     clean: List[Tuple[int, List[str]]] = _normalize_rows(string_lines)
     raw_headers: List[List[str]] = _get_headers(clean)
     raw_data: List[List[List[str]]] = _get_data(clean)

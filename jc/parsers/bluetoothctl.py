@@ -113,7 +113,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
@@ -438,7 +438,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     result: List = []
 
     if jc.utils.has_data(data):
-        linedata = data.splitlines()
+        linedata = jc.utils.splitlines(data)
         linedata.reverse()
 
         while linedata:

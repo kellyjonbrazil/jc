@@ -100,7 +100,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`cbt` (Google Bigtable) command parser'
     author = 'Andreas Weiden'
     author_email = 'andreas.weiden@gmail.com'
@@ -169,7 +169,7 @@ def parse(
             column_name = ""
             timestamp = ""
             value_next = False
-            for field in line.splitlines():
+            for field in jc.utils.splitlines(line):
                 if not field.strip():
                     continue
                 if field.startswith(" " * 4):

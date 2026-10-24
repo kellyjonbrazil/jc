@@ -145,5 +145,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.df.parse(cmd_output, quiet=True), self.centos_7_7_df_json)
 
 
+    def test_df_line_separator(self):
+        """
+        Test 'df' with a line-break character other than LF inside a field
+        """
+        data = 'Filesystem     1K-blocks  Used Available Use% Mounted on\ntmpfs               1024     0      1024   0% /mnt/x\u2028/dev/sda1         100000 99999         1 100% /data\n'
+        result = jc.parsers.df.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['mounted_on'], '/mnt/x\u2028/dev/sda1         100000 99999         1 100% /data')
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -42,5 +42,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.m3u.parse(self.m3u_dirty, quiet=True), self.m3u_dirty_json)
 
 
+    def test_m3u_line_separator(self):
+        """
+        Test 'm3u' with a line-break character other than LF inside a field
+        """
+        data = '#EXTM3U\n#EXTINF:105,Artist - Intro\u2028http://example.com/a.mp3\nmusic/a.mp3\n'
+        result = jc.parsers.m3u.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['display'], 'Artist - Intro\u2028http://example.com/a.mp3')
+        self.assertEqual(result[0]['path'], 'music/a.mp3')
+
+    def test_m3u_cr_line_endings(self):
+        """
+        Test 'm3u' with CR-only line endings
+        """
+        data = '#EXTM3U\r#EXTINF:105,Artist - Title\rmusic/a.mp3\r#EXTINF:200,Other - Title\rmusic/b.mp3\r'
+        result = jc.parsers.m3u.parse(data, quiet=True)
+        self.assertEqual([x['path'] for x in result], ['music/a.mp3', 'music/b.mp3'])
+
+
 if __name__ == '__main__':
     unittest.main()

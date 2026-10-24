@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_pid_maps': (
                 'fixtures/linux-proc/pid_maps',
-                'fixtures/linux-proc/pid_maps.json')
+                'fixtures/linux-proc/pid_maps.json'),
+            'proc_pid_maps_line_separator': (
+                'fixtures/linux-proc/pid_maps_line_separator',
+                'fixtures/linux-proc/pid_maps_line_separator.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_maps.parse(self.f_in['proc_pid_maps'], quiet=True),
                                                         self.f_json['proc_pid_maps'])
+
+    def test_proc_pid_maps_line_separator(self):
+        """
+        Test '/proc/<pid>/maps' with a pathname containing U+2028 (LINE
+        SEPARATOR): the line must stay a single record
+        """
+        self.assertEqual(jc.parsers.proc_pid_maps.parse(self.f_in['proc_pid_maps_line_separator'], quiet=True),
+                                                        self.f_json['proc_pid_maps_line_separator'])
 
 
 if __name__ == '__main__':

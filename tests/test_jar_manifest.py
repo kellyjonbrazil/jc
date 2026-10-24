@@ -42,5 +42,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.jar_manifest.parse(self.rhel_8_manifest_mf_multi, quiet=True), self.rhel_8_manifest_mf_multi_json)
 
 
+    def test_jar_manifest_line_separator(self):
+        """
+        Test 'jar_manifest' with a line-break character other than LF inside a field
+        """
+        data = 'Manifest-Version: 1.0\r\nMain-Class: com.example.app.Launcher\r\nImplementation-Title: Reporting Service\u2028Main-Class: org.example.app.Main\r\nImplementation-Version: 1.4.2\r\n\r\n'
+        result = jc.parsers.jar_manifest.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['Main_Class'], 'com.example.app.Launcher')
+        self.assertEqual(result[0]['Implementation_Title'], 'Reporting Service\u2028Main-Class: org.example.app.Main')
+
+    def test_jar_manifest_cr_line_endings(self):
+        """
+        Test 'jar_manifest' with CR-only line endings
+        """
+        data = 'Manifest-Version: 1.0\rMain-Class: com.example.Main\rCreated-By: 1.8\r\rName: a/b.class\rSHA-256-Digest: abc\r'
+        expected = [{'Manifest_Version': '1.0', 'Main_Class': 'com.example.Main', 'Created_By': '1.8'}, {'Name': 'a/b.class', 'SHA_256_Digest': 'abc'}]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -30,5 +30,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.syslog.parse(self.syslog, quiet=True), self.syslog_json)
 
 
+    def test_syslog_line_separator(self):
+        """
+        Test 'syslog' with a line-break character other than LF inside a field
+        """
+        data = '<13>1 2026-01-01T00:00:00Z web01 webapp - - - login failed for user bob\u2028<86>1 2026-01-01T00:00:00Z dc01 sshd 4242 - - Accepted password for root from 10.0.0.5\n'
+        result = jc.parsers.syslog.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['message'], 'login failed for user bob\u2028<86>1 2026-01-01T00:00:00Z dc01 sshd 4242 - - Accepted password for root from 10.0.0.5')
+
+
 if __name__ == '__main__':
     unittest.main()

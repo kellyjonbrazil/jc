@@ -431,5 +431,16 @@ class BluetoothctlTests(unittest.TestCase):
         self.assertEqual(parse(data, quiet=True), expected)
 
 
+    def test_bluetoothctl_line_separator(self):
+        """
+        Test 'bluetoothctl' with a line-break character other than LF inside a field
+        """
+        data = 'Device EB:06:EF:62:B3:19 (public)\n\tName: Kbd\u2028Trusted: yes\u2028-\n\tTrusted: no\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['name'], 'Kbd\u2028Trusted: yes\u2028-')
+        self.assertEqual(result[0]['trusted'], 'no')
+
+
 if __name__ == '__main__':
     unittest.main()

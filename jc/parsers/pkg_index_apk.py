@@ -102,7 +102,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.0"
+    version = "1.1"
     description = "Alpine Linux Package Index file parser"
     author = "Roey Darwish Dror"
     author_email = "roey.ghost@gmail.com"
@@ -199,7 +199,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]:
 
     package: Dict = {}
     if jc.utils.has_data(data):
-        lines = iter(data.splitlines())
+        lines = iter(jc.utils.splitlines(data))
         for line in lines:
             line = line.strip()
             if not line:

@@ -78,5 +78,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.top.parse(self.ubuntu_20_10_top_b_allfields, quiet=True), self.ubuntu_20_10_top_b_allfields_json)
 
 
+    def test_top_line_separator(self):
+        """
+        Test 'top' with a line-break character other than LF inside a field
+        """
+        data = 'top - 11:24:50 up 2 min,  2 users,  load average: 0.55, 0.28, 0.11\n\n    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND\n   1183 nobody    20   0    2500    900    800 S   0.0   0.0   0:00.00 x\u2028 999999 root      20   0  167000  11000   8000 S   0.0   0.1   0:01.00 /usr/sbin/sshd -D\n'
+        result = jc.parsers.top.parse(data, quiet=True)
+        self.assertEqual(len(result[0]['processes']), 1)
+        self.assertEqual(result[0]['processes'][0]['pid'], 1183)
+        self.assertEqual(result[0]['processes'][0]['command'], 'x\u2028 999999 root      20   0  167000  11000   8000 S   0.0   0.1   0:01.00 /usr/sbin/sshd -D')
+
+
 if __name__ == '__main__':
     unittest.main()

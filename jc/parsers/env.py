@@ -73,7 +73,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`env` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -131,7 +131,7 @@ def parse(data, raw=False, quiet=False):
     value = None
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if VAR_DEF_PATTERN.match(line):
                 if not value is None:
                     raw_output[key] = value

@@ -51,5 +51,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.curl_head.parse(data, quiet=True), expected)
 
 
+    def test_curl_head_line_separator(self):
+        """
+        Test 'curl_head' with a line-break character other than LF inside a field
+        """
+        data = '*   Trying 127.0.0.1:80...\n> HEAD /download/1 HTTP/1.1\n> \n< HTTP/1.1 200 OK\n< Content-Disposition: attachment; filename="a.txt"\u2028> POST /admin HTTP/1.1\u2028< HTTP/1.1 201 Created\u2028< X-Rest: ""\n< X-Content-Type-Options: nosniff\n< \n'
+        result = jc.parsers.curl_head.parse(data, quiet=True)
+        self.assertEqual([x['_type'] for x in result], ['request', 'response'])
+        self.assertEqual(result[1]['content-disposition'], 'attachment; filename="a.txt"\u2028> POST /admin HTTP/1.1\u2028< HTTP/1.1 201 Created\u2028< X-Rest: ""')
+        self.assertEqual(result[1]['x-content-type-options'], 'nosniff')
+
+
 if __name__ == '__main__':
     unittest.main()

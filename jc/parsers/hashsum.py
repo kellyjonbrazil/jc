@@ -76,7 +76,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'hashsum command parser (`md5sum`, `shasum`, etc.)'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -139,7 +139,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # check for legacy md5 command output
             if line.startswith('MD5 ('):
                 file_hash = line.split('=', maxsplit=1)[1].strip()

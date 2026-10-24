@@ -60,5 +60,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.cbt.parse(self.multiple_rows, quiet=True, raw=True), self.multiple_rows_raw_json)
 
 
+    def test_cbt_line_separator(self):
+        """
+        Test 'cbt' with a line-break character other than LF inside a field
+        """
+        data = '----------------------------------------\nsandbox\u2028payroll\n  acl:user                                 @ 2024/03/01-09:00:00.000000\n    "owner"\n'
+        result = jc.parsers.cbt.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['key'], 'sandbox\u2028payroll')
+
+
 if __name__ == '__main__':
     unittest.main()
