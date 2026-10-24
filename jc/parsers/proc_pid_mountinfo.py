@@ -249,7 +249,7 @@ def parse(
             (?P<fs_type>\S+)\s
             (?P<mount_source>\S+)\s
             (?P<super_options>\S+)?
-            ''', re.VERBOSE
+            ''', re.VERBOSE | re.ASCII
         )
 
         for line in filter(None, jc.utils.splitlines(data)):

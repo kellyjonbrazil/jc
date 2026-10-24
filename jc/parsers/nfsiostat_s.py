@@ -172,7 +172,7 @@ from jc.parsers.nfsiostat import (
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nfsiostat` command streaming parser'
     author = 'Yang Bai'
     author_email = '271969568+ybai08@users.noreply.github.com'
@@ -280,6 +280,8 @@ def parse(
 
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
                 warn_if_values_line_missing()
+                if 'ops_sec' in output_line:
+                    raise ParseError(f'{output_line["mount"]}: more than one ops/s line in a mount block')
                 section = 'mount'
                 continue
 

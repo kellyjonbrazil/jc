@@ -153,5 +153,34 @@ class MyTests(unittest.TestCase):
         self.assertEqual(stderr, '')
 
 
+    def test_nfsiostat_other_whitespace_in_filesystem(self):
+        """
+        Test 'nfsiostat' with non-ASCII whitespace and a line separator in a mount header
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--two-mounts.out'), 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        for old, new in (('/mnt/secondmount', '/mnt/second　mount'),
+                         ('/mnt/secondmount', '/mnt/second\xa0mount'),
+                         ('/mnt/secondmount', '/mnt/second\x1fmount'),
+                         ('192.168.128.221:/mnt/secondmount', 'other:/x 192.168.128.221:/export')):
+            result = jc.parsers.nfsiostat.parse(data.replace(old, new), quiet=True)
+            self.assertEqual([(x['filesystem'], x['mount']) for x in result],
+                             [('192.168.128.220:/mnt/warm/archivedb', '/archive'),
+                              ('192.168.128.221:/mnt/secondmount'.replace(old, new), '/blah')])
+            self.assertEqual(result[1]['ops_sec'], 3.215)
+
+    def test_nfsiostat_second_ops_line_warns(self):
+        """
+        Test 'nfsiostat' warns when a mount block has more than one ops/s line
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--two-mounts.out'), 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        data = data.replace('192.168.128.221:/mnt/secondmount mounted on /blah:', 'unrecognized header')
+        _, stderr = _parse_capturing_stderr(data)
+        self.assertIn('/archive: more than one ops/s line in a mount block', stderr)
+
+
 if __name__ == '__main__':
     unittest.main()

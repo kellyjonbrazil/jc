@@ -68,5 +68,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
 
 
+    def test_hosts_other_whitespace_in_field(self):
+        """
+        Test 'hosts' splits fields on ASCII whitespace only
+        """
+        data = '10.0.0.5\xa0vault.example.com\n0.0.0.0 ads.example.net\xa0tracker.example.net\n'
+        expected = [{'ip': '10.0.0.5\xa0vault.example.com', 'hostname': []}, {'ip': '0.0.0.0', 'hostname': ['ads.example.net\xa0tracker.example.net']}]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
