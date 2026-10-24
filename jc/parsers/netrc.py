@@ -236,7 +236,7 @@ def parse(
                 entry = _new_entry()
 
                 # the macro body is every raw line after the macro name's
-                # line, up to (but not including) a blank line or EOF
+                # line, up to (but not including) an empty line or EOF
                 body_lineno = lexer.token_end_lineno + 1
                 name = lexer.get_token()
                 if name is not None:
@@ -244,7 +244,7 @@ def parse(
                     body_lineno = lexer.token_end_lineno + 1
 
                 definition: List[str] = []
-                while body_lineno < len(lines) and lines[body_lineno].strip(' \t') != '':
+                while body_lineno < len(lines) and lines[body_lineno] != '':
                     definition.append(lines[body_lineno])
                     body_lineno += 1
 
@@ -254,10 +254,11 @@ def parse(
                 lexer.goto_line(body_lineno)
                 continue
 
-            if tok in ('login', 'password', 'account') and entry is not None:
+            # 'user' is an alternate name for 'login'
+            if tok in ('login', 'user', 'password', 'account') and entry is not None:
                 value = lexer.get_token()
                 if value is not None:
-                    entry[tok] = value
+                    entry['login' if tok == 'user' else tok] = value
                 continue
 
             # unrecognized token - ignore

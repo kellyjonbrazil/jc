@@ -88,6 +88,25 @@ class MyTests(unittest.TestCase):
             ]
             self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected, msg=repr(ch))
 
+    def test_netrc_macdef_whitespace_only_line(self):
+        """
+        Test that only an empty line ends a macdef body, not a whitespace-only line
+        """
+        data = 'macdef init\ncd /pub\n  \t\nmget *\n\nmachine a.example login alice\n'
+        expected = [
+            {'machine': None, 'login': None, 'password': None, 'account': None, 'macdef': 'init', 'definition': ['cd /pub', '  \t', 'mget *']},
+            {'machine': 'a.example', 'login': 'alice', 'password': None, 'account': None, 'macdef': None, 'definition': None}
+        ]
+        self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
+
+    def test_netrc_user_keyword(self):
+        """
+        Test that 'user' is accepted as an alternate name for 'login'
+        """
+        data = 'machine a.example user alice password p1\n'
+        expected = [{'machine': 'a.example', 'login': 'alice', 'password': 'p1', 'account': None, 'macdef': None, 'definition': None}]
+        self.assertEqual(jc.parsers.netrc.parse(data, quiet=True), expected)
+
     def test_netrc_comment_positions(self):
         """
         Test that comments are recognized at the same positions as Python's netrc module
