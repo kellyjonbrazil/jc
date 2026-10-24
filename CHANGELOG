@@ -1,6 +1,7 @@
 jc changelog
 
 20261023 v1.26.2
+- Enhance `cef` and `cef-s` parsers for slow parsing of long extension values
 - Fix many parsers to split lines only on LF and CRLF line endings so other
   line-break characters inside a field no longer split a record. This also
   applies to `--slurp` input
