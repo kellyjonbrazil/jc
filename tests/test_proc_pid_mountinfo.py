@@ -47,6 +47,9 @@ class MyTests(unittest.TestCase):
         data = '24 30 0:22 / /sys rw,nosuid - sysfs sysfs rw\n429 30 0:55 / /home/u/x\x1e99 1 0:99 / /tmp rw,nosuid,nodev,noexec - tmpfs tmpfs rw rw,relatime - tmpfs tmpfs rw,inode64\n'
         result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
         self.assertNotIn(99, [x['mount_id'] for x in result])
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['mount_id'], 24)
+        self.assertEqual(result[0]['mount_point'], '/sys')
 
         # the same mount point as the kernel prints it, with spaces escaped
         data = '24 30 0:22 / /sys rw,nosuid - sysfs sysfs rw\n429 30 0:55 / /home/u/x\x1e99\\0401\\0400:99\\040/\\040/tmp rw,relatime - tmpfs tmpfs rw,inode64\n'

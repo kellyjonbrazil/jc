@@ -69,6 +69,7 @@ class MyTests(unittest.TestCase):
         data = 'alice:x:1000:1000::/home/alice:/bin/sh\n# note\x0ctoor::0:0::/root:/bin/sh\n'
         result = jc.parsers.passwd.parse(data, quiet=True)
         self.assertEqual([x['username'] for x in result], ['alice'])
+        self.assertEqual(result, [{'username': 'alice', 'password': 'x', 'uid': 1000, 'gid': 1000, 'comment': '', 'home': '/home/alice', 'shell': '/bin/sh'}])
 
 
 if __name__ == '__main__':

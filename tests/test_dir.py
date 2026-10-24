@@ -123,6 +123,8 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.dir.parse(data, quiet=True)
         self.assertEqual(len(result), 2)
         self.assertEqual([x['parent'] for x in result], ['C:\\Shared', 'C:\\Shared'])
+        self.assertEqual(result[0]['size'], 0)
+        self.assertEqual(result[1]['filename'], 'payroll.xlsx')
 
 
 if __name__ == '__main__':
