@@ -435,7 +435,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 Streaming parsers accept any iterable object and return an iterable object
 allowing lazy processing of the data. The input data should iterate on lines
 of string data. Examples of good input data are `sys.stdin` or
-`str.splitlines()`.
+`str.split('\n')`.
 
 To use the returned iterable object in your code, simply loop through it or
 use the [next()](https://docs.python.org/3/library/functions.html#next)
@@ -443,7 +443,7 @@ builtin function:
 ```python
 import jc
 
-result = jc.parse('ls_s', ls_command_output.splitlines())
+result = jc.parse('ls_s', ls_command_output.split('\n'))
 for item in result:
     print(item["filename"])
 ```
