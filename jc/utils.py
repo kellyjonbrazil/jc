@@ -523,12 +523,30 @@ def splitlines(
         List of strings. Like `str.splitlines()`, a trailing line terminator
         does not produce an empty final line.
     """
+    lines: List[str]
+
+    # fast path: str.split() is much faster than iterating regex matches
+    if not keepends:
+        if split_cr:
+            text = text.replace('\r\n', '\n').replace('\r', '\n')
+
+        lines = text.split('\n')
+        tail = lines.pop()
+
+        if not split_cr:
+            lines = [line[:-1] if line.endswith('\r') else line for line in lines]
+
+        if tail:
+            lines.append(tail)
+
+        return lines
+
     line_end = _CR_LF_LINE_END_RE if split_cr else _LF_LINE_END_RE
-    lines: List[str] = []
+    lines = []
     start = 0
 
     for match in line_end.finditer(text):
-        lines.append(text[start:match.end() if keepends else match.start()])
+        lines.append(text[start:match.end()])
         start = match.end()
 
     if start < len(text):
