@@ -12,9 +12,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424.out'), 'r', encoding='utf-8') as f:
         syslog = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-long-sd.out'), 'r', encoding='utf-8') as f:
+        syslog_long_sd = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424.json'), 'r', encoding='utf-8') as f:
         syslog_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-long-sd.json'), 'r', encoding='utf-8') as f:
+        syslog_long_sd_json = json.loads(f.read())
 
 
     def test_syslog_nodata(self):
@@ -38,6 +44,12 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.syslog.parse(data, quiet=True)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['message'], 'login failed for user bob\u2028<86>1 2026-01-01T00:00:00Z dc01 sshd 4242 - - Accepted password for root from 10.0.0.5')
+
+    def test_syslog_5424_long_sd(self):
+        """
+        Test syslog with a long word in structured data
+        """
+        self.assertEqual(jc.parsers.syslog.parse(self.syslog_long_sd, quiet=True), self.syslog_long_sd_json)
 
 
 if __name__ == '__main__':
