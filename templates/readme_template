@@ -509,8 +509,9 @@ inside a value, such as a lone CR, form feed, or Unicode line separator, stay
 part of that line. Parsers for file formats that can use CR-only line endings (`csv`,
 `hosts`, `jar-manifest`, and `m3u`) also accept a lone CR as a line ending.
 
-Streaming parsers read `STDIN` as text lines, so a lone CR also ends a line
-for them.
+Streaming parsers split `STDIN` lines the same way (LF and CRLF only). Bytes
+in `STDIN` that are not valid UTF-8 are shown as backslash escapes (e.g.
+`\xff`) instead of stopping the parser.
 
 ## Use In Other Shells
 `jc` can be used in most any shell. Some modern shells have JSON deserialization

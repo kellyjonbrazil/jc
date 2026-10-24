@@ -499,8 +499,9 @@ separator, stay part of that line. Parsers for file formats that can use CR-only
 (\fBcsv\fP, \fBhosts\fP, \fBjar-manifest\fP, and \fBm3u\fP) also accept a
 lone CR as a line ending.
 
-Streaming parsers read \fBSTDIN\fP as text lines, so a lone CR also ends a
-line for them.
+Streaming parsers split \fBSTDIN\fP lines the same way (LF and CRLF only).
+Bytes in \fBSTDIN\fP that are not valid UTF-8 are shown as backslash escapes
+(e.g. \fB\\xff\fP) instead of stopping the parser.
 
 .SH EXAMPLES
 Standard Syntax:
