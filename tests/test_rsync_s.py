@@ -190,5 +190,13 @@ total size is 221.79G  speedup is 25,388.23
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_stats.splitlines(), quiet=True)), self.generic_rsync_i_stats_streaming_json)
 
 
+    def test_rsync_s_crlf_lines(self):
+        """
+        Test rsync with CRLF line endings split on LF only
+        """
+        crlf_data = self.centos_7_7_rsync_i.replace('\n', '\r\n')
+        self.assertEqual(list(jc.parsers.rsync_s.parse(crlf_data.split('\n'), quiet=True)), self.centos_7_7_rsync_i_streaming_json)
+
+
 if __name__ == '__main__':
     unittest.main()

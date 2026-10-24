@@ -229,5 +229,30 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(jc.parsers.tsv_ih_s.parse(self.generic_tsv_ih_simple_double_quote_tsv.splitlines(), quiet=True)), self.generic_tsv_ih_simple_double_quote_streaming_json)
 
 
+    def test_csv_s_blank_only(self):
+        """
+        Test csv_s with blank-only input
+        """
+        self.assertEqual(list(jc.parsers.csv_s.parse([''], quiet=True)), [])
+
+    def test_csv_ih_s_blank_only(self):
+        """
+        Test csv_ih_s with blank-only input
+        """
+        self.assertEqual(list(jc.parsers.csv_ih_s.parse([''], quiet=True)), [])
+
+    def test_tsv_s_blank_only(self):
+        """
+        Test tsv_s with blank-only input
+        """
+        self.assertEqual(list(jc.parsers.tsv_s.parse([''], quiet=True)), [])
+
+    def test_tsv_ih_s_blank_only(self):
+        """
+        Test tsv_ih_s with blank-only input
+        """
+        self.assertEqual(list(jc.parsers.tsv_ih_s.parse([''], quiet=True)), [])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -97,7 +97,7 @@ from jc.parsers.cef import _pycef_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'CEF string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -296,6 +296,8 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r'):
+                line = line[:-1]
             output_line: Dict = {}
 
             #skip blank lines
