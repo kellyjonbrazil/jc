@@ -365,10 +365,11 @@ class MyTests(unittest.TestCase):
 
     def test_git_log_s_crlf_lines(self):
         """
-        Test git_log with CRLF line endings split on LF only
+        Test git_log with CRLF line endings, split on LF or with line endings kept
         """
         crlf_data = self.generic_git_log.replace('\n', '\r\n')
         self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.split('\n'), quiet=True)), self.generic_git_log_streaming_json)
+        self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.generic_git_log_streaming_json)
 
 
 if __name__ == '__main__':

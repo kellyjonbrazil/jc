@@ -296,7 +296,9 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
-            if line.endswith('\r'):
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
                 line = line[:-1]
             output_line: Dict = {}
 
