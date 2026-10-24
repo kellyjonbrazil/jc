@@ -192,5 +192,19 @@ class VeracryptTests(unittest.TestCase):
             for k, v in expected[1].items():
                 self.assertEqual(v, actual[1][k], f"Volume regex failed on {k}")
 
+    def test_veracrypt_long_first_line(self):
+        """
+        Test 'veracrypt' with a long run of digits as the first line
+        """
+
+        with open("tests/fixtures/generic/veracrypt-long-line.out", "r") as f:
+            output = f.read()
+
+        with open("tests/fixtures/generic/veracrypt-long-line.json", "r") as f:
+            expected = json.loads(f.read())
+
+        self.assertEqual(parse(output, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
