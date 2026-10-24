@@ -735,7 +735,7 @@ class JcCli():
 
             # single-line string parsers
             if isinstance(self.data_in, str):
-                items = self.data_in.splitlines()
+                items = utils.splitlines(self.data_in, split_cr=True)
                 self.inputlist = []
 
                 for line in items:
