@@ -108,7 +108,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'Syslog RFC 5424 string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,7 +149,7 @@ def _extract_ident(struct_string) -> Optional[str]:
 
 
 def _extract_kv(struct_string) -> List[Dict]:
-    key_vals = re.compile(r'(?P<key>\w+)=(?P<val>\"[^\"]*\")')
+    key_vals = re.compile(r'\b(?P<key>\w+)=(?P<val>\"[^\"]*\")')
     key_vals_match = key_vals.findall(struct_string)
     kv_list = []
 

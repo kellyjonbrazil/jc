@@ -86,7 +86,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Syslog RFC 5424 string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,7 +128,7 @@ def _extract_ident(struct_string) -> Optional[str]:
 
 
 def _extract_kv(struct_string) -> List[Dict]:
-    key_vals = re.compile(r'(?P<key>\w+)=(?P<val>\"[^\"]*\")')
+    key_vals = re.compile(r'\b(?P<key>\w+)=(?P<val>\"[^\"]*\")')
     key_vals_match = key_vals.findall(struct_string)
     kv_list = []
 
