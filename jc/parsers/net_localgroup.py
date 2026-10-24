@@ -105,6 +105,9 @@ def _process(proc_data):
     return proc_data
 
 
+_BLANKS = ' \t\r'
+
+
 class _PushbackIterator:
     def __init__(self, iterator):
         self.iterator = iterator
@@ -124,14 +127,14 @@ def _parse_net_localgroup_list(line_iter, expect_asterisk):
     while True:
         try:
             line = next(line_iter)
-            if not line.strip():
+            if not line.strip(_BLANKS):
                 continue  # Skip empty lines
 
             # Check if the line starts with an asterisk
             if line == 'The command completed successfully.':
                 break
             elif expect_asterisk and line.startswith('*'):
-                name_list.append(line[1:].strip())
+                name_list.append(line[1:].strip(_BLANKS))
             else:
                 name_list.append(line)
         except StopIteration:
@@ -152,32 +155,32 @@ def _parse(data):
 
     group_name = ""
     lines = jc.utils.splitlines(data)
-    lines = [line.rstrip() for line in lines if line.strip() != ""]
+    lines = [line.rstrip(_BLANKS) for line in lines if line.strip(_BLANKS) != ""]
 
     line_iter = _PushbackIterator(iter(lines))
     for line in line_iter:
-        line = line.rstrip()
+        line = line.rstrip(_BLANKS)
 
         # Skip empty lines
-        if not line.strip():
+        if not line.strip(_BLANKS):
             continue
 
         match_domain_processed = re.match(r"^The request will be processed at a domain controller for domain (.+)", line, re.IGNORECASE)
-        match_localgroup_list = re.match(r"^Aliases for[\s]*([^:]+)", line, re.IGNORECASE)        #  "Aliases for \\DESKTOP-WIN11:"
-        match_localgroup_members = re.match(r"^Alias name[\s]*([^:]+)", line, re.IGNORECASE)      #  "Alias name     administrators:"
+        match_localgroup_list = re.match(r"^Aliases for[ \t]*([^:]+)", line, re.IGNORECASE)        #  "Aliases for \\DESKTOP-WIN11:"
+        match_localgroup_members = re.match(r"^Alias name[ \t]*([^:]+)", line, re.IGNORECASE)      #  "Alias name     administrators:"
         if match_domain_processed:
             # Extract the domain name
-            result["domain"] = match_domain_processed.group(1).strip()
+            result["domain"] = match_domain_processed.group(1).strip(_BLANKS)
         elif match_localgroup_list:
             # Extract the account origin
-            result["account_origin"] = match_localgroup_list.group(1).strip()
+            result["account_origin"] = match_localgroup_list.group(1).strip(_BLANKS)
             parse_type = 'groups_list'   # Prepare to read groups
         elif match_localgroup_members:
             # We are querying a specific group
-            group_name = match_localgroup_members.group(1).strip()
+            group_name = match_localgroup_members.group(1).strip(_BLANKS)
             parse_type = 'members_list'  # Prepare to read members
         elif line.startswith('Comment'):
-            comment_line = line.split('Comment', 1)[1].strip()
+            comment_line = line.split('Comment', 1)[1].strip(_BLANKS)
             result["comment"] = comment_line if comment_line else None
         elif line.startswith('---'):
             # Start of a section (groups or members)

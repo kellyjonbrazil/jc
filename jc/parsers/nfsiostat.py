@@ -203,7 +203,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nfsiostat` command parser'
     author = 'Yang Bai'
     author_email = '271969568+ybai08@users.noreply.github.com'
@@ -215,7 +215,7 @@ class info():
 __version__ = info.version
 
 
-MOUNT_RE = re.compile(r'^(?P<filesystem>\S+) mounted on (?P<mount>.+):$')
+MOUNT_RE = re.compile(r'^(?P<filesystem>[^ \t]+) mounted on (?P<mount>.+):$')
 OP_HEADER_RE = re.compile(r'^(?P<op>[a-z]+):\s+ops/s\s')
 COLUMN_SPLIT_RE = re.compile(r'\s{2,}|\t')
 
@@ -334,7 +334,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             stripped = line.strip()
 
             if not stripped:
@@ -356,6 +356,8 @@ def parse(
 
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
                 warn_if_values_line_missing()
+                if 'ops_sec' in mount:
+                    warn(f'{mount["mount"]}: more than one ops/s line in a mount block')
                 section = 'mount'
                 continue
 

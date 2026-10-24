@@ -184,5 +184,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['groups'][0]['members'], ['Administrator', 'CORP\\aa\u2028The command completed successfully.\u2028x', 'CORP\\Domain Admins', 'user1'])
 
 
+    def test_net_localgroup_other_whitespace_in_name(self):
+        """
+        Test 'net_localgroup' only trims space and tab from member names
+        """
+        data = 'Alias name     Server Admins\nComment\n\nMembers\n\n-------------------------------------------------------------------------------\n\xa0\nalice\xa0\nThe command completed successfully.\xa0\nbob\nThe command completed successfully.\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result['groups'], [{'name': 'Server Admins', 'members': ['\xa0', 'alice\xa0', 'The command completed successfully.\xa0', 'bob']}])
+
+
 if __name__ == '__main__':
     unittest.main()

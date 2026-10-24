@@ -534,5 +534,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['path'], '@x\x1eunix  2        ACC       STREAM     LISTENING     99999    1/init               /run/other.sock')
 
 
+    def test_netstat_other_whitespace_in_program_name(self):
+        """
+        Test 'netstat' UNIX sockets with tab and non-ASCII whitespace in the program name
+        """
+        header = 'Active UNIX domain sockets (servers and established)\nProto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\n'
+        for name in ('ab\t/dev/log', 'a\t/dev/log', 'ab\xa0/dev/log', 'ab\x1f/dev/log', 'ab\u3000/dev/log'):
+            data = header + 'unix  2      [ ]         DGRAM                    34693    1898/' + name + '     /run/user/1000/systemd/notify\n'
+            result = jc.parsers.netstat.parse(data, quiet=True)
+            self.assertEqual(len(result), 1)
+            self.assertEqual(result[0]['program_name'], name)
+            self.assertEqual(result[0]['path'], '/run/user/1000/systemd/notify')
+
+        data = header + 'unix  3      [ ]         STREAM     CONNECTED     34694    1899/ab\t/dev/log     /run/user/1000/bus\n'
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(result[0]['program_name'], 'ab\t/dev/log')
+        self.assertEqual(result[0]['state'], 'CONNECTED')
+        self.assertEqual(result[0]['path'], '/run/user/1000/bus')
+
+
 if __name__ == '__main__':
     unittest.main()
