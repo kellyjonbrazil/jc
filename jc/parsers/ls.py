@@ -268,8 +268,12 @@ def parse(data, raw=False, quiet=False):
                     parent = entry[:-1]
                     new_section = True
 
-                    # fixup to remove trailing \n in previous entry
-                    raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
+                    # fixup to remove the trailing \n that a blank separator
+                    # line appended to the previous entry. An empty directory
+                    # leaves that entry untouched, and its filename can end in
+                    # any character, so only remove an actual newline.
+                    if raw_output and raw_output[-1]['filename'].endswith('\n'):
+                        raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
                 if re.match(r'total [0-9]+', entry):
