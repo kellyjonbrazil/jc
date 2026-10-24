@@ -788,9 +788,36 @@ class JcCli():
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
 
+    @staticmethod
+    def stdin_lines(stdin: TextIO) -> Iterable[str]:
+        """
+        Lazily yield UTF-8 lines from the binary buffer of stdin. Lines end
+        at LF or CRLF only, and a CRLF ending is yielded as LF. Bytes that
+        cannot be decoded are shown as backslash escapes. Falls back to
+        iterating stdin directly if it has no binary buffer.
+        """
+        buffer = getattr(stdin, 'buffer', None)
+        if buffer is None:
+            yield from stdin
+            return
+
+        text = io.TextIOWrapper(buffer, encoding='utf-8',
+                                errors='backslashreplace', newline='\n')
+        try:
+            for line in text:
+                if line.endswith('\r\n'):
+                    line = line[:-2] + '\n'
+                yield line
+        finally:
+            # leave the underlying buffer open
+            try:
+                text.detach()
+            except ValueError:
+                pass
+
     def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
-        self.data_in = sys.stdin
+        self.data_in = self.stdin_lines(sys.stdin)
         self.slicer()
 
         if self.parser_module:
