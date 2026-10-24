@@ -119,7 +119,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ldd` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,7 +135,7 @@ _PATH_AND_ADDRESS = re.compile(r'^(?P<path>\S+)\s*\((?P<address>0x[0-9a-fA-F]+)\
 _NAME_AND_ADDRESS = re.compile(r'^(?P<name>\S+)\s*\((?P<address>0x[0-9a-fA-F]+)\)$')
 _VERSION_INFO_HEADER = 'Version information:'
 _VERSION_OBJECT = re.compile(r'^(?P<obj>\S+):$')
-_VERSION_REQUIREMENT = re.compile(r'^(?P<name>\S+)\s*\((?P<version>[^)]+)\)\s*=>\s*(?P<path>\S+)$')
+_VERSION_REQUIREMENT = re.compile(r'^(?P<name>\S+)\s+\((?P<version>[^)]+)\)\s*=>\s*(?P<path>\S+)$')
 _FILE_HEADER = re.compile(r'^(?P<file>.+):$')
 
 
