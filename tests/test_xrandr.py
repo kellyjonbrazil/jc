@@ -373,5 +373,16 @@ default connected 1024x600+0+0 0mm x 0mm
         self.assertEqual(actual, reference)
 
 
+    def test_long_mode_line(self):
+        """Mode line followed by a long run of digits with no frequency"""
+        with open("tests/fixtures/generic/xrandr-long-mode.out", "r") as f:
+            actual = parse(f.read(), quiet=True)
+
+        with open('tests/fixtures/generic/xrandr-long-mode.json', 'r') as f:
+            reference = json.loads(f.read())
+
+        self.assertEqual(actual, reference)
+
+
 if __name__ == "__main__":
     unittest.main()
