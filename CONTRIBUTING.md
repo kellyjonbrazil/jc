@@ -102,6 +102,17 @@ Good:
 ]
 ```
 
+## Line and Field Splitting
+- Split input into lines with `jc.utils.splitlines(data)` instead of
+  `data.splitlines()`. `str.splitlines()` also ends a line at characters like
+  CR, form feed, and U+2028 that commands print inside values such as file
+  names, which turns one line into several. Pass `split_cr=True` only for file
+  formats that can use CR-only line endings.
+- Split fields on the characters the format actually uses. A bare `split()`,
+  `strip()`, or regex `\s` also matches Unicode whitespace such as a
+  non-breaking space, so use `split(' ')`, `strip(' \t')`, or `re.ASCII` when
+  the format only separates fields with spaces and tabs.
+
 ## Development Environment
 Use the following steps to set up the development environment.
 

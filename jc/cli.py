@@ -517,7 +517,7 @@ class JcCli():
 
     @staticmethod
     def open_text_file(path_string: str) -> str:
-        with open(path_string, 'r') as f:
+        with open(path_string, 'r', newline='') as f:
             return f.read()
 
     def run_user_command(self) -> None:
@@ -530,12 +530,13 @@ class JcCli():
                 self.magic_run_command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                close_fds=False,           # Allows inheriting file descriptors
-                universal_newlines=True,   # which is useful for process substitution
-                encoding='UTF-8'
+                close_fds=False  # Allows inheriting file descriptors
+                                 # which is useful for process substitution
             )
 
-            self.magic_stdout, self.magic_stderr = proc.communicate()
+            stdout_bytes, stderr_bytes = proc.communicate()
+            self.magic_stdout = stdout_bytes.decode('utf-8')
+            self.magic_stderr = stderr_bytes.decode('utf-8')
             self.magic_stdout = self.magic_stdout or '\n'
             self.magic_returncode = proc.returncode
 

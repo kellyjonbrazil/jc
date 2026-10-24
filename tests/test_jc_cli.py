@@ -1,6 +1,8 @@
 import contextlib
 import io
 import os
+import sys
+import tempfile
 import unittest
 from datetime import datetime, timezone
 
@@ -703,6 +705,34 @@ power management:
 
         for path, expected in paths.items():
             self.assertEqual(expected, JcCli.is_proc_path(path), path)
+
+    def test_magic_open_text_file_no_newline_translation(self):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'wb') as f:
+                f.write(b'1 (a\rb) S 0\nc\r\n')
+            self.assertEqual('1 (a\rb) S 0\nc\r\n', JcCli.open_text_file(path))
+        finally:
+            os.remove(path)
+
+    def test_magic_run_user_command_no_newline_translation(self):
+        code = ("import sys; "
+                "sys.stdout.buffer.write(b'a\\rb\\r\\nc\\n'); "
+                "sys.stderr.buffer.write(b'e\\rf\\n')")
+        cli = JcCli()
+        cli.magic_run_command = [sys.executable, '-c', code]
+        cli.run_user_command()
+        self.assertEqual('a\rb\r\nc\n', cli.magic_stdout)
+        self.assertEqual('e\rf\n', cli.magic_stderr)
+        self.assertEqual(0, cli.magic_returncode)
+
+    def test_magic_run_user_command_empty_output(self):
+        cli = JcCli()
+        cli.magic_run_command = [sys.executable, '-c', 'pass']
+        cli.run_user_command()
+        self.assertEqual('\n', cli.magic_stdout)
+        self.assertEqual('', cli.magic_stderr)
+        self.assertEqual(0, cli.magic_returncode)
 
 
 if __name__ == '__main__':
