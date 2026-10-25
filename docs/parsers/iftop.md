@@ -212,4 +212,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/iftop.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/iftop.py)
 
-Version 1.2 by Ron Green (11993626+georgettica@users.noreply.github.com)
+Version 1.3 by Ron Green (11993626+georgettica@users.noreply.github.com)

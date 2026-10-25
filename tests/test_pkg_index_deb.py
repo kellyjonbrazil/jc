@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'deb_packages_index': (
                 'fixtures/generic/pkg-index-deb.out',
-                'fixtures/generic/pkg-index-deb.json')
+                'fixtures/generic/pkg-index-deb.json'),
+            'deb_description_en': (
+                'fixtures/generic/pkg-index-deb--description-en.out',
+                'fixtures/generic/pkg-index-deb--description-en.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -42,6 +45,16 @@ class MyTests(unittest.TestCase):
             self.f_json['deb_packages_index']
         )
 
+
+    def test_pkg_index_deb_description_en(self):
+        """
+        Test 'pkg-index-deb' where a Description-en is not inherited by
+        the following packages
+        """
+        self.assertEqual(
+            parse(self.f_in['deb_description_en'], quiet=True),
+            self.f_json['deb_description_en']
+        )
 
     def test_pkg_index_deb_line_separator(self):
         """

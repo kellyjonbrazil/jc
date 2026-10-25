@@ -188,7 +188,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.2"
+    version = "1.3"
     description = "`iftop` command parser"
     author = "Ron Green"
     author_email = "11993626+georgettica@users.noreply.github.com"
@@ -244,6 +244,14 @@ def _process(proc_data: List[JSONDictType], quiet: bool = False) -> List[JSONDic
                             if connection_key in string_to_bytes_fields:
                                 connection[connection_key] = jc.utils.convert_size_to_int(connection[connection_key])
     return proc_data
+
+
+_HEADER_KEYS = ("device", "ip_address", "mac_address")
+
+
+def _header_only(item: Dict) -> Dict:
+    """Return a new dict with only the interface header values of `item`"""
+    return {k: item[k] for k in _HEADER_KEYS if k in item}
 
 
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
@@ -318,12 +326,12 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         if line.startswith("interface:"):
             # Example:
             # interface: enp0s3
-            interface_item["device"] = line.split(":")[1].strip()
+            interface_item["device"] = line.split(":", maxsplit=1)[1].strip()
 
         elif line.startswith("IP address is:"):
             # Example:
             # IP address is: 10.10.15.129
-            interface_item["ip_address"] = line.split(":")[1].strip()
+            interface_item["ip_address"] = line.split(":", maxsplit=1)[1].strip()
 
         elif line.startswith("MAC address is:"):
             # Example:
@@ -353,14 +361,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             line.startswith("# Host name (port/service if enabled)")
             and saw_already_host_line
         ):
-            old_interface_item, interface_item = interface_item, {}
-            interface_item.update(
-                {
-                    "device": old_interface_item["device"],
-                    "ip_address": old_interface_item["ip_address"],
-                    "mac_address": old_interface_item["mac_address"],
-                }
-            )
+            interface_item = _header_only(interface_item)
 
         elif "=>" in line and is_previous_line_interface and ":" in line:
             # should not happen
@@ -369,8 +370,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         elif "=>" in line and not is_previous_line_interface and ":" in line:
             # Example:
             #    1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
-            is_previous_line_interface = True
             match_raw = re_linux_clients_before_newline.match(line)
+            # only expect a receive line if the send line was parsed
+            is_previous_line_interface = bool(match_raw)
 
             if not match_raw:
                 # this is a bug in iftop
@@ -397,8 +399,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             pass
 
         elif "=>" in line and is_previous_line_interface and ":" not in line:
-            is_previous_line_interface = True
             match_raw = re_linux_clients_before_newline_no_port.match(line)
+            # only expect a receive line if the send line was parsed
+            is_previous_line_interface = bool(match_raw)
 
             if not match_raw:
                 # this is a bug in iftop
@@ -570,9 +573,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             )
 
         elif all(c == "=" for c in line):
-            interface_item["clients"] = clients
+            # a separator that ends an empty report does not produce a record
+            if clients or any(k not in _HEADER_KEYS for k in interface_item):
+                interface_item["clients"] = clients
+                raw_output.append(interface_item)
+
+            # the next report starts with only the interface header values
             clients = []
-            # keep the copy here as without it keeps the objects linked
-            raw_output.append(interface_item.copy())
+            interface_item = _header_only(interface_item)
 
     return raw_output if raw else _process(raw_output, quiet=quiet)

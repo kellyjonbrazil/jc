@@ -21,6 +21,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-truncated-lines.out'), 'r', encoding='utf-8') as f:
         generic_iftop_truncated_lines = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-b-n1-unmatched-send.out'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iftop_b_n1_unmatched_send = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-repeated-separators.out'), 'r', encoding='utf-8') as f:
+        generic_iftop_repeated_separators = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iftop-b-n1.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_10_iftop_b_n1_json = json.loads(f.read())
@@ -33,6 +39,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-truncated-lines.json'), 'r', encoding='utf-8') as f:
         generic_iftop_truncated_lines_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-b-n1-unmatched-send.json'), 'r', encoding='utf-8') as f:
+        ubuntu_20_10_iftop_b_n1_unmatched_send_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-repeated-separators.json'), 'r', encoding='utf-8') as f:
+        generic_iftop_repeated_separators_json = json.loads(f.read())
 
 
     def test_iftop_nodata(self):
@@ -65,6 +77,31 @@ class MyTests(unittest.TestCase):
         the arrow and a flow line with a long host field and no rate columns
         """
         self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_truncated_lines, quiet=True), self.generic_iftop_truncated_lines_json)
+
+    def test_iftop_unmatched_send_line(self):
+        """
+        Test 'iftop -t -P' with a send line that cannot be parsed: its receive
+        line is ignored and the previous client is not repeated
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.ubuntu_20_10_iftop_b_n1_unmatched_send, quiet=True), self.ubuntu_20_10_iftop_b_n1_unmatched_send_json)
+
+    def test_iftop_unmatched_first_send_line(self):
+        """
+        Test 'iftop -t -P' where the very first send line cannot be parsed
+        """
+        lines = self.ubuntu_20_10_iftop_b_n1.splitlines()
+        lines[6] = '   1 ubuntu-2004-clean-01:ssh                 =>'
+        result = jc.parsers.iftop.parse('\n'.join(lines), quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['clients'], [])
+
+    def test_iftop_repeated_separators(self):
+        """
+        Test 'iftop -t -P' with repeated '=' separator lines, an interface
+        name containing a colon and an IPv6 address
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_repeated_separators, quiet=True), self.generic_iftop_repeated_separators_json)
+        self.assertEqual(len(jc.parsers.iftop.parse(self.generic_iftop_repeated_separators, raw=True, quiet=True)), 1)
 
     def test_iftop_host_port_split(self):
         """
