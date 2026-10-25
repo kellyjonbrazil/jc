@@ -39,9 +39,11 @@ class MyTests(unittest.TestCase):
 
     def test_sparse_table_parse_data_crosses_column_end(self):
         """
-        Test sparse_table_parse with data that is wider than its column. When
+        Test sparse_table_parse with data that is wider than its column.
+        This pins the existing behavior, which is not the ideal result: when
         the search for whitespace reaches the start of the line, the first
-        character is replaced by the delimiter.
+        character is replaced by the delimiter, so the value loses its first
+        character and moves one column to the right.
         """
         data = [
             'col_1 col_2 col_3',
