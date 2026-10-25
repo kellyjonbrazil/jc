@@ -94,7 +94,7 @@ from jc.jc_types import JSONDictType
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'SRT file parser'
     author = 'Mark Rotner'
     author_email = 'rotner.mr@gmail.com'
@@ -141,16 +141,21 @@ __version__ = info.version
 RGX_TIMESTAMP_MAGNITUDE_DELIM = r"[,.:，．。：]"
 RGX_POSITIVE_INT = r"[0-9]+"
 RGX_POSITIVE_INT_OPTIONAL = r"[0-9]*"
-RGX_TIMESTAMP = '{field}{separator}{field}{separator}{field}{separator}?{optional_field}'.format(
+# A timestamp or index only starts at the first digit of a run of digits, and
+# the optional trailing parts are only tried after their delimiter. This keeps
+# a long run of digits from being split between adjacent repetitions in every
+# possible way.
+RGX_TIMESTAMP = '(?<![0-9]){field}{separator}{field}{separator}{field}(?:{separator}{optional_field})?'.format(
     separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
     field=RGX_POSITIVE_INT,
     optional_field=RGX_POSITIVE_INT_OPTIONAL
 )
-RGX_INDEX = r"-?[0-9]+\.?[0-9]*"  # int\float\negative.
+RGX_INDEX = r"-?(?<![0-9])[0-9]+(?:\.[0-9]*)?"  # int\float\negative.
 RGX_CONTENT = r".*?"  # Anything(except newline) but lazy.
 RGX_NEWLINE = r"\r?\n"  # Newline(CRLF\LF).
 SRT_REGEX = re.compile(
-    r"\s*(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?(?:{newline}|\Z)({content})"
+    # No leading whitespace: finditer() skips anything that does not match.
+    r"(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?(?:{newline}|\Z)({content})"
     # Many sub editors don't add a blank line to the end, and many editors and
     # players accept that. We allow it to be missing in input.
     #
@@ -176,7 +181,8 @@ SRT_REGEX = re.compile(
     re.DOTALL,
 )
 TIMESTAMP_REGEX = re.compile(
-    '^({field}){separator}({field}){separator}({field}){separator}?({optional_field})$'.format(
+    # The third field must take all of its digits when there is no delimiter.
+    '^({field}){separator}({field}){separator}({field})(?:{separator}|(?![0-9]))({optional_field})$'.format(
         separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
         field=RGX_POSITIVE_INT,
         optional_field=RGX_POSITIVE_INT_OPTIONAL
