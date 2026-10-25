@@ -91,13 +91,14 @@ Examples:
     }
 """
 import jc.utils
+from jc.exceptions import ParseError
 import configparser
 import uuid
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'INI with duplicate key file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -125,6 +126,18 @@ class MultiDict(dict):
 
         else:
             super().__setitem__(key, value)
+
+
+def _optionxform(option):
+    """
+    Keep keys as they are (no conversion to lower-case). A line with a
+    delimiter but no key is rejected here, since it would otherwise be
+    collected by configparser and reported only after the whole input is read.
+    """
+    if not option:
+        raise ParseError('Found a line with an empty key (a delimiter with no key name before it).')
+
+    return option
 
 
 def _process(proc_data):
@@ -189,7 +202,7 @@ def parse(data, raw=False, quiet=False):
         )
 
         # don't convert keys to lower-case:
-        ini_parser.optionxform = lambda option: option
+        ini_parser.optionxform = _optionxform
 
         try:
             ini_parser.read_string(data)
