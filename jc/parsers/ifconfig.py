@@ -219,7 +219,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.5'
+    version = '2.6'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -424,7 +424,7 @@ def parse(
 
     # Linux syntax
     re_linux_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+)\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+)\s+
         Link\sencap:(?P<type>\S+\s?\S+)
         (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -441,8 +441,11 @@ def parse(
         Scope:(?P<scope>Link|Host)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # state words are only tried from the start of a run of words separated by
+    # single spaces. A start further into the run cannot match where an earlier
+    # start did not, so the result is the same with less searching.
     re_linux_state = re.compile(r'''
-        \W+(?P<state>(?:\w+\s)+)(?:\s+)?
+        (?:^\w+\s|\W(?<!\w\s))(?P<state>(?:\w+\s)+)(?:\s+)?
         MTU:(?P<mtu>[0-9]+)\s+
         Metric:(?P<metric>[0-9]+)
         ''', re.IGNORECASE | re.VERBOSE
@@ -464,7 +467,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_bytes = re.compile(r'''
-        \W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        ^\W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
         TX\sbytes:(?P<tx_bytes>\d+)\s+\(.*\)
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -476,7 +479,7 @@ def parse(
 
     # OpenBSD syntax
     re_openbsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)?>\s+
         mtu\s+(?P<mtu>[0-9]+)
@@ -491,14 +494,14 @@ def parse(
     re_openbsd_ipv6 = re.compile(r'''
         inet6\s+(?P<address>\S+)\s+
         prefixlen\s+(?P<mask>[0-9]+)\s+
-        scopeid\s+(?P<scope>\w+x\w+)
+        scopeid\s+(?P<scope>\w[^\Wx]*x\w+)
         <(?P<type>link|host|global)>
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_details = re.compile(r'''
-        \S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        (?<!\S)\S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
         txqueuelen\s+[0-9]+\s+
-        \((?P<type>\S+\s?\S+)\)
+        \((?P<type>\S(?:\S*\s)?\S+)\)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_rx = re.compile(r'''
@@ -529,7 +532,7 @@ def parse(
 
     # FreeBSD syntax
     re_freebsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)>\s+
         metric\s+(?P<metric>[0-9]+)\s+
@@ -554,8 +557,8 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_ipv6 = re.compile(r'''
-        \s?inet6\s(?P<address>.*?)
-        (?:\%(?P<scope_id>\w+\d+))?\s
+        ^\s*inet6\s(?P<address>.*?)
+        (?:\%(?P<scope_id>\w+\d))?\s
         prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)  # positive lookahead for scopeid or end of line
         (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -571,12 +574,14 @@ def parse(
     re_freebsd_hwaddr = re.compile(r'''
         hwaddr\s(?P<hw_address>[0-9A-Fa-f:?]+)
         (?:\s+media:\s(?P<media>.+)\s
-        <(?P<media_flags>.+)>)?
+        <(?P<media_flags>[^<]+)>)?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # only the first 'media: ' on the line is tried. If it does not match,
+    # a later one on the same line cannot match either.
     re_freebsd_media = re.compile(r'''
-        media:\s(?P<media>.+)
-        (?:\s+?<(?P<media_flags>.+)>)
+        ^(?:(?!media:\s).)*media:\s(?P<media>.+)
+        (?:\s<(?P<media_flags>[^<]+)>)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_nd6_options = re.compile(r'''
@@ -588,26 +593,27 @@ def parse(
         plugged:\s(?P<plugged>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # each value runs up to the first occurrence of the next label
     re_freebsd_vendor_pn_sn_date = re.compile(r'''
-        vendor:\s(?P<vendor>.+)\s
-        PN:\s(?P<vendor_pn>.+)\s
-        SN:\s(?P<vendor_sn>.+)\s
+        ^\s*vendor:\s(?P<vendor>(?:(?!\sPN:\s).)+)\s
+        PN:\s(?P<vendor_pn>(?:(?!\sSN:\s).)+)\s
+        SN:\s(?P<vendor_sn>(?:(?!\sDATE:\s).)+)\s
         DATE:\s(?P<vendor_date>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_temp_volts = re.compile(r'''
-        module\stemperature:\s(?P<module_temperature>.+)\s
+        ^\s*module\stemperature:\s(?P<module_temperature>.+)\s
         voltage:\s(?P<module_voltage>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_tx_rx_power = re.compile(r'''
-        RX:\s+(?P<rx_power>.+)\s+
+        ^\s*RX:\s+(?P<rx_power>\S.*)\s
         TX:\s(?P<tx_pwer>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_options = re.compile(r'''
         options=(?P<options>[0-9A-Fa-f]+)
-        <(?P<options_flags>.+)>
+        <(?P<options_flags>[^<]+)>
         ''', re.IGNORECASE | re.VERBOSE
     )
 

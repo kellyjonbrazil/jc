@@ -42,6 +42,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields4.out'), 'r', encoding='utf-8') as f:
         osx_freebsd12_ifconfig_extra_fields4 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-long-fields.out'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_long_fields = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-long-fields2.out'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_long_fields2 = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ifconfig.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ifconfig_json = json.loads(f.read())
@@ -75,6 +81,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/ifconfig-extra-fields4.json'), 'r', encoding='utf-8') as f:
         freebsd12_ifconfig_extra_fields4_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-long-fields.json'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_long_fields_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-long-fields2.json'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_long_fields2_json = json.loads(f.read())
 
     def test_ifconfig_nodata(self):
         """
@@ -147,6 +159,20 @@ class MyTests(unittest.TestCase):
         Test 'ifconfig' on freebsd12 with lane fields
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
+
+    def test_ifconfig_long_fields(self):
+        """
+        Test 'ifconfig' with long descriptions, option lists, padded
+        transceiver fields, and whitespace-only lines (FreeBSD and Linux)
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse(self.generic_ifconfig_long_fields, quiet=True), self.generic_ifconfig_long_fields_json)
+
+    def test_ifconfig_long_fields2(self):
+        """
+        Test 'ifconfig' with padded fields and whitespace-only lines
+        (Linux tun, FreeBSD hwaddr/media, OpenBSD)
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse(self.generic_ifconfig_long_fields2, quiet=True), self.generic_ifconfig_long_fields2_json)
 
     def test_ifconfig_hex_mask_all_zeros(self):
         """
