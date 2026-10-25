@@ -2,6 +2,7 @@ import sys
 import locale
 import unittest
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class MyTests(unittest.TestCase):
@@ -439,6 +440,64 @@ line5
 
 
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
+    def test_utils_expansion_limit(self):
+        self.assertEqual(jc.utils.expansion_limit(0), 50000000)
+        self.assertEqual(jc.utils.expansion_limit(1000), 51000000)
+
+    def test_utils_expansion_check_small(self):
+        data = {'a': [1, 2.5, None, True, False, 'x' * 100], 'b': {'c': 'd'}, 'e': []}
+        self.assertIsNone(jc.utils.expansion_check(data, 0))
+        self.assertIsNone(jc.utils.expansion_check('x' * 1000, 0))
+        self.assertIsNone(jc.utils.expansion_check([], 0))
+
+    def test_utils_expansion_check_shared_references(self):
+        # one 1 MB list referenced many times is counted once per reference
+        shared = ['x' * 998] * 1000      # 1,001,001 characters of JSON
+        self.assertIsNone(jc.utils.expansion_check([shared] * 40, 100))
+        self.assertRaises(ParseError, jc.utils.expansion_check, [shared] * 60, 100)
+        self.assertRaises(ParseError, jc.utils.expansion_check, {'a': [shared] * 60}, 100)
+
+    def test_utils_expansion_check_nested_references(self):
+        node = ['x']
+        for _ in range(30):
+            node = [node, node]
+        self.assertRaises(ParseError, jc.utils.expansion_check, node, 1000)
+
+    def test_utils_expansion_check_boundary(self):
+        # each item of `shared` is '"' + 998 x's + '"' plus a separator
+        shared = ['x' * 998] * 1000
+        shared_size = 2 + 1000 * 1000 + 999
+        items = 50
+        input_size = 100
+        limit = jc.utils.expansion_limit(input_size)
+        # [shared, shared, ..., "ppp...p"]
+        base_size = 2 + items * shared_size + items + 2
+        pad = 'p' * (limit - base_size)
+        data = [shared] * items + [pad]
+        self.assertIsNone(jc.utils.expansion_check(data, input_size))
+        data = [shared] * items + [pad + 'p']
+        self.assertRaises(ParseError, jc.utils.expansion_check, data, input_size)
+
+    def test_utils_expansion_check_circular(self):
+        data = [1, 2]
+        data.append(data)
+        self.assertIsNone(jc.utils.expansion_check(data, 0))
+
+    def test_utils_xml_defaults_check(self):
+        doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "1" y CDATA #IMPLIED>]><a>' + '<b/>' * 100 + '</a>'
+        self.assertIsNone(jc.utils.xml_defaults_check(doc))
+        self.assertIsNone(jc.utils.xml_defaults_check(doc.encode()))
+        self.assertIsNone(jc.utils.xml_defaults_check('<a><b x="1"/></a>'))
+        self.assertIsNone(jc.utils.xml_defaults_check('<!DOCTYPE a [<!ATTLIST b x CDATA "1">]><a><b>'))
+
+    def test_utils_xml_defaults_check_limit(self):
+        doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "' + 'v' * 100000 + '">]><a>' + '<b/>' * 2000 + '</a>'
+        self.assertRaises(ParseError, jc.utils.xml_defaults_check, doc)
+        self.assertRaises(ParseError, jc.utils.xml_defaults_check, doc.encode())
+        # attributes given in the document are not defaulted
+        doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "' + 'v' * 100000 + '">]><a>' + '<b x=""/>' * 2000 + '</a>'
+        self.assertIsNone(jc.utils.xml_defaults_check(doc))
+
     # def test_utils_warning_message(self):
     #     msg = [
     #         'this is a long first line that will be wrapped yada yada yada yada yada yada yada.',
