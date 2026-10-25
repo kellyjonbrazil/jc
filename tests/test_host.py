@@ -19,7 +19,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/generic/host-google.json'),
             'sunet': (
                 'fixtures/generic/host-sunet.out',
-                'fixtures/generic/host-sunet.json')
+                'fixtures/generic/host-sunet.json'),
+            'soa': (
+                'fixtures/generic/host-soa.out',
+                'fixtures/generic/host-soa.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -53,6 +56,29 @@ class MyTests(unittest.TestCase):
             parse(self.f_in['sunet'], quiet=True),
             self.f_json['sunet']
         )
+
+    def test_host_soa(self):
+        """
+        Test 'host -t soa' (a single SOA line is a single record)
+        """
+        self.assertEqual(
+            parse(self.f_in['soa'], quiet=True),
+            self.f_json['soa']
+        )
+
+    def test_host_soa_c_mode(self):
+        """
+        Test 'host -C' with multiple nameservers (one record per SOA line)
+        """
+        data = (
+            'Nameserver 192.0.2.1:\n'
+            'example.com has SOA record ns1.example.com. admin.example.com. 1 7200 3600 1209600 3600\n'
+            'Nameserver 192.0.2.2:\n'
+            'example.com has SOA record ns1.example.com. admin.example.com. 2 7200 3600 1209600 3600\n'
+        )
+        result = parse(data, quiet=True)
+        self.assertEqual([x['nameserver'] for x in result], ['192.0.2.1', '192.0.2.2'])
+        self.assertEqual([x['serial'] for x in result], [1, 2])
 
 if __name__ == '__main__':
     unittest.main()
