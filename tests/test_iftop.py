@@ -18,6 +18,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iftop-b-n1-noport.out'), 'r', encoding='utf-8') as f:
         ubuntu_20_10_iftop_b_n1_noport = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-truncated-lines.out'), 'r', encoding='utf-8') as f:
+        generic_iftop_truncated_lines = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iftop-b-n1.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_10_iftop_b_n1_json = json.loads(f.read())
@@ -27,6 +30,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.10/iftop-b-n1-noport.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_10_iftop_b_n1_noport_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-truncated-lines.json'), 'r', encoding='utf-8') as f:
+        generic_iftop_truncated_lines_json = json.loads(f.read())
 
 
     def test_iftop_nodata(self):
@@ -52,6 +58,33 @@ class MyTests(unittest.TestCase):
         Test 'iftop -i <device> -t -B -s 1' with units as MiB on Ubuntu 20.10
         """
         self.assertEqual(jc.parsers.iftop.parse(self.ubuntu_20_10_iftop_b_n1_noport, quiet=True), self.ubuntu_20_10_iftop_b_n1_noport_json)
+
+    def test_iftop_truncated_lines(self):
+        """
+        Test 'iftop -t -P' output with a flow line that is only padding before
+        the arrow and a flow line with a long host field and no rate columns
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_truncated_lines, quiet=True), self.generic_iftop_truncated_lines_json)
+
+    def test_iftop_host_port_split(self):
+        """
+        Test 'iftop -t -P' splits host and port at the last colon of the host
+        field, including IPv6 addresses and a host field that ends in a colon
+        """
+        cases = [
+            ('2001:db8::1:https', '2001:db8::5:443', ('2001:db8::1', 'https'), ('2001:db8::5', '443')),
+            ('fe80::1:ssh', 'fe80::2:40876', ('fe80::1', 'ssh'), ('fe80::2', '40876')),
+            ('a:b:', 'host:http', ('a', 'b:'), ('host', 'http'))
+        ]
+
+        for send_host, receive_host, send_expected, receive_expected in cases:
+            with self.subTest(send_host):
+                lines = self.ubuntu_20_10_iftop_b_n1.splitlines()
+                lines[6] = '   1 ' + send_host + '                 =>       448b       448b       448b       112B'
+                lines[7] = '     ' + receive_host + '                    <=       208b       208b       208b        52B'
+                connections = jc.parsers.iftop.parse('\n'.join(lines), quiet=True)[0]['clients'][0]['connections']
+                self.assertEqual((connections[0]['host_name'], connections[0]['host_port']), send_expected)
+                self.assertEqual((connections[1]['host_name'], connections[1]['host_port']), receive_expected)
 
 if __name__ == '__main__':
     unittest.main()
