@@ -169,7 +169,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -267,7 +267,8 @@ def _remove_text_from_value(value: Optional[str]) -> Optional[str]:
     summary k/v pair are added.
     """
     if value:
-        return re.sub(r"\s+\((\w+)\)$", '', value)
+        # start only at the first blank of a run so a long run is scanned once
+        return re.sub(r"(?<!\s)\s+\((\w+)\)$", '', value)
 
     return None
 
