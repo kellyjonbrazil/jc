@@ -1,4 +1,5 @@
 import os
+import json
 import unittest
 from jc.exceptions import ParseError
 import jc.parsers.asciitable_m
@@ -7,6 +8,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable_m-wrapped-cells.out'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_wrapped_cells = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable_m-wrapped-cells.json'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_wrapped_cells_json = json.loads(f.read())
 
     def test_asciitable_m_nodata(self):
         """
@@ -399,6 +408,20 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.asciitable_m.parse(data, quiet=True)
         self.assertEqual([x['user'] for x in result], ['alice', 'carol', 'bob'])
         self.assertEqual(result[1]['note'], 'hi\u2028+-+\u2028root')
+
+    def test_asciitable_m_wrapped_cells(self):
+        """
+        Test 'asciitable_m' with many wrapped lines in header and data cells
+        """
+        self.assertEqual(jc.parsers.asciitable_m.parse(self.generic_asciitable_m_wrapped_cells, quiet=True), self.generic_asciitable_m_wrapped_cells_json)
+
+    def test_asciitable_m_empty_lines_in_cell(self):
+        """
+        Test 'asciitable_m' with blank continuation lines inside a cell
+        """
+        data = '+------+------+\n| a    | b    |\n+------+------+\n|      | one  |\n| x    |      |\n|      | two  |\n| y    |      |\n+------+------+\n'
+        expected = [{'a': 'x\ny', 'b': 'one\ntwo'}]
+        self.assertEqual(jc.parsers.asciitable_m.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':
