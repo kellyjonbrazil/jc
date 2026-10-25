@@ -557,8 +557,8 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_ipv6 = re.compile(r'''
-        \s?inet6\s(?P<address>.*?)
-        (?:\%(?P<scope_id>\w+\d+))?\s
+        ^\s*inet6\s(?P<address>.*?)
+        (?:\%(?P<scope_id>\w+\d))?\s
         prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)  # positive lookahead for scopeid or end of line
         (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -574,12 +574,14 @@ def parse(
     re_freebsd_hwaddr = re.compile(r'''
         hwaddr\s(?P<hw_address>[0-9A-Fa-f:?]+)
         (?:\s+media:\s(?P<media>.+)\s
-        <(?P<media_flags>.+)>)?
+        <(?P<media_flags>[^<]+)>)?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # only the first 'media: ' on the line is tried. If it does not match,
+    # a later one on the same line cannot match either.
     re_freebsd_media = re.compile(r'''
-        media:\s(?P<media>.+)
-        (?:\s+?<(?P<media_flags>.+)>)
+        ^(?:(?!media:\s).)*media:\s(?P<media>.+)
+        (?:\s<(?P<media_flags>[^<]+)>)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_nd6_options = re.compile(r'''
@@ -591,26 +593,27 @@ def parse(
         plugged:\s(?P<plugged>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # each value runs up to the first occurrence of the next label
     re_freebsd_vendor_pn_sn_date = re.compile(r'''
-        vendor:\s(?P<vendor>.+)\s
-        PN:\s(?P<vendor_pn>.+)\s
-        SN:\s(?P<vendor_sn>.+)\s
+        ^\s*vendor:\s(?P<vendor>(?:(?!\sPN:\s).)+)\s
+        PN:\s(?P<vendor_pn>(?:(?!\sSN:\s).)+)\s
+        SN:\s(?P<vendor_sn>(?:(?!\sDATE:\s).)+)\s
         DATE:\s(?P<vendor_date>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_temp_volts = re.compile(r'''
-        module\stemperature:\s(?P<module_temperature>.+)\s
+        ^\s*module\stemperature:\s(?P<module_temperature>.+)\s
         voltage:\s(?P<module_voltage>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_tx_rx_power = re.compile(r'''
-        RX:\s+(?P<rx_power>.+)\s+
+        ^\s*RX:\s+(?P<rx_power>\S.*)\s
         TX:\s(?P<tx_pwer>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_options = re.compile(r'''
         options=(?P<options>[0-9A-Fa-f]+)
-        <(?P<options_flags>.+)>
+        <(?P<options_flags>[^<]+)>
         ''', re.IGNORECASE | re.VERBOSE
     )
 
