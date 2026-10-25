@@ -160,7 +160,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -224,24 +224,41 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _remove_ansi_c(line):
-    pattern = r"\$'((?:[^'\\]|\\.)*)'"
+_ANSI_C_PATTERN = re.compile(r"\$'((?:[^'\\]|\\.)*)'")
 
+# For array bodies: backslash escapes and ordinary "..." and '...' strings are
+# matched first and kept as they are, so only a `$'` that starts a word is
+# taken as ANSI-C quoting.
+_ARRAY_ANSI_C_PATTERN = re.compile(r"""\\.|"(?:[^"\\]|\\.)*"|'[^']*'|\$'((?:[^'\\]|\\.)*)'""")
+
+
+def _remove_ansi_c(line, shell_quote=False):
     def decode_ansi_c(match):
         inner_content = match.group(1)
+
+        if inner_content is None:
+            return match.group(0)
 
         if _raw:   # global variable because of laziness
             decoded = inner_content
         else:
             decoded = inner_content.encode('utf-8').decode('unicode_escape')
 
+        if shell_quote:
+            # array bodies are split with shlex.split() afterwards, so quote
+            # the text to keep it one word
+            return shlex.quote(decoded)
+
         return f"'{decoded}'"
 
-    return re.sub(pattern, decode_ansi_c, line)
+    if shell_quote:
+        return _ARRAY_ANSI_C_PATTERN.sub(decode_ansi_c, line)
+
+    return _ANSI_C_PATTERN.sub(decode_ansi_c, line)
 
 
 def _get_simple_array_vals(body: str) -> List[str]:
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
     body_split = shlex.split(body)
     values = []
@@ -252,7 +269,7 @@ def _get_simple_array_vals(body: str) -> List[str]:
 
 
 def _get_associative_array_vals(body: str) -> Dict[str, str]:
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
     body_split = shlex.split(body)
     values: Dict = {}
@@ -265,7 +282,7 @@ def _get_associative_array_vals(body: str) -> Dict[str, str]:
 
 def _get_bare_array_vals(body: str) -> List[str]:
     # ksh/zsh indexed arrays are printed as bare values with no [index]=
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
     return shlex.split(body)
 
