@@ -424,7 +424,7 @@ def parse(
 
     # Linux syntax
     re_linux_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+)\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+)\s+
         Link\sencap:(?P<type>\S+\s?\S+)
         (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -441,8 +441,11 @@ def parse(
         Scope:(?P<scope>Link|Host)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # state words are only tried from the start of a run of words separated by
+    # single spaces. A start further into the run cannot match where an earlier
+    # start did not, so the result is the same with less searching.
     re_linux_state = re.compile(r'''
-        \W+(?P<state>(?:\w+\s)+)(?:\s+)?
+        (?:^\w+\s|\W(?<!\w\s))(?P<state>(?:\w+\s)+)(?:\s+)?
         MTU:(?P<mtu>[0-9]+)\s+
         Metric:(?P<metric>[0-9]+)
         ''', re.IGNORECASE | re.VERBOSE
@@ -464,7 +467,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_bytes = re.compile(r'''
-        \W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        ^\W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
         TX\sbytes:(?P<tx_bytes>\d+)\s+\(.*\)
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -476,7 +479,7 @@ def parse(
 
     # OpenBSD syntax
     re_openbsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)?>\s+
         mtu\s+(?P<mtu>[0-9]+)
@@ -491,14 +494,14 @@ def parse(
     re_openbsd_ipv6 = re.compile(r'''
         inet6\s+(?P<address>\S+)\s+
         prefixlen\s+(?P<mask>[0-9]+)\s+
-        scopeid\s+(?P<scope>\w+x\w+)
+        scopeid\s+(?P<scope>\w[^\Wx]*x\w+)
         <(?P<type>link|host|global)>
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_details = re.compile(r'''
-        \S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        (?<!\S)\S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
         txqueuelen\s+[0-9]+\s+
-        \((?P<type>\S+\s?\S+)\)
+        \((?P<type>\S(?:\S*\s)?\S+)\)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_rx = re.compile(r'''
@@ -529,7 +532,7 @@ def parse(
 
     # FreeBSD syntax
     re_freebsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)>\s+
         metric\s+(?P<metric>[0-9]+)\s+
