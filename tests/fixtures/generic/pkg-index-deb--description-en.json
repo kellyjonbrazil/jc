@@ -1,0 +1,16 @@
+[
+  {
+    "package": "a",
+    "version": "1.0",
+    "description": "AAA  more about a"
+  },
+  {
+    "package": "b",
+    "version": "2.0",
+    "description": "BBB"
+  },
+  {
+    "package": "c",
+    "version": "3.0"
+  }
+]
