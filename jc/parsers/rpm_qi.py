@@ -185,7 +185,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -271,6 +271,7 @@ def parse(data, raw=False, quiet=False):
                         entry_obj['description'] = ' '.join(description)
                     raw_output.append(entry_obj)
                     entry_obj = {}
+                    description = []
                     desc_entry = False
                     desc_en_entry = False
 
