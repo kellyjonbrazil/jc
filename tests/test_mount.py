@@ -66,6 +66,18 @@ class MyTests(unittest.TestCase):
         generic_mount_newline_in_source_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-type-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_type_in_mountpoint = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-type-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_type_in_mountpoint_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.out'), 'r', encoding='utf-8') as f:
+        generic_mount_options_in_mountpoint_bsd = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.json'), 'r', encoding='utf-8') as f:
+        generic_mount_options_in_mountpoint_bsd_json = json.loads(f.read())
+
     def test_mount_nodata(self):
         """
         Test 'mount' with no data
@@ -154,6 +166,19 @@ class MyTests(unittest.TestCase):
             jc.parsers.mount.parse(osx, quiet=True),
             [{'filesystem': '/dev/disk2s1', 'mount_point': '/Volumes/turn on', 'options': ['hfs', 'local', 'journaled']}]
         )
+
+    def test_mount_type_in_mountpoint(self):
+        """
+        Test 'mount -l' with mount points that contain type and options text
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_type_in_mountpoint, quiet=True), self.generic_mount_type_in_mountpoint_json)
+
+    def test_mount_options_in_mountpoint_bsd(self):
+        """
+        Test 'mount' on macOS/BSD with a mount point that contains options text
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_options_in_mountpoint_bsd, quiet=True), self.generic_mount_options_in_mountpoint_bsd_json)
+
 
 
 if __name__ == '__main__':
