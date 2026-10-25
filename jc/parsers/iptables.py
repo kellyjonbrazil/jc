@@ -173,7 +173,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.14'
+    version = '1.15'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -187,11 +187,11 @@ __version__ = info.version
 chain_pkt_byte_pattern = re.compile(
     r'''
         \s\(policy\s
-        (?P<policy_name>.+)
+        (?P<policy_name>\S+)
         \s
-        (?P<packets>.+)
+        (?P<packets>\S+)
         \spackets,\s
-        (?P<bytes>.+)
+        (?P<bytes>\S+)
         \sbytes\)
     ''', re.VERBOSE
 )

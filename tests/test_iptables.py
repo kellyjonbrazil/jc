@@ -51,6 +51,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.out'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump2 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-chain-header-long.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_chain_header_long = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iptables-filter.json'), 'r', encoding='utf-8') as f:
         centos_7_7_iptables_filter_json = json.loads(f.read())
@@ -93,6 +96,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-no-jump2.json'), 'r', encoding='utf-8') as f:
         generic_iptables_no_jump2_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-chain-header-long.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_chain_header_long_json = json.loads(f.read())
 
 
     def test_iptables_nodata(self):
@@ -184,6 +190,28 @@ class MyTests(unittest.TestCase):
         Test 'sudo iptables' with no jump target and verbose output
         """
         self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_no_jump2, quiet=True), self.generic_iptables_no_jump2_json)
+
+    def test_iptables_chain_header_long_generic(self):
+        """
+        Test 'sudo iptables -nvL' with a long chain header line that repeats
+        the policy text without closing the counters
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_chain_header_long, quiet=True), self.generic_iptables_chain_header_long_json)
+
+    def test_iptables_chain_header_policy_counters(self):
+        """
+        Test 'sudo iptables -nvL' chain header policy and counters, including
+        a byte counter with a size suffix and headers without counters
+        """
+        data = '''Chain INPUT (policy DROP 1234 packets, 3456M bytes)
+Chain OUTPUT (policy ACCEPT)
+Chain DOCKER (2 references)'''
+        expected = [
+            {'chain': 'INPUT', 'default_policy': 'DROP', 'default_packets': 1234, 'default_bytes': 3456000000, 'rules': []},
+            {'chain': 'OUTPUT', 'rules': []},
+            {'chain': 'DOCKER', 'rules': []}
+        ]
+        self.assertEqual(jc.parsers.iptables.parse(data, quiet=True), expected)
 
     def test_iptables_x_option_format(self):
         """
