@@ -87,7 +87,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = 'YAML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -162,5 +162,9 @@ def parse(data, raw=False, quiet=False):
 
         for document in yaml.load_all(data):
             raw_output.append(document)
+
+        # aliases load as shared objects that are written out in full for
+        # each reference, so limit how much the output can grow from them
+        jc.utils.expansion_check(raw_output, len(data))
 
     return raw_output if raw else _process(raw_output)
