@@ -182,7 +182,7 @@ def parse(
         stat_p = re.compile(r'^cpu\s+(?: \d+){7,10}\b.*intr ', re.DOTALL)
         swaps_p = re.compile(r'^Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n')
         uptime_p = re.compile(r'^\d+.\d\d \d+.\d\d$')
-        version_p = re.compile(r'^.+\sversion\s[^\n]+$')
+        version_p = re.compile(r'^\S+\sversion\s[^\n]+$')
         vmallocinfo_p = re.compile(r'^0x[0-9a-f]{16}-0x[0-9a-f]{16}\s+\d+ \w+\+\w+/\w+ ')
         vmstat_p = re.compile(r'^nr_free_pages \d+\n.* \d$', re.DOTALL)
         zoneinfo_p = re.compile(r'^Node \d+, zone\s+\w+\n')
