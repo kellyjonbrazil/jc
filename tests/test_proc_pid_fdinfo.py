@@ -31,7 +31,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_fdinfo_inotify.json'),
             'proc_pid_fdinfo_timerfd': (
                 'fixtures/linux-proc/pid_fdinfo_timerfd',
-                'fixtures/linux-proc/pid_fdinfo_timerfd.json')
+                'fixtures/linux-proc/pid_fdinfo_timerfd.json'),
+            'proc_pid_fdinfo_long_epoll': (
+                'fixtures/generic/proc-pid-fdinfo-long-epoll.out',
+                'fixtures/generic/proc-pid-fdinfo-long-epoll.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -88,6 +91,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(self.f_in['proc_pid_fdinfo_timerfd'], quiet=True),
                                                           self.f_json['proc_pid_fdinfo_timerfd'])
+
+    def test_proc_pid_fdinfo_long_epoll(self):
+        """
+        Test '/proc/<pid>/fdinfo/<fd>' epoll file with a long word in the tfd line
+        """
+        self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(self.f_in['proc_pid_fdinfo_long_epoll'], quiet=True),
+                                                          self.f_json['proc_pid_fdinfo_long_epoll'])
 
 
     def test_proc_pid_fdinfo_line_separator(self):

@@ -55,7 +55,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/version` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -72,8 +72,8 @@ version_pattern = re.compile(r'''
     Linux\ version\ (?P<version>\S+)\s
     \((?P<email>\S+?)\)\s
     \((?P<gcc>gcc.+)\)\s
-    (?P<build>\#\d+(\S+)?)\s
-    (?P<flags>.*)?
+    (?P<build>\#\d\S*)\s
+    (?P<flags>[^#\n]*)
     (?P<date>(Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)
     ''', re.VERBOSE
 )

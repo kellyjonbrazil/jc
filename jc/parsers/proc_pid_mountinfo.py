@@ -146,7 +146,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/<pid>/mountinfo` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -243,9 +243,9 @@ def parse(
             (?P<min>\d+)\s
             (?P<root>\S+)\s
             (?P<mount_point>\S+)\s
-            (?P<mount_options>\S+)\s?
-            # (?P<optional_fields>(?:\s?\S+:\S+\s?)*)\s?-\s
-            (?P<optional_fields>(?:\s?(?:\S+:\S+|unbindable)\s?)*)\s?-\s
+            (?P<mount_options>\S+)\s
+            # match each optional field as a whole space-terminated token
+            (?P<optional_fields>(?:(?:[^\s:]+:\S+|unbindable)\s)*)-\s
             (?P<fs_type>\S+)\s
             (?P<mount_source>\S+)\s
             (?P<super_options>\S+)?

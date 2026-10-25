@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -201,7 +201,7 @@ def parse(data, raw=False, quiet=False):
     RE_REPLY_MS = re.compile(r'\s(?P<reply_ms>\d*\.\d*)ms')   # group: reply_ms
     RE_ASYMM = re.compile(r'\sasymm\s+(?P<asymm>[\d]+)')      # group: asymm
     RE_REACHED = re.compile(r'\sreached')
-    RE_SUMMARY = re.compile(r'\s+Resume:\s+pmtu\s+(?P<pmtu>\d+)(?:\s+hops\s+(?P<hops>\d+))?(?:\s+back\s+(?P<back>\d+))?')  # groups: pmtu, hops, back
+    RE_SUMMARY = re.compile(r'\sResume:\s+pmtu\s+(?P<pmtu>\d+)(?:\s+hops\s+(?P<hops>\d+))?(?:\s+back\s+(?P<back>\d+))?')  # groups: pmtu, hops, back
 
     raw_output = {}
 

@@ -164,4 +164,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/conntrack.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/conntrack.py)
 
-Version 1.0 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
+Version 1.1 by Tung Lam (53996158+tunglambk@users.noreply.github.com)

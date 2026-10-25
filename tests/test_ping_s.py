@@ -431,6 +431,13 @@ class MyTests(unittest.TestCase):
         pi_ping_ip_O_D_streaming_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.out'), 'r', encoding='utf-8') as f:
+        generic_ping_long_digits = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_long_digits_streaming_json = json.loads(f.read())
+
+
     def test_ping_s_nodata(self):
         """
         Test 'ping' with no data
@@ -874,6 +881,12 @@ class MyTests(unittest.TestCase):
         Test 'ping' with missing hostname on linux
         """
         self.assertEqual(list(jc.parsers.ping_s.parse(self.centos_7_7_ping_missing_hostname.splitlines(), quiet=True)), self.centos_7_7_ping_missing_hostname_json)
+
+    def test_ping_s_long_digits(self):
+        """
+        Test 'ping' with a long run of digits in the statistics section
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_long_digits.splitlines(), quiet=True)), self.generic_ping_long_digits_streaming_json)
 
 
 if __name__ == '__main__':

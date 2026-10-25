@@ -16,6 +16,12 @@ class MyTests(unittest.TestCase):
         "tests/fixtures/windows/windows-2016/ipconfig",
     ]
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ipconfig-long-line.out'), 'r', encoding='utf-8') as f:
+        generic_ipconfig_long_line = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ipconfig-long-line.json'), 'r', encoding='utf-8') as f:
+        generic_ipconfig_long_line_json = json.loads(f.read())
+
     def setUp(self):
         for tf in MyTests.test_files:
             in_file = os.path.join(THIS_DIR, os.pardir, f"{tf}.out")
@@ -48,11 +54,16 @@ class MyTests(unittest.TestCase):
         """
         Test 'ipconfig' with a line-break character other than LF inside a field
         """
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/windows/windows-10/ipconfig.out'), 'r', encoding='utf-8') as f:
-            data = f.read().replace('adapter Ethernet 2:', 'adapter Ethernet\u20282:')
+        data = self._windows_10_ipconfig.replace('adapter Ethernet 2:', 'adapter Ethernet\u20282:')
         result = jc.parsers.ipconfig.parse(data, quiet=True)
         self.assertEqual([x['name'] for x in result['adapters']], ['Tailscale', 'Ethernet\u20282', 'Bluetooth Network Connection'])
         self.assertEqual(result['adapters'][0]['physical_address'], None)
+
+    def test_ipconfig_long_line(self):
+        """
+        Test 'ipconfig' with a long line that repeats 'adapter' and has no colon
+        """
+        self.assertEqual(jc.parsers.ipconfig.parse(self.generic_ipconfig_long_line, quiet=True), self.generic_ipconfig_long_line_json)
 
 
 if __name__ == "__main__":

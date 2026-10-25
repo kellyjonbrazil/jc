@@ -144,7 +144,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`apachectl -S` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -184,7 +184,8 @@ _user_group = re.compile(
     r'(?P<not_used>\s+not_used)?\s*$'
 )
 
-_mutex = re.compile(r'^Mutex\s+(?P<name>\S+):\s+(?P<value>.*?)\s*$')
+# trailing whitespace is stripped from the value after matching
+_mutex = re.compile(r'^Mutex\s+(?P<name>\S+):\s+(?P<value>.*)$')
 _mutex_directory = re.compile(r'dir="(?P<directory>[^"]*)"')
 _mutex_mechanism = re.compile(r'mechanism=(?P<mechanism>\S+)')
 
@@ -273,7 +274,7 @@ def _parse_mutex(line: str) -> Optional[JSONDictType]:
     if not match:
         return None
 
-    value = match.group('value')
+    value = match.group('value').rstrip()
     mutex: JSONDictType = {
         'name': match.group('name'),
         'using_defaults': False,
