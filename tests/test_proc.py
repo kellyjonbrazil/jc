@@ -3,6 +3,9 @@ import unittest
 import json
 from typing import Dict
 import jc.parsers.proc
+import jc.parsers.proc_pid_fdinfo
+import jc.parsers.proc_pid_mountinfo
+import jc.parsers.proc_version
 from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -237,6 +240,21 @@ class MyTests(unittest.TestCase):
         for in_, expected in zip(self.f_in.keys(), self.f_json.keys()):
             self.assertEqual(jc.parsers.proc.parse(self.f_in[in_], quiet=True),
                                                    self.f_json[expected])
+
+    def test_proc_file_signature_detection_long_fields(self):
+        """
+        Test proc parser file signature detection on files with a long field
+        """
+        fixtures = {
+            'fixtures/generic/proc-pid-fdinfo-long-epoll.out': jc.parsers.proc_pid_fdinfo,
+            'fixtures/generic/proc-pid-mountinfo-long-optional.out': jc.parsers.proc_pid_mountinfo,
+            'fixtures/generic/proc-version-long.out': jc.parsers.proc_version
+        }
+
+        for filepath, parser in fixtures.items():
+            with open(os.path.join(THIS_DIR, filepath), 'r', encoding='utf-8') as f:
+                data = f.read()
+            self.assertEqual(jc.parsers.proc.parse(data, quiet=True), parser.parse(data, quiet=True))
 
 
 if __name__ == '__main__':
