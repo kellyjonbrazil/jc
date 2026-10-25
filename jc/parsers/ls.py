@@ -13,12 +13,14 @@ minor numbers in that column rather than a byte count.
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
 
-> Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly
-> parse filenames that include newline characters. Since `ls` does not
-> encode newlines in filenames when outputting to a pipe it will cause `jc`
-> to see multiple files instead of a single file if `-1`, `-l`, or `-b` is
-> not used. Alternatively, `vdir` can be used, which is the same as running
-> `ls -lb`.
+> Note: The `-b` option of `ls` should be used to correctly parse
+> filenames that include newline characters. Since `ls` does not encode
+> newlines in filenames when outputting to a pipe it will cause `jc` to see
+> multiple files instead of a single file if `-b` is not used. `-l` without
+> `-b` handles most of these filenames, but not when only files (no
+> directories) are listed, since there is no `total` line to identify the
+> output as `ls -l` output. Alternatively, `vdir` can be used, which is the
+> same as running `ls -lb`.
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the local
 time of the system the parser is run on)
@@ -208,6 +210,40 @@ def _is_section_header(line, prev_line, next_line):
     return not _PERM_RE.match(line)
 
 
+def _all_entries_long(linedata, start):
+    """
+    Return True if every entry line from `start` on matches the `ls -l`
+    permissions pattern. Blank lines, directory headers, and 'total 1234'
+    lines directly after a header are not entry lines.
+    """
+    after_header = False
+    line_count = len(linedata)
+
+    for i in range(start, line_count):
+        line = linedata[i]
+        prev_line = linedata[i - 1] if i > 0 else None
+        next_line = linedata[i + 1] if i + 1 < line_count else None
+
+        if line == '':
+            after_header = False
+            continue
+
+        if _is_section_header(line, prev_line, next_line):
+            after_header = True
+            continue
+
+        if after_header and _is_total(line):
+            after_header = False
+            continue
+
+        after_header = False
+
+        if not _PERM_RE.match(line):
+            return False
+
+    return True
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -266,6 +302,7 @@ def parse(data, raw=False, quiet=False):
 
         start = 0
         line_count = len(linedata)
+        has_total = False
 
         # Look for parent line if glob or -R is used. Otherwise skip the
         # first line if it starts with 'total 1234'
@@ -276,11 +313,16 @@ def parse(data, raw=False, quiet=False):
             # Skip following total line if it exists
             if first_next is not None and _is_total(first_next):
                 start = 2
+                has_total = True
         elif _is_total(linedata[0]):
             start = 1
+            has_total = True
 
-        # Check if -l was used to parse extra data
-        if start < line_count and _PERM_RE.match(linedata[start]):
+        # Check if -l was used to parse extra data. Without a leading
+        # 'total 1234' line (e.g. 'ls -l file1 file2') every entry must
+        # look like an 'ls -l' line, since a plain 'ls' filename can too
+        if start < line_count and _PERM_RE.match(linedata[start]) \
+           and (has_total or _all_entries_long(linedata, start)):
             # date field width is detected once for the whole listing
             # from the first entry line: 3 tokens for the default and
             # --time-style=full-iso formats, 2 for --time-style=long-iso
