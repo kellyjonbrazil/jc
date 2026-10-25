@@ -13,7 +13,9 @@ except ImportError:
 try:
     import xmltodict
     XMLTODICT_INSTALLED = True
-    XMLTODICT_0_13_0_OR_HIGHER = version.parse(xmltodict.__version__) >= version.parse('0.13.0')  # type: ignore
+    # xmltodict 1.0 and later have no __version__ attribute
+    XMLTODICT_VERSION = getattr(xmltodict, '__version__', '1.0.0')
+    XMLTODICT_0_13_0_OR_HIGHER = version.parse(XMLTODICT_VERSION) >= version.parse('0.13.0')  # type: ignore
 except Exception:
     XMLTODICT_INSTALLED = False
 
