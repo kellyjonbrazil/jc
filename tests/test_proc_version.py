@@ -22,7 +22,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/version2.json'),
             'proc_version3': (
                 'fixtures/linux-proc/version3',
-                'fixtures/linux-proc/version3.json')
+                'fixtures/linux-proc/version3.json'),
+            'proc_version_long': (
+                'fixtures/generic/proc-version-long.out',
+                'fixtures/generic/proc-version-long.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -58,6 +61,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_version.parse(self.f_in['proc_version3'], quiet=True),
                                                        self.f_json['proc_version3'])
+
+    def test_proc_version_long(self):
+        """
+        Test '/proc/version' with a long build number and no weekday in the date
+        """
+        self.assertEqual(jc.parsers.proc_version.parse(self.f_in['proc_version_long'], quiet=True),
+                                                       self.f_json['proc_version_long'])
 
 
 if __name__ == '__main__':

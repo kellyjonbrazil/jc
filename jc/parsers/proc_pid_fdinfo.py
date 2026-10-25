@@ -103,7 +103,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/<pid>/fdinfo/<fd>` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -179,7 +179,7 @@ def parse(
 
             # epoll files
             if line.startswith('tfd:'):
-                line_match = re.findall(r'(?P<key>\S+):(?:\s+)?(?P<val>\S+s*)', line)
+                line_match = re.findall(r'(?<!\S)(?P<key>\S+):(?:\s+)?(?P<val>\S+s*)', line)
                 if line_match:
                     raw_output.update({'epoll': {k.strip(): v.strip() for k, v in line_match}})
                 continue
