@@ -33,6 +33,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.out'), 'r', encoding='utf-8') as f:
         generic_mount_parens_in_filesystem = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-newline-in-source.out'), 'r', encoding='utf-8') as f:
+        generic_mount_newline_in_source = f.read()
+
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/mount.json'), 'r', encoding='utf-8') as f:
@@ -58,6 +61,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.json'), 'r', encoding='utf-8') as f:
         generic_mount_parens_in_filesystem_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-newline-in-source.json'), 'r', encoding='utf-8') as f:
+        generic_mount_newline_in_source_json = json.loads(f.read())
 
 
     def test_mount_nodata(self):
@@ -126,6 +132,28 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['mount_point'], '/tmp/usb')
         self.assertEqual(result[0]['type'], 'tmpfs')
         self.assertEqual(result[0]['options'], ['rw', 'relatime', 'inode64'])
+
+    def test_mount_newline_in_source(self):
+        """
+        Test 'mount' where a newline in a source name leaves a long line that
+        repeats ' on ... type ... (' after its last ')'
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_newline_in_source, quiet=True), self.generic_mount_newline_in_source_json)
+
+    def test_mount_point_ends_in_on(self):
+        """
+        Test 'mount' with a mount point that ends in ' on' on Linux and macOS
+        """
+        linux = '/dev/sdb1 on /mnt/turn on type ext4 (rw,relatime)\n'
+        osx = '/dev/disk2s1 on /Volumes/turn on (hfs, local, journaled)\n'
+        self.assertEqual(
+            jc.parsers.mount.parse(linux, quiet=True),
+            [{'filesystem': '/dev/sdb1', 'mount_point': '/mnt/turn on', 'type': 'ext4', 'options': ['rw', 'relatime']}]
+        )
+        self.assertEqual(
+            jc.parsers.mount.parse(osx, quiet=True),
+            [{'filesystem': '/dev/disk2s1', 'mount_point': '/Volumes/turn on', 'options': ['hfs', 'local', 'journaled']}]
+        )
 
 
 if __name__ == '__main__':

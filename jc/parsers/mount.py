@@ -1,5 +1,9 @@
 r"""jc - JSON Convert `mount` command output parser
 
+> Note: Mount points that contain ` on ` (space, on, space) are not
+> supported because `mount` output does not mark where the mount point
+> begins.
+
 Usage (cli):
 
     $ mount | jc --mount
@@ -76,7 +80,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,17 +114,20 @@ def _osx_parse(data):
     for entry in data:
         output_line = {}
 
+        # the mount point does not run across ` on `: the greedy filesystem
+        # group already tried that later ` on ` with the same remainder
         pattern = re.compile(
             r'''
                 (?P<filesystem>.*)
                 \son\s
-                (?P<mount_point>.*?)
+                (?P<mount_point>(?:.(?<!\son\s))*?)
                 \s
                 \((?P<options>.*?)\)\s*
             ''', re.VERBOSE
         )
 
-        mymatch = pattern.match(entry)
+        # a match always ends at a `)`, so stop at the last one
+        mymatch = pattern.match(entry, 0, entry.rfind(')') + 1)
         groups = mymatch.groupdict()
 
         if groups:
@@ -140,11 +147,12 @@ def _linux_parse(data):
     for entry in data:
         output_line = {}
 
+        # see _osx_parse() for the mount_point group and the end position
         pattern = re.compile(
             r'''
                 (?P<filesystem>.*)
                 \son\s
-                (?P<mount_point>.*?)
+                (?P<mount_point>(?:.(?<!\son\s))*?)
                 \stype\s
                 (?P<type>\S+)
                 \s+
@@ -153,7 +161,8 @@ def _linux_parse(data):
             ''', re.VERBOSE
         )
 
-        mymatch = pattern.match(entry)
+        # a match always ends at a `)`, so stop at the last one
+        mymatch = pattern.match(entry, 0, entry.rfind(')') + 1)
         groups = mymatch.groupdict()
 
         if groups:

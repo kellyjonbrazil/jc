@@ -99,6 +99,41 @@ class MyTests(unittest.TestCase):
         raw_rules = jc.parse('nftables', data, raw=True, quiet=True)[0]['chains'][0]['rules']
         self.assertEqual((raw_rules[0]['counter_packets'], raw_rules[0]['counter_bytes']), ('12', '720'))
 
+    def test_nftables_chain_header_fields(self):
+        """
+        Test 'nftables' chain header priority, devices, and handle: the
+        priority ends at the first `;` after it and is null when no `;`
+        follows it
+        """
+        cases = {
+            'type filter hook input priority filter; policy drop;': ('filter', [], 'drop'),
+            'type filter hook input priority filter - 10; policy drop;': ('filter - 10', [], 'drop'),
+            'type filter hook input priority   0;': ('0', [], None),
+            'type filter hook input priority 0': (None, [], None),
+            'type filter hook input; priority 0': (None, [], None),
+            'type filter hook input priority priority 0; policy drop;': ('priority 0', [], 'drop'),
+            'type filter hook input ' + 'priority ' * 200 + '0': (None, [], None),
+            'type filter hook ingress device eth0 priority 0;': ('0', ['eth0'], None),
+            'type filter hook ingress device = "eth0" priority 0;': ('0', ['eth0'], None),
+            'type filter hook ingress devices   =   { "eth0", "eth1" } priority 0;': ('0', ['eth0', 'eth1'], None)
+        }
+
+        for header, expected in cases.items():
+            with self.subTest(header):
+                data = 'table ip t {\n\tchain c {\n\t\t' + header + '    # handle 9\n\t}\n}\n'
+                chain = jc.parse('nftables', data, quiet=True)[0]['chains'][0]
+                self.assertEqual((chain['priority'], chain['devices'], chain['policy']), expected)
+
+    def test_nftables_rule_blank_run(self):
+        """
+        Test 'nftables' keeps a long run of blanks inside a rule and still
+        finds the trailing handle
+        """
+        rule = 'accept comment "a' + ' ' * 5000 + 'b"'
+        data = 'table ip t {\n\tchain c {\n\t\t' + rule + ' # handle 5\n\t\tdrop' + ' ' * 5000 + 'x\n\t}\n}\n'
+        rules = jc.parse('nftables', data, quiet=True)[0]['chains'][0]['rules']
+        self.assertEqual([(r['rule'], r['handle']) for r in rules], [(rule, 5), ('drop' + ' ' * 5000 + 'x', None)])
+
 
 if __name__ == '__main__':
     unittest.main()

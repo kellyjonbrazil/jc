@@ -188,7 +188,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.1"
+    version = "1.2"
     description = "`iftop` command parser"
     author = "Ron Green"
     author_email = "11993626+georgettica@users.noreply.github.com"
@@ -270,11 +270,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     is_previous_line_interface = False
     saw_already_host_line = False
 
-    before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s]+)\s+"
+    # the port is the text after the last colon of the host field
+    before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s:]*[^\s])\s+"
     before_arrow_no_port = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+)\s+"
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
-    newline_before_arrow = r"\s+(?P<receive_ip>.+):(?P<receive_port>\w+)\s+"
-    newline_before_arrow_no_port = r"\s+(?P<receive_ip>.+)\s+"
+    newline_before_arrow = r"\s+(?P<receive_ip>[^\s]+):(?P<receive_port>\w+)\s+"
+    # receive_ip keeps the padding before the arrow, all but one blank
+    newline_before_arrow_no_port = r"\s+(?P<receive_ip>[^\s]+\s*)\s"
     after_arrow_till_end = r"\s+(?P<receive_last_2s>[^\s]+)\s+(?P<receive_last_10s>[^\s]+)\s+(?P<receive_last_40s>[^\s]+)\s+(?P<receive_cumulative>[^\s]+)"
     re_linux_clients_before_newline = re.compile(
         rf"{before_arrow}=>{after_arrow_before_newline}"

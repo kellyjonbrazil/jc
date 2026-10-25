@@ -30,6 +30,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.out'), 'r', encoding='utf-8') as f:
         ss_padded_opts = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-unclosed.out'), 'r', encoding='utf-8') as f:
+        ss_users_unclosed = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -51,6 +54,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-padded-opts.json'), 'r', encoding='utf-8') as f:
         ss_padded_opts_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-unclosed.json'), 'r', encoding='utf-8') as f:
+        ss_users_unclosed_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -128,6 +134,37 @@ class MyTests(unittest.TestCase):
                          padded['process_id']['3242']['user'])
         self.assertEqual(unpadded['cgroup'], padded['cgroup'])
         self.assertEqual(sorted(unpadded), sorted(padded))
+
+    def test_ss_users_unclosed(self):
+        """
+        Test 'ss' rows whose users: block is never closed, or holds a long
+        run of '("' after its last complete record
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_users_unclosed, quiet=True), self.ss_users_unclosed_json)
+
+    def test_ss_users_records(self):
+        """
+        Test 'ss' users: records: several records in one block, names that
+        contain '("' or 'users:((', and a block that is only closed by '))'
+        followed by a space or the end of the row
+        """
+        header = 'Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess\n'
+        row = 'tcp   LISTEN 0      5            0.0.0.0:19001      0.0.0.0:*    '
+        cases = {
+            'users:(("a",pid=1,fd=2),("b",pid=3,fd=4))':
+                {'1': {'user': 'a', 'file_descriptor': '2'},
+                 '3': {'user': 'b', 'file_descriptor': '4'}},
+            'users:(("("x",pid=7,fd=8),("users:((",pid=9,fd=10))':
+                {'7': {'user': '("x', 'file_descriptor': '8'},
+                 '9': {'user': 'users:((', 'file_descriptor': '10'}},
+            'users:(("a))b",pid=11,fd=12)) ino:1':
+                {'11': {'user': 'a))b', 'file_descriptor': '12'}}
+        }
+
+        for users, expected in cases.items():
+            with self.subTest(users):
+                opts = jc.parsers.ss.parse(header + row + users + '\n', quiet=True)[0]['opts']
+                self.assertEqual(opts['process_id'], expected)
 
 
 if __name__ == '__main__':
