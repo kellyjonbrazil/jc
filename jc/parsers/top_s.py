@@ -174,7 +174,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`top -b` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -441,13 +441,21 @@ def parse(
 
             if line.startswith('top - '):
                 if output_line:
-                    if process_list:
-                        output_line['processes'] = parse_table(process_list)
-                    yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished_line = output_line
+                    finished_list = process_list
+                    finished_idx = idx
                     process_table = False
                     process_list = []
                     output_line = {}
                     idx += 1
+                    try:
+                        if finished_list:
+                            finished_line['processes'] = parse_table(finished_list)
+                        yield finished_line if raw else _process(finished_line, idx=finished_idx, quiet=quiet)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
 
                 uptime_str = line[6:]
                 output_line.update(parse_uptime(uptime_str, raw=True, quiet=True))
@@ -528,9 +536,13 @@ def parse(
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
 
-    if output_line:
-        if process_list:
-            output_line['processes'] = parse_table(process_list)
-        yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+    try:
+        if output_line:
+            if process_list:
+                output_line['processes'] = parse_table(process_list)
+            yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+
+    except Exception as e:
+        yield raise_or_yield(ignore_exceptions, e, line)
 
     return None
