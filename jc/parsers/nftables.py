@@ -166,7 +166,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nft` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -177,8 +177,9 @@ class info():
 
 __version__ = info.version
 
-# `nft -a` prints the object handle as a trailing comment
-_handle_pattern = re.compile(r'\s*#\s*handle\s+(?P<handle>\d+)\s*$')
+# `nft -a` prints the object handle as a trailing comment. The blanks before
+# the `#` are stripped by the caller, so the pattern starts at the `#`.
+_handle_pattern = re.compile(r'#\s*handle\s+(?P<handle>\d+)\s*$')
 
 _table_pattern = re.compile(r'^table\s+(?P<family>\S+)\s+(?P<name>\S+)\s*\{?$')
 _named_block_pattern = re.compile(r'^(?P<kind>chain|set|map|counter|quota|flowtable)\s+(?P<name>\S+)\s*\{$')
@@ -186,7 +187,7 @@ _ct_block_pattern = re.compile(r'^ct\s+(?:helper|timeout|expectation)\s+\S+\s*\{
 
 _chain_type_pattern = re.compile(r'^type\s+(?P<type>\S+)')
 _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
-_device_pattern = re.compile(r'\bdevices?\s*=?\s*(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
+_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
 
@@ -383,7 +384,8 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
         type_match = _chain_type_pattern.match(statement)
         hook_match = _hook_pattern.search(statement)
         device_match = _device_pattern.search(statement)
-        priority_match = _priority_pattern.search(statement)
+        # the priority always ends at a `;`, so only search up to the last one
+        priority_match = _priority_pattern.search(statement, 0, statement.rfind(';') + 1)
         policy_match = _policy_pattern.search(statement)
 
         if type_match:
