@@ -492,6 +492,23 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
         """
         self.assertEqual(jc.parsers.asciitable.parse(self.generic_asciitable_wide, quiet=True), self.generic_asciitable_wide_json)
 
+    def test_asciitable_single_space_header(self):
+        """
+        Test 'asciitable' with header words separated by a single space,
+        which form one column name
+        """
+        input = '''
+first name  last name  age
+John        Smith      42
+Jane        Doe
+        '''
+        expected = [
+            {"first_name": "John", "last_name": "Smith", "age": "42"},
+            {"first_name": "Jane", "last_name": "Doe", "age": None}
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
     def test_asciitable_long_row(self):
         """
         Test 'asciitable' with one very long row and many short rows
