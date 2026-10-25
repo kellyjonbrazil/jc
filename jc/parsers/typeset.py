@@ -160,7 +160,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -170,14 +170,19 @@ class info():
 
 __version__ = info.version
 
-VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^(].*)$')
-SIMPLE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[\d+\]=.+\))$')
+# The variable name is the word directly before the first `=` on the line, so
+# each pattern is tried once per line rather than at every offset of the value.
+NAME_PATTERN = r'^[^=]*(?<![a-zA-Z0-9_])(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)='
+# array definitions end the line with `)`; check that before matching the body
+ARRAY_NAME_PATTERN = NAME_PATTERN + r'(?=\(.*\)$)'
+VAR_DEF_PATTERN = re.compile(NAME_PATTERN + r'(?P<val>[^(].*)$')
+SIMPLE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\[\d+\]=.+\))$')
 # ksh/zsh print indexed arrays as bare values with no [index]= prefix
-BARE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*[^[].*\))$')
+BARE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\s*[^[].*\))$')
 # allow a leading space after the paren (zsh) and quoted keys
-ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*\[.+\]=.+\))$')
-EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\s*\)$')
-EMPTY_VAR_DEF_PATTERN = re.compile(r'(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
+ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\s*\[.+\]=.+\))$')
+EMPTY_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'\(\s*\)$')
+EMPTY_VAR_DEF_PATTERN = re.compile(r'^\s*(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
 
 _raw = False
 
