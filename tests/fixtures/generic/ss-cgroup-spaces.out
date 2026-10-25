@@ -1,0 +1,7 @@
+Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess
+udp   UNCONN 0      0      127.0.0.53%lo:53         0.0.0.0:*    users:(("systemd-resolve",pid=893,fd=12)) uid:101 ino:29400 sk:2 cgroup:/system.slice/systemd-resolved.service <->
+udp   UNCONN 0      0            0.0.0.0:3130       0.0.0.0:*    users:(("squid",pid=1402,fd=9)) uid:13 ino:31877 sk:5 cgroup:/system.slice/squid.service <->
+tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1161,fd=3)) ino:30488 sk:1 cgroup:/system.slice/ssh.service <->
+tcp   LISTEN 0      5            0.0.0.0:19001      0.0.0.0:*    users:(("python3",pid=3201,fd=3)) uid:1000 ino:2415307 sk:a004 cgroup:/user.slice/user-1000.slice/user@1000.service/app.slice/my app uid:0 ino:30488 cgroup:/system.slice/ssh.service <->
+tcp   LISTEN 0      5            0.0.0.0:19002      0.0.0.0:*    uid:1000 ino:2415308 sk:a005 cgroup:/user.slice/user-1000.slice/user@1000.service/app.slice/web users:(("sshd",pid=1161,fd=3)) timer:x <->
+tcp   LISTEN 0      5               [::]:19003         [::]:*    users:(("python3",pid=3202,fd=3)) uid:1000 ino:2415309 sk:a006 cgroup:/user.slice/user-1000.slice/user@1000.service/app.slice/my svc v6only:1 <->

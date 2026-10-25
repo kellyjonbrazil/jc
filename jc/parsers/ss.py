@@ -309,13 +309,32 @@ _USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),fd=(?P<fd>\d+)\)')
 #: Marks a field belonging to the headerless options region added by -e, -o
 #: and -p. Used both to recognize that region and to find where it starts.
 _OPTS_FIELD_RE = re.compile(r'ino:|uid:|sk:|users:|timer:|cgroup:|v6only:')
+
+#: The `cgroup:` key at the start of a token. Its value is a path of
+#: directory names, which can contain spaces and colons.
+_CGROUP_KEY_RE = re.compile(r'(?:^| )cgroup:')
+
+#: Tokens that can follow the cgroup path: `v6only:N`, `fwmark:0x...` and the
+#: shutdown marker (`<->`, `-->`, `<--` or `---`).
+_AFTER_CGROUP_RE = re.compile(r'(?:v6only:\d+|fwmark:0x[0-9a-fA-F]+|[<-]-[>-])\Z')
+
+#: The shutdown marker printed after the -e details.
+_SHUTDOWN_RE = re.compile(r'[<-]-[>-]\Z')
+
+#: Keys of the options region that ss prints before the shutdown marker. In
+#: one-line mode (-O) other tokens, such as `skmem:` and the -i fields, are
+#: printed after the marker.
+_BEFORE_SHUTDOWN_KEYS = {'uid', 'ino', 'sk', 'fwmark', 'cgroup', 'v6only', 'users', 'timer', 'process_id'}
+
+#: Keys printed by -e that are renamed to their schema names.
+_OPTS_KEY_NAMES = {'uid': 'uid_number', 'ino': 'inode_number', 'sk': 'cookie'}
 import string
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -393,11 +412,17 @@ def _parse_opts(proc_data):
     proc_data = proc_data.replace(_SPACE_HOLD, ' ')
     opts = {}
 
-    # `users:` is the only field here that can contain a space, because a
-    # process name can. Lift it out before the naive space split below, which
-    # would otherwise tear `users:(("my proc",pid=2,fd=3))` into two tokens and
-    # lose the record entirely.
+    # `users:` and `cgroup:` are the fields here that can contain a space,
+    # because a process name and a cgroup directory name can. Lift `users:`
+    # out before the space split below, which would otherwise tear
+    # `users:(("my proc",pid=2,fd=3))` into two tokens and lose the record
+    # entirely. ss prints `users:` before `cgroup:`, so a block that starts
+    # after `cgroup:` is part of the cgroup path.
     users = _match_first(_USERS_BLOCK_RE, 'users:((', proc_data)
+    cgroup = _CGROUP_KEY_RE.search(proc_data)
+    if users and cgroup and cgroup.start() < users.start():
+        users = None
+
     if users:
         opts['process_id'] = {}
         block = users.group(0)
@@ -410,18 +435,43 @@ def _parse_opts(proc_data):
             record = _match_first(_USERS_RE, '("', block, record.end())
         proc_data = proc_data[:users.start()] + proc_data[users.end():]
 
-    o_field = proc_data.split(' ')
+    # The cgroup path runs to the end of the region, apart from the tokens
+    # ss prints after it, so text inside of the path is not read as more
+    # fields.
+    cgroup = _CGROUP_KEY_RE.search(proc_data)
+    if cgroup:
+        o_field = proc_data[:cgroup.start()].split(' ')
+        cgroup_field = proc_data[cgroup.start():].strip(' ').split(' ')
+        trailing = []
+
+        # one-line mode: the tokens after the last shutdown marker are not
+        # part of the path, unless one of them is a key that ss prints before
+        # the marker (then that marker is part of the path).
+        marker = len(cgroup_field) - 1
+        while marker > 0 and not _SHUTDOWN_RE.match(cgroup_field[marker]):
+            if cgroup_field[marker].split(':', 1)[0] in _BEFORE_SHUTDOWN_KEYS:
+                marker = 0
+            else:
+                marker -= 1
+        if marker > 0:
+            trailing = cgroup_field[:marker:-1]
+            del cgroup_field[marker + 1:]
+
+        while len(cgroup_field) > 1 and _AFTER_CGROUP_RE.match(cgroup_field[-1]):
+            trailing.append(cgroup_field.pop())
+        o_field.append(' '.join(cgroup_field))
+        o_field.extend(reversed(trailing))
+    else:
+        o_field = proc_data.split(' ')
 
     for item in o_field:
-        # -e option:
-        item = re.sub(
-            'uid', 'uid_number',
-            re.sub('sk', 'cookie', re.sub('ino', 'inode_number', item)))
-
         if ":" in item:
             # maxsplit=1: a process name can contain a colon, and splitting on
             # every one of them raises before the value is ever looked at.
             key, val = item.split(':', maxsplit=1)
+
+            # -e option
+            key = _OPTS_KEY_NAMES.get(key, key)
 
             # -o option
             if key == "timer":
