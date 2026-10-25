@@ -1,13 +1,24 @@
 jc changelog
 
-20261023 v1.26.2
-- Enhance `cef` and `cef-s` parsers for slow parsing of long extension values
+20261024 v1.26.2
+- Enhance many parsers to avoid slow parsing of long or unusual field values,
+  including `cef`, `syslog`, `who`, `iptables`, `nftables`, `mount`, `ss`,
+  `ping`, `traceroute`, and the `/proc` file parsers
 - Fix many parsers to split lines only on LF and CRLF line endings so other
   line-break characters inside a field no longer split a record. This also
-  applies to `--slurp` input
+  applies to `--slurp` and line slicing
 - Fix several parsers to split fields only on spaces and tabs, and enhance the
   `netrc` parser to support quoted values, escapes, comments, and the `user`
   keyword
+- Fix "magic" syntax and `/proc` file input to pass line endings to the parser
+  unchanged, matching `STDIN` input
+- Fix streaming parsers to read `STDIN` as UTF-8 lines split on LF and CRLF on
+  all platforms. Invalid UTF-8 bytes are now shown as escapes instead of
+  stopping the parser, even with `-qq`
+- Fix several streaming parsers to handle CRLF line endings and blank input
+  when used as a python library. Library usage examples now use `split('\n')`
+- Fix `proc` parser to report an error instead of empty output for input that
+  is not a recognized `/proc` file
 
 20261018 v1.26.1
 - Add `apachectl` command parser
