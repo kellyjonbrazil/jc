@@ -298,6 +298,7 @@ _SPACE_HOLD = '\x00'
 
 #: The whole `users:((...))` block, which may contain spaces inside a quoted
 #: process name and so must be taken out before any space-based tokenizing.
+#: Applied with _match_first, as is _USERS_RE below.
 _USERS_BLOCK_RE = re.compile(r'users:\(\(.*?\)\)(?=\s|$)')
 
 #: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
@@ -314,7 +315,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -357,6 +358,27 @@ def _process(proc_data):
 
     return proc_data
 
+def _match_first(pattern, opener, text, pos=0):
+    """
+    Same result as `pattern.search(text, pos)` for a pattern that starts with
+    the literal `opener` and then scans lazily for its closing text. Only the
+    first `opener` needs to be tried: closing text that would complete a later
+    `opener` would also complete the first one.
+
+    Parameters:
+
+        pattern:     (Pattern) compiled regex that starts with `opener`
+        opener:      (string)  literal text the pattern starts with
+        text:        (string)  text to search
+        pos:         (integer) index to start searching from
+
+    Returns:
+
+        Match object or None
+    """
+    start = text.find(opener, pos)
+    return pattern.match(text, start) if start != -1 else None
+
 def _parse_opts(proc_data):
     """ Process extra options -e, -o, -p
 
@@ -375,12 +397,17 @@ def _parse_opts(proc_data):
     # process name can. Lift it out before the naive space split below, which
     # would otherwise tear `users:(("my proc",pid=2,fd=3))` into two tokens and
     # lose the record entirely.
-    users = _USERS_BLOCK_RE.search(proc_data)
+    users = _match_first(_USERS_BLOCK_RE, 'users:((', proc_data)
     if users:
-        opts['process_id'] = {
-            pid: {'user': user, 'file_descriptor': fd}
-            for user, pid, fd in _USERS_RE.findall(users.group(0))
-        }
+        opts['process_id'] = {}
+        block = users.group(0)
+        record = _match_first(_USERS_RE, '("', block)
+        while record:
+            opts['process_id'][record.group('pid')] = {
+                'user': record.group('user'),
+                'file_descriptor': record.group('fd')
+            }
+            record = _match_first(_USERS_RE, '("', block, record.end())
         proc_data = proc_data[:users.start()] + proc_data[users.end():]
 
     o_field = proc_data.split(' ')
@@ -468,7 +495,7 @@ def parse(data, raw=False, quiet=False):
                 # dict(zip(...)) silently drops the overflow: the opts column
                 # ends up holding the truncated `users:(("my` and the pid and
                 # fd are lost with no error anywhere.
-                users_here = _USERS_BLOCK_RE.search(entry)
+                users_here = _match_first(_USERS_BLOCK_RE, 'users:((', entry)
                 if users_here:
                     entry = (entry[:users_here.start()]
                              + users_here.group(0).replace(' ', _SPACE_HOLD)
