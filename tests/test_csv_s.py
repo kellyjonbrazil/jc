@@ -1,6 +1,7 @@
 import os
 import json
 import unittest
+import jc.parsers.csv
 import jc.parsers.csv_s
 import jc.parsers.csv_ih_s
 import jc.parsers.tsv_s
@@ -46,6 +47,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.csv'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
@@ -95,6 +102,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted-streaming.json'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe_streaming_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom-streaming.json'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom_streaming_json = json.loads(f.read())
@@ -191,6 +204,24 @@ class MyTests(unittest.TestCase):
         Test 'doublequoted.csv' file
         """
         self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_doublequoted.splitlines(), quiet=True)), self.generic_csv_doublequoted_streaming_json)
+
+    def test_csv_s_apostrophes(self):
+        """
+        Test 'csv-apostrophes.csv' file to ensure apostrophes in field values do not change the quote character
+        """
+        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_apostrophes.splitlines(), quiet=True)), self.generic_csv_apostrophes_streaming_json)
+
+    def test_csv_s_apostrophes_pipe(self):
+        """
+        Test 'csv-apostrophes-pipe.csv' file to ensure apostrophes and delimiters in field values do not change the dialect
+        """
+        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_apostrophes_pipe.splitlines(), quiet=True)), self.generic_csv_apostrophes_pipe_streaming_json)
+
+    def test_csv_s_doublequoted_matches_csv(self):
+        """
+        Test 'doublequoted.csv' file gives the same records as the csv parser
+        """
+        self.assertEqual(list(jc.parsers.csv_s.parse(self.generic_csv_doublequoted.splitlines(), quiet=True)), jc.parsers.csv.parse(self.generic_csv_doublequoted, quiet=True))
 
     def test_csv_s_utf8_bom(self):
         """
