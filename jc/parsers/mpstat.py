@@ -111,12 +111,11 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`mpstat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -157,6 +156,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     return proc_data
 
 
+def _parse_row(header_list: List[str], line: str) -> Dict:
+    """
+    Same result as `simple_table_parse([header, line])[0]` for a header that
+    has already been split into `header_list`.
+    """
+    return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
+
+
 def parse(
     data: str,
     raw: bool = False,
@@ -182,6 +189,7 @@ def parse(
     output_line: Dict = {}
     header_found: bool = False
     header_start: int = 0
+    header_list: List[str] = []
     stat_type: str = ''    # 'cpu' or 'interrupts'
 
     if jc.utils.has_data(data):
@@ -205,11 +213,12 @@ def parse(
                     header_start = line.find('NODE ')
 
                 header_text = header_text[header_start:]
+                header_list = header_text.split()
                 continue
 
             # data line - pull time from beginning and then parse as a table
             if header_found:
-                output_line = simple_table_parse([header_text, line[header_start:]])[0]
+                output_line = _parse_row(header_list, line[header_start:])
                 output_line['type'] = stat_type
                 item_time = line[:header_start].strip()
                 if 'Average:' not in item_time:
