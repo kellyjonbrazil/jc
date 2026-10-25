@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_pid_mountinfo': (
                 'fixtures/linux-proc/pid_mountinfo',
-                'fixtures/linux-proc/pid_mountinfo.json')
+                'fixtures/linux-proc/pid_mountinfo.json'),
+            'proc_pid_mountinfo_long_optional': (
+                'fixtures/generic/proc-pid-mountinfo-long-optional.out',
+                'fixtures/generic/proc-pid-mountinfo-long-optional.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_mountinfo.parse(self.f_in['proc_pid_mountinfo'], quiet=True),
                                                              self.f_json['proc_pid_mountinfo'])
+
+    def test_proc_pid_mountinfo_long_optional(self):
+        """
+        Test '/proc/<pid>/mountinfo' with a line that has many optional fields and no separator
+        """
+        self.assertEqual(jc.parsers.proc_pid_mountinfo.parse(self.f_in['proc_pid_mountinfo_long_optional'], quiet=True),
+                                                             self.f_json['proc_pid_mountinfo_long_optional'])
 
 
     def test_proc_pid_mountinfo_line_separator(self):
