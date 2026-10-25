@@ -298,6 +298,10 @@ def parse(data, raw=False, quiet=False):
                 description.append(line)
                 continue
 
+            # other indented lines continue the previous field and are not keys
+            if line.startswith((' ', '\t')):
+                continue
+
             if len(split_line) == 2:
                 keyname = jc.utils.normalize_key(split_line[0])
                 entry_obj[keyname] = split_line[1].strip()
