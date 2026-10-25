@@ -109,7 +109,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`/etc/group` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -175,7 +175,9 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             output_line = {}
-            fields = entry.split(':')
+            # the last field is the rest of the line: a colon after the
+            # third one is part of that field and does not end it
+            fields = entry.split(':', maxsplit=3)
 
             output_line['group_name'] = fields[0]
             output_line['password'] = fields[1]

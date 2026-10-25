@@ -94,7 +94,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`/etc/passwd` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,7 +156,9 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             output_line = {}
-            fields = entry.split(':')
+            # the last field is the rest of the line: a colon after the
+            # sixth one is part of that field and does not end it
+            fields = entry.split(':', maxsplit=6)
 
             output_line['username'] = fields[0]
             output_line['password'] = fields[1]

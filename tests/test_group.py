@@ -72,5 +72,17 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['members'], ['joeuser', 'x\x0c#', 'www-data'])
 
 
+    def test_group_colon_in_members(self):
+        """
+        Test 'group' with a colon in the member list
+        """
+        data = 'sudo:x:27:joeuser,x:,www-data\nempty:x:28::,www-data\n'
+        expected = [
+            {'group_name': 'sudo', 'password': 'x', 'gid': 27, 'members': ['joeuser', 'x:', 'www-data']},
+            {'group_name': 'empty', 'password': 'x', 'gid': 28, 'members': [':', 'www-data']}
+        ]
+        self.assertEqual(jc.parsers.group.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
