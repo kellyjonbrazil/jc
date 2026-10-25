@@ -268,6 +268,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['device'], 'wlan0')
         self.assertEqual(result[0]['connection'], 'Cafe\x0cGENERAL.DEVICE:tun0')
 
+    def test_nmcli_remove_text_long_blank_run(self):
+        """
+        Test removing a trailing '(text)' summary from values with long runs of blanks
+        """
+        blanks = ' ' * 20000
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('x' + blanks + 'y (b)'), 'x' + blanks + 'y')
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('100' + blanks + '(connected)'), '100')
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('x' + blanks + 'y'), 'x' + blanks + 'y')
+
 
 if __name__ == '__main__':
     unittest.main()
