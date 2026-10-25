@@ -120,6 +120,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_long_iso = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames.out'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-newline-structure-like-names.out'), 'r', encoding='utf-8') as f:
+        ls_l_newline_structure_like_names = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ls_json = json.loads(f.read())
@@ -231,6 +237,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.json'), 'r', encoding='utf-8') as f:
         ls_l_long_iso_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames.json'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-newline-structure-like-names.json'), 'r', encoding='utf-8') as f:
+        ls_l_newline_structure_like_names_json = json.loads(f.read())
 
 
     def test_ls_empty_dir(self):
@@ -465,6 +477,29 @@ class MyTests(unittest.TestCase):
         confirm link_to parsing still works with the narrower date width.
         """
         self.assertEqual(jc.parsers.ls.parse(self.ls_l_long_iso, quiet=True), self.ls_l_long_iso_json)
+
+    def test_ls_l_entry_like_dirnames(self):
+        """
+        Test 'ls -l -- *' where some directory names look like 'ls -l'
+        entry lines or a 'total' line, and a filename ends in ':'. The
+        'name:' headers are only recognized by position (first line or
+        after a blank line, and followed by a 'total' line).
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_entry_like_dirnames, quiet=True), self.ls_l_entry_like_dirnames_json)
+
+    def test_ls_l_newline_structure_like_names(self):
+        """
+        Test 'ls -l' with filenames containing a newline followed by text
+        that looks like a 'total' line or a 'name:' header. These are
+        part of the filename, not structure lines.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_newline_structure_like_names, quiet=True), self.ls_l_newline_structure_like_names_json)
+
+    def test_ls_l_total_only(self):
+        """
+        Test 'ls -l' on an empty directory (only a 'total 0' line)
+        """
+        self.assertEqual(jc.parsers.ls.parse('total 0\n', quiet=True), [])
 
 
 if __name__ == '__main__':

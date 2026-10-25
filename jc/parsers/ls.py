@@ -150,7 +150,7 @@ _LONG_ISO_TIME_RE = re.compile(r'^\d{2}:\d{2}$')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -179,6 +179,33 @@ def _detect_date_width(sample_line):
         return 2
 
     return 3
+
+
+def _is_total(line):
+    """Return True if the line is a 'total 1234' block count line."""
+    return bool(re.match(r'total [0-9]+', line))
+
+
+def _is_section_header(line, prev_line, next_line):
+    """
+    Return True if `line` is a directory header ("name:") printed for
+    globs and -R. `ls` only prints a header as the first line or after a
+    blank line. A header that looks like an entry line must also be
+    followed by a 'total 1234' line, since an entry line for a filename
+    ending in ':' can be followed by a blank line or the end of the
+    output. `prev_line` and `next_line` are None at the start and end of
+    the output.
+    """
+    if not line.endswith(':'):
+        return False
+
+    if prev_line is not None and prev_line != '':
+        return False
+
+    if next_line is not None and _is_total(next_line):
+        return True
+
+    return not _PERM_RE.match(line)
 
 
 def _process(proc_data):
@@ -237,42 +264,46 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # Delete first line if it starts with 'total 1234'
-        if re.match(r'total [0-9]+', linedata[0]):
-            linedata.pop(0)
+        start = 0
+        line_count = len(linedata)
 
-        # Look for parent line if glob or -R is used
-        if not _PERM_RE.match(linedata[0]) \
-           and linedata[0].endswith(':'):
-            parent = linedata.pop(0)[:-1]
-            # Pop following total line if it exists
-            if re.match(r'total [0-9]+', linedata[0]):
-                linedata.pop(0)
+        # Look for parent line if glob or -R is used. Otherwise skip the
+        # first line if it starts with 'total 1234'
+        first_next = linedata[1] if line_count > 1 else None
+        if _is_section_header(linedata[0], None, first_next):
+            parent = linedata[0][:-1]
+            start = 1
+            # Skip following total line if it exists
+            if first_next is not None and _is_total(first_next):
+                start = 2
+        elif _is_total(linedata[0]):
+            start = 1
 
         # Check if -l was used to parse extra data
-        if _PERM_RE.match(linedata[0]):
-            # detect date field width once for the whole listing: 3 tokens
-            # for the default and --time-style=full-iso formats, 2 for
-            # --time-style=long-iso (see _detect_date_width)
-            date_width = 3
-            for candidate in linedata:
-                if _PERM_RE.match(candidate):
-                    date_width = _detect_date_width(candidate)
-                    break
+        if start < line_count and _PERM_RE.match(linedata[start]):
+            # date field width is detected once for the whole listing
+            # from the first entry line: 3 tokens for the default and
+            # --time-style=full-iso formats, 2 for --time-style=long-iso
+            # (see _detect_date_width)
+            date_width = None
 
-            for entry in linedata:
+            for i in range(start, line_count):
+                entry = linedata[i]
+                prev_line = linedata[i - 1] if i > 0 else None
+                next_line = linedata[i + 1] if i + 1 < line_count else None
                 output_line = {}
 
-                if not _PERM_RE.match(entry) \
-                   and entry.endswith(':'):
+                if _is_section_header(entry, prev_line, next_line):
                     parent = entry[:-1]
                     new_section = True
 
                     # fixup to remove trailing \n in previous entry
-                    raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
+                    if raw_output:
+                        raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
-                if re.match(r'total [0-9]+', entry):
+                # 'total 1234' is only printed directly after a parent line
+                if new_section and _is_total(entry):
                     new_section = False
                     continue
 
@@ -286,6 +317,11 @@ def parse(data, raw=False, quiet=False):
                    and not _PERM_RE.match(entry):
                     raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
                     continue
+
+                new_section = False
+
+                if date_width is None:
+                    date_width = _detect_date_width(entry)
 
                 # block (b) and character (c) device entries report
                 # major,minor instead of a size, which takes one extra
@@ -327,7 +363,7 @@ def parse(data, raw=False, quiet=False):
                 output_line['date'] = ' '.join(parsed_line[date_start:date_start + date_width])
                 raw_output.append(output_line)
         else:
-            for entry in linedata:
+            for entry in linedata[start:]:
                 output_line = {}
 
                 if entry == '':
