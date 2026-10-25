@@ -73,6 +73,7 @@ Examples:
     ]
 """
 import csv
+import re
 from typing import List, Union, Type
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -80,7 +81,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -108,6 +109,29 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
     # No further processing
     return proc_data
+
+
+def _sniff(data: str) -> Type[csv.Dialect]:
+    """
+    Detect the CSV dialect from the start of the text. The quote character
+    is always a double quote. The delimiter can only be a punctuation or
+    whitespace character that is found in the first row outside of quoted
+    fields, and quoted fields and apostrophes are removed from the sample so
+    they do not influence the detection. Raises an exception if the dialect
+    cannot be detected.
+    """
+    masked = re.sub(r'"[^"]*("|$)', '""', data[:1024]).replace("'", '')
+    rows = [row for row in masked.splitlines() if row.strip()]
+
+    # the last row is incomplete if the sample was cut off
+    if len(data) > 1024 and len(rows) > 1:
+        rows.pop()
+
+    delimiters = re.sub(r'[\w"]', '', rows[0])
+    dialect = csv.Sniffer().sniff('\n'.join(rows), delimiters)
+    dialect.quotechar = '"'
+    dialect.doublequote = True
+    return dialect
 
 
 def parse(
@@ -154,9 +178,7 @@ def parse(
             else 'excel'  # default in csv module
         )
         try:
-            dialect = csv.Sniffer().sniff(data[:1024])
-            if '""' in data:
-                dialect.doublequote = True
+            dialect = _sniff(data)
             if tsv:
                 dialect.delimiter = '\t'
         except Exception:
