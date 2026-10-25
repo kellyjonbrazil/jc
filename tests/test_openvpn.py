@@ -26,6 +26,12 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/openvpn-status-marker-names.log'), 'r', encoding='utf-8') as f:
+        f_marker_in = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/openvpn-status-marker-names.json'), 'r', encoding='utf-8') as f:
+        f_marker_json = json.loads(f.read())
+
     def test_openvpn_nodata(self):
         """
         Test 'openvpn' with no data
@@ -53,6 +59,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['clients'][0]['common_name'], 'foo@example.com')
         self.assertEqual(result['clients'][0]['real_address'], '10.0.0.5')
         self.assertEqual(result['clients'][0]['connected_since'], 'Thu Jun 18 08:00:00 2015\u2028x,203.0.113.9:40000,3512,3801,Thu Jun 18 08:11:00 2015')
+
+
+    def test_openvpn_marker_names(self):
+        """
+        Test 'openvpn' with common names that start with a section name
+        """
+        self.assertEqual(parse(self.f_marker_in, quiet=True), self.f_marker_json)
+
 
 
 if __name__ == '__main__':
