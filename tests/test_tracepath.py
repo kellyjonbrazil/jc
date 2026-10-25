@@ -23,6 +23,13 @@ class MyTests(unittest.TestCase):
         centos_7_7_tracepath6_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tracepath-long-padding.out'), 'r', encoding='utf-8') as f:
+        generic_tracepath_long_padding = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tracepath-long-padding.json'), 'r', encoding='utf-8') as f:
+        generic_tracepath_long_padding_json = json.loads(f.read())
+
+
     def test_tracepath_nodata(self):
         """
         Test 'tracepath' with no data
@@ -40,6 +47,12 @@ class MyTests(unittest.TestCase):
         Test 'tracepath6' on Centos 7.7
         """
         self.assertEqual(jc.parsers.tracepath.parse(self.centos_7_7_tracepath6, quiet=True), self.centos_7_7_tracepath6_json)
+
+    def test_tracepath_long_padding(self):
+        """
+        Test 'tracepath' with a long run of spaces in a hop line
+        """
+        self.assertEqual(jc.parsers.tracepath.parse(self.generic_tracepath_long_padding, quiet=True), self.generic_tracepath_long_padding_json)
 
 
 if __name__ == '__main__':

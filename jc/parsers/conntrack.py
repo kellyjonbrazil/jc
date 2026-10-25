@@ -140,7 +140,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`conntrack` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -178,8 +178,10 @@ _date_keys = {'start', 'stop'}
 _hex_keys = {'srckey', 'dstkey'}
 
 # `-o ktimestamp` prints `[start=...]`/`[stop=...]` as ctime() strings, so a
-# bracketed token can contain spaces and a line cannot be split on whitespace
-_token_re = re.compile(r'\[[^\]]*\]|\S+')
+# bracketed token can contain spaces and a line cannot be split on whitespace.
+# Brackets do not nest, so the search for the closing bracket stops at the next
+# opening one instead of rescanning the rest of the line for each `[`
+_token_re = re.compile(r'\[[^\[\]]*\]|\S+')
 
 # conntrack writes a trailing `N flow entries have been shown.` summary to
 # stderr, which lands in the data with `2>&1` or in saved output. It is not a

@@ -167,7 +167,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -338,11 +338,11 @@ def _linux_parse(data):
             #
             # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
             #
-            m = re.search(r'(\d+) packets transmitted', line)
+            m = re.search(r'(?<!\d)(\d+) packets transmitted', line)
             if m:
                 raw_output['packets_transmitted'] = m.group(1)
 
-            m = re.search(r'(\d+) received,', line)
+            m = re.search(r'(?<!\d)(\d+) received,', line)
             if m:
                 raw_output['packets_received'] = m.group(1)
 
@@ -358,7 +358,7 @@ def _linux_parse(data):
             if m:
                 raw_output['errors'] = m.group(1)
 
-            m = re.search(r'([\d\.]+)% packet loss', line)
+            m = re.search(r'(?<![\d\.])([\d\.]+)% packet loss', line)
             if m:
                 raw_output['packet_loss_percent'] = m.group(1)
 
