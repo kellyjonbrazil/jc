@@ -88,7 +88,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`host` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
@@ -230,7 +230,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                             'minimum': minimum 
                         },
                     )
-                    raw_output.append(rrdata)
+
+                    # -C output: each SOA line completes a record, so start a
+                    # new one. Otherwise the single record is appended after
+                    # the loop.
+                    if soaparse:
+                        raw_output.append(rrdata)
+                        rrdata = {}
 
                 except IndexError:
                     if not warned:

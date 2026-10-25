@@ -133,11 +133,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # normalize keys: convert to lowercase
+    # normalize keys: convert to lowercase. Each distinct key is converted
+    # once and the result is shared by all rows.
+    lower_keys: Dict[str, str] = {}
     for item in proc_data:
         for key in item.copy():
-            k_new = key.lower()
-            item[k_new] = item.pop(key)
+            if key not in lower_keys:
+                lower_keys[key] = key.lower()
+            item[lower_keys[key]] = item.pop(key)
 
     return proc_data
 
@@ -157,11 +160,15 @@ def _lstrip(string: str) -> str:
 
 
 def _rstrip(string: str) -> str:
-    """find the rightmost non-whitespace character and rstrip and pad to that index"""
+    """
+    find the rightmost non-whitespace character and rstrip to that index.
+    Lines shorter than that index get one trailing space so they still end
+    in whitespace, the same as if they were padded to the full width.
+    """
     rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
-    new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
+    new_rstrip_list = (x[:max_point] if len(x) >= max_point else x + ' ' for x in rstrip_list)
     return '\n'.join(new_rstrip_list)
 
 
