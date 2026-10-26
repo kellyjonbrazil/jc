@@ -446,7 +446,7 @@ def _bsd_error_sender(line):
         return line_list[4].strip(':').strip('(').strip(')')
 
     sender = line_list[3]
-    if sender.endswith((':', ',')):
+    if sender.endswith(':'):
         sender = sender[:-1]
 
     return sender
