@@ -166,7 +166,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`nft` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -211,14 +211,11 @@ def _split_handle(statement: str) -> Tuple[str, Optional[str]]:
     return statement.strip(), None
 
 
-def _brace_depth(text: str) -> int:
+def _scan_braces(text: str, depth: int, in_quotes: bool) -> Tuple[int, bool]:
     """
-    Return the net number of open braces in a statement, ignoring braces that
-    appear inside a quoted string.
+    Continue counting open braces over `text`, ignoring braces that appear
+    inside a quoted string. Returns the updated `(depth, in_quotes)` state.
     """
-    depth = 0
-    in_quotes = False
-
     for char in text:
         if char == '"':
             in_quotes = not in_quotes
@@ -228,7 +225,7 @@ def _brace_depth(text: str) -> int:
             elif char == '}':
                 depth -= 1
 
-    return depth
+    return depth, in_quotes
 
 
 def _is_block_declaration(statement: str) -> bool:
@@ -245,12 +242,20 @@ def _is_block_declaration(statement: str) -> bool:
     )
 
 
+# A block opener (`table ... {`) or a lone closing brace is at most four
+# tokens long, plus a trailing `# handle N` comment, so it never spans more
+# than this many wrapped lines.
+_MAX_BLOCK_LINES = 8
+
+
 def _statements(data: str) -> Iterator[Tuple[str, Optional[str]]]:
     """
     Yield `(statement, handle)` pairs. Lines that wrap inside `{ }`, such as
     a long `elements = { ... }` list, are joined into a single statement.
     """
-    pending = ''
+    pending: List[str] = []
+    depth = 0
+    in_quotes = False
 
     for line in data.splitlines():
         line = line.strip()
@@ -258,24 +263,25 @@ def _statements(data: str) -> Iterator[Tuple[str, Optional[str]]]:
         if not line:
             continue
 
-        pending = f'{pending} {line}' if pending else line
-        statement, handle = _split_handle(pending)
+        pending.append(line)
+        depth, in_quotes = _scan_braces(line, depth, in_quotes)
 
         # a block declaration or a closing brace is complete even though its
         # brace is unbalanced
-        if statement == '}':
-            yield statement, handle
-            pending = ''
-            continue
+        if len(pending) <= _MAX_BLOCK_LINES:
+            statement, handle = _split_handle(' '.join(pending))
 
-        if _is_block_declaration(statement):
-            yield statement, handle
-            pending = ''
-            continue
+            if statement == '}' or _is_block_declaration(statement):
+                yield statement, handle
+                pending = []
+                depth = 0
+                in_quotes = False
+                continue
 
-        if _brace_depth(pending) == 0:
-            yield statement, handle
-            pending = ''
+        if depth == 0:
+            yield _split_handle(' '.join(pending))
+            pending = []
+            in_quotes = False
 
 
 def _comment_value(statement: str) -> str:
@@ -411,11 +417,20 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
         return
 
     unquoted = _quoted_pattern.sub('""', statement)
-    counter_match = next(
-        (match for match in _counter_pattern.finditer(unquoted)
-         if _brace_depth(unquoted[:match.start()]) == 0),
-        None
-    )
+    counter_match = None
+    depth = 0
+    in_quotes = False
+    position = 0
+
+    # only a counter outside of any `{ }` belongs to the rule. Carry the brace
+    # state forward instead of rescanning from the start for each candidate.
+    for match in _counter_pattern.finditer(unquoted):
+        depth, in_quotes = _scan_braces(unquoted[position:match.start()], depth, in_quotes)
+        position = match.start()
+
+        if depth == 0:
+            counter_match = match
+            break
 
     chain['rules'].append({
         'rule': statement,

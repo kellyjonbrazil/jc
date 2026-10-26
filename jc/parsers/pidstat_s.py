@@ -81,13 +81,12 @@ import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from jc.parsers.universal import simple_table_parse
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`pidstat -H` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -140,6 +139,14 @@ def normalize_header(header: str) -> str:
                  .lower()
 
 
+def _parse_row(header_list: List[str], line: str) -> Dict:
+    """
+    Same result as `simple_table_parse([header, line])[0]` for a header that
+    has already been split into `header_list`.
+    """
+    return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -168,6 +175,7 @@ def parse(
 
     table_list: List = []
     header: str = ''
+    header_list: List[str] = []
 
     for line in data:
         try:
@@ -180,17 +188,18 @@ def parse(
 
             if line.startswith('#'):
                 if len(table_list) > 1:
-                    output_line = simple_table_parse(table_list)[0]
+                    output_line = _parse_row(table_list[0].split(), table_list[1])
                     yield output_line if raw else _process(output_line)
                     header = ''
 
                 header = normalize_header(line)
+                header_list = header.split()
                 table_list = [header]
                 continue
 
             if header:
                 table_list.append(line)
-                output_line = simple_table_parse(table_list)[0]
+                output_line = _parse_row(header_list, table_list[1])
                 yield output_line if raw else _process(output_line)
                 table_list = [header]
                 continue
@@ -200,7 +209,7 @@ def parse(
 
     try:
         if len(table_list) > 1:
-            output_line = simple_table_parse(table_list)[0]
+            output_line = _parse_row(table_list[0].split(), table_list[1])
             yield output_line if raw else _process(output_line)
 
     except Exception as e:

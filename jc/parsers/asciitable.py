@@ -125,7 +125,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -148,11 +148,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # normalize keys: convert to lowercase
+    # normalize keys: convert to lowercase. Each distinct key is converted
+    # once and the result is shared by all rows.
+    lower_keys: Dict[str, str] = {}
     for item in proc_data:
         for key in item.copy():
-            k_new = key.lower()
-            item[k_new] = item.pop(key)
+            if key not in lower_keys:
+                lower_keys[key] = key.lower()
+            item[lower_keys[key]] = item.pop(key)
 
     return proc_data
 
@@ -172,11 +175,11 @@ def _lstrip(string: str) -> str:
 
 
 def _rstrip(string: str) -> str:
-    """find the rightmost non-whitespace character and rstrip and pad to that index"""
+    """find the rightmost non-whitespace character and rstrip to that index"""
     rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     end_points = (len(x.rstrip()) for x in rstrip_list)
     max_point = max(end_points)
-    new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
+    new_rstrip_list = (x[:max_point] for x in rstrip_list)
     return '\n'.join(new_rstrip_list)
 
 
@@ -250,7 +253,9 @@ def _normalize_rows(table: str) -> List[str]:
     returns a List of row strings. Header is snake-cased
     """
     result: List[str] = []
-    for line in jc.utils.splitlines(table):
+    table_lines = jc.utils.splitlines(table)
+    max_len = max([len(x) for x in table_lines]) if table_lines else 0
+    for line in table_lines:
         # skip blank lines
         if not line.strip():
             continue
@@ -261,6 +266,10 @@ def _normalize_rows(table: str) -> List[str]:
 
         # header or data row found - remove column separators
         if not result:  # this is the header row
+            # pad the header to the table width. Data rows do not need to be
+            # padded since sparse_table_parse handles short lines.
+            line = line + ' ' * (max_len - len(line))
+
             # normalize the separator
             line = line.replace('│', '|')\
                        .replace('┃', '|')\
@@ -307,16 +316,19 @@ def _normalize_rows(table: str) -> List[str]:
 def _fixup_headers(table: List[Dict]) -> List[Dict]:
     """remove consecutive underscores and any trailing underscores"""
     new_table = []
+    new_keys: Dict[str, str] = {}  # each distinct key is fixed once
     for row in table:
         new_row = row.copy()
         for k in row:
-            # remove replacement character
-            k_new = k.replace('�', '')
-            # remove consecutive underscores
-            k_new = re.sub(r'__+', '_', k_new)
-            # remove trailing underscores
-            k_new = re.sub(r'_+$', '', k_new)
-            new_row[k_new] = new_row.pop(k)
+            if k not in new_keys:
+                # remove replacement character
+                k_new = k.replace('�', '')
+                # remove consecutive underscores
+                k_new = re.sub(r'__+', '_', k_new)
+                # remove trailing underscores
+                k_new = re.sub(r'_+$', '', k_new)
+                new_keys[k] = k_new
+            new_row[new_keys[k]] = new_row.pop(k)
         new_table.append(new_row)
 
     return new_table
