@@ -25,6 +25,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-unescaped-equals-streaming.json'), 'r', encoding='utf-8') as f:
         cef_unescaped_equals_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-equals-in-header.out'), 'r', encoding='utf-8') as f:
+        cef_equals_in_header = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-equals-in-header-streaming.json'), 'r', encoding='utf-8') as f:
+        cef_equals_in_header_streaming_json = json.loads(f.read())
+
     def test_cef_s_nodata(self):
         """
         Test 'cef' with no data
@@ -52,6 +58,12 @@ class MyTests(unittest.TestCase):
         crlf_data = self.cef.replace('\n', '\r\n')
         self.assertEqual(list(jc.parsers.cef_s.parse(crlf_data.split('\n'), quiet=True)), self.cef_streaming_json)
         self.assertEqual(list(jc.parsers.cef_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.cef_streaming_json)
+
+    def test_cef_s_equals_in_header(self):
+        """
+        Test cef lines with '=' and escaped pipes in the header fields
+        """
+        self.assertEqual(list(jc.parsers.cef_s.parse(self.cef_equals_in_header.splitlines(), quiet=True)), self.cef_equals_in_header_streaming_json)
 
 
 if __name__ == '__main__':
