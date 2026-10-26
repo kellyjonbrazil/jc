@@ -167,7 +167,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -438,6 +438,20 @@ def _linux_parse(data):
     return raw_output
 
 
+def _bsd_error_sender(line):
+    # error lines are 'N bytes from <ip>: <message>' or, when the sender
+    # was resolved to a name, 'N bytes from <name> (<ip>): <message>'
+    line_list = line.split()
+    if len(line_list) > 4 and line_list[4].startswith('('):
+        return line_list[4].strip(':').strip('(').strip(')')
+
+    sender = line_list[3]
+    if sender.endswith((':', ',')):
+        sender = sender[:-1]
+
+    return sender
+
+
 def _bsd_parse(data):
     raw_output = {}
     ping_responses = []
@@ -537,7 +551,7 @@ def _bsd_parse(data):
 
                     try:
                         response['bytes'] = line.split()[0]
-                        response['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+                        response['response_ip'] = _bsd_error_sender(line)
                     except Exception:
                         pass
 
