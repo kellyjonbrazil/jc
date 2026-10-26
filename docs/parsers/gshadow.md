@@ -102,4 +102,4 @@ Compatibility:  linux, aix, freebsd
 
 Source: [`jc/parsers/gshadow.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/gshadow.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

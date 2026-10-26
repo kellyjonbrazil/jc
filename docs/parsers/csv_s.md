@@ -94,4 +94,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/csv_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/csv_s.py)
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
