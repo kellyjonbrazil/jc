@@ -58,7 +58,16 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.gshadow.parse(data, quiet=True)
         self.assertEqual([x['group_name'] for x in result], ['ops', 'staff'])
         self.assertEqual(result[0]['members'], ['alice', '\u2028#y', 'carol'])
-        self.assertEqual(result[1]['members'], ['alice\u2028sudo'])
+        self.assertEqual(result[1]['members'], ['alice\u2028sudo::bob:bob'])
+
+
+    def test_gshadow_colon_in_members(self):
+        """
+        Test 'gshadow' with a colon in the member list
+        """
+        data = 'sudo:*::alice,x:,bob\n'
+        expected = [{'group_name': 'sudo', 'password': '*', 'administrators': [], 'members': ['alice', 'x:', 'bob']}]
+        self.assertEqual(jc.parsers.gshadow.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

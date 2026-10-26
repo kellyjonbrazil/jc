@@ -177,7 +177,7 @@ _DATETIME_RE = re.compile(
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ics` file parser'
     author = 'Paolo Valletta'
     author_email = 'paolovalletta@hotmail.it'
@@ -279,8 +279,13 @@ def _unfold(data: str) -> List[str]:
     """
     Unfold the continuation lines of RFC 5545 section 3.1.
     """
+    # a lone CR is only a line break in files that have no LF at all
+    # (CR-only line endings); otherwise it is part of the value
+    if '\n' not in data:
+        data = data.replace('\r', '\n')
+
     lines: List[str] = []
-    for line in data.replace('\r\n', '\n').replace('\r', '\n').split('\n'):
+    for line in data.replace('\r\n', '\n').split('\n'):
         if line[:1] in (' ', '\t') and lines:
             lines[-1] += line[1:]
             continue

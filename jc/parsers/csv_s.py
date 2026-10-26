@@ -61,11 +61,12 @@ import jc.utils
 from jc.streaming import streaming_input_type_check, add_jc_meta, raise_or_yield
 from jc.jc_types import StreamingOutputType
 from jc.exceptions import ParseError
+from jc.parsers.csv import _sniff
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -144,16 +145,14 @@ def parse(
 
         temp_list[0] = temp_list[0].decode('utf-8-sig')
 
-    sniffdata = '\r\n'.join(temp_list)[:1024]
+    sniffdata = '\r\n'.join(temp_list)
     dialect: Union[str, Type[csv.Dialect]] = (
             'excel-tab' if tsv
             else 'excel'  # default in csv module
         )
 
     try:
-        dialect = csv.Sniffer().sniff(sniffdata)
-        if '""' in sniffdata:
-            dialect.doublequote = True
+        dialect = _sniff(sniffdata)
         if tsv:
             dialect.delimiter = '\t'
     except Exception:

@@ -72,5 +72,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result, [{'username': 'alice', 'password': 'x', 'uid': 1000, 'gid': 1000, 'comment': '', 'home': '/home/alice', 'shell': '/bin/sh'}])
 
 
+    def test_passwd_colon_in_shell(self):
+        """
+        Test 'passwd' with a colon after the shell field
+        """
+        data = 'svc:x:1001:1001::/home/svc:/usr/sbin/nologin:x\n'
+        expected = [{'username': 'svc', 'password': 'x', 'uid': 1001, 'gid': 1001, 'comment': '', 'home': '/home/svc', 'shell': '/usr/sbin/nologin:x'}]
+        self.assertEqual(jc.parsers.passwd.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

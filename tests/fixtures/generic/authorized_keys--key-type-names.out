@@ -1,0 +1,7 @@
+# signature algorithm names and other key type names
+rsa-sha2-512 AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8wb9u8Rx1RgPHJOSnTPi50enG
+rsa-sha2-256 AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8wb9u8Rx1RgPHJOSnTPi50enG carol@example.com
+no-pty rsa-sha2-512 AAAAB3NzaC1yc2EAAAADAQABAAABAQDg0BAJ5uRurdBc7//UY1w4p7cuc8wb9u8Rx1RgPHJOSnTPi50enG
+webauthn-sk-ecdsa-sha2-nistp256@openssh.com AAAAInNrLWVjZHNhLXNoYTItbmlzdHAyNTZAb3BlbnNzaC5jb20AAAAIbmlzdHAyNTYAAABBBC1x dave@example.com
+example-key@example.com AAAAF2V4YW1wbGUta2V5QGV4YW1wbGUuY29tAAAAIFlOUZrkmTErKUM7fdipf/Bo3vy6l1W21dAOhMUk1nsG erin@example.com
+restrict,command="/bin/true" example-key@example.com AAAAF2V4YW1wbGUta2V5QGV4YW1wbGUuY29tAAAAIFlOUZrkmTErKUM7fdipf/Bo3vy6l1W21dAOhMUk1nsG erin@example.com

@@ -42,6 +42,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.csv'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
 
@@ -90,6 +96,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.json'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.json'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom_json = json.loads(f.read())
@@ -231,6 +243,30 @@ class MyTests(unittest.TestCase):
         self.assertIn('\r', data)
         self.assertNotIn('\n', data)
         self.assertEqual(jc.parsers.csv.parse(data, quiet=True), self.generic_csv_insurance_json)
+
+
+    def test_csv_apostrophes(self):
+        """
+        Test 'csv-apostrophes.csv' file to ensure apostrophes in field values do not change the quote character
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_apostrophes, quiet=True), self.generic_csv_apostrophes_json)
+
+    def test_csv_apostrophes_pipe(self):
+        """
+        Test 'csv-apostrophes-pipe.csv' file to ensure apostrophes and delimiters in field values do not change the dialect
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_apostrophes_pipe, quiet=True), self.generic_csv_apostrophes_pipe_json)
+
+    def test_csv_apostrophes_tab(self):
+        """
+        Test tab-delimited data with apostrophes in field values
+        """
+        data = 'id\tname\tnote\n1\talice\t"hi,\'x\',\'"\n2\tbob\tit\'s \'fine\', really\n'
+        expected = [
+            {'id': '1', 'name': 'alice', 'note': "hi,'x','"},
+            {'id': '2', 'name': 'bob', 'note': "it's 'fine', really"}
+        ]
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

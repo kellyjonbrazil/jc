@@ -1,0 +1,4 @@
+# a backslash is only special directly before a double quote
+environment="A=\\"" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJLNmFWbBt4k6aVs1qpIIKB3zeOIMRt0UWgysevpknKo key1@example.com
+command="dir C:\\tools\\bin",no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICvYBsl/DgCvGh/DMo+nY6kmlyPI24+sT5OvcdsYbW6Q
+command="echo \"hi\"",no-pty ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMCkl3YbF1N57WM5fMmAVGVZ+qhMqcvu3ncxF8MVCLas quoted@example.com
