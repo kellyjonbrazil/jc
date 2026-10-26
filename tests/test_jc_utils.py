@@ -528,6 +528,24 @@ line5
                     '               new line\n')
         self.assertEqual(expected, self._stderr_of(jc.utils.warning_message, msg))
 
+    def test_utils_warning_message_long_line_shortened(self):
+        word = 'a@' + 'b' * 1000000
+        out = self._stderr_of(jc.utils.warning_message, ['Invalid email address found: ' + word])
+        self.assertTrue(out.startswith('jc:  Warning - Invalid email address found: a@bbb'))
+        self.assertTrue(' '.join(out.split()).endswith('... (1000031 characters)'))
+        self.assertLess(len(out), 6000)
+
+    def test_utils_error_message_long_line_shortened(self):
+        out = self._stderr_of(jc.utils.error_message, ['first', 'x' * 100000])
+        self.assertTrue(' '.join(out.split()).endswith('... (100000 characters)'))
+        self.assertLess(len(out), 6000)
+
+    def test_utils_warning_message_line_at_limit_unchanged(self):
+        line = 'y' * jc.utils._MAX_MESSAGE_LINE_LENGTH
+        out = self._stderr_of(jc.utils.warning_message, ['first', line])
+        self.assertNotIn('...', out)
+        self.assertEqual(len(line), out.count('y'))
+
     # def test_utils_warning_message(self):
     #     msg = [
     #         'this is a long first line that will be wrapped yada yada yada yada yada yada yada.',

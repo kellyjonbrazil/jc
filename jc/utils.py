@@ -66,6 +66,24 @@ def _escape_controls(string: str) -> str:
     return string.translate(_CONTROL_CHAR_ESCAPES)
 
 
+# message lines longer than this are shortened before they are wrapped.
+# TextWrapper takes time proportional to the square of the length of a
+# long unbroken word.
+_MAX_MESSAGE_LINE_LENGTH = 4096
+
+
+def _message_line(string: str) -> str:
+    """
+    Return a message line ready for wrapping: shortened with an ellipsis
+    and the original length if it is very long, and with control
+    characters escaped.
+    """
+    if len(string) > _MAX_MESSAGE_LINE_LENGTH:
+        string = f'{string[:_MAX_MESSAGE_LINE_LENGTH]}... ({len(string)} characters)'
+
+    return _escape_controls(string)
+
+
 def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message to `STDERR` for non-fatal issues. The first line
@@ -93,7 +111,7 @@ def warning_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
                                subsequent_indent=' ' * 19)
 
-    first_line = _escape_controls(message_lines.pop(0))
+    first_line = _message_line(message_lines.pop(0))
     first_str = f'jc:  Warning - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -101,7 +119,7 @@ def warning_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(_escape_controls(line))
+        message = next_wrapper.fill(_message_line(line))
         _safe_print(message, file=sys.stderr)
 
 
@@ -125,7 +143,7 @@ def error_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
                                subsequent_indent=' ' * 17)
 
-    first_line = _escape_controls(message_lines.pop(0))
+    first_line = _message_line(message_lines.pop(0))
     first_str = f'jc:  Error - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -133,7 +151,7 @@ def error_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(_escape_controls(line))
+        message = next_wrapper.fill(_message_line(line))
         _safe_print(message, file=sys.stderr)
 
 
