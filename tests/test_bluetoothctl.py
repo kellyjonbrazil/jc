@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import unittest
 
@@ -15,7 +16,16 @@ from jc.parsers.bluetoothctl import (
 )
 
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
 class BluetoothctlTests(unittest.TestCase):
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/bluetoothctl_devices_names.out'), 'r', encoding='utf-8') as f:
+        generic_devices_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/bluetoothctl_devices_names.json'), 'r', encoding='utf-8') as f:
+        generic_devices_names_json = json.loads(f.read())
     def test_bluetoothctl_nodata(self):
         """
         Test 'bluetoothctl' with no data
@@ -440,6 +450,18 @@ class BluetoothctlTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['name'], 'Kbd\u2028Trusted: yes\u2028-')
         self.assertEqual(result[0]['trusted'], 'no')
+
+    def test_bluetoothctl_devices_names(self):
+        """
+        Test 'bluetoothctl devices' with names that end in 'not available' and '(random)'
+        """
+        self.assertEqual(parse(self.generic_devices_names, quiet=True), self.generic_devices_names_json)
+
+    def test_bluetoothctl_not_available(self):
+        """
+        Test 'bluetoothctl info' for an unknown device
+        """
+        self.assertEqual(parse('Device EB:06:EF:62:B3:33 not available\n', quiet=True), [])
 
 
 if __name__ == '__main__':

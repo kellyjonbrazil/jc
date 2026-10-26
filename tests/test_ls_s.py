@@ -61,6 +61,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_long_iso = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames.out'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-newline-structure-like-names.out'), 'r', encoding='utf-8') as f:
+        ls_l_newline_structure_like_names = f.read()
+
     # output
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls-al-streaming.json'), 'r', encoding='utf-8') as f:
@@ -101,6 +107,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_long_iso_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames-streaming.json'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames_streaming_json = json.loads(f.read())
 
 
     def test_ls_s_empty_dir(self):
@@ -196,6 +205,58 @@ class MyTests(unittest.TestCase):
         wide instead of the default/full-iso 3.
         """
         self.assertEqual(list(jc.parsers.ls_s.parse(self.ls_l_long_iso.splitlines(), quiet=True)), self.ls_l_long_iso_streaming_json)
+
+    def test_ls_s_l_entry_like_dirnames(self):
+        """
+        Test 'ls -l -- *' where some directory names look like 'ls -l'
+        entry lines or a 'total' line, and a filename ends in ':'. The
+        'name:' headers are only recognized by position (first line or
+        after a blank line, and followed by a 'total' line).
+        """
+        self.assertEqual(list(jc.parsers.ls_s.parse(self.ls_l_entry_like_dirnames.splitlines(), quiet=True)), self.ls_l_entry_like_dirnames_streaming_json)
+
+    def test_ls_s_l_newline_structure_like_names(self):
+        """
+        Test 'ls -l' (without -b) with filenames containing a newline
+        followed by text that looks like a 'total' line or a 'name:'
+        header. The continuation lines are reported as parsing errors
+        and do not set a parent.
+        """
+        result = list(jc.parsers.ls_s.parse(self.ls_l_newline_structure_like_names.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual([x['_jc_meta']['success'] for x in result], [True, True, False, True, False, True])
+        self.assertEqual(result[2]['_jc_meta']['line'], 'total 1')
+        self.assertEqual(result[4]['_jc_meta']['line'], 'alpha:')
+        self.assertFalse(any('parent' in x for x in result))
+
+    def test_ls_s_l_newline_structure_like_names_raise_exception(self):
+        """
+        Test 'ls -l' (without -b) with filenames containing a newline
+        followed by text that looks like a 'total' line (raises ParseError)
+        """
+        g = jc.parsers.ls_s.parse(self.ls_l_newline_structure_like_names.splitlines(), quiet=True)
+        with self.assertRaises(ParseError):
+            list(g)
+
+    def test_ls_s_lazy(self):
+        """
+        Test that records are yielded while input is still being read
+        (at most one line of lookahead)
+        """
+        lines = self.ls_l_entry_like_dirnames.splitlines()
+        consumed = []
+
+        def line_gen():
+            for i, line in enumerate(lines):
+                consumed.append(i)
+                yield line
+
+        g = jc.parsers.ls_s.parse(line_gen(), quiet=True)
+        first = next(g)
+        self.assertEqual(first['filename'], 'notes:')
+        self.assertEqual(consumed[-1], 1)
+        second = next(g)
+        self.assertEqual(second['filename'], 'run.sh')
+        self.assertEqual(consumed[-1], 5)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,27 @@
+[
+  {
+    "key": "admin",
+    "cells": {
+      "acct": {
+        "email": "admin@corp.example"
+      }
+    }
+  },
+  {
+    "key": "report----------------------------------------2024",
+    "cells": {
+      "notes": {
+        "size": "42",
+        "text": "header----------------------------------------footer"
+      }
+    }
+  },
+  {
+    "key": "plain",
+    "cells": {
+      "acct": {
+        "email": "plain@corp.example"
+      }
+    }
+  }
+]

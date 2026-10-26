@@ -493,6 +493,249 @@ def input_type_check(data: object) -> None:
         raise TypeError("Input data must be a 'str' object.")
 
 
+# The output may be up to this many times the input size, plus a fixed
+# allowance, before `expansion_check()` raises `ParseError`.
+_EXPANSION_RATIO = 1000
+_EXPANSION_ALLOWANCE = 50 * 1000 * 1000
+
+
+def expansion_limit(input_size: int) -> int:
+    """
+    Return the largest output size (in characters of JSON) accepted for
+    an input of `input_size` characters or bytes. Used by parsers that
+    limit how much the output can grow from shared references or
+    declared default values.
+
+    Parameters:
+
+        input_size:  (int) length of the input data
+
+    Returns:
+
+        Integer      maximum accepted output size
+    """
+    return _EXPANSION_RATIO * input_size + _EXPANSION_ALLOWANCE
+
+
+def _scalar_json_size(obj: object) -> int:
+    """Estimate the JSON size of a value that is not a list or dict."""
+    if obj is None or obj is True:
+        return 4
+    if obj is False:
+        return 5
+    if isinstance(obj, str):
+        return len(obj) + 2
+    if isinstance(obj, int):
+        if obj.bit_length() <= 64:
+            return len(int.__repr__(obj))
+        return obj.bit_length() * 3 // 10 + 2
+    if isinstance(obj, float):
+        return len(float.__repr__(obj))
+    if isinstance(obj, (bytes, bytearray)):
+        return 4 * len(obj) + 3
+    return len(str(obj)) + 2
+
+
+def expansion_check(data: object, input_size: int) -> None:
+    """
+    Ensure the JSON output for `data` will not be far larger than the
+    input. Objects referenced more than once (e.g. YAML aliases or binary
+    plist object references) are counted once per reference, as they are
+    when serialized, but each object is only walked once. Raises
+    `ParseError` if the estimated output size is larger than
+    `expansion_limit(input_size)`.
+
+    Parameters:
+
+        data:        (object) parsed data (dictionaries, lists, scalars)
+        input_size:  (int) length of the input data
+
+    Returns:
+
+        None         raises `ParseError` if the output would be too large
+    """
+    from .exceptions import ParseError
+
+    limit = expansion_limit(input_size)
+
+    def too_large() -> ParseError:
+        return ParseError(
+            'Output would be too large: shared references or default values '
+            f'expand to more than {limit} characters.'
+        )
+
+    # sizes of objects already walked, keyed by id(). The object is kept
+    # in the value so its id cannot be reused during the walk.
+    sizes: Dict[int, Tuple[object, int]] = {}
+    in_progress: Set[int] = set()
+
+    def known_size(obj: object) -> Optional[int]:
+        """Return the size of a scalar or an already walked object, else None"""
+        if isinstance(obj, (dict, list, tuple)):
+            obj_id = id(obj)
+            if obj_id in sizes:
+                return sizes[obj_id][1]
+            if obj_id in in_progress:
+                # circular reference: cannot be serialized, so not counted
+                return 0
+            return None
+        if obj is None or isinstance(obj, (str, int, float, bytes)):
+            return _scalar_json_size(obj)
+        obj_id = id(obj)
+        if obj_id not in sizes:
+            sizes[obj_id] = (obj, _scalar_json_size(obj))
+        return sizes[obj_id][1]
+
+    def new_frame(obj: Any) -> List[Any]:
+        """[object, is_dict, iterator, running size]
+
+        Each item adds one separator (the opening bracket counts as the
+        first), so an empty container is fixed up when it is finished.
+        """
+        in_progress.add(id(obj))
+        if isinstance(obj, dict):
+            return [obj, True, iter(obj.items()), 1]
+        return [obj, False, iter(obj), 1]
+
+    size = known_size(data)
+    if size is not None:
+        if size > limit:
+            raise too_large()
+        return
+
+    stack = [new_frame(data)]
+
+    while stack:
+        frame = stack[-1]
+        descend = False
+
+        for item in frame[2]:
+            if frame[1]:
+                key, value = item
+                frame[3] += _scalar_json_size(key) + 2
+            else:
+                value = item
+                frame[3] += 1
+
+            size = known_size(value)
+            if size is None:
+                stack.append(new_frame(value))
+                descend = True
+                break
+
+            frame[3] += size
+            if frame[3] > limit:
+                raise too_large()
+
+        if descend:
+            continue
+
+        stack.pop()
+        obj = frame[0]
+        if not obj:
+            frame[3] += 1
+        in_progress.discard(id(obj))
+        sizes[id(obj)] = (obj, frame[3])
+
+        if stack:
+            stack[-1][3] += frame[3]
+            if stack[-1][3] > limit:
+                raise too_large()
+        elif frame[3] > limit:
+            raise too_large()
+
+
+class _StopDefaultsCheck(Exception):
+    pass
+
+
+def xml_defaults_check(data: Union[str, bytes]) -> None:
+    """
+    Ensure attribute default values declared in an XML document's DTD
+    (`<!ATTLIST>`) do not make the output far larger than the input. The
+    XML parser adds the defaults to every matching element, so they are
+    counted with a separate pass that keeps no per-element data. Raises
+    `ParseError` if they would add more than `expansion_limit(len(data))`
+    characters. Malformed documents and documents with entity declarations
+    are left for the XML library to report.
+
+    Parameters:
+
+        data:        (string, bytes) XML document. A string is parsed as
+                     UTF-8, bytes use the document's declared encoding.
+
+    Returns:
+
+        None         raises `ParseError` if the output would be too large
+    """
+    marker = '<!ATTLIST' if isinstance(data, str) else b'<!ATTLIST'
+    if marker not in data:  # type: ignore
+        return
+
+    from xml.parsers import expat
+    from .exceptions import ParseError
+
+    limit = expansion_limit(len(data))
+    added = 0
+
+    # element name -> {attribute name: output size of its default or 0}
+    # the first declaration of an attribute is the one that applies
+    declared: Dict[str, Dict[str, int]] = {}
+    element_size: Dict[str, int] = {}
+
+    def attlist_decl(elname, attname, attr_type, default, required):
+        attrs = declared.setdefault(elname, {})
+        if attname not in attrs:
+            # "@name":"value", plus a separator
+            attrs[attname] = 0 if default is None else len(attname) + len(default) + 7
+            element_size.pop(elname, None)
+
+    def start_element(name, attrs):
+        nonlocal added
+        defaults = declared.get(name)
+        if not defaults:
+            return
+
+        size = element_size.get(name)
+        if size is None:
+            size = element_size[name] = sum(defaults.values())
+
+        # attributes given in the document are not defaulted
+        for attname in attrs[0::2]:
+            size -= defaults.get(attname, 0)
+
+        added += size
+        if added > limit:
+            raise ParseError(
+                'Output would be too large: attribute default values expand '
+                f'to more than {limit} characters.'
+            )
+
+    def entity_decl(*args):
+        raise _StopDefaultsCheck()
+
+    if isinstance(data, str):
+        parser = expat.ParserCreate('utf-8')
+        xml_bytes = data.encode('utf-8')
+    else:
+        parser = expat.ParserCreate()
+        xml_bytes = data
+
+    # only attributes given in the document are passed to start_element
+    parser.ordered_attributes = True
+    parser.specified_attributes = True
+    parser.AttlistDeclHandler = attlist_decl
+    parser.StartElementHandler = start_element
+    parser.EntityDeclHandler = entity_decl
+
+    try:
+        parser.Parse(xml_bytes, True)
+    except ParseError:
+        raise
+    except Exception:
+        pass
+
+
 _LF_LINE_END_RE = re.compile(r'\r?\n')
 _CR_LF_LINE_END_RE = re.compile(r'\r\n|\r|\n')
 

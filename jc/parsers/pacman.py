@@ -180,7 +180,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`pacman` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -237,7 +237,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             if key in name_description_fields and isinstance(val, list):
                 new_list = []
                 for name_desc in val:
-                    n, *d = name_desc.split(': ')
+                    n, *d = name_desc.split(': ', maxsplit=1)
                     if d == []:
                         d = ''
                     else:
@@ -294,10 +294,12 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             splitline = line.split(' : ', maxsplit=1)
 
-            if len(splitline) == 2:
+            # keys always start in the first column. Indented lines (for
+            # example, optional deps entries) continue the previous field.
+            if len(splitline) == 2 and not line.startswith((' ', '\t')):
                 # this is a key/value pair
                 key, val = splitline
                 key = key.strip()

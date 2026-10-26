@@ -1,0 +1,7 @@
+-rw-r--r-- 1 user user  0 Oct 25 07:41 ---------- 1 root root 0 Jan  1 00:00 x
+-rw-r--r-- 1 user user  0 Oct 25 07:41 bin
+-rw-r--r-- 1 user user  0 Oct 25 07:41 passwd.txt
+
+docs:
+total 4
+-rw-r--r-- 1 user user 3 Oct 25 07:41 a.txt

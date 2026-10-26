@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         cef_unescaped_equals_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-equals-in-header.out'), 'r', encoding='utf-8') as f:
+        cef_equals_in_header = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-equals-in-header.json'), 'r', encoding='utf-8') as f:
+        cef_equals_in_header_json = json.loads(f.read())
+
     def test_cef_nodata(self):
         """
         Test 'cef' with no data
@@ -71,6 +77,12 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['msg'], 'hi\u2028there')
         self.assertEqual(result[0]['src'], '1.2.3.4')
+
+    def test_cef_equals_in_header(self):
+        """
+        Test cef lines with '=' and escaped pipes in the header fields
+        """
+        self.assertEqual(jc.parsers.cef.parse(self.cef_equals_in_header, quiet=True), self.cef_equals_in_header_json)
 
 
 if __name__ == '__main__':

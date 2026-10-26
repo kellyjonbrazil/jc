@@ -109,4 +109,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/ping_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ping_s.py)
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

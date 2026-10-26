@@ -80,7 +80,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`mount` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -108,32 +108,63 @@ def _process(proc_data):
     return proc_data
 
 
+# The options are at the end of the line, so the entry is matched from the
+# end: the last `type <type> (<options>)` (Linux) or ` (<options>)` (macOS and
+# BSD) ends the mount point, and the last ` on ` before it ends the filesystem.
+_LINUX_TAIL = re.compile(
+    r'''
+        (?P<head>.*)
+        \stype\s
+        (?P<type>\S+)
+        \s+
+        \((?P<options>.*)\)\Z
+    ''', re.VERBOSE
+)
+
+_OSX_TAIL = re.compile(
+    r'''
+        (?P<head>.*)
+        \s
+        \((?P<options>.*)\)\Z
+    ''', re.VERBOSE
+)
+
+_HEAD = re.compile(
+    r'''
+        (?P<filesystem>.*)
+        \son\s
+        (?P<mount_point>.*)\Z
+    ''', re.VERBOSE
+)
+
+
+def _trim_entry(entry):
+    """Cut the entry after the `)` that closes the options."""
+    entry = entry.rstrip()
+
+    # `mount -l` adds the filesystem label as ` [LABEL]` at the end
+    if entry.endswith(']'):
+        pos = entry.rfind(') [')
+        if pos != -1:
+            entry = entry[:pos + 1]
+
+    # a match always ends at a `)`, so stop at the last one
+    return entry[:entry.rfind(')') + 1]
+
+
 def _osx_parse(data):
     output = []
 
     for entry in data:
         output_line = {}
 
-        # the mount point does not run across ` on `: the greedy filesystem
-        # group already tried that later ` on ` with the same remainder
-        pattern = re.compile(
-            r'''
-                (?P<filesystem>.*)
-                \son\s
-                (?P<mount_point>(?:.(?<!\son\s))*?)
-                \s
-                \((?P<options>.*?)\)\s*
-            ''', re.VERBOSE
-        )
-
-        # a match always ends at a `)`, so stop at the last one
-        mymatch = pattern.match(entry, 0, entry.rfind(')') + 1)
-        groups = mymatch.groupdict()
+        tail = _OSX_TAIL.match(_trim_entry(entry)).groupdict()
+        groups = _HEAD.match(tail['head']).groupdict()
 
         if groups:
             output_line['filesystem'] = groups['filesystem']
             output_line['mount_point'] = groups['mount_point']
-            options = groups['options'].split(', ')
+            options = tail['options'].split(', ')
             output_line['options'] = options
 
         output.append(output_line)
@@ -147,29 +178,14 @@ def _linux_parse(data):
     for entry in data:
         output_line = {}
 
-        # see _osx_parse() for the mount_point group and the end position
-        pattern = re.compile(
-            r'''
-                (?P<filesystem>.*)
-                \son\s
-                (?P<mount_point>(?:.(?<!\son\s))*?)
-                \stype\s
-                (?P<type>\S+)
-                \s+
-                \((?P<options>.*?)\)
-                \s*
-            ''', re.VERBOSE
-        )
-
-        # a match always ends at a `)`, so stop at the last one
-        mymatch = pattern.match(entry, 0, entry.rfind(')') + 1)
-        groups = mymatch.groupdict()
+        tail = _LINUX_TAIL.match(_trim_entry(entry)).groupdict()
+        groups = _HEAD.match(tail['head']).groupdict()
 
         if groups:
             output_line['filesystem'] = groups["filesystem"]
             output_line['mount_point'] = groups["mount_point"]
-            output_line['type'] = groups["type"]
-            output_line['options'] = groups["options"].split(',')
+            output_line['type'] = tail["type"]
+            output_line['options'] = tail["options"].split(',')
             output.append(output_line)
 
     return output

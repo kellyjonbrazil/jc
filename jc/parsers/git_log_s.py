@@ -106,7 +106,7 @@ patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -163,6 +163,23 @@ def _is_commit_hash(hash_string: str) -> bool:
     return False
 
 
+def _finish_record(output_line, message_lines, file_list, file_stats_list, patch_lines, use_message, raw):
+    """Assemble a completed commit record and process it unless raw"""
+    if use_message and message_lines:
+        output_line['message'] = '\n'.join(message_lines)
+
+    if file_list:
+        output_line['stats']['files'] = file_list
+
+    if file_stats_list:
+        output_line['stats']['file_stats'] = file_stats_list
+
+    if patch_lines:
+        output_line['patch'] = '\n'.join(patch_lines)
+
+    return output_line if raw else _process(output_line)
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -213,23 +230,19 @@ def parse(
             # oneline style
             if not line.startswith(' ') and line_list and _is_commit_hash(line_list[0]):
                 if output_line:
-                    if file_list:
-                        output_line['stats']['files'] = file_list
-
-                    if file_stats_list:
-                        output_line['stats']['file_stats'] = file_stats_list
-
-                    if patch_lines:
-                        output_line['patch'] = '\n'.join(patch_lines)
-
-                    yield output_line if raw else _process(output_line)
-
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished = (output_line, message_lines, file_list, file_stats_list, patch_lines)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
                     numstat_found = False
                     patch_lines = []
+                    try:
+                        yield _finish_record(*finished, use_message=False, raw=raw)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
@@ -239,26 +252,19 @@ def parse(
             # all other styles
             if line.startswith('commit '):
                 if output_line:
-                    if message_lines:
-                        output_line['message'] = '\n'.join(message_lines)
-
-                    if file_list:
-                        output_line['stats']['files'] = file_list
-
-                    if file_stats_list:
-                        output_line['stats']['file_stats'] = file_stats_list
-
-                    if patch_lines:
-                        output_line['patch'] = '\n'.join(patch_lines)
-
-                    yield output_line if raw else _process(output_line)
-
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished = (output_line, message_lines, file_list, file_stats_list, patch_lines)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
                     numstat_found = False
                     patch_lines = []
+                    try:
+                        yield _finish_record(*finished, use_message=True, raw=raw)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -359,19 +365,10 @@ def parse(
 
     try:
         if output_line:
-            if message_lines:
-                output_line['message'] = '\n'.join(message_lines)
-
-            if file_list:
-                output_line['stats']['files'] = file_list
-
-            if file_stats_list:
-                output_line['stats']['file_stats'] = file_stats_list
-
-            if patch_lines:
-                output_line['patch'] = '\n'.join(patch_lines)
-
-            yield output_line if raw else _process(output_line)
+            yield _finish_record(
+                output_line, message_lines, file_list, file_stats_list, patch_lines,
+                use_message=True, raw=raw
+            )
 
     except Exception as e:
         yield raise_or_yield(ignore_exceptions, e, line)

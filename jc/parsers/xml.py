@@ -76,7 +76,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,6 +145,10 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         has_data = True
+
+        # attribute default values declared in a DTD are added to every
+        # matching element, so limit how much the output can grow from them
+        jc.utils.xml_defaults_check(data)
 
     if raw and has_data:
         # modified output with _ prefix for attributes

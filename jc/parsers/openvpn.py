@@ -156,7 +156,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'openvpn-status.log file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -281,22 +281,25 @@ def parse(
 
         for line in filter(None, jc.utils.splitlines(data)):
 
-            if line.startswith('OpenVPN CLIENT LIST'):
+            # section markers are whole lines, so a common name that starts
+            # with a marker word is treated as a normal row
+            if line.rstrip() == 'OpenVPN CLIENT LIST':
                 section = 'clients'
                 continue
 
-            if line.startswith('ROUTING TABLE'):
+            if line.rstrip() == 'ROUTING TABLE':
                 section = 'routing'
                 continue
 
-            if line.startswith('GLOBAL STATS'):
+            if line.rstrip() == 'GLOBAL STATS':
                 section = 'stats'
                 continue
 
-            if line.startswith('END'):
+            if line.rstrip() == 'END':
                 break
 
-            if section == 'clients' and line.startswith('Updated,'):
+            # the real Updated line has exactly one comma; client rows have more
+            if section == 'clients' and line.startswith('Updated,') and line.count(',') == 1:
                 _, updated = line.split(',', maxsplit=1)
                 continue
 

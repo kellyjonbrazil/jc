@@ -39,6 +39,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_blkid_ip_udev_multi = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-label-escapes.out'), 'r', encoding='utf-8') as f:
+        generic_blkid_label_escapes = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/blkid.json'), 'r', encoding='utf-8') as f:
         centos_7_7_blkid_json = json.loads(f.read())
@@ -69,6 +72,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/blkid-ip-udev-multi.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_blkid_ip_udev_multi_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-label-escapes.json'), 'r', encoding='utf-8') as f:
+        generic_blkid_label_escapes_json = json.loads(f.read())
 
     def test_blkid_nodata(self):
         """
@@ -146,6 +152,51 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['id_fs_label'], '\x1eID_FS_TYPE=xfs\x1e')
         self.assertEqual(result[0]['id_fs_type'], 'ext4')
+
+
+    def test_blkid_label_escapes(self):
+        """
+        Test 'blkid' with labels containing quotation marks, backslashes,
+        '=' and the 0x1c character (printed as ^\\ without escaping the
+        backslash)
+        """
+        self.assertEqual(jc.parsers.blkid.parse(self.generic_blkid_label_escapes, quiet=True), self.generic_blkid_label_escapes_json)
+
+    def test_blkid_label_caret_backslash(self):
+        """
+        Test 'blkid' where a label with 0x1c contains text that looks like
+        another tag
+        """
+        data = '/dev/sdb1: LABEL="x^\\\\" DEVICE=/dev/sda1 Z=^\\" UUID="6666" TYPE="btrfs"\n'
+        result = jc.parsers.blkid.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['device'], '/dev/sdb1')
+        self.assertEqual(result[0]['label'], 'x^\\" DEVICE=/dev/sda1 Z=^\\')
+        self.assertEqual(result[0]['uuid'], '6666')
+        self.assertNotIn('z', result[0])
+
+    def test_blkid_unquoted_values(self):
+        """
+        Test 'blkid' with hand-written unquoted and mixed values
+        """
+        data = '/dev/sda1: UUID=abc TYPE=ext4\n/dev/sda2: UUID=def TYPE="xfs" LABEL="my disk"\n/dev/sda3: LABEL=\'single quoted\' TYPE=ext4\n'
+        expected = [
+            {'device': '/dev/sda1', 'uuid': 'abc', 'type': 'ext4'},
+            {'device': '/dev/sda2', 'uuid': 'def', 'type': 'xfs', 'label': 'my disk'},
+            {'device': '/dev/sda3', 'label': 'single quoted', 'type': 'ext4'}
+        ]
+        self.assertEqual(jc.parsers.blkid.parse(data, quiet=True), expected)
+
+    def test_blkid_blank_lines(self):
+        """
+        Test 'blkid' with blank lines between device lines
+        """
+        data = '/dev/sda1: UUID="abc" TYPE="ext4"\n\n/dev/sda2: UUID="def" TYPE="xfs"\n'
+        expected = [
+            {'device': '/dev/sda1', 'uuid': 'abc', 'type': 'ext4'},
+            {'device': '/dev/sda2', 'uuid': 'def', 'type': 'xfs'}
+        ]
+        self.assertEqual(jc.parsers.blkid.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

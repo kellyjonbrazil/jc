@@ -58,7 +58,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`systemctl` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -120,7 +120,7 @@ def parse(data, raw=False, quiet=False):
         raw_output = []
 
         for entry in cleandata[1:]:
-            if 'LOAD   = ' in entry:
+            if entry.startswith('LOAD   = '):
                 break
 
             else:

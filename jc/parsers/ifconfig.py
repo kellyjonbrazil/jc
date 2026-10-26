@@ -219,7 +219,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.6'
+    version = '2.7'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -327,12 +327,26 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _bundle_match(pattern_list, string):
-    """Returns a match object if a string matches one of a list of patterns.
+def _header_match(pattern_list, string):
+    """Returns a match object if the start of a string (column 0) matches one
+    of a list of interface header patterns. Indented lines are never headers.
     If no match is found, returns None"""
     for pattern in pattern_list:
-        match = re.search(pattern, string)
+        match = pattern.match(string)
         if match:
+            return match
+    return None
+
+
+def _bundle_match(pattern_list, string):
+    """Returns a match object if a string matches one of a list of patterns
+    at its first word, ignoring indentation. Text later in the line (an SSID
+    or a description, for example) does not count.
+    If no match is found, returns None"""
+    indent = len(string) - len(string.lstrip())
+    for pattern in pattern_list:
+        match = pattern.search(string)
+        if match and match.start() <= indent:
             return match
     return None
 
@@ -424,7 +438,7 @@ def parse(
 
     # Linux syntax
     re_linux_interface = re.compile(r'''
-        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+)\s+
+        (?P<name>\S+)\s+
         Link\sencap:(?P<type>\S+\s?\S+)
         (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -479,7 +493,7 @@ def parse(
 
     # OpenBSD syntax
     re_openbsd_interface = re.compile(r'''
-        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?P<name>\S+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)?>\s+
         mtu\s+(?P<mtu>[0-9]+)
@@ -499,7 +513,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_details = re.compile(r'''
-        (?<!\S)\S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        (?<!\S)[a-z]+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+|[0-9A-Fa-f-]+\s+)?
         txqueuelen\s+[0-9]+\s+
         \((?P<type>\S(?:\S*\s)?\S+)\)
         ''', re.IGNORECASE | re.VERBOSE
@@ -532,7 +546,7 @@ def parse(
 
     # FreeBSD syntax
     re_freebsd_interface = re.compile(r'''
-        (?<![a-zA-Z0-9:._-])(?P<name>[a-zA-Z0-9:._-]+):\s+
+        (?P<name>\S+):\s+
         flags=(?P<flags>[0-9]+)
         <(?P<state>\S+)>\s+
         metric\s+(?P<metric>[0-9]+)\s+
@@ -577,10 +591,8 @@ def parse(
         <(?P<media_flags>[^<]+)>)?
         ''', re.IGNORECASE | re.VERBOSE
     )
-    # only the first 'media: ' on the line is tried. If it does not match,
-    # a later one on the same line cannot match either.
     re_freebsd_media = re.compile(r'''
-        ^(?:(?!media:\s).)*media:\s(?P<media>.+)
+        ^\s*media:\s(?P<media>.+)
         (?:\s<(?P<media_flags>[^<]+)>)
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -626,16 +638,18 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
 
+    # interface header patterns are only tried at column 0, so they are not
+    # part of the lists of patterns for the other lines
     re_linux = [
-        re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
+        re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
         re_linux_bytes, re_linux_tx_stats
     ]
     re_openbsd = [
-        re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
+        re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
         re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
     ]
     re_freebsd = [
-        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
+        re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
         re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
         re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
         re_freebsd_tx_rx_power, re_freebsd_options
@@ -649,7 +663,7 @@ def parse(
         for line in filter(None, data.splitlines()):
 
             # Find new interface lines
-            interface_match = _bundle_match(interface_patterns, line)
+            interface_match = _header_match(interface_patterns, line)
             if interface_match:
                 if interface_item['name'] is not None:
                     if ipv4_info:
@@ -716,7 +730,7 @@ def parse(
                 continue
 
             # lane information lines
-            lane_match = re.search(re_freebsd_lane, line)
+            lane_match = _bundle_match([re_freebsd_lane], line)
             if lane_match:
                 lane_info.append(lane_match.groupdict())
                 continue
