@@ -29,6 +29,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-equals-in-header.json'), 'r', encoding='utf-8') as f:
         cef_equals_in_header_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-custom-labels.out'), 'r', encoding='utf-8') as f:
+        cef_custom_labels = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-custom-labels.json'), 'r', encoding='utf-8') as f:
+        cef_custom_labels_json = json.loads(f.read())
+
     def test_cef_nodata(self):
         """
         Test 'cef' with no data
@@ -83,6 +89,12 @@ class MyTests(unittest.TestCase):
         Test cef lines with '=' and escaped pipes in the header fields
         """
         self.assertEqual(jc.parsers.cef.parse(self.cef_equals_in_header, quiet=True), self.cef_equals_in_header_json)
+
+    def test_cef_custom_labels(self):
+        """
+        Test cef lines with custom field labels, including epoch fields and unmatched labels
+        """
+        self.assertEqual(jc.parsers.cef.parse(self.cef_custom_labels, quiet=True), self.cef_custom_labels_json)
 
 
 if __name__ == '__main__':
