@@ -68,7 +68,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'POSIX path list string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
@@ -101,10 +101,13 @@ def parse(data, raw=False, quiet=False):
 
     delimiter = ":" if "\\" not in data else ";"
 
-    raw_output = [
-        path.parse(line, raw=raw, quiet=quiet)
-        for line in data.split(delimiter)
-        if jc.utils.has_data(data)
-    ]
+    raw_output = []
+
+    # check the whole input once instead of for every entry
+    if jc.utils.has_data(data):
+        raw_output = [
+            path.parse(line, raw=raw, quiet=quiet)
+            for line in data.split(delimiter)
+        ]
 
     return raw_output
