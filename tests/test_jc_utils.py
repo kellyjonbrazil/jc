@@ -12,6 +12,9 @@ from jc.exceptions import ParseError
 class MyTests(unittest.TestCase):
 
     def test_utils_timestamp(self):
+        """
+        Test timestamp conversion of known date formats
+        """
         # naive timestamps created in PDT
         datetime_map = {
             # C locale format conversion, or date cli command in C locale with non-UTC tz
@@ -120,6 +123,9 @@ class MyTests(unittest.TestCase):
                     raise
 
     def test_utils_convert_to_int(self):
+        """
+        Test converting values to integers
+        """
         io_map = {
             None: None,
             True: 1,
@@ -147,6 +153,9 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.utils.convert_to_int(input_string), expected_output)
 
     def test_utils_convert_to_float(self):
+        """
+        Test converting values to floats
+        """
         io_map = {
             None: None,
             True: 1.0,
@@ -174,6 +183,9 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.utils.convert_to_float(input_string), expected_output)
 
     def test_utils_convert_to_bool(self):
+        """
+        Test converting values to booleans
+        """
         io_map = {
             None: False,
             True: True,
@@ -209,6 +221,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_convert_size_to_int(self):
+        """
+        Test converting size strings to integers
+        """
         io_map = {
             '42': 42,
             '13b': 13,
@@ -224,6 +239,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_convert_size_to_int_binary_true(self):
+        """
+        Test converting size strings to integers with binary units
+        """
         io_map = {
             '1 KB': 1024,
             '1.5 GB': 1610612736
@@ -234,6 +252,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_convert_size_to_int_posix_mode(self):
+        """
+        Test converting size strings to integers in POSIX mode
+        """
         io_map = {
             '1 K': 1024,
             '1 KiB': 1024,
@@ -248,6 +269,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_convert_size_to_int_decimal_bias(self):
+        """
+        Test converting size strings to integers with decimal bias
+        """
         io_map = {
             '1 K': 1000,
             '1 Ki': 1000,
@@ -262,6 +286,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_timestamp_does_not_change_locale(self):
+        """
+        Test that timestamp conversion restores the original LC_TIME locale
+        """
         # jc.utils.timestamp sets LC_TIME while trying date formats. It should
         # always restore the original LC_TIME, on both success and failure.
         original = locale.setlocale(locale.LC_TIME)
@@ -297,34 +324,55 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_has_data_nodata(self):
+        """
+        Test has_data with only whitespace
+        """
         self.assertFalse(jc.utils.has_data('     \n      '))
 
 
     def test_utils_has_data_withdata(self):
+        """
+        Test has_data with data
+        """
         self.assertTrue(jc.utils.has_data('     \n  abcd    \n    '))
 
 
     def test_utils_input_type_check_wrong(self):
+        """
+        Test that input_type_check raises TypeError for input that is not a string
+        """
         self.assertRaises(TypeError, jc.utils.input_type_check, ['abc'])
 
 
     def test_utils_input_type_check_correct(self):
+        """
+        Test input_type_check with a string
+        """
         self.assertEqual(jc.utils.input_type_check('abc'), None)
 
 
     def test_utils_splitlines(self):
+        """
+        Test that splitlines splits only on LF and CRLF
+        """
         data = 'line1\nline2\r\nline3\u2028still line3\rstill line3\x0cstill line3\n'
         expected = ['line1', 'line2', 'line3\u2028still line3\rstill line3\x0cstill line3']
         self.assertEqual(jc.utils.splitlines(data), expected)
 
 
     def test_utils_splitlines_keepends(self):
+        """
+        Test splitlines with keepends
+        """
         data = 'line1\nline2\r\nline3\u2028still line3'
         expected = ['line1\n', 'line2\r\n', 'line3\u2028still line3']
         self.assertEqual(jc.utils.splitlines(data, keepends=True), expected)
 
 
     def test_utils_splitlines_other_separators_stay_in_line(self):
+        """
+        Test that splitlines keeps other line-break characters in the line
+        """
         for sep in ('\x0b', '\x0c', '\x1c', '\x1d', '\x1e', '\x85', '\u2028', '\u2029'):
             data = 'a' + sep + 'b\nc\n'
             self.assertEqual(jc.utils.splitlines(data), ['a' + sep + 'b', 'c'])
@@ -332,6 +380,9 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_splitlines_same_as_str_splitlines(self):
+        """
+        Test that splitlines matches str.splitlines() for input with only LF and CRLF line endings
+        """
         for data in ('', '\n', 'a', 'a\n', 'a\n\nb', 'a\r\n\r\nb\r\n', '\n\na\n\n'):
             for keepends in (False, True):
                 self.assertEqual(jc.utils.splitlines(data, keepends=keepends), data.splitlines(keepends))
@@ -339,23 +390,35 @@ class MyTests(unittest.TestCase):
 
 
     def test_utils_splitlines_split_cr(self):
+        """
+        Test splitlines with split_cr, which also splits on a lone CR
+        """
         data = 'line1\rline2\r\nline3\nline4\u2028still line4\x0cstill line4\r'
         expected = ['line1', 'line2', 'line3', 'line4\u2028still line4\x0cstill line4']
         self.assertEqual(jc.utils.splitlines(data, split_cr=True), expected)
 
 
     def test_utils_splitlines_split_cr_keepends(self):
+        """
+        Test splitlines with split_cr and keepends
+        """
         data = 'line1\rline2\r\nline3\nline4\u2028still line4'
         expected = ['line1\r', 'line2\r\n', 'line3\n', 'line4\u2028still line4']
         self.assertEqual(jc.utils.splitlines(data, keepends=True, split_cr=True), expected)
 
 
     def test_utils_splitlines_split_cr_blank_lines(self):
+        """
+        Test splitlines with split_cr and blank lines
+        """
         data = 'a\r\rb\r\n\r\nc\r'
         self.assertEqual(jc.utils.splitlines(data, split_cr=True), ['a', '', 'b', '', 'c'])
 
 
     def test_utils_line_slice_string_positive_slice(self):
+        """
+        Test line_slice of a string with a positive start and end
+        """
         data = '''line1
 line2
 line3
@@ -366,6 +429,9 @@ line4
 
 
     def test_utils_line_slice_string_negative_slice(self):
+        """
+        Test line_slice of a string with a negative end
+        """
         data = '''line1
 line2
 line3
@@ -376,6 +442,9 @@ line4
 
 
     def test_utils_line_slice_iter_positive_slice(self):
+        """
+        Test line_slice of an iterable with a positive start and end
+        """
         data = [
             'line1',
             'line2',
@@ -387,6 +456,9 @@ line4
 
 
     def test_utils_line_slice_iter_negative_slice(self):
+        """
+        Test line_slice of an iterable with a negative end
+        """
         data = [
             'line1',
             'line2',
@@ -397,6 +469,9 @@ line4
         self.assertEqual(list(jc.utils.line_slice(data, 1, -1)), expected)
 
     def test_utils_line_slice_string_blank_lines(self):
+        """
+        Test line_slice of a string with blank lines
+        """
         data = '''line1
 line2
 
@@ -407,6 +482,9 @@ line5
         self.assertEqual(jc.utils.line_slice(data, 1, 4), expected)
 
     def test_utils_line_slice_iter_positive_blank_lines(self):
+        """
+        Test line_slice of an iterable with blank lines
+        """
         data = [
             'line1',
             'line2',
@@ -418,12 +496,18 @@ line5
         self.assertEqual(list(jc.utils.line_slice(data, 1, 4)), expected)
 
     def test_utils_line_slice_string_lone_cr(self):
+        """
+        Test that line_slice of a string counts lines at LF and CRLF only
+        """
         data = 'a\rb\nc\r\nd\ne'
         self.assertEqual(jc.utils.line_slice(data, 1, 3), 'c\nd')
         self.assertEqual(jc.utils.line_slice(data, 0, 2), 'a\rb\nc')
         self.assertEqual(jc.utils.line_slice(data, -2, None), 'd\ne')
 
     def test_remove_quotes(self):
+        """
+        Test removing single and double quotes around a string
+        """
         for char in ["'", '"']:
             with self.subTest(f'Quote character: {char}'):
                 data = f'{char}this is a test{char}'
@@ -431,6 +515,9 @@ line5
                 self.assertEqual(jc.utils.remove_quotes(data), expected)
 
     def test_normalize_key(self):
+        """
+        Test normalizing key names
+        """
         io_map = {
             'This is @ crazy  Key!!': 'this_is_crazy_key',
             'Simple': 'simple',
@@ -445,16 +532,25 @@ line5
 
     # need to mock shutil.get_terminal_size().columns or add a column parameter to test
     def test_utils_expansion_limit(self):
+        """
+        Test the output size limit for an input size
+        """
         self.assertEqual(jc.utils.expansion_limit(0), 50000000)
         self.assertEqual(jc.utils.expansion_limit(1000), 51000000)
 
     def test_utils_expansion_check_small(self):
+        """
+        Test expansion_check with small data
+        """
         data = {'a': [1, 2.5, None, True, False, 'x' * 100], 'b': {'c': 'd'}, 'e': []}
         self.assertIsNone(jc.utils.expansion_check(data, 0))
         self.assertIsNone(jc.utils.expansion_check('x' * 1000, 0))
         self.assertIsNone(jc.utils.expansion_check([], 0))
 
     def test_utils_expansion_check_shared_references(self):
+        """
+        Test that expansion_check counts a shared object once per reference
+        """
         # one 1 MB list referenced many times is counted once per reference
         shared = ['x' * 998] * 1000      # 1,001,001 characters of JSON
         self.assertIsNone(jc.utils.expansion_check([shared] * 40, 100))
@@ -462,12 +558,18 @@ line5
         self.assertRaises(ParseError, jc.utils.expansion_check, {'a': [shared] * 60}, 100)
 
     def test_utils_expansion_check_nested_references(self):
+        """
+        Test expansion_check with nested shared references
+        """
         node = ['x']
         for _ in range(30):
             node = [node, node]
         self.assertRaises(ParseError, jc.utils.expansion_check, node, 1000)
 
     def test_utils_expansion_check_boundary(self):
+        """
+        Test expansion_check at the size limit
+        """
         # each item of `shared` is '"' + 998 x's + '"' plus a separator
         shared = ['x' * 998] * 1000
         shared_size = 2 + 1000 * 1000 + 999
@@ -483,11 +585,17 @@ line5
         self.assertRaises(ParseError, jc.utils.expansion_check, data, input_size)
 
     def test_utils_expansion_check_circular(self):
+        """
+        Test expansion_check with a circular reference
+        """
         data = [1, 2]
         data.append(data)
         self.assertIsNone(jc.utils.expansion_check(data, 0))
 
     def test_utils_xml_defaults_check(self):
+        """
+        Test xml_defaults_check with documents under the limit
+        """
         doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "1" y CDATA #IMPLIED>]><a>' + '<b/>' * 100 + '</a>'
         self.assertIsNone(jc.utils.xml_defaults_check(doc))
         self.assertIsNone(jc.utils.xml_defaults_check(doc.encode()))
@@ -495,6 +603,9 @@ line5
         self.assertIsNone(jc.utils.xml_defaults_check('<!DOCTYPE a [<!ATTLIST b x CDATA "1">]><a><b>'))
 
     def test_utils_xml_defaults_check_limit(self):
+        """
+        Test that xml_defaults_check raises ParseError when attribute defaults exceed the limit
+        """
         doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "' + 'v' * 100000 + '">]><a>' + '<b/>' * 2000 + '</a>'
         self.assertRaises(ParseError, jc.utils.xml_defaults_check, doc)
         self.assertRaises(ParseError, jc.utils.xml_defaults_check, doc.encode())
@@ -511,24 +622,36 @@ line5
         return f.getvalue()
 
     def test_utils_warning_message_control_chars(self):
+        """
+        Test that warning messages show control characters as escapes
+        """
         msg = ['Unparsable line found: a\x1b]0;b\x07c\x1b[2Jd\x9be\x7ff\x00g\rh', 'x\x85y']
         expected = ('jc:  Warning - Unparsable line found: a\\x1b]0;b\\x07c\\x1b[2Jd\\x9be\\x7ff\\x00g\\x0dh\n'
                     '               x\\x85y\n')
         self.assertEqual(expected, self._stderr_of(jc.utils.warning_message, msg))
 
     def test_utils_error_message_control_chars(self):
+        """
+        Test that error messages show control characters as escapes
+        """
         msg = ['Parser issue with swapon:', 'ParseError: bad line \x1b[1;31mred\x1b[0m']
         expected = ('jc:  Error - Parser issue with swapon:\n'
                     '             ParseError: bad line \\x1b[1;31mred\\x1b[0m\n')
         self.assertEqual(expected, self._stderr_of(jc.utils.error_message, msg))
 
     def test_utils_warning_message_printable_unchanged(self):
+        """
+        Test that warning messages keep tabs, newlines and printable characters
+        """
         msg = ['tab\there caf\u00e9 \u2603 \u00a0 \u4e2d\u6587', 'new\nline']
         expected = ('jc:  Warning - tab      here caf\u00e9 \u2603 \u00a0 \u4e2d\u6587\n'
                     '               new line\n')
         self.assertEqual(expected, self._stderr_of(jc.utils.warning_message, msg))
 
     def test_utils_warning_message_long_line_shortened(self):
+        """
+        Test that warning messages shorten very long lines
+        """
         word = 'a@' + 'b' * 1000000
         out = self._stderr_of(jc.utils.warning_message, ['Invalid email address found: ' + word])
         self.assertTrue(out.startswith('jc:  Warning - Invalid email address found: a@bbb'))
@@ -536,11 +659,17 @@ line5
         self.assertLess(len(out), 6000)
 
     def test_utils_error_message_long_line_shortened(self):
+        """
+        Test that error messages shorten very long lines
+        """
         out = self._stderr_of(jc.utils.error_message, ['first', 'x' * 100000])
         self.assertTrue(' '.join(out.split()).endswith('... (100000 characters)'))
         self.assertLess(len(out), 6000)
 
     def test_utils_warning_message_line_at_limit_unchanged(self):
+        """
+        Test that warning messages keep a line at the length limit
+        """
         line = 'y' * jc.utils._MAX_MESSAGE_LINE_LENGTH
         out = self._stderr_of(jc.utils.warning_message, ['first', line])
         self.assertNotIn('...', out)
