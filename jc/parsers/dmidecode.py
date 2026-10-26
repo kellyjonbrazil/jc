@@ -127,7 +127,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`dmidecode` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -202,12 +202,13 @@ def parse(data, raw=False, quiet=False):
 
         data = data.splitlines()
 
-        # remove header rows
-        for row in data.copy():
-            if row:
-                data.pop(0)
-            else:
+        # remove header rows (everything before the first blank line)
+        for idx, row in enumerate(data):
+            if not row:
+                data = data[idx:]
                 break
+        else:
+            data = []
 
         # main parsing loop
         for line in data:
@@ -339,7 +340,7 @@ def parse(data, raw=False, quiet=False):
             if item_values \
                and not value_list \
                and line.startswith('\t\t'):
-                if f'{key}_data' not in item['values']:
+                if not key_data and f'{key}_data' not in item['values']:
                     item['values'][f'{key}_data'] = []
                 key_data.append(line.strip())
                 continue
