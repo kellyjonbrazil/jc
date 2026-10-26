@@ -120,12 +120,14 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`dmidecode` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,6 +137,9 @@ class info():
 
 
 __version__ = info.version
+
+# Handle 0x0000, DMI type 0, 24 bytes
+_handle_pattern = re.compile(r'Handle (0x[0-9A-Fa-f]{4}), DMI type ([0-9]+), ([0-9]+) bytes')
 
 
 def _process(proc_data):
@@ -232,11 +237,15 @@ def parse(data, raw=False, quiet=False):
             if line.startswith('Handle ') and line.endswith('bytes'):
 
                 # Handle 0x0000, DMI type 0, 24 bytes
-                header = line.replace(',', ' ').split()
+                handle_match = _handle_pattern.fullmatch(line)
+                if not handle_match:
+                    raise ParseError('Invalid Handle line. Expected format: Handle 0x0000, DMI type 0, 24 bytes')
+
+                header = handle_match.groups()
                 item = {
-                    'handle': header[1],
-                    'type': header[4],
-                    'bytes': header[5]
+                    'handle': header[0],
+                    'type': header[1],
+                    'bytes': header[2]
                 }
                 continue
 
@@ -264,9 +273,9 @@ def parse(data, raw=False, quiet=False):
                     raw_output.append(item)
 
                 item = {
-                    'handle': header[1],
-                    'type': header[4],
-                    'bytes': header[5],
+                    'handle': header[0],
+                    'type': header[1],
+                    'bytes': header[2],
                     'description': line,
                     'values': {}
                 }

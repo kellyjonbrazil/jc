@@ -269,6 +269,18 @@ class MyTests(unittest.TestCase):
         freebsd12_netstat_ib_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-program-name-state-words.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_state_words = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-program-name-state-words-e.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_state_words_e = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-program-name-state-words.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_state_words_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-program-name-state-words-e.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_state_words_e_json = json.loads(f.read())
+
     def test_netstat_nodata(self):
         """
         Test 'netstat' with no data
@@ -551,6 +563,19 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['program_name'], 'ab\t/dev/log')
         self.assertEqual(result[0]['state'], 'CONNECTED')
         self.assertEqual(result[0]['path'], '/run/user/1000/bus')
+
+    def test_netstat_program_name_state_words(self):
+        """
+        Test 'netstat -lnp' with state words in the PID/Program name column
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_state_words, quiet=True), self.generic_netstat_state_words_json)
+
+    def test_netstat_program_name_state_words_e(self):
+        """
+        Test 'netstat -lnpe' with state words in the PID/Program name column
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_state_words_e, quiet=True), self.generic_netstat_state_words_e_json)
+
 
 
 if __name__ == '__main__':

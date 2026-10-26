@@ -4,6 +4,9 @@ Supports `-a`, `-l`, or no `findmnt` options.
 
 > Note: Newer versions of `findmnt` have a JSON output option.
 
+> Note: Names that contain wide (e.g. CJK) characters can misalign the
+> columns. Use `findmnt -l` or `findmnt -J` for those.
+
 Usage (cli):
 
     $ findmnt | jc --findmnt
@@ -87,13 +90,13 @@ Examples:
 import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
-from jc.parsers.universal import simple_table_parse
+from jc.parsers.universal import simple_table_parse, sparse_table_parse
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`findmnt` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,7 +125,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         reg_options = []
         kv_options = {}
 
-        if 'options' in item:
+        if item.get('options'):
             opt_list = item['options'].split(',')
 
             for option in opt_list:
@@ -180,6 +183,13 @@ def parse(
             table.append(line)
 
         table[0] = table[0].lower()
-        raw_output = simple_table_parse(table)
+
+        # `findmnt -r` separates the columns with a single space and escapes
+        # spaces in values. Otherwise the columns are aligned under the
+        # header and values can contain spaces, so use the column positions.
+        if '  ' in table[0].strip():
+            raw_output = sparse_table_parse(table, delim='\x00')
+        else:
+            raw_output = simple_table_parse(table)
 
     return raw_output if raw else _process(raw_output)

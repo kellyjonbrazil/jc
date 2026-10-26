@@ -413,7 +413,7 @@ from jc.parsers.asn1crypto import pem, x509, jc_global
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -573,7 +573,7 @@ def parse(
         certs = []
         if pem.detect(der_bytes):
             for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
-                if type_name == 'CERTIFICATE':
+                if type_name in ('CERTIFICATE', 'X509 CERTIFICATE', 'TRUSTED CERTIFICATE'):
                     certs.append(x509.Certificate.load(der_bytes))
 
         else:

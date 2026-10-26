@@ -437,6 +437,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping_long_digits_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-error-resolved-sender.out'), 'r', encoding='utf-8') as f:
+        generic_ping_error_resolved_sender = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-error-resolved-sender-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_error_resolved_sender_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-bsd-error-bare-address.out'), 'r', encoding='utf-8') as f:
+        generic_ping_bsd_error_bare_address = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-bsd-error-bare-address-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_bsd_error_bare_address_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-error-bare-address.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_error_bare_address = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-error-bare-address-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_error_bare_address_streaming_json = json.loads(f.read())
+
 
     def test_ping_s_nodata(self):
         """
@@ -887,6 +905,24 @@ class MyTests(unittest.TestCase):
         Test 'ping' with a long run of digits in the statistics section
         """
         self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_long_digits.splitlines(), quiet=True)), self.generic_ping_long_digits_streaming_json)
+
+    def test_ping_s_error_resolved_sender(self):
+        """
+        Test 'ping' error lines where the sender was resolved to a name
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_error_resolved_sender.splitlines(), quiet=True)), self.generic_ping_error_resolved_sender_streaming_json)
+
+    def test_ping_s_bsd_error_bare_address(self):
+        """
+        Test 'ping' on macOS/BSD with error lines where the sender is a bare address
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_bsd_error_bare_address.splitlines(), quiet=True)), self.generic_ping_bsd_error_bare_address_streaming_json)
+
+    def test_ping6_s_bsd_error_bare_address(self):
+        """
+        Test 'ping6' on macOS/BSD with error lines where the sender is a bare address
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_bsd_error_bare_address.splitlines(), quiet=True)), self.generic_ping6_bsd_error_bare_address_streaming_json)
 
 
 if __name__ == '__main__':

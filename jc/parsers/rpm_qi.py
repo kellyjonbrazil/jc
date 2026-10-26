@@ -185,7 +185,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -265,7 +265,11 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, jc.utils.splitlines(data)):
             split_line = line.split(': ', maxsplit=1)
 
-            if (split_line[0].startswith('Name') or split_line[0] == 'Package') and len(split_line) == 2:
+            # new entries start with the exact header line that rpm
+            # ('Name        : ') or deb control data ('Package: ') prints.
+            # Description text is never a header, except for the rpm one.
+            if (split_line[0] == 'Name        ' or
+                    (split_line[0] == 'Package' and not desc_entry)) and len(split_line) == 2:
                 if entry_obj:
                     if description:
                         entry_obj['description'] = ' '.join(description)
@@ -275,13 +279,13 @@ def parse(data, raw=False, quiet=False):
                     desc_entry = False
                     desc_en_entry = False
 
-            if line.startswith('Description :'):
+            if not desc_entry and line.startswith('Description :'):
                 desc_entry = True
                 description = []
                 continue
 
             # for apt-cache show output
-            if line.startswith('Description-en:'):
+            if not desc_entry and line.startswith('Description-en:'):
                 desc_en_entry = True
                 description = [split_line[1].strip()]
                 continue
@@ -292,6 +296,10 @@ def parse(data, raw=False, quiet=False):
 
             if desc_en_entry and line.startswith(' '):
                 description.append(line)
+                continue
+
+            # other indented lines continue the previous field and are not keys
+            if line.startswith((' ', '\t')):
                 continue
 
             if len(split_line) == 2:

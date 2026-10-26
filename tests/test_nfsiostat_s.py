@@ -27,6 +27,14 @@ class MyTests(unittest.TestCase):
     f_in: Dict = {}
     f_json: Dict = {}
 
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--long-mount-name.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_long_mount_name = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat_s--long-mount-name.json'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_s_long_mount_name_json = json.loads(f.read())
+
     @classmethod
     def setUpClass(cls):
         fixtures = {
@@ -286,6 +294,39 @@ class MyTests(unittest.TestCase):
         data = self.f_in['two_mounts'].replace('192.168.128.221:/mnt/secondmount mounted on /blah:', 'unrecognized header')
         with self.assertRaises(ParseError):
             list(parse(data.splitlines(), quiet=True))
+
+    def test_nfsiostat_s_long_mount_name(self):
+        """
+        Test 'nfsiostat' with a very long mount point name
+        """
+        result, stderr = _parse_capturing_stderr(self.generic_nfsiostat_long_mount_name.splitlines())
+        self.assertEqual(result, self.generic_nfsiostat_s_long_mount_name_json)
+        long_name = result[0]['mount']
+        self.assertGreater(len(long_name), 256)
+        flat = stderr.replace('\n', '').replace(' ', '')
+        self.assertIn(long_name[:256] + '...:skippingunknownoperationtable:commit', flat)
+        self.assertNotIn(long_name[:257], flat)
+
+    def test_nfsiostat_s_long_mount_name_error_text(self):
+        """
+        Test 'nfsiostat' shortens a very long mount point name in error text
+        """
+        name = '/mnt/' + 'x' * 1000
+        data = [
+            f'192.168.1.10:/export/home mounted on {name}:',
+            '           ops/s       rpc bklog',
+            '           1.000           0.000',
+            '           ops/s       rpc bklog'
+        ]
+        result, _ = _parse_capturing_stderr(data, quiet=True, ignore_exceptions=True)
+        message = result[0]['_jc_meta']['error'] if '_jc_meta' in result[0] else ''
+        self.assertIn(name[:256] + '...: more than one ops/s line in a mount block', message)
+        self.assertNotIn(name[:257], message)
+
+        with self.assertRaises(ParseError) as cm:
+            list(parse(data, quiet=True))
+        self.assertTrue(str(cm.exception).startswith(name[:256] + '...: more than one ops/s line in a mount block'))
+        self.assertNotIn(name[:257], str(cm.exception))
 
 
 if __name__ == '__main__':

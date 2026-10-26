@@ -38,8 +38,17 @@ def parse_network(headers, entry):
         "UNKNOWN", "7"
     ]
 
-    # split entry based on presence of value in "State" column
-    contains_state = any(re.search(rf"\b{re.escape(state)}\b", entry) for state in LIST_OF_STATES)
+    # split entry based on presence of value in "State" column. The first five
+    # columns never contain whitespace, so the state, if present, is the sixth
+    # word. The PID/Program name column is free text and is not searched.
+    words = entry.split(maxsplit=8)
+    contains_state = len(words) > 5 and words[5] in LIST_OF_STATES
+
+    # with the "User" and "Inode" columns (-e) the sixth word of a row without a
+    # state is the user, so also require the numeric inode in the eighth word
+    if contains_state and 'user' in headers:
+        contains_state = len(words) > 7 and words[7].isdigit()
+
     split_modifier = 1 if contains_state else 2
     entry = entry.split(maxsplit=len(headers) - split_modifier)
 

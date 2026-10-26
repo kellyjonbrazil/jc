@@ -65,6 +65,18 @@ class MyTests(unittest.TestCase):
         self.assertEqual([x['package'] for x in result], ['coolprompt', 'plainpkg'])
         self.assertEqual(result[0]['description'], 'A theme\u2028Package: openssl\u2028Version: 3.0.15')
 
+    def test_pkg_index_deb_indented_continuation_lines(self):
+        """
+        Test 'pkg-index-deb' where indented continuation lines look like fields
+        """
+        data = ('Package: coolprompt\nVersion: 1.0\nSHA256: aaaa\n'
+                'Description: A theme\n Package: other\n SHA256: bbbb\n Note: text\n\n'
+                'Package: plainpkg\nVersion: 2.0\n')
+        result = parse(data, quiet=True)
+        self.assertEqual([x['package'] for x in result], ['coolprompt', 'plainpkg'])
+        self.assertEqual(result[0]['sha256'], 'aaaa')
+        self.assertNotIn('note', result[0])
+
 
 if __name__ == '__main__':
     unittest.main()

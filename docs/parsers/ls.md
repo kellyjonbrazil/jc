@@ -18,12 +18,14 @@ minor numbers in that column rather than a byte count.
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
 
-> Note: The `-1`, `-l`, or `-b` option of `ls` should be used to correctly
-> parse filenames that include newline characters. Since `ls` does not
-> encode newlines in filenames when outputting to a pipe it will cause `jc`
-> to see multiple files instead of a single file if `-1`, `-l`, or `-b` is
-> not used. Alternatively, `vdir` can be used, which is the same as running
-> `ls -lb`.
+> Note: The `-b` option of `ls` should be used to correctly parse
+> filenames that include newline characters. Since `ls` does not encode
+> newlines in filenames when outputting to a pipe it will cause `jc` to see
+> multiple files instead of a single file if `-b` is not used. `-l` without
+> `-b` handles most of these filenames, but not when only files (no
+> directories) are listed, since there is no `total` line to identify the
+> output as `ls -l` output. Alternatively, `vdir` can be used, which is the
+> same as running `ls -lb`.
 
 The `epoch` calculated timestamp field is naive. (i.e. based on the local
 time of the system the parser is run on)
@@ -170,4 +172,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/ls.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls.py)
 
-Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.14 by Kelly Brazil (kellyjonbrazil@gmail.com)

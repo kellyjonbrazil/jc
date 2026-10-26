@@ -455,6 +455,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.json'), 'r', encoding='utf-8') as f:
         generic_ping_long_digits_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-bsd-error-bare-address.out'), 'r', encoding='utf-8') as f:
+        generic_ping_bsd_error_bare_address = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-bsd-error-bare-address.json'), 'r', encoding='utf-8') as f:
+        generic_ping_bsd_error_bare_address_json = json.loads(f.read())
+
 
     def test_ping_nodata(self):
         """
@@ -887,6 +893,12 @@ class MyTests(unittest.TestCase):
         Test 'ping' with a long run of digits in the statistics section
         """
         self.assertEqual(jc.parsers.ping.parse(self.generic_ping_long_digits, quiet=True), self.generic_ping_long_digits_json)
+
+    def test_ping_bsd_error_bare_address(self):
+        """
+        Test 'ping' on macOS/BSD with error lines where the sender is a bare address
+        """
+        self.assertEqual(jc.parsers.ping.parse(self.generic_ping_bsd_error_bare_address, quiet=True), self.generic_ping_bsd_error_bare_address_json)
 
 
 if __name__ == '__main__':

@@ -21,6 +21,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsof-sudo.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_lsof_sudo = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsof--long-name.out'), 'r', encoding='utf-8') as f:
+        generic_lsof_long_name = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/lsof.json'), 'r', encoding='utf-8') as f:
         centos_7_7_lsof_json = json.loads(f.read())
@@ -33,6 +36,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsof-sudo.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_lsof_sudo_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsof--long-name.json'), 'r', encoding='utf-8') as f:
+        generic_lsof_long_name_json = json.loads(f.read())
 
 
     def test_lsof_nodata(self):
@@ -64,6 +70,12 @@ class MyTests(unittest.TestCase):
         Test 'sudo lsof' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.lsof.parse(self.ubuntu_18_4_lsof_sudo, quiet=True), self.ubuntu_18_4_lsof_sudo_json)
+
+    def test_lsof_long_name(self):
+        """
+        Test 'lsof' with one very long NAME value and many ordinary rows
+        """
+        self.assertEqual(jc.parsers.lsof.parse(self.generic_lsof_long_name, quiet=True), self.generic_lsof_long_name_json)
 
 
 if __name__ == '__main__':
