@@ -12,6 +12,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
+    # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iostat-many-devices.out'), 'r', encoding='utf-8') as f:
+        generic_iostat_many_devices = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iostat-many-devices-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_iostat_many_devices_streaming_json = json.loads(f.read())
+
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.out'), 'r', encoding='utf-8') as f:
         centos_7_7_iostat = f.read()
@@ -197,6 +205,26 @@ class MyTests(unittest.TestCase):
         Test 'iostat -mx' on ubuntu 20.10
         """
         self.assertEqual(list(jc.parsers.iostat_s.parse(self.ubuntu_20_10_iostat_mx.splitlines(), quiet=True)), self.ubuntu_20_10_iostat_mx_streaming_json)
+
+
+    def test_iostat_s_many_devices(self):
+        """
+        Test 'iostat -x' with many devices under repeated headers
+        """
+        self.assertEqual(list(jc.parsers.iostat_s.parse(self.generic_iostat_many_devices.splitlines(), quiet=True)), self.generic_iostat_many_devices_streaming_json)
+
+    def test_iostat_s_ragged_rows(self):
+        """
+        Test 'iostat' rows with fewer or more fields than the header
+        """
+        data = ['avg-cpu:  %user   %nice %system', '  1.00 2.00', '', 'Device: r/s w/s', 'sda 1.5', 'sdb 2.5 3.5 extra words', '   sdc   4.5   5.5  ']
+        expected = [
+            {"percent_user": 1.0, "percent_nice": 2.0, "type": "cpu"},
+            {"device": "sda", "r_s": 1.5, "type": "device"},
+            {"device": "sdb", "r_s": 2.5, "w_s": 3.5, "type": "device"},
+            {"device": "sdc", "r_s": 4.5, "w_s": 5.5, "type": "device"}
+        ]
+        self.assertEqual(list(jc.parsers.iostat_s.parse(data, quiet=True)), expected)
 
 
 if __name__ == '__main__':

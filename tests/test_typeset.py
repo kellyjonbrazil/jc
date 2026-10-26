@@ -67,5 +67,41 @@ class MyTests(unittest.TestCase):
         self.assertEqual([x['value'] for x in result], [{'red': '#f00', 'mix': 'r=([1]=g)'}, ['k=([x]=y)', 'plain'], {'mode': 'a=(b)', 'x': 'y'}])
 
 
+    def test_typeset_ansi_c_quote_in_array_values(self):
+        """
+        Test 'declare -p' arrays with $'...' values that contain quotes and
+        text in the form of other elements
+        """
+        data = "declare -A roles=([dave]=$'guest\\n\\' [carol]=\\'admin' [alice]=\"admin\" )\ndeclare -a notes=([0]=\"a\" [1]=$'b\\n\\' [9]=\\'c' [2]=\"z\")"
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(result[0]['value'], {'dave': "guest\n' [carol]='admin", 'alice': 'admin'})
+        self.assertEqual(result[1]['value'], ['a', "b\n' [9]='c", 'z'])
+
+    def test_typeset_ansi_c_in_double_quoted_array_value(self):
+        """
+        Test 'declare -p' array where a double-quoted value contains $'
+        """
+        data = 'declare -A roles=([dave]="\\$\'\\" [carol]=\\"admin\\" [x]=\\"\'" [alice]="admin" )'
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(sorted(result[0]['value']), ['alice', 'dave'])
+        self.assertEqual(result[0]['value']['alice'], 'admin')
+
+    def test_typeset_ansi_c_array_raw(self):
+        """
+        Test 'declare -p' array with $'...' values containing quotes in raw mode
+        """
+        data = "declare -a notes=([0]=\"a\" [1]=$'it\\'s\\n')"
+        result = jc.parsers.typeset.parse(data, raw=True, quiet=True)
+        self.assertEqual(result[0]['value'], ['a', "it\\'s\\n"])
+
+    def test_typeset_ansi_c_bare_array(self):
+        """
+        Test zsh/ksh bare-value array with $'...' values containing quotes
+        """
+        data = "typeset -a arr=( a 'b c' $'d\\n\\' e=\\'f' )"
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(result[0]['value'], ['a', 'b c', "d\n' e='f"])
+
+
 if __name__ == '__main__':
     unittest.main()
