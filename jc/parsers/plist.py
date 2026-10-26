@@ -55,11 +55,12 @@ import plistlib
 import binascii
 from datetime import datetime
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'PLIST file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -98,12 +99,33 @@ def _b2a(byte_string: bytes) -> str:
       return colon_separated
 
 
-def _fix_objects(obj):
+def _fix_objects(obj, _memo=None):
     """
     Recursively traverse the nested dictionary or list and convert objects
     into JSON serializable types.
+
+    Objects referenced more than once (binary plist object references) are
+    only converted once and stay shared, so the work and memory used here
+    follow the size of the input.
     """
+    if not isinstance(obj, (dict, list)):
+        return obj
+
+    if _memo is None:
+        _memo = {}
+
+    # converted objects keyed by id(): [original, converted, finished]
+    # The original is kept so its id cannot be reused during the walk.
+    obj_id = id(obj)
+    if obj_id in _memo:
+        if not _memo[obj_id][2]:
+            raise ParseError('Plist contains a circular reference.')
+        return _memo[obj_id][1]
+
     if isinstance(obj, dict):
+        entry = [obj, obj, False]
+        _memo[obj_id] = entry
+
         for k, v in obj.copy().items():
 
             if isinstance(v, datetime):
@@ -113,28 +135,27 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, bytes):
-                v = _b2a(v)
-                obj.update({k: v})
+                if id(v) not in _memo:
+                    _memo[id(v)] = [v, _b2a(v), True]
+                obj.update({k: _memo[id(v)][1]})
                 continue
 
-            if isinstance(v, dict):
-                obj.update({k: _fix_objects(v)})
+            if isinstance(v, (dict, list)):
+                obj.update({k: _fix_objects(v, _memo)})
                 continue
 
-            if isinstance(v, list):
-                newlist = []
-                for i in v:
-                    newlist.append(_fix_objects(i))
-                obj.update({k: newlist})
-                continue
+        entry[2] = True
+        return obj
 
-    if isinstance(obj, list):
-        new_list = []
-        for i in obj:
-            new_list.append(_fix_objects(i))
-        obj = new_list
+    new_list = []
+    entry = [obj, new_list, False]
+    _memo[obj_id] = entry
 
-    return obj
+    for i in obj:
+        new_list.append(_fix_objects(i, _memo))
+
+    entry[2] = True
+    return new_list
 
 
 def parse(
@@ -164,6 +185,11 @@ def parse(
         if isinstance(data, str):
             data = bytes(data, 'utf-8')
 
+        # attribute default values declared in the DTD of an XML plist are
+        # added to every matching element by the XML parser, so limit how
+        # much they can add
+        jc.utils.xml_defaults_check(data)
+
         try:
             raw_output = plistlib.loads(data)
 
@@ -187,5 +213,9 @@ def parse(
                 os.remove(plist_file_name)
 
         raw_output = _fix_objects(raw_output)
+
+        # objects referenced more than once are written out in full for
+        # each reference, so limit how much the output can grow from them
+        jc.utils.expansion_check(raw_output, len(data))
 
     return raw_output if raw else _process(raw_output)

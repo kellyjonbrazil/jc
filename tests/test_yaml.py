@@ -2,6 +2,7 @@ import os
 import unittest
 import json
 import jc.parsers.yaml
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -22,12 +23,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.yaml'), 'r', encoding='utf-8') as f:
         generic_yaml_istio_sidecar = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-anchors.yaml'), 'r', encoding='utf-8') as f:
+        generic_yaml_anchors = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sc.json'), 'r', encoding='utf-8') as f:
         generic_yaml_istio_sc_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-istio-sidecar.json'), 'r', encoding='utf-8') as f:
         generic_yaml_istio_sidecar_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/yaml-anchors.json'), 'r', encoding='utf-8') as f:
+        generic_yaml_anchors_json = json.loads(f.read())
 
 
     def test_yaml_nodata(self):
@@ -63,6 +70,32 @@ class MyTests(unittest.TestCase):
         data = 'key: ='
         expected = [{"key":"="}]
         self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
+
+    def test_yaml_anchors(self):
+        """
+        Test yaml file with anchors, aliases and merge keys
+        """
+        self.assertEqual(jc.parsers.yaml.parse(self.generic_yaml_anchors, quiet=True), self.generic_yaml_anchors_json)
+
+    def test_yaml_repeated_aliases(self):
+        """
+        Test yaml file with a mapping referenced many times
+        """
+        data = 'd: &d {a: 1, b: [x, y]}\nl: [' + ', '.join(['*d'] * 500) + ']\n'
+        result = jc.parsers.yaml.parse(data, quiet=True)
+        self.assertEqual(len(result[0]['l']), 500)
+        self.assertEqual(result[0]['l'][499], {'a': 1, 'b': ['x', 'y']})
+
+    def test_yaml_alias_expansion_limit(self):
+        """
+        Test yaml file with nested aliases that expand far beyond the input size
+        """
+        lines = ['a0: &a0 [x, x, x, x, x, x, x, x, x, x]']
+        for i in range(1, 10):
+            lines.append('a%d: &a%d [%s]' % (i, i, ', '.join(['*a%d' % (i - 1)] * 10)))
+        data = '\n'.join(lines) + '\n'
+        self.assertRaises(ParseError, jc.parsers.yaml.parse, data, quiet=True)
+        self.assertRaises(ParseError, jc.parsers.yaml.parse, data, raw=True, quiet=True)
 
 
 if __name__ == '__main__':
