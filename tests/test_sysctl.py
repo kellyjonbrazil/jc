@@ -65,6 +65,20 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.sysctl.parse(self.freebsd12_sysctl, quiet=True), self.freebsd12_sysctl_json)
 
+    def test_sysctl_repeated_and_continued_values(self):
+        """
+        Test 'sysctl' repeated keys and continuation lines
+        """
+        data = 'a.b = 1\na.b = 2\nc.d = 3\nmore\nnodelim\n'
+        self.assertEqual(jc.parsers.sysctl.parse(data, raw=True, quiet=True), {'a.b': '1\n2', 'c.d': '3\nmore\nnodelim'})
+
+    def test_sysctl_continuation_without_key(self):
+        """
+        Test 'sysctl' continuation line before any key
+        """
+        with self.assertRaises(IndexError):
+            jc.parsers.sysctl.parse('nodelim\na.b = 1\n', quiet=True)
+
 
 if __name__ == '__main__':
     unittest.main()
