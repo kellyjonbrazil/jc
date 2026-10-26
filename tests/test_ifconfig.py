@@ -88,6 +88,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-long-fields2.json'), 'r', encoding='utf-8') as f:
         generic_ifconfig_long_fields2_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-free-text.out'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_free_text = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ifconfig-free-text.json'), 'r', encoding='utf-8') as f:
+        generic_ifconfig_free_text_json = json.loads(f.read())
+
     def test_ifconfig_nodata(self):
         """
         Test 'ifconfig' with no data
@@ -200,6 +206,14 @@ class MyTests(unittest.TestCase):
     nd6 options=201<PERFORMNUD,DAD>'''
         expected = [{"name":"utun2","flags":8051,"state":["UP","POINTOPOINT","RUNNING","MULTICAST"],"mtu":1400,"type":None,"mac_addr":None,"ipv4_addr":"10.85.40.243","ipv4_mask":"255.255.255.255","ipv4_bcast":None,"ipv6_addr":"fdae:f7e0:9f37:64::146","ipv6_mask":128,"ipv6_scope":None,"ipv6_type":None,"metric":None,"rx_packets":None,"rx_errors":None,"rx_dropped":None,"rx_overruns":None,"rx_frame":None,"tx_packets":None,"tx_errors":None,"tx_dropped":None,"tx_overruns":None,"tx_carrier":None,"tx_collisions":None,"rx_bytes":None,"tx_bytes":None,"ipv6_scope_id":None,"nd6_options":201,"nd6_flags":["PERFORMNUD","DAD"],"ipv4":[{"address":"10.85.40.243","mask":"255.255.255.255"}],"ipv6":[{"address":"fe80::3af9:d3ff:fe69:1732","scope_id":"utun2","mask":64,"scope":"0xd"},{"address":"fdae:f7e0:9f37:64::146","scope_id":None,"mask":128,"scope":None}]}]
         self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
+
+    def test_ifconfig_free_text(self):
+        """
+        Test 'ifconfig' with an SSID and a description that look like other lines
+        """
+        self.assertEqual(jc.parsers.ifconfig.parse(self.generic_ifconfig_free_text, quiet=True), self.generic_ifconfig_free_text_json)
+
+
 
 if __name__ == '__main__':
     unittest.main()

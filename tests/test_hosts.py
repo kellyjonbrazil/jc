@@ -77,6 +77,19 @@ class MyTests(unittest.TestCase):
         expected = [{'ip': '10.0.0.5\xa0vault.example.com', 'hostname': []}, {'ip': '0.0.0.0', 'hostname': ['ads.example.net\xa0tracker.example.net']}]
         self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
 
+    def test_hosts_comment_inside_word(self):
+        """
+        Test 'hosts' cuts each line at the first '#' even when it is in the middle of a word
+        """
+        data = '127.0.0.1 localhost#c\n10.0.0.2#x host2\n10.0.0.3 a b#c d\n10.0.0.4\tvault\t# note\n'
+        expected = [
+            {'ip': '127.0.0.1', 'hostname': ['localhost']},
+            {'ip': '10.0.0.2', 'hostname': []},
+            {'ip': '10.0.0.3', 'hostname': ['a', 'b']},
+            {'ip': '10.0.0.4', 'hostname': ['vault']}
+        ]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

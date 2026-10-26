@@ -29,6 +29,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt-multiple-rows-raw.json'), 'r', encoding='utf-8') as f:
         multiple_rows_raw_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt--dashes-in-values.out'), 'r', encoding='utf-8') as f:
+        dashes_in_values = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cbt--dashes-in-values.json'), 'r', encoding='utf-8') as f:
+        dashes_in_values_json = json.loads(f.read())
+
     def test_cbt_nodata(self):
         """
         Test 'cbt' with no data
@@ -68,6 +74,12 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.cbt.parse(data, quiet=True)
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['key'], 'sandbox\u2028payroll')
+
+    def test_cbt_dashes_in_values(self):
+        """
+        Test 'cbt' with a row key and a cell value that contain 40 dashes
+        """
+        self.assertEqual(jc.parsers.cbt.parse(self.dashes_in_values, quiet=True), self.dashes_in_values_json)
 
 
 if __name__ == '__main__':

@@ -45,6 +45,12 @@ class MyTests(unittest.TestCase):
         ubuntu_20_10_top_b_allfields_streaming_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/top-b-bad-state.out'), 'r', encoding='utf-8') as f:
+        generic_top_b_bad_state = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/top-b-bad-state-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_top_b_bad_state_streaming_json = json.loads(f.read())
+
     def test_top_s_nodata(self):
         """
         Test 'top' with no data
@@ -86,6 +92,32 @@ class MyTests(unittest.TestCase):
         Test 'top -b -n1' with MiB units and all fields on Ubuntu 20.10
         """
         self.assertEqual(list(jc.parsers.top_s.parse(self.ubuntu_20_10_top_b_allfields.splitlines(), quiet=True)), self.ubuntu_20_10_top_b_allfields_streaming_json)
+
+    def test_top_s_bad_record_ignore_exceptions(self):
+        """
+        Test 'top -b' where the first sample has an unknown process state: one
+        error record is emitted and the following samples parse normally
+        """
+        result = list(jc.parsers.top_s.parse(self.generic_top_b_bad_state.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_top_b_bad_state_streaming_json)
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [False, True, True])
+
+    def test_top_s_bad_last_record_ignore_exceptions(self):
+        """
+        Test 'top -b' where the final sample is bad: the error is yielded and not raised
+        """
+        last_bad = self.centos_7_7_top_b_n3.splitlines()
+        idx = max(i for i, l in enumerate(last_bad) if l.startswith('     1 '))
+        last_bad[idx] = last_bad[idx].replace(' S ', ' X ', 1)
+        result = list(jc.parsers.top_s.parse(last_bad, quiet=True, ignore_exceptions=True))
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [True, True, False])
+
+    def test_top_s_bad_record_raises(self):
+        """
+        Test 'top -b' with a bad record still raises when ignore_exceptions is not set
+        """
+        with self.assertRaises(KeyError):
+            list(jc.parsers.top_s.parse(self.generic_top_b_bad_state.splitlines(), quiet=True))
 
 
 if __name__ == '__main__':

@@ -36,6 +36,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-bad-email2.der'), 'rb') as f:
         x509_cert_bad_email2 = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-trusted-label.pem'), 'rb') as f:
+        x509_cert_trusted_label = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-x509-label.pem'), 'rb') as f:
+        x509_cert_x509_label = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-ca-cert.json'), 'r', encoding='utf-8') as f:
         x509_ca_cert_json = json.loads(f.read())
@@ -63,6 +69,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-bad-email2.json'), 'r', encoding='utf-8') as f:
         x509_cert_bad_email2_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-trusted-label.json'), 'r', encoding='utf-8') as f:
+        x509_cert_trusted_label_json = json.loads(f.read())
 
 
     def test_x509_cert_nodata(self):
@@ -124,6 +133,18 @@ class MyTests(unittest.TestCase):
         Test 'cat x509-cert-bad-email2.der' (DER file with a non-compliant email address - IDNA2008 encoded)
         """
         self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_bad_email2, quiet=True), self.x509_cert_bad_email2_json)
+
+    def test_x509_cert_trusted_label(self):
+        """
+        Test 'cat x509-cert-trusted-label.pem' (PEM block labeled TRUSTED CERTIFICATE)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_trusted_label, quiet=True), self.x509_cert_trusted_label_json)
+
+    def test_x509_cert_x509_label(self):
+        """
+        Test 'cat x509-cert-x509-label.pem' (PEM block labeled X509 CERTIFICATE)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_x509_label, quiet=True), self.x509_cert_trusted_label_json)
 
 
 if __name__ == '__main__':

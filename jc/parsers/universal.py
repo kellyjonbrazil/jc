@@ -91,67 +91,86 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
     # cast iterable to a list. Also keeps from mutating the caller's list
     data = list(data)
 
-    # find the longest line and pad all lines with spaces to match
-    max_len = max([len(x) for x in data])
-
-    new_data = []
-    for line in data:
-        new_data.append(line + ' ' * (max_len - len(line)))
-
-    data = new_data
-
     # find header
     output: List = []
     header_text: str = data.pop(0)
-    header_text = header_text + ' '
     header_list: List = header_text.split()
 
-    # find each column index and end position
-    header_search = [header_list[0]]
-    for h in header_list[1:]:
-        header_search.append(' ' + h + ' ')
-
+    # find each column end position. Each header name is searched for
+    # starting just after the previous one, so repeated names and any kind
+    # of whitespace between names are handled. The end of a column is the
+    # character just before the start of the next header name.
     header_spec_list = []
+    col_start = header_text.find(header_list[0])
     for i, column in enumerate(header_list[0:len(header_list) - 1]):
+        col_start = header_text.find(header_list[i + 1], col_start + len(column))
         header_spec = {
             'name': column,
-            'end': header_text.find(header_search[i + 1])
+            'end': col_start - 1
         }
 
         header_spec_list.append(header_spec)
 
     # parse lines
-    if data:
-        for entry in data:
-            output_line = {}
+    for entry in data:
+        entry_len = len(entry)
+        delim_in_data = delim in entry
+        entry_chars = list(entry)
 
-            # insert new separator since data can contain spaces
-            for col in reversed(header_list):
-                # find the right header_spec
-                for h_spec in header_spec_list:
-                    if h_spec['name'] == col:
-                        h_end = h_spec['end']
-                        # check if the location contains whitespace. if not
-                        # then move to the left until a space is found
-                        while h_end > 0 and not entry[h_end].isspace():
-                            h_end -= 1
+        # positions past the end of the line are treated as whitespace, so
+        # short lines do not need to be padded. Delimiters that fall there
+        # are appended to the end of the line.
+        trailing_delims: List[int] = []
 
-                        # insert custom delimiter
-                        entry = entry[:h_end] + delim + entry[h_end + 1:]
+        # insert new separator since data can contain spaces
+        last_end = None
+        for h_spec in reversed(header_spec_list):
+            h_end = h_spec['end']
 
-            # create the entry list from the new custom delimiter
-            entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
+            # the characters between the previous delimiter and the end of
+            # its column are known to not be whitespace, so start the
+            # search at the previous delimiter instead of searching them
+            # again
+            if last_end is not None and h_end > last_end:
+                h_end = last_end
 
-            # clean up leading and trailing spaces in entry
-            clean_entry_list = []
-            for col in entry_list:
-                clean_entry = col.strip()
-                if clean_entry == '':
-                    clean_entry = None
+            if h_end >= entry_len:
+                trailing_delims.append(h_end)
+                last_end = h_end
+                continue
 
-                clean_entry_list.append(clean_entry)
+            # check if the location contains whitespace. if not
+            # then move to the left until a space is found
+            while h_end > 0 and not entry_chars[h_end].isspace():
+                h_end -= 1
 
-            output_line = dict(zip(header_list, clean_entry_list))
-            output.append(output_line)
+            # insert custom delimiter
+            entry_chars[h_end] = delim
+            last_end = h_end
+
+        # create the entry list from the new custom delimiter
+        entry = ''.join(entry_chars)
+        if trailing_delims:
+            if delim_in_data:
+                # the delimiter is part of the data, so the spaces between
+                # the delimiters can end up inside a value. Pad the same as
+                # a full-width line would be padded.
+                for h_end in reversed(trailing_delims):
+                    entry = entry + ' ' * (h_end - len(entry)) + delim
+            else:
+                entry = entry + delim * len(trailing_delims)
+        entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
+
+        # clean up leading and trailing spaces in entry
+        clean_entry_list = []
+        for col in entry_list:
+            clean_entry = col.strip()
+            if clean_entry == '':
+                clean_entry = None
+
+            clean_entry_list.append(clean_entry)
+
+        output_line = dict(zip(header_list, clean_entry_list))
+        output.append(output_line)
 
     return output

@@ -145,4 +145,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/blkid.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/blkid.py)
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

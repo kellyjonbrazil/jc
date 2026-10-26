@@ -113,7 +113,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`bluetoothctl` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
@@ -179,6 +179,9 @@ except ImportError:
     Device = Dict[str, Any]  # type: ignore
 
 
+# the error printed for an unknown controller/device is the entire output
+_not_available_pattern = r"(Controller|Device) \S+ not available"
+
 _controller_head_pattern = r"Controller (?P<address>([0-9A-F]{2}:){5}[0-9A-F]{2}) (?P<name>.+)"
 
 _controller_line_pattern = (
@@ -209,9 +212,6 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
 
     name = matches["name"]
 
-    if name.endswith("not available"):
-        return None
-
     controller: Controller = {
             "manufacturer": '',
             "version": '',
@@ -235,12 +235,12 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
     if name.endswith("[default]"):
         controller["is_default"] = True
         name = name.replace("[default]", "")
-    elif name.endswith("(public)"):
+    elif name == "(public)":
         controller["is_public"] = True
-        name = name.replace("(public)", "")
-    elif name.endswith("(random)"):
+        name = ""
+    elif name == "(random)":
         controller["is_random"] = True
-        name = name.replace("(random)", "")
+        name = ""
 
     controller["name"] = name.strip()
 
@@ -320,9 +320,6 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
 
     name = matches["name"]
 
-    if name.endswith("not available"):
-        return None
-
     device: Device = {
         "name": '',
         "is_public": False,
@@ -346,12 +343,12 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
         "battery_percentage": 0
     }
 
-    if name.endswith("(public)"):
+    if name == "(public)":
         device["is_public"] = True
-        name = name.replace("(public)", "")
-    elif name.endswith("(random)"):
+        name = ""
+    elif name == "(random)":
         device["is_random"] = True
-        name = name.replace("(random)", "")
+        name = ""
 
     device["name"] = name.strip()
 
@@ -438,6 +435,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     result: List = []
 
     if jc.utils.has_data(data):
+        if re.fullmatch(_not_available_pattern, data.strip()):
+            return result
+
         linedata = jc.utils.splitlines(data)
         linedata.reverse()
 

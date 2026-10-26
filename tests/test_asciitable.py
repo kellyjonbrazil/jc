@@ -1,4 +1,5 @@
 import os
+import json
 import unittest
 from jc.exceptions import ParseError
 import jc.parsers.asciitable
@@ -7,6 +8,21 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable--wide.out'), 'r', encoding='utf-8') as f:
+        generic_asciitable_wide = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable--long-row.out'), 'r', encoding='utf-8') as f:
+        generic_asciitable_long_row = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable--wide.json'), 'r', encoding='utf-8') as f:
+        generic_asciitable_wide_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable--long-row.json'), 'r', encoding='utf-8') as f:
+        generic_asciitable_long_row_json = json.loads(f.read())
+
 
     def test_asciitable_nodata(self):
         """
@@ -468,6 +484,55 @@ Internet  10.12.13.4       198   0950.5C8A.5c41  ARPA   GigabitEthernet2.17
         result = jc.parsers.asciitable.parse(data, quiet=True)
         self.assertEqual(len(result), 2)
         self.assertEqual(result[0]['comment'], 'hello\u20289   admin  hello')
+
+    def test_asciitable_wide(self):
+        """
+        Test 'asciitable' with a table of many columns, empty cells, and
+        short rows
+        """
+        self.assertEqual(jc.parsers.asciitable.parse(self.generic_asciitable_wide, quiet=True), self.generic_asciitable_wide_json)
+
+    def test_asciitable_single_space_header(self):
+        """
+        Test 'asciitable' with header words separated by a single space,
+        which form one column name
+        """
+        input = '''
+first name  last name  age
+John        Smith      42
+Jane        Doe
+        '''
+        expected = [
+            {"first_name": "John", "last_name": "Smith", "age": "42"},
+            {"first_name": "Jane", "last_name": "Doe", "age": None}
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
+    def test_asciitable_long_row(self):
+        """
+        Test 'asciitable' with one very long row and many short rows
+        """
+        self.assertEqual(jc.parsers.asciitable.parse(self.generic_asciitable_long_row, quiet=True), self.generic_asciitable_long_row_json)
+
+    def test_asciitable_ragged_rows(self):
+        """
+        Test 'asciitable' with data rows that are longer or shorter than
+        the header row
+        """
+        input = '''
+| foo |    bar |  baz
+| 1   |      2 |  3
+| 4   |        |  5 and some longer text
+| 6   |      7 |
+        '''
+        expected = [
+            {"foo": "1", "bar": "2", "baz": "3"},
+            {"foo": "4", "bar": None, "baz": "5 and some longer text"},
+            {"foo": "6", "bar": "7", "baz": None}
+        ]
+
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
 
 if __name__ == '__main__':
