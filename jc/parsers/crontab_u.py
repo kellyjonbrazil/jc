@@ -170,7 +170,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -233,37 +233,45 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         # Clear any commented lines
-        for i, line in reversed(list(enumerate(cleandata))):
-            if line.strip().startswith('#'):
-                cleandata.pop(i)
+        cleandata = [line for line in cleandata if not line.strip().startswith('#')]
 
         # Pop any variable assignment lines
         cron_var = []
-        for i, line in reversed(list(enumerate(cleandata))):
+        remaining = []
+        for line in reversed(cleandata):
             if '=' in line \
                 and not line.strip()[0].isdigit() \
                 and not line.strip()[0] == '@' \
                 and not line.strip()[0] == '*':
 
-                var_line = cleandata.pop(i)
+                var_line = line
                 var_name = var_line.split('=', maxsplit=1)[0].strip()
                 var_value = var_line.split('=', maxsplit=1)[1].strip()
                 cron_var.append({'name': var_name,
                                  'value': var_value})
+            else:
+                remaining.append(line)
+
+        cleandata = remaining[::-1]
 
         raw_output['variables'] = cron_var
 
         # Pop any shortcut lines
         shortcut_list = []
-        for i, line in reversed(list(enumerate(cleandata))):
+        remaining = []
+        for line in reversed(cleandata):
             if line.strip().startswith('@'):
-                shortcut_line = cleandata.pop(i)
+                shortcut_line = line
                 occurrence = shortcut_line.split(maxsplit=1)[0].strip().lstrip('@')
                 usr = shortcut_line.split(maxsplit=2)[1].strip()
                 cmd = shortcut_line.split(maxsplit=2)[2].strip()
                 shortcut_list.append({'occurrence': occurrence,
                                       'user': usr,
                                       'command': cmd})
+            else:
+                remaining.append(line)
+
+        cleandata = remaining[::-1]
 
         # Add header row for parsing
         cleandata[:0] = ['minute hour day_of_month month day_of_week user command']
