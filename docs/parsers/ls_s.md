@@ -120,4 +120,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/ls_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls_s.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
