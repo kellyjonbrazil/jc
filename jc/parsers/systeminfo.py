@@ -212,7 +212,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.3"
+    version = "1.4"
     description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
@@ -339,11 +339,14 @@ def parse(data, raw=False, quiet=False):
                 # the value data doesn't start where it should
                 # so this is multiline data
                 if delim not in key:
-                    raw_data[last_key] += line
+                    raw_data[last_key].append(line)
                     continue
 
-            raw_data[key] = value
+            raw_data[key] = [value]
             last_key = key
+
+        # join the collected lines of each value once
+        raw_data = {k: ''.join(v) for k, v in raw_data.items()}
 
     # clean up keys; strip values
     raw_output = {}
