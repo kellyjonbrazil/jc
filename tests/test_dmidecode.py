@@ -121,6 +121,18 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
 
+    def test_dmidecode_data_lines_at_end_of_input(self):
+        """
+        Test 'dmidecode' indented data lines at the very end of input
+        (no trailing blank line)
+        """
+        data = 'hdr\n\nHandle 0x0001, DMI type 1, 8 bytes\nSystem\n\tKey: v\n\t\tdata 1\n\t\tdata 2'
+        expected = [
+            {'handle': '0x0001', 'type': 1, 'bytes': 8, 'description': 'System',
+             'values': {'key': 'v', 'key_data': ['data 1', 'data 2']}}
+        ]
+        self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

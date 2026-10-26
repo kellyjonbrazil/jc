@@ -340,8 +340,9 @@ def parse(data, raw=False, quiet=False):
             if item_values \
                and not value_list \
                and line.startswith('\t\t'):
-                if not key_data and f'{key}_data' not in item['values']:
-                    item['values'][f'{key}_data'] = []
+                if not key_data:
+                    # share the list so data at the end of input is kept
+                    item['values'][f'{key}_data'] = key_data
                 key_data.append(line.strip())
                 continue
 
