@@ -49,6 +49,23 @@ def _safe_pager(string: str) -> None:
         pager(_asciify(string))
 
 
+# C0 controls (except tab and newline), DEL, and C1 controls are shown as
+# escapes in warning and error messages
+_CONTROL_CHAR_ESCAPES = {
+    c: f'\\x{c:02x}'
+    for c in list(range(0x00, 0x20)) + [0x7f] + list(range(0x80, 0xa0))
+    if c not in (0x09, 0x0a)
+}
+
+
+def _escape_controls(string: str) -> str:
+    """
+    Return the string with control characters other than tab and newline
+    replaced by visible `\\xNN` escapes.
+    """
+    return string.translate(_CONTROL_CHAR_ESCAPES)
+
+
 def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message to `STDERR` for non-fatal issues. The first line
@@ -76,7 +93,7 @@ def warning_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
                                subsequent_indent=' ' * 19)
 
-    first_line = message_lines.pop(0)
+    first_line = _escape_controls(message_lines.pop(0))
     first_str = f'jc:  Warning - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -84,7 +101,7 @@ def warning_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(line)
+        message = next_wrapper.fill(_escape_controls(line))
         _safe_print(message, file=sys.stderr)
 
 
@@ -108,7 +125,7 @@ def error_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
                                subsequent_indent=' ' * 17)
 
-    first_line = message_lines.pop(0)
+    first_line = _escape_controls(message_lines.pop(0))
     first_str = f'jc:  Error - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -116,7 +133,7 @@ def error_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(line)
+        message = next_wrapper.fill(_escape_controls(line))
         _safe_print(message, file=sys.stderr)
 
 

@@ -1,6 +1,10 @@
 import sys
+import io
+import os
+import contextlib
 import locale
 import unittest
+from unittest import mock
 import jc.utils
 from jc.exceptions import ParseError
 
@@ -497,6 +501,32 @@ line5
         # attributes given in the document are not defaulted
         doc = '<!DOCTYPE a [<!ATTLIST b x CDATA "' + 'v' * 100000 + '">]><a>' + '<b x=""/>' * 2000 + '</a>'
         self.assertIsNone(jc.utils.xml_defaults_check(doc))
+
+    def _stderr_of(self, func, message_lines):
+        f = io.StringIO()
+        with mock.patch.dict(os.environ, {'COLUMNS': '80'}), \
+             mock.patch.object(jc.utils, 'CLI_QUIET', False), \
+             contextlib.redirect_stderr(f):
+            func(message_lines)
+        return f.getvalue()
+
+    def test_utils_warning_message_control_chars(self):
+        msg = ['Unparsable line found: a\x1b]0;b\x07c\x1b[2Jd\x9be\x7ff\x00g\rh', 'x\x85y']
+        expected = ('jc:  Warning - Unparsable line found: a\\x1b]0;b\\x07c\\x1b[2Jd\\x9be\\x7ff\\x00g\\x0dh\n'
+                    '               x\\x85y\n')
+        self.assertEqual(expected, self._stderr_of(jc.utils.warning_message, msg))
+
+    def test_utils_error_message_control_chars(self):
+        msg = ['Parser issue with swapon:', 'ParseError: bad line \x1b[1;31mred\x1b[0m']
+        expected = ('jc:  Error - Parser issue with swapon:\n'
+                    '             ParseError: bad line \\x1b[1;31mred\\x1b[0m\n')
+        self.assertEqual(expected, self._stderr_of(jc.utils.error_message, msg))
+
+    def test_utils_warning_message_printable_unchanged(self):
+        msg = ['tab\there caf\u00e9 \u2603 \u00a0 \u4e2d\u6587', 'new\nline']
+        expected = ('jc:  Warning - tab      here caf\u00e9 \u2603 \u00a0 \u4e2d\u6587\n'
+                    '               new line\n')
+        self.assertEqual(expected, self._stderr_of(jc.utils.warning_message, msg))
 
     # def test_utils_warning_message(self):
     #     msg = [
