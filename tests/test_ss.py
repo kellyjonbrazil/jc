@@ -33,6 +33,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-unclosed.out'), 'r', encoding='utf-8') as f:
         ss_users_unclosed = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-cgroup-spaces.out'), 'r', encoding='utf-8') as f:
+        ss_cgroup_spaces = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ss-sudo-a.json'), 'r', encoding='utf-8') as f:
         centos_7_7_ss_sudo_a_json = json.loads(f.read())
@@ -57,6 +60,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-users-unclosed.json'), 'r', encoding='utf-8') as f:
         ss_users_unclosed_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-cgroup-spaces.json'), 'r', encoding='utf-8') as f:
+        ss_cgroup_spaces_json = json.loads(f.read())
 
     def test_ss_nodata(self):
         """
@@ -165,6 +171,61 @@ class MyTests(unittest.TestCase):
             with self.subTest(users):
                 opts = jc.parsers.ss.parse(header + row + users + '\n', quiet=True)[0]['opts']
                 self.assertEqual(opts['process_id'], expected)
+
+
+    def test_ss_cgroup_spaces(self):
+        """
+        Test 'ss -tulnpe' with cgroup paths that contain spaces and text in
+        the form of other fields
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.ss_cgroup_spaces, quiet=True), self.ss_cgroup_spaces_json)
+
+    def test_ss_cgroup_fields_in_path(self):
+        """
+        Test 'ss -e' where the cgroup path contains uid:, ino: and users:
+        text. The values ss printed for the socket are kept.
+        """
+        rows = jc.parsers.ss.parse(self.ss_cgroup_spaces, quiet=True)
+
+        opts = rows[3]['opts']
+        self.assertEqual(opts['uid_number'], '1000')
+        self.assertEqual(opts['inode_number'], '2415307')
+        self.assertEqual(opts['cgroup'], '/user.slice/user-1000.slice/user@1000.service/app.slice/my app uid:0 ino:30488 cgroup:/system.slice/ssh.service')
+
+        opts = rows[4]['opts']
+        self.assertNotIn('process_id', opts)
+        self.assertEqual(opts['inode_number'], '2415308')
+        self.assertEqual(opts['cgroup'], '/user.slice/user-1000.slice/user@1000.service/app.slice/web users:(("sshd",pid=1161,fd=3)) timer:x')
+
+        # the key renames do not change the path
+        self.assertEqual(rows[1]['opts']['cgroup'], '/system.slice/squid.service')
+
+    def test_ss_cgroup_trailing_tokens(self):
+        """
+        Test 'ss -e' with the tokens printed after the cgroup path: v6only,
+        fwmark, the shutdown markers, and the one-line (-O) fields after the
+        marker
+        """
+        header = 'Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess\n'
+        row = 'tcp   LISTEN 0      5               [::]:19003         [::]:*    uid:1000 ino:5 sk:a006 '
+        cases = {
+            'cgroup:/a b <->': {'cgroup': '/a b'},
+            'cgroup:/a b -->': {'cgroup': '/a b'},
+            'cgroup:/a b <--': {'cgroup': '/a b'},
+            'cgroup:/a b ---': {'cgroup': '/a b'},
+            'cgroup:/a b v6only:1 <->': {'cgroup': '/a b', 'v6only': '1'},
+            'cgroup:/a b fwmark:0x1f v6only:0 <->': {'cgroup': '/a b', 'fwmark': '0x1f', 'v6only': '0'},
+            'cgroup:/a <-> uid:0 <->': {'cgroup': '/a <-> uid:0'},
+            'cgroup:/a <-> uid:0': {'cgroup': '/a <-> uid:0'},
+            'cgroup:/a b <-> skmem:(r0,rb131072) ts sack cubic wscale:7,7':
+                {'cgroup': '/a b', 'skmem': '(r0,rb131072)', 'wscale': '7,7'}
+        }
+
+        for opts_text, expected in cases.items():
+            with self.subTest(opts_text):
+                opts = jc.parsers.ss.parse(header + row + opts_text + '\n', quiet=True)[0]['opts']
+                expected.update({'uid_number': '1000', 'inode_number': '5', 'cookie': 'a006'})
+                self.assertEqual(opts, expected)
 
 
 if __name__ == '__main__':

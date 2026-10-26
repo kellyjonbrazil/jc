@@ -101,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.2'
+    version = '2.3'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -171,14 +171,10 @@ def _process(proc_data):
     return proc_data
 
 
-def _long_filesystem_hash(header, line):
+def _filesystem_col_len(header):
     """
-    Returns truncated hash and value of the filesystem field if it is too
-    long for the column.
+    Returns the length of the filesystem column, derived from the header.
     """
-    filesystem_field = line.split()[0]
-
-    # get length of filesystem column
     space_count = 0
     for char in header[10:]:
         if char == ' ':
@@ -187,7 +183,15 @@ def _long_filesystem_hash(header, line):
 
         break
 
-    filesystem_col_len = space_count + 9
+    return space_count + 9
+
+
+def _long_filesystem_hash(filesystem_col_len, line):
+    """
+    Returns truncated hash and value of the filesystem field if it is too
+    long for the column.
+    """
+    filesystem_field = line.split()[0]
 
     # return the hash and value if the field data is longer than the column length
     if len(filesystem_field) > filesystem_col_len:
@@ -231,8 +235,9 @@ def parse(data, raw=False, quiet=False):
         # fix long filesystem data in some older versions of df
         header = cleandata[0]
         fix_data.append(header)
+        filesystem_col_len = _filesystem_col_len(header)
         for line in cleandata[1:]:
-            field_hash, field_value = _long_filesystem_hash(header, line)
+            field_hash, field_value = _long_filesystem_hash(filesystem_col_len, line)
             if field_hash:
                 filesystem_map.update({field_hash: field_value})
                 newline = line.replace(field_value, field_hash)

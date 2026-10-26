@@ -11,6 +11,14 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
+    # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-many-processes.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_many_processes = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-many-processes-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_pidstat_many_processes_streaming_json = json.loads(f.read())
+
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat.out'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat = f.read()
@@ -76,6 +84,25 @@ class MyTests(unittest.TestCase):
         Test 'pidstat -hT'
         """
         self.assertEqual(list(jc.parsers.pidstat_s.parse(self.generic_pidstat_ht.splitlines(), quiet=True)), self.generic_pidstat_ht_streaming_json)
+
+
+    def test_pidstat_s_many_processes(self):
+        """
+        Test 'pidstat -h' with many processes and repeated samples
+        """
+        self.assertEqual(list(jc.parsers.pidstat_s.parse(self.generic_pidstat_many_processes.splitlines(), quiet=True)), self.generic_pidstat_many_processes_streaming_json)
+
+    def test_pidstat_s_ragged_rows(self):
+        """
+        Test 'pidstat' rows with fewer or more fields than the header
+        """
+        data = ['# Time UID PID Command', '  1646857494   0   2 kthreadd', '  1646857494   0', '  1646857494   0   4 a command with spaces']
+        expected = [
+            {"time": 1646857494, "uid": 0, "pid": 2, "command": "kthreadd"},
+            {"time": 1646857494, "uid": 0},
+            {"time": 1646857494, "uid": 0, "pid": 4, "command": "a command with spaces"}
+        ]
+        self.assertEqual(list(jc.parsers.pidstat_s.parse(data, quiet=True)), expected)
 
 
 if __name__ == '__main__':
