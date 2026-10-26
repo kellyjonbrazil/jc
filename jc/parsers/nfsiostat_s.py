@@ -165,14 +165,14 @@ from jc.streaming import (
 from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
 from jc.parsers.nfsiostat import (
-    MOUNT_RE, OP_HEADER_RE, COLUMN_SPLIT_RE, KNOWN_OPS, NO_MOUNTS_MESSAGE, _parse_op_values,
+    MOUNT_RE, OP_HEADER_RE, COLUMN_SPLIT_RE, KNOWN_OPS, NO_MOUNTS_MESSAGE, _mount_label, _parse_op_values,
     _process as _process_list
 )
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`nfsiostat` command streaming parser'
     author = 'Yang Bai'
     author_email = '271969568+ybai08@users.noreply.github.com'
@@ -240,13 +240,13 @@ def parse(
 
     def warn_if_values_line_missing() -> None:
         if section is not None:
-            warn(f'{output_line["mount"]}: missing the values line after a header line')
+            warn(f'{_mount_label(output_line["mount"])}: missing the values line after a header line')
 
     def end_of_mount_block() -> None:
         warn_if_values_line_missing()
 
         if not any(isinstance(value, dict) for value in output_line.values()):
-            warn(f'{output_line["mount"]}: no operation statistics found (truncated input?)')
+            warn(f'{_mount_label(output_line["mount"])}: no operation statistics found (truncated input?)')
 
     for line in data:
         try:
@@ -281,7 +281,7 @@ def parse(
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
                 warn_if_values_line_missing()
                 if 'ops_sec' in output_line:
-                    raise ParseError(f'{output_line["mount"]}: more than one ops/s line in a mount block')
+                    raise ParseError(f'{_mount_label(output_line["mount"])}: more than one ops/s line in a mount block')
                 section = 'mount'
                 continue
 
@@ -293,7 +293,7 @@ def parse(
                     section = op
                     columns = COLUMN_SPLIT_RE.split(stripped.split(':', maxsplit=1)[1].strip())
                 else:
-                    warn(f'{output_line["mount"]}: skipping unknown operation table: {op}')
+                    warn(f'{_mount_label(output_line["mount"])}: skipping unknown operation table: {op}')
                     section = SKIP
                 continue
 
@@ -301,7 +301,7 @@ def parse(
                 section = None
                 values = stripped.split()
                 if len(values) != 2:
-                    raise ParseError(f'{output_line["mount"]}: unexpected number of fields')
+                    raise ParseError(f'{_mount_label(output_line["mount"])}: unexpected number of fields')
                 output_line['ops_sec'], output_line['rpc_bklog'] = values
                 continue
 
@@ -314,7 +314,7 @@ def parse(
                 section = None
                 op_stats = _parse_op_values(columns, stripped)
                 if not op_stats:
-                    raise ParseError(f'{output_line["mount"]}: could not parse {op} values')
+                    raise ParseError(f'{_mount_label(output_line["mount"])}: could not parse {op} values')
                 output_line[op] = op_stats
                 continue
 

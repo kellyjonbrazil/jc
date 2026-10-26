@@ -9,8 +9,18 @@ from tests import utils_for_test as test_utils
 sys.path.pop()
 import jc
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 class MyTests(unittest.TestCase):
+
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nftables--wrapped-set-elements.out'), 'r', encoding='utf-8') as f:
+        generic_nftables_wrapped_set_elements = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nftables--wrapped-set-elements.json'), 'r', encoding='utf-8') as f:
+        generic_nftables_wrapped_set_elements_json = json.loads(f.read())
 
     def test_nftables_nodata(self):
         """
@@ -133,6 +143,32 @@ class MyTests(unittest.TestCase):
         data = 'table ip t {\n\tchain c {\n\t\t' + rule + ' # handle 5\n\t\tdrop' + ' ' * 5000 + 'x\n\t}\n}\n'
         rules = jc.parse('nftables', data, quiet=True)[0]['chains'][0]['rules']
         self.assertEqual([(r['rule'], r['handle']) for r in rules], [(rule, 5), ('drop' + ' ' * 5000 + 'x', None)])
+
+    def test_nftables_wrapped_set_elements(self):
+        """
+        Test 'nftables' with a set whose elements wrap over many lines and
+        rules with counters inside braces
+        """
+        self.assertEqual(jc.parse('nftables', self.generic_nftables_wrapped_set_elements, quiet=True), self.generic_nftables_wrapped_set_elements_json)
+
+    def test_nftables_wrapped_statement_handle(self):
+        """
+        Test 'nftables' keeps the handle of a statement that wraps over more
+        lines than a block opener can, and of a closing brace
+        """
+        lines = ''.join(f'\t\t\t{i},\n' for i in range(20))
+        data = 'table ip t { # handle 1\n\tset s {\n\t\ttype integer\n\t\telements = { 0,\n' + lines + '\t\t\t99 } # handle 2\n\t} # handle 3\n}\n'
+        table = jc.parse('nftables', data, quiet=True)[0]
+        self.assertEqual(table['handle'], 1)
+        self.assertEqual(table['sets'][0]['elements'], ['0'] + [str(i) for i in range(20)] + ['99'])
+
+    def test_nftables_wrapped_closing_brace_handle(self):
+        """
+        Test 'nftables' with a closing brace whose handle comment wraps
+        """
+        data = 'table ip t {\n\tchain c {\n\t\taccept\n\t} #\nhandle\n5\n}\n'
+        table = jc.parse('nftables', data, quiet=True)[0]
+        self.assertEqual([r['rule'] for r in table['chains'][0]['rules']], ['accept'])
 
 
 if __name__ == '__main__':

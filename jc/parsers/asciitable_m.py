@@ -383,18 +383,29 @@ def _get_data(table: Iterable[Tuple[int, List]]) -> List[List[List[str]]]:
 
 def _collapse_headers(table: List[List[str]]) -> List[str]:
     """append each column string to return the full header list"""
-    result = table[0]
+    first = table[0]
+    # parts for each column; the width follows the most recent header line
+    parts: List[List[str]] = [[h] for h in first]
+    changed: List[bool] = [False] * len(first)
+
     for line in table[1:]:
-        new_line: List[str] = []
+        if len(line) > len(parts):
+            raise IndexError('list index out of range')
+
+        parts = parts[:len(line)]
+        changed = changed[:len(line)]
         for i, header in enumerate(line):
             if header:
-                new_header = result[i] + '_' + header
-                # remove consecutive underscores
-                new_header = re.sub(r'__+', '_', new_header)
-                new_line.append(new_header)
-            else:
-                new_line.append(result[i])
-        result = new_line
+                parts[i].append(header)
+                changed[i] = True
+
+    result: List[str] = []
+    for i, col in enumerate(parts):
+        if changed[i]:
+            # remove consecutive underscores
+            result.append(re.sub(r'__+', '_', '_'.join(col)))
+        else:
+            result.append(col[0])
 
     return result
 
@@ -404,18 +415,29 @@ def _collapse_data(table: List[List[List[str]]], quiet=False) -> List[List[str]]
     result: List[List[str]] = []
 
     for index, row in enumerate(table):
-        try:
-            new_row: List[str] = []
-            for line in row:
-                if new_row:
-                    for i, item in enumerate(line):
-                        new_row[i] = (new_row[i] + '\n' + item).strip()
-                else:
-                    new_row = line
+        first_line = row[0]
+        width = len(first_line)
+        cols: List[List[str]] = [[item] if item else [] for item in first_line]
+        failed = False
 
+        for line in row[1:]:
+            for i, item in enumerate(line):
+                if i >= width:
+                    failed = True
+                    break
+                if item:
+                    cols[i].append(item)
+            if failed:
+                break
+
+        # empty items are dropped so each cell is joined only once
+        new_row = ['\n'.join(c) for c in cols]
+
+        if not failed:
             result.append(new_row)
-        except IndexError:
+        else:
             if not quiet:
+                row[0] = new_row
                 row_string = '\n'.join([' | '.join(l) for l in row])
                 jc.utils.warning_message(
                     [f'Possible table separator character found in row {index}:  {row_string}. Skipping.']
