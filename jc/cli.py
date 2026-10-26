@@ -77,7 +77,8 @@ class JcCli():
                  'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'xonsh_comp',
                  'magic_found_parser', 'magic_options', 'magic_run_command',
                  'magic_run_command_str', 'magic_stdout', 'magic_stderr',
-                 'magic_returncode', 'slice_str', 'slice_start', 'slice_end')
+                 'magic_returncode', 'slice_str', 'slice_start', 'slice_end',
+                 'meta_replaced_warned')
 
     def __init__(self) -> None:
         self.data_in: Optional[Union[str, bytes, TextIO, Iterable[str]]] = None
@@ -111,6 +112,7 @@ class JcCli():
         self.help_me: bool = False
         self.pretty: bool = False
         self.quiet: bool = False
+        self.meta_replaced_warned: bool = False
         self.ignore_exceptions: bool = False
         self.raw: bool = False
         self.slurp: bool = False
@@ -657,12 +659,15 @@ class JcCli():
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
             self.exit_error()
 
-    def add_metadata_to_output(self) -> None:
+    def add_metadata_to_output(self, merge: bool = False) -> None:
         """
         This function mutates self.data_out in place. If the _jc_meta field
-        does not already exist, it will be created with the metadata fields. If
-        the _jc_meta field already exists, the metadata fields will be added to
-        the existing object.
+        does not already exist, it will be created with the metadata fields.
+
+        If merge is True (streaming parsers, which add their own _jc_meta
+        object with ignore_exceptions), the metadata fields are added to an
+        existing _jc_meta object. Otherwise an existing _jc_meta field came
+        from the parsed data and is replaced, with a warning unless quiet.
 
         In the case of an empty list (no data), a dictionary with a _jc_meta
         object will be added to the list. This way you always get metadata,
@@ -684,10 +689,7 @@ class JcCli():
                 meta_obj['input_list'] = self.inputlist
 
             if isinstance(self.data_out, dict):
-                if '_jc_meta' not in self.data_out:
-                    self.data_out['_jc_meta'] = {}
-
-                self.data_out['_jc_meta'].update(meta_obj)
+                self._set_meta(self.data_out, meta_obj, merge)
 
             elif isinstance(self.data_out, list):
                 if not self.data_out:
@@ -695,14 +697,27 @@ class JcCli():
 
                 for item in self.data_out:
                     if isinstance(item, dict):
-                        if '_jc_meta' not in item:
-                            item['_jc_meta'] = {}
-
-                        item['_jc_meta'].update(meta_obj)
+                        self._set_meta(item, meta_obj, merge)
 
             else:
                 utils.error_message(['Parser returned an unsupported object type.'])
                 self.exit_error()
+
+    def _set_meta(self, item: Dict, meta_obj: JSONDictType, merge: bool) -> None:
+        """Add the metadata fields to the _jc_meta object of one item"""
+        existing = item.get('_jc_meta')
+
+        if merge and isinstance(existing, dict):
+            existing.update(meta_obj)
+            return
+
+        if '_jc_meta' in item and not self.quiet and not self.meta_replaced_warned:
+            utils.warning_message([
+                'The parsed data has a _jc_meta field. It is replaced by the jc metadata (-M).'
+            ])
+            self.meta_replaced_warned = True
+
+        item['_jc_meta'] = dict(meta_obj)
 
     def slicer(self) -> None:
         """Slice input data lazily, if possible. Updates self.data_in"""
@@ -842,7 +857,7 @@ class JcCli():
                 self.data_out = line
                 if self.meta_out:
                     self.run_timestamp = datetime.now(timezone.utc)
-                    self.add_metadata_to_output()
+                    self.add_metadata_to_output(merge=True)
 
                 self.safe_print_out()
 

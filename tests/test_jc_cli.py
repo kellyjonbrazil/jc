@@ -365,7 +365,7 @@ class MyTests(unittest.TestCase):
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
         cli.parser_name = 'ping'
         expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
-        cli.add_metadata_to_output()
+        cli.add_metadata_to_output(merge=True)
         self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_list_existing_meta(self):
@@ -376,8 +376,49 @@ class MyTests(unittest.TestCase):
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.parser_name = 'ping'
         expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
+        cli.add_metadata_to_output(merge=True)
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_replaces_meta_from_parsed_data(self):
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = {'a': 1, '_jc_meta': {'magic_command': ['cat', 'x'], 'magic_command_exit': 0}}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'toml'
+        expected = {'a': 1, '_jc_meta': {'parser': 'toml', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_replaces_non_dict_meta(self):
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = [{'server': ['nginx'], '_jc_meta': 'anything'}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'http-headers'
+        expected = [{'server': ['nginx'], '_jc_meta': {'parser': 'http-headers', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_merge_replaces_non_dict_meta(self):
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = {'a': '1', '_jc_meta': 'x'}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'csv-s'
+        expected = {'a': '1', '_jc_meta': {'parser': 'csv-s', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
+        cli.add_metadata_to_output(merge=True)
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_replace_warning_once(self):
+        cli = JcCli()
+        cli.data_out = [{'a': 1, '_jc_meta': 1}, {'a': 2, '_jc_meta': 2}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'yaml'
+        f = io.StringIO()
+        with contextlib.redirect_stderr(f):
+            cli.add_metadata_to_output()
+        self.assertEqual(f.getvalue().count('Warning'), 1)
+        self.assertIn('_jc_meta', f.getvalue())
 
     def test_slice_none_str(self):
         cli = JcCli()
