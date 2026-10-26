@@ -88,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -238,6 +238,20 @@ def _error_type_v6(line):
     return return_code
 
 
+def _bsd_error_sender(line):
+    # error lines are 'N bytes from <ip>: <message>' or, when the sender
+    # was resolved to a name, 'N bytes from <name> (<ip>): <message>'
+    line_list = line.split()
+    if len(line_list) > 4 and line_list[4].startswith('('):
+        return line_list[4].strip(':').strip('(').strip(')')
+
+    sender = line_list[3]
+    if sender.endswith(':'):
+        sender = sender[:-1]
+
+    return sender
+
+
 def _bsd_parse(line, s):
     output_line = {}
 
@@ -307,7 +321,7 @@ def _bsd_parse(line, s):
         try:
             output_line['sent_bytes'] = line.split()[0]
             output_line['destination_ip'] = s.destination_ip
-            output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+            output_line['response_ip'] = _bsd_error_sender(line)
         except Exception:
             pass
         return output_line
@@ -337,7 +351,7 @@ def _bsd_parse(line, s):
             try:
                 output_line['bytes'] = line.split()[0]
                 output_line['destination_ip'] = s.destination_ip
-                output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+                output_line['response_ip'] = _bsd_error_sender(line)
             except Exception:
                 pass
 
