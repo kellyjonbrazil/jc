@@ -420,6 +420,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(f.getvalue().count('Warning'), 1)
         self.assertIn('_jc_meta', f.getvalue())
 
+    def test_cli_json_out_escapes_c1_controls(self):
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.data_out = {'name': 'a\x9b2Jb\x7fc\xa9\u00e9', 'x': '\udc9b'}
+        expected = '{"name":"a\\u009b2Jb\\u007fc\xa9\u00e9","x":"\\udc9b"}'
+        self.assertEqual(cli.json_out(), expected)
+
     def test_slice_none_str(self):
         cli = JcCli()
         cli.slice_start = None

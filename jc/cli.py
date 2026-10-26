@@ -45,6 +45,10 @@ JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
 SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
 SLICER_RE = re.compile(SLICER_PATTERN)
+# DEL, C1 control characters and lone surrogates are written as \\u escapes
+# in JSON output. json.dumps() only escapes U+0000-U+001F when ensure_ascii
+# is off.
+JSON_ESCAPE_RE = re.compile('[\x7f-\x9f\ud800-\udfff]')
 
 
 class info():
@@ -416,6 +420,9 @@ class JcCli():
             ensure_ascii=self.ascii_only,
             default=string_serializer
         )
+
+        # these characters can only appear inside JSON strings
+        j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)
 
         if not self.mono and PYGMENTS_INSTALLED:
             class JcStyle(Style):
