@@ -636,6 +636,38 @@ power management:
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
+    def test_slurp_non_utf8_raises(self):
+        cli = JcCli()
+        cli.parser_module = url_parser
+        cli.data_in = b'https://a.example/a\n\xff\n'
+        with self.assertRaises(TypeError):
+            cli.create_slurp_output()
+
+    def test_slurp_non_utf8_exit_code(self):
+        stdin = io.TextIOWrapper(io.BytesIO(b'a\n\xff\n'), encoding='utf-8')
+        out = io.StringIO()
+        err = io.StringIO()
+        with mock.patch('sys.argv', ['jc', '--slurp', '--path']), \
+             mock.patch('sys.stdin', stdin), \
+             contextlib.redirect_stdout(out), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+        self.assertEqual(100, cm.exception.code)
+        self.assertEqual('', out.getvalue())
+        self.assertIn('path parser could not parse the input data', err.getvalue())
+
+    def test_slice_multiple_proc_files(self):
+        cli = JcCli()
+        cli.slice_str = '-1:'
+        cli.inputlist = ['/proc/uptime', '/proc/loadavg']
+        cli.data_in = ['1.0 2.0\n', '0.1 0.2 0.3 1/2 3\n']
+        with self.assertRaises(SystemExit) as cm:
+            with contextlib.redirect_stderr(io.StringIO()) as err:
+                cli.slicer()
+        self.assertEqual(100, cm.exception.code)
+        self.assertIn('Line slicing is not supported with multiple /proc files', err.getvalue())
+
     def test_magic_proc_path_traversal(self):
         # traversal outside of /proc should exit with an error instead of opening the file
         cli = JcCli()

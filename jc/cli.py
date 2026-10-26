@@ -706,6 +706,12 @@ class JcCli():
 
     def slicer(self) -> None:
         """Slice input data lazily, if possible. Updates self.data_in"""
+        if self.slice_str and isinstance(self.data_in, list) and self.inputlist:
+            utils.error_message([
+                'Line slicing is not supported with multiple /proc files.'
+            ])
+            self.exit_error()
+
         if self.slice_str:
             slice_start_str, slice_end_str = self.slice_str.split(':', maxsplit=1)
             if slice_start_str:
@@ -769,6 +775,10 @@ class JcCli():
                             obj.update({'_file': mline[0]})
 
                     self.data_out.append(parsed_line)
+
+            # input that could not be decoded as UTF-8 stays as bytes
+            else:
+                raise TypeError('Slurp input must be UTF-8 text.')
 
             if self.meta_out:
                 self.data_out = {"result": self.data_out}
