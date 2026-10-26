@@ -190,4 +190,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/nftables.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nftables.py)
 
-Version 1.1 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
+Version 1.2 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
