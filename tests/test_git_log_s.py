@@ -174,6 +174,12 @@ class MyTests(unittest.TestCase):
         generic_git_log_fuller_stat_patch_streaming_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat_bad_record = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat_bad_record_streaming_json = json.loads(f.read())
+
     def test_git_log_s_nodata(self):
         """
         Test 'git_log' with no data
@@ -370,6 +376,15 @@ class MyTests(unittest.TestCase):
         crlf_data = self.generic_git_log.replace('\n', '\r\n')
         self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.split('\n'), quiet=True)), self.generic_git_log_streaming_json)
         self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.generic_git_log_streaming_json)
+
+    def test_git_log_s_bad_record_ignore_exceptions(self):
+        """
+        Test 'git log --stat' with a record that cannot be processed: one error
+        record is emitted and the following commits parse normally
+        """
+        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_git_log_short_stat_bad_record_streaming_json)
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [True, False, True])
 
 
 if __name__ == '__main__':

@@ -75,7 +75,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`/etc/hosts` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,19 +133,14 @@ def parse(data, raw=False, quiet=False):
             if line.strip().startswith('#'):
                 continue
 
+            # a comment starts at the first '#', even in the middle of a word
+            line = line.split('#', 1)[0]
             line_list = re.findall(r'\S+', line, flags=re.ASCII)
+            if not line_list:
+                continue
+
             ip = line_list[0]
             hosts_list = line_list[1:]
-
-            comment_found = False
-            for i, item in enumerate(hosts_list):
-                if '#' in item:
-                    comment_found = True
-                    comment_item = i
-                    break
-
-            if comment_found:
-                hosts_list = hosts_list[:comment_item]
 
             output_line['ip'] = ip
             output_line['hostname'] = hosts_list

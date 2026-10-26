@@ -123,7 +123,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'CEF string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -172,7 +172,9 @@ def _pycef_parse(str_input):
     # This regex separates the string into the CEF header and the extension
     # data.  Once we do this, it's easier to use other regexes to parse each
     # part.
-    header_re = r'((CEF:\d+)([^=\\]+\|){,7})(.*)'
+    # Header fields can contain '=' (only '|' and '\\' are escaped in the
+    # header) so the extension starts after the 7th unescaped '|'.
+    header_re = r'((CEF:\d+)\|((?:\\.|[^|\\])*\|){,6})(.*)'
 
     res = re.search(header_re, str_input)
 
@@ -180,10 +182,10 @@ def _pycef_parse(str_input):
         header = res.group(1)
         extension = res.group(4)
 
-        # Split the header on the "|" char.  Uses a negative lookbehind
-        # assertion to ensure we don't accidentally split on escaped chars,
-        # though.
-        spl = re.split(r'(?<!\\)\|', header)
+        # Split the header on the "|" char, skipping escaped chars (including
+        # an escaped backslash right before the delimiter). The trailing empty
+        # item represents what follows the final '|' delimiter.
+        spl = re.findall(r'((?:\\.|[^|\\])*)\|', header) + ['']
 
         # If the input entry had any blanks in the required headers, that's wrong
         # and we should return.  Note we explicitly don't check the last item in the
