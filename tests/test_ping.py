@@ -449,11 +449,11 @@ class MyTests(unittest.TestCase):
         alpine_linux_3_13_ping_hostname_json = json.loads(f.read())
 
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.out'), 'r', encoding='utf-8') as f:
-        generic_ping_long_digits = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-long-digits.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_long_digits = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-long-digits.json'), 'r', encoding='utf-8') as f:
-        generic_ping_long_digits_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-long-digits.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_long_digits_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-bsd-error-bare-address.out'), 'r', encoding='utf-8') as f:
         generic_ping_bsd_error_bare_address = f.read()
@@ -930,11 +930,11 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.centos_7_7_ping_missing_hostname, quiet=True), self.centos_7_7_ping_missing_hostname_json)
 
-    def test_ping_long_digits(self):
+    def test_ping_linux_long_digits(self):
         """
         Test 'ping' with a long run of digits in the statistics section
         """
-        self.assertEqual(jc.parsers.ping.parse(self.generic_ping_long_digits, quiet=True), self.generic_ping_long_digits_json)
+        self.assertEqual(jc.parsers.ping.parse(self.generic_ping_linux_long_digits, quiet=True), self.generic_ping_linux_long_digits_json)
 
     def test_ping_bsd_error_bare_address(self):
         """
