@@ -39,11 +39,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.out'), 'r', encoding='utf-8') as f:
         generic_df_long_filesystem = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-wide-chars.out'), 'r', encoding='utf-8') as f:
-        generic_df_wide_chars = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-wide-chars.out'), 'r', encoding='utf-8') as f:
+        generic_df_linux_wide_chars = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-wide-chars.json'), 'r', encoding='utf-8') as f:
-        generic_df_wide_chars_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-wide-chars.json'), 'r', encoding='utf-8') as f:
+        generic_df_linux_wide_chars_json = json.loads(f.read())
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/df.json'), 'r', encoding='utf-8') as f:
@@ -177,7 +177,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'df' with wide, combining, zero-width and U+2063 characters
         """
-        self.assertEqual(jc.parsers.df.parse(self.generic_df_wide_chars, quiet=True), self.generic_df_wide_chars_json)
+        self.assertEqual(jc.parsers.df.parse(self.generic_df_linux_wide_chars, quiet=True), self.generic_df_linux_wide_chars_json)
 
 if __name__ == '__main__':
     unittest.main()
