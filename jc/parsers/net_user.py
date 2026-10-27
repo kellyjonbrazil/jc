@@ -412,17 +412,19 @@ def _parse(data):
                     if not line:
                         continue  # Skip empty lines
 
-                    # Check for domain line
-                    domain_pattern = re.compile(r'^User accounts for (.+)$')
-                    account_origin_match = domain_pattern.match(line)
-                    if account_origin_match:
-                        result["account_origin"] = account_origin_match.group(1)
-                        continue
+                    # Check for the domain line and the line of dashes that
+                    # starts the user list. Only above the list, since a user
+                    # row can start with the same text.
+                    if not collecting_users:
+                        domain_pattern = re.compile(r'^User accounts for (.+)$')
+                        account_origin_match = domain_pattern.match(line)
+                        if account_origin_match:
+                            result["account_origin"] = account_origin_match.group(1)
+                            continue
 
-                    # Check for the line of dashes indicating start of user list
-                    if line.startswith('---'):
-                        collecting_users = True
-                        continue
+                        if line.startswith('---'):
+                            collecting_users = True
+                            continue
 
                     # Check for the completion message
                     if line.startswith('The command completed'):
