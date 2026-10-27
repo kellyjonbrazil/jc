@@ -14,6 +14,9 @@ Block (`b`) and character (`c`) device entries report `major_number` and
 `minor_number` instead of `size`, since `ls` prints the device's major and
 minor numbers in that column rather than a byte count.
 
+Entries that `ls` cannot stat (e.g. `-????????? ? ? ? ?  ? name`) report
+`null` for `links`, `owner`, `group`, `size`, and `date`.
+
 `--time-style=iso` is not supported since its date field is a different
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
@@ -94,7 +97,9 @@ from jc.streaming import (
 )
 from jc.exceptions import ParseError
 
-_PERM_RE = re.compile(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?')
+_PERM_RE = re.compile(r'[-dclpsbDCMnP?](([-r][-w][-xsS]){2}([-r][-w][-xtT])|\?{9})[+]?')
+# entries `ls` cannot stat print '?' for the permissions and every field
+_NO_STAT_RE = re.compile(r'[-dclpsbDCMnP?]\?{9}')
 _LONG_ISO_DATE_RE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 _LONG_ISO_TIME_RE = re.compile(r'^\d{2}:\d{2}$')
 
@@ -118,7 +123,7 @@ def _detect_date_width(sample_line):
     Return the number of whitespace-separated tokens that make up the
     date field: 2 for --time-style=long-iso ("2024-08-15 10:53"), 3 for
     the default and --time-style=full-iso formats. `sample_line` must be
-    a data line that matches _PERM_RE.
+    a data line that matches _PERM_RE and not _NO_STAT_RE.
     """
     device = sample_line[0] in ('b', 'c')
     tokens = sample_line.split()
@@ -232,7 +237,7 @@ def _process(proc_data):
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
-    if 'date' in proc_data:
+    if proc_data.get('date') is not None:
         # to speed up processing only try to convert the date if it's not the default format
         if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', proc_data['date']):
             ts = jc.utils.timestamp(proc_data['date'], format_hint=(7200,))
@@ -300,23 +305,30 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             if not _PERM_RE.match(line):
                 raise ParseError('Not ls -l data')
 
+            # entries `ls` cannot stat have a single '?' in each field
+            # and no link target
+            no_stat = bool(_NO_STAT_RE.match(line))
+
             # block (b) and character (c) device entries report
             # major,minor instead of a size, which takes one extra
             # whitespace-separated token
-            device = line[0] in ('b', 'c')
+            device = line[0] in ('b', 'c') and not no_stat
             size_width = 2 if device else 1
 
             # date field width is consistent for the whole `ls` invocation,
             # so it only needs to be detected once per stream
-            if date_width is None:
+            if date_width is None and not no_stat:
                 date_width = _detect_date_width(line)
 
-            fixed_width = 4 + size_width + date_width
+            entry_date_width = 1 if no_stat else date_width
+            fixed_width = 4 + size_width + entry_date_width
             parsed_line, filename = _split_entry(line, fixed_width)
             output_line = {}
 
             # split filenames and links
-            if filename is not None:
+            if no_stat:
+                filename_field = [filename or '']
+            elif filename is not None:
                 filename_field = filename.split(' -> ')
             else:
                 # in case of filenames starting with a newline character
@@ -343,7 +355,11 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 output_line['size'] = parsed_line[4]
 
             date_start = 4 + size_width
-            output_line['date'] = ' '.join(parsed_line[date_start:date_start + date_width])
+            output_line['date'] = ' '.join(parsed_line[date_start:date_start + entry_date_width])
+
+            if no_stat:
+                for key in ('links', 'owner', 'group', 'size', 'date'):
+                    output_line[key] = None
 
             yield output_line if raw else _process(output_line)
 

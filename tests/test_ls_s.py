@@ -123,6 +123,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-spaces-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_spaces_long_iso_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-no-stat.out'), 'r', encoding='utf-8') as f:
+        ls_lR_no_stat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-stat-long-iso.out'), 'r', encoding='utf-8') as f:
+        ls_l_no_stat_long_iso = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-no-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        ls_lR_no_stat_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-stat-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
+        ls_l_no_stat_long_iso_streaming_json = json.loads(f.read())
+
     def test_ls_s_empty_dir(self):
         """
         Test plain 'ls' on an empty directory
@@ -313,6 +325,33 @@ class MyTests(unittest.TestCase):
         result = list(jc.parsers.ls_s.parse(['-rw-r--r-- 1 u g 0 Oct  1 12:00 trail  \r\n'], raw=True, quiet=True))
         self.assertEqual(result[0]['filename'], 'trail  ')
         self.assertEqual(result[0]['date'], 'Oct 1 12:00')
+
+    def test_ls_s_lR_no_stat(self):
+        """
+        Test 'ls -lR' with entries in a directory that can be read but not searched
+        """
+        self.assertEqual(list(jc.parsers.ls_s.parse(self.ls_lR_no_stat.splitlines(), quiet=True)), self.ls_lR_no_stat_streaming_json)
+
+    def test_ls_s_lR_no_stat_names(self):
+        """
+        Test that entries ls cannot stat are separate entries with null fields
+        """
+        result = list(jc.parsers.ls_s.parse(self.ls_lR_no_stat.splitlines(), raw=True, quiet=True))
+        self.assertEqual([(r['parent'], r['filename']) for r in result], [('.', 'locked'), ('.', 'open'), ('./locked', 'afile'), ('./locked', 'alink'), ('./locked', 'fifo'), ('./locked', 'sub'), ('./locked', 'two  sp'), ('./open', 'zfile')])
+        self.assertEqual(result[3], {'filename': 'alink', 'parent': './locked', 'flags': 'l?????????', 'links': None, 'owner': None, 'group': None, 'size': None, 'date': None})
+
+    def test_ls_s_l_no_stat_long_iso(self):
+        """
+        Test 'ls -l --time-style=long-iso' where the first entries cannot be stat'ed
+        """
+        self.assertEqual(list(jc.parsers.ls_s.parse(self.ls_l_no_stat_long_iso.splitlines(), quiet=True)), self.ls_l_no_stat_long_iso_streaming_json)
+
+    def test_ls_s_l_no_stat_device(self):
+        """
+        Test a character device entry that cannot be stat'ed
+        """
+        result = list(jc.parsers.ls_s.parse(['c????????? ? ? ? ?            ? tty0'], quiet=True))
+        self.assertEqual(result, [{'filename': 'tty0', 'flags': 'c?????????', 'links': None, 'owner': None, 'group': None, 'size': None, 'date': None}])
 
 
 if __name__ == '__main__':
