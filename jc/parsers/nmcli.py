@@ -232,8 +232,10 @@ def _normalize_value(value: str) -> Optional[str]:
     if value == '--':
         return None
 
-    if value.startswith('"') and value.endswith('"'):
-        value = value.strip('"')
+    # nmcli prints an empty string value as "". Other quote characters are
+    # part of the value (e.g. a connection named with quotes).
+    if value == '""':
+        return ''
 
     return value
 

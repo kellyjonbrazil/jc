@@ -278,5 +278,19 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.nmcli._remove_text_from_value('x' + blanks + 'y'), 'x' + blanks + 'y')
 
 
+    def test_nmcli_quoted_values(self):
+        """
+        Test 'nmcli' with values that contain double quote characters
+        """
+        data = 'connection.id:                          "CorpNet"\nconnection.uuid:                        ""\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(result[0]['connection_id'], '"CorpNet"')
+        self.assertEqual(result[0]['connection_uuid'], '')
+
+        data = 'NAME       UUID  TYPE  DEVICE\n"CorpNet"  a1    wifi  wlp1\nCorpNet    b2    wifi  wlp2\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], ['"CorpNet"', 'CorpNet'])
+
+
 if __name__ == '__main__':
     unittest.main()
