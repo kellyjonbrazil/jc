@@ -223,7 +223,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`getfacl` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -288,34 +288,41 @@ def parse(
     if jc.utils.has_data(data):
         header: Dict = {field: None for field in _header_fields}
 
-        for line in data.splitlines():
-            line = line.strip()
-
+        for raw_line in data.splitlines():
+            line = raw_line.strip()
             if not line:
                 continue
 
             if line.startswith('#'):
                 key, _, value = line.partition(':')
                 field = key.lstrip('#').strip()
-
                 if field in header:
                     if field == 'file':
                         header = {field: None for field in _header_fields}
-                    header[field] = value.strip() or None
-
+                        # only the line ending is removed from a file name,
+                        # so spaces at the end of the name are kept. The
+                        # name follows one space after the colon.
+                        value = raw_line.lstrip().partition(':')[2]
+                        if value.startswith(' '):
+                            value = value[1:]
+                        header[field] = value or None
+                    else:
+                        header[field] = value.strip() or None
                 continue
 
-            entry, _, comment = line.partition('#')
-            match = _entry_re.match(entry.rstrip())
-
+            # The whole line is an entry unless it ends with the
+            # `#effective:` comment, so a `#` can be part of a name
+            effective = None
+            match = _entry_re.match(line)
+            if not match:
+                comment_start = line.rfind('#effective:')
+                if comment_start > 0 and line[comment_start - 1] in ' \t':
+                    effective_match = _effective_re.match(line[comment_start + 1:])
+                    if effective_match:
+                        effective = effective_match.group('effective')
+                        match = _entry_re.match(line[:comment_start].rstrip())
             if not match:
                 continue
-
-            effective = None
-            effective_match = _effective_re.match(comment.strip())
-
-            if effective_match:
-                effective = effective_match.group('effective')
 
             raw_output.append({
                 'file': header['file'],
