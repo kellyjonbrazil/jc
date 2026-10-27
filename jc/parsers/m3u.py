@@ -60,7 +60,7 @@ Examples:
     ]
 """
 import shlex
-from typing import List, Dict
+from typing import List, Dict, Tuple
 import jc.utils
 
 
@@ -97,6 +97,36 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
+
+
+def _split_extinf(info_str: str) -> Tuple[str, str]:
+    """
+    Split the text after '#EXTINF:' at the first comma that is not inside
+    a double-quoted attribute value. Returns the duration/attributes part
+    and the title part. The title is empty if there is no such comma.
+    """
+    in_quote = False
+    index = 0
+
+    while index < len(info_str):
+        character = info_str[index]
+
+        if character == '\\':
+            # match shlex escapes: any character outside quotes, only
+            # a double quote or backslash inside quotes
+            if not in_quote or info_str[index + 1:index + 2] in ('"', '\\'):
+                index += 2
+                continue
+
+        elif character == '"':
+            in_quote = not in_quote
+
+        elif character == ',' and not in_quote:
+            return info_str[:index], info_str[index + 1:].strip()
+
+        index += 1
+
+    return info_str, ''
 
 
 def parse(
@@ -137,12 +167,13 @@ def parse(
                 # if a parsing error occurs, a warning message will be
                 # printed to STDERR and `unparsed_info` added
                 try:
-                    extline = shlex.shlex(splitline[1], posix=True)
+                    attributes, title = _split_extinf(splitline[1])
+                    extline = shlex.shlex(attributes, posix=True)
                     extline.whitespace_split = True
                     extline.whitespace = ', '  # add comma to whitespace detection
                     extline.quotes = '"'  # remove single quotes
                     extline_list = list(extline)
-                    runtime = extline_list.pop(0)
+                    runtime = extline_list.pop(0) if extline_list else ''
                     display_list = []
 
                     for item in extline_list:
@@ -152,6 +183,10 @@ def parse(
 
                         else:
                             display_list.append(item)
+
+                    # the title is everything after the first comma, as-is
+                    if title:
+                        display_list.append(title)
 
                     display = ' '.join(display_list)
                     output_line.update({
