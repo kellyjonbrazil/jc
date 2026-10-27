@@ -59,7 +59,7 @@ from datetime import datetime
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'TOML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -97,7 +97,10 @@ def _fix_objects(obj: Any) -> JSONDictType:
             if isinstance(v, datetime):
                 iso = v.isoformat()
                 v = int(round(v.timestamp()))
-                obj.update({k: v, f'{k}_iso': iso})
+                obj.update({k: v})
+                # do not replace a key of the same name from the document
+                if f'{k}_iso' not in obj:
+                    obj.update({f'{k}_iso': iso})
                 continue
 
             if isinstance(v, dict):
