@@ -27,6 +27,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--reserved-names.json'), 'r', encoding='utf-8') as f:
         reserved_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--header-names.out'), 'r', encoding='utf-8') as f:
+        header_names_in = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--header-names.json'), 'r', encoding='utf-8') as f:
+        header_names_json = json.loads(f.read())
+
     def test_http_headers_nodata(self):
         """
         Test 'http_headers' with no data
@@ -108,6 +114,12 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.http_headers.parse(self.reserved_in, raw=True, quiet=True)
         self.assertEqual(result[0]['_response_status'], 451)
         self.assertNotIn('date_epoch_utc', result[0])
+
+    def test_http_headers_header_names(self):
+        """
+        Test 'http_headers' with headers named like a method or HTTP version and headers with no space after the colon
+        """
+        self.assertEqual(jc.parsers.http_headers.parse(self.header_names_in, quiet=True), self.header_names_json)
 
 
 if __name__ == '__main__':

@@ -31,6 +31,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--reserved-names.json'), 'r', encoding='utf-8') as f:
         reserved_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--header-names.out'), 'r', encoding='utf-8') as f:
+        header_names_in = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/http_headers--header-names.json'), 'r', encoding='utf-8') as f:
+        header_names_json = json.loads(f.read())
+
     def test_curl_head_nodata(self):
         """
         Test 'curl_head' with no data
@@ -89,6 +95,16 @@ class MyTests(unittest.TestCase):
         with contextlib.redirect_stderr(err):
             jc.parsers.curl_head.parse(data, quiet=True)
         self.assertEqual(err.getvalue(), '')
+
+    def test_curl_head_header_names(self):
+        """
+        Test 'curl_head' with headers named like a method or HTTP version and headers with no space after the colon
+        """
+        data = '* Connected\n> HEAD / HTTP/1.1\n> Host: a\n> \n' + ''.join('< ' + x + '\n' for x in self.header_names_in.splitlines())
+        result = jc.parsers.curl_head.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]['_type'], 'request')
+        self.assertEqual(result[1], self.header_names_json[0])
 
 
 if __name__ == '__main__':
