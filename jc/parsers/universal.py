@@ -1,5 +1,46 @@
 r"""jc - JSON Convert universal parsers"""
+import re
+import unicodedata
+from functools import lru_cache
 from typing import Iterable, List, Dict
+
+
+_NON_ASCII = re.compile('[^\x00-\x7f]')
+
+
+@lru_cache(maxsize=4096)
+def _char_width(char: str) -> int:
+    """Number of terminal cells a character fills."""
+    if unicodedata.combining(char) or unicodedata.category(char) == 'Cf':
+        return 0
+
+    if unicodedata.east_asian_width(char) in ('W', 'F'):
+        return 2
+
+    return 1
+
+
+def _cell_starts(text: str) -> List[int]:
+    """Return the display cell at the start of each character of text."""
+    cell_at_char: List[int] = []
+    cell = 0
+    for char in text:
+        cell_at_char.append(cell)
+        cell += 1 if char < '\x80' else _char_width(char)
+
+    return cell_at_char
+
+
+def _cell_chars(text: str) -> List[int]:
+    """Return the character index at each display cell of text."""
+    char_at_cell: List[int] = []
+    for i, char in enumerate(text):
+        if char < '\x80':
+            char_at_cell.append(i)
+        else:
+            char_at_cell.extend([i] * _char_width(char))
+
+    return char_at_cell
 
 
 def simple_table_parse(data: Iterable[str]) -> List[Dict]:
@@ -53,6 +94,11 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
     Blank cells are converted to None in the resulting dictionary. Data
     elements must line up within column boundaries.
 
+    Column positions are measured in display cells: East Asian wide and
+    fullwidth characters count as two cells, combining characters and
+    zero-width format characters count as zero cells, and all other
+    characters count as one cell.
+
     Example Table:
 
         col_1        col_2     col_3     col_4         col_5
@@ -98,13 +144,17 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
     # starting just after the previous one, so repeated names and any kind
     # of whitespace between names are handled. The end of a column is the
     # character just before the start of the next header name.
+    header_cells = None
+    if _NON_ASCII.search(header_text):
+        header_cells = _cell_starts(header_text)
+
     header_spec_list = []
     col_start = header_text.find(header_list[0])
     for i, column in enumerate(header_list[0:len(header_list) - 1]):
         col_start = header_text.find(header_list[i + 1], col_start + len(column))
         header_spec = {
             'name': column,
-            'end': col_start - 1
+            'end': (header_cells[col_start] if header_cells else col_start) - 1
         }
 
         header_spec_list.append(header_spec)
@@ -113,7 +163,15 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
     # and the row is sliced at those positions. The character at each cut
     # position is dropped.
     for entry in data:
-        entry_len = len(entry)
+        # rows with non-ASCII characters map the column positions from
+        # display cells to character indexes
+        row_cells = None
+        if _NON_ASCII.search(entry):
+            row_cells = _cell_chars(entry)
+            entry_len = len(row_cells)
+        else:
+            entry_len = len(entry)
+
         cuts: List[int] = []
 
         # positions past the end of the line are treated as whitespace, so
@@ -127,6 +185,9 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
             if h_end >= entry_len:
                 trailing_cuts += 1
                 continue
+
+            if row_cells:
+                h_end = row_cells[h_end]
 
             # the characters between the previous cut and the end of its
             # column are known to not be whitespace, so start the search

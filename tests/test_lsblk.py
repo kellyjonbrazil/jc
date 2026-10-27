@@ -40,6 +40,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-invisible-separator.json'), 'r', encoding='utf-8') as f:
         generic_lsblk_invisible_separator_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-wide-chars.out'), 'r', encoding='utf-8') as f:
+        generic_lsblk_wide_chars = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-wide-chars.json'), 'r', encoding='utf-8') as f:
+        generic_lsblk_wide_chars_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-zero-width.out'), 'r', encoding='utf-8') as f:
+        generic_lsblk_zero_width = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-zero-width.json'), 'r', encoding='utf-8') as f:
+        generic_lsblk_zero_width_json = json.loads(f.read())
+
 
     def test_lsblk_nodata(self):
         """
@@ -95,6 +107,18 @@ sr0                   11:0    1    1073741312  0 rom'''
         Test 'lsblk' with a U+2063 invisible separator in a label
         """
         self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_invisible_separator, quiet=True), self.generic_lsblk_invisible_separator_json)
+
+    def test_lsblk_wide_chars(self):
+        """
+        Test 'lsblk' with wide, combining and zero-width characters in labels
+        """
+        self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_wide_chars, quiet=True), self.generic_lsblk_wide_chars_json)
+
+    def test_lsblk_zero_width(self):
+        """
+        Test 'lsblk' with a zero-width space at the end of a full-width label
+        """
+        self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_zero_width, quiet=True), self.generic_lsblk_zero_width_json)
 
 if __name__ == '__main__':
     unittest.main()

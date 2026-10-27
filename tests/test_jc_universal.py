@@ -155,5 +155,39 @@ class MyTests(unittest.TestCase):
         self.assertEqual(sparse_table_parse(data), [{'a': None}] * 100)
 
 
+    def test_sparse_table_parse_display_width(self):
+        """
+        Test sparse_table_parse measures column positions in display cells
+        """
+        data = [
+            'name      label     size',
+            '\u5171\u6709\u30e1\u30e2  x         10',
+            'a\u200bb       cafe\u0301      20',
+            'c\ufeff         \u65e5\u672c\u8a9e\u30e9  30',
+            'd         e\u0301\u0302\u2063f        40'
+        ]
+        expected = [
+            {'name': '\u5171\u6709\u30e1\u30e2', 'label': 'x', 'size': '10'},
+            {'name': 'a\u200bb', 'label': 'cafe\u0301', 'size': '20'},
+            {'name': 'c\ufeff', 'label': '\u65e5\u672c\u8a9e\u30e9', 'size': '30'},
+            {'name': 'd', 'label': 'e\u0301\u0302\u2063f', 'size': '40'}
+        ]
+        self.assertEqual(sparse_table_parse(data), expected)
+
+    def test_sparse_table_parse_wide_header(self):
+        """
+        Test sparse_table_parse with wide characters in the header row
+        """
+        data = [
+            '\u540d\u524d  \u30b5\u30a4\u30ba  note',
+            'ab    12        x y',
+            '\u5171\u6709  3\u0301        \u65e5'
+        ]
+        expected = [
+            {'\u540d\u524d': 'ab', '\u30b5\u30a4\u30ba': '12', 'note': 'x y'},
+            {'\u540d\u524d': '\u5171\u6709', '\u30b5\u30a4\u30ba': '3\u0301', 'note': '\u65e5'}
+        ]
+        self.assertEqual(sparse_table_parse(data), expected)
+
 if __name__ == '__main__':
     unittest.main()
