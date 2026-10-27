@@ -186,7 +186,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.1'
     description = '`net user` command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'

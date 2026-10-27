@@ -125,7 +125,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.4'
     description = 'ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

@@ -177,7 +177,7 @@ _DATETIME_RE = re.compile(
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.1'
     description = '`ics` file parser'
     author = 'Paolo Valletta'
     author_email = 'paolovalletta@hotmail.it'

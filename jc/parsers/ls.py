@@ -152,7 +152,7 @@ _LONG_ISO_TIME_RE = re.compile(r'^\d{2}:\d{2}$')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.15'
+    version = '1.14'
     description = '`ls` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
