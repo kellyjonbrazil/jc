@@ -258,6 +258,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(second['filename'], 'run.sh')
         self.assertEqual(consumed[-1], 5)
 
+    def test_ls_s_lR_empty_folders_osx_layout(self):
+        """
+        Test macOS 'ls -lR' layout with several empty directories in a row (no 'total' lines)
+        """
+        data = 'total 8\ndrwxr-xr-x  2 u  staff   64 Jan  3 14:46 a\ndrwxr-xr-x  2 u  staff   64 Jan  3 14:46 b\n-rw-r--r--  1 u  staff  400 Jan  3 14:46 id_rsa.pub\n\n./a:\n\n./b:\n\n./c:\ntotal 8\n-rw-r--r--  1 u  staff  12 Jan  3 14:46 notes\n\n./d:\n'
+        result = list(jc.parsers.ls_s.parse(data.split('\n'), raw=True, quiet=True))
+        self.assertEqual([r['filename'] for r in result], ['a', 'b', 'id_rsa.pub', 'notes'])
+        self.assertEqual([r.get('parent') for r in result], [None, None, None, './c'])
+
 
 if __name__ == '__main__':
     unittest.main()

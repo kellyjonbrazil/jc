@@ -343,12 +343,17 @@ def parse(data, raw=False, quiet=False):
                     parent = entry[:-1]
                     new_section = True
 
-                    # fixup to remove trailing \n in previous entry
-                    if raw_output:
-                        if filename_extra:
-                            raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
-                            filename_extra = []
-                        raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
+                    # the blank line before the header is not part of the
+                    # previous filename. It is only in filename_extra if it
+                    # was collected there (macOS prints no 'total' line for
+                    # an empty directory, so that blank line is skipped)
+                    if filename_extra and filename_extra[-1] == '' and prev_line == '':
+                        filename_extra.pop()
+
+                    if raw_output and filename_extra:
+                        raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
+
+                    filename_extra = []
                     continue
 
                 # 'total 1234' is only printed directly after a parent line
