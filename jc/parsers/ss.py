@@ -346,6 +346,11 @@ class info():
 __version__ = info.version
 
 
+def _is_port_number(value):
+    """Return True if the port value consists only of ASCII digits."""
+    return isinstance(value, str) and re.fullmatch(r'[0-9]+', value) is not None
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -365,12 +370,14 @@ def _process(proc_data):
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
-        if 'local_port' in entry:
+        # only a port written as digits is a number: a service name such as
+        # `x11` or `pop3` contains digits but is not a port number
+        if 'local_port' in entry and _is_port_number(entry['local_port']):
             local_num = jc.utils.convert_to_int(entry['local_port'])
             if local_num is not None and local_num >= 0:
                 entry['local_port_num'] = local_num
 
-        if 'peer_port' in entry:
+        if 'peer_port' in entry and _is_port_number(entry['peer_port']):
             peer_num = jc.utils.convert_to_int(entry['peer_port'])
             if peer_num is not None and peer_num >= 0:
                 entry['peer_port_num'] = peer_num
@@ -524,7 +531,7 @@ def parse(data, raw=False, quiet=False):
         header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')
         header_text = header_text.replace('peer address:port', 'peer_address peer_port')
-        header_text = header_text.replace('portprocess', 'port')  # don't support process info today
+        header_text = re.sub(r'port *process', 'port', header_text)  # don't support process info today
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()

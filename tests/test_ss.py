@@ -64,6 +64,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-cgroup-spaces.json'), 'r', encoding='utf-8') as f:
         ss_cgroup_spaces_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-service-port-names.out'), 'r', encoding='utf-8') as f:
+        generic_ss_service_port_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-service-port-names.json'), 'r', encoding='utf-8') as f:
+        generic_ss_service_port_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-port-process-header.out'), 'r', encoding='utf-8') as f:
+        generic_ss_port_process_header = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-port-process-header.json'), 'r', encoding='utf-8') as f:
+        generic_ss_port_process_header_json = json.loads(f.read())
+
     def test_ss_nodata(self):
         """
         Test 'ss' with no data
@@ -226,6 +238,19 @@ class MyTests(unittest.TestCase):
                 opts = jc.parsers.ss.parse(header + row + opts_text + '\n', quiet=True)[0]['opts']
                 expected.update({'uid_number': '1000', 'inode_number': '5', 'cookie': 'a006'})
                 self.assertEqual(opts, expected)
+
+    def test_ss_service_port_names(self):
+        """
+        Test 'ss' with service names that contain digits as ports
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.generic_ss_service_port_names, quiet=True), self.generic_ss_service_port_names_json)
+
+    def test_ss_port_process_header(self):
+        """
+        Test 'ss' with a 'Port Process' header written with a space
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.generic_ss_port_process_header, quiet=True), self.generic_ss_port_process_header_json)
+
 
 
 if __name__ == '__main__':
