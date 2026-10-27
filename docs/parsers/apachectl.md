@@ -166,4 +166,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/apachectl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/apachectl.py)
 
-Version 1.2 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
+Version 1.3 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
