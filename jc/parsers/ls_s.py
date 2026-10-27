@@ -136,6 +136,36 @@ def _is_blank(line):
     return isinstance(line, str) and not line.strip()
 
 
+def _split_entry(line, field_count):
+    """
+    Split an `ls -l` entry line into its first `field_count` fields,
+    which are separated by runs of spaces, and the filename. `ls` prints
+    exactly one space between the date and the filename, so the filename
+    is the rest of the line after that space and keeps any leading or
+    trailing whitespace. The filename is None if the line ends after the
+    last field.
+    """
+    fields = []
+    pos = 0
+    length = len(line)
+
+    while len(fields) < field_count:
+        while pos < length and line[pos] in ' \t':
+            pos += 1
+
+        if pos == length:
+            break
+
+        start = pos
+        while pos < length and line[pos] not in ' \t':
+            pos += 1
+
+        fields.append(line[start:pos])
+
+    filename = line[pos + 1:] if pos < length else None
+    return fields, filename
+
+
 def _is_total(line):
     """Return True if the line is a 'total 1234' block count line."""
     return isinstance(line, str) and bool(re.match(r'total [0-9]+', line))
@@ -151,7 +181,7 @@ def _is_section_header(line, prev_line, next_line):
     output. `prev_line` and `next_line` are None at the start and end of
     the output.
     """
-    if not line.strip().endswith(':'):
+    if not line.endswith(':'):
         return False
 
     if prev_line is not None and not _is_blank(prev_line):
@@ -241,6 +271,13 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
         try:
             streaming_line_input_type_check(line)
 
+            # remove only the line ending: filenames can start or end
+            # with whitespace
+            if line.endswith('\n'):
+                line = line[:-1]
+            if line.endswith('\r'):
+                line = line[:-1]
+
             # skip blank lines
             if not line.strip():
                 new_section = False
@@ -248,7 +285,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
 
             # Look for parent line if glob or -R is used
             if _is_section_header(line, prev_line, next_line):
-                parent = line.strip()[:-1]
+                parent = line[:-1]
                 new_section = True
                 continue
 
@@ -272,15 +309,15 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             # date field width is consistent for the whole `ls` invocation,
             # so it only needs to be detected once per stream
             if date_width is None:
-                date_width = _detect_date_width(line.strip())
+                date_width = _detect_date_width(line)
 
             fixed_width = 4 + size_width + date_width
-            parsed_line = line.strip().split(maxsplit=fixed_width)
+            parsed_line, filename = _split_entry(line, fixed_width)
             output_line = {}
 
             # split filenames and links
-            if len(parsed_line) == fixed_width + 1:
-                filename_field = parsed_line[fixed_width].split(' -> ')
+            if filename is not None:
+                filename_field = filename.split(' -> ')
             else:
                 # in case of filenames starting with a newline character
                 filename_field = ['']

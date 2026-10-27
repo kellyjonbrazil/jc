@@ -183,6 +183,36 @@ def _detect_date_width(sample_line):
     return 3
 
 
+def _split_entry(line, field_count):
+    """
+    Split an `ls -l` entry line into its first `field_count` fields,
+    which are separated by runs of spaces, and the filename. `ls` prints
+    exactly one space between the date and the filename, so the filename
+    is the rest of the line after that space and keeps any leading or
+    trailing whitespace. The filename is None if the line ends after the
+    last field.
+    """
+    fields = []
+    pos = 0
+    length = len(line)
+
+    while len(fields) < field_count:
+        while pos < length and line[pos] in ' \t':
+            pos += 1
+
+        if pos == length:
+            break
+
+        start = pos
+        while pos < length and line[pos] not in ' \t':
+            pos += 1
+
+        fields.append(line[start:pos])
+
+    filename = line[pos + 1:] if pos < length else None
+    return fields, filename
+
+
 def _is_total(line):
     """Return True if the line is a 'total 1234' block count line."""
     return bool(re.match(r'total [0-9]+', line))
@@ -386,11 +416,11 @@ def parse(data, raw=False, quiet=False):
                 size_width = 2 if device else 1
                 fixed_width = 4 + size_width + date_width
 
-                parsed_line = entry.split(maxsplit=fixed_width)
+                parsed_line, filename = _split_entry(entry, fixed_width)
 
                 # split filenames and links
-                if len(parsed_line) == fixed_width + 1:
-                    filename_field = parsed_line[fixed_width].split(' -> ')
+                if filename is not None:
+                    filename_field = filename.split(' -> ')
                 else:
                     # in case of filenames starting with a newline character
                     filename_field = ['']

@@ -256,6 +256,17 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-total.json'), 'r', encoding='utf-8') as f:
         ls_l_no_total_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-spaces.out'), 'r', encoding='utf-8') as f:
+        ls_lR_spaces = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-spaces-long-iso.out'), 'r', encoding='utf-8') as f:
+        ls_l_spaces_long_iso = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-spaces.json'), 'r', encoding='utf-8') as f:
+        ls_lR_spaces_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-spaces-long-iso.json'), 'r', encoding='utf-8') as f:
+        ls_l_spaces_long_iso_json = json.loads(f.read())
 
     def test_ls_empty_dir(self):
         """
@@ -552,6 +563,34 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.ls.parse(data, raw=True, quiet=True)
         self.assertEqual([r['filename'] for r in result], ['a', 'b', 'id_rsa.pub', 'notes\nmore'])
         self.assertEqual([r.get('parent') for r in result], [None, None, None, './c'])
+
+    def test_ls_lR_spaces(self):
+        """
+        Test 'ls -lR' with filenames and a directory name that start or end with whitespace
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_lR_spaces, quiet=True), self.ls_lR_spaces_json)
+
+    def test_ls_lR_spaces_names(self):
+        """
+        Test that leading, trailing, repeated, and whitespace-only filenames are kept as printed
+        """
+        result = jc.parsers.ls.parse(self.ls_lR_spaces, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['  ', ' lead', ' sub ', 'co:lon', 'plain', 'trail ', 'two  sp', '\xa0nbsp', '\xfcn\xef', 'x '])
+        self.assertEqual(result[-1]['parent'], './ sub ')
+        self.assertEqual(result[0]['date'], 'Oct 1 12:00')
+
+    def test_ls_l_spaces_long_iso(self):
+        """
+        Test 'ls -l --time-style=long-iso' with filenames that start or end with whitespace
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_spaces_long_iso, quiet=True), self.ls_l_spaces_long_iso_json)
+
+    def test_ls_l_device_leading_space(self):
+        """
+        Test a device entry whose filename starts with a space
+        """
+        result = jc.parsers.ls.parse('crw-rw-rw- 1 root root 1, 3 Sep 16 08:00  null\n', quiet=True)
+        self.assertEqual(result, [{'filename': ' null', 'flags': 'crw-rw-rw-', 'links': 1, 'owner': 'root', 'group': 'root', 'major_number': 1, 'minor_number': 3, 'date': 'Sep 16 08:00'}])
 
 
 if __name__ == '__main__':
