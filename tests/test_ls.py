@@ -280,6 +280,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-stat-long-iso.json'), 'r', encoding='utf-8') as f:
         ls_l_no_stat_long_iso_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-arrows.out'), 'r', encoding='utf-8') as f:
+        ls_l_arrows = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-arrows.json'), 'r', encoding='utf-8') as f:
+        ls_l_arrows_json = json.loads(f.read())
+
     def test_ls_empty_dir(self):
         """
         Test plain 'ls' on an empty directory
@@ -630,6 +636,20 @@ class MyTests(unittest.TestCase):
         """
         result = jc.parsers.ls.parse('c????????? ? ? ? ?            ? tty0\n', quiet=True)
         self.assertEqual(result, [{'filename': 'tty0', 'flags': 'c?????????', 'links': None, 'owner': None, 'group': None, 'size': None, 'date': None}])
+
+    def test_ls_l_arrows(self):
+        """
+        Test 'ls -l' with ' -> ' in the names of files, directories, and symbolic links
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_arrows, quiet=True), self.ls_l_arrows_json)
+
+    def test_ls_l_arrows_link_to(self):
+        """
+        Test that only symbolic links get link_to, split at the first ' -> '
+        """
+        result = jc.parsers.ls.parse(self.ls_l_arrows, raw=True, quiet=True)
+        self.assertEqual([(r['filename'], r.get('link_to')) for r in result], [('arrowtarget', 'a -> b'), ('deploy.key', None), ('deploy.key -> old', None), ('dir -> y', None), ('lnk', 'x -> target'), ('normallnk', 'tgt')])
+        self.assertEqual(result[2]['flags'], '-rw-r--r--.')
 
 
 if __name__ == '__main__':

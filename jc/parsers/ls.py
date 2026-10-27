@@ -12,6 +12,10 @@ minor numbers in that column rather than a byte count.
 Entries that `ls` cannot stat (e.g. `-????????? ? ? ? ?  ? name`) report
 `null` for `links`, `owner`, `group`, `size`, and `date`.
 
+Only symbolic link (`l`) entries have a `link_to` field. The filename is
+split at the first ` -> `, so a link whose name contains ` -> ` reports
+the rest of its name as part of `link_to`.
+
 `--time-style=iso` is not supported since its date field is a different
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
@@ -429,13 +433,15 @@ def parse(data, raw=False, quiet=False):
                 parsed_line, filename = _split_entry(entry, fixed_width)
 
                 # split filenames and links
-                if no_stat:
-                    filename_field = [filename or '']
-                elif filename is not None:
-                    filename_field = filename.split(' -> ')
-                else:
+                if filename is None:
                     # in case of filenames starting with a newline character
                     filename_field = ['']
+                elif entry[0] == 'l' and not no_stat:
+                    # only symbolic links print ' -> target'. A link name that
+                    # contains ' -> ' is ambiguous, so split at the first one
+                    filename_field = filename.split(' -> ', 1)
+                else:
+                    filename_field = [filename]
 
                 # create list of dictionaries
                 output_line['filename'] = filename_field[0]
