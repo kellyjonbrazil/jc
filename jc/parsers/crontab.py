@@ -167,6 +167,7 @@ Examples:
       ]
     }
 """
+import re
 import jc.utils
 import jc.parsers.universal
 
@@ -183,6 +184,10 @@ class info():
 
 
 __version__ = info.version
+
+# a variable line: NAME=value or NAME = value, where NAME has no spaces (or
+# is quoted). A job line has its schedule fields before any '='.
+_VAR_RE = re.compile(r'''\s*(?:"[^"]*"|'[^']*'|[^\s=]+)\s*=''')
 
 
 def _process(proc_data):
@@ -243,7 +248,7 @@ def parse(data, raw=False, quiet=False):
         cron_var = []
         remaining = []
         for line in reversed(cleandata):
-            if '=' in line \
+            if _VAR_RE.match(line) \
                 and not line.strip()[0].isdigit() \
                 and not line.strip()[0] == '@' \
                 and not line.strip()[0] == '*':

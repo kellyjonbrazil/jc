@@ -70,6 +70,12 @@ class MyTests(unittest.TestCase):
     ), 'r', encoding='utf-8') as f:
         whitespace_comments_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-job-with-equals.out'), 'r', encoding='utf-8') as f:
+        generic_crontab_job_with_equals = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-job-with-equals.json'), 'r', encoding='utf-8') as f:
+        generic_crontab_job_with_equals_json = json.loads(f.read())
+
     def test_crontab_nodata(self):
         """
         Test 'crontab' with no data
@@ -180,6 +186,12 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.crontab.parse(data, raw=True, quiet=True)
         self.assertEqual(result['variables'], [{'name': 'B', 'value': '2'}, {'name': 'A', 'value': '1'}])
         self.assertEqual([x['command'] for x in result['schedule']], ['cmd1', 'cmd2', 'y z', 'x'])
+
+    def test_crontab_job_with_equals(self):
+        """
+        Test 'crontab' with job lines that contain '=' and do not start with a digit
+        """
+        self.assertEqual(jc.parsers.crontab.parse(self.generic_crontab_job_with_equals, quiet=True), self.generic_crontab_job_with_equals_json)
 
 
 if __name__ == '__main__':
