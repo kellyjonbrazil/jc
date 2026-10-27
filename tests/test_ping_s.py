@@ -454,53 +454,53 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-error-bare-address-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping6_bsd_error_bare_address_streaming_json = json.loads(f.read())
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-n-hostname.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_n_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-n-hostname.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_n_hostname = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-n-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_n_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-n-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_n_hostname_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-H-ip.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_H_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-H-ip.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_H_ip = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-H-ip-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_H_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-H-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_H_ip_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-digit-hostname.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_digit_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-digit-hostname.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_digit_hostname = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-digit-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_digit_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-digit-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_digit_hostname_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-hostname-with-spaces.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_hostname_with_spaces = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-hostname-with-spaces.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_hostname_with_spaces = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-hostname-with-spaces-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_hostname_with_spaces_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-hostname-with-spaces-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_hostname_with_spaces_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-icmp-req.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_icmp_req = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-icmp-req.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_icmp_req = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-icmp-req-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_icmp_req_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-icmp-req-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_icmp_req_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-reply-H-ip.out'), 'r', encoding='utf-8') as f:
-        generic_ping6_reply_H_ip = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-H-ip.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_reply_H_ip = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-reply-H-ip-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping6_reply_H_ip_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-H-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_reply_H_ip_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-reply-n-hostname.out'), 'r', encoding='utf-8') as f:
-        generic_ping6_reply_n_hostname = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-n-hostname.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_reply_n_hostname = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-reply-n-hostname-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping6_reply_n_hostname_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-n-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_reply_n_hostname_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-no-time.out'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_no_time = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-no-time.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_no_time = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-reply-no-time-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_ping_reply_no_time_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-no-time-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_no_time_streaming_json = json.loads(f.read())
 
 
 
@@ -973,53 +973,53 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_bsd_error_bare_address.splitlines(), quiet=True)), self.generic_ping6_bsd_error_bare_address_streaming_json)
 
 
-    def test_ping_s_reply_n_hostname(self):
+    def test_ping_s_linux_reply_n_hostname(self):
         """
         Test 'ping -n <hostname>' on linux where replies show only the address
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_n_hostname.splitlines(), quiet=True)), self.generic_ping_reply_n_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_n_hostname.splitlines(), quiet=True)), self.generic_ping_linux_reply_n_hostname_streaming_json)
 
-    def test_ping_s_reply_H_ip(self):
+    def test_ping_s_linux_reply_H_ip(self):
         """
         Test 'ping -H <ip>' on linux where replies show a resolved name
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_H_ip.splitlines(), quiet=True)), self.generic_ping_reply_H_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_H_ip.splitlines(), quiet=True)), self.generic_ping_linux_reply_H_ip_streaming_json)
 
-    def test_ping_s_reply_digit_hostname(self):
+    def test_ping_s_linux_reply_digit_hostname(self):
         """
         Test 'ping -D <hostname>' on linux with a host name that starts with a digit
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_digit_hostname.splitlines(), quiet=True)), self.generic_ping_reply_digit_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_digit_hostname.splitlines(), quiet=True)), self.generic_ping_linux_reply_digit_hostname_streaming_json)
 
-    def test_ping_s_reply_hostname_with_spaces(self):
+    def test_ping_s_linux_reply_hostname_with_spaces(self):
         """
         Test 'ping <hostname>' on linux where the resolved name contains spaces
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_hostname_with_spaces.splitlines(), quiet=True)), self.generic_ping_reply_hostname_with_spaces_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_hostname_with_spaces.splitlines(), quiet=True)), self.generic_ping_linux_reply_hostname_with_spaces_streaming_json)
 
-    def test_ping_s_reply_icmp_req(self):
+    def test_ping_s_linux_reply_icmp_req(self):
         """
         Test 'ping <hostname>' on linux with old iputils 'icmp_req' reply lines
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_icmp_req.splitlines(), quiet=True)), self.generic_ping_reply_icmp_req_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_icmp_req.splitlines(), quiet=True)), self.generic_ping_linux_reply_icmp_req_streaming_json)
 
-    def test_ping6_s_reply_H_ip(self):
+    def test_ping6_s_linux_reply_H_ip(self):
         """
         Test 'ping6 -H <ip>' on linux where replies show a resolved name
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_reply_H_ip.splitlines(), quiet=True)), self.generic_ping6_reply_H_ip_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_linux_reply_H_ip.splitlines(), quiet=True)), self.generic_ping6_linux_reply_H_ip_streaming_json)
 
-    def test_ping6_s_reply_n_hostname(self):
+    def test_ping6_s_linux_reply_n_hostname(self):
         """
         Test 'ping6 -n -D <hostname>' on linux where replies show only the address
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_reply_n_hostname.splitlines(), quiet=True)), self.generic_ping6_reply_n_hostname_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping6_linux_reply_n_hostname.splitlines(), quiet=True)), self.generic_ping6_linux_reply_n_hostname_streaming_json)
 
-    def test_ping_s_reply_no_time(self):
+    def test_ping_s_linux_reply_no_time(self):
         """
         Test 'ping -s 4 <ip>' on linux with reply lines that have no time field
         """
-        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_reply_no_time.splitlines(), quiet=True)), self.generic_ping_reply_no_time_streaming_json)
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_no_time.splitlines(), quiet=True)), self.generic_ping_linux_reply_no_time_streaming_json)
 
 if __name__ == '__main__':
     unittest.main()
