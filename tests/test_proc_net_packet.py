@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_net_packet': (
                 'fixtures/linux-proc/net_packet',
-                'fixtures/linux-proc/net_packet.json')
+                'fixtures/linux-proc/net_packet.json'),
+            'proc_net_packet2': (
+                'fixtures/linux-proc/net_packet2',
+                'fixtures/linux-proc/net_packet2.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_net_packet.parse(self.f_in['proc_net_packet'], quiet=True),
                                                           self.f_json['proc_net_packet'])
+
+    def test_proc_net_packet2(self):
+        """
+        Test '/proc/net/packet' from a 64-bit kernel with several sockets
+        """
+        self.assertEqual(jc.parsers.proc_net_packet.parse(self.f_in['proc_net_packet2'], quiet=True),
+                                                          self.f_json['proc_net_packet2'])
 
 
     def test_proc_net_packet_multiple_rows(self):
