@@ -195,4 +195,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/nfsiostat_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/nfsiostat_s.py)
 
-Version 1.2 by Yang Bai (271969568+ybai08@users.noreply.github.com)
+Version 1.1 by Yang Bai (271969568+ybai08@users.noreply.github.com)
