@@ -46,11 +46,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/stat-missing-data.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_stat_missing_data_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows.out'), 'r', encoding='utf-8') as f:
-        generic_stat_arrows = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-linux-arrows.out'), 'r', encoding='utf-8') as f:
+        generic_stat_linux_arrows = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows.json'), 'r', encoding='utf-8') as f:
-        generic_stat_arrows_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-linux-arrows.json'), 'r', encoding='utf-8') as f:
+        generic_stat_linux_arrows_json = json.loads(f.read())
 
     def test_stat_nodata(self):
         """
@@ -98,13 +98,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'stat' with ' -> ' in the names of files, directories, and symbolic links
         """
-        self.assertEqual(jc.parsers.stat.parse(self.generic_stat_arrows, quiet=True), self.generic_stat_arrows_json)
+        self.assertEqual(jc.parsers.stat.parse(self.generic_stat_linux_arrows, quiet=True), self.generic_stat_linux_arrows_json)
 
     def test_stat_arrows_link_to(self):
         """
         Test that only symbolic links get link_to, split at the first ' -> '
         """
-        result = jc.parsers.stat.parse(self.generic_stat_arrows, raw=True, quiet=True)
+        result = jc.parsers.stat.parse(self.generic_stat_linux_arrows, raw=True, quiet=True)
         self.assertEqual([(r['file'], r.get('link_to')) for r in result], [('arrowtarget', 'a -> b'), ('deploy.key', None), ('deploy.key -> old', None), ('dir -> y', None), ('lnk', 'x -> target'), ('normallnk', 'tgt')])
         self.assertEqual(result[2]['type'], 'regular empty file')
 

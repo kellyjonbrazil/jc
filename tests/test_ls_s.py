@@ -111,34 +111,34 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_entry_like_dirnames_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-spaces.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-spaces.out'), 'r', encoding='utf-8') as f:
         ls_lR_spaces = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-spaces-long-iso.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-spaces-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_spaces_long_iso = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-spaces-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-spaces-streaming.json'), 'r', encoding='utf-8') as f:
         ls_lR_spaces_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-spaces-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-spaces-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_spaces_long_iso_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-no-stat.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-no-stat.out'), 'r', encoding='utf-8') as f:
         ls_lR_no_stat = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-stat-long-iso.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-stat-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_no_stat_long_iso = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-lR-no-stat-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-no-stat-streaming.json'), 'r', encoding='utf-8') as f:
         ls_lR_no_stat_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-stat-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-stat-long-iso-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_no_stat_long_iso_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-arrows.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-arrows.out'), 'r', encoding='utf-8') as f:
         ls_l_arrows = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-arrows-streaming.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-arrows-streaming.json'), 'r', encoding='utf-8') as f:
         ls_l_arrows_streaming_json = json.loads(f.read())
 
     def test_ls_s_empty_dir(self):

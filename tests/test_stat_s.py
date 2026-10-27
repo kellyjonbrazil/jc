@@ -45,11 +45,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/stat-streaming.json'), 'r', encoding='utf-8') as f:
         freebsd12_stat_streaming_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows.out'), 'r', encoding='utf-8') as f:
-        generic_stat_arrows = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-linux-arrows.out'), 'r', encoding='utf-8') as f:
+        generic_stat_linux_arrows = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows-streaming.json'), 'r', encoding='utf-8') as f:
-        generic_stat_arrows_streaming_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-linux-arrows-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_stat_linux_arrows_streaming_json = json.loads(f.read())
 
     def test_stat_s_nodata(self):
         """
@@ -97,13 +97,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'stat' with ' -> ' in the names of files, directories, and symbolic links
         """
-        self.assertEqual(list(jc.parsers.stat_s.parse(self.generic_stat_arrows.splitlines(), quiet=True)), self.generic_stat_arrows_streaming_json)
+        self.assertEqual(list(jc.parsers.stat_s.parse(self.generic_stat_linux_arrows.splitlines(), quiet=True)), self.generic_stat_linux_arrows_streaming_json)
 
     def test_stat_s_arrows_link_to(self):
         """
         Test that only symbolic links get link_to, split at the first ' -> '
         """
-        result = list(jc.parsers.stat_s.parse(self.generic_stat_arrows.splitlines(), raw=True, quiet=True))
+        result = list(jc.parsers.stat_s.parse(self.generic_stat_linux_arrows.splitlines(), raw=True, quiet=True))
         self.assertEqual([(r['file'], r.get('link_to')) for r in result], [('arrowtarget', 'a -> b'), ('deploy.key', None), ('deploy.key -> old', None), ('dir -> y', None), ('lnk', 'x -> target'), ('normallnk', 'tgt')])
         self.assertEqual(result[2]['type'], 'regular empty file')
 
