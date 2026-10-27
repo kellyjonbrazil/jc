@@ -2,6 +2,7 @@ import os
 import unittest
 import json
 import plistlib
+from datetime import datetime
 import tempfile
 from unittest import mock
 import jc.parsers.plist
@@ -173,6 +174,23 @@ class MyTests(unittest.TestCase):
                 with self.assertRaises(Exception):
                     jc.parsers.plist.parse('{', quiet=True)
                 self.assertEqual([], os.listdir(tmp_dir))
+
+    def test_plist_existing_iso_key(self):
+        """
+        Test 'plist' with a key that has the same name as a generated _iso key
+        """
+        data = {
+            'built': datetime(1979, 5, 27, 7, 32, 0),
+            'built_iso': 'my own value',
+            'nested': {'when_iso': 5, 'when': datetime(2020, 1, 1, 0, 0, 0)},
+            'other': datetime(2021, 1, 1, 0, 0, 0)
+        }
+        result = jc.parsers.plist.parse(plistlib.dumps(data), quiet=True)
+        self.assertEqual(result['built_iso'], 'my own value')
+        self.assertEqual(result['nested']['when_iso'], 5)
+        self.assertIsInstance(result['nested']['when'], int)
+        self.assertEqual(result['other_iso'], '2021-01-01T00:00:00')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,11 @@
 r"""jc - JSON Convert `file` command output parser
 
+> Note: `file` output does not mark where the file name ends, so each
+> line is split at the last `: ` (at the first `: ` for gzip files, whose
+> description includes `last modified: `). A description that contains
+> `: `, for example a symbolic link whose target contains it, puts part
+> of the description in `filename`.
+
 Usage (cli):
 
     $ file * | jc --file
