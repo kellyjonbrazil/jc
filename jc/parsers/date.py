@@ -74,6 +74,7 @@ Examples:
 """
 from datetime import datetime, timezone
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -172,6 +173,14 @@ def parse(data, raw=False, quiet=False):
 
         if dt_utc:
             dt = dt_utc
+
+        if dt is None:
+            # Neither a naive nor a UTC timestamp could be built, so the input
+            # is in a format this parser does not recognise -- `date -I`, or a
+            # non-C locale. Saying so routes the CLI to its own message, which
+            # already suggests LC_ALL=C, and lets a library caller catch this
+            # as ParseError like every other parse failure.
+            raise ParseError('Could not parse the date string. If this is the correct parser, try setting the locale to C (LC_ALL=C).')
 
         raw_output = {
             'year': dt.year,
