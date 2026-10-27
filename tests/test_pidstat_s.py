@@ -49,6 +49,12 @@ class MyTests(unittest.TestCase):
         generic_pidstat_ht_streaming_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-hl-hash-line.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_hl_hash_line = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-hl-hash-line-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_pidstat_hl_hash_line_streaming_json = json.loads(f.read())
+
     def test_pidstat_s_nodata(self):
         """
         Test 'pidstat' with no data
@@ -103,6 +109,12 @@ class MyTests(unittest.TestCase):
             {"time": 1646857494, "uid": 0, "pid": 4, "command": "a command with spaces"}
         ]
         self.assertEqual(list(jc.parsers.pidstat_s.parse(data, quiet=True)), expected)
+
+    def test_pidstat_s_hl_hash_line(self):
+        """
+        Test 'pidstat -hl' with a '#' line that is not the pidstat header
+        """
+        self.assertEqual(list(jc.parsers.pidstat_s.parse(self.generic_pidstat_hl_hash_line.splitlines(), quiet=True)), self.generic_pidstat_hl_hash_line_streaming_json)
 
 
 if __name__ == '__main__':
