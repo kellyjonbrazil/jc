@@ -106,7 +106,7 @@ patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.8'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

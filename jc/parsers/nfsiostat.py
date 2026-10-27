@@ -203,7 +203,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.1'
     description = '`nfsiostat` command parser'
     author = 'Yang Bai'
     author_email = '271969568+ybai08@users.noreply.github.com'

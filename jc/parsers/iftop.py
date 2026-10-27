@@ -188,7 +188,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.3"
+    version = "1.2"
     description = "`iftop` command parser"
     author = "Ron Green"
     author_email = "11993626+georgettica@users.noreply.github.com"

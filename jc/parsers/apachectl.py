@@ -144,7 +144,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.1'
     description = '`apachectl -S` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'

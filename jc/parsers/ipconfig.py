@@ -434,7 +434,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.3'
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'

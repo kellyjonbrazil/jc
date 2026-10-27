@@ -100,7 +100,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.1'
     description = '`cbt` (Google Bigtable) command parser'
     author = 'Andreas Weiden'
     author_email = 'andreas.weiden@gmail.com'
