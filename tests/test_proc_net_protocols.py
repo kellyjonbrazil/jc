@@ -16,7 +16,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'proc_net_protocols': (
                 'fixtures/linux-proc/net_protocols',
-                'fixtures/linux-proc/net_protocols.json')
+                'fixtures/linux-proc/net_protocols.json'),
+            'proc_net_protocols2': (
+                'fixtures/linux-proc/net_protocols2',
+                'fixtures/linux-proc/net_protocols2.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -38,6 +41,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_net_protocols.parse(self.f_in['proc_net_protocols'], quiet=True),
                                                              self.f_json['proc_net_protocols'])
+
+    def test_proc_net_protocols2(self):
+        """
+        Test '/proc/net/protocols' from kernel 6.5 or later (no "sp" column)
+        """
+        self.assertEqual(jc.parsers.proc_net_protocols.parse(self.f_in['proc_net_protocols2'], quiet=True),
+                                                             self.f_json['proc_net_protocols2'])
 
 
 if __name__ == '__main__':

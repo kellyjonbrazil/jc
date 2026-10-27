@@ -199,7 +199,7 @@ def parse(
         net_netlink_p = re.compile(r'^sk\s+Eth Pid\s+Groups\s+Rmem\s+Wmem')
         net_netstat_p = re.compile(r'^TcpExt: SyncookiesSent SyncookiesRecv SyncookiesFailed')
         net_packet_p = re.compile(r'^sk +RefCnt Type Proto +Iface R Rmem +User +Inode\n')
-        net_protocols_p = re.compile(r'^protocol  size sockets  memory press maxhdr  slab module     cl co di ac io in de sh ss gs se re sp bi br ha uh gp em\n')
+        net_protocols_p = re.compile(r'^protocol  size sockets  memory press maxhdr  slab module     cl co di ac io in de sh ss gs se re (?:sp )?bi br ha uh gp em\n')
         net_route_p = re.compile(r'^Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT\s+\n')
         net_tcp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode')
         net_unix_p = re.compile(r'^Num       RefCount Protocol Flags    Type St Inode Path\n')
