@@ -202,12 +202,13 @@ def parse(data, raw=False, quiet=False):
 
         data = data.splitlines()
 
-        # remove header rows
-        for row in data.copy():
-            if row:
-                data.pop(0)
-            else:
+        # remove header rows (everything before the first blank line)
+        for idx, row in enumerate(data):
+            if not row:
+                data = data[idx:]
                 break
+        else:
+            data = []
 
         # main parsing loop
         for line in data:
@@ -339,8 +340,9 @@ def parse(data, raw=False, quiet=False):
             if item_values \
                and not value_list \
                and line.startswith('\t\t'):
-                if f'{key}_data' not in item['values']:
-                    item['values'][f'{key}_data'] = []
+                if not key_data:
+                    # share the list so data at the end of input is kept
+                    item['values'][f'{key}_data'] = key_data
                 key_data.append(line.strip())
                 continue
 

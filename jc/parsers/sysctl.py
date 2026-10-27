@@ -57,7 +57,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`sysctl` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -120,6 +120,10 @@ def parse(data, raw=False, quiet=False):
         else:
             delim = ': '
 
+        # values are collected as lists of lines and joined once at the end
+        parts = {}
+        last_key = None
+
         for line in data:
             linedata = line.split(delim, maxsplit=1)
 
@@ -130,30 +134,34 @@ def parse(data, raw=False, quiet=False):
 
                 # syctl -a repeats some keys on linux. Append values from repeating keys
                 # to the previous key value
-                if key in raw_output:
-                    existing_value = raw_output[key]
-                    raw_output[key] = existing_value + '\n' + value
+                if key in parts:
+                    parts[key].append(value)
                     continue
 
                 # fix for weird multiline output in bsd
                 # if the key looks strange (has spaces or no dots) then it's probably a value field
                 # on a separate line. in this case, just append it to the previous key in the dictionary.
                 if '.' not in key or ' ' in key:
-                    previous_key = [*raw_output.keys()][-1]
-                    raw_output[previous_key] = raw_output[previous_key] + '\n' + line
+                    if last_key is None:
+                        raise IndexError('list index out of range')
+                    parts[last_key].append(line)
                     continue
 
                 # if the key looks normal then just add to the dictionary as normal
                 else:
-                    raw_output[key] = value
+                    parts[key] = [value]
+                    last_key = key
                     continue
 
             # if there is an IndexError exception, then there was no delimiter in the line.
             # In this case just append the data line as a value to the previous key.
             except IndexError:
-                prior_key = [*raw_output.keys()][-1]
-                raw_output[prior_key] = raw_output[prior_key] + '\n' + line
+                if last_key is None:
+                    raise IndexError('list index out of range')
+                parts[last_key].append(line)
                 continue
+
+        raw_output = {k: '\n'.join(v) for k, v in parts.items()}
 
     if raw:
         return raw_output

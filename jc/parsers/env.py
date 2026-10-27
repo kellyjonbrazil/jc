@@ -128,21 +128,22 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = {}
     key = ''
-    value = None
+    value = None    # list of the lines that make up the current value
 
     if jc.utils.has_data(data):
         for line in jc.utils.splitlines(data):
             if VAR_DEF_PATTERN.match(line):
                 if not value is None:
-                    raw_output[key] = value
-                key, value = line.split('=', maxsplit=1)
+                    raw_output[key] = '\n'.join(value)
+                key, first_line = line.split('=', maxsplit=1)
+                value = [first_line]
                 continue
 
             if not value is None:
-                value = value + '\n' + line
+                value.append(line)
 
     if not value is None:
-        raw_output[key] = value
+        raw_output[key] = '\n'.join(value)
 
     return raw_output if raw else _process(raw_output)
 
