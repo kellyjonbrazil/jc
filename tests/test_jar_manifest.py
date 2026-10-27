@@ -15,12 +15,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.out'), 'r', encoding='utf-8') as f:
         rhel_8_manifest_mf_multi = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/jar-manifest-continuations.out'), 'r', encoding='utf-8') as f:
+        generic_continuations = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.json'), 'r', encoding='utf-8') as f:
         rhel_8_manifest_mf_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/rhel-8/MANIFEST.MF.MULTI.json'), 'r', encoding='utf-8') as f:
         rhel_8_manifest_mf_multi_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/jar-manifest-continuations.json'), 'r', encoding='utf-8') as f:
+        generic_continuations_json = json.loads(f.read())
 
 
     def test_jar_manifest_nodata(self):
@@ -59,6 +65,57 @@ class MyTests(unittest.TestCase):
         data = 'Manifest-Version: 1.0\rMain-Class: com.example.Main\rCreated-By: 1.8\r\rName: a/b.class\rSHA-256-Digest: abc\r'
         expected = [{'Manifest_Version': '1.0', 'Main_Class': 'com.example.Main', 'Created_By': '1.8'}, {'Name': 'a/b.class', 'SHA_256_Digest': 'abc'}]
         self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+    def test_jar_manifest_continuations_fixture(self):
+        """
+        Test 'jar_manifest' with continuation lines of one, two and three lines and an unzip header
+        """
+        self.assertEqual(jc.parsers.jar_manifest.parse(self.generic_continuations, quiet=True), self.generic_continuations_json)
+
+    def test_jar_manifest_single_continuation(self):
+        """
+        Test 'jar_manifest' with a single continuation line followed by another folded attribute
+        """
+        data = 'A: x\n y\nB: p\n q\n r\nC: z\n'
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), [{'A': 'xy', 'B': 'pqr', 'C': 'z'}])
+
+    def test_jar_manifest_last_attribute_two_continuations(self):
+        """
+        Test 'jar_manifest' with a value folded over three lines at the end of a section
+        """
+        data = 'Manifest-Version: 1.0\nPremain-Class: com.example.ag\n ent.Premain\n Agent\n\nName: a\nB: c\n d\n e\n'
+        expected = [{'Manifest_Version': '1.0', 'Premain_Class': 'com.example.agent.PremainAgent'}, {'Name': 'a', 'B': 'cde'}]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+    def test_jar_manifest_continuation_keeps_inner_spaces(self):
+        """
+        Test 'jar_manifest' removes only the one leading space of a continuation line
+        """
+        data = 'Bundle-Description: Hello \n  wide  world\n'
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), [{'Bundle_Description': 'Hello  wide  world'}])
+
+    def test_jar_manifest_continuation_looks_like_unzip_line(self):
+        """
+        Test 'jar_manifest' with continuation text that looks like the unzip inflating line
+        """
+        data = 'Manifest-Version: 1.0\nMain-Class: com.example.Main\nBundle-Description: abc\n  inflating: META-INF/MANIFEST.MF\n def\n\n'
+        expected = [{'Manifest_Version': '1.0', 'Main_Class': 'com.example.Main', 'Bundle_Description': 'abc inflating: META-INF/MANIFEST.MFdef'}]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+    def test_jar_manifest_unzip_extracting_line(self):
+        """
+        Test 'jar_manifest' with the unzip header of a manifest that is stored without compression
+        """
+        data = 'Archive:  a.jar\n extracting: META-INF/MANIFEST.MF\nManifest-Version: 1.0\n'
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), [{'Archive': 'a.jar', 'Manifest_Version': '1.0'}])
+
+    def test_jar_manifest_many_continuations(self):
+        """
+        Test 'jar_manifest' with a value folded over many short lines
+        """
+        data = 'Manifest-Version: 1.0\nClass-Path: a\n' + ' ab\n' * 20000 + 'Created-By: 1.8\n'
+        result = jc.parsers.jar_manifest.parse(data, quiet=True)
+        self.assertEqual(result, [{'Manifest_Version': '1.0', 'Class_Path': 'a' + 'ab' * 20000, 'Created_By': '1.8'}])
 
 
 if __name__ == '__main__':
