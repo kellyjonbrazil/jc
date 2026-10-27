@@ -31,18 +31,24 @@ def normalize_interface_headers(header):
     return header
 
 
-def parse_item(headers, entry, kind):
+def header_flags(headers):
+    """Check the header once for the columns that change how rows are parsed."""
+    return 'socket' in headers, '0_win' in headers
+
+
+def parse_item(headers, entry, kind, flags):
+    has_socket, has_0win = flags
     entry = entry.split(maxsplit=len(headers) - 1)
 
     # fixup udp records with no state field entry
     if kind == 'network' and entry[0].startswith('udp'):
         entry.insert(5, None)
 
-    if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
+    if kind == 'network' and has_socket and 'udp' in str(entry):
         entry.insert(7, None)
 
     # fixup -T output on FreeBSD
-    if kind == 'network' and '0_win' in headers and entry[0].startswith('udp'):
+    if kind == 'network' and has_0win and entry[0].startswith('udp'):
         entry.insert(1, '')
         entry.insert(1, '')
         entry.insert(1, '')
@@ -252,41 +258,48 @@ def parse(cleandata):
         if network and (line.startswith('Socket ') or line.startswith('Proto ') or line.startswith('Tcpcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if socket and line.startswith('Address '):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if reg_kernel_control and (line.startswith('id ') or line.startswith('kctlref ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if active_kernel_event and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if active_kernel_control and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if routing_table and line.startswith('Destination '):
             header_text = normalize_route_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if interface_table and line.startswith('Name  '):
             header_text = normalize_interface_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         # get items
         if network:
-            raw_output.append(parse_item(headers, line, 'network'))
+            raw_output.append(parse_item(headers, line, 'network', flags))
             continue
 
         if multipath:
@@ -294,27 +307,27 @@ def parse(cleandata):
             continue
 
         if socket:
-            raw_output.append(parse_item(headers, line, 'socket'))
+            raw_output.append(parse_item(headers, line, 'socket', flags))
             continue
 
         if reg_kernel_control:
-            raw_output.append(parse_item(headers, line, 'Registered kernel control module'))
+            raw_output.append(parse_item(headers, line, 'Registered kernel control module', flags))
             continue
 
         if active_kernel_event:
-            raw_output.append(parse_item(headers, line, 'Active kernel event socket'))
+            raw_output.append(parse_item(headers, line, 'Active kernel event socket', flags))
             continue
 
         if active_kernel_control:
-            raw_output.append(parse_item(headers, line, 'Active kernel control socket'))
+            raw_output.append(parse_item(headers, line, 'Active kernel control socket', flags))
             continue
 
         if routing_table and not (line.startswith('Internet:') or line.startswith('Internet6:')):
-            raw_output.append(parse_item(headers, line, 'route'))
+            raw_output.append(parse_item(headers, line, 'route', flags))
             continue
 
         if interface_table:
-            raw_output.append(parse_item(headers, line, 'interface'))
+            raw_output.append(parse_item(headers, line, 'interface', flags))
             continue
 
     return parse_post(raw_output)

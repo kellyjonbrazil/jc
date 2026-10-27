@@ -29,6 +29,9 @@ import jc.parsers.ls_s as ls_s_parser
 
 class MyTests(unittest.TestCase):
     def test_cli_magic_parser(self):
+        """
+        Test that magic syntax command lines map to the right parser, options and command
+        """
         commands = {
             'jc -p systemctl list-sockets': ('--systemctl-ls', ['p'], ['systemctl', 'list-sockets']),
             'jc -p systemctl list-unit-files': ('--systemctl-luf', ['p'], ['systemctl', 'list-unit-files']),
@@ -64,6 +67,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_set_env_colors(self):
+        """
+        Test custom colors from the JC_COLORS environment variable, including invalid values that fall back to the defaults
+        """
         if pygments.__version__.startswith('2.3.'):
             env = {
                 '': {
@@ -163,6 +169,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out(self):
+        """
+        Test JSON output with color
+        """
         test_input = [
             None,
             {},
@@ -197,6 +206,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out_mono(self):
+        """
+        Test JSON output without color
+        """
         test_input = [
             None,
             {},
@@ -222,6 +234,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out_pretty(self):
+        """
+        Test pretty-printed JSON output with color
+        """
         test_input = [
             {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
             {"key1": [{"subkey1": "subvalue1"}, {"subkey2": [1, 2, 3]}], "key2": True}
@@ -247,6 +262,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(PYGMENTS_INSTALLED, 'pygments library installed')
     def test_cli_json_out_pretty_no_pygments(self):
+        """
+        Test pretty-printed JSON output when pygments is not installed
+        """
         test_input = [
             {"key1": "value1", "key2": 2, "key3": None, "key4": 3.14, "key5": True},
             {"key1": [{"subkey1": "subvalue1"}, {"subkey2": [1, 2, 3]}], "key2": True}
@@ -266,6 +284,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_yaml_out(self):
+        """
+        Test YAML output with color
+        """
         test_input = [
             None,
             {},
@@ -300,6 +321,9 @@ class MyTests(unittest.TestCase):
 
     @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
     def test_cli_yaml_out_mono(self):
+        """
+        Test YAML output without color
+        """
         test_input = [
             None,
             {},
@@ -326,16 +350,25 @@ class MyTests(unittest.TestCase):
             self.assertEqual(cli.yaml_out(), expected_json)
 
     def test_cli_about_jc(self):
+        """
+        Test the about information and parser count
+        """
         cli = JcCli()
         self.assertEqual(cli.about_jc()['name'], 'jc')
         self.assertGreaterEqual(cli.about_jc()['parser_count'], 55)
         self.assertEqual(cli.about_jc()['parser_count'], len(cli.about_jc()['parsers']))
 
     def test_cli_parsers_text(self):
+        """
+        Test that the parser list text for help is not empty
+        """
         cli = JcCli()
         self.assertIsNot(cli.parsers_text, '')
 
     def test_add_meta_to_simple_dict(self):
+        """
+        Test adding metadata to a dictionary
+        """
         cli = JcCli()
         cli.data_out = {'a': 1, 'b': 2}
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
@@ -347,6 +380,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_simple_list(self):
+        """
+        Test adding metadata to each dictionary in a list
+        """
         cli = JcCli()
         cli.data_out = [{'a': 1, 'b': 2},{'a': 3, 'b': 4}]
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
@@ -358,6 +394,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_dict_existing_meta(self):
+        """
+        Test merging metadata into an existing _jc_meta object in a dictionary (streaming parsers)
+        """
         cli = JcCli()
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.magic_returncode = 2
@@ -365,10 +404,13 @@ class MyTests(unittest.TestCase):
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
         cli.parser_name = 'ping'
         expected = {'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
-        cli.add_metadata_to_output()
+        cli.add_metadata_to_output(merge=True)
         self.assertEqual(cli.data_out, expected)
 
     def test_add_meta_to_list_existing_meta(self):
+        """
+        Test merging metadata into existing _jc_meta objects in a list (streaming parsers)
+        """
         cli = JcCli()
         cli.data_out = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar'}},{'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar'}}]
         cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
@@ -376,10 +418,77 @@ class MyTests(unittest.TestCase):
         cli.magic_run_command = ['ping', '-c3', '192.168.1.123']
         cli.parser_name = 'ping'
         expected = [{'a': 1, 'b': 2, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}, {'a': 3, 'b': 4, '_jc_meta': {'foo': 'bar', 'parser': 'ping', 'magic_command': ['ping', '-c3', '192.168.1.123'], 'magic_command_exit': 2, 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
+        cli.add_metadata_to_output(merge=True)
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_replaces_meta_from_parsed_data(self):
+        """
+        Test that metadata replaces a _jc_meta field that came from the parsed data
+        """
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = {'a': 1, '_jc_meta': {'magic_command': ['cat', 'x'], 'magic_command_exit': 0}}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'toml'
+        expected = {'a': 1, '_jc_meta': {'parser': 'toml', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
+    def test_add_meta_replaces_non_dict_meta(self):
+        """
+        Test that metadata replaces a _jc_meta field that is not an object
+        """
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = [{'server': ['nginx'], '_jc_meta': 'anything'}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'http-headers'
+        expected = [{'server': ['nginx'], '_jc_meta': {'parser': 'http-headers', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}]
+        cli.add_metadata_to_output()
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_merge_replaces_non_dict_meta(self):
+        """
+        Test that merging replaces a _jc_meta field that is not an object
+        """
+        cli = JcCli()
+        cli.quiet = True
+        cli.data_out = {'a': '1', '_jc_meta': 'x'}
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'csv-s'
+        expected = {'a': '1', '_jc_meta': {'parser': 'csv-s', 'timestamp': 1659659829.273349, 'slice_start': None, 'slice_end': None}}
+        cli.add_metadata_to_output(merge=True)
+        self.assertEqual(cli.data_out, expected)
+
+    def test_add_meta_replace_warning_once(self):
+        """
+        Test that replacing _jc_meta fields prints one warning
+        """
+        cli = JcCli()
+        cli.data_out = [{'a': 1, '_jc_meta': 1}, {'a': 2, '_jc_meta': 2}]
+        cli.run_timestamp = datetime(2022, 8, 5, 0, 37, 9, 273349, tzinfo=timezone.utc)
+        cli.parser_name = 'yaml'
+        f = io.StringIO()
+        with contextlib.redirect_stderr(f):
+            cli.add_metadata_to_output()
+        self.assertEqual(f.getvalue().count('Warning'), 1)
+        self.assertIn('_jc_meta', f.getvalue())
+
+    def test_cli_json_out_escapes_c1_controls(self):
+        """
+        Test that JSON output escapes DEL, C1 control characters and lone surrogates
+        """
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.data_out = {'name': 'a\x9b2Jb\x7fc\xa9\u00e9', 'x': '\udc9b'}
+        expected = '{"name":"a\\u009b2Jb\\u007fc\xa9\u00e9","x":"\\udc9b"}'
+        self.assertEqual(cli.json_out(), expected)
+
     def test_slice_none_str(self):
+        """
+        Test line slicing of a string with no start or end
+        """
         cli = JcCli()
         cli.slice_start = None
         cli.slice_end = None
@@ -401,6 +510,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_in, expected)
 
     def test_slice_positive_str(self):
+        """
+        Test line slicing of a string with a positive start and end
+        """
         cli = JcCli()
         cli.slice_start = 1
         cli.slice_end = 5
@@ -420,6 +532,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_in, expected)
 
     def test_slice_negative_str(self):
+        """
+        Test line slicing of a string with a negative end
+        """
         cli = JcCli()
         cli.slice_start = 1
         cli.slice_end = -1
@@ -439,6 +554,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_in, expected)
 
     def test_slice_none_iter(self):
+        """
+        Test line slicing of an iterable with no start or end
+        """
         cli = JcCli()
         cli.slice_start = None
         cli.slice_end = None
@@ -462,6 +580,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_in, expected)
 
     def test_slice_positive_iter(self):
+        """
+        Test line slicing of an iterable with a positive start and end
+        """
         cli = JcCli()
         cli.slice_start = 1
         cli.slice_end = 5
@@ -483,6 +604,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(cli.data_in), expected)
 
     def test_slice_negative_iter(self):
+        """
+        Test line slicing of an iterable with a negative end
+        """
         cli = JcCli()
         cli.slice_start = 1
         cli.slice_end = -1
@@ -504,6 +628,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(cli.data_in), expected)
 
     def test_slurp_standard(self):
+        """
+        Test --slurp with a standard parser
+        """
         cli = JcCli()
         cli.parser_module = url_parser
         cli.data_in = '''http://www.google.com
@@ -514,6 +641,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_out, expected)
 
     def test_slurp_line_separator(self):
+        """
+        Test that --slurp splits lines on LF, CRLF and lone CR but not on other line-break characters
+        """
         cli = JcCli()
         cli.parser_module = url_parser
         cli.data_in = 'https://a.example/a\nhttps://b.example/x\u2028https://c.example/y\r\nhttps://d.example/d\rhttps://e.example/e\n'
@@ -523,6 +653,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(cli.data_out), 4)
 
     def test_slurp_standard_with_meta_out(self):
+        """
+        Test --slurp with a standard parser and metadata output
+        """
         cli = JcCli()
         cli.meta_out = True
         cli.parser_module = url_parser
@@ -537,6 +670,9 @@ class MyTests(unittest.TestCase):
         self.assertEqual(cli.data_out, expected)
 
     def test_slurp_proc(self):
+        """
+        Test --slurp with a list of /proc files
+        """
         cli = JcCli()
         cli.parser_module = proc_parser
         cli.inputlist = ['/proc/stat', '/proc/cpuinfo']
@@ -584,6 +720,9 @@ power management:
         self.assertEqual(cli.data_out, expected)
 
     def test_slurp_proc_with_meta_out(self):
+        """
+        Test --slurp with a list of /proc files and metadata output
+        """
         cli = JcCli()
         cli.meta_out = True
         cli.parser_module = proc_parser
@@ -636,7 +775,51 @@ power management:
         cli.add_metadata_to_output()
         self.assertEqual(cli.data_out, expected)
 
+    def test_slurp_non_utf8_raises(self):
+        """
+        Test that --slurp raises an error for input that is not valid UTF-8
+        """
+        cli = JcCli()
+        cli.parser_module = url_parser
+        cli.data_in = b'https://a.example/a\n\xff\n'
+        with self.assertRaises(TypeError):
+            cli.create_slurp_output()
+
+    def test_slurp_non_utf8_exit_code(self):
+        """
+        Test that --slurp exits with an error and no output for input that is not valid UTF-8
+        """
+        stdin = io.TextIOWrapper(io.BytesIO(b'a\n\xff\n'), encoding='utf-8')
+        out = io.StringIO()
+        err = io.StringIO()
+        with mock.patch('sys.argv', ['jc', '--slurp', '--path']), \
+             mock.patch('sys.stdin', stdin), \
+             contextlib.redirect_stdout(out), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+        self.assertEqual(100, cm.exception.code)
+        self.assertEqual('', out.getvalue())
+        self.assertIn('path parser could not parse the input data', err.getvalue())
+
+    def test_slice_multiple_proc_files(self):
+        """
+        Test that line slicing a list of /proc files exits with an error
+        """
+        cli = JcCli()
+        cli.slice_str = '-1:'
+        cli.inputlist = ['/proc/uptime', '/proc/loadavg']
+        cli.data_in = ['1.0 2.0\n', '0.1 0.2 0.3 1/2 3\n']
+        with self.assertRaises(SystemExit) as cm:
+            with contextlib.redirect_stderr(io.StringIO()) as err:
+                cli.slicer()
+        self.assertEqual(100, cm.exception.code)
+        self.assertIn('Line slicing is not supported with multiple /proc files', err.getvalue())
+
     def test_magic_proc_path_traversal(self):
+        """
+        Test that a /proc path that leads outside of /proc exits with an error
+        """
         # traversal outside of /proc should exit with an error instead of opening the file
         cli = JcCli()
         cli.magic_run_command = ['/proc/../etc/hosts']
@@ -649,6 +832,9 @@ power management:
 
     @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
     def test_magic_proc_path_traversal_multiple_files(self):
+        """
+        Test that a /proc file list with a path outside of /proc exits with an error
+        """
         # a bad entry in the file list should exit with an error, even if the first entry is valid
         cli = JcCli()
         cli.magic_run_command = ['/proc/uptime', '/proc/../etc/hosts']
@@ -661,6 +847,9 @@ power management:
 
     @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
     def test_magic_proc_single_file(self):
+        """
+        Test magic syntax with a single /proc file
+        """
         cli = JcCli()
         cli.magic_run_command = ['/proc/uptime']
         cli.magic_run_command_str = '/proc/uptime'
@@ -670,6 +859,9 @@ power management:
 
     @unittest.skipIf(not os.path.exists('/proc/self/status'), '/proc not available')
     def test_magic_proc_symlinked_file(self):
+        """
+        Test magic syntax with a /proc file reached through a symlink
+        """
         # /proc/self is a symlink and must still be readable
         cli = JcCli()
         cli.magic_run_command = ['/proc/self/status']
@@ -679,6 +871,9 @@ power management:
 
     @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
     def test_magic_proc_multiple_files(self):
+        """
+        Test magic syntax with a list of /proc files
+        """
         cli = JcCli()
         cli.magic_run_command = ['/proc/uptime', '/proc/stat']
         cli.magic_run_command_str = '/proc/uptime /proc/stat'
@@ -688,6 +883,9 @@ power management:
         self.assertEqual(2, len(cli.magic_stdout))
 
     def test_magic_is_proc_path(self):
+        """
+        Test detection of paths inside /proc
+        """
         paths = {
             '/proc': True,
             '/proc/uptime': True,
@@ -710,6 +908,9 @@ power management:
             self.assertEqual(expected, JcCli.is_proc_path(path), path)
 
     def test_magic_open_text_file_no_newline_translation(self):
+        """
+        Test that /proc files are read without newline translation
+        """
         fd, path = tempfile.mkstemp()
         try:
             with os.fdopen(fd, 'wb') as f:
@@ -719,6 +920,9 @@ power management:
             os.remove(path)
 
     def test_magic_run_user_command_no_newline_translation(self):
+        """
+        Test that magic command output is read without newline translation
+        """
         code = ("import sys; "
                 "sys.stdout.buffer.write(b'a\\rb\\r\\nc\\n'); "
                 "sys.stderr.buffer.write(b'e\\rf\\n')")
@@ -730,6 +934,9 @@ power management:
         self.assertEqual(0, cli.magic_returncode)
 
     def test_magic_run_user_command_empty_output(self):
+        """
+        Test a magic command with no output
+        """
         cli = JcCli()
         cli.magic_run_command = [sys.executable, '-c', 'pass']
         cli.run_user_command()
@@ -739,10 +946,16 @@ power management:
 
 
     def test_stdin_lines(self):
+        """
+        Test that STDIN lines are split on LF and CRLF, keeping a lone CR in the line
+        """
         stdin = io.TextIOWrapper(io.BytesIO(b'a\r\nb\rc\nd'), encoding='utf-8', errors='strict')
         self.assertEqual(['a\n', 'b\rc\n', 'd'], list(JcCli.stdin_lines(stdin)))
 
     def test_stdin_lines_no_buffer(self):
+        """
+        Test reading STDIN lines from a text stream without a binary buffer
+        """
         stdin = io.StringIO('a\nb\n')
         self.assertEqual(['a\n', 'b\n'], list(JcCli.stdin_lines(stdin)))
 
@@ -760,6 +973,9 @@ power management:
         return records
 
     def test_streaming_line_endings(self):
+        """
+        Test streaming parser output for LF, CRLF and lone CR line endings
+        """
         data = (b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n'
                 b'-rw-r--r-- 1 root root 0 Jan  1 00:00 m\rmm\n'
                 b'-rw-r--r-- 1 root root 0 Jan  1 00:00 zzz\r\n')
@@ -768,6 +984,9 @@ power management:
         self.assertTrue(all(x['_jc_meta']['success'] for x in records))
 
     def test_streaming_non_utf8(self):
+        """
+        Test that streaming parsers show input bytes that are not valid UTF-8 as escapes
+        """
         data = (b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n'
                 b'-rw-r--r-- 1 root root 0 Jan  1 00:00 mmm\xff\n'
                 b'-rw-r--r-- 1 root root 0 Jan  1 00:00 zzz\n')

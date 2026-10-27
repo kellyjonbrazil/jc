@@ -2,6 +2,8 @@ import os
 import unittest
 import json
 import plistlib
+import tempfile
+from unittest import mock
 import jc.parsers.plist
 from jc.exceptions import ParseError
 
@@ -157,6 +159,20 @@ class MyTests(unittest.TestCase):
         )
         self.assertRaises(ParseError, jc.parsers.plist.parse, data, quiet=True)
 
+
+    def test_plist_nextstep_temp_file_removed(self):
+        """
+        Test that the temporary file used for NeXTSTEP input is removed
+        after both a successful and a failed parse
+        """
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            with mock.patch.object(tempfile, 'tempdir', tmp_dir):
+                jc.parsers.plist.parse(self.nextstep, quiet=True)
+                self.assertEqual([], os.listdir(tmp_dir))
+
+                with self.assertRaises(Exception):
+                    jc.parsers.plist.parse('{', quiet=True)
+                self.assertEqual([], os.listdir(tmp_dir))
 
 if __name__ == '__main__':
     unittest.main()

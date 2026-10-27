@@ -31,7 +31,7 @@ def normalize_interface_headers(header):
     return header
 
 
-def parse_network(headers, entry):
+def parse_network(headers, entry, has_user):
     LIST_OF_STATES = [
         "ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2",
         "TIME_WAIT", "CLOSED", "CLOSE_WAIT", "LAST_ACK", "LISTEN", "CLOSING",
@@ -46,7 +46,7 @@ def parse_network(headers, entry):
 
     # with the "User" and "Inode" columns (-e) the sixth word of a row without a
     # state is the user, so also require the numeric inode in the eighth word
-    if contains_state and 'user' in headers:
+    if contains_state and has_user:
         contains_state = len(words) > 7 and words[7].isdigit()
 
     split_modifier = 1 if contains_state else 2
@@ -63,12 +63,19 @@ def parse_network(headers, entry):
     return output_line
 
 
-def parse_socket(header_text, headers, entry):
+def socket_columns(header_text):
+    """Find the column positions in the header once, not for every row."""
     # get the column # of first letter of "state"
     state_col = header_text.find('state')
     # get the program name column area
     pn_start = header_text.find('program_name')
     pn_end = header_text.find('path') - 1
+
+    return state_col, pn_start, pn_end
+
+
+def parse_socket(headers, entry, columns):
+    state_col, pn_start, pn_end = columns
 
     # remove [ and ] from each line
     entry = entry.replace('[ ]', '---')
@@ -216,6 +223,7 @@ def parse(cleandata):
     routing_table = False
     interface_table = False
     headers = None
+    has_user = False
 
     for line in cleandata:
 
@@ -263,25 +271,31 @@ def parse(cleandata):
         if line.startswith('Proto'):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
             continue
 
         if line.startswith('Destination '):
             header_text = normalize_route_headers(line)
             headers = header_text.split()
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
             continue
 
         if line.startswith('Iface '):
             header_text = normalize_interface_headers(line)
             headers = header_text.split()
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
             continue
 
         # parse items
         if network:
-            raw_output.append(parse_network(headers, line))
+            raw_output.append(parse_network(headers, line, has_user))
             continue
 
         if socket:
-            raw_output.append(parse_socket(header_text, headers, line))
+            raw_output.append(parse_socket(headers, line, columns))
             continue
 
         if bluetooth:

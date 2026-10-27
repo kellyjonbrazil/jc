@@ -97,7 +97,7 @@ from jc.parsers.cef import _pycef_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'CEF string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -203,10 +203,15 @@ def _process(proc_data: Dict) -> Dict:
     # Process custom field labels (adapted from pycef library)
     cleanup_list = []
     custom_fields = list(proc_data.keys())
+    field_pos = {k: i for i, k in enumerate(custom_fields)}
     for key in custom_fields:
         if key.endswith('Label'):
             customlabel = key[:-5]
-            for customfield in custom_fields:
+            # look up the related fields directly, keeping original key order
+            related = [f for f in (customlabel, customlabel + '_epoch', customlabel + '_epoch_utc')
+                       if f in field_pos]
+            related.sort(key=field_pos.get)
+            for customfield in related:
                 new_name = proc_data[key]
                 # check for normal custom fields
                 if customfield == customlabel:

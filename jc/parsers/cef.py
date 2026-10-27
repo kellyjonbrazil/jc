@@ -123,7 +123,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'CEF string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -334,10 +334,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         # Process custom field labels (adapted from pycef library)
         cleanup_list = []
         custom_fields = list(item.keys())
+        field_pos = {k: i for i, k in enumerate(custom_fields)}
         for key in custom_fields:
             if key.endswith('Label'):
                 customlabel = key[:-5]
-                for customfield in custom_fields:
+                # look up the related fields directly, keeping original key order
+                related = [f for f in (customlabel, customlabel + '_epoch', customlabel + '_epoch_utc')
+                           if f in field_pos]
+                related.sort(key=field_pos.get)
+                for customfield in related:
                     new_name = item[key]
                     # check for normal custom fields
                     if customfield == customlabel:
