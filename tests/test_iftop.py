@@ -47,6 +47,12 @@ class MyTests(unittest.TestCase):
         generic_iftop_repeated_separators_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-port-service-name.out'), 'r', encoding='utf-8') as f:
+        generic_iftop_port_service_name = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-port-service-name.json'), 'r', encoding='utf-8') as f:
+        generic_iftop_port_service_name_json = json.loads(f.read())
+
     def test_iftop_nodata(self):
         """
         Test 'iftop -b' with no data
@@ -122,6 +128,13 @@ class MyTests(unittest.TestCase):
                 connections = jc.parsers.iftop.parse('\n'.join(lines), quiet=True)[0]['clients'][0]['connections']
                 self.assertEqual((connections[0]['host_name'], connections[0]['host_port']), send_expected)
                 self.assertEqual((connections[1]['host_name'], connections[1]['host_port']), receive_expected)
+
+    def test_iftop_port_service_name(self):
+        """
+        Test 'iftop' with receive lines whose port is a service name containing a hyphen
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_port_service_name, quiet=True), self.generic_iftop_port_service_name_json)
+
 
 if __name__ == '__main__':
     unittest.main()
