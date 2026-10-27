@@ -167,7 +167,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`ping` and `ping6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -635,11 +635,11 @@ def _bsd_parse(data):
 
     # identify duplicates in responses
     if ping_responses:
-        seq_list = []
+        seen_seq = set()
         for reply in ping_responses:
             if 'icmp_seq' in reply:
-                seq_list.append(reply['icmp_seq'])
-                reply['duplicate'] = True if seq_list.count(reply['icmp_seq']) > 1 else False
+                reply['duplicate'] = reply['icmp_seq'] in seen_seq
+                seen_seq.add(reply['icmp_seq'])
 
     raw_output['responses'] = ping_responses
 
