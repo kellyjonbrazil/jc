@@ -9,6 +9,10 @@ local time of the system the parser is run on).
 The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
 only available if the timezone field is UTC.
 
+Only symbolic links (`type` is `symbolic link`) have a `link_to` field. The
+`File:` line is split at the first ` -> `, so a link whose name contains
+` -> ` reports the rest of its name as part of `link_to`.
+
 Usage (cli):
 
     $ stat * | jc --stat-s
@@ -84,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`stat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -94,6 +98,31 @@ class info():
 
 
 __version__ = info.version
+
+
+def _strip_quotes(name: str) -> str:
+    """Remove the curly quotes older versions of `stat` print around names."""
+    return name.strip('\u2018').rstrip('\u2019')
+
+
+def _add_link_to(output_line: Dict, file_field: str) -> Dict:
+    """
+    Split the `File:` field of a symbolic link into `file` and `link_to`.
+    `stat` prints 'name -> target'. A link name that contains ' -> ' is
+    ambiguous, so the field is split at the first ' -> '. Returns a new
+    dictionary with `link_to` directly after `file`.
+    """
+    if ' -> ' not in file_field:
+        return output_line
+
+    filename, link = file_field.split(' -> ', 1)
+    new_line = {'file': _strip_quotes(filename), 'link_to': _strip_quotes(link)}
+
+    for key, value in output_line.items():
+        if key != 'file':
+            new_line[key] = value
+
+    return new_line
 
 
 def _process(proc_data: JSONDictType) -> JSONDictType:
@@ -159,6 +188,7 @@ def parse(
 
     output_line: Dict = {}
     os_type = ''
+    file_field = ''
 
     for line in data:
         try:
@@ -182,18 +212,10 @@ def parse(
 
                     output_line = {}
                     line_list = line.split(maxsplit=1)
-                    output_line['file'] = line_list[1]
+                    file_field = line_list[1]
 
-                    # populate link_to field if -> found
-                    if ' -> ' in output_line['file']:
-                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                        link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
-                        output_line['file'] = filename
-                        output_line['link_to'] = link
-                    else:
-                        filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                        output_line['file'] = filename
-
+                    # link_to is split off once the file type is known
+                    output_line['file'] = _strip_quotes(file_field)
                     continue
 
                 # line #2
@@ -203,6 +225,10 @@ def parse(
                     output_line['blocks'] = line_list[3]
                     output_line['io_blocks'] = line_list[6]
                     output_line['type'] = line_list[7]
+
+                    if output_line['type'] == 'symbolic link':
+                        output_line = _add_link_to(output_line, file_field)
+
                     continue
 
                 # line #3
