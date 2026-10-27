@@ -46,6 +46,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/stat-missing-data.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_4_stat_missing_data_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows.out'), 'r', encoding='utf-8') as f:
+        generic_stat_arrows = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-arrows.json'), 'r', encoding='utf-8') as f:
+        generic_stat_arrows_json = json.loads(f.read())
+
     def test_stat_nodata(self):
         """
         Test 'stat' with no data
@@ -87,6 +93,28 @@ class MyTests(unittest.TestCase):
         Test 'stat /etc/passwd' with missing data.
         """
         self.assertEqual(jc.parsers.stat.parse(self.ubuntu_20_4_stat_missing_data, quiet=True), self.ubuntu_20_4_stat_missing_data_json)
+
+    def test_stat_arrows(self):
+        """
+        Test 'stat' with ' -> ' in the names of files, directories, and symbolic links
+        """
+        self.assertEqual(jc.parsers.stat.parse(self.generic_stat_arrows, quiet=True), self.generic_stat_arrows_json)
+
+    def test_stat_arrows_link_to(self):
+        """
+        Test that only symbolic links get link_to, split at the first ' -> '
+        """
+        result = jc.parsers.stat.parse(self.generic_stat_arrows, raw=True, quiet=True)
+        self.assertEqual([(r['file'], r.get('link_to')) for r in result], [('arrowtarget', 'a -> b'), ('deploy.key', None), ('deploy.key -> old', None), ('dir -> y', None), ('lnk', 'x -> target'), ('normallnk', 'tgt')])
+        self.assertEqual(result[2]['type'], 'regular empty file')
+
+    def test_stat_link_quoted(self):
+        """
+        Test a symbolic link in the quoted format of older 'stat' versions
+        """
+        data = '  File: \u2018lnk\u2019 -> \u2018a -> b\u2019\n  Size: 6         \tBlocks: 0          IO Block: 4096   symbolic link\n'
+        result = jc.parsers.stat.parse(data, raw=True, quiet=True)
+        self.assertEqual(result, [{'file': 'lnk', 'link_to': 'a -> b', 'size': '6', 'blocks': '0', 'io_blocks': '4096', 'type': 'symbolic link'}])
 
 
 if __name__ == '__main__':
