@@ -30,11 +30,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-freebsd-route-host-names.json'), 'r', encoding='utf-8') as f:
         generic_netstat_freebsd_route_host_names_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-service-port-names.out'), 'r', encoding='utf-8') as f:
-        generic_netstat_service_port_names = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-service-port-names.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_service_port_names = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-service-port-names.json'), 'r', encoding='utf-8') as f:
-        generic_netstat_service_port_names_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-service-port-names.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_service_port_names_json = json.loads(f.read())
 
     # netstat
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.out'), 'r', encoding='utf-8') as f:
@@ -622,7 +622,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'netstat' with service names that contain digits as ports
         """
-        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_service_port_names, quiet=True), self.generic_netstat_service_port_names_json)
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_service_port_names, quiet=True), self.generic_netstat_linux_service_port_names_json)
 
 
 
