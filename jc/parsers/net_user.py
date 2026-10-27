@@ -381,8 +381,12 @@ def _parse(data):
                         if len(match.groups()) == 2 and match.group(2) is not None:
                             value = match.group(2).strip()
                             if key in ["local_group_memberships", "global_group_memberships"]:
-                                line_iter.pushback(value)
-                                user_account_keypairs[key] = _parse_groups(line_iter)
+                                if value.startswith('*'):
+                                    line_iter.pushback(value)
+                                    user_account_keypairs[key] = _parse_groups(line_iter)
+                                else:
+                                    # not a group list, so don't parse it again
+                                    user_account_keypairs[key] = []
                             else:
                                 user_account_keypairs[key] = value
                         else:

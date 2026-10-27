@@ -535,6 +535,15 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ls.parse(self.ls_l_no_total, quiet=True), self.ls_l_no_total_json)
 
+    def test_ls_l_filename_with_newlines_sections(self):
+        """
+        Test 'ls -l' filenames with newlines across multiple sections
+        """
+        data = '/dir:\ntotal 8\n-rw-r--r-- 1 u g 0 Jan  1 10:00 a\nb\nc\n-rw-r--r-- 1 u g 0 Jan  1 10:00 d\n\n/dir2:\ntotal 0\n-rw-r--r-- 1 u g 0 Jan  1 10:00 e\nf\n'
+        result = jc.parsers.ls.parse(data, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['a\nb\nc', 'd', 'e\nf'])
+        self.assertEqual([r['parent'] for r in result], ['/dir', '/dir', '/dir2'])
+
 
 if __name__ == '__main__':
     unittest.main()

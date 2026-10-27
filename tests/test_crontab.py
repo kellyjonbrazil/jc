@@ -172,6 +172,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result['schedule']), 1)
         self.assertEqual(result['schedule'][0]['command'], '/usr/bin/backup;\x0c#$(/usr/bin/other)')
 
+    def test_crontab_mixed_lines_order(self):
+        """
+        Test 'crontab' with comments, variables, shortcuts and entries interleaved
+        """
+        data = '# c1\nA=1\n* * * * * cmd1\n@daily x\nB=2\n# c2\n@reboot y z\n0 1 * * * cmd2\n'
+        result = jc.parsers.crontab.parse(data, raw=True, quiet=True)
+        self.assertEqual(result['variables'], [{'name': 'B', 'value': '2'}, {'name': 'A', 'value': '1'}])
+        self.assertEqual([x['command'] for x in result['schedule']], ['cmd1', 'cmd2', 'y z', 'x'])
+
 
 if __name__ == '__main__':
     unittest.main()

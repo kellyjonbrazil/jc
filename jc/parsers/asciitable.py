@@ -248,6 +248,9 @@ def _snake_case(line: str) -> str:
     return line
 
 
+_problem_header_pattern = re.compile(r'(?:\| )( +)([^|]+)')
+
+
 def _normalize_rows(table: str) -> List[str]:
     """
     returns a List of row strings. Header is snake-cased
@@ -284,14 +287,11 @@ def _normalize_rows(table: str) -> List[str]:
             # find the number of chars to pad in front of headers that are too
             # far away from the separator. Replace spaces with unicode char: �
             # we will remove this char from headers after sparse_table_parse
-            problem_header_pattern = re.compile(r'(?:\| )( +)([^|]+)')
-            problem_headers = problem_header_pattern.findall(line)
-            if problem_headers:
-                for p_header in problem_headers:
-                    old_header = p_header[0] + p_header[1]
-                    sub_chars = '�' * len(p_header[0])
-                    new_header = sub_chars + p_header[1]
-                    line = line.replace(old_header, new_header)
+            # Each header is padded in place, in a single pass.
+            line = _problem_header_pattern.sub(
+                lambda m: '| ' + '\ufffd' * len(m.group(1)) + m.group(2),
+                line
+            )
 
             line = line.replace('|', ' ')
             result.append(_snake_case(line))

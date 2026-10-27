@@ -418,6 +418,15 @@ class MyTests(unittest.TestCase):
         expected = [{'type': 'VEVENT', 'uid': '2', 'summary': 'Lunch'}]
         self.assertEqual(jc.parsers.ics.parse(data, quiet=True), expected)
 
+    def test_ics_folded_lines_and_unmatched_end(self):
+        """
+        Test 'ics' folded lines with several continuations and an END
+        that has no matching BEGIN
+        """
+        data = 'BEGIN:VCALENDAR\nBEGIN:VEVENT\nUID:1\nSUMMARY:a\n b\n\tc\nBEGIN:VALARM\nBEGIN:VALARM\nACTION:DISPLAY\nEND:VALARM\nEND:VEVENT\nEND:VEVENT\nEND:VCALENDAR\n'
+        expected = [{'type': 'VEVENT', 'uid': '1', 'summary': 'abc', 'alarms': [{}]}]
+        self.assertEqual(jc.parsers.ics.parse(data, raw=True, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

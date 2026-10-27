@@ -75,6 +75,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[1]['value'], 'root')
         self.assertEqual(result[2]['value'], 'x\u2028PATH=/tmp/other\u2028USER=nobody')
 
+    def test_env_multiline_values(self):
+        """
+        Test 'env' values that span several lines
+        """
+        data = 'A=1\nb\nc\nD=\nE=x\n\n'
+        self.assertEqual(jc.parsers.env.parse(data, raw=True), {'A': '1\nb\nc', 'D': '', 'E': 'x\n'})
+
 
 if __name__ == '__main__':
     unittest.main()

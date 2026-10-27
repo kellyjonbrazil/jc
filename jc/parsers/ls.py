@@ -329,6 +329,10 @@ def parse(data, raw=False, quiet=False):
             # (see _detect_date_width)
             date_width = None
 
+            # extra lines of a filename with newlines are collected here and
+            # joined onto the last entry once, when the entry is complete
+            filename_extra = []
+
             for i in range(start, line_count):
                 entry = linedata[i]
                 prev_line = linedata[i - 1] if i > 0 else None
@@ -341,6 +345,9 @@ def parse(data, raw=False, quiet=False):
 
                     # fixup to remove trailing \n in previous entry
                     if raw_output:
+                        if filename_extra:
+                            raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
+                            filename_extra = []
                         raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
                     continue
 
@@ -357,7 +364,9 @@ def parse(data, raw=False, quiet=False):
                 # fixup for filenames with newlines
                 if not new_section \
                    and not _PERM_RE.match(entry):
-                    raw_output[-1]['filename'] = raw_output[-1]['filename'] + '\n' + entry
+                    if not raw_output:
+                        raise IndexError('list index out of range')
+                    filename_extra.append(entry)
                     continue
 
                 new_section = False
@@ -403,7 +412,14 @@ def parse(data, raw=False, quiet=False):
 
                 date_start = 4 + size_width
                 output_line['date'] = ' '.join(parsed_line[date_start:date_start + date_width])
+                if filename_extra:
+                    raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
+                    filename_extra = []
+
                 raw_output.append(output_line)
+
+            if filename_extra:
+                raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
         else:
             for entry in linedata[start:]:
                 output_line = {}

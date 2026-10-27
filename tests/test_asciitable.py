@@ -534,6 +534,23 @@ Jane        Doe
 
         self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
 
+    def test_asciitable_padded_header_text_in_other_header(self):
+        """
+        Test 'asciitable' padding of a header whose text also appears
+        inside another header
+        """
+        data = '| x a |  a |\n|-----|----|\n| 1   | 2  |\n'
+        expected = [{'x_a': '1', 'a': '2'}]
+        self.assertEqual(jc.parsers.asciitable.parse(data, raw=True, quiet=True), expected)
+
+    def test_asciitable_centered_headers(self):
+        """
+        Test 'asciitable' with headers padded away from the separator
+        """
+        data = '|  a  |  b  |\n|-----|-----|\n| 1   | 2   |\n'
+        expected = [{'a': '1', 'b': '2'}]
+        self.assertEqual(jc.parsers.asciitable.parse(data, raw=True, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

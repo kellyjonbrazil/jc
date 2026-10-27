@@ -98,6 +98,41 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
 
+    def test_dmidecode_header_rows(self):
+        """
+        Test 'dmidecode' header rows are skipped up to the first blank line,
+        and input with no blank line yields no output
+        """
+        data = 'line 1\nline 2\nline 3\n\nHandle 0x0000, DMI type 0, 24 bytes\nBIOS Information\n\tVendor: Acme\n\n'
+        expected = [
+            {'handle': '0x0000', 'type': 0, 'bytes': 24, 'description': 'BIOS Information', 'values': {'vendor': 'Acme'}}
+        ]
+        self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
+        self.assertEqual(jc.parsers.dmidecode.parse('line 1\nline 2\nline 3', quiet=True), [])
+
+    def test_dmidecode_data_lines(self):
+        """
+        Test 'dmidecode' indented data lines under a key
+        """
+        data = 'hdr\n\nHandle 0x0001, DMI type 1, 8 bytes\nSystem\n\tKey: v\n\t\tdata 1\n\t\tdata 2\n\tOther: x\n\n'
+        expected = [
+            {'handle': '0x0001', 'type': 1, 'bytes': 8, 'description': 'System',
+             'values': {'key': 'v', 'key_data': ['data 1', 'data 2'], 'other': 'x'}}
+        ]
+        self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
+
+    def test_dmidecode_data_lines_at_end_of_input(self):
+        """
+        Test 'dmidecode' indented data lines at the very end of input
+        (no trailing blank line)
+        """
+        data = 'hdr\n\nHandle 0x0001, DMI type 1, 8 bytes\nSystem\n\tKey: v\n\t\tdata 1\n\t\tdata 2'
+        expected = [
+            {'handle': '0x0001', 'type': 1, 'bytes': 8, 'description': 'System',
+             'values': {'key': 'v', 'key_data': ['data 1', 'data 2']}}
+        ]
+        self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
