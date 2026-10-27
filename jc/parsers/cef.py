@@ -123,7 +123,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.1'
     description = 'CEF string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

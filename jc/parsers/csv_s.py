@@ -66,7 +66,7 @@ from jc.parsers.csv import _sniff
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.6'
     description = 'CSV file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

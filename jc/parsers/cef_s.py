@@ -97,7 +97,7 @@ from jc.parsers.cef import _pycef_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.1'
     description = 'CEF string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
