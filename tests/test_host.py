@@ -22,7 +22,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/generic/host-sunet.json'),
             'soa': (
                 'fixtures/generic/host-soa.out',
-                'fixtures/generic/host-soa.json')
+                'fixtures/generic/host-soa.json'),
+            'txt': (
+                'fixtures/generic/host-txt.out',
+                'fixtures/generic/host-txt.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -64,6 +67,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             parse(self.f_in['soa'], quiet=True),
             self.f_json['soa']
+        )
+
+    def test_host_txt_record_words(self):
+        """
+        Test 'host' with TXT text that contains other record type words
+        """
+        self.assertEqual(
+            parse(self.f_in['txt'], quiet=True),
+            self.f_json['txt']
         )
 
     def test_host_soa_c_mode(self):
