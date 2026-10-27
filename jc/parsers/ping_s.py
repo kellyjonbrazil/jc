@@ -100,6 +100,20 @@ class info():
 __version__ = info.version
 
 
+# Linux reply line: '[<timestamp>] <bytes> bytes from <name> (<ip>): icmp_seq=N ttl=N time=X ms ...'
+# The sender is either '<name> (<ip>)' or a bare '<ip>'. The name branch is
+# greedy so the last '(<ip>): icmp_seq=' on the line is used.
+_LINUX_REPLY_RE = re.compile(
+    r'^(?:\[(?P<timestamp>[^\] ]+)\] )?'
+    r'(?P<bytes>\d+) bytes from '
+    r'(?:.* \((?P<paren_ip>[^ ()]+)\)|(?P<bare_ip>[^ ()]+))'
+    r': (?:icmp_seq|icmp_req|seq)=(?P<icmp_seq>\d+)'
+    r'(?: (?:ttl|hlim)=(?P<ttl>\d+))?'
+    r'(?: time=(?P<time_ms>[0-9.]+) ms)?'
+    r'(?P<rest>(?:\D.*)?)$'
+)
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -514,6 +528,26 @@ def _linux_parse(line, s):
 
     timestamp_offset = 1 if timestamp else 0
 
+    # normal responses
+    if ' bytes from ' in line:
+        m = _LINUX_REPLY_RE.match(line.strip())
+        if m:
+            output_line = {
+                'type': 'reply',
+                'destination_ip': s.destination_ip or None,
+                'sent_bytes': s.sent_bytes or None,
+                'pattern': s.pattern or None,
+                'timestamp': m.group('timestamp'),
+                'response_bytes': m.group('bytes'),
+                'response_ip': m.group('paren_ip') or m.group('bare_ip'),
+                'icmp_seq': m.group('icmp_seq'),
+                'ttl': m.group('ttl'),
+                'time_ms': m.group('time_ms'),
+                'duplicate': 'DUP!' in m.group('rest')
+            }
+
+            return output_line
+
     # ping response lines
     err = None
     if s.ipv4:
@@ -554,38 +588,11 @@ def _linux_parse(line, s):
 
         return output_line
 
-    # normal responses
+    # unrecognized reply lines raise the same exception type as before
     if ' bytes from ' in line:
+        raise IndexError('list index out of range')
 
-        line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
-
-        # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
-        param_positions = None
-        if s.ipv4 and not s.hostname:
-            param_positions = (0, 3, 5, 7, 9)
-        elif s.ipv4 and s.hostname:
-            param_positions = (0, 4, 7, 9, 11)
-        elif not s.ipv4 and not s.hostname:
-            param_positions = (0, 3, 5, 7, 9)
-        elif not s.ipv4 and s.hostname:
-            param_positions = (0, 4, 7, 9, 11)
-        bts, rip, iseq, t2l, tms = (x + timestamp_offset for x in param_positions)
-
-        output_line = {
-            'type': 'reply',
-            'destination_ip': s.destination_ip or None,
-            'sent_bytes': s.sent_bytes or None,
-            'pattern': s.pattern or None,
-            'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-            'response_bytes': line.split()[bts],
-            'response_ip': line.split()[rip].rstrip(':'),
-            'icmp_seq': line.split()[iseq],
-            'ttl': line.split()[t2l],
-            'time_ms': line.split()[tms],
-            'duplicate': 'DUP!' in line
-        }
-
-        return output_line
+    return None
 
 
 @add_jc_meta

@@ -96,25 +96,24 @@ class MyTests(unittest.TestCase):
 
     def test_sparse_table_parse_delimiter_in_data(self):
         """
-        Test sparse_table_parse with the delimiter character inside the data
-        and with a custom delimiter
+        Test sparse_table_parse with delimiter characters inside the data
         """
         data = [
             'a      b      c      d',
-            'x⁣y',
-            'x      y|z'
+            'x\u2063y',
+            'x      y|z',
+            'x\u20631\u20632    v      w\u2063\x00      z',
+            '\x00\u2063'
         ]
         expected = [
-            {'a': 'x', 'b': 'y', 'c': None, 'd': '⁣'},
-            {'a': 'x', 'b': 'y|z', 'c': None, 'd': None}
+            {'a': 'x\u2063y', 'b': None, 'c': None, 'd': None},
+            {'a': 'x', 'b': 'y|z', 'c': None, 'd': None},
+            {'a': 'x\u20631\u20632', 'b': 'v', 'c': 'w\u2063\x00', 'd': 'z'},
+            {'a': '\x00\u2063', 'b': None, 'c': None, 'd': None}
         ]
         self.assertEqual(sparse_table_parse(data), expected)
-
-        expected_custom = [
-            {'a': 'x⁣y', 'b': None, 'c': None, 'd': None},
-            {'a': 'x', 'b': 'y', 'c': 'z', 'd': '|'}
-        ]
-        self.assertEqual(sparse_table_parse(data, delim='|'), expected_custom)
+        self.assertEqual(sparse_table_parse(data, delim='|'), expected)
+        self.assertEqual(sparse_table_parse(data, delim='\x00'), expected)
 
     def test_sparse_table_parse_repeated_column_name(self):
         """
@@ -155,6 +154,40 @@ class MyTests(unittest.TestCase):
         data = ['a ' * 2000] + ['b'] * 100
         self.assertEqual(sparse_table_parse(data), [{'a': None}] * 100)
 
+
+    def test_sparse_table_parse_display_width(self):
+        """
+        Test sparse_table_parse measures column positions in display cells
+        """
+        data = [
+            'name      label     size',
+            '\u5171\u6709\u30e1\u30e2  x         10',
+            'a\u200bb       cafe\u0301      20',
+            'c\ufeff         \u65e5\u672c\u8a9e\u30e9  30',
+            'd         e\u0301\u0302\u2063f        40'
+        ]
+        expected = [
+            {'name': '\u5171\u6709\u30e1\u30e2', 'label': 'x', 'size': '10'},
+            {'name': 'a\u200bb', 'label': 'cafe\u0301', 'size': '20'},
+            {'name': 'c\ufeff', 'label': '\u65e5\u672c\u8a9e\u30e9', 'size': '30'},
+            {'name': 'd', 'label': 'e\u0301\u0302\u2063f', 'size': '40'}
+        ]
+        self.assertEqual(sparse_table_parse(data), expected)
+
+    def test_sparse_table_parse_wide_header(self):
+        """
+        Test sparse_table_parse with wide characters in the header row
+        """
+        data = [
+            '\u540d\u524d  \u30b5\u30a4\u30ba  note',
+            'ab    12        x y',
+            '\u5171\u6709  3\u0301        \u65e5'
+        ]
+        expected = [
+            {'\u540d\u524d': 'ab', '\u30b5\u30a4\u30ba': '12', 'note': 'x y'},
+            {'\u540d\u524d': '\u5171\u6709', '\u30b5\u30a4\u30ba': '3\u0301', 'note': '\u65e5'}
+        ]
+        self.assertEqual(sparse_table_parse(data), expected)
 
 if __name__ == '__main__':
     unittest.main()

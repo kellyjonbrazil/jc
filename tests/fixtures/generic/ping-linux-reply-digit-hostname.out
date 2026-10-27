@@ -1,0 +1,8 @@
+PING 1e100.net (142.250.1.1) 56(84) bytes of data.
+[1700000000.123456] 64 bytes from lax17s.1e100.net (142.250.1.1): icmp_seq=1 ttl=59 time=12.3 ms
+[1700000000.130001] 64 bytes from lax17s.1e100.net (142.250.1.1): icmp_seq=1 ttl=59 time=12.9 ms (DUP!)
+[1700000001.124987] 64 bytes from lax17s.1e100.net (142.250.1.1): icmp_seq=2 ttl=59 time=12.1 ms
+
+--- 1e100.net ping statistics ---
+2 packets transmitted, 2 received, +1 duplicates, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 12.100/12.433/12.900/0.340 ms
