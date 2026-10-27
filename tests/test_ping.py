@@ -510,6 +510,20 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse('', quiet=True), {})
 
+    def test_ping_short_output(self):
+        """
+        Test 'ping' output that was cut short before any reply arrived, e.g.
+        `timeout 2 ping -c 5 host | jc --ping`. Fewer than three lines used to
+        raise IndexError while the parser looked for a reply line near the end.
+        """
+        one_line = 'PING google.com (142.250.125.102): 56 data bytes\n'
+        two_lines = one_line + '64 bytes from 142.250.125.102: seq=0 ttl=42 time=1.3 ms\n'
+
+        for data in (one_line, two_lines):
+            parsed = jc.parsers.ping.parse(data, quiet=True)
+            self.assertEqual(parsed['destination_ip'], '142.250.125.102')
+            self.assertEqual(parsed['data_bytes'], 56)
+
     def test_ping_ip_O_centos_7_7(self):
         """
         Test 'ping <ip> -O' on Centos 7.7
