@@ -54,6 +54,19 @@ Do not report these unless they lead to something above:
 
 - Wrong output for genuinely ambiguous input formats.
 - Output differences between platforms or versions of the tool that produced the input.
+- Output that is large because the input describes a large table. Table parsers (`csv`, `asciitable`, and the parsers built on the simple and sparse table helpers in `jc/parsers/universal.py`) emit every header column as a key in every record, with `null` for missing cells. Output that grows with rows × columns, or long header names repeated in each record, is expected. Only growth beyond what the input describes counts, such as shared references or entity and alias expansion.
+- Large pretty-printed output (`-p`) from deeply nested input. The indentation grows with the nesting depth; the data itself is not duplicated.
+- Limitations documented in a parser's docstring, for example `mount` points containing ` on `, or file names with newlines in `ls` output without `-b`.
+
+## Parsing rules jc follows
+
+These describe intended behavior. A parser that breaks one of them is in scope.
+
+- Lines end at LF or CRLF. A lone CR also ends a line for `csv`, `hosts`, `jar_manifest`, `m3u`, `ics` files that use only CR, and `--slurp`. Other line-break characters (U+2028, U+2029, U+0085, VT, FF) are part of the value they appear in.
+- Where the tool separates fields with spaces or tabs, other Unicode whitespace (such as NBSP or U+3000) is part of the value.
+- `yaml`, `plist` and `xml` raise `ParseError` when the output would be larger than 1000 × the input size + 50 MB. Expansion below that limit is not High severity.
+- CLI JSON output escapes U+0000-U+001F, DEL, the C1 controls U+0080-U+009F and lone surrogates. Other printable Unicode is written as is.
+- Warning and error messages show control characters as `\xNN` escapes and shorten very long lines.
 
 ## How I'd like reports and patches
 

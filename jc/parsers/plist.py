@@ -60,7 +60,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'PLIST file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -201,16 +201,20 @@ def parse(
             import os
 
             # use delete=False for windows compatibility
-            with tempfile.NamedTemporaryFile(mode='w+b', delete=False) as plist_file:
-                plist_file_name = plist_file.name
-                plist_file.write(data)
-                plist_file.seek(0)
-                parsed_plist = PBPlist(plist_file_name)
-                raw_output = parsed_plist.root.nativeType()
+            plist_file = tempfile.NamedTemporaryFile(mode='w+b', delete=False)
+            plist_file_name = plist_file.name
 
-            # try to delete the temp file
-            if os.path.exists(plist_file_name):
-                os.remove(plist_file_name)
+            # always delete the temp file, even if parsing fails
+            try:
+                with plist_file:
+                    plist_file.write(data)
+                    plist_file.seek(0)
+                    parsed_plist = PBPlist(plist_file_name)
+                    raw_output = parsed_plist.root.nativeType()
+
+            finally:
+                if os.path.exists(plist_file_name):
+                    os.remove(plist_file_name)
 
         raw_output = _fix_objects(raw_output)
 
