@@ -32,6 +32,22 @@ class MyTests(unittest.TestCase):
             .replace("/", "_")
         )
 
+    def test_systeminfo_truncated(self):
+        """
+        Test 'systeminfo' output cut short, e.g. `systeminfo | head -5 |
+        jc --systeminfo`. _process() used to assume every key it converts was
+        present, raising KeyError on 'network_cards' and then on the integer
+        fields, and UnboundLocalError when no time zone had been parsed.
+        """
+        truncated = (
+            'Host Name:                 WIN-ABC123\n'
+            'OS Name:                   Microsoft Windows 10 Pro\n'
+            'OS Version:                10.0.19042 N/A Build 19042\n'
+        )
+        parsed = jc.parsers.systeminfo.parse(truncated, quiet=True)
+        self.assertEqual(parsed['host_name'], 'WIN-ABC123')
+        self.assertEqual(parsed['os_name'], 'Microsoft Windows 10 Pro')
+
     def test_windows_systeminfo(self):
         """
         Test a sample Windows "systeminfo" command output

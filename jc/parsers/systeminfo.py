@@ -265,7 +265,10 @@ def _process(proc_data):
         if isinstance(proc_data[item], str) and not proc_data[item]:
             proc_data[item] = None
 
-    for i, nic in enumerate(proc_data["network_cards"]):
+    # A run that was cut short (`systeminfo | head -20 | jc --systeminfo`, a
+    # closed pipe) parses only the fields it received, so nothing below can
+    # assume a given key is present.
+    for i, nic in enumerate(proc_data.get("network_cards") or []):
         proc_data["network_cards"][i]["dhcp_enabled"] = jc.utils.convert_to_bool(
             nic["dhcp_enabled"]
         )
@@ -276,18 +279,25 @@ def _process(proc_data):
                 proc_data["network_cards"][i][item] = None
 
     for key in int_list:
-        proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in proc_data:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     for key in dt_list:
         tz = proc_data.get("time_zone", "")
-        if tz:
-            # convert
-            # from: (UTC-08:00) Pacific Time (US & Canada)
-            # to: (UTC-0800)
-            tz_fields = tz.split()
-            tz = " " + tz_fields[0].replace(":", "")
-            ts_formats = (1700, 1705, 1710)
-            ts = jc.utils.timestamp(f"{proc_data.get(key)}{tz}", format_hint=ts_formats)
+        if not tz:
+            # `ts` is only built when a time zone is present, so the two
+            # assignments below would otherwise read an unbound name. Without a
+            # zone there is nothing to anchor the timestamp to, so the epoch
+            # fields are left off rather than guessed.
+            continue
+
+        # convert
+        # from: (UTC-08:00) Pacific Time (US & Canada)
+        # to: (UTC-0800)
+        tz_fields = tz.split()
+        tz = " " + tz_fields[0].replace(":", "")
+        ts_formats = (1700, 1705, 1710)
+        ts = jc.utils.timestamp(f"{proc_data.get(key)}{tz}", format_hint=ts_formats)
         proc_data[key + '_epoch'] = ts.naive
         proc_data[key + '_epoch_utc'] = ts.utc
 
