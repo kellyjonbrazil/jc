@@ -73,6 +73,8 @@ Examples:
 import re
 import jc.utils
 
+_BSD_LINE_RE = re.compile(r'(?![0-9a-fA-F]+ )([\w-]+) \((.*)\) = ([0-9a-fA-F]+)[ \t]*\Z')
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -140,8 +142,15 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, jc.utils.splitlines(data)):
+            # BSD style output: `MD5 (file name) = hash`. The file name is
+            # everything between the first ` (` and the last `) = `
+            bsd = _BSD_LINE_RE.match(line)
+            if bsd:
+                file_name, file_hash = bsd.group(2), bsd.group(3)
+                # filler, BSD style output does not show a mode
+                file_mode = None
             # check for legacy md5 command output
-            if line.startswith('MD5 ('):
+            elif line.startswith('MD5 ('):
                 file_hash = line.split('=', maxsplit=1)[1].strip()
                 file_name = line.split('=', maxsplit=1)[0].strip()
                 file_name = file_name[5:]
