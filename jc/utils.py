@@ -912,6 +912,10 @@ def line_slice(
 class timestamp:
     __slots__ = ('string', 'format', 'naive', 'utc', 'iso')
 
+    # no supported format matches a longer normalized string
+    _MAX_LENGTH = 100
+    _DIGIT = re.compile(r'\d')
+
     def __init__(self,
                  datetime_string: Optional[str],
                  format_hint: Optional[Iterable[int]] = None
@@ -955,7 +959,15 @@ class timestamp:
         else:
             format_hint = tuple(format_hint)
 
-        dt = self._parse_dt(self.string, format_hint=format_hint)
+        if self._may_match(self.string):
+            dt = self._parse_dt(self.string, format_hint=format_hint)
+        else:
+            dt = {
+                'format': None,
+                'timestamp_naive': None,
+                'timestamp_utc': None,
+                'iso': None
+            }
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
@@ -963,6 +975,116 @@ class timestamp:
 
     def __repr__(self) -> str:
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc}, iso={self.iso!r})'
+
+    @staticmethod
+    def _may_match(dt_string: Optional[str]) -> bool:
+        """
+        Quick check for strings that no supported format can match: strings
+        without a digit, or longer than 100 characters after normalization.
+        These strings are not passed to the cached parser.
+        """
+        if not isinstance(dt_string, str) or not dt_string:
+            return True
+
+        if not timestamp._DIGIT.search(dt_string):
+            return False
+
+        if len(dt_string) <= timestamp._MAX_LENGTH:
+            return True
+
+        normalized_datetime, _ = timestamp._normalize_dt_string(dt_string)
+        return len(normalized_datetime) <= timestamp._MAX_LENGTH
+
+    @staticmethod
+    def _normalize_dt_string(dt_string: Optional[str]) -> Tuple[str, bool]:
+        """
+        Normalize a datetime string before matching it against the supported
+        formats. Returns the normalized string and whether a UTC timezone was
+        detected.
+        """
+        # from https://www.timeanddate.com/time/zones/
+        # only removed UTC & GMT timezones and added known non-UTC offsets
+        tz_abbr: Set[str] = {
+            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
+            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
+            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
+            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
+            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
+            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
+            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
+            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
+            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
+            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
+            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
+            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
+            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
+            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
+            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
+            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
+            'YEKST', 'YEKT', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
+            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
+            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
+            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
+            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
+            'UTC+1345', 'UTC+1400'
+        }
+
+        offset_suffixes: Tuple[str, ...] = (
+            '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
+            '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
+            '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
+            '+05:00', '+05:30', '+05:45', '+06:00', '+06:30', '+07:00', '+08:00',
+            '+08:45', '+09:00', '+10:00', '+10:30', '+11:00', '+12:00', '+13:00',
+            '+13:45', '+14:00'
+        )
+
+        data: str = dt_string or ''
+        utc_tz: bool = False
+
+        # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
+        data = data.replace('Coordinated Universal Time', 'UTC')
+
+        # UTC can also be indicated with 'Z' for Zulu time (ISO-8601). Convert to 'UTC'
+        data = data.replace('Z', 'UTC')
+
+        # GMT and UTC are practically equivalent. Convert to 'UTC'
+        data = data.replace('GMT', 'UTC')
+
+        if 'UTC' in data:
+            utc_tz = True
+            if 'UTC+' in data or 'UTC-' in data:
+                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
+
+        elif '+0000' in data \
+             or '-0000' in data \
+             or '+00:00' in data \
+             or '-00:00' in data:
+            utc_tz = True
+            data = data.replace('+00:00', '+0000')  # fix for python 3.6
+
+        # normalize the timezone by taking out any timezone reference, except UTC
+        cleandata = data.replace('(', '').replace(')', '')
+        normalized_datetime_list: List[str] = []
+        for term in cleandata.split():
+            if term not in tz_abbr:
+                normalized_datetime_list.append(term)
+
+        normalized_datetime = ' '.join(normalized_datetime_list)
+
+        # remove non UTC offset suffixes at the end of the string
+        for suffix in offset_suffixes:
+            if normalized_datetime.endswith(suffix):
+                normalized_datetime = normalized_datetime[0:-len(suffix)]
+                break
+
+        # normalize further by converting any greater-than 6-digit subsecond to 6-digits
+        p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
+        normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
+
+        return normalized_datetime, utc_tz
 
     @staticmethod
     @lru_cache(maxsize=2048)
@@ -1069,48 +1191,6 @@ class timestamp:
             remove_ids = {7250}
             formats = tuple((x for x in formats if x['id'] not in remove_ids))
 
-        # from https://www.timeanddate.com/time/zones/
-        # only removed UTC & GMT timezones and added known non-UTC offsets
-        tz_abbr: Set[str] = {
-            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
-            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
-            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
-            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
-            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
-            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
-            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
-            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
-            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
-            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
-            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
-            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
-            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
-            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
-            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
-            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
-            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
-            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
-            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
-            'YEKST', 'YEKT', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
-            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
-            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
-            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
-            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
-            'UTC+1345', 'UTC+1400'
-        }
-
-        offset_suffixes: Tuple[str, ...] = (
-            '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
-            '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
-            '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
-            '+05:00', '+05:30', '+05:45', '+06:00', '+06:30', '+07:00', '+08:00',
-            '+08:45', '+09:00', '+10:00', '+10:30', '+11:00', '+12:00', '+13:00',
-            '+13:45', '+14:00'
-        )
-
-        data: str = dt_string or ''
-        normalized_datetime: str = ''
-        utc_tz: bool = False
         dt: Optional[datetime] = None
         dt_utc: Optional[datetime] = None
         timestamp_naive: Optional[int] = None
@@ -1129,45 +1209,7 @@ class timestamp:
         else:
             format_hint = tuple(format_hint)
 
-        # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
-        data = data.replace('Coordinated Universal Time', 'UTC')
-
-        # UTC can also be indicated with 'Z' for Zulu time (ISO-8601). Convert to 'UTC'
-        data = data.replace('Z', 'UTC')
-
-        # GMT and UTC are practically equivalent. Convert to 'UTC'
-        data = data.replace('GMT', 'UTC')
-
-        if 'UTC' in data:
-            utc_tz = True
-            if 'UTC+' in data or 'UTC-' in data:
-                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
-
-        elif '+0000' in data \
-             or '-0000' in data \
-             or '+00:00' in data \
-             or '-00:00' in data:
-            utc_tz = True
-            data = data.replace('+00:00', '+0000')  # fix for python 3.6
-
-        # normalize the timezone by taking out any timezone reference, except UTC
-        cleandata = data.replace('(', '').replace(')', '')
-        normalized_datetime_list: List[str] = []
-        for term in cleandata.split():
-            if term not in tz_abbr:
-                normalized_datetime_list.append(term)
-
-        normalized_datetime = ' '.join(normalized_datetime_list)
-
-        # remove non UTC offset suffixes at the end of the string
-        for suffix in offset_suffixes:
-            if normalized_datetime.endswith(suffix):
-                normalized_datetime = normalized_datetime[0:-len(suffix)]
-                break
-
-        # normalize further by converting any greater-than 6-digit subsecond to 6-digits
-        p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
-        normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
+        normalized_datetime, utc_tz = timestamp._normalize_dt_string(dt_string)
 
         # try format hints first, then fall back to brute-force method
         hint_obj_list: List[TimeStampFormatType] = []

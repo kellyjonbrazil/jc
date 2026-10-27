@@ -285,6 +285,33 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.utils.convert_size_to_int(input_string, decimal_bias=True), expected_output)
 
 
+    def test_utils_timestamp_non_date_strings(self):
+        """
+        Test 'timestamp' with strings that have no digits or are very long
+        """
+        no_match = (None, None, None, None)
+        before = jc.utils.timestamp._parse_dt.cache_info().currsize
+
+        for input_string in ('hello world', 'never', 'n/a', 'x' * 20000, 'ab1 ' * 5000):
+            ts = jc.utils.timestamp(input_string)
+            self.assertEqual((ts.format, ts.naive, ts.utc, ts.iso), no_match)
+            self.assertEqual(ts.string, input_string)
+
+        self.assertEqual(jc.utils.timestamp._parse_dt.cache_info().currsize, before)
+
+    def test_utils_timestamp_long_strings_that_normalize_short(self):
+        """
+        Test 'timestamp' with long strings that are short after normalization
+        """
+        ts = jc.utils.timestamp('Wed Mar 24 11:11:30 ' + 'EST ' * 40 + '2021')
+        self.assertEqual((ts.format, ts.iso), (1000, '2021-03-24T11:11:30'))
+
+        ts = jc.utils.timestamp('2019-08-13 18:13:43.555604315' + '1' * 200 + ' -0400')
+        self.assertEqual((ts.format, ts.iso), (7200, '2019-08-13T18:13:43.555604'))
+
+        ts = jc.utils.timestamp('2021-03-23' + ' ' * 200 + '00:14')
+        self.assertEqual((ts.format, ts.iso), (1500, '2021-03-23T00:14:00'))
+
     def test_utils_timestamp_does_not_change_locale(self):
         """
         Test that timestamp conversion restores the original LC_TIME locale
