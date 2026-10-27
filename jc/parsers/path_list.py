@@ -79,6 +79,19 @@ class info():
 __version__ = info.version
 
 
+def _is_windows(data: str) -> bool:
+    """
+    A path list is a Windows path list if an entry separated by ';' starts
+    with a drive letter or a UNC prefix, or if it contains backslashes and
+    no forward slash or colon. Everything else is a POSIX path list.
+    """
+    for entry in data.split(';'):
+        if path._WINDOWS_START.match(entry.strip()):
+            return True
+
+    return '\\' in data and '/' not in data and ':' not in data
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -99,15 +112,19 @@ def parse(data, raw=False, quiet=False):
     # This parser uses path.py
     path.info = info  # type: ignore
 
-    delimiter = ":" if "\\" not in data else ";"
-
     raw_output = []
 
     # check the whole input once instead of for every entry
     if jc.utils.has_data(data):
-        raw_output = [
-            path.parse(line, raw=raw, quiet=quiet)
-            for line in data.split(delimiter)
-        ]
+        windows = _is_windows(data)
+        delimiter = ";" if windows else ":"
+
+        for line in data.split(delimiter):
+            if not jc.utils.has_data(line):
+                raw_output.append({})
+                continue
+
+            line = line.rstrip("\n")
+            raw_output.append(path._parse_path(line, windows, raw))
 
     return raw_output

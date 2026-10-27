@@ -1,0 +1,24 @@
+[
+  {
+    "path": "c:\\tools",
+    "parent": "c:\\",
+    "filename": "tools",
+    "stem": "tools",
+    "extension": "",
+    "path_list": [
+      "c:\\",
+      "tools"
+    ]
+  },
+  {
+    "path": "\\\\server\\share\\bin",
+    "parent": "\\\\server\\share\\",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "\\\\server\\share\\",
+      "bin"
+    ]
+  }
+]
