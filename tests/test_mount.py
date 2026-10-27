@@ -78,11 +78,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.json'), 'r', encoding='utf-8') as f:
         generic_mount_options_in_mountpoint_bsd_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-aix-header-text-in-osx.out'), 'r', encoding='utf-8') as f:
-        generic_mount_aix_header_text_in_osx = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-aix-header-text.out'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_aix_header_text = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-aix-header-text-in-osx.json'), 'r', encoding='utf-8') as f:
-        generic_mount_aix_header_text_in_osx_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-aix-header-text.json'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_aix_header_text_json = json.loads(f.read())
 
     def test_mount_nodata(self):
         """
@@ -189,7 +189,7 @@ class MyTests(unittest.TestCase):
         """
         Test 'mount' on OSX with mount names that contain AIX header words
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_aix_header_text_in_osx, quiet=True), self.generic_mount_aix_header_text_in_osx_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_osx_aix_header_text, quiet=True), self.generic_mount_osx_aix_header_text_json)
 
 
 if __name__ == '__main__':
