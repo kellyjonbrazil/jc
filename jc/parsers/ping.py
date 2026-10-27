@@ -179,6 +179,20 @@ class info():
 __version__ = info.version
 
 
+# Linux reply line: '[<timestamp>] <bytes> bytes from <name> (<ip>): icmp_seq=N ttl=N time=X ms ...'
+# The sender is either '<name> (<ip>)' or a bare '<ip>'. The name branch is
+# greedy so the last '(<ip>): icmp_seq=' on the line is used.
+_LINUX_REPLY_RE = re.compile(
+    r'^(?:\[(?P<timestamp>[^\] ]+)\] )?'
+    r'(?P<bytes>\d+) bytes from '
+    r'(?:.* \((?P<paren_ip>[^ ()]+)\)|(?P<bare_ip>[^ ()]+))'
+    r': (?:icmp_seq|icmp_req|seq)=(?P<icmp_seq>\d+)'
+    r'(?: (?:ttl|hlim)=(?P<ttl>\d+))?'
+    r'(?: time=(?P<time_ms>[0-9.]+) ms)?'
+    r'(?P<rest>(?:\D.*)?)$'
+)
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -395,36 +409,19 @@ def _linux_parse(data):
 
             # normal responses
             elif ' bytes from ' in line:
-                try:
-                    line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
-
-                    # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
-                    if ipv4 and not hostname:
-                        bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
-                    elif ipv4 and hostname:
-                        bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
-                    elif not ipv4 and not hostname:
-                        bts, rip, iseq, t2l, tms = (0, 3, 5, 7, 9)
-                    elif not ipv4 and hostname:
-                        bts, rip, iseq, t2l, tms = (0, 4, 7, 9, 11)
-
-                    # if timestamp option is specified, then shift everything right by one
-                    timestamp = False
-                    if line[0] == '[':
-                        timestamp = True
-                        bts, rip, iseq, t2l, tms = (bts + 1, rip + 1, iseq + 1, t2l + 1, tms + 1)
-
+                m = _LINUX_REPLY_RE.match(line.strip())
+                if m:
                     response = {
                         'type': 'reply',
-                        'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-                        'bytes': line.split()[bts],
-                        'response_ip': line.split()[rip].rstrip(':'),
-                        'icmp_seq': line.split()[iseq],
-                        'ttl': line.split()[t2l],
-                        'time_ms': line.split()[tms],
-                        'duplicate': True if 'DUP!' in line else False
+                        'timestamp': m.group('timestamp'),
+                        'bytes': m.group('bytes'),
+                        'response_ip': m.group('paren_ip') or m.group('bare_ip'),
+                        'icmp_seq': m.group('icmp_seq'),
+                        'ttl': m.group('ttl'),
+                        'time_ms': m.group('time_ms'),
+                        'duplicate': 'DUP!' in m.group('rest')
                     }
-                except Exception:
+                else:
                     response = {
                         'type': 'unparsable_line',
                         'unparsed_line': line
