@@ -173,6 +173,12 @@ class MyTests(unittest.TestCase):
         git_log_line_separator_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.out'), 'r', encoding='utf-8') as f:
+        git_log_stat_name_separator = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.json'), 'r', encoding='utf-8') as f:
+        git_log_stat_name_separator_json = json.loads(f.read())
+
     def test_git_log_nodata(self):
         """
         Test 'git_log' with no data
@@ -347,6 +353,12 @@ class MyTests(unittest.TestCase):
         SEPARATOR) followed by a fake commit header: still a single commit
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_line_separator, quiet=True), self.git_log_line_separator_json)
+
+    def test_git_log_stat_name_separator(self):
+        """
+        Test 'git_log --stat' with file names that contain ' | ' and '|'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_stat_name_separator, quiet=True), self.git_log_stat_name_separator_json)
 
 
 if __name__ == '__main__':

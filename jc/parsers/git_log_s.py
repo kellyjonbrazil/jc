@@ -323,7 +323,12 @@ def parse(
                 if numstat_found:
                     continue
 
-                file_line_split = line.split('|')
+                # git separates the name from the stats with the last ` | `
+                # (a name can contain ` | ` too)
+                if ' | ' in line:
+                    file_line_split = line.rsplit(' | ', maxsplit=1)
+                else:
+                    file_line_split = line.split('|')
                 file_name = file_line_split[0].strip()
                 file_list.append(file_name)
 
