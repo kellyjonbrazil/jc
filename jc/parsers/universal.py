@@ -78,11 +78,9 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
 
                          Also, ensure there are no blank line items.
 
-        delim:  (string) Delimiter to use. By default `u\\2063`
-                         (invisible separator) is used since it is unlikely
-                         to ever be seen in terminal output. You can change
-                         this for troubleshooting purposes or if there is a
-                         delimiter conflict with your data.
+        delim:  (string) Not used. Rows are sliced at the column
+                         positions, so any character can appear in the
+                         data. Kept for compatibility with existing callers.
 
     Returns:
 
@@ -111,55 +109,50 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
 
         header_spec_list.append(header_spec)
 
-    # parse lines
+    # parse lines. The cut positions of each row are found from the right
+    # and the row is sliced at those positions. The character at each cut
+    # position is dropped.
     for entry in data:
         entry_len = len(entry)
-        delim_in_data = delim in entry
-        entry_chars = list(entry)
+        cuts: List[int] = []
 
         # positions past the end of the line are treated as whitespace, so
-        # short lines do not need to be padded. Delimiters that fall there
-        # are appended to the end of the line.
-        trailing_delims: List[int] = []
+        # short lines do not need to be padded. Cuts that fall there give
+        # blank cells at the end of the row.
+        trailing_cuts = 0
 
-        # insert new separator since data can contain spaces
-        last_end = None
         for h_spec in reversed(header_spec_list):
             h_end = h_spec['end']
 
-            # the characters between the previous delimiter and the end of
-            # its column are known to not be whitespace, so start the
-            # search at the previous delimiter instead of searching them
-            # again
-            if last_end is not None and h_end > last_end:
-                h_end = last_end
-
             if h_end >= entry_len:
-                trailing_delims.append(h_end)
-                last_end = h_end
+                trailing_cuts += 1
                 continue
+
+            # the characters between the previous cut and the end of its
+            # column are known to not be whitespace, so start the search
+            # just left of the previous cut instead of searching them again.
+            # A cut that reaches the start of the line stays there.
+            if cuts and h_end >= cuts[-1]:
+                h_end = cuts[-1]
+                if h_end > 0:
+                    h_end -= 1
 
             # check if the location contains whitespace. if not
             # then move to the left until a space is found
-            while h_end > 0 and not entry_chars[h_end].isspace():
+            while h_end > 0 and not entry[h_end].isspace():
                 h_end -= 1
 
-            # insert custom delimiter
-            entry_chars[h_end] = delim
-            last_end = h_end
+            if not cuts or h_end != cuts[-1]:
+                cuts.append(h_end)
 
-        # create the entry list from the new custom delimiter
-        entry = ''.join(entry_chars)
-        if trailing_delims:
-            if delim_in_data:
-                # the delimiter is part of the data, so the spaces between
-                # the delimiters can end up inside a value. Pad the same as
-                # a full-width line would be padded.
-                for h_end in reversed(trailing_delims):
-                    entry = entry + ' ' * (h_end - len(entry)) + delim
-            else:
-                entry = entry + delim * len(trailing_delims)
-        entry_list = entry.split(delim, maxsplit=len(header_list) - 1)
+        # slice the row at the cut positions
+        entry_list = []
+        col_start = 0
+        for h_end in reversed(cuts):
+            entry_list.append(entry[col_start:h_end])
+            col_start = h_end + 1
+        entry_list.append(entry[col_start:])
+        entry_list.extend([''] * trailing_cuts)
 
         # clean up leading and trailing spaces in entry
         clean_entry_list = []

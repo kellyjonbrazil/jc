@@ -96,25 +96,24 @@ class MyTests(unittest.TestCase):
 
     def test_sparse_table_parse_delimiter_in_data(self):
         """
-        Test sparse_table_parse with the delimiter character inside the data
-        and with a custom delimiter
+        Test sparse_table_parse with delimiter characters inside the data
         """
         data = [
             'a      b      c      d',
-            'x⁣y',
-            'x      y|z'
+            'x\u2063y',
+            'x      y|z',
+            'x\u20631\u20632    v      w\u2063\x00      z',
+            '\x00\u2063'
         ]
         expected = [
-            {'a': 'x', 'b': 'y', 'c': None, 'd': '⁣'},
-            {'a': 'x', 'b': 'y|z', 'c': None, 'd': None}
+            {'a': 'x\u2063y', 'b': None, 'c': None, 'd': None},
+            {'a': 'x', 'b': 'y|z', 'c': None, 'd': None},
+            {'a': 'x\u20631\u20632', 'b': 'v', 'c': 'w\u2063\x00', 'd': 'z'},
+            {'a': '\x00\u2063', 'b': None, 'c': None, 'd': None}
         ]
         self.assertEqual(sparse_table_parse(data), expected)
-
-        expected_custom = [
-            {'a': 'x⁣y', 'b': None, 'c': None, 'd': None},
-            {'a': 'x', 'b': 'y', 'c': 'z', 'd': '|'}
-        ]
-        self.assertEqual(sparse_table_parse(data, delim='|'), expected_custom)
+        self.assertEqual(sparse_table_parse(data, delim='|'), expected)
+        self.assertEqual(sparse_table_parse(data, delim='\x00'), expected)
 
     def test_sparse_table_parse_repeated_column_name(self):
         """
