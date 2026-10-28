@@ -9,6 +9,13 @@ Block (`b`) and character (`c`) device entries report `major_number` and
 `minor_number` instead of `size`, since `ls` prints the device's major and
 minor numbers in that column rather than a byte count.
 
+Entries that `ls` cannot stat (e.g. `-????????? ? ? ? ?  ? name`) report
+`null` for `links`, `owner`, `group`, `size`, and `date`.
+
+Only symbolic link (`l`) entries have a `link_to` field. The filename is
+split at the first ` -> `, so a link whose name contains ` -> ` reports
+the rest of its name as part of `link_to`.
+
 `--time-style=iso` is not supported since its date field is a different
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
@@ -145,7 +152,9 @@ Examples:
 import re
 import jc.utils
 
-_PERM_RE = re.compile(r'[-dclpsbDCMnP?]([-r][-w][-xsS]){2}([-r][-w][-xtT])[+]?')
+_PERM_RE = re.compile(r'[-dclpsbDCMnP?](([-r][-w][-xsS]){2}([-r][-w][-xtT])|\?{9})[+]?')
+# entries `ls` cannot stat print '?' for the permissions and every field
+_NO_STAT_RE = re.compile(r'[-dclpsbDCMnP?]\?{9}')
 _LONG_ISO_DATE_RE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
 _LONG_ISO_TIME_RE = re.compile(r'^\d{2}:\d{2}$')
 
@@ -169,7 +178,7 @@ def _detect_date_width(sample_line):
     Return the number of whitespace-separated tokens that make up the
     date field: 2 for --time-style=long-iso ("2024-08-15 10:53"), 3 for
     the default and --time-style=full-iso formats. `sample_line` must be
-    a data line that matches _PERM_RE.
+    a data line that matches _PERM_RE and not _NO_STAT_RE.
     """
     device = sample_line[0] in ('b', 'c')
     tokens = sample_line.split()
@@ -181,6 +190,36 @@ def _detect_date_width(sample_line):
         return 2
 
     return 3
+
+
+def _split_entry(line, field_count):
+    """
+    Split an `ls -l` entry line into its first `field_count` fields,
+    which are separated by runs of spaces, and the filename. `ls` prints
+    exactly one space between the date and the filename, so the filename
+    is the rest of the line after that space and keeps any leading or
+    trailing whitespace. The filename is None if the line ends after the
+    last field.
+    """
+    fields = []
+    pos = 0
+    length = len(line)
+
+    while len(fields) < field_count:
+        while pos < length and line[pos] in ' \t':
+            pos += 1
+
+        if pos == length:
+            break
+
+        start = pos
+        while pos < length and line[pos] not in ' \t':
+            pos += 1
+
+        fields.append(line[start:pos])
+
+    filename = line[pos + 1:] if pos < length else None
+    return fields, filename
 
 
 def _is_total(line):
@@ -263,7 +302,7 @@ def _process(proc_data):
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
-        if 'date' in entry:
+        if entry.get('date') is not None:
             # to speed up processing only try to convert the date if it's not the default format
             if not re.match(r'[a-zA-Z]{3}\s{1,2}\d{1,2}\s{1,2}[0-9:]{4,5}', entry['date']):
                 ts = jc.utils.timestamp(entry['date'], format_hint=(7200,))
@@ -343,12 +382,17 @@ def parse(data, raw=False, quiet=False):
                     parent = entry[:-1]
                     new_section = True
 
-                    # fixup to remove trailing \n in previous entry
-                    if raw_output:
-                        if filename_extra:
-                            raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
-                            filename_extra = []
-                        raw_output[-1]['filename'] = raw_output[-1]['filename'][:-1]
+                    # the blank line before the header is not part of the
+                    # previous filename. It is only in filename_extra if it
+                    # was collected there (macOS prints no 'total' line for
+                    # an empty directory, so that blank line is skipped)
+                    if filename_extra and filename_extra[-1] == '' and prev_line == '':
+                        filename_extra.pop()
+
+                    if raw_output and filename_extra:
+                        raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
+
+                    filename_extra = []
                     continue
 
                 # 'total 1234' is only printed directly after a parent line
@@ -371,24 +415,33 @@ def parse(data, raw=False, quiet=False):
 
                 new_section = False
 
-                if date_width is None:
+                # entries `ls` cannot stat have a single '?' in each field
+                # and no link target
+                no_stat = bool(_NO_STAT_RE.match(entry))
+
+                if date_width is None and not no_stat:
                     date_width = _detect_date_width(entry)
 
                 # block (b) and character (c) device entries report
                 # major,minor instead of a size, which takes one extra
                 # whitespace-separated token
-                device = entry[0] in ('b', 'c')
+                device = entry[0] in ('b', 'c') and not no_stat
                 size_width = 2 if device else 1
-                fixed_width = 4 + size_width + date_width
+                entry_date_width = 1 if no_stat else date_width
+                fixed_width = 4 + size_width + entry_date_width
 
-                parsed_line = entry.split(maxsplit=fixed_width)
+                parsed_line, filename = _split_entry(entry, fixed_width)
 
                 # split filenames and links
-                if len(parsed_line) == fixed_width + 1:
-                    filename_field = parsed_line[fixed_width].split(' -> ')
-                else:
+                if filename is None:
                     # in case of filenames starting with a newline character
                     filename_field = ['']
+                elif entry[0] == 'l' and not no_stat:
+                    # only symbolic links print ' -> target'. A link name that
+                    # contains ' -> ' is ambiguous, so split at the first one
+                    filename_field = filename.split(' -> ', 1)
+                else:
+                    filename_field = [filename]
 
                 # create list of dictionaries
                 output_line['filename'] = filename_field[0]
@@ -411,7 +464,12 @@ def parse(data, raw=False, quiet=False):
                     output_line['size'] = parsed_line[4]
 
                 date_start = 4 + size_width
-                output_line['date'] = ' '.join(parsed_line[date_start:date_start + date_width])
+                output_line['date'] = ' '.join(parsed_line[date_start:date_start + entry_date_width])
+
+                if no_stat:
+                    for key in ('links', 'owner', 'group', 'size', 'date'):
+                        output_line[key] = None
+
                 if filename_extra:
                     raw_output[-1]['filename'] += '\n' + '\n'.join(filename_extra)
                     filename_extra = []

@@ -160,6 +160,9 @@ class MyTests(unittest.TestCase):
             'proc_net_packet': (
                 'fixtures/linux-proc/net_packet',
                 'fixtures/linux-proc/net_packet.json'),
+            'proc_net_packet2': (
+                'fixtures/linux-proc/net_packet2',
+                'fixtures/linux-proc/net_packet2.json'),
             'proc_net_protocols': (
                 'fixtures/linux-proc/net_protocols',
                 'fixtures/linux-proc/net_protocols.json'),

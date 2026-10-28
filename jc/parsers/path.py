@@ -41,6 +41,7 @@ Examples:
       ]
     }
 """
+import re
 from pathlib import PurePosixPath, PureWindowsPath
 from typing import Dict
 import jc.utils
@@ -48,7 +49,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'POSIX path string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
@@ -57,6 +58,9 @@ class info():
 
 
 __version__ = info.version
+
+# drive letter (C:\\ or C:/) or UNC prefix (\\\\server)
+_WINDOWS_START = re.compile(r'[A-Za-z]:[\\/]|\\\\')
 
 
 def _process(proc_data: Dict) -> Dict:
@@ -97,7 +101,23 @@ def parse(data, raw=False, quiet=False):
 
     data = data.rstrip("\n")
 
-    if "\\" in data:
+    return _parse_path(data, _is_windows(data), raw)
+
+
+def _is_windows(data: str) -> bool:
+    """
+    Windows paths start with a drive letter (C:\\ or C:/) or a UNC prefix
+    (\\\\server). Relative paths with backslashes and no forward slash or
+    colon are also treated as Windows paths. Everything else is POSIX.
+    """
+    if _WINDOWS_START.match(data):
+        return True
+
+    return '\\' in data and '/' not in data and ':' not in data
+
+
+def _parse_path(data: str, windows: bool, raw: bool = False) -> Dict:
+    if windows:
         path = PureWindowsPath(data)
     else:
         path = PurePosixPath(data)

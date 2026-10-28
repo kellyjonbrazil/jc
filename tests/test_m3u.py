@@ -60,6 +60,22 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.m3u.parse(data, quiet=True)
         self.assertEqual([x['path'] for x in result], ['music/a.mp3', 'music/b.mp3'])
 
+    def test_m3u_attributes_only_before_title(self):
+        """
+        Test 'm3u' with key="value" text, '#' and repeated spaces in the title
+        """
+        data = ('#EXTM3U\n'
+                '#EXTINF:-1 tvg-id="news.1" group-title="News",Kids tvg-id="x" group-title="Kids"\n'
+                'http://example.com/a\n'
+                '#EXTINF:-1 group-title="Local",El Paso #1  (720p) E=MC2\n'
+                'http://example.com/b\n')
+        result = jc.parsers.m3u.parse(data, quiet=True)
+        self.assertEqual(result[0]['tvg-id'], 'news.1')
+        self.assertEqual(result[0]['group-title'], 'News')
+        self.assertEqual(result[0]['display'], 'Kids tvg-id="x" group-title="Kids"')
+        self.assertEqual(result[1]['display'], 'El Paso #1  (720p) E=MC2')
+        self.assertNotIn('E', result[1])
+
 
 if __name__ == '__main__':
     unittest.main()
