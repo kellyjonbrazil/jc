@@ -36,8 +36,8 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-hh.out'), 'r', encoding='utf-8') as f:
         osx_10_14_6_df_hh = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.out'), 'r', encoding='utf-8') as f:
-        generic_df_long_filesystem = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem.out'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem = f.read()
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-wide-chars.out'), 'r', encoding='utf-8') as f:
         generic_df_linux_wide_chars = f.read()
@@ -73,14 +73,14 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/df-hh.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_df_hh_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem.json'), 'r', encoding='utf-8') as f:
-        generic_df_long_filesystem_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem.json'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem-many-rows.out'), 'r', encoding='utf-8') as f:
-        generic_df_long_filesystem_many_rows = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem-many-rows.out'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem_many_rows = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-long-filesystem-many-rows.json'), 'r', encoding='utf-8') as f:
-        generic_df_long_filesystem_many_rows_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem-many-rows.json'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem_many_rows_json = json.loads(f.read())
 
 
     def test_df_nodata(self):
@@ -147,13 +147,13 @@ class MyTests(unittest.TestCase):
         """
         Test older version of 'df' with long filesystem data
         """
-        self.assertEqual(jc.parsers.df.parse(self.generic_df_long_filesystem, quiet=True), self.generic_df_long_filesystem_json)
+        self.assertEqual(jc.parsers.df.parse(self.generic_df_linux_long_filesystem, quiet=True), self.generic_df_linux_long_filesystem_json)
 
     def test_df_long_filesystem_many_rows(self):
         """
         Test older version of 'df' with a wide filesystem column and many rows
         """
-        self.assertEqual(jc.parsers.df.parse(self.generic_df_long_filesystem_many_rows, quiet=True), self.generic_df_long_filesystem_many_rows_json)
+        self.assertEqual(jc.parsers.df.parse(self.generic_df_linux_long_filesystem_many_rows, quiet=True), self.generic_df_linux_long_filesystem_many_rows_json)
 
     def test_df_centos_7_7_trailing_newline(self):
         """
