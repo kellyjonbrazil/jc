@@ -551,6 +551,45 @@ Jane        Doe
         expected = [{'a': '1', 'b': '2'}]
         self.assertEqual(jc.parsers.asciitable.parse(data, raw=True, quiet=True), expected)
 
+    def test_asciitable_incomplete_ansi_escape(self):
+        """
+        Test 'asciitable' with an incomplete ANSI escape at the end of a cell
+        """
+        for code in ('\x1b[', '\x9b ', '\x1b[0;1'):
+            with self.subTest(code=repr(code)):
+                cell = ('bob' + code).ljust(9)
+                input = ('+-----------+-------+--------+\n'
+                         '| user      | admin | active |\n'
+                         '+-----------+-------+--------+\n'
+                         '| \x1b[31malice\x1b[0m     | yes   | yes    |\n'
+                         '| ' + cell + ' | no    | yes    |\n'
+                         '+-----------+-------+--------+\n')
+                expected = [
+                    {'user': 'alice', 'admin': 'yes', 'active': 'yes'},
+                    {'user': ('bob' + code).strip(), 'admin': 'no', 'active': 'yes'}
+                ]
+                self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
+    def test_asciitable_rows_that_look_like_separators(self):
+        """
+        Test 'asciitable' with data rows that start and end like separators
+        """
+        input = '''
+SSID         CHAN  SIGNAL  AUTH
+-----------  ----  ------  ----
+corp-wifi    36    80      WPA2
+--free-wifi  6     95      --
+--           11    60      --
+==x          1     42      y==
+        '''
+        expected = [
+            {'ssid': 'corp-wifi', 'chan': '36', 'signal': '80', 'auth': 'WPA2'},
+            {'ssid': '--free-wifi', 'chan': '6', 'signal': '95', 'auth': '--'},
+            {'ssid': '--', 'chan': '11', 'signal': '60', 'auth': '--'},
+            {'ssid': '==x', 'chan': '1', 'signal': '42', 'auth': 'y=='}
+        ]
+        self.assertEqual(jc.parsers.asciitable.parse(input, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
