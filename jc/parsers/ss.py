@@ -290,7 +290,6 @@ Examples:
       ]
 """
 import re
-import ast
 
 #: Stands in for a space inside a quoted process name while the row is split
 #: on whitespace. Restored in _parse_opts. A NUL cannot occur in ss output.
@@ -405,6 +404,58 @@ def _match_first(pattern, opener, text, pos=0):
     start = text.find(opener, pos)
     return pattern.match(text, start) if start != -1 else None
 
+def _unix_columns(entry, tokens, local_sep, peer_sep):
+    """
+    Split a unix socket row into its eight main columns, followed by the
+    options region when the row has one. The socket name can contain spaces,
+    so the row is split at the header's `:` columns when the row lines up
+    with them, else around the `<inode> * <peer inode>` tokens.
+
+    Parameters:
+
+        entry:       (string)  row text
+        tokens:      (list)    row text split on spaces
+        local_sep:   (integer) column of the `:` in `Local Address:Port`
+        peer_sep:    (integer) column of the `:` in `Peer Address:Port`
+
+    Returns:
+
+        List of strings, or None if the row does not have the unix layout
+    """
+    columns = None
+    opts = ''
+
+    if (0 < local_sep < peer_sep < len(entry) - 1
+            and entry[local_sep] == ' ' and entry[peer_sep] == ' '
+            and entry[local_sep - 1] != ' ' and entry[peer_sep - 1] != ' '
+            and entry[local_sep + 1] != ' ' and entry[peer_sep + 1] != ' '):
+        front = re.split(r'[ ]+', entry[:local_sep].strip(), maxsplit=4)
+        local_port, _, peer_address = entry[local_sep + 1:peer_sep].partition(' ')
+        peer_address = peer_address.strip()
+        peer_port, _, opts = entry[peer_sep + 1:].partition(' ')
+        if (len(front) == 5 and peer_address
+                and _is_port_number(local_port) and _is_port_number(peer_port)):
+            columns = front + [local_port, peer_address, peer_port]
+
+    if columns is None:
+        # the name ends before the last `<inode> * <peer inode>` tokens
+        for i in range(len(tokens) - 3, 4, -1):
+            if (tokens[i + 1] == '*' and _is_port_number(tokens[i])
+                    and _is_port_number(tokens[i + 2])):
+                columns = tokens[:4] + [' '.join(tokens[4:i]), tokens[i], '*', tokens[i + 2]]
+                opts = ' '.join(tokens[i + 3:])
+                break
+
+    if columns is None:
+        return None
+
+    columns[4] = columns[4].replace(_SPACE_HOLD, ' ')
+    opts = ' '.join(re.split(r'[ ]{2,}', opts.strip()))
+    if _OPTS_FIELD_RE.search(opts):
+        columns.append(opts)
+
+    return columns
+
 def _parse_opts(proc_data):
     """ Process extra options -e, -o, -p
 
@@ -482,14 +533,14 @@ def _parse_opts(proc_data):
 
             # -o option
             if key == "timer":
-                val = val.replace('(', '[').replace(')', ']')
-                val = ast.literal_eval(re.sub(r'([a-z0-9\.]+)', '"\\1"', val))
-                val = {
-                    'timer_name': val[0],
-                    'expire_time': val[1],
-                    'retrans': val[2]
-                }
-                opts[key] = val
+                # the expire time can be empty, as in `timer:(keepalive,,0)`
+                timer = val.strip('()').split(',')
+                if len(timer) == 3:
+                    val = {
+                        'timer_name': timer[0],
+                        'expire_time': timer[1],
+                        'retrans': timer[2]
+                    }
 
             opts[key] = val
 
@@ -528,6 +579,17 @@ def parse(data, raw=False, quiet=False):
         # from opt fields, which are only separated by one space
         recv_q_position = header_text.find('recv-q')
 
+        # the `:` between address and port in the header lines up with the
+        # space between a unix socket name and its inode in the rows
+        local_sep = header_text.find('local address:port')
+        peer_sep = header_text.find('peer address:port')
+        if local_sep != -1 and peer_sep != -1 and 0 <= recv_q_position < local_sep:
+            # two spaces are added twice to each row before these columns
+            local_sep += len('local address') + 4
+            peer_sep += len('peer address') + 4
+        else:
+            local_sep = peer_sep = -1
+
         header_text = header_text.replace('netidstate', 'netid state')
         header_text = header_text.replace('local address:port', 'local_address local_port')
         header_text = header_text.replace('peer address:port', 'peer_address peer_port')
@@ -535,10 +597,10 @@ def parse(data, raw=False, quiet=False):
         header_text = header_text.replace('-', '_')
 
         header_list = header_text.split()
-        extra_opts = False
 
         for entry in cleandata[1:]:
             output_line = {}
+            row_header = list(header_list)
             if entry[0] not in string.whitespace:
                 # fix issue where recv-q can be too close to state
                 entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
@@ -559,10 +621,26 @@ def parse(data, raw=False, quiet=False):
                              + entry[users_here.end():])
 
                 entry_list = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip())
+                main_columns = None
 
-                if len(entry_list) > len(header_list) or extra_opts == True:
+                if header_list[0] == 'netid' and len(entry_list) > 8:
+                    if entry_list[0].startswith('u_'):
+                        main_columns = _unix_columns(entry, entry_list, local_sep, peer_sep)
+
+                    elif (entry_list[0] in contains_colon and entry_list[0] != 'nl'
+                            and ':' in entry_list[4] and ':' in entry_list[5]):
+                        # the address columns have no spaces, so the options
+                        # region starts at the seventh token, even when a full
+                        # column leaves only one space before the next one
+                        main_columns = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip(), maxsplit=6)
+                        main_columns[6] = ' '.join(re.split(TWO_OR_MORE_SPACES_PATTERN, main_columns[6]))
+
+                # each row is split on its own: a row with more fields than
+                # the header does not change how the rows after it are split
+                if main_columns:
+                    entry_list = main_columns
+                elif len(entry_list) > len(row_header):
                     entry_list = re.split(TWO_OR_MORE_SPACES_PATTERN, entry.strip())
-                    extra_opts = True
 
                 if entry_list[0] in contains_colon and ':' in entry_list[4]:
                     l_field = entry_list[4].rsplit(':', maxsplit=1)
@@ -586,18 +664,18 @@ def parse(data, raw=False, quiet=False):
                 # `opts` with an earlier one, so the caller gets a raw string
                 # and the ino/sk/cgroup fields are dropped with no error.
                 # Rejoin the tail so the whole region reaches _parse_opts.
-                opts_start = (len(header_list) - 1
-                              if header_list[-1] == 'opts' else len(header_list))
+                opts_start = (len(row_header) - 1
+                              if row_header[-1] == 'opts' else len(row_header))
                 if (len(entry_list) > opts_start
                         and _OPTS_FIELD_RE.search(entry_list[opts_start])):
                     entry_list[opts_start:] = [' '.join(entry_list[opts_start:])]
 
                 if _OPTS_FIELD_RE.search(entry_list[-1]):
-                    if header_list[-1] != 'opts':
-                        header_list.append('opts')
+                    if row_header[-1] != 'opts':
+                        row_header.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
 
-            output_line = dict(zip(header_list, entry_list))
+            output_line = dict(zip(row_header, entry_list))
 
             # some post processing to pull out fields: interface, link_layer, path, pid, channel
             # Information from https://www.cyberciti.biz/files/ss.html used to define field names
