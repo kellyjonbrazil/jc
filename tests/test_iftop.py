@@ -53,6 +53,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-port-service-name.json'), 'r', encoding='utf-8') as f:
         generic_iftop_port_service_name_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-linux-no-port-flows.out'), 'r', encoding='utf-8') as f:
+        generic_iftop_linux_no_port_flows = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-linux-no-port-flows.json'), 'r', encoding='utf-8') as f:
+        generic_iftop_linux_no_port_flows_json = json.loads(f.read())
+
     def test_iftop_nodata(self):
         """
         Test 'iftop -b' with no data
@@ -134,6 +140,13 @@ class MyTests(unittest.TestCase):
         Test 'iftop' with receive lines whose port is a service name containing a hyphen
         """
         self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_port_service_name, quiet=True), self.generic_iftop_port_service_name_json)
+
+    def test_iftop_no_port_flows(self):
+        """
+        Test 'iftop -t -P' output where one flow is printed without ports
+        between flows that have ports
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_linux_no_port_flows, quiet=True), self.generic_iftop_linux_no_port_flows_json)
 
 
 if __name__ == '__main__':

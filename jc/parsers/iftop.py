@@ -284,8 +284,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
     # the port is the text after the last colon of the host field
     newline_before_arrow = r"\s+(?P<receive_ip>[^\s]+):(?P<receive_port>[^\s:]+)\s+"
-    # receive_ip keeps the padding before the arrow, all but one blank
-    newline_before_arrow_no_port = r"\s+(?P<receive_ip>[^\s]+\s*)\s"
+    newline_before_arrow_no_port = r"\s+(?P<receive_ip>[^\s]+)\s+"
     after_arrow_till_end = r"\s+(?P<receive_last_2s>[^\s]+)\s+(?P<receive_last_10s>[^\s]+)\s+(?P<receive_last_40s>[^\s]+)\s+(?P<receive_cumulative>[^\s]+)"
     re_linux_clients_before_newline = re.compile(
         rf"{before_arrow}=>{after_arrow_before_newline}"
@@ -395,11 +394,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_send)
             # not adding yet as the receive part is not yet parsed
 
-        elif "=>" in line and not is_previous_line_interface and ":" not in line:
+        elif "=>" in line and is_previous_line_interface and ":" not in line:
             # should not happen
             pass
 
-        elif "=>" in line and is_previous_line_interface and ":" not in line:
+        elif "=>" in line and not is_previous_line_interface and ":" not in line:
+            # Example:
+            #    1 ubuntu-2004-clean-01                     =>     4.82KB     4.82KB     4.82KB     9.63KB
             match_raw = re_linux_clients_before_newline_no_port.match(line)
             # only expect a receive line if the send line was parsed
             is_previous_line_interface = bool(match_raw)
@@ -457,7 +458,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
         elif "<=" in line and is_previous_line_interface and ":" not in line:
             # Example:
-            #      10.10.15.72:40876                        <=       208b       208b       208b        52B
+            #      10.10.15.72                              <=     14.5KB     14.5KB     14.5KB     29.1KB
             is_previous_line_interface = False
             match_raw = re_linux_clients_after_newline_no_port.match(line)
 
