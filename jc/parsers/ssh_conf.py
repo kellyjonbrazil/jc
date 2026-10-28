@@ -640,7 +640,10 @@ def parse(
             if line.strip().startswith('#'):
                 continue
 
-            if line.strip().startswith('Host '):
+            tokens = line.split()
+
+            # a Host line starts a new block and ends any Match block
+            if tokens[0].lower() == 'host' and len(tokens) > 1:
                 if host:
                     raw_output.append(host)
 
@@ -649,10 +652,11 @@ def parse(
                     'host': hostnames,
                     'host_list': hostnames.split()
                 }
+                match_block_found = False
+                continue
 
             # support configuration file by ignoring all lines between
             # Match xxx and Match all. Keywords are case-insensitive.
-            tokens = line.split()
             if tokens[0].lower() == 'match':
                 match_block_found = not (
                     len(tokens) == 2 and tokens[1].lower() == 'all'

@@ -118,6 +118,40 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(parse(data, quiet=True), expected)
 
+    def test_ssh_conf_host_ends_match_block(self):
+        """
+        Test 'ssh_conf' with Host blocks after a Match block
+        """
+        data = (
+            'Match host bastion\n'
+            '    ProxyJump jump.example.com\n'
+            '\n'
+            'Host prod-*\n'
+            '    User root\n'
+            '    IdentityFile ~/.ssh/prod_key\n'
+            '    StrictHostKeyChecking no\n'
+            '\n'
+            'Match user admin\n'
+            '    Port 2222\n'
+            'host *\n'
+            '    ServerAliveInterval 60\n'
+        )
+        expected = [
+            {
+                'host': 'prod-*',
+                'host_list': ['prod-*'],
+                'user': 'root',
+                'identityfile': ['~/.ssh/prod_key'],
+                'stricthostkeychecking': 'no'
+            },
+            {
+                'host': '*',
+                'host_list': ['*'],
+                'serveraliveinterval': 60
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
