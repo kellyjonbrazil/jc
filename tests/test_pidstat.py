@@ -9,6 +9,10 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
+    # new input fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-linux-stray-line.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_stray_line = f.read()
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/pidstat.out'), 'r', encoding='utf-8') as f:
         centos_7_7_pidstat = f.read()
@@ -86,6 +90,29 @@ class MyTests(unittest.TestCase):
         Test 'pidstat -hl' with a '#' line that is not the pidstat header
         """
         self.assertEqual(jc.parsers.pidstat.parse(self.generic_pidstat_hl_hash_line, quiet=True), self.generic_pidstat_hl_hash_line_json)
+
+
+    def test_pidstat_stray_line(self):
+        """
+        Test 'pidstat -hl' with a line that is not pidstat data after the header. Should raise ParseError
+        """
+        self.assertRaises(ParseError, jc.parsers.pidstat.parse, self.generic_pidstat_stray_line, quiet=True)
+
+    def test_pidstat_ragged_rows(self):
+        """
+        Test 'pidstat' rows with fewer or more fields than the header. Fewer should raise ParseError, more go into the last column
+        """
+        header = '# Time UID PID Command\n'
+        for bad in ('1646857494   0', 'random'):
+            self.assertRaises(ParseError, jc.parsers.pidstat.parse, header + bad, quiet=True)
+
+        data = header + '  1646857494   0   2 kthreadd\n  1646857494   0   3\n   \n  1646857494   0   4 a command with spaces\n'
+        expected = [
+            {"time": 1646857494, "uid": 0, "pid": 2, "command": "kthreadd"},
+            {"time": 1646857494, "uid": 0, "pid": 3},
+            {"time": 1646857494, "uid": 0, "pid": 4, "command": "a command with spaces"}
+        ]
+        self.assertEqual(jc.parsers.pidstat.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

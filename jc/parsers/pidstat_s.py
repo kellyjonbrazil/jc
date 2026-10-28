@@ -169,6 +169,18 @@ def _parse_row(header_list: List[str], line: str) -> Dict:
     return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
 
 
+def _check_row(header_list: List[str], line: str) -> None:
+    """
+    The last column (Command) takes the rest of the line, so a row can have
+    more fields than the header, and may have no Command at all, but it
+    cannot have fewer fields than that. The Time column of `pidstat -h` is
+    always an epoch integer.
+    """
+    fields = line.split()
+    if len(fields) < len(header_list) - 1 or not fields[0].isdecimal():
+        raise ParseError('Not pidstat data')
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -221,6 +233,7 @@ def parse(
 
             # a data row never starts with '#'
             if header and not line.startswith('#'):
+                _check_row(header_list, line)
                 table_list.append(line)
                 output_line = _parse_row(header_list, table_list[1])
                 yield output_line if raw else _process(output_line)
