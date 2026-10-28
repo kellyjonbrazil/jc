@@ -59,7 +59,8 @@ Schema:
         "connecttimeout":                             integer,
         "controlmaster":                              string,
         "controlpath":                                string,
-        "controlpersist":                             string/integer,
+        "controlpersist":                             string,
+        "controlpersist_seconds":                     integer,
         "dynamicforward": [
                                                       string
         ],
@@ -146,8 +147,9 @@ Schema:
         ],
         "pubkeyacceptedalgorithms_strategy":          string,
         "pubkeyauthentication":                       string,
-        "rekeylimit":                                 string/integer,
-        "rekeylimit_time":                            string/integer,
+        "rekeylimit":                                 string,
+        "rekeylimit_bytes":                           integer,
+        "rekeylimit_seconds":                         integer,
         "remotecommand":                              string,
         "remoteforward": [
                                                       string
@@ -363,10 +365,12 @@ Examples:
           "af21",
           "cs1"
         ],
-        "rekeylimit": 0,
-        "rekeylimit_time": 0,
+        "rekeylimit": "0 0",
         "streamlocalbindmask": "0177",
-        "syslogfacility": "USER"
+        "syslogfacility": "USER",
+        "controlpersist_seconds": null,
+        "rekeylimit_bytes": 0,
+        "rekeylimit_seconds": 0
       }
     ]
 
@@ -522,7 +526,7 @@ Examples:
       }
     ]
 """
-from typing import Any, Callable, Set, List, Dict
+from typing import Set, List, Dict
 from jc.jc_types import JSONDictType
 from jc.parsers.sshd_conf import _convert_time, _convert_size
 import jc.utils
@@ -540,15 +544,6 @@ class info():
 
 
 __version__ = info.version
-
-
-def _convert_rekey(value: str, converter: Callable) -> Any:
-    """Convert a RekeyLimit size or time, keeping 'default' and 'none'"""
-    words = value.split()
-    if words and words[0].lower() in ('default', 'none'):
-        return words[0]
-
-    return converter(value)
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -597,20 +592,18 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 continue
 
             if key == 'rekeylimit':
-                # size in bytes, then an optional time in seconds. The
-                # keywords 'default' and 'none' are kept as strings
+                # size in bytes and optional time in seconds. The keywords
+                # 'default' and 'none' and unparsable values are null
                 rekey_split = val.split(maxsplit=1)
-                host[key] = _convert_rekey(rekey_split[0], _convert_size)
+                host[key + '_bytes'] = _convert_size(rekey_split[0])
+                host[key + '_seconds'] = None
                 if len(rekey_split) > 1:
-                    host[key + '_time'] = _convert_rekey(
-                        rekey_split[1], _convert_time
-                    )
+                    host[key + '_seconds'] = _convert_time(rekey_split[1])
                 continue
 
             if key == 'controlpersist':
-                # yes and no are kept as strings, otherwise time in seconds
-                if val.lower() not in ('yes', 'no'):
-                    host[key] = _convert_time(val)
+                # time in seconds. yes, no and unparsable values are null
+                host[key + '_seconds'] = _convert_time(val)
                 continue
 
             if key in split_fields_space:

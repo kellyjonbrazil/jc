@@ -214,9 +214,11 @@ class MyTests(unittest.TestCase):
                 'serveraliveinterval': 90,
                 'connecttimeout': 10,
                 'forwardx11timeout': 1200,
-                'controlpersist': 600,
-                'rekeylimit': 1073741824,
-                'rekeylimit_time': 3600
+                'controlpersist': '10m',
+                'rekeylimit': '1G 1h',
+                'controlpersist_seconds': 600,
+                'rekeylimit_bytes': 1073741824,
+                'rekeylimit_seconds': 3600
             },
             {
                 'host': 'b',
@@ -224,7 +226,8 @@ class MyTests(unittest.TestCase):
                 'serveraliveinterval': None,
                 'connecttimeout': None,
                 'forwardx11timeout': 86400,
-                'controlpersist': 'yes'
+                'controlpersist': 'yes',
+                'controlpersist_seconds': None
             }
         ]
         self.assertEqual(parse(data, quiet=True), expected)
@@ -255,22 +258,44 @@ class MyTests(unittest.TestCase):
         Test 'ssh_conf' with RekeyLimit and ControlPersist values
         """
         cases = [
-            ('RekeyLimit 0 0', {'rekeylimit': 0, 'rekeylimit_time': 0}),
-            ('RekeyLimit 4G', {'rekeylimit': 4294967296}),
-            ('RekeyLimit 512m 2h', {'rekeylimit': 536870912, 'rekeylimit_time': 7200}),
-            ('RekeyLimit default none', {'rekeylimit': 'default', 'rekeylimit_time': 'none'}),
-            ('RekeyLimit 1G none', {'rekeylimit': 1073741824, 'rekeylimit_time': 'none'}),
-            ('RekeyLimit 1GB 1.5h', {'rekeylimit': None, 'rekeylimit_time': None}),
-            ('ControlPersist yes', {'controlpersist': 'yes'}),
-            ('ControlPersist no', {'controlpersist': 'no'}),
-            ('ControlPersist 0', {'controlpersist': 0}),
-            ('ControlPersist 4h', {'controlpersist': 14400}),
-            ('ControlPersist 1h30m', {'controlpersist': 5400}),
-            ('ControlPersist soon', {'controlpersist': None})
+            ('RekeyLimit 0 0', 0, 0),
+            ('RekeyLimit 4G', 4294967296, None),
+            ('RekeyLimit 512m 2h', 536870912, 7200),
+            ('RekeyLimit default none', None, None),
+            ('RekeyLimit 1G none', 1073741824, None),
+            ('RekeyLimit 1GB 1.5h', None, None)
         ]
-        for line, expected in cases:
+        for line, size, seconds in cases:
             with self.subTest(line=line):
-                self.assertEqual(parse(line, quiet=True), [expected])
+                expected = [{
+                    'rekeylimit': line.split(maxsplit=1)[1],
+                    'rekeylimit_bytes': size,
+                    'rekeylimit_seconds': seconds
+                }]
+                self.assertEqual(parse(line, quiet=True), expected)
+                self.assertEqual(
+                    parse(line, raw=True, quiet=True),
+                    [{'rekeylimit': line.split(maxsplit=1)[1]}]
+                )
+
+        cases = [
+            ('yes', None),
+            ('no', None),
+            ('0', 0),
+            ('4h', 14400),
+            ('1h30m', 5400),
+            ('soon', None)
+        ]
+        for value, seconds in cases:
+            with self.subTest(controlpersist=value):
+                self.assertEqual(
+                    parse('ControlPersist ' + value, quiet=True),
+                    [{'controlpersist': value, 'controlpersist_seconds': seconds}]
+                )
+                self.assertEqual(
+                    parse('ControlPersist ' + value, raw=True, quiet=True),
+                    [{'controlpersist': value}]
+                )
 
     def test_ssh_conf_hostkeyalgorithms_modifier(self):
         """
