@@ -36,6 +36,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-service-port-names.json'), 'r', encoding='utf-8') as f:
         generic_netstat_linux_service_port_names_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-proto-text-in-program-name.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_proto_text_in_program_name = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-proto-text-in-program-name.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_proto_text_in_program_name_json = json.loads(f.read())
+
     # netstat
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.out'), 'r', encoding='utf-8') as f:
         centos_7_7_netstat = f.read()
@@ -624,6 +630,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_service_port_names, quiet=True), self.generic_netstat_linux_service_port_names_json)
 
+
+
+    def test_netstat_linux_proto_text_in_program_name(self):
+        """
+        Test Linux 'netstat' where a line starting with Proto is not a
+        full header line: it is skipped and the header in use is kept
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_proto_text_in_program_name, quiet=True), self.generic_netstat_linux_proto_text_in_program_name_json)
 
 
 if __name__ == '__main__':
