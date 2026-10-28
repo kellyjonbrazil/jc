@@ -84,5 +84,16 @@ sr0                   11:0    1    1073741312  0 rom'''
         expected = [{"name":"sda","maj_min":"8:0","rm":False,"size":"5368709120000","ro":False,"type":"disk","mountpoints":[],"size_bytes":5368709120000},{"name":"sda1","maj_min":"8:1","rm":False,"size":"1048576","ro":False,"type":"part","mountpoints":[],"size_bytes":1048576},{"name":"sda2","maj_min":"8:2","rm":False,"size":"1073741824","ro":False,"type":"part","mountpoints":["/boot"],"size_bytes":1073741824},{"name":"sda3","maj_min":"8:3","rm":False,"size":"1073741824","ro":False,"type":"part","mountpoints":["/boot/efi"],"size_bytes":1073741824},{"name":"sda4","maj_min":"8:4","rm":False,"size":"51536461824","ro":False,"type":"part","mountpoints":[],"size_bytes":51536461824},{"name":"almalinux-root","maj_min":"253:0","rm":False,"size":"36075208704","ro":False,"type":"lvm","mountpoints":["/"],"size_bytes":36075208704},{"name":"almalinux-docker","maj_min":"253:1","rm":False,"size":"1073741824","ro":False,"type":"lvm","mountpoints":["/opt/docker"],"size_bytes":1073741824},{"name":"almalinux-home","maj_min":"253:2","rm":False,"size":"5368709120","ro":False,"type":"lvm","mountpoints":["/home"],"size_bytes":5368709120},{"name":"almalinux-opt","maj_min":"253:3","rm":False,"size":"9017753600","ro":False,"type":"lvm","mountpoints":["/var/lib/kafka","/opt"],"size_bytes":9017753600},{"name":"sr0","maj_min":"11:0","rm":True,"size":"1073741312","ro":False,"type":"rom","mountpoints":[],"size_bytes":1073741312}]
         self.assertEqual(jc.parsers.lsblk.parse(data, quiet=True), expected)
 
+    def test_lsblk_missing_name_header(self):
+        """
+        Test lsblk output whose `NAME MAJ:MIN ...` header line was dropped, so
+        the first data row is treated as the header and no `name` column
+        exists. This used to raise `KeyError: 'name'`; it should now parse
+        without crashing.
+        """
+        data = 'sda      8:0   0  20G  0 disk\nsda1     8:1   0  10G  0 part\n'
+        self.assertEqual(jc.parsers.lsblk.parse(data, quiet=True), [])
+
+
 if __name__ == '__main__':
     unittest.main()
