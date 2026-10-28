@@ -204,6 +204,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-summary-name-streaming.json'), 'r', encoding='utf-8') as f:
         generic_git_log_stat_summary_name_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_no_bar = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_no_bar_json = json.loads(f.read())
+
     def test_git_log_s_nodata(self):
         """
         Test 'git_log' with no data
@@ -435,6 +441,13 @@ class MyTests(unittest.TestCase):
         Test 'git_log --stat' with file names that contain 'changed, '
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_summary_name.splitlines(), quiet=True)), self.generic_git_log_stat_summary_name_json)
+
+
+    def test_git_log_stat_no_bar_s(self):
+        """
+        Test 'git_log --stat --summary' with lines that have no '|' separator
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_no_bar.splitlines(), quiet=True)), self.generic_git_log_stat_no_bar_json)
 
 
 if __name__ == '__main__':

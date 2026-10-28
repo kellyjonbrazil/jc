@@ -338,6 +338,7 @@ def parse(
                 file_name = jc.utils.unquote_git_path(file_line_split[0].strip())
                 file_list.append(file_name)
 
+                lines_changed_count_str = None
                 if len(file_line_split) > 1:
                     file_stats = file_line_split[1].strip()
                     lines_changed_str = file_stats.split(' ')
