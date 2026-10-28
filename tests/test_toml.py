@@ -89,6 +89,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result, {'a': ['1979-05-27T07:32:00+00:00', '1979-05-27', '07:32:00'], 'b': '1979-05-27'})
         self.assertEqual(json.loads(json.dumps(result)), result)
 
+    def test_toml_non_finite(self):
+        """
+        Test 'toml' with nan and inf values: they are null
+        """
+        data = 'x = nan\ny = -inf\nz = [1.5, inf, {a = nan}]\n[t]\nw = +inf\nv = 2.0\n'
+        expected = {'x': None, 'y': None, 'z': [1.5, None, {'a': None}], 't': {'w': None, 'v': 2.0}}
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

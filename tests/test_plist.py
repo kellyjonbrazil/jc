@@ -238,6 +238,22 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.plist.parse(self.uid_bin, quiet=True), self.uid_bin_json)
 
+    def test_plist_non_finite(self):
+        """
+        Test 'plist' with nan and inf reals: they are null
+        """
+        data = (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<plist version="1.0"><dict>'
+            '<key>a</key><real>nan</real>'
+            '<key>b</key><array><real>inf</real><real>1.5</real></array>'
+            '<key>c</key><real>-inf</real>'
+            '<key>d</key><real>2.5</real>'
+            '</dict></plist>\n'
+        )
+        expected = {'a': None, 'b': [None, 1.5], 'c': None, 'd': 2.5}
+        self.assertEqual(jc.parsers.plist.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

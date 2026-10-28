@@ -54,6 +54,7 @@ import sys
 # standard library with the xml parser. :(
 sys.path = [x for x in sys.path if 'jc/jc/parsers' not in x]
 
+import math
 from typing import Dict, Union
 import plistlib
 import binascii
@@ -118,6 +119,10 @@ def _fix_value(value, _memo):
             _memo[id(value)] = [value, _b2a(value), True]
         return _memo[id(value)][1]
 
+    # JSON has no inf or nan
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+
     if isinstance(value, datetime):
         return value.isoformat()
 
@@ -171,6 +176,10 @@ def _fix_objects(obj, _memo=None):
 
             if isinstance(v, (dict, list)):
                 obj.update({k: _fix_objects(v, _memo)})
+                continue
+
+            if isinstance(v, float) and not math.isfinite(v):
+                obj.update({k: None})
                 continue
 
         entry[2] = True

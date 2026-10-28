@@ -54,6 +54,7 @@ Examples:
       }
     }
 """
+import math
 from typing import Any
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -95,6 +96,10 @@ def _fix_objects(obj: Any) -> JSONDictType:
     Recursively traverse the nested dictionary or list and convert objects
     into JSON serializable types.
     """
+    # JSON has no inf or nan
+    if isinstance(obj, float) and not math.isfinite(obj):
+        return None
+
     # array items: datetimes become ISO strings, since there is no key to
     # hold the timestamp next to it
     if isinstance(obj, (datetime, date, time)):
@@ -119,6 +124,10 @@ def _fix_objects(obj: Any) -> JSONDictType:
 
             if isinstance(v, dict):
                 obj.update({k: _fix_objects(v)})
+                continue
+
+            if isinstance(v, float) and not math.isfinite(v):
+                obj.update({k: None})
                 continue
 
             if isinstance(v, list):
