@@ -244,6 +244,96 @@ def remove_quotes(data: str) -> str:
     return data
 
 
+_GIT_ESCAPES = {
+    'a': '\a', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t',
+    'v': '\v', '\\': '\\', '"': '"'
+}
+_git_escape_pattern = re.compile(r'\\([0-3][0-7]{2}|.)', re.DOTALL)
+
+
+def _git_quoted_end(data: str, start: int = 0) -> int:
+    """
+    Return the index of the double quote that closes the C-quoted string
+    that opens at data[start], or -1 if there is none.
+    """
+    i = start + 1
+    size = len(data)
+    while i < size:
+        char = data[i]
+        if char == '\\':
+            i += 2
+            continue
+        if char == '"':
+            return i
+        i += 1
+    return -1
+
+
+def _git_unquote_one(data: str) -> str:
+    """Decode the content of one C-quoted git path (quotes already removed)"""
+    out = bytearray()
+    pos = 0
+
+    for match in _git_escape_pattern.finditer(data):
+        out += data[pos:match.start()].encode('utf-8', 'backslashreplace')
+        pos = match.end()
+        esc = match.group(1)
+
+        if len(esc) == 3 and esc[0] in '0123':
+            out.append(int(esc, 8))
+        elif esc in _GIT_ESCAPES:
+            out += _GIT_ESCAPES[esc].encode('utf-8')
+        else:
+            out += match.group(0).encode('utf-8', 'backslashreplace')
+
+    out += data[pos:].encode('utf-8', 'backslashreplace')
+    return out.decode('utf-8', 'backslashreplace')
+
+
+def unquote_git_path(data: str) -> str:
+    """
+    Decode a file path as printed by git. By default (`core.quotePath`) git
+    wraps a path that has non-ASCII characters, double quotes, backslashes or
+    control characters in double quotes and C-style escapes those characters
+    (e.g. `"d\\303\\251ploy.yml"`). The escapes are decoded and the bytes are
+    interpreted as UTF-8. Invalid UTF-8 is shown as backslash escapes.
+
+    A path that is not quoted is returned unmodified. Each side of a rename
+    in the `"old" => new` or `old => "new"` form is decoded separately.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    if data.startswith('"'):
+        end = _git_quoted_end(data)
+        if end == len(data) - 1:
+            return _git_unquote_one(data[1:end])
+
+        if end > 0 and data.startswith(' => ', end + 1):
+            rest = data[end + 5:]
+            if rest.startswith('"') and _git_quoted_end(rest) == len(rest) - 1:
+                rest = _git_unquote_one(rest[1:-1])
+            return _git_unquote_one(data[1:end]) + ' => ' + rest
+
+        return data
+
+    if data.endswith('"'):
+        # a plain name can not contain a double quote, so the first one
+        # opens the quoted second name of the rename
+        idx = data.find(' => "')
+        if idx >= 0 and '"' not in data[:idx]:
+            start = idx + 4
+            if _git_quoted_end(data, start) == len(data) - 1:
+                return (data[:start] + _git_unquote_one(data[start + 1:-1]))
+
+    return data
+
+
 def normalize_key(data: str) -> str:
     r"""
     Normalize a key name by shifting to lower-case and converting special

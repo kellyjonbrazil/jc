@@ -22,6 +22,9 @@ local time of the system the parser is run on)
 The `epoch_utc` calculated timestamp field is timezone-aware and is
 only available if the timezone field is UTC.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git log | jc --git-log-s
@@ -306,12 +309,13 @@ def parse(
             numstat = numstat_pattern.match(line)
             if numstat:
                 # this is a --numstat line
+                numstat_name = jc.utils.unquote_git_path(numstat['name'])
                 file_stats_list.append({
-                    'name': numstat['name'],
+                    'name': numstat_name,
                     'insertions': numstat['insertions'],
                     'deletions': numstat['deletions']
                 })
-                file_list.append(numstat['name'])
+                file_list.append(numstat_name)
                 output_line.setdefault('stats', {})
                 numstat_found = True
                 continue
@@ -329,7 +333,7 @@ def parse(
                     file_line_split = line.rsplit(' | ', maxsplit=1)
                 else:
                     file_line_split = line.split('|')
-                file_name = file_line_split[0].strip()
+                file_name = jc.utils.unquote_git_path(file_line_split[0].strip())
                 file_list.append(file_name)
 
                 if len(file_line_split) > 1:

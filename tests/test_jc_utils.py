@@ -685,6 +685,36 @@ line5
         self.assertTrue(' '.join(out.split()).endswith('... (1000031 characters)'))
         self.assertLess(len(out), 6000)
 
+    def test_utils_unquote_git_path(self):
+        """
+        Test unquote_git_path with git C-quoted and unquoted paths
+        """
+        cases = {
+            'plain/file.txt': 'plain/file.txt',
+            '"d\\303\\251ploy.yml"': 'd\u00e9ploy.yml',
+            '"a\\"b"': 'a"b',
+            '"back\\\\slash"': 'back\\slash',
+            '"tab\\there"': 'tab\there',
+            '"new\\nline"': 'new\nline',
+            '"\\a\\b\\f\\r\\v"': '\a\b\f\r\v',
+            '"bad\\377.txt"': 'bad\\xff.txt',
+            '"\\346\\227\\245.txt"': '\u65e5.txt',
+            '"keep \u00e9\\t"': 'keep \u00e9\t',
+            '"\\q"': '\\q',
+            '""': '',
+            '"': '"',
+            '"unterminated': '"unterminated',
+            'x => y': 'x => y',
+            '"p q/d\\303\\251.txt" => p q/f.txt': 'p q/d\u00e9.txt => p q/f.txt',
+            'a => "b\\"c"': 'a => b"c',
+            '"a" => "b\\tc"': 'a => b\tc',
+            '"a\\" => \\"b"': 'a" => "b'
+        }
+
+        for quoted, expected in cases.items():
+            with self.subTest(quoted):
+                self.assertEqual(jc.utils.unquote_git_path(quoted), expected)
+
     def test_utils_error_message_long_line_shortened(self):
         """
         Test that error messages shorten very long lines
