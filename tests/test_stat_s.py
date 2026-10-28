@@ -116,5 +116,33 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result, [{'file': 'lnk', 'link_to': 'a -> b', 'size': '6', 'blocks': '0', 'io_blocks': '4096', 'type': 'symbolic link'}])
 
 
+    def test_stat_s_bsd_apostrophe(self):
+        """
+        Test 'stat' on macOS/FreeBSD with an apostrophe and a quote in the file names
+        """
+        pre = '16777220 161929661 -rw-r--r-- 1 kbrazil staff 0 5 "Aug 13 15:03:52 2021" "Aug 13 14:37:03 2021" "Aug 13 14:37:03 2021" "Aug 13 14:37:03 2021" 4096 8 0 '
+        data = [pre + "it's here.txt\n", pre + 'say "hi" \\ x.txt\n', pre + 'a  b.txt\n']
+        result = list(jc.parsers.stat_s.parse(data, raw=True, quiet=True))
+        self.assertEqual([r['file'] for r in result], ["it's here.txt", 'say "hi" \\ x.txt', 'a  b.txt'])
+        self.assertEqual(result[0]['access_time'], 'Aug 13 15:03:52 2021')
+        self.assertEqual(result[0]['unix_flags'], '0')
+
+    def test_stat_s_linux_whitespace_file_name(self):
+        """
+        Test 'stat' on Linux with a file name that is only whitespace
+        """
+        rest = ('  Size: 0         \tBlocks: 0          IO Block: 4096   regular empty file\n'
+                'Device: 801h/2049d\tInode: 12          Links: 1\n'
+                'Access: (0644/-rw-r--r--)  Uid: ( 1000/    user)   Gid: ( 1000/    user)\n'
+                'Access: 2021-08-13 15:03:52.000000000 -0700\n'
+                'Modify: 2021-08-13 15:03:52.000000000 -0700\n'
+                'Change: 2021-08-13 15:03:52.000000000 -0700\n'
+                ' Birth: -\n')
+        data = ("  File: '   '\n" + rest + '  File:    \n' + rest + '  File: ok\n' + rest).splitlines(True)
+        result = list(jc.parsers.stat_s.parse(data, raw=True, quiet=True))
+        self.assertEqual([r['file'] for r in result], ["'   '", '   ', 'ok'])
+        self.assertEqual([r['inode'] for r in result], ['12', '12', '12'])
+
+
 if __name__ == '__main__':
     unittest.main()
