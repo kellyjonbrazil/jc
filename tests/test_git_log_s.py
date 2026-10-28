@@ -180,6 +180,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record-streaming.json'), 'r', encoding='utf-8') as f:
         generic_git_log_short_stat_bad_record_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-ambiguous-refname.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_ambiguous_refname = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-ambiguous-refname-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_ambiguous_refname_streaming_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.out'), 'r', encoding='utf-8') as f:
         generic_git_log_stat_name_separator = f.read()
 
@@ -409,12 +415,22 @@ class MyTests(unittest.TestCase):
 
     def test_git_log_s_bad_record_ignore_exceptions(self):
         """
-        Test 'git log --stat' with a record that cannot be processed: one error
-        record is emitted and the following commits parse normally
+        Test 'git log --stat 2>&1' with a git warning line before the first
+        commit: one error record is emitted and the commits parse normally
+        """
+        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_ambiguous_refname.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_git_log_stat_ambiguous_refname_streaming_json)
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [False, True, True])
+        self.assertEqual(result[0]['_jc_meta']['line'], "warning: refname 'release' is ambiguous.")
+
+    def test_git_log_s_huge_line_count(self):
+        """
+        Test 'git log --stat' with a file line count too large for a float:
+        the count is null and the commit parses normally
         """
         result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
         self.assertEqual(result, self.generic_git_log_short_stat_bad_record_streaming_json)
-        self.assertEqual([r['_jc_meta']['success'] for r in result], [True, False, True])
+        self.assertEqual(result[1]['stats']['file_stats'][0], {'name': 'docs/big.md', 'lines_changed': None})
 
     def test_git_log_stat_name_separator_s(self):
         """

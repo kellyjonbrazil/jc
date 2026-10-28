@@ -4,6 +4,7 @@ JC cli module
 
 import io
 import sys
+import math
 import os
 import posixpath
 import re
@@ -11,7 +12,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Iterable, Union, Optional, TextIO, Tuple
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO, Tuple
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
@@ -49,7 +50,62 @@ SLICER_RE = re.compile(SLICER_PATTERN)
 # in JSON output. json.dumps() only escapes U+0000-U+001F when ensure_ascii
 # is off.
 JSON_ESCAPE_RE = re.compile('[\x7f-\x9f\ud800-\udfff]')
+# strings that YAML 1.1 readers load as booleans or sexagesimal numbers,
+# but that YAML 1.2 (and so ruamel.yaml) leaves unquoted
+YAML11_NON_STR_RE = re.compile(r'''^(?:y|Y|yes|Yes|YES|n|N|no|No|NO|on|On|ON|off|Off|OFF
+    |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+                 # sexagesimal int
+    |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*)$''',  # sexagesimal float
+    re.VERBOSE)
 
+
+
+def _non_finite_to_null(data: Any) -> Any:
+    """
+    Return `data` with non-finite floats (inf, -inf, nan) in nested
+    dictionaries and lists replaced by None, since JSON has no such
+    numbers. Dictionaries and lists are changed in place and tuples are
+    turned into lists. Dictionary keys that are non-finite floats become
+    the strings json.dumps() would write for them.
+    """
+    def fix(value: Any) -> Any:
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        if isinstance(value, tuple):
+            return list(value)
+        return value
+
+    def key_name(key: float) -> str:
+        if key != key:
+            return 'NaN'
+        return 'Infinity' if key > 0 else '-Infinity'
+
+    data = fix(data)
+    stack = [data]
+    seen = set()
+
+    # walk without recursion so deeply nested data cannot hit the limit
+    while stack:
+        obj = stack.pop()
+        if id(obj) in seen:
+            continue
+        seen.add(id(obj))
+
+        if isinstance(obj, dict):
+            items = []
+            for key, value in obj.items():
+                if isinstance(key, float) and not math.isfinite(key):
+                    key = key_name(key)
+                items.append((key, fix(value)))
+            obj.clear()
+            obj.update(items)
+            stack.extend(v for v in obj.values() if isinstance(v, (dict, list)))
+
+        elif isinstance(obj, list):
+            for index, value in enumerate(obj):
+                obj[index] = fix(value)
+            stack.extend(v for v in obj if isinstance(v, (dict, list)))
+
+    return data
 
 class info():
     version: str = __version__
@@ -371,15 +427,33 @@ class JcCli():
         if YAML_INSTALLED:
             y_string_buf = io.BytesIO()
 
-            # monkey patch to disable plugins since we don't use them and in
-            # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
-            # plugin code is incompatible with the pyoxidizer packager
-            YAML.official_plug_ins = lambda a: []  # type: ignore
+            # the changes below are made on subclasses so the ruamel.yaml
+            # classes stay unchanged for other code in the same process
 
-            # monkey patch to disable aliases
-            representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True  # type: ignore
+            # disable plugins since we don't use them and in ruamel.yaml
+            # versions prior to 0.17.0 the use of __file__ in the plugin code
+            # is incompatible with the pyoxidizer packager
+            class JcYAML(YAML):
+                def official_plug_ins(self):
+                    return []
 
-            yaml = YAML()
+            # disable aliases
+            class JcRepresenter(representer.RoundTripRepresenter):
+                def ignore_aliases(self, data):
+                    return True
+
+            # quote strings that YAML 1.1 readers would load as booleans or
+            # numbers (e.g. yes, off, 1:30) so they stay strings for them too
+            def represent_str(rep, data):
+                style = None
+                if '\n' not in data and YAML11_NON_STR_RE.match(data):
+                    style = "'"
+                return rep.represent_scalar('tag:yaml.org,2002:str', data, style=style)
+
+            JcRepresenter.add_representer(str, represent_str)
+
+            yaml = JcYAML()
+            yaml.Representer = JcRepresenter
             yaml.default_flow_style = False
             yaml.explicit_start = True  # type: ignore
             yaml.allow_unicode = not self.ascii_only
@@ -413,13 +487,23 @@ class JcCli():
         def string_serializer(data):
             return str(data)
 
-        j_string = json.dumps(
-            self.data_out,
-            indent=self.json_indent,
-            separators=self.json_separators,
-            ensure_ascii=self.ascii_only,
-            default=string_serializer
-        )
+        def dumps(data: Any) -> str:
+            return json.dumps(
+                data,
+                indent=self.json_indent,
+                separators=self.json_separators,
+                ensure_ascii=self.ascii_only,
+                default=string_serializer,
+                allow_nan=False
+            )
+
+        try:
+            j_string = dumps(self.data_out)
+        except ValueError:
+            # JSON has no inf or nan: write them as null. Only done when
+            # needed, so normal output costs nothing extra.
+            self.data_out = _non_finite_to_null(self.data_out)
+            j_string = dumps(self.data_out)
 
         # these characters can only appear inside JSON strings
         j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)
@@ -870,7 +954,12 @@ class JcCli():
 
     def standard_parse_and_print(self) -> None:
         """supports binary and UTF-8 string data"""
-        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
+        # magic output can be an empty string (e.g. an empty /proc file), so
+        # only read STDIN when the magic syntax was not used
+        if self.magic_stdout is None:
+            self.data_in = sys.stdin.buffer.read()
+        else:
+            self.data_in = self.magic_stdout
 
         # convert to UTF-8, if possible. Otherwise, leave as bytes
         try:

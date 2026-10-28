@@ -1,5 +1,9 @@
 r"""jc - JSON Convert TOML file parser
 
+Datetime values are converted into Unix epoch timestamps and ISO strings.
+Datetime values inside arrays, local dates, and local times are converted
+into ISO strings.
+
 Usage (cli):
 
     $ cat file.toml | jc --toml
@@ -50,11 +54,12 @@ Examples:
       }
     }
 """
+import math
 from typing import Any
 from jc.jc_types import JSONDictType
 import jc.utils
 from jc.parsers import tomli
-from datetime import datetime
+from datetime import datetime, date, time
 
 
 class info():
@@ -91,6 +96,15 @@ def _fix_objects(obj: Any) -> JSONDictType:
     Recursively traverse the nested dictionary or list and convert objects
     into JSON serializable types.
     """
+    # JSON has no inf or nan
+    if isinstance(obj, float) and not math.isfinite(obj):
+        return None
+
+    # array items: datetimes become ISO strings, since there is no key to
+    # hold the timestamp next to it
+    if isinstance(obj, (datetime, date, time)):
+        return obj.isoformat()
+
     if isinstance(obj, dict):
         for k, v in obj.copy().items():
 
@@ -103,8 +117,17 @@ def _fix_objects(obj: Any) -> JSONDictType:
                     obj.update({f'{k}_iso': iso})
                 continue
 
+            # local dates and local times have no timestamp
+            if isinstance(v, (date, time)):
+                obj.update({k: v.isoformat()})
+                continue
+
             if isinstance(v, dict):
                 obj.update({k: _fix_objects(v)})
+                continue
+
+            if isinstance(v, float) and not math.isfinite(v):
+                obj.update({k: None})
                 continue
 
             if isinstance(v, list):

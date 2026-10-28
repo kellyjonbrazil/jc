@@ -87,6 +87,7 @@ Examples:
 """
 from typing import Dict, Iterable, Union
 import re
+import math
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
@@ -186,7 +187,10 @@ def _process(proc_data: Dict) -> Dict:
 
         if key in extended_floats:
             try:
-                proc_data[key] = float(value)
+                float_value = float(value)
+                # keep the text of inf and nan, which JSON cannot represent
+                if math.isfinite(float_value):
+                    proc_data[key] = float_value
             except Exception:
                 pass
 

@@ -79,6 +79,14 @@ class MyTests(unittest.TestCase):
         with self.assertRaises(IndexError):
             jc.parsers.sysctl.parse('nodelim\na.b = 1\n', quiet=True)
 
+    def test_sysctl_non_finite_values(self):
+        """
+        Test 'sysctl -a' with values of nan and inf: the text is kept
+        """
+        data = 'kernel.hostname = nan\nkernel.domainname = inf\nvm.x = 1.5\nvm.y = 12\n'
+        expected = {'kernel.hostname': 'nan', 'kernel.domainname': 'inf', 'vm.x': 1.5, 'vm.y': 12}
+        self.assertEqual(jc.parsers.sysctl.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

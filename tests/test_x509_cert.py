@@ -1,9 +1,25 @@
 import os
+import time
 import unittest
 import json
 import jc.parsers.x509_cert
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def _parse_in_tz(parser, data, tz):
+    """Parse data with the TZ environment variable set to tz"""
+    old_tz = os.environ.get('TZ')
+    os.environ['TZ'] = tz
+    time.tzset()
+    try:
+        return parser.parse(data, quiet=True)
+    finally:
+        if old_tz is None:
+            del os.environ['TZ']
+        else:
+            os.environ['TZ'] = old_tz
+        time.tzset()
 
 
 class MyTests(unittest.TestCase):
@@ -42,6 +58,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-x509-label.pem'), 'rb') as f:
         x509_cert_x509_label = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-no-zone.pem'), 'rb') as f:
+        x509_cert_no_zone = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-ca-cert.json'), 'r', encoding='utf-8') as f:
         x509_ca_cert_json = json.loads(f.read())
@@ -73,6 +92,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-trusted-label.json'), 'r', encoding='utf-8') as f:
         x509_cert_trusted_label_json = json.loads(f.read())
 
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-cert-no-zone.json'), 'r', encoding='utf-8') as f:
+        x509_cert_no_zone_json = json.loads(f.read())
 
     def test_x509_cert_nodata(self):
         """
@@ -145,6 +167,25 @@ class MyTests(unittest.TestCase):
         Test 'cat x509-cert-x509-label.pem' (PEM block labeled X509 CERTIFICATE)
         """
         self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_x509_label, quiet=True), self.x509_cert_trusted_label_json)
+
+    def test_x509_cert_no_zone(self):
+        """
+        Test 'cat x509-cert-no-zone.pem' (GeneralizedTime without a time zone)
+        """
+        self.assertEqual(jc.parsers.x509_cert.parse(self.x509_cert_no_zone, quiet=True), self.x509_cert_no_zone_json)
+
+    @unittest.skipUnless(hasattr(time, 'tzset'), 'time.tzset() is not available')
+    def test_x509_cert_no_zone_tz(self):
+        """
+        Test 'cat x509-cert-no-zone.pem' (GeneralizedTime without a time zone) is read as UTC in any time zone
+        """
+        for tz in ('UTC', 'Asia/Tokyo'):
+            result = _parse_in_tz(jc.parsers.x509_cert, self.x509_cert_no_zone, tz)
+            validity = result[0]['tbs_certificate']['validity']
+            self.assertEqual(validity['not_before'], 1577836800)
+            self.assertEqual(validity['not_after'], 2208988800)
+            self.assertEqual(validity['not_after_iso'], '2040-01-01T00:00:00+00:00')
+            self.assertEqual(result, self.x509_cert_no_zone_json)
 
 
 if __name__ == '__main__':
