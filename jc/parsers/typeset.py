@@ -287,6 +287,23 @@ def _get_bare_array_vals(body: str) -> List[str]:
     return shlex.split(body)
 
 
+def _get_flags(line: str) -> str:
+    """Return the leading option flags of a declare/typeset/export line."""
+    tokens = line.split()
+    if not tokens or tokens[0] not in ('declare', 'typeset', 'export'):
+        return ''
+
+    # gather leading flag tokens; ksh may split them (e.g. `typeset -A -i`)
+    flags = ''
+    for tok in tokens[1:]:
+        if tok.startswith('-'):
+            flags += tok
+        else:
+            break
+
+    return flags
+
+
 def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
     opts = {
         'type': type_hint,
@@ -318,13 +335,7 @@ def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
     if keyword == 'export':
         opts['exported'] = True
 
-    # gather leading flag tokens; ksh may split them (e.g. `typeset -A -i`)
-    flags = ''
-    for tok in tokens[1:]:
-        if tok.startswith('-'):
-            flags += tok
-        else:
-            break
+    flags = _get_flags(line)
 
     for char in flags:
         if char in opts_map:
@@ -410,8 +421,11 @@ def parse(
                 raw_output.append(item)
                 continue
 
-            # simple array
-            simple_arr_def_match = re.search(SIMPLE_ARRAY_DEF_PATTERN, line)
+            # simple array. A line declared with -A is an associative array
+            # even when its first key is a number.
+            flags = _get_flags(line)
+            is_assoc = 'A' in flags and 'a' not in flags
+            simple_arr_def_match = None if is_assoc else re.search(SIMPLE_ARRAY_DEF_PATTERN, line)
             if simple_arr_def_match:
                 item['name'] = simple_arr_def_match['name']
                 item['value'] = _get_simple_array_vals(simple_arr_def_match['body'])

@@ -21,6 +21,12 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 class MyTests(unittest.TestCase):
 
     # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/typeset--numeric-first-key.out'), 'r', encoding='utf-8') as f:
+        generic_numeric_first_key = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/typeset--numeric-first-key.json'), 'r', encoding='utf-8') as f:
+        generic_numeric_first_key_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/typeset--long-array-like-value.out'), 'r', encoding='utf-8') as f:
         generic_long_array_like_value = f.read()
 
@@ -101,6 +107,12 @@ class MyTests(unittest.TestCase):
         data = "typeset -a arr=( a 'b c' $'d\\n\\' e=\\'f' )"
         result = jc.parsers.typeset.parse(data, quiet=True)
         self.assertEqual(result[0]['value'], ['a', 'b c', "d\n' e='f"])
+
+    def test_typeset_numeric_first_key_associative(self):
+        """
+        Test 'declare -p' associative arrays declared with -A whose first key is a number
+        """
+        self.assertEqual(jc.parsers.typeset.parse(self.generic_numeric_first_key, quiet=True), self.generic_numeric_first_key_json)
 
 
 if __name__ == '__main__':

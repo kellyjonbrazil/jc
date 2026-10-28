@@ -170,6 +170,35 @@ class MyTests(unittest.TestCase):
         table = jc.parse('nftables', data, quiet=True)[0]
         self.assertEqual([r['rule'] for r in table['chains'][0]['rules']], ['accept'])
 
+    def test_nftables_line_break_in_quoted_string(self):
+        """
+        Test 'nftables' with line-break characters inside a quoted comment
+        """
+        for sep in ('\n', '\r\n', '\r', '\x0b', '\x0c', '\x1c', '\x85', ' ', ' '):
+            with self.subTest(sep=repr(sep)):
+                comment = 'web' + sep + '}' + sep + 'chain unused { # handle 7' + sep + 'comment '
+                data = ('table inet filter { # handle 1\n\tchain input { # handle 1\n'
+                        '\t\ttype filter hook input priority filter; policy drop;\n'
+                        '\t\ttcp dport 443 accept comment "' + comment + '" # handle 4\n'
+                        '\t\ttcp dport 22 accept # handle 5\n\t}\n}\n')
+                chains = jc.parse('nftables', data, quiet=True)[0]['chains']
+                self.assertEqual([c['name'] for c in chains], ['input'])
+                self.assertEqual([r['handle'] for r in chains[0]['rules']], [4, 5])
+                self.assertEqual(chains[0]['rules'][0]['rule'], 'tcp dport 443 accept comment "' + comment + '"')
+
+    def test_nftables_unterminated_quoted_string_warns(self):
+        """
+        Test 'nftables' warns when the input ends inside a quoted string
+        """
+        for data in ('table ip t {\n\tchain c {\n\t\taccept comment "x\n\t}\n}\n',
+                     'table ip t {\n}\ncomment "x\n'):
+            with self.subTest(data=data):
+                stderr = io.StringIO()
+                with contextlib.redirect_stderr(stderr):
+                    result = jc.parse('nftables', data)
+                self.assertEqual(result[0]['name'], 't')
+                self.assertIn('Some input was skipped', stderr.getvalue())
+
 
 if __name__ == '__main__':
     unittest.main()

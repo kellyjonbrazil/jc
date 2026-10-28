@@ -1,0 +1,3 @@
+22 1 8:2 / / rw,relatime shared:1 - ext4 /dev/sda2 rw
+41 22 0:35 / /run/user/1000/app rw,nosuid,nodev,relatime shared:230 - tmpfs  rw,inode64
+42 22 0:36 / /mnt/scratch rw,relatime - tmpfs  rw,size=1024k,inode64

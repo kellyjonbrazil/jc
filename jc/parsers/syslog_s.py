@@ -106,6 +106,18 @@ escape_map = {
     r'\]': ']'
 }
 
+# a backslash and the character after it
+_escape_re = re.compile(r'\\.', re.DOTALL)
+
+
+def _unescape(string: str) -> str:
+    """
+    Decode escape sequences in one left-to-right pass so the backslash
+    from an escaped backslash does not start another escape sequence.
+    Unknown escape sequences are left as-is.
+    """
+    return _escape_re.sub(lambda m: escape_map.get(m.group(), m.group()), string)
+
 
 def _extract_structs(structs_string: str) -> List[str]:
     struct_match = re.compile(r'(?P<eachstruct>\[.+?(?<!\\)\])')
@@ -137,8 +149,7 @@ def _extract_kv(struct_string) -> List[Dict]:
             key, val = kv
 
             # fixup escaped characters
-            for esc, esc_sub in escape_map.items():
-                val = val.replace(esc, esc_sub)
+            val = _unescape(val)
 
             kv_list.append({key: val[1:-1]})
 
@@ -173,8 +184,7 @@ def _process(proc_data: Dict) -> Dict:
 
     # fixup escaped characters
     if 'message' in proc_data and proc_data['message']:
-        for esc, esc_sub in escape_map.items():
-            proc_data['message'] = proc_data['message'].replace(esc, esc_sub)
+        proc_data['message'] = _unescape(proc_data['message'])
 
     # parse identity and key value pairs in the structured data section
     if 'structured_data' in proc_data and proc_data['structured_data']:

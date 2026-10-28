@@ -1,0 +1,4 @@
+shm on /run/containers/a/shm type tmpfs (rw,nosuid,nodev,noexec,relatime,context="system_u:object_r:container_file_t:s0:c12,c34",size=64000k)
+shm on /run/containers/b/shm type tmpfs (rw,nosuid,nodev,relatime,context="system_u:object_r:container_file_t:s0",size=64000k)
+overlay on /var/lib/jobs/merged type overlay (rw,relatime,lowerdir=/golden/image,upperdir=/var/lib/jobs/pr-17\,noexec,workdir=/var/lib/jobs/work)
+//srv/a on /mnt/share type cifs (rw,relatime,vers=3.0,username=bob"s,noperm)

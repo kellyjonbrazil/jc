@@ -1,0 +1,26 @@
+commit 233ede78832c6f96d579d1c3276284f4f257d08e
+Author: Test User <test@example.com>
+
+    first with summary-like names
+
+ .github/workflows/changed, deploy.yml | 1 +
+ 3 files changed, 3 insertions(+).txt  | 1 +
+ README.md                             | 1 +
+ 3 files changed, 3 insertions(+)
+
+commit 23a1ee7a516a838f712b4fd10fd3ba5ad2384aa6
+Author: Test User <test@example.com>
+
+    second
+
+ .github/workflows/changed, deploy.yml | 1 +
+ README.md                             | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit b62d16ca1e2d1e96d30ded667c4ed1ea9a81ff0a
+Author: Test User <test@example.com>
+
+    delete only
+
+ README.md | 2 --
+ 1 file changed, 2 deletions(-)

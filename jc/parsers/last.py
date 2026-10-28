@@ -104,6 +104,9 @@ import jc.utils
 
 DATE_RE = re.compile(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]')
 LAST_F_DATE_RE = re.compile(r'\d\d:\d\d:\d\d \d\d\d\d')
+# a console or X display such as `:0`, `:0.0` or `:pts/0:S.0`, not an IPv6
+# address such as `::1` or `::ffff:203.0.113.5`
+CONSOLE_HOST_RE = re.compile(r':(?!:)')
 LOGIN_LOGOUT_EPOCH_RE = re.compile(r'.*\d\d:\d\d:\d\d \d\d\d\d.*')
 LOGOUT_IGNORED_EVENTS = ['down', 'crash']
 
@@ -136,6 +139,10 @@ class info():
 __version__ = info.version
 
 
+class _BootTimeRow(dict):
+    """A row read from the FreeBSD/macOS `boot time` line."""
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -149,7 +156,7 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        if 'user' in entry and entry['user'] == 'boot_time':
+        if isinstance(entry, _BootTimeRow) and entry.get('user') == 'boot_time':
             entry['user'] = 'boot time'
 
         if 'tty' in entry and entry['tty'] == '~':
@@ -158,7 +165,7 @@ def _process(proc_data):
         if 'hostname' in entry and entry['hostname'] == '-':
             entry['hostname'] = None
 
-        if 'hostname' in entry and entry['hostname'] is not None and entry['hostname'][0] == ":":
+        if 'hostname' in entry and entry['hostname'] is not None and CONSOLE_HOST_RE.match(entry['hostname']):
             entry['hostname'] = f'CONSOLE{entry["hostname"]}'
 
         if 'logout' in entry and entry['logout'] == 'still_logged_in':
@@ -316,6 +323,7 @@ def parse(data, raw=False, quiet=False):
 
     for entry in cleandata:
         output_line = {}
+        bsd_boot_time = False
 
         # util-linux rows: the user and hostname columns can contain spaces
         # (e.g. the user name of a failed login in lastb output)
@@ -348,6 +356,7 @@ def parse(data, raw=False, quiet=False):
             if linedata[0] == 'boot_time':
                 linedata.insert(1, '-')
                 linedata.insert(1, '~')
+                bsd_boot_time = True
 
         output_line['user'] = linedata[0]
 
@@ -385,6 +394,9 @@ def parse(data, raw=False, quiet=False):
 
             if len(linedata) > 9:
                 output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
+
+        if bsd_boot_time:
+            output_line = _BootTimeRow(output_line)
 
         raw_output.append(output_line)
 

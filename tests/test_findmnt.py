@@ -17,6 +17,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/findmnt-spaces.json'), 'r', encoding='utf-8') as f:
         generic_findmnt_spaces_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/findmnt-quoted-and-escaped-commas.out'), 'r', encoding='utf-8') as f:
+        generic_findmnt_quoted_and_escaped_commas = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/findmnt-quoted-and-escaped-commas.json'), 'r', encoding='utf-8') as f:
+        generic_findmnt_quoted_and_escaped_commas_json = json.loads(f.read())
+
     @classmethod
     def setUpClass(cls):
         fixtures = {
@@ -129,6 +135,15 @@ class MyTests(unittest.TestCase):
             {'target': '/media/My\\x20Passport', 'source': '/dev/sdb1', 'fstype': 'exfat', 'options': ['rw', 'nosuid'], 'kv_options': {'uid': '1000'}}
         ]
         self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_findmnt_quoted_and_escaped_commas(self):
+        """
+        Test 'findmnt' with quoted and backslash-escaped commas in options
+        """
+        self.assertEqual(
+            parse(self.generic_findmnt_quoted_and_escaped_commas, quiet=True),
+            self.generic_findmnt_quoted_and_escaped_commas_json
+        )
 
 
 if __name__ == '__main__':

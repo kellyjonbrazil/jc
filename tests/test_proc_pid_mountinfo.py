@@ -19,7 +19,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_mountinfo.json'),
             'proc_pid_mountinfo_long_optional': (
                 'fixtures/generic/proc-pid-mountinfo-long-optional.out',
-                'fixtures/generic/proc-pid-mountinfo-long-optional.json')
+                'fixtures/generic/proc-pid-mountinfo-long-optional.json'),
+            'proc_pid_mountinfo_empty_source': (
+                'fixtures/generic/proc-pid-mountinfo-empty-source.out',
+                'fixtures/generic/proc-pid-mountinfo-empty-source.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -86,6 +89,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[1]['mount_point'], '/tmp/a\xa0b')
         self.assertEqual(result[1]['mount_source'], '/dev/sda1\xa0ro,nosuid')
         self.assertEqual(result[1]['super_options'], ['rw', 'inode64'])
+
+    def test_proc_pid_mountinfo_empty_source(self):
+        """
+        Test '/proc/<pid>/mountinfo' with lines that have an empty mount source
+        """
+        self.assertEqual(jc.parsers.proc_pid_mountinfo.parse(self.f_in['proc_pid_mountinfo_empty_source'], quiet=True),
+                                                             self.f_json['proc_pid_mountinfo_empty_source'])
 
 
 if __name__ == '__main__':

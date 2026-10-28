@@ -1,0 +1,8 @@
+Routing tables
+
+Internet:
+Destination        Gateway            Flags     Netif Expire
+default            192.168.71.2       UGS         em0
+Name               link#2             UH          lo0
+Destination        link#1             U           em0
+192.168.71.163     link#1             UHS         lo0

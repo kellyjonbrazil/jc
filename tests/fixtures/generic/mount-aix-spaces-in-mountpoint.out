@@ -1,0 +1,9 @@
+  node       mounted        mounted over    vfs       date        options      
+-------- ---------------  ---------------  ------ ------------ --------------- 
+         /dev/hd4         /                jfs2   Sep 06 11:46 rw,log=/dev/hd8 
+         /dev/fslv00      /sandbox /etc    jfs2   Sep 06 11:47 rw,log=/dev/sboxlv_log
+         /dev/fslv01      /data nfs3 Sep 06 11:47 ro,nosuid jfs2   Sep 06 11:47 rw,log=/dev/hd8
+         /dev/livedump    /var/adm/ras/livedump jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+         /dev/fslv02      /var/adm/ras/my live dump jfs2   Sep 06 11:47 rw,log=/dev/hd8 
+remote   /local           /re mote         nfs3   Sep 06 11:49 hard,intr,vers=3
+remote   /export/a b      /remote          nfs3   Sep 06 11:49 hard,intr,vers=3

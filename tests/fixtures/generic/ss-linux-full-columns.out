@@ -1,0 +1,5 @@
+Netid State  Recv-Q Send-Q                    Local Address:Port  Peer Address:PortProcess
+udp   UNCONN 212992 0                               0.0.0.0:5353       0.0.0.0:*    users:(("avahi-daemon",pid=1917749,fd=12)) uid:128 ino:559134615 sk:3b cgroup:/system.slice/avahi-daemon.service <->
+tcp   ESTAB  0      0                              10.0.0.5:22        10.0.0.9:51234 users:(("sshd",pid=812,fd=4)) ino:2 sk:2 cgroup:/ <->
+tcp   ESTAB  131072 0                              10.0.0.5:22        10.0.0.9:51235 users:(("sshd",pid=813,fd=4)) ino:3 sk:3 cgroup:/ <->
+u_str ESTAB  0      0                    /run/a b 4242 * 4243 users:(("my app",pid=900,fd=5)) ino:4242 sk:4 cgroup:/user.slice <->
