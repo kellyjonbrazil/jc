@@ -49,6 +49,12 @@ SLICER_RE = re.compile(SLICER_PATTERN)
 # in JSON output. json.dumps() only escapes U+0000-U+001F when ensure_ascii
 # is off.
 JSON_ESCAPE_RE = re.compile('[\x7f-\x9f\ud800-\udfff]')
+# strings that YAML 1.1 readers load as booleans or sexagesimal numbers,
+# but that YAML 1.2 (and so ruamel.yaml) leaves unquoted
+YAML11_NON_STR_RE = re.compile(r'''^(?:y|Y|yes|Yes|YES|n|N|no|No|NO|on|On|ON|off|Off|OFF
+    |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+                 # sexagesimal int
+    |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*)$''',  # sexagesimal float
+    re.VERBOSE)
 
 
 class info():
@@ -385,6 +391,16 @@ class JcCli():
             class JcRepresenter(representer.RoundTripRepresenter):
                 def ignore_aliases(self, data):
                     return True
+
+            # quote strings that YAML 1.1 readers would load as booleans or
+            # numbers (e.g. yes, off, 1:30) so they stay strings for them too
+            def represent_str(rep, data):
+                style = None
+                if '\n' not in data and YAML11_NON_STR_RE.match(data):
+                    style = "'"
+                return rep.represent_scalar('tag:yaml.org,2002:str', data, style=style)
+
+            JcRepresenter.add_representer(str, represent_str)
 
             yaml = JcYAML()
             yaml.Representer = JcRepresenter

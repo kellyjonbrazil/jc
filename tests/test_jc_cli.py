@@ -350,6 +350,63 @@ class MyTests(unittest.TestCase):
             self.assertEqual(cli.yaml_out(), expected_json)
 
     @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
+    def test_cli_yaml_out_yaml11_strings_quoted(self):
+        """
+        Test YAML output quotes strings that a YAML 1.1 reader would load as
+        a boolean or a number (yes/no/on/off, sexagesimal), in values and keys
+        """
+        test_input = [
+            {'filename': 'yes'},
+            {'filename': 'No'},
+            {'filename': 'ON'},
+            {'filename': 'off'},
+            {'filename': 'y'},
+            {'filename': 'N'},
+            {'login_at': '1:30'},
+            {'login_at': '10:25'},
+            {'login_at': '12:30:45'},
+            {'login_at': '-1:30.5'},
+            {'login_at': '09:53'},
+            {'filename': 'yesterday'},
+            {'filename': 'yEs'},
+            {'filename': 'normal.txt'},
+            {'yes': '1', 'on': '2'},
+            {'filename': 'true'},
+            {'key1': 'value1', 'key2': 2, 'key3': None, 'key4': 3.14, 'key5': True}
+        ]
+
+        expected_output = [
+            "---\nfilename: 'yes'",
+            "---\nfilename: 'No'",
+            "---\nfilename: 'ON'",
+            "---\nfilename: 'off'",
+            "---\nfilename: 'y'",
+            "---\nfilename: 'N'",
+            "---\nlogin_at: '1:30'",
+            "---\nlogin_at: '10:25'",
+            "---\nlogin_at: '12:30:45'",
+            "---\nlogin_at: '-1:30.5'",
+            '---\nlogin_at: 09:53',
+            '---\nfilename: yesterday',
+            '---\nfilename: yEs',
+            '---\nfilename: normal.txt',
+            "---\n'yes': '1'\n'on': '2'",
+            "---\nfilename: 'true'",
+            '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
+        ]
+
+        for test_dict, expected_yaml in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_dict
+            output = cli.yaml_out()
+            self.assertEqual(output, expected_yaml)
+            # a YAML 1.1 reader loads the same data
+            yaml11 = ruamel.yaml.YAML(typ='safe', pure=True)
+            self.assertEqual(yaml11.load('%YAML 1.1\n' + output + '\n'), test_dict)
+
+    @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
     def test_cli_yaml_out_no_side_effects(self):
         """
         Test YAML output leaves the ruamel.yaml classes unchanged for other
