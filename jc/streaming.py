@@ -1,7 +1,6 @@
 """jc - JSON Convert streaming utils"""
 
 from functools import wraps
-from inspect import signature, Parameter
 from typing import Tuple, Union, Iterable, Callable, TypeVar, cast, Any
 from .jc_types import JSONDictType
 
@@ -86,27 +85,9 @@ def add_jc_meta(func: F) -> F:
         ignore_exceptions:  (bool)  continue processing lines and ignore
                             exceptions if `True`.
     """
-    # ignore_exceptions can be passed by keyword or by position, so find its
-    # position and default value once
-    flag_index = None
-    flag_default = False
-    params = list(signature(func).parameters.values())
-    for index, param in enumerate(params):
-        if param.name == 'ignore_exceptions':
-            if param.kind in (Parameter.POSITIONAL_ONLY, Parameter.POSITIONAL_OR_KEYWORD):
-                flag_index = index
-            if param.default is not Parameter.empty:
-                flag_default = param.default
-            break
-
     @wraps(func)
     def wrapper(*args, **kwargs):
-        if 'ignore_exceptions' in kwargs:
-            ignore_exceptions = kwargs['ignore_exceptions']
-        elif flag_index is not None and len(args) > flag_index:
-            ignore_exceptions = args[flag_index]
-        else:
-            ignore_exceptions = flag_default
+        ignore_exceptions = kwargs.get('ignore_exceptions', False)
         gen = func(*args, **kwargs)
         for value in gen:
             # if the yielded value is a dict, then we know it was a
