@@ -214,8 +214,9 @@ class MyTests(unittest.TestCase):
                 'serveraliveinterval': 90,
                 'connecttimeout': 10,
                 'forwardx11timeout': 1200,
-                'controlpersist': '10m',
-                'rekeylimit': '1G 1h'
+                'controlpersist': 600,
+                'rekeylimit': 1073741824,
+                'rekeylimit_time': 3600
             },
             {
                 'host': 'b',
@@ -224,6 +225,64 @@ class MyTests(unittest.TestCase):
                 'connecttimeout': None,
                 'forwardx11timeout': 86400,
                 'controlpersist': 'yes'
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_ssh_conf_forwards_are_lists(self):
+        """
+        Test 'ssh_conf' with repeated RemoteForward and DynamicForward
+        """
+        data = (
+            'Host a\n'
+            '    RemoteForward 9000 localhost:9000\n'
+            '    RemoteForward 9001 localhost:9001\n'
+            '    DynamicForward 1080\n'
+            '    DynamicForward 127.0.0.1:1081\n'
+        )
+        expected = [
+            {
+                'host': 'a',
+                'host_list': ['a'],
+                'remoteforward': ['9000 localhost:9000', '9001 localhost:9001'],
+                'dynamicforward': ['1080', '127.0.0.1:1081']
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_ssh_conf_rekeylimit_controlpersist(self):
+        """
+        Test 'ssh_conf' with RekeyLimit and ControlPersist values
+        """
+        cases = [
+            ('RekeyLimit 0 0', {'rekeylimit': 0, 'rekeylimit_time': 0}),
+            ('RekeyLimit 4G', {'rekeylimit': 4294967296}),
+            ('RekeyLimit 512m 2h', {'rekeylimit': 536870912, 'rekeylimit_time': 7200}),
+            ('RekeyLimit default none', {'rekeylimit': 'default', 'rekeylimit_time': 'none'}),
+            ('RekeyLimit 1G none', {'rekeylimit': 1073741824, 'rekeylimit_time': 'none'}),
+            ('RekeyLimit 1GB 1.5h', {'rekeylimit': None, 'rekeylimit_time': None}),
+            ('ControlPersist yes', {'controlpersist': 'yes'}),
+            ('ControlPersist no', {'controlpersist': 'no'}),
+            ('ControlPersist 0', {'controlpersist': 0}),
+            ('ControlPersist 4h', {'controlpersist': 14400}),
+            ('ControlPersist 1h30m', {'controlpersist': 5400}),
+            ('ControlPersist soon', {'controlpersist': None})
+        ]
+        for line, expected in cases:
+            with self.subTest(line=line):
+                self.assertEqual(parse(line, quiet=True), [expected])
+
+    def test_ssh_conf_hostkeyalgorithms_modifier(self):
+        """
+        Test 'ssh_conf' with a HostKeyAlgorithms modifier
+        """
+        data = 'Host a\n    HostKeyAlgorithms +ssh-rsa,ssh-dss\n'
+        expected = [
+            {
+                'host': 'a',
+                'host_list': ['a'],
+                'hostkeyalgorithms': ['ssh-rsa', 'ssh-dss'],
+                'hostkeyalgorithms_strategy': '+'
             }
         ]
         self.assertEqual(parse(data, quiet=True), expected)

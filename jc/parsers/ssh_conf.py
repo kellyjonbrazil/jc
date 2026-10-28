@@ -59,8 +59,10 @@ Schema:
         "connecttimeout":                             integer,
         "controlmaster":                              string,
         "controlpath":                                string,
-        "controlpersist":                             string,
-        "dynamicforward":                             string,
+        "controlpersist":                             string/integer,
+        "dynamicforward": [
+                                                      string
+        ],
         "enableescapecommandline":                    string,
         "enablesshkeysign":                           string,
         "escapechar":                                 string,
@@ -85,6 +87,7 @@ Schema:
         "hostkeyalgorithms": [
                                                       string
         ],
+        "hostkeyalgorithms_strategy":                 string,
         "hostkeyalias":                               string,
         "hostname":                                   string,
         "identitiesonly":                             string,
@@ -143,9 +146,12 @@ Schema:
         ],
         "pubkeyacceptedalgorithms_strategy":          string,
         "pubkeyauthentication":                       string,
-        "rekeylimit":                                 string,
+        "rekeylimit":                                 string/integer,
+        "rekeylimit_time":                            string/integer,
         "remotecommand":                              string,
-        "remoteforward":                              string,
+        "remoteforward": [
+                                                      string
+        ],
         "requesttty":                                 string,
         "requiredrsasize":                            integer,
         "revokedhostkeys":                            string,
@@ -357,7 +363,8 @@ Examples:
           "af21",
           "cs1"
         ],
-        "rekeylimit": "0 0",
+        "rekeylimit": 0,
+        "rekeylimit_time": 0,
         "streamlocalbindmask": "0177",
         "syslogfacility": "USER"
       }
@@ -515,9 +522,9 @@ Examples:
       }
     ]
 """
-from typing import Set, List, Dict
+from typing import Any, Callable, Set, List, Dict
 from jc.jc_types import JSONDictType
-from jc.parsers.sshd_conf import _convert_time
+from jc.parsers.sshd_conf import _convert_time, _convert_size
 import jc.utils
 
 
@@ -533,6 +540,15 @@ class info():
 
 
 __version__ = info.version
+
+
+def _convert_rekey(value: str, converter: Callable) -> Any:
+    """Convert a RekeyLimit size or time, keeping 'default' and 'none'"""
+    words = value.split()
+    if words and words[0].lower() in ('default', 'none'):
+        return words[0]
+
+    return converter(value)
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -580,6 +596,23 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 host[key] = new_list
                 continue
 
+            if key == 'rekeylimit':
+                # size in bytes, then an optional time in seconds. The
+                # keywords 'default' and 'none' are kept as strings
+                rekey_split = val.split(maxsplit=1)
+                host[key] = _convert_rekey(rekey_split[0], _convert_size)
+                if len(rekey_split) > 1:
+                    host[key + '_time'] = _convert_rekey(
+                        rekey_split[1], _convert_time
+                    )
+                continue
+
+            if key == 'controlpersist':
+                # yes and no are kept as strings, otherwise time in seconds
+                if val.lower() not in ('yes', 'no'):
+                    host[key] = _convert_time(val)
+                continue
+
             if key in split_fields_space:
                 host[key] = val.split()
                 continue
@@ -623,13 +656,13 @@ def parse(
     host: Dict = {}
 
     multi_fields: Set[str] = {
-        'certificatefile', 'identityfile', 'include', 'localforward',
-        'sendenv', 'setenv'
+        'certificatefile', 'dynamicforward', 'identityfile', 'include',
+        'localforward', 'remoteforward', 'sendenv', 'setenv'
     }
 
     modified_fields: Set[str] = {
         'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
-        'HostKeyAlgorithms', 'kexalgorithms', 'macs',
+        'hostkeyalgorithms', 'kexalgorithms', 'macs',
         'pubkeyacceptedalgorithms'
     }
 
