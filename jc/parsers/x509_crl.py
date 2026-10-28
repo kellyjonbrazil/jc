@@ -40,7 +40,8 @@ Schema:
                   "critical":             boolean,
                   "extn_value":           string,
                   "extn_value_iso":       string
-                },
+                }
+              ],
               "revocation_date_iso":      string
             }
           ],
