@@ -24,17 +24,17 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.out'), 'r', encoding='utf-8') as f:
         aix_7_1_mount = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.out'), 'r', encoding='utf-8') as f:
-        generic_mount_spaces_in_mountpoint = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-spaces-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_spaces_in_mountpoint = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-filename.out'), 'r', encoding='utf-8') as f:
-        generic_mount_spaces_in_filename = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-spaces-in-filename.out'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_spaces_in_filename = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.out'), 'r', encoding='utf-8') as f:
-        generic_mount_parens_in_filesystem = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-parens-in-filesystem.out'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_parens_in_filesystem = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-newline-in-source.out'), 'r', encoding='utf-8') as f:
-        generic_mount_newline_in_source = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-newline-in-source.out'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_newline_in_source = f.read()
 
 
     # output
@@ -53,30 +53,30 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/mount.json'), 'r', encoding='utf-8') as f:
         aix_7_1_mount_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-mountpoint.json'), 'r', encoding='utf-8') as f:
-        generic_mount_spaces_in_mountpoint_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-spaces-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_spaces_in_mountpoint_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-spaces-in-filename.json'), 'r', encoding='utf-8') as f:
-        generic_mount_spaces_in_filename_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-spaces-in-filename.json'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_spaces_in_filename_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-parens-in-filesystem.json'), 'r', encoding='utf-8') as f:
-        generic_mount_parens_in_filesystem_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-parens-in-filesystem.json'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_parens_in_filesystem_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-newline-in-source.json'), 'r', encoding='utf-8') as f:
-        generic_mount_newline_in_source_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-newline-in-source.json'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_newline_in_source_json = json.loads(f.read())
 
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-type-in-mountpoint.out'), 'r', encoding='utf-8') as f:
-        generic_mount_type_in_mountpoint = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-type-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_type_in_mountpoint = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-type-in-mountpoint.json'), 'r', encoding='utf-8') as f:
-        generic_mount_type_in_mountpoint_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-type-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_type_in_mountpoint_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.out'), 'r', encoding='utf-8') as f:
-        generic_mount_options_in_mountpoint_bsd = f.read()
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-options-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_options_in_mountpoint = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.json'), 'r', encoding='utf-8') as f:
-        generic_mount_options_in_mountpoint_bsd_json = json.loads(f.read())
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-options-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_options_in_mountpoint_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-aix-header-text.out'), 'r', encoding='utf-8') as f:
         generic_mount_osx_aix_header_text = f.read()
@@ -136,19 +136,19 @@ class MyTests(unittest.TestCase):
         """
         Test 'mount' with spaces in the mountpoint
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_spaces_in_mountpoint, quiet=True), self.generic_mount_spaces_in_mountpoint_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_linux_spaces_in_mountpoint, quiet=True), self.generic_mount_linux_spaces_in_mountpoint_json)
 
     def test_mount_spaces_in_filename(self):
         """
         Test 'mount' with spaces in the filename
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_spaces_in_filename, quiet=True), self.generic_mount_spaces_in_filename_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_linux_spaces_in_filename, quiet=True), self.generic_mount_linux_spaces_in_filename_json)
 
     def test_mount_parens_in_filesystem(self):
         """
         Test 'mount' with parenthesis in the filesystem
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_parens_in_filesystem, quiet=True), self.generic_mount_parens_in_filesystem_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_osx_parens_in_filesystem, quiet=True), self.generic_mount_osx_parens_in_filesystem_json)
 
 
     def test_mount_line_separator(self):
@@ -168,7 +168,7 @@ class MyTests(unittest.TestCase):
         Test 'mount' where a newline in a source name leaves a long line that
         repeats ' on ... type ... (' after its last ')'
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_newline_in_source, quiet=True), self.generic_mount_newline_in_source_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_linux_newline_in_source, quiet=True), self.generic_mount_linux_newline_in_source_json)
 
     def test_mount_point_ends_in_on(self):
         """
@@ -189,13 +189,13 @@ class MyTests(unittest.TestCase):
         """
         Test 'mount -l' with mount points that contain type and options text
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_type_in_mountpoint, quiet=True), self.generic_mount_type_in_mountpoint_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_linux_type_in_mountpoint, quiet=True), self.generic_mount_linux_type_in_mountpoint_json)
 
     def test_mount_options_in_mountpoint_bsd(self):
         """
         Test 'mount' on macOS/BSD with a mount point that contains options text
         """
-        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_options_in_mountpoint_bsd, quiet=True), self.generic_mount_options_in_mountpoint_bsd_json)
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_osx_options_in_mountpoint, quiet=True), self.generic_mount_osx_options_in_mountpoint_json)
 
     def test_mount_aix_header_text_in_osx(self):
         """
