@@ -1,0 +1,12 @@
+title = "dates"
+offset_datetime = 1979-05-27T07:32:00Z
+local_date = 1979-05-27
+local_time = 07:32:00
+offset_datetimes = [ 1979-05-27T07:32:00Z, 1979-05-27T00:32:00-07:00 ]
+local_dates = [ 1979-05-27, 1980-01-01 ]
+local_times = [ 07:32:00, 00:32:00.999999 ]
+mixed = [ [ 1979-05-27T07:32:00+09:00, "text" ], { renewed = 2021-06-15T12:30:00Z } ]
+
+[[events]]
+name = "start"
+when = 1979-05-27T07:32:00-08:00
