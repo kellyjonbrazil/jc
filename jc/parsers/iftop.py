@@ -181,6 +181,7 @@ Examples:
     ]
 """
 import re
+import ipaddress
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -254,6 +255,25 @@ def _header_only(item: Dict) -> Dict:
     return {k: item[k] for k in _HEADER_KEYS if k in item}
 
 
+def _has_port(host_field: str) -> bool:
+    """
+    Return True if the host field of a flow line ends in a port. iftop puts
+    an IPv6 address in brackets when a port follows it, so an unbracketed
+    field that is a whole IPv6 address has no port.
+    """
+    if ":" not in host_field:
+        return False
+
+    if host_field.count(":") >= 2 and "[" not in host_field and "]" not in host_field:
+        try:
+            ipaddress.IPv6Address(host_field)
+            return False
+        except ValueError:
+            pass
+
+    return True
+
+
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
     """
     Main text parsing function
@@ -323,6 +343,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         return raw_output if raw else _process(raw_output, quiet=quiet)
 
     for line in filter(None, data.splitlines()):
+        has_port = False
+        if "=>" in line or "<=" in line:
+            fields = line.split(None, 2)
+            if "=>" in line and len(fields) > 1:
+                has_port = _has_port(fields[1])
+            elif fields:
+                has_port = _has_port(fields[0])
+
         if line.startswith("interface:"):
             # Example:
             # interface: enp0s3
@@ -363,11 +391,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         ):
             interface_item = _header_only(interface_item)
 
-        elif "=>" in line and is_previous_line_interface and ":" in line:
+        elif "=>" in line and is_previous_line_interface and has_port:
             # should not happen
             pass
 
-        elif "=>" in line and not is_previous_line_interface and ":" in line:
+        elif "=>" in line and not is_previous_line_interface and has_port:
             # Example:
             #    1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
             match_raw = re_linux_clients_before_newline.match(line)
@@ -394,11 +422,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_send)
             # not adding yet as the receive part is not yet parsed
 
-        elif "=>" in line and is_previous_line_interface and ":" not in line:
+        elif "=>" in line and is_previous_line_interface and not has_port:
             # should not happen
             pass
 
-        elif "=>" in line and not is_previous_line_interface and ":" not in line:
+        elif "=>" in line and not is_previous_line_interface and not has_port:
             # Example:
             #    1 ubuntu-2004-clean-01                     =>     4.82KB     4.82KB     4.82KB     9.63KB
             match_raw = re_linux_clients_before_newline_no_port.match(line)
@@ -424,11 +452,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_send)
             # not adding yet as the receive part is not yet parsed
 
-        elif "<=" in line and not is_previous_line_interface and ":" in line:
+        elif "<=" in line and not is_previous_line_interface and has_port:
             # should not happen
             pass
 
-        elif "<=" in line and is_previous_line_interface and ":" in line:
+        elif "<=" in line and is_previous_line_interface and has_port:
             # Example:
             #      10.10.15.72:40876                        <=       208b       208b       208b        52B
             is_previous_line_interface = False
@@ -452,11 +480,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_receive)
             clients.append(current_client)
 
-        elif "<=" in line and not is_previous_line_interface and ":" not in line:
+        elif "<=" in line and not is_previous_line_interface and not has_port:
             # should not happen
             pass
 
-        elif "<=" in line and is_previous_line_interface and ":" not in line:
+        elif "<=" in line and is_previous_line_interface and not has_port:
             # Example:
             #      10.10.15.72                              <=     14.5KB     14.5KB     14.5KB     29.1KB
             is_previous_line_interface = False

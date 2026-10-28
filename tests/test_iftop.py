@@ -59,6 +59,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-linux-no-port-flows.json'), 'r', encoding='utf-8') as f:
         generic_iftop_linux_no_port_flows_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-linux-ipv6-no-port.out'), 'r', encoding='utf-8') as f:
+        generic_iftop_linux_ipv6_no_port = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iftop-linux-ipv6-no-port.json'), 'r', encoding='utf-8') as f:
+        generic_iftop_linux_ipv6_no_port_json = json.loads(f.read())
+
     def test_iftop_nodata(self):
         """
         Test 'iftop -b' with no data
@@ -121,7 +127,7 @@ class MyTests(unittest.TestCase):
         field, including IPv6 addresses and a host field that ends in a colon
         """
         cases = [
-            ('2001:db8::1:https', '2001:db8::5:443', ('2001:db8::1', 'https'), ('2001:db8::5', '443')),
+            ('2001:db8::1:https', '[2001:db8::5]:443', ('2001:db8::1', 'https'), ('[2001:db8::5]', '443')),
             ('fe80::1:ssh', 'fe80::2:40876', ('fe80::1', 'ssh'), ('fe80::2', '40876')),
             ('a:b:', 'host:http', ('a', 'b:'), ('host', 'http'))
         ]
@@ -147,6 +153,13 @@ class MyTests(unittest.TestCase):
         between flows that have ports
         """
         self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_linux_no_port_flows, quiet=True), self.generic_iftop_linux_no_port_flows_json)
+
+    def test_iftop_ipv6_no_port(self):
+        """
+        Test 'iftop -t -P' output with IPv6 addresses printed without a port
+        next to bracketed IPv6 addresses that have a port
+        """
+        self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_linux_ipv6_no_port, quiet=True), self.generic_iftop_linux_ipv6_no_port_json)
 
 
 if __name__ == '__main__':
