@@ -1,9 +1,13 @@
+import contextlib
+import io
+import sys
 from copy import deepcopy
 import unittest
 from typing import Generator
 from types import ModuleType
 import jc.lib
 import jc.parsers.csv as csv_parser
+import jc.parsers.disabled_parser as disabled_parser
 
 
 class MyTests(unittest.TestCase):
@@ -13,9 +17,43 @@ class MyTests(unittest.TestCase):
 
     def test_lib_get_parser_broken_parser(self):
         """get_parser substitutes the disabled_parser if a parser is broken"""
-        broken = jc.lib.get_parser('broken_parser')
-        disabled = jc.lib.get_parser('disabled_parser')
-        self.assertIs(broken, disabled)
+        jc.lib.parsers.append('broken-parser')
+        try:
+            broken = jc.lib.get_parser('broken_parser')
+        finally:
+            jc.lib.parsers.remove('broken-parser')
+        self.assertIs(broken, disabled_parser)
+
+    def test_lib_get_parser_unknown_name(self):
+        """
+        Test get_parser, parse and parser_info with a name that is not a
+        registered parser: ModuleNotFoundError and no warning
+        """
+        disabled_name = disabled_parser.__name__
+        for name in ('not_a_parser', 'not-a-parser', '--not-a-parser', '\x1b[2J', 'foo', 'foo_s', 'disabled_parser'):
+            stderr = io.StringIO()
+            with contextlib.redirect_stderr(stderr):
+                self.assertRaises(ModuleNotFoundError, jc.lib.get_parser, name)
+                self.assertRaises(ModuleNotFoundError, jc.lib.parse, name, 'a=1', quiet=True)
+                self.assertRaises(ModuleNotFoundError, jc.lib.parser_info, name)
+            self.assertEqual(stderr.getvalue(), '')
+        self.assertEqual(disabled_parser.__name__, disabled_name)
+
+    def test_lib_get_parser_unregistered_module(self):
+        """
+        Test get_parser with the name of a module under jc/parsers that is
+        not a parser: it is not imported
+        """
+        sys.modules.pop('jc.parsers.asn1crypto.pkcs12', None)
+        self.assertRaises(ModuleNotFoundError, jc.lib.get_parser, 'asn1crypto.pkcs12')
+        self.assertNotIn('jc.parsers.asn1crypto.pkcs12', sys.modules)
+
+    def test_lib_get_parser_name_variants(self):
+        """
+        Test get_parser with module, cli and argument names of a parser
+        """
+        for name in ('ini_dup', 'ini-dup', '--ini-dup'):
+            self.assertEqual(jc.lib.get_parser(name).__name__, 'jc.parsers.ini_dup')
 
     def test_lib_get_parser_module(self):
         p = jc.lib.get_parser(csv_parser)

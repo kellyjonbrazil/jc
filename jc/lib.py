@@ -360,6 +360,11 @@ def _get_parser(parser_mod_name: str) -> ModuleType:
     modpath: str = 'jcparsers.' if parser_cli_name in local_parsers else 'jc.parsers.'
     mod = None
 
+    # only registered parsers can be loaded by name. Other names would
+    # import other modules under jc/parsers or end up as the disabled parser.
+    if parser_cli_name not in parsers:
+        raise ModuleNotFoundError(f'No parser named "{parser_mod_name}"')
+
     try:
         mod =  importlib.import_module(f'{modpath}{parser_mod_name}')
     except Exception as e:
