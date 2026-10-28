@@ -46,8 +46,8 @@ https://github.com/torvalds/linux/blob/master/net/ipv6/datagram.c
         "uid":                                  integer,
         "unanswered_0_window_probes":           integer,
         "inode":                                integer,
-        "ref":                                  integer,
-        "pointer":                              string,
+        "sock_ref_count":                       integer,
+        "sock_mem_loc":                         string,
         "drops":                                integer,
         "opposite_endian_local_address":        string,    [0]
         "opposite_endian_remote_address":       string     [0]
@@ -78,8 +78,8 @@ Examples:
         "uid": 193,
         "unanswered_0_window_probes": 0,
         "inode": 11301,
-        "ref": 2,
-        "pointer": "00000000188b1206",
+        "sock_ref_count": 2,
+        "sock_mem_loc": "00000000188b1206",
         "drops": 0
       },
       {
@@ -97,8 +97,8 @@ Examples:
         "uid": 193,
         "unanswered_0_window_probes": 0,
         "inode": 11299,
-        "ref": 2,
-        "pointer": "00000000a7f8edaa",
+        "sock_ref_count": 2,
+        "sock_mem_loc": "00000000a7f8edaa",
         "drops": 0
       },
       {
@@ -116,8 +116,8 @@ Examples:
         "uid": 0,
         "unanswered_0_window_probes": 0,
         "inode": 2764719,
-        "ref": 2,
-        "pointer": "000000008eb56d17",
+        "sock_ref_count": 2,
+        "sock_mem_loc": "000000008eb56d17",
         "drops": 0
       },
       ...
@@ -140,8 +140,8 @@ Examples:
         "uid": "193",
         "unanswered_0_window_probes": "0",
         "inode": "11301",
-        "ref": "2",
-        "pointer": "00000000188b1206",
+        "sock_ref_count": "2",
+        "sock_mem_loc": "00000000188b1206",
         "drops": "0"
       },
       {
@@ -159,8 +159,8 @@ Examples:
         "uid": "193",
         "unanswered_0_window_probes": "0",
         "inode": "11299",
-        "ref": "2",
-        "pointer": "00000000a7f8edaa",
+        "sock_ref_count": "2",
+        "sock_mem_loc": "00000000a7f8edaa",
         "drops": "0"
       },
       {
@@ -178,8 +178,8 @@ Examples:
         "uid": "0",
         "unanswered_0_window_probes": "0",
         "inode": "2764719",
-        "ref": "2",
-        "pointer": "000000008eb56d17",
+        "sock_ref_count": "2",
+        "sock_mem_loc": "000000008eb56d17",
         "drops": "0"
       },
       ...
@@ -218,7 +218,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         List of Dictionaries. Structured to conform to the schema.
     """
     int_list = {
-        'timer_active', 'uid', 'unanswered_0_window_probes', 'inode', 'ref',
+        'timer_active', 'uid', 'unanswered_0_window_probes', 'inode', 'sock_ref_count',
         'drops'
     }
 
@@ -307,8 +307,8 @@ def parse(
             output_line['uid'] = line[7]
             output_line['unanswered_0_window_probes'] = line[8]
             output_line['inode'] = line[9]
-            output_line['ref'] = line[10]
-            output_line['pointer'] = line[11]
+            output_line['sock_ref_count'] = line[10]
+            output_line['sock_mem_loc'] = line[11]
             output_line['drops'] = line[12]
 
             raw_output.append(output_line)
