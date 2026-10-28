@@ -19,7 +19,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/generic/toml-example.json'),
             'toml2': (
                 'fixtures/generic/toml-example2.toml',
-                'fixtures/generic/toml-example2.json')
+                'fixtures/generic/toml-example2.json'),
+            'toml_dates': (
+                'fixtures/generic/toml-dates.toml',
+                'fixtures/generic/toml-dates.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -67,6 +70,24 @@ class MyTests(unittest.TestCase):
             'arr': [{'d': 1609459200, 'd_iso': 'x'}]
         }
         self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_toml_dates(self):
+        """
+        Test 'toml' with local dates, local times, and datetimes inside arrays
+        """
+        self.assertEqual(
+            parse(self.f_in['toml_dates'], quiet=True),
+            self.f_json['toml_dates']
+        )
+
+    def test_toml_array_datetimes_serializable(self):
+        """
+        Test 'toml' with datetime values inside an array
+        """
+        data = 'a = [ 1979-05-27T07:32:00Z, 1979-05-27, 07:32:00 ]\nb = 1979-05-27\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result, {'a': ['1979-05-27T07:32:00+00:00', '1979-05-27', '07:32:00'], 'b': '1979-05-27'})
+        self.assertEqual(json.loads(json.dumps(result)), result)
 
 
 if __name__ == '__main__':
