@@ -57,13 +57,14 @@ Examples:
       "last_pid": "2039"
     }
 """
+import math
 from typing import Dict
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/loadavg` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -92,7 +93,9 @@ def _process(proc_data: Dict) -> Dict:
 
     for key in proc_data:
         if key in float_list:
-            proc_data[key] = float(proc_data[key])
+            float_value = float(proc_data[key])
+            # JSON has no inf or nan
+            proc_data[key] = float_value if math.isfinite(float_value) else None
 
         if key in int_list:
             proc_data[key] = int(proc_data[key])
