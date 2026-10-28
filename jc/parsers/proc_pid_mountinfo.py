@@ -41,18 +41,20 @@ Schema:
         "fs_type":                  string,
         "mount_source":             string,
         "super_options": [
-                                    integer    # [2]
+                                    string
         ],
         "super_options_fields": {
-          "<key>":                  string
+          "<key>":                  string/integer    # [2]
         }
       }
     ]
 
     [0] if empty, then private mount
     [1] unbindable will always have a value of 0
-    [2] integer conversions are attempted. Use --raw or raw=True for
-        original string values.
+    [2] integer conversions are attempted for values that are numbers,
+        optionally followed by a size suffix (k, M, G, etc.). Other values
+        are left as strings. Use --raw or raw=True for original string
+        values.
 
 Examples:
 
@@ -184,7 +186,11 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             if 'unbindable' in  entry['optional_fields']:
                 entry['optional_fields'] = {'unbindable': 0}
             else:
-                entry['optional_fields'] = {x.split(':')[0]: int(x.split(':')[1]) for x in entry['optional_fields'].split()}
+                optional_fields = {}
+                for x in entry['optional_fields'].split():
+                    key, _, val = x.partition(':')
+                    optional_fields[key] = int(val) if re.match(r'^[0-9]+$', val) else val
+                entry['optional_fields'] = optional_fields
 
         if 'super_options' in entry:
             if entry['super_options']:
@@ -202,8 +208,11 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                         entry['super_options_fields'] = {}
 
                     for field in s_options_fields:
-                        key, val = field.split('=')
-                        entry['super_options_fields'][key] = jc.utils.convert_to_int(val)
+                        key, val = field.split('=', maxsplit=1)
+                        if re.match(r'^-?[0-9]+[kKmMgGtTpPeE]?$', val):
+                            val = jc.utils.convert_to_int(val)
+
+                        entry['super_options_fields'][key] = val
 
             else:
                 del entry['super_options']

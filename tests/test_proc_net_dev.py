@@ -40,5 +40,19 @@ class MyTests(unittest.TestCase):
                                                        self.f_json['proc_net_dev'])
 
 
+    def test_proc_net_dev_interface_that_looks_like_a_number(self):
+        """
+        Test '/proc/net/dev' with an interface name that looks like a number
+        """
+        data = (
+            'Inter-|   Receive                                                |  Transmit\n'
+            ' face |bytes    packets errs drop fifo frame compressed multicast|bytes    packets errs drop fifo colls carrier compressed\n'
+            '  007:   13222     152    0    0    0     0          0         0    13222     152    0    0    0     0       0          0\n'
+        )
+        result = jc.parsers.proc_net_dev.parse(data, quiet=True)
+        self.assertEqual(result[0]['interface'], '007')
+        self.assertEqual(result[0]['r_bytes'], 13222)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -246,7 +246,12 @@ def _process(proc_data: Dict) -> Dict:
     if 'state' in proc_data:
         proc_data['state_pretty'] = state_map[proc_data['state']]
 
+    no_convert = {'comm', 'state', 'state_pretty'}
+
     for key, val in proc_data.items():
+        if key in no_convert:
+            continue
+
         try:
             proc_data[key] = int(val)
         except Exception:

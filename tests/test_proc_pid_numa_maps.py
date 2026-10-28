@@ -49,5 +49,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_pid_numa_maps.parse(data, quiet=True), expected)
 
 
+    def test_proc_pid_numa_maps_address_that_looks_like_a_number(self):
+        """
+        Test '/proc/<pid>/numa_maps' with an address that has no hex letters
+        """
+        data = '00400000 default file=/usr/bin/cat mapped=2 N0=2 kernelpagesize_kB=4\n'
+        expected = [{'address': '00400000', 'policy': 'default', 'file': '/usr/bin/cat', 'mapped': 2, 'N0': 2, 'kernelpagesize_kB': 4}]
+        self.assertEqual(jc.parsers.proc_pid_numa_maps.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
