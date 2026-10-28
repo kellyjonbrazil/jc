@@ -103,9 +103,9 @@ Examples:
       },
       {
         "entry": "1480",
-        "local_address": "192.168.1.146",
+        "local_address": "192.0.2.10",
         "local_port": 68,
-        "remote_address": "192.168.1.254",
+        "remote_address": "192.0.2.1",
         "remote_port": 67,
         "state": "01",
         "tx_queue": "00000000",
@@ -165,9 +165,9 @@ Examples:
       },
       {
         "entry": "1480",
-        "local_address": "9201A8C0",
+        "local_address": "0A0200C0",
         "local_port": "0044",
-        "remote_address": "FE01A8C0",
+        "remote_address": "010200C0",
         "remote_port": "0043",
         "state": "01",
         "tx_queue": "00000000",
