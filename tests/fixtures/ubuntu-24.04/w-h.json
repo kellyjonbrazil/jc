@@ -1,0 +1,1 @@
+[{"user": "alice", "tty": "pts/1", "from": "10.0.0.5", "login_at": "09:14", "idle": "0.00s", "jcpu": "0.02s", "pcpu": "0.01s", "what": "vim notes.md"}, {"user": "bob", "tty": "pts/2", "from": null, "login_at": "09:20", "idle": "1:02m", "jcpu": "0.10s", "pcpu": "0.00s", "what": "-bash"}]

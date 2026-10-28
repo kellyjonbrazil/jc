@@ -24,6 +24,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/w.out'), 'r', encoding='utf-8') as f:
         nixos_w = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-24.04/w-h.out'), 'r', encoding='utf-8') as f:
+        ubuntu_24_04_w_h = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/w.json'), 'r', encoding='utf-8') as f:
         centos_7_7_w_json = json.loads(f.read())
@@ -39,6 +42,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/nixos/w.json'), 'r', encoding='utf-8') as f:
         nixos_w_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-24.04/w-h.json'), 'r', encoding='utf-8') as f:
+        ubuntu_24_04_w_h_json = json.loads(f.read())
 
 
     def test_w_nodata(self):
@@ -76,6 +82,12 @@ class MyTests(unittest.TestCase):
         Test 'w' on nixos
         """
         self.assertEqual(jc.parsers.w.parse(self.nixos_w, quiet=True), self.nixos_w_json)
+
+    def test_w_ubuntu_24_04_headerless(self):
+        """
+        Test 'w -h' (no uptime line and no column header) on Ubuntu 24.04
+        """
+        self.assertEqual(jc.parsers.w.parse(self.ubuntu_24_04_w_h, quiet=True), self.ubuntu_24_04_w_h_json)
 
 
 if __name__ == '__main__':

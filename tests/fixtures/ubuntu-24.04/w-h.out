@@ -1,0 +1,2 @@
+alice    pts/1    10.0.0.5         09:14    0.00s  0.02s  0.01s vim notes.md
+bob      pts/2    -                09:20    1:02m  0.10s  0.00s -bash

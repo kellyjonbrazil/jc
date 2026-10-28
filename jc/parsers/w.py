@@ -156,12 +156,23 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    cleandata = data.splitlines()[1:]
+    cleandata = [line for line in data.splitlines() if line.strip()]
     raw_output = []
 
     if jc.utils.has_data(data):
 
-        header_text = cleandata[0].lower()
+        # The default output starts with the uptime line and then the column header, but
+        # `w -h` / `--no-header` prints neither: the first line is already a session. Drop the
+        # uptime line only when it is there, and take the header as optional, else use the
+        # standard column names so the sessions are parsed instead of dropped.
+        if cleandata and not cleandata[0].upper().startswith('USER'):
+            if ' up ' in cleandata[0] or 'load average' in cleandata[0]:
+                cleandata = cleandata[1:]
+        if cleandata and cleandata[0].upper().startswith('USER'):
+            header_text = cleandata[0].lower()
+            cleandata = cleandata[1:]
+        else:
+            header_text = 'user tty from login_at idle jcpu pcpu what'
         # fixup for 'from' column that can be blank
         from_col = header_text.find('from')
         # clean up 'login@' header
@@ -169,10 +180,10 @@ def parse(data, raw=False, quiet=False):
         header_text = header_text.replace('login@', 'login_at')
         headers = [h for h in ' '.join(header_text.strip().split()).split() if h]
 
-        # parse lines
+        # parse lines (the header, when present, was removed above)
         raw_output = []
         if cleandata:
-            for entry in cleandata[1:]:
+            for entry in cleandata:
                 output_line = {}
 
                 # normalize data by inserting Null for missing data
