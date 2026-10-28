@@ -76,6 +76,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-port-process-header.json'), 'r', encoding='utf-8') as f:
         generic_ss_port_process_header_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-unix-name-spaces.out'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_unix_name_spaces = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-unix-name-spaces.json'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_unix_name_spaces_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-full-columns.out'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_full_columns = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-full-columns.json'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_full_columns_json = json.loads(f.read())
+
     def test_ss_nodata(self):
         """
         Test 'ss' with no data
@@ -251,6 +263,43 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ss.parse(self.generic_ss_port_process_header, quiet=True), self.generic_ss_port_process_header_json)
 
+
+    def test_ss_unix_name_spaces(self):
+        """
+        Test 'ss -a' with netlink and unix socket names that contain spaces
+        before ordinary unix socket rows
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.generic_ss_linux_unix_name_spaces, quiet=True), self.generic_ss_linux_unix_name_spaces_json)
+
+    def test_ss_unix_name_spaces_unaligned(self):
+        """
+        Test 'ss -a' on Centos 7.7 with an added unix socket row whose name
+        contains a space: the other records do not change
+        """
+        lines = self.centos_7_7_ss_sudo_a.splitlines()
+        first_unix = next(i for i, line in enumerate(lines) if line.startswith('u_'))
+        lines.insert(first_unix, 'u_str  LISTEN     0      128    /tmp/a b 99999                  * 0')
+        result = jc.parsers.ss.parse('\n'.join(lines), quiet=True)
+        added = result.pop(first_unix - 1)
+        self.assertEqual(result, self.centos_7_7_ss_sudo_a_json)
+        self.assertEqual((added['path'], added['local_port'], added['peer_address'], added['peer_port']),
+                         ('/tmp/a b', '99999', '*', '0'))
+
+    def test_ss_full_columns(self):
+        """
+        Test 'ss -tuxpe' rows where a full Recv-Q or Port column leaves only
+        one space before the next column
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.generic_ss_linux_full_columns, quiet=True), self.generic_ss_linux_full_columns_json)
+
+    def test_ss_timer_empty_time(self):
+        """
+        Test 'ss -o' with a timer whose expire time is empty
+        """
+        data = ('Netid State Recv-Q Send-Q Local Address:Port Peer Address:Port Process\n'
+                'tcp   ESTAB 0      0         10.0.0.5:22       10.0.0.9:40000 timer:(keepalive,,0) ino:5 sk:5 <->')
+        opts = jc.parsers.ss.parse(data, quiet=True)[0]['opts']
+        self.assertEqual(opts['timer'], {'timer_name': 'keepalive', 'expire_time': '', 'retrans': '0'})
 
 
 if __name__ == '__main__':
