@@ -139,6 +139,10 @@ class info():
 __version__ = info.version
 
 
+class _BootTimeRow(dict):
+    """A row read from the FreeBSD/macOS `boot time` line."""
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -152,7 +156,7 @@ def _process(proc_data):
         List of Dictionaries. Structured data to conform to the schema.
     """
     for entry in proc_data:
-        if 'user' in entry and entry['user'] == 'boot_time':
+        if isinstance(entry, _BootTimeRow) and entry.get('user') == 'boot_time':
             entry['user'] = 'boot time'
 
         if 'tty' in entry and entry['tty'] == '~':
@@ -319,6 +323,7 @@ def parse(data, raw=False, quiet=False):
 
     for entry in cleandata:
         output_line = {}
+        bsd_boot_time = False
 
         # util-linux rows: the user and hostname columns can contain spaces
         # (e.g. the user name of a failed login in lastb output)
@@ -351,6 +356,7 @@ def parse(data, raw=False, quiet=False):
             if linedata[0] == 'boot_time':
                 linedata.insert(1, '-')
                 linedata.insert(1, '~')
+                bsd_boot_time = True
 
         output_line['user'] = linedata[0]
 
@@ -388,6 +394,9 @@ def parse(data, raw=False, quiet=False):
 
             if len(linedata) > 9:
                 output_line['duration'] = linedata[9].replace('(', '').replace(')', '')
+
+        if bsd_boot_time:
+            output_line = _BootTimeRow(output_line)
 
         raw_output.append(output_line)
 

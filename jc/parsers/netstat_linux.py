@@ -31,6 +31,50 @@ def normalize_interface_headers(header):
     return header
 
 
+NETWORK_HEADERS = ['proto', 'recv_q', 'send_q', 'local_address', 'foreign_address', 'state']
+NETWORK_OPTIONAL = ['user', 'inode', 'program_name', 'timer']
+SOCKET_HEADERS = ['proto', 'refcnt', 'flags', 'type', 'state', 'inode']
+SOCKET_OPTIONAL = ['program_name']
+ROUTE_HEADERS = ['destination', 'gateway', 'genmask', 'route_flags']
+ROUTE_OPTIONAL = ['metric', 'route_refs', 'use', 'mss', 'window', 'irtt', 'iface']
+INTERFACE_HEADERS = ['iface', 'mtu', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr', 'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
+INTERFACE_OPTIONAL = ['met', 'flg']
+
+
+def is_header(headers, required, optional, last=None):
+    """
+    Check that the normalized header words are a full header line: the
+    required columns first, then only known optional columns (each once),
+    and the last column, if given, at the end.
+    """
+    if headers[:len(required)] != required:
+        return False
+
+    rest = headers[len(required):]
+    if last:
+        if not rest or rest[-1] != last:
+            return False
+        rest = rest[:-1]
+
+    return len(set(rest)) == len(rest) and all(word in optional or word.endswith('_context') for word in rest)
+
+
+def is_network_header(headers):
+    return is_header(headers, NETWORK_HEADERS, NETWORK_OPTIONAL)
+
+
+def is_socket_header(headers):
+    return is_header(headers, SOCKET_HEADERS, SOCKET_OPTIONAL, last='path')
+
+
+def is_route_header(headers):
+    return 'iface' in headers and is_header(headers, ROUTE_HEADERS, ROUTE_OPTIONAL)
+
+
+def is_interface_header(headers):
+    return is_header(headers, INTERFACE_HEADERS, INTERFACE_OPTIONAL)
+
+
 def parse_network(headers, entry, has_user):
     LIST_OF_STATES = [
         "ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2",
@@ -224,8 +268,14 @@ def parse(cleandata):
     interface_table = False
     headers = None
     has_user = False
+    columns = None
 
     for line in cleandata:
+
+        # each section needs its own full header line
+        if line.startswith(('Active Internet', 'Active UNIX', 'Active Bluetooth',
+                            'Kernel IP routing table', 'Kernel Interface table')):
+            headers = None
 
         if line.startswith('Active Internet'):
             network = True
@@ -270,23 +320,43 @@ def parse(cleandata):
         # get headers
         if line.startswith('Proto'):
             header_text = normalize_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            # only a full header line starts a new section header
+            if not (is_network_header(new_headers) or is_socket_header(new_headers)):
+                continue
+
+            headers = new_headers
             has_user = 'user' in headers
             columns = socket_columns(header_text)
             continue
 
         if line.startswith('Destination '):
             header_text = normalize_route_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            if not is_route_header(new_headers):
+                continue
+
+            headers = new_headers
             has_user = 'user' in headers
             columns = socket_columns(header_text)
             continue
 
         if line.startswith('Iface '):
             header_text = normalize_interface_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            if not is_interface_header(new_headers):
+                continue
+
+            headers = new_headers
             has_user = 'user' in headers
             columns = socket_columns(header_text)
+            continue
+
+        # rows before any full header line are skipped
+        if headers is None:
             continue
 
         # parse items
