@@ -90,6 +90,34 @@ class MyTests(unittest.TestCase):
             self.f_json['ssh_config5']
         )
 
+    def test_ssh_conf_match_case_insensitive(self):
+        """
+        Test 'ssh_conf' with lowercase and mixed case Match keywords
+        """
+        data = (
+            'Host a\n'
+            '    User one\n'
+            'match host bastion\n'
+            '    User two\n'
+            '    Port 2222\n'
+            'MATCH   ALL\n'
+            '    Compression yes\n'
+            'Match host other\n'
+            '    Compression no\n'
+            'mAtCh\tAll\n'
+            '    ForwardAgent no\n'
+        )
+        expected = [
+            {
+                'host': 'a',
+                'host_list': ['a'],
+                'user': 'one',
+                'compression': 'yes',
+                'forwardagent': 'no'
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

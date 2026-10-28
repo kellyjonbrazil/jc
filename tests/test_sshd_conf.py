@@ -59,6 +59,29 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.sshd_conf.parse(self.f_in['sshd_config'], quiet=True),
                                                     self.f_json['sshd_config'])
 
+    def test_sshd_conf_match_case_insensitive(self):
+        """
+        Test 'sshd_conf' with lowercase and mixed case Match keywords
+        """
+        data = (
+            'PermitRootLogin yes\n'
+            'match User nobody\n'
+            '    PermitRootLogin no\n'
+            '    Banner none\n'
+            'MATCH   ALL\n'
+            'PasswordAuthentication yes\n'
+            'Match user other\n'
+            '    PasswordAuthentication no\n'
+            'mAtCh\tAll\n'
+            'X11Forwarding no\n'
+        )
+        expected = {
+            'permitrootlogin': 'yes',
+            'passwordauthentication': 'yes',
+            'x11forwarding': 'no'
+        }
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -522,7 +522,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ssh` config file and `ssh -G` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -651,13 +651,12 @@ def parse(
                 }
 
             # support configuration file by ignoring all lines between
-            # Match xxx and Match any
-            if line.strip().startswith('Match all'):
-                match_block_found = False
-                continue
-
-            if line.strip().startswith('Match'):
-                match_block_found = True
+            # Match xxx and Match all. Keywords are case-insensitive.
+            tokens = line.split()
+            if tokens[0].lower() == 'match':
+                match_block_found = not (
+                    len(tokens) == 2 and tokens[1].lower() == 'all'
+                )
                 continue
 
             if match_block_found:
