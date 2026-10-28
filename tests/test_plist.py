@@ -35,6 +35,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-shared-refs-bin.plist'), 'rb') as f:
         shared_refs_bin = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-array-objects.plist'), 'rb') as f:
+        array_objects = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-nextstep-data.plist'), 'rb') as f:
+        nextstep_data = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-uid-bin.plist'), 'rb') as f:
+        uid_bin = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-garageband-info.json'), 'r', encoding='utf-8') as f:
         generic_garageband_json = json.loads(f.read())
@@ -56,6 +65,15 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-shared-refs-bin.json'), 'r', encoding='utf-8') as f:
         shared_refs_bin_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-array-objects.json'), 'r', encoding='utf-8') as f:
+        array_objects_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-nextstep-data.json'), 'r', encoding='utf-8') as f:
+        nextstep_data_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/plist-uid-bin.json'), 'r', encoding='utf-8') as f:
+        uid_bin_json = json.loads(f.read())
 
 
     def test_plist_nodata(self):
@@ -190,6 +208,51 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['nested']['when_iso'], 5)
         self.assertIsInstance(result['nested']['when'], int)
         self.assertEqual(result['other_iso'], '2021-01-01T00:00:00')
+
+    def test_plist_array_objects(self):
+        """
+        Test 'plist' with data and date values inside arrays
+        """
+        self.assertEqual(jc.parsers.plist.parse(self.array_objects, quiet=True), self.array_objects_json)
+
+    def test_plist_array_objects_serializable(self):
+        """
+        Test 'plist' with data and date values inside arrays and as the root object
+        """
+        data = plistlib.dumps({'a': [b'\x00\xff', datetime(2020, 1, 1, 0, 0, 0)]}, fmt=plistlib.FMT_BINARY)
+        result = jc.parsers.plist.parse(data, quiet=True)
+        self.assertEqual(result, {'a': ['00:ff', '2020-01-01T00:00:00']})
+        self.assertEqual(json.dumps(result), '{"a": ["00:ff", "2020-01-01T00:00:00"]}')
+        self.assertEqual(jc.parsers.plist.parse(plistlib.dumps(b'\x01\x02'), quiet=True), '01:02')
+
+    def test_plist_nextstep_data(self):
+        """
+        Test 'plist' with NeXTSTEP data values as a dictionary value and inside an array
+        """
+        self.assertEqual(jc.parsers.plist.parse(self.nextstep_data, quiet=True), self.nextstep_data_json)
+
+    @unittest.skipUnless(hasattr(plistlib, 'UID'), 'plistlib.UID needs python 3.8 or newer')
+    def test_plist_bin_uid(self):
+        """
+        Test 'plist' with binary UID values as dictionary values and inside an array
+        """
+        self.assertEqual(jc.parsers.plist.parse(self.uid_bin, quiet=True), self.uid_bin_json)
+
+    def test_plist_non_finite(self):
+        """
+        Test 'plist' with nan and inf reals: they are null
+        """
+        data = (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<plist version="1.0"><dict>'
+            '<key>a</key><real>nan</real>'
+            '<key>b</key><array><real>inf</real><real>1.5</real></array>'
+            '<key>c</key><real>-inf</real>'
+            '<key>d</key><real>2.5</real>'
+            '</dict></plist>\n'
+        )
+        expected = {'a': None, 'b': [None, 1.5], 'c': None, 'd': 2.5}
+        self.assertEqual(jc.parsers.plist.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':
