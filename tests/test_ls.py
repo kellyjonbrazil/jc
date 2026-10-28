@@ -114,22 +114,22 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-devices.out'), 'r', encoding='utf-8') as f:
         ls_l_devices = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_long_iso = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-entry-like-dirnames.out'), 'r', encoding='utf-8') as f:
         ls_l_entry_like_dirnames = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-newline-structure-like-names.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-newline-structure-like-names.out'), 'r', encoding='utf-8') as f:
         ls_l_newline_structure_like_names = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-entry-like-names.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-entry-like-names.out'), 'r', encoding='utf-8') as f:
         ls_entry_like_names = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-total.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-total.out'), 'r', encoding='utf-8') as f:
         ls_l_no_total = f.read()
 
     # output
@@ -238,22 +238,22 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-devices.json'), 'r', encoding='utf-8') as f:
         ls_l_devices_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-long-iso.json'), 'r', encoding='utf-8') as f:
         ls_l_long_iso_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-entry-like-dirnames.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-entry-like-dirnames.json'), 'r', encoding='utf-8') as f:
         ls_l_entry_like_dirnames_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-newline-structure-like-names.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-newline-structure-like-names.json'), 'r', encoding='utf-8') as f:
         ls_l_newline_structure_like_names_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-entry-like-names.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-entry-like-names.json'), 'r', encoding='utf-8') as f:
         ls_entry_like_names_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-no-total.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-total.json'), 'r', encoding='utf-8') as f:
         ls_l_no_total_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-spaces.out'), 'r', encoding='utf-8') as f:

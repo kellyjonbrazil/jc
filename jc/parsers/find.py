@@ -3,6 +3,10 @@ r"""jc - JSON Convert `find` command output parser
 This parser returns a list of objects by default and a list of strings if
 the `--raw` option is used.
 
+> Note: Output lines that start with `find: ` are treated as error
+> messages, so a path that starts with `find: ` is reported as an error.
+> Use `./` paths (e.g. `find ./dir`) to avoid this.
+
 Usage (cli):
 
     $ find | jc --find

@@ -183,6 +183,7 @@ parsers: List[str] = [
     'proc-net-protocols',
     'proc-net-route',
     'proc-net-tcp',
+    'proc-net-udp',
     'proc-net-unix',
     'proc-pid-fdinfo',
     'proc-pid-io',
