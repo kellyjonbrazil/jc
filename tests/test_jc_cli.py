@@ -22,6 +22,7 @@ except ImportError:
     RUAMELYAML_INSTALLED = False
 
 from jc.cli import JcCli
+from jc.exceptions import ParseError
 import jc.parsers.url as url_parser
 import jc.parsers.proc as proc_parser
 import jc.parsers.ls_s as ls_s_parser
@@ -934,6 +935,24 @@ power management:
         cli.do_magic()
         self.assertEqual('proc', cli.magic_found_parser)
         self.assertIsInstance(cli.magic_stdout, str)
+
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
+    def test_magic_proc_empty_file_does_not_read_stdin(self):
+        """
+        Test magic syntax with an empty /proc file (e.g. /proc/<pid>/maps of a
+        zombie process): STDIN is not read
+        """
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/uptime']
+        cli.magic_run_command_str = '/proc/uptime'
+        with mock.patch.object(JcCli, 'open_text_file', return_value=''):
+            cli.do_magic()
+        self.assertEqual('', cli.magic_stdout)
+        cli.parser_module = proc_parser
+        with mock.patch('sys.stdin') as mock_stdin:
+            mock_stdin.buffer.read.return_value = b'0.13 0.23 0.25 1/185 1758\n'
+            self.assertRaises(ParseError, cli.standard_parse_and_print)
+        mock_stdin.buffer.read.assert_not_called()
 
     @unittest.skipIf(not os.path.exists('/proc/self/status'), '/proc not available')
     def test_magic_proc_symlinked_file(self):

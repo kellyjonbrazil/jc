@@ -894,7 +894,12 @@ class JcCli():
 
     def standard_parse_and_print(self) -> None:
         """supports binary and UTF-8 string data"""
-        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
+        # magic output can be an empty string (e.g. an empty /proc file), so
+        # only read STDIN when the magic syntax was not used
+        if self.magic_stdout is None:
+            self.data_in = sys.stdin.buffer.read()
+        else:
+            self.data_in = self.magic_stdout
 
         # convert to UTF-8, if possible. Otherwise, leave as bytes
         try:
