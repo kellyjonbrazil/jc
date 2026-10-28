@@ -502,7 +502,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-n-hostname.json'), 'r', encoding='utf-8') as f:
         generic_ping6_linux_reply_n_hostname_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors.out'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors.json'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors_json = json.loads(f.read())
 
     def test_ping_nodata(self):
         """
@@ -984,6 +988,54 @@ class MyTests(unittest.TestCase):
         Test 'ping6 -n -D <hostname>' on linux where replies show only the address
         """
         self.assertEqual(jc.parsers.ping.parse(self.generic_ping6_linux_reply_n_hostname, quiet=True), self.generic_ping6_linux_reply_n_hostname_json)
+
+    def test_ping_osx_icmp_errors(self):
+        """
+        Test 'ping' on macOS/BSD with ICMP error messages that look like replies
+        """
+        result = jc.parsers.ping.parse(self.generic_ping_osx_icmp_errors, quiet=True)
+        self.assertEqual(result, self.generic_ping_osx_icmp_errors_json)
+        self.assertEqual(
+            [(r['type'], r.get('response_ip')) for r in result['responses']],
+            [
+                ('frag_needed_and_df_set', '10.0.0.1'),
+                ('redirect_type_of_service_and_host', '10.0.0.1'),
+                ('destination_host_unreachable_for_type_of_service', '10.0.0.1'),
+                ('communication_prohibited_by_filter', '10.0.0.1'),
+                ('unparsable_line', None),
+                ('reply', '192.0.2.10')
+            ]
+        )
+        self.assertEqual(result['responses'][0]['len'], 1500)
+
+    def test_ping_bsd_error_types(self):
+        """
+        Test 'ping' on macOS/BSD with the error messages of iputils, FreeBSD and macOS
+        """
+        messages = [
+            ('Frag needed and DF set (mtu = 1400)', 'frag_needed_and_df_set'),
+            ('frag needed and DF set (MTU 1400)', 'frag_needed_and_df_set'),
+            ('Destination Net Unreachable for Type of Service', 'destination_net_unreachable_for_type_of_service'),
+            ('Destination Net Unreachable', 'destination_net_unreachable'),
+            ('Redirect Host(New addr: 10.0.0.254)', 'redirect_host'),
+            ('Redirect Type of Service and Network(New addr: 10.0.0.254)', 'redirect_type_of_service_and_network'),
+            ('Source Quench', 'source_quench'),
+            ('Parameter problem: pointer = 0x14', 'parameter_problem'),
+            ('Frag reassembly time exceeded', 'frag_reassembly_time_exceeded')
+        ]
+        for message, expected in messages:
+            data = ('PING 192.0.2.10 (192.0.2.10): 56 data bytes\n'
+                    '92 bytes from 10.0.0.1: ' + message + '\n'
+                    'Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst\n'
+                    ' 4  5  00 5400 567b   0 0000  3f  01 a024 192.168.1.221  192.0.2.10 \n'
+                    '\n'
+                    '--- 192.0.2.10 ping statistics ---\n'
+                    '1 packets transmitted, 0 packets received, 100.0% packet loss\n')
+            result = jc.parsers.ping.parse(data, quiet=True)
+            self.assertEqual(result['responses'][0]['type'], expected, message)
+            self.assertEqual(result['responses'][0]['response_ip'], '10.0.0.1')
+            self.assertEqual(result['responses'][0]['id'], 22139)
+
 
 if __name__ == '__main__':
     unittest.main()

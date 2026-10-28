@@ -502,7 +502,11 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-no-time-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping_linux_reply_no_time_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors.out'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors_streaming_json = json.loads(f.read())
 
     def test_ping_s_nodata(self):
         """
@@ -1020,6 +1024,81 @@ class MyTests(unittest.TestCase):
         Test 'ping -s 4 <ip>' on linux with reply lines that have no time field
         """
         self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_no_time.splitlines(), quiet=True)), self.generic_ping_linux_reply_no_time_streaming_json)
+
+    def test_ping_s_osx_icmp_errors(self):
+        """
+        Test 'ping' on macOS/BSD with ICMP error messages that look like replies
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping_osx_icmp_errors.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_ping_osx_icmp_errors_streaming_json)
+        self.assertEqual(
+            [r.get('type') for r in result],
+            [
+                'frag_needed_and_df_set',
+                'redirect_type_of_service_and_host',
+                'destination_host_unreachable_for_type_of_service',
+                'communication_prohibited_by_filter',
+                None,
+                'reply',
+                'summary'
+            ]
+        )
+        self.assertFalse(result[4]['_jc_meta']['success'])
+        self.assertEqual(result[0]['response_ip'], '10.0.0.1')
+
+    def test_ping_s_osx_long_unknown_error(self):
+        """
+        Test 'ping' on macOS/BSD with an unknown error message as long as a reply line
+        """
+        data = [
+            'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+            '36 bytes from 10.0.0.1: an error message that is long enough to look like a reply'
+        ]
+        self.assertRaises(IndexError, list, jc.parsers.ping_s.parse(data, quiet=True))
+
+    def test_ping_s_error_types(self):
+        """
+        Test 'ping' with error messages of iputils, FreeBSD and macOS
+        """
+        messages = [
+            ('Frag needed and DF set (mtu = 1400)', 'frag_needed_and_df_set'),
+            ('frag needed and DF set (MTU 1400)', 'frag_needed_and_df_set'),
+            ('Destination Host Unreachable for Type of Service', 'destination_host_unreachable_for_type_of_service'),
+            ('Destination Host Unreachable', 'destination_host_unreachable'),
+            ('Redirect Type of Service and Host(New addr: 10.0.0.254)', 'redirect_type_of_service_and_host'),
+            ('Source Quench', 'source_quench'),
+            ('Parameter problem: pointer = 0x14', 'parameter_problem')
+        ]
+        for message, expected in messages:
+            data = [
+                'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+                '92 bytes from 10.0.0.1: ' + message
+            ]
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual(result[0]['type'], expected, message)
+            self.assertEqual(result[0]['response_ip'], '10.0.0.1')
+
+    def test_ping6_s_linux_error_types(self):
+        """
+        Test 'ping6' on linux with the IPv6 error messages of iputils
+        """
+        messages = [
+            ('Time exceeded: Defragmentation failure', 'time_exceeded_fragment_reassembly_time_exceeded'),
+            ('Time exceeded: Hop limit', 'time_exceeded_hop_limit'),
+            ('Destination unreachable: Address unreachable', 'destination_unreachable_address_unreachable'),
+            ('Packet too big: mtu=1280', 'packet_too_big'),
+            ('Parameter problem: Wrong header field 40', 'parameter_problem')
+        ]
+        for message, expected in messages:
+            data = [
+                'PING 2001:db8::1(2001:db8::1) 56 data bytes',
+                'From 2001:db8::fe icmp_seq=1 ' + message
+            ]
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual(result[0]['type'], expected, message)
+            self.assertEqual(result[0]['response_ip'], '2001:db8::fe')
+            self.assertEqual(result[0]['icmp_seq'], 1)
+
 
 if __name__ == '__main__':
     unittest.main()

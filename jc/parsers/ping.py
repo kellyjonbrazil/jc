@@ -247,15 +247,17 @@ def _ipv6_in(line):
 
 
 def _error_type(line):
-    # from https://github.com/dgibson/iputils/blob/master/ping.c
-    # https://android.googlesource.com/platform/external/ping/+/8fc3c91cf9e7f87bc20b9e6d3ea2982d87b70d9a/ping.c
-    # https://opensource.apple.com/source/network_cmds/network_cmds-328/ping.tproj/ping.c
+    # IPv4 ICMP error messages from pr_icmph() in:
+    # https://github.com/iputils/iputils/blob/master/ping/ping.c
+    # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping.c
+    # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping.tproj/ping.c
     type_map = {
         'Destination Net Unreachable': 'destination_net_unreachable',
         'Destination Host Unreachable': 'destination_host_unreachable',
         'Destination Protocol Unreachable': 'destination_protocol_unreachable',
         'Destination Port Unreachable': 'destination_port_unreachable',
         'Frag needed and DF set': 'frag_needed_and_df_set',
+        'frag needed and DF set': 'frag_needed_and_df_set',
         'Source Route Failed': 'source_route_failed',
         'Destination Net Unknown': 'destination_net_unknown',
         'Destination Host Unknown': 'destination_host_unknown',
@@ -265,21 +267,44 @@ def _error_type(line):
         'Destination Net Unreachable for Type of Service': 'destination_net_unreachable_for_type_of_service',
         'Destination Host Unreachable for Type of Service': 'destination_host_unreachable_for_type_of_service',
         'Packet filtered': 'packet_filtered',
+        'Communication prohibited by filter': 'communication_prohibited_by_filter',
         'Precedence Violation': 'precedence_violation',
         'Precedence Cutoff': 'precedence_cutoff',
         'Dest Unreachable, Bad Code': 'dest_unreachable_bad_code',
+        'Source Quench': 'source_quench',
         'Redirect Network': 'redirect_network',
         'Redirect Host': 'redirect_host',
         'Redirect Type of Service and Network': 'redirect_type_of_service_and_network',
+        'Redirect Type of Service and Host': 'redirect_type_of_service_and_host',
         'Redirect, Bad Code': 'redirect_bad_code',
         'Time to live exceeded': 'time_to_live_exceeded',
         'Frag reassembly time exceeded': 'frag_reassembly_time_exceeded',
-        'Time exceeded, Bad Code': 'time_exceeded_bad_code'
+        'Time exceeded, Bad Code': 'time_exceeded_bad_code',
+        'Parameter problem': 'parameter_problem'
     }
 
-    for err_type, code in type_map.items():
+    # longest first, so 'Destination Net Unreachable for Type of Service'
+    # is not taken for 'Destination Net Unreachable'
+    for err_type in sorted(type_map, key=len, reverse=True):
         if err_type in line:
-            return code
+            return type_map[err_type]
+
+    return None
+
+
+def _bsd_reply_fields(line):
+    # '<bytes> bytes from <ip>: icmp_seq=N ttl=N time=X ms' (IPv4) or
+    # '<bytes> bytes from <ip>, icmp_seq=N hlim=N time=X ms' (IPv6) once ':'
+    # or ',' and '=' are replaced with spaces. BusyBox prints 'seq=' for
+    # 'icmp_seq='. Error messages that are not in _error_type() also start
+    # with '<bytes> bytes from <ip>: ', so check the labels.
+    fields = line.split()
+    if (len(fields) < 10
+            or fields[4] not in ('icmp_seq', 'seq')
+            or fields[6] not in ('ttl', 'hlim')
+            or fields[8] != 'time'):
+        raise ValueError('not a reply line')
+    return fields
 
 
 def _linux_parse(data):
@@ -591,14 +616,15 @@ def _bsd_parse(data):
                 elif ' bytes from ' in line:
                     try:
                         line = line.replace(':', ' ').replace('=', ' ')
+                        fields = _bsd_reply_fields(line)
 
                         response = {
                             'type': 'reply',
-                            'bytes': line.split()[0],
-                            'response_ip': line.split()[3],
-                            'icmp_seq': line.split()[5],
-                            'ttl': line.split()[7],
-                            'time_ms': line.split()[9]
+                            'bytes': fields[0],
+                            'response_ip': fields[3],
+                            'icmp_seq': fields[5],
+                            'ttl': fields[7],
+                            'time_ms': fields[9]
                         }
                     except Exception:
                         response = {
@@ -613,13 +639,15 @@ def _bsd_parse(data):
             elif ' bytes from ' in line:
                 try:
                     line = line.replace(',', ' ').replace('=', ' ')
+                    fields = _bsd_reply_fields(line)
+
                     response = {
                         'type': 'reply',
-                        'bytes': line.split()[0],
-                        'response_ip': line.split()[3],
-                        'icmp_seq': line.split()[5],
-                        'ttl': line.split()[7],
-                        'time_ms': line.split()[9]
+                        'bytes': fields[0],
+                        'response_ip': fields[3],
+                        'icmp_seq': fields[5],
+                        'ttl': fields[7],
+                        'time_ms': fields[9]
                     }
                 except Exception:
                     response = {
