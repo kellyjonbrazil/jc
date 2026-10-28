@@ -198,8 +198,8 @@ def _next_args(data: str) -> List[Tuple[str, Optional[str]]]:
         elif quoted and end > start and data[end - 1] == '"':
             param = data[start:end - 1]
 
-        if param or val is not None:
-            args.append((param, val))
+        # an empty name (lone quote) is a valid parameter for the kernel
+        args.append((param, val))
 
         pos = end
 
@@ -237,6 +237,8 @@ def parse(
 
         for key, val in _next_args(data):
             if in_init:
+                if val is None and key == '--':
+                    break
                 init_args.append(key if val is None else key + '=' + val)
 
             elif val is None and key == '--':

@@ -77,7 +77,7 @@ class MyTests(unittest.TestCase):
         expected = {
             "root": "/dev/sda1",
             "_options": ["ro"],
-            "_init_args": ["single", "x=a b", "--", "z"]
+            "_init_args": ["single", "x=a b"]
         }
         self.assertEqual(parse(data, quiet=True), expected)
         self.assertEqual(parse('ro --\n', quiet=True), {"_options": ["ro"], "_init_args": []})
@@ -110,6 +110,26 @@ class MyTests(unittest.TestCase):
             }
         }
         self.assertEqual(parse(data, quiet=True), expected)
+
+
+    def test_proc_cmdline_empty_parameters(self):
+        """
+        Test 'proc_cmdline' with empty parameters like the kernel
+        """
+        self.assertEqual(
+            parse('a=1 "" ro -- "" b "', quiet=True),
+            {"a": "1", "_options": ["", "ro"], "_init_args": ["", "b", ""]}
+        )
+        self.assertEqual(parse('" x', quiet=True), {"_options": [" x"]})
+
+    def test_proc_cmdline_second_dashes(self):
+        """
+        Test 'proc_cmdline' with a second -- in the init arguments
+        """
+        self.assertEqual(
+            parse('ro -- one -- two three', quiet=True),
+            {"_options": ["ro"], "_init_args": ["one"]}
+        )
 
 
 if __name__ == '__main__':
