@@ -1,5 +1,9 @@
 r"""jc - JSON Convert `iftop` command output parser
 
+> Note: `iftop` shortens long host names and addresses to fit its host
+> column, so `host_name` can be a shortened name or address. The brackets
+> `iftop` prints around an IPv6 address followed by a port are removed.
+
 Usage (cli):
 
     $ iftop -i <device> -t -B -s1 | jc --iftop
@@ -255,6 +259,20 @@ def _header_only(item: Dict) -> Dict:
     return {k: item[k] for k in _HEADER_KEYS if k in item}
 
 
+def _host_name(host_field: str) -> str:
+    """
+    Remove the brackets iftop prints around an IPv6 address that is
+    followed by a port. A shortened address may be missing the closing
+    bracket.
+    """
+    if host_field.startswith('['):
+        host_field = host_field[1:]
+        if host_field.endswith(']'):
+            host_field = host_field[:-1]
+
+    return host_field
+
+
 def _has_port(host_field: str) -> bool:
     """
     Return True if the host field of a flow line ends in a port. iftop puts
@@ -411,7 +429,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["index"] = int(match_dict["index"])
             current_client["connections"] = []
             current_client_send = {
-                "host_name": match_dict["host_name"],
+                "host_name": _host_name(match_dict["host_name"]),
                 "host_port": match_dict["host_port"],
                 "last_2s": match_dict["send_last_2s"],
                 "last_10s": match_dict["send_last_10s"],
@@ -442,7 +460,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["index"] = int(match_dict["index"])
             current_client["connections"] = []
             current_client_send = {
-                "host_name": match_dict["host_name"],
+                "host_name": _host_name(match_dict["host_name"]),
                 "last_2s": match_dict["send_last_2s"],
                 "last_10s": match_dict["send_last_10s"],
                 "last_40s": match_dict["send_last_40s"],
@@ -468,7 +486,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             match_dict = match_raw.groupdict()
             current_client_receive = {
-                "host_name": match_dict["receive_ip"],
+                "host_name": _host_name(match_dict["receive_ip"]),
                 "host_port": match_dict["receive_port"],
                 "last_2s": match_dict["receive_last_2s"],
                 "last_10s": match_dict["receive_last_10s"],
@@ -496,7 +514,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             match_dict = match_raw.groupdict()
             current_client_receive = {
-                "host_name": match_dict["receive_ip"],
+                "host_name": _host_name(match_dict["receive_ip"]),
                 "last_2s": match_dict["receive_last_2s"],
                 "last_10s": match_dict["receive_last_10s"],
                 "last_40s": match_dict["receive_last_40s"],

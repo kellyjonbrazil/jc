@@ -127,7 +127,7 @@ class MyTests(unittest.TestCase):
         field, including IPv6 addresses and a host field that ends in a colon
         """
         cases = [
-            ('2001:db8::1:https', '[2001:db8::5]:443', ('2001:db8::1', 'https'), ('[2001:db8::5]', '443')),
+            ('2001:db8::1:https', '[2001:db8::5]:443', ('2001:db8::1', 'https'), ('2001:db8::5', '443')),
             ('fe80::1:ssh', 'fe80::2:40876', ('fe80::1', 'ssh'), ('fe80::2', '40876')),
             ('a:b:', 'host:http', ('a', 'b:'), ('host', 'http'))
         ]
