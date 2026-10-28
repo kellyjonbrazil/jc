@@ -51,5 +51,25 @@ class MyTests(unittest.TestCase):
                                                         self.f_json['proc_pid_maps_line_separator'])
 
 
+    def test_proc_pid_maps_pathname_trailing_space(self):
+        """
+        Test '/proc/<pid>/maps' with white space at the end of a pathname
+        """
+        data = (
+            '7f53b436c000-7f53b4375000 r-xp 00000000 fd:00 798126                     /tmp/plugin.so \n'
+            '7f53b4375000-7f53b4376000 rw-p 00000000 fd:00 798127                     /tmp/tab.so\t \n'
+            '7f53b4376000-7f53b4377000 rw-p 00000000 00:00 0 \n'
+            '7f53b4377000-7f53b4378000 rw-p 00000000 00:00 0                          [heap]\n'
+        )
+        result = jc.parsers.proc_pid_maps.parse(data, quiet=True)
+        self.assertEqual(len(result), 4)
+        self.assertEqual(result[0]['pathname'], '/tmp/plugin.so ')
+        self.assertEqual(result[0]['inode'], 798126)
+        self.assertEqual(result[1]['pathname'], '/tmp/tab.so\t ')
+        self.assertNotIn('pathname', result[2])
+        self.assertEqual(result[3]['pathname'], '[heap]')
+        self.assertEqual(result[3]['start'], '7f53b4377000')
+
+
 if __name__ == '__main__':
     unittest.main()
