@@ -35,6 +35,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-custom-labels.json'), 'r', encoding='utf-8') as f:
         cef_custom_labels_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-escaped-backslash.out'), 'r', encoding='utf-8') as f:
+        cef_escaped_backslash = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/cef-escaped-backslash.json'), 'r', encoding='utf-8') as f:
+        cef_escaped_backslash_json = json.loads(f.read())
+
     def test_cef_nodata(self):
         """
         Test 'cef' with no data
@@ -95,6 +101,12 @@ class MyTests(unittest.TestCase):
         Test cef lines with custom field labels, including epoch fields and unmatched labels
         """
         self.assertEqual(jc.parsers.cef.parse(self.cef_custom_labels, quiet=True), self.cef_custom_labels_json)
+
+    def test_cef_escaped_backslash(self):
+        """
+        Test cef lines with escaped backslashes followed by escapable characters
+        """
+        self.assertEqual(jc.parsers.cef.parse(self.cef_escaped_backslash, quiet=True), self.cef_escaped_backslash_json)
 
 
 if __name__ == '__main__':

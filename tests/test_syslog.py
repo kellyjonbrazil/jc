@@ -23,6 +23,12 @@ class MyTests(unittest.TestCase):
         syslog_long_sd_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-escaped-backslash.out'), 'r', encoding='utf-8') as f:
+        syslog_5424_escaped_backslash = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/syslog-5424-escaped-backslash.json'), 'r', encoding='utf-8') as f:
+        syslog_5424_escaped_backslash_json = json.loads(f.read())
+
     def test_syslog_nodata(self):
         """
         Test 'syslog' with no data
@@ -50,6 +56,12 @@ class MyTests(unittest.TestCase):
         Test syslog with a long word in structured data
         """
         self.assertEqual(jc.parsers.syslog.parse(self.syslog_long_sd, quiet=True), self.syslog_long_sd_json)
+
+    def test_syslog_5424_escaped_backslash(self):
+        """
+        Test syslog 5424 lines with escaped backslashes before escapable characters
+        """
+        self.assertEqual(jc.parsers.syslog.parse(self.syslog_5424_escaped_backslash, quiet=True), self.syslog_5424_escaped_backslash_json)
 
 
 if __name__ == '__main__':
