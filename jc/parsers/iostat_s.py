@@ -160,7 +160,11 @@ def _normalize_headers(line):
 def _create_obj(header_list, line, section_name):
     # same result as simple_table_parse([header, line])[0], but the header is
     # split only once per header line instead of once per data line
-    row = line.strip().split(None, len(header_list) - 1)
+    # iostat values never contain spaces: one value per header column
+    row = line.split()
+    if len(row) != len(header_list):
+        raise ParseError('Not iostat data')
+
     item = dict(zip(header_list, row))
     item['type'] = section_name
     return item
