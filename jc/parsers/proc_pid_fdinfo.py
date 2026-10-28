@@ -32,37 +32,48 @@ Any unspecified fields are strings.
       "mnt_id":                     integer,
       "scm_fds":                    string,
       "ino":                        integer,
-      "lock":                       string,
-      "epoll": {
-        "tfd":                      integer,
-        "events":                   string,
-        "data":                     string,
-        "pos":                      integer,
-        "ino":                      string,
-        "sdev":                     string
-      },
-      "inotify": {
-        "wd":                       integer,  # [1]
-        "ino":                      string,
-        "sdev":                     string,
-        "mask":                     string,
-        "ignored_mask":             string,
-        "fhandle-bytes":            string,
-        "fhandle-type":             string,
-        "f_handle":                 string
-      },
+      "lock": [
+                                    string
+      ],
+      "epoll": [
+        {
+          "tfd":                    integer,
+          "events":                 string,
+          "data":                   string,
+          "pos":                    integer,
+          "ino":                    string,
+          "sdev":                   string
+        }
+      ],
+      "inotify": [
+        {
+          "wd":                     integer,  # [1]
+          "ino":                    string,
+          "sdev":                   string,
+          "mask":                   string,
+          "ignored_mask":           string,
+          "fhandle-bytes":          string,
+          "fhandle-type":           string,
+          "f_handle":               string
+        }
+      ],
       "fanotify": {
         "flags":                    string,
         "event-flags":              string,
-        "mnt_id":                   string,
-        "mflags":                   string,
-        "mask":                     string,
-        "ignored_mask":             string,
-        "ino":                      string,
-        "sdev":                     string,
-        "fhandle-bytes":            string,
-        "fhandle-type":             string,
-        "f_handle":                 string
+        "marks": [
+          {
+            "mnt_id":               string,
+            "mnt_ns":               string,
+            "mflags":               string,
+            "mask":                 string,
+            "ignored_mask":         string,
+            "ino":                  string,
+            "sdev":                 string,
+            "fhandle-bytes":        string,
+            "fhandle-type":         string,
+            "f_handle":             string
+          }
+        ]
       },
       "clockid":                    integer,
       "ticks":                      integer,
@@ -83,19 +94,60 @@ Examples:
     $ cat /proc/1/fdinfo/5 | jc --proc -p
     {
       "pos": 0,
-      "flags": 2,
-      "mnt_id": 9,
-      "ino": 63107,
-      "clockid": 0,
-      "ticks": 0,
-      "settime flags": 1,
-      "it_value": [
-        0,
-        49406829
-      ],
-      "it_interval": [
-        1,
-        0
+      "flags": 526336,
+      "mnt_id": 19,
+      "ino": 84,
+      "inotify": [
+        {
+          "wd": 11,
+          "ino": "9360d8",
+          "sdev": "fc00000",
+          "mask": "2",
+          "ignored_mask": "0",
+          "fhandle-bytes": "c",
+          "fhandle-type": "81",
+          "f_handle": "d8609300000000000ab79f4e"
+        },
+        {
+          "wd": 10,
+          "ino": "9360d7",
+          "sdev": "fc00000",
+          "mask": "2",
+          "ignored_mask": "0",
+          "fhandle-bytes": "c",
+          "fhandle-type": "81",
+          "f_handle": "d7609300000000005bcd4b8d"
+        }
+      ]
+    }
+
+    $ cat /proc/1/fdinfo/5 | jc --proc -p -r
+    {
+      "pos": "0",
+      "flags": "02004000",
+      "mnt_id": "19",
+      "ino": "84",
+      "inotify": [
+        {
+          "wd": "b",
+          "ino": "9360d8",
+          "sdev": "fc00000",
+          "mask": "2",
+          "ignored_mask": "0",
+          "fhandle-bytes": "c",
+          "fhandle-type": "81",
+          "f_handle": "d8609300000000000ab79f4e"
+        },
+        {
+          "wd": "a",
+          "ino": "9360d7",
+          "sdev": "fc00000",
+          "mask": "2",
+          "ignored_mask": "0",
+          "fhandle-bytes": "c",
+          "fhandle-type": "81",
+          "f_handle": "d7609300000000005bcd4b8d"
+        }
       ]
     }
 """
@@ -106,7 +158,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '2.0'
     description = '`/proc/<pid>/fdinfo/<fd>` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -142,15 +194,15 @@ def _process(proc_data: Dict) -> Dict:
         if key in root_octal_list:
             proc_data[key] = int(val, 8)
 
-    if 'epoll' in proc_data:
-        for key, val in proc_data['epoll'].items():
+    for item in proc_data.get('epoll', []):
+        for key, val in item.items():
             if key in epoll_int_list:
-                proc_data['epoll'][key] = int(val)
+                item[key] = int(val)
 
-    if 'inotify' in proc_data:
-        for key, val in proc_data['inotify'].items():
+    for item in proc_data.get('inotify', []):
+        for key, val in item.items():
             if key in inotify_hex_list:
-                proc_data['inotify'][key] = int(val, 16)
+                item[key] = int(val, 16)
 
     return proc_data
 
@@ -187,28 +239,43 @@ def parse(
             if line.startswith('tfd:'):
                 line_match = re.findall(r'(?<!\S)(?P<key>\S+):(?:\s+)?(?P<val>\S+s*)', line)
                 if line_match:
-                    raw_output.update({'epoll': {k.strip(): v.strip() for k, v in line_match}})
+                    raw_output.setdefault('epoll', []).append(
+                        {k.strip(): v.strip() for k, v in line_match}
+                    )
                 continue
 
-            # inotify files
+            # inotify files: one line per watch
             if line.startswith('inotify'):
                 split_line = line[8:].split()
-                raw_output['inotify'] = {}
+                watch = {}
                 for item in split_line:
                     k, v = item.split(':', maxsplit=1)
-                    raw_output['inotify'][k] = v
+                    watch[k] = v
+                raw_output.setdefault('inotify', []).append(watch)
                 continue
 
-            # fanotify files
+            # fanotify files: one group flags line, then one line per mark
             if line.startswith('fanotify'):
                 split_line = line[9:].split()
+                fanotify = raw_output.setdefault('fanotify', {})
 
-                if not 'fanotify' in raw_output:
-                    raw_output['fanotify'] = {}
+                if split_line and split_line[0].startswith('flags:'):
+                    fanotify_obj = fanotify
+                else:
+                    fanotify_obj = {}
 
                 for item in split_line:
                     k, v = item.split(':', maxsplit=1)
-                    raw_output['fanotify'][k] = v
+                    fanotify_obj[k] = v
+
+                marks = fanotify.setdefault('marks', [])
+                if fanotify_obj is not fanotify:
+                    marks.append(fanotify_obj)
+                continue
+
+            # file locks: one line per lock
+            if line.startswith('lock:'):
+                raw_output.setdefault('lock', []).append(line[5:].strip())
                 continue
 
             # timerfd files

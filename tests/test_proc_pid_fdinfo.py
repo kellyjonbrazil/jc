@@ -34,7 +34,16 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_fdinfo_timerfd.json'),
             'proc_pid_fdinfo_long_epoll': (
                 'fixtures/generic/proc-pid-fdinfo-long-epoll.out',
-                'fixtures/generic/proc-pid-fdinfo-long-epoll.json')
+                'fixtures/generic/proc-pid-fdinfo-long-epoll.json'),
+            'proc_pid_fdinfo_epoll_multi': (
+                'fixtures/linux-proc/pid_fdinfo_epoll_multi',
+                'fixtures/linux-proc/pid_fdinfo_epoll_multi.json'),
+            'proc_pid_fdinfo_inotify_multi': (
+                'fixtures/linux-proc/pid_fdinfo_inotify_multi',
+                'fixtures/linux-proc/pid_fdinfo_inotify_multi.json'),
+            'proc_pid_fdinfo_lock_multi': (
+                'fixtures/linux-proc/pid_fdinfo_lock_multi',
+                'fixtures/linux-proc/pid_fdinfo_lock_multi.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -124,11 +133,53 @@ class MyTests(unittest.TestCase):
         """
         data = 'pos:\t0\nflags:\t02004000\nmnt_id:\t19\nino:\t84\ninotify wd:1a ino:9360d7 sdev:fc00000 mask:2 ignored_mask:0 fhandle-bytes:c fhandle-type:81 f_handle:d7609300000000005bcd4b8d\n'
         result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
-        self.assertEqual((result['flags'], result['inotify']['wd'], result['inotify']['ino']), (526336, 26, '9360d7'))
+        self.assertEqual((result['flags'], result['inotify'][0]['wd'], result['inotify'][0]['ino']), (526336, 26, '9360d7'))
 
         data = data.replace('wd:1a', 'wd:a')
         result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
-        self.assertEqual((result['inotify']['wd'], result['inotify']['ino']), (10, '9360d7'))
+        self.assertEqual((result['inotify'][0]['wd'], result['inotify'][0]['ino']), (10, '9360d7'))
+
+
+    def test_proc_pid_fdinfo_epoll_multi(self):
+        """
+        Test '/proc/<pid>/fdinfo/<fd>' epoll file with two targets
+        """
+        self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(self.f_in['proc_pid_fdinfo_epoll_multi'], quiet=True),
+                                                          self.f_json['proc_pid_fdinfo_epoll_multi'])
+
+    def test_proc_pid_fdinfo_inotify_multi(self):
+        """
+        Test '/proc/<pid>/fdinfo/<fd>' inotify file with three watches
+        """
+        self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(self.f_in['proc_pid_fdinfo_inotify_multi'], quiet=True),
+                                                          self.f_json['proc_pid_fdinfo_inotify_multi'])
+
+    def test_proc_pid_fdinfo_lock_multi(self):
+        """
+        Test '/proc/<pid>/fdinfo/<fd>' file with two locks
+        """
+        self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(self.f_in['proc_pid_fdinfo_lock_multi'], quiet=True),
+                                                          self.f_json['proc_pid_fdinfo_lock_multi'])
+
+    def test_proc_pid_fdinfo_fanotify_marks(self):
+        """
+        Test 'proc_pid_fdinfo' fanotify file with no marks and with superblock and mount namespace marks
+        """
+        data = 'pos:\t0\nflags:\t02\nmnt_id:\t9\nino:\t63107\nfanotify flags:10 event-flags:0\n'
+        result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
+        self.assertEqual(result['fanotify'], {'flags': '10', 'event-flags': '0', 'marks': []})
+
+        data += 'fanotify sdev:800013 mflags:0 mask:3b ignored_mask:0\nfanotify mnt_ns:4026531841 mflags:0 mask:1000000 ignored_mask:0\n'
+        expected = {
+            'flags': '10',
+            'event-flags': '0',
+            'marks': [
+                {'sdev': '800013', 'mflags': '0', 'mask': '3b', 'ignored_mask': '0'},
+                {'mnt_ns': '4026531841', 'mflags': '0', 'mask': '1000000', 'ignored_mask': '0'}
+            ]
+        }
+        result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
+        self.assertEqual(result['fanotify'], expected)
 
 
 if __name__ == '__main__':
