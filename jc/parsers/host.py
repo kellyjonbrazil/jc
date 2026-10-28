@@ -208,16 +208,16 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
             if ' has SOA record ' in line:
                 linedata = line.split(' ', maxsplit=10)
 
-                zone = linedata[0]
-                mname = linedata[4]
-                rname = linedata[5]
-                serial = linedata[6]
-                refresh = linedata[7]
-                retry = linedata[8]
-                expire = linedata[9]
-                minimum = linedata[10]
-
                 try:
+                    zone = linedata[0]
+                    mname = linedata[4]
+                    rname = linedata[5]
+                    serial = linedata[6]
+                    refresh = linedata[7]
+                    retry = linedata[8]
+                    expire = linedata[9]
+                    minimum = linedata[10]
+
                     rrdata.update(
                         {
                             'zone': zone,
