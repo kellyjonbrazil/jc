@@ -190,6 +190,44 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(parse(data, quiet=True), expected)
 
+    def test_ssh_conf_time_suffixes(self):
+        """
+        Test 'ssh_conf' with time suffixes
+        """
+        data = (
+            'Host a\n'
+            '    ServerAliveInterval 1m30s\n'
+            '    ConnectTimeout 10\n'
+            '    ForwardX11Timeout 20M\n'
+            '    ControlPersist 10m\n'
+            '    RekeyLimit 1G 1h\n'
+            'Host b\n'
+            '    ServerAliveInterval 1.5h\n'
+            '    ConnectTimeout none\n'
+            '    ForwardX11Timeout 1d\n'
+            '    ControlPersist yes\n'
+        )
+        expected = [
+            {
+                'host': 'a',
+                'host_list': ['a'],
+                'serveraliveinterval': 90,
+                'connecttimeout': 10,
+                'forwardx11timeout': 1200,
+                'controlpersist': '10m',
+                'rekeylimit': '1G 1h'
+            },
+            {
+                'host': 'b',
+                'host_list': ['b'],
+                'serveraliveinterval': None,
+                'connecttimeout': None,
+                'forwardx11timeout': 86400,
+                'controlpersist': 'yes'
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

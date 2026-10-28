@@ -476,9 +476,61 @@ Examples:
       "xauthlocation": "/usr/bin/xauth"
     }
 """
-from typing import Set, List, Dict
+import re
+from typing import Set, List, Dict, Optional
 from jc.jc_types import JSONDictType
 import jc.utils
+
+
+_TIME_UNITS = {'': 1, 's': 1, 'm': 60, 'h': 3600, 'd': 86400, 'w': 604800}
+_TIME_TERM = re.compile(r'([0-9]+)([smhdwSMHDW]?)')
+_SIZE_VALUE = re.compile(r'[0-9]+(?:\.[0-9]+)?[kmgKMG]?')
+
+
+def _convert_time(value: Optional[str]) -> Optional[int]:
+    """
+    Convert an sshd_config(5) TIME FORMATS value (a sequence of
+    number[qualifier] terms, e.g. 90, 2m, 1h30m) to integer seconds.
+    Only the first word of the value is used. Returns None if the value is
+    not in the documented format.
+    """
+    if not value:
+        return None
+
+    words = value.split()
+    if not words:
+        return None
+
+    word = words[0]
+    pos = 0
+    total = 0
+    for term in _TIME_TERM.finditer(word):
+        if term.start() != pos or len(term.group(1)) > 10:
+            return None
+
+        pos = term.end()
+        total += int(term.group(1)) * _TIME_UNITS[term.group(2).lower()]
+
+    if pos != len(word) or total > 2147483647:
+        return None
+
+    return total
+
+
+def _convert_size(value: Optional[str]) -> Optional[int]:
+    """
+    Convert an sshd_config(5) RekeyLimit size (a number with an optional
+    K, M or G suffix, 1024-based) to integer bytes. Only the first word of
+    the value is used. Returns None if the value is not in that format.
+    """
+    if not value:
+        return None
+
+    words = value.split()
+    if not words or not _SIZE_VALUE.fullmatch(words[0]):
+        return None
+
+    return jc.utils.convert_size_to_int(words[0], posix_mode=True)
 
 
 class info():
@@ -517,10 +569,13 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
         'pubkeyacceptedalgorithms', 'pubkeyacceptedkeytypes'
     }
 
-    int_list: Set[str] = {'clientalivecountmax', 'clientaliveinterval', 'logingracetime',
-        'maxauthtries', 'maxsessions', 'maxstartups', 'maxstartups_rate', 'maxstartups_full',
-        'rekeylimit', 'rekeylimit_time', 'x11displayoffset', 'x11maxdisplays'
+    int_list: Set[str] = {'clientalivecountmax', 'maxauthtries', 'maxsessions',
+        'maxstartups', 'maxstartups_rate', 'maxstartups_full', 'x11displayoffset',
+        'x11maxdisplays'
     }
+
+    # values in seconds that can use time qualifiers (2m, 1h30m)
+    time_list: Set[str] = {'clientaliveinterval', 'logingracetime', 'rekeylimit_time'}
 
     dict_copy = proc_data.copy()
     for key, val in dict_copy.items():
@@ -581,6 +636,13 @@ def _process(proc_data: JSONDictType) -> JSONDictType:
     for key, val in proc_data.items():
         if key in int_list:
             proc_data[key] = jc.utils.convert_to_int(val)
+
+        if key in time_list:
+            proc_data[key] = _convert_time(val)
+
+        # size in bytes that can use K, M, G suffixes
+        if key == 'rekeylimit':
+            proc_data[key] = _convert_size(val)
 
     return proc_data
 

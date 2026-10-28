@@ -141,6 +141,83 @@ class MyTests(unittest.TestCase):
         expected = {'allowusers': 'alice bob', 'denygroups': 'guests temps'}
         self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
 
+    def test_sshd_conf_time_and_size_suffixes(self):
+        """
+        Test 'sshd_conf' with time and size suffixes
+        """
+        data = (
+            'LoginGraceTime 2m\n'
+            'ClientAliveInterval 1h30m\n'
+            'RekeyLimit 1G 1H\n'
+        )
+        expected = {
+            'logingracetime': 120,
+            'clientaliveinterval': 5400,
+            'rekeylimit': 1073741824,
+            'rekeylimit_time': 3600
+        }
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
+
+    def test_sshd_conf_time_formats(self):
+        """
+        Test 'sshd_conf' with each time qualifier, upper case qualifiers and invalid times
+        """
+        cases = [
+            ('90', 90),
+            ('0', 0),
+            ('1s', 1),
+            ('2m', 120),
+            ('1h', 3600),
+            ('1d', 86400),
+            ('1w', 604800),
+            ('1W2D3H4M5S', 604800 + 2 * 86400 + 3 * 3600 + 4 * 60 + 5),
+            ('1m30s', 90),
+            ('1h30', 3630),
+            ('300 # keepalive', 300),
+            ('1.5h', None),
+            ('-1', None),
+            ('2x', None),
+            ('m', None),
+            ('1m 30s', 60),
+            ('99999999999w', None),
+            ('9' * 5000, None)
+        ]
+        for value, seconds in cases:
+            with self.subTest(value=value):
+                result = jc.parsers.sshd_conf.parse('LoginGraceTime ' + value, quiet=True)
+                self.assertEqual(result, {'logingracetime': seconds})
+
+    def test_sshd_conf_rekeylimit_formats(self):
+        """
+        Test 'sshd_conf' with RekeyLimit sizes and times
+        """
+        cases = [
+            ('0 0', 0, 0),
+            ('4096', 4096, None),
+            ('1K', 1024, None),
+            ('2m 10m', 2097152, 600),
+            ('1g 1d', 1073741824, 86400),
+            ('1.5G', 1610612736, None),
+            ('default none', None, None),
+            ('1GB 1h', None, 3600),
+            ('1G 1.5h', 1073741824, None)
+        ]
+        for value, size, seconds in cases:
+            with self.subTest(value=value):
+                result = jc.parsers.sshd_conf.parse('RekeyLimit ' + value, quiet=True)
+                expected = {'rekeylimit': size}
+                if seconds is not None or ' ' in value:
+                    expected['rekeylimit_time'] = seconds
+                self.assertEqual(result, expected)
+
+    def test_sshd_conf_time_suffixes_raw(self):
+        """
+        Test 'sshd_conf' raw output keeps time and size strings
+        """
+        data = 'LoginGraceTime 2m\nRekeyLimit 1G 1h\n'
+        expected = {'logingracetime': '2m', 'rekeylimit': '1G 1h'}
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, raw=True, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

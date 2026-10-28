@@ -517,6 +517,7 @@ Examples:
 """
 from typing import Set, List, Dict
 from jc.jc_types import JSONDictType
+from jc.parsers.sshd_conf import _convert_time
 import jc.utils
 
 
@@ -559,9 +560,13 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     }
 
     int_list: Set[str] = {
-        'canonicalizemaxdots', 'connectionattempts', 'connecttimeout',
-        'forwardx11timeout', 'numberofpasswordprompts', 'port', 'protocol',
-        'requiredrsasize', 'serveralivecountmax', 'serveraliveinterval'
+        'canonicalizemaxdots', 'connectionattempts', 'numberofpasswordprompts',
+        'port', 'protocol', 'requiredrsasize', 'serveralivecountmax'
+    }
+
+    # values in seconds that can use time qualifiers (20m, 1h30m)
+    time_list: Set[str] = {
+        'connecttimeout', 'forwardx11timeout', 'serveraliveinterval'
     }
 
     for host in proc_data:
@@ -586,6 +591,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         for key, val in host.items():
             if key in int_list:
                 host[key] = jc.utils.convert_to_int(val)
+
+            if key in time_list:
+                host[key] = _convert_time(val)
 
     return proc_data
 
