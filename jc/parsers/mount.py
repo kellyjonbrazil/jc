@@ -190,6 +190,10 @@ def _linux_parse(data):
 
     return output
 
+
+_AIX_HEADER = ['node', 'mounted', 'mounted', 'over', 'vfs', 'date', 'options']
+
+
 def _aix_parse(data):
     output = []
 
@@ -247,7 +251,8 @@ def parse(data, raw=False, quiet=False):
 
         # check for OSX and AIX output
         if ' type ' not in cleandata[0]:
-            if '  node  ' in cleandata[0]:
+            # AIX only when the first line is its column header
+            if cleandata[0].split() == _AIX_HEADER:
                 raw_output = _aix_parse(cleandata)
             else:
                 raw_output = _osx_parse(cleandata)

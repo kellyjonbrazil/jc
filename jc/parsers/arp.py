@@ -119,7 +119,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -129,6 +129,8 @@ class info():
 
 
 __version__ = info.version
+
+_LINUX_HEADER = ['Address', 'HWtype', 'HWaddress', 'Flags', 'Mask', 'Iface']
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -209,8 +211,9 @@ def parse(
 
                 raw_output.append(output_line)
 
-        # detect if linux style was used
-        elif cleandata[0].startswith('Address'):
+        # detect if linux style was used (full header row only, since an
+        # `arp -a` line can start with a host name such as Addressbook)
+        elif cleandata[0].split() == _LINUX_HEADER:
 
             # fix header row to change Flags Mask to flags_mask
             cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')

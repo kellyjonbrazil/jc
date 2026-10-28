@@ -1,0 +1,10 @@
+Linux 3.10.0-1062.1.2.el7.x86_64 (localhost) 	03/09/2022 	_x86_64_	(1 CPU)
+
+#      Time   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+ 1646859134     0         1    0.00    0.03    0.00    0.03     0  /usr/lib/systemd/systemd --switched-root --system --deserialize 22 
+ 1646859134     0         6    0.00    0.00    0.00    0.00     0  ksoftirqd/0
+ 1646859134  1000      4242    0.00    0.00    0.00    0.00     0  sh -c echo
+#      Time   PID       UID    %usr %system  %guest    %CPU   CPU  x
+ 1646859134     0         9    0.00    0.01    0.00    0.01     0  rcu_sched
+ 1646859134     0        11    0.00    0.00    0.00    0.00     0  watchdog/0
+ 1646859134     0        32    0.00    0.00    0.00    0.00     0  khugepaged

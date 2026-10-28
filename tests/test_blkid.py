@@ -76,6 +76,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-label-escapes.json'), 'r', encoding='utf-8') as f:
         generic_blkid_label_escapes_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-udev-label-colon.out'), 'r', encoding='utf-8') as f:
+        generic_blkid_udev_label_colon = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-udev-label-colon.json'), 'r', encoding='utf-8') as f:
+        generic_blkid_udev_label_colon_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-device-spaces.out'), 'r', encoding='utf-8') as f:
+        generic_blkid_device_spaces = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/blkid-device-spaces.json'), 'r', encoding='utf-8') as f:
+        generic_blkid_device_spaces_json = json.loads(f.read())
+
     def test_blkid_nodata(self):
         """
         Test 'blkid' with no data
@@ -197,6 +209,18 @@ class MyTests(unittest.TestCase):
             {'device': '/dev/sda2', 'uuid': 'def', 'type': 'xfs'}
         ]
         self.assertEqual(jc.parsers.blkid.parse(data, quiet=True), expected)
+
+    def test_blkid_udev_label_colon(self):
+        """
+        Test 'blkid -o udev' with a label that ends in ':'
+        """
+        self.assertEqual(jc.parsers.blkid.parse(self.generic_blkid_udev_label_colon, quiet=True), self.generic_blkid_udev_label_colon_json)
+
+    def test_blkid_device_spaces(self):
+        """
+        Test 'blkid' with a first device path that contains a space
+        """
+        self.assertEqual(jc.parsers.blkid.parse(self.generic_blkid_device_spaces, quiet=True), self.generic_blkid_device_spaces_json)
 
 
 if __name__ == '__main__':
