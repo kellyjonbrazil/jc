@@ -1,6 +1,8 @@
 import os
 import json
 import unittest
+from unittest import mock
+import jc.utils
 import jc.parsers.git_log_s
 from jc.exceptions import ParseError
 
@@ -412,9 +414,30 @@ class MyTests(unittest.TestCase):
         Test 'git log --stat' with a record that cannot be processed: one error
         record is emitted and the following commits parse normally
         """
-        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
+        # the fixture's 300-digit count once made convert_to_int() raise.
+        # It now returns None, so make it raise for that count here.
+        convert_to_int = jc.utils.convert_to_int
+
+        def raising_convert_to_int(value):
+            if isinstance(value, str) and len(value) > 300:
+                raise OverflowError('cannot convert float infinity to integer')
+            return convert_to_int(value)
+
+        with mock.patch('jc.utils.convert_to_int', raising_convert_to_int):
+            result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
         self.assertEqual(result, self.generic_git_log_short_stat_bad_record_streaming_json)
         self.assertEqual([r['_jc_meta']['success'] for r in result], [True, False, True])
+
+    def test_git_log_s_huge_line_count(self):
+        """
+        Test 'git log --stat' with a file line count too large for a float:
+        the count is null and the commit parses normally
+        """
+        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [True, True, True])
+        self.assertEqual(result[1]['commit'], '728d882ed007b3c8b785018874a0eb06e1143b66')
+        self.assertEqual(result[1]['stats']['file_stats'][0], {'name': 'docs/big.md', 'lines_changed': None})
+        self.assertEqual(result[1]['stats']['file_stats'][1], {'name': 'jc/parsers/git_log.py', 'lines_changed': 51})
 
     def test_git_log_stat_name_separator_s(self):
         """
