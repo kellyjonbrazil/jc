@@ -6,7 +6,11 @@ Binary values are converted into an ASCII hex representation.
 
 Datetime objects are converted into Unix epoch timestamps and ISO strings.
 The timestamp and ISO string will maintain the same naive or timezone-aware
-properties as the object in the original PLIST file.
+properties as the object in the original PLIST file. Datetime objects inside
+arrays are converted into ISO strings.
+
+UID objects (binary PLIST files) are converted into `{"CF$UID": <integer>}`
+objects.
 
 Usage (cli):
 
@@ -50,6 +54,7 @@ import sys
 # standard library with the xml parser. :(
 sys.path = [x for x in sys.path if 'jc/jc/parsers' not in x]
 
+import math
 from typing import Dict, Union
 import plistlib
 import binascii
@@ -70,6 +75,9 @@ class info():
 
 
 __version__ = info.version
+
+# plistlib.UID was added in python 3.8
+_UID = getattr(plistlib, 'UID', ())
 
 
 def _process(proc_data: Dict) -> Dict:
@@ -99,6 +107,31 @@ def _b2a(byte_string: bytes) -> str:
       return colon_separated
 
 
+def _fix_value(value, _memo):
+    """
+    Convert a value that is not a dictionary or list (an array item or the
+    root object) into a JSON serializable type. Datetime objects become ISO
+    strings, since there is no key to hold the timestamp next to it.
+    """
+    if isinstance(value, (bytes, bytearray)):
+        # binary data referenced more than once is only converted once
+        if id(value) not in _memo:
+            _memo[id(value)] = [value, _b2a(value), True]
+        return _memo[id(value)][1]
+
+    # JSON has no inf or nan
+    if isinstance(value, float) and not math.isfinite(value):
+        return None
+
+    if isinstance(value, datetime):
+        return value.isoformat()
+
+    if isinstance(value, _UID):
+        return {'CF$UID': value.data}
+
+    return value
+
+
 def _fix_objects(obj, _memo=None):
     """
     Recursively traverse the nested dictionary or list and convert objects
@@ -108,11 +141,11 @@ def _fix_objects(obj, _memo=None):
     only converted once and stay shared, so the work and memory used here
     follow the size of the input.
     """
-    if not isinstance(obj, (dict, list)):
-        return obj
-
     if _memo is None:
         _memo = {}
+
+    if not isinstance(obj, (dict, list)):
+        return _fix_value(obj, _memo)
 
     # converted objects keyed by id(): [original, converted, finished]
     # The original is kept so its id cannot be reused during the walk.
@@ -137,14 +170,16 @@ def _fix_objects(obj, _memo=None):
                     obj.update({f'{k}_iso': iso})
                 continue
 
-            if isinstance(v, bytes):
-                if id(v) not in _memo:
-                    _memo[id(v)] = [v, _b2a(v), True]
-                obj.update({k: _memo[id(v)][1]})
+            if isinstance(v, (bytes, bytearray, _UID)):
+                obj.update({k: _fix_value(v, _memo)})
                 continue
 
             if isinstance(v, (dict, list)):
                 obj.update({k: _fix_objects(v, _memo)})
+                continue
+
+            if isinstance(v, float) and not math.isfinite(v):
+                obj.update({k: None})
                 continue
 
         entry[2] = True
