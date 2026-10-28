@@ -47,7 +47,9 @@ def parse(cleandata: List[str]):
     for line in cleandata:
         line = line.strip()
 
-        if not line.startswith(POSSIBLE_PROTOCOLS):  # -b.
+        # -b: an owner line's first word is not a protocol (even if it starts with one)
+        first_word = line.split(maxsplit=1)[:1]
+        if not first_word or first_word[0] not in POSSIBLE_PROTOCOLS:
             line_data = raw_output.pop(len(raw_output) - 1)
             line_data['program_name'] = line
             raw_output.append(line_data)

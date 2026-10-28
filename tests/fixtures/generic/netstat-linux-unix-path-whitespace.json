@@ -1,0 +1,62 @@
+[
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 50001,
+    "program_name": "systemd",
+    "path": "/run/bus\u001f/hidden/part",
+    "kind": "socket",
+    "pid": 1898
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 50002,
+    "program_name": "systemd",
+    "path": "/run/bus\u001f/hidden/part",
+    "kind": "socket",
+    "pid": 1899
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 50003,
+    "program_name": "systemd",
+    "path": "/run/bus\u00a0name/more part",
+    "kind": "socket",
+    "pid": 1900
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 50004,
+    "program_name": "systemd",
+    "path": "/run/two  spaces/x",
+    "kind": "socket",
+    "pid": 1901
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 50005,
+    "program_name": "systemd",
+    "path": "/run/plain",
+    "kind": "socket",
+    "pid": 1902
+  }
+]

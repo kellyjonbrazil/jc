@@ -1,0 +1,57 @@
+[
+  {
+    "proto": "TCP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "state": "LISTENING",
+    "pid": 1712,
+    "local_port": "135",
+    "foreign_port": "0",
+    "program_name": "[svchost.exe]",
+    "local_port_num": 135
+  },
+  {
+    "proto": "TCP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "state": "LISTENING",
+    "pid": 5876,
+    "local_port": "4325",
+    "foreign_port": "0",
+    "program_name": "[svchost.exe]",
+    "local_port_num": 4325
+  },
+  {
+    "proto": "TCP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "state": "LISTENING",
+    "pid": 4,
+    "local_port": "3389",
+    "foreign_port": "0",
+    "program_name": "[svchost.exe]",
+    "local_port_num": 3389
+  },
+  {
+    "proto": "UDP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "*",
+    "state": "",
+    "pid": 2048,
+    "local_port": "5353",
+    "foreign_port": "*",
+    "program_name": "[svchost.exe]",
+    "local_port_num": 5353
+  },
+  {
+    "proto": "TCP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "state": "LISTENING",
+    "pid": 4,
+    "local_port": "445",
+    "foreign_port": "0",
+    "program_name": "Can not obtain ownership information",
+    "local_port_num": 445
+  }
+]

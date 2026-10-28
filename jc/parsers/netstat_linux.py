@@ -7,7 +7,8 @@ def normalize_headers(header):
     header = header.lower()
     header = header.replace('local address', 'local_address')
     header = header.replace('foreign address', 'foreign_address')
-    header = header.replace('pid/program name', 'program_name')
+    # keep the width so column positions still line up with the data rows
+    header = header.replace('pid/program name', 'program_name    ')
     header = header.replace('security context', 'security_context')
     header = header.replace('i-node', ' inode')
     header = header.replace('-', '_')
@@ -118,21 +119,38 @@ def socket_columns(header_text):
     return state_col, pn_start, pn_end
 
 
+FLAGS_RE = re.compile(r'^([^ \t]+[ \t]+[^ \t]+[ \t]+)(\[[^\]]*\])')
+
+
 def parse_socket(headers, entry, columns):
     state_col, pn_start, pn_end = columns
 
-    # remove [ and ] from each line
-    entry = entry.replace('[ ]', '---')
-    entry = entry.replace('[', ' ').replace(']', ' ')
+    # Only the Flags column (the third) is bracketed and has blanks in it.
+    # Replace the brackets there, keeping the length so the column positions
+    # still match. Brackets in the program name and path are left alone.
+    m = FLAGS_RE.match(entry)
+    if m:
+        flags = m.group(2)
+        if flags[1:-1].strip(' ') == '':
+            flags = '-' * len(flags)
+        else:
+            flags = ' ' + flags[1:-1] + ' '
+        entry = m.group(1) + flags + entry[m.end():]
 
     # find program_name column area and substitute whitespace with \u2063 there
-    old_pn = entry[pn_start:pn_end]
-    new_pn = re.sub(r'\s', '\u2063', old_pn)
-    entry = entry.replace(old_pn, new_pn)
+    old_pn = ''
+    new_pn = ''
+    if pn_start >= 0:
+        # the padding after the name stays a separator
+        old_pn = entry[pn_start:pn_end].rstrip(' ')
+        new_pn = re.sub(r'\s', '\u2063', old_pn)
+        entry = entry[:pn_start] + new_pn + entry[pn_start + len(old_pn):]
 
-    entry_list = entry.split(maxsplit=len(headers) - 1)
-    # check column # to see if state column is populated
-    if entry[state_col] in string.whitespace:
+    # check column # to see if state column is populated. Choose the split count
+    # before splitting so the spare split does not land inside the path.
+    has_state = entry[state_col] not in string.whitespace
+    entry_list = entry.split(maxsplit=len(headers) - (1 if has_state else 2))
+    if not has_state:
         entry_list.insert(4, None)
 
     output_line = dict(zip(headers, entry_list))
