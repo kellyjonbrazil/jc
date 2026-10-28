@@ -664,7 +664,14 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        if ' time ' in data.splitlines()[-2] or ' time ' in data.splitlines()[-3]:
+        # The OS is told apart by looking for a reply line near the end, but a
+        # run that was cut short -- `timeout 2 ping ...`, a SIGINT, a closed
+        # pipe -- can be shorter than the two lines this reaches back for.
+        # Slicing keeps the same two lines when they exist and yields nothing
+        # when they do not, instead of raising IndexError.
+        tail = data.splitlines()[-3:-1]
+
+        if any(' time ' in line for line in tail):
             raw_output = _linux_parse(data)
         else:
             raw_output = _bsd_parse(data)
