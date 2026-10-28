@@ -405,7 +405,7 @@ Examples:
 """
 import binascii
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Union
 import jc.utils
 from jc.parsers.asn1crypto import pem, x509, jc_global
@@ -497,6 +497,11 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, datetime):
+                # a GeneralizedTime without a time zone is returned as a
+                # naive datetime. Use UTC so the result does not depend on
+                # the local time zone.
+                if v.tzinfo is None:
+                    v = v.replace(tzinfo=timezone.utc)
                 iso = v.isoformat()
                 v = int(round(v.timestamp()))
                 obj.update({k: v, f'{k}_iso': iso})

@@ -198,6 +198,12 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
+    # remove one pair of matching quotes around variable values
+    for var in proc_data.get('variables') or []:
+        value = var['value']
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+            var['value'] = value[1:-1]
+
     # put items in lists
     try:
         for entry in proc_data['schedule']:

@@ -1,8 +1,11 @@
 import os
 import unittest
+import unittest.mock
 import json
 from typing import Dict
 import jc.parsers.proc
+import jc.parsers.proc_net_tcp
+import jc.parsers.proc_net_udp
 import jc.parsers.proc_pid_fdinfo
 import jc.parsers.proc_pid_mountinfo
 import jc.parsers.proc_version
@@ -172,6 +175,18 @@ class MyTests(unittest.TestCase):
             'proc_net_route': (
                 'fixtures/linux-proc/net_route',
                 'fixtures/linux-proc/net_route.json'),
+            'proc_net_tcp': (
+                'fixtures/linux-proc/net_tcp',
+                'fixtures/linux-proc/net_tcp.json'),
+            'proc_net_tcp6': (
+                'fixtures/linux-proc/net_tcp6',
+                'fixtures/linux-proc/net_tcp6.json'),
+            'proc_net_udp': (
+                'fixtures/linux-proc/net_udp',
+                'fixtures/linux-proc/net_udp.json'),
+            'proc_net_udp6': (
+                'fixtures/linux-proc/net_udp6',
+                'fixtures/linux-proc/net_udp6.json'),
             'proc_net_unix': (
                 'fixtures/linux-proc/net_unix',
                 'fixtures/linux-proc/net_unix.json'),
@@ -261,6 +276,25 @@ class MyTests(unittest.TestCase):
             with open(os.path.join(THIS_DIR, filepath), 'r', encoding='utf-8') as f:
                 data = f.read()
             self.assertEqual(jc.parsers.proc.parse(data, quiet=True), parser.parse(data, quiet=True))
+
+
+    def test_proc_file_signature_detection_net_tcp_udp_header_only(self):
+        """
+        Test proc parser file signature detection on tcp and udp files with only a header line
+        """
+        fixtures = {
+            'proc_net_tcp': jc.parsers.proc_net_tcp,
+            'proc_net_tcp6': jc.parsers.proc_net_tcp,
+            'proc_net_udp': jc.parsers.proc_net_udp,
+            'proc_net_udp6': jc.parsers.proc_net_udp
+        }
+
+        for name, parser in fixtures.items():
+            header = self.f_in[name].split('\n', 1)[0]
+            for data in (header, header + '\n'):
+                with unittest.mock.patch.object(parser, 'parse', return_value=['matched']) as mock_parse:
+                    self.assertEqual(jc.parsers.proc.parse(data, quiet=True), ['matched'])
+                    mock_parse.assert_called_once()
 
 
 if __name__ == '__main__':

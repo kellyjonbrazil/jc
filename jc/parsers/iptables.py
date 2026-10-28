@@ -219,16 +219,17 @@ def _process(proc_data):
     for entry in proc_data:
 
         if 'default_packets' in entry:
-            entry['default_packets'] = jc.utils.convert_to_int(entry['default_packets'])
+            entry['default_packets'] = jc.utils.convert_size_to_int(entry['default_packets'])
 
         if 'default_bytes' in entry:
             entry['default_bytes'] = jc.utils.convert_size_to_int(entry['default_bytes'])
 
         for rule in entry['rules']:
-            int_list = ['num', 'pkts']
-            for key in rule:
-                if key in int_list:
-                    rule[key] = jc.utils.convert_to_int(rule[key])
+            if 'num' in rule:
+                rule['num'] = jc.utils.convert_to_int(rule['num'])
+
+            if 'pkts' in rule:
+                rule['pkts'] = jc.utils.convert_size_to_int(rule['pkts'])
 
             if 'bytes' in rule:
                 rule['bytes'] = jc.utils.convert_size_to_int(rule['bytes'])
@@ -316,18 +317,25 @@ def parse(data, raw=False, quiet=False):
                 # sometimes the "target" column is blank. Stuff in a dummy character
                 opt_values = {'--', '-f', '!f'}
                 line_split = line.split()
-                if headers[0] == 'target' and line.startswith(' '):           # standard output
-                    line = '\u2063' + line
+                blank_target = False
+                t_idx = headers.index('target') if 'target' in headers else -1
 
-                elif headers[0] == 'pkts' and line_split[3] in opt_values:    # verbose output
-                    first_section = line_split[:2]
-                    second_section = line_split[2:]
-                    line = ' '.join(first_section) + ' \u2063 ' + ' '.join(second_section)
+                if t_idx == 0:                                    # standard output
+                    if line.startswith(' '):
+                        line = '\u2063' + line
+                        blank_target = True
+
+                elif t_idx > 0:                                   # verbose and/or line numbers
+                    if len(line_split) > t_idx + 1 and line_split[t_idx + 1] in opt_values:
+                        first_section = line_split[:t_idx]
+                        second_section = line_split[t_idx:]
+                        line = ' '.join(first_section) + ' \u2063 ' + ' '.join(second_section)
+                        blank_target = True
 
                 rule = line.split(maxsplit=len(headers) - 1)
                 temp_rule = dict(zip(headers, rule))
                 if temp_rule:
-                    if temp_rule.get('target') == '\u2063':
+                    if blank_target:
                         temp_rule['target'] = ''
                     chain['rules'].append(temp_rule)
 
