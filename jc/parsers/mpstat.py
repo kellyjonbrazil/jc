@@ -200,7 +200,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
 
             # skip blank lines
             if not line.strip():

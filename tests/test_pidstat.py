@@ -114,6 +114,18 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(jc.parsers.pidstat.parse(data, quiet=True), expected)
 
+    def test_pidstat_line_break_chars_in_command(self):
+        """
+        Test 'pidstat -hl' with CR and other line-break characters inside the command. Should stay in one row
+        """
+        header = '#      Time   UID       PID    %usr %system  %guest    %CPU   CPU  Command\n'
+        for sep in ('\r', '\x0b', '\x0c', '\x1c', '\x85', ' '):
+            data = header + ' 1646859134     0         6    0.00    0.00    0.00    0.03     0  foo' + sep + 'bar baz\n'
+            result = jc.parsers.pidstat.parse(data, quiet=True)
+            self.assertEqual(len(result), 1)
+            self.assertEqual(result[0]['command'], 'foo' + sep + 'bar baz')
+            self.assertEqual(result[0]['percent_cpu'], 0.03)
+
 
 if __name__ == '__main__':
     unittest.main()

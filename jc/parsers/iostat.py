@@ -250,7 +250,7 @@ def parse(data, raw=False, quiet=False):
         cpu_list = []
         device_list = []
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             # skip blank lines
             if not line.strip():
                 continue
