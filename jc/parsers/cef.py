@@ -117,6 +117,7 @@ Examples:
 """
 from typing import List, Dict
 import re
+import math
 import jc.utils
 from jc.exceptions import ParseError
 
@@ -330,7 +331,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
             if key in extended_floats:
                 try:
-                    item[key] = float(value)
+                    float_value = float(value)
+                    # keep the text of inf and nan, which JSON cannot represent
+                    if math.isfinite(float_value):
+                        item[key] = float_value
                 except Exception:
                     pass
 

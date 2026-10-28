@@ -291,6 +291,24 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.nmcli.parse(data, quiet=True)
         self.assertEqual([x['name'] for x in result], ['"CorpNet"', 'CorpNet'])
 
+    def test_nmcli_non_finite_values(self):
+        """
+        Test 'nmcli device show' with values too large for a float: the text is kept
+        """
+        data = (
+            'GENERAL.DEVICE:                         enp0s3\n'
+            'GENERAL.TYPE:                           1.0e999\n'
+            'GENERAL.MTU:                            1500\n'
+            'IP4.ROUTE[1]:                           dst = 0.0.0.0/0, nh = 1.0e999, mt = 100\n'
+        )
+        expected = [{
+            'device': 'enp0s3',
+            'type': '1.0e999',
+            'mtu': 1500,
+            'ip4_route_1': {'dst': '0.0.0.0/0', 'nh': '1.0e999', 'mt': 100}
+        }]
+        self.assertEqual(jc.parsers.nmcli.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
