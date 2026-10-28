@@ -102,7 +102,7 @@ from jc.exceptions import ParseError
 
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
-changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
+changes_pattern = re.compile(r'^\s*(?P<files>\d+) files? changed(?:, (?P<insertions>\d+) insertions?\(\+\))?(?:, (?P<deletions>\d+) deletions?\(-\))?\s*$')
 numstat_pattern = re.compile(r'^(?P<insertions>\d+|-)\t(?P<deletions>\d+|-)\t(?P<name>.+)$')
 patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
@@ -320,7 +320,9 @@ def parse(
                 numstat_found = True
                 continue
 
-            if line.startswith(' ') and 'changed, ' not in line:
+            changes = changes_pattern.match(line) if line.startswith(' ') else None
+
+            if line.startswith(' ') and not changes:
                 # this is a file name from `--stat`. Ignore if `--numstat`
                 # output was already found for this commit since it is
                 # more detailed.
@@ -347,18 +349,12 @@ def parse(
                 file_stats_list.append(file_stat)
                 continue
 
-            if line.startswith(' ') and 'changed, ' in line:
+            if changes:
                 # this is the stat summary
-                changes = changes_pattern.match(line)
-                if changes:
-                    files = changes['files']
-                    insertions = changes['insertions']
-                    deletions = changes['deletions']
-
                 output_line['stats'] = {
-                    'files_changed': files or '0',
-                    'insertions': insertions or '0',
-                    'deletions':  deletions or '0'
+                    'files_changed': changes['files'],
+                    'insertions': changes['insertions'] or '0',
+                    'deletions': changes['deletions'] or '0'
                 }
                 continue
 
