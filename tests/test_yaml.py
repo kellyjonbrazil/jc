@@ -112,6 +112,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(ruamel.yaml.constructor.RoundTripConstructor.yaml_constructors, constructors)
         self.assertEqual(ruamel.yaml.YAML().load('a: 2022-04-18\n')['a'], datetime.date(2022, 4, 18))
 
+    def test_yaml_non_finite(self):
+        """
+        Test 'yaml' with nan and inf values: they are null
+        """
+        data = 'a: .nan\nb: -.inf\nc: [.inf, 1.5, 1e400]\nd: !!float .NaN\ne: 2.5\nf: nan\n'
+        expected = [{'a': None, 'b': None, 'c': [None, 1.5, None], 'd': None, 'e': 2.5, 'f': 'nan'}]
+        self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

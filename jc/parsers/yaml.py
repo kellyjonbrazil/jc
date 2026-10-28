@@ -81,6 +81,7 @@ Examples:
       }
     ]
 """
+import math
 import jc.utils
 from jc.exceptions import LibraryNotInstalled
 
@@ -167,6 +168,17 @@ def parse(data, raw=False, quiet=False):
         # modify the value constructor to output values starting with a
         # literal "=" as a string.
         JcConstructor.add_constructor('tag:yaml.org,2002:value', str_constructor)
+
+        # load nan and inf as None since JSON does not support them
+        float_constructor = RoundTripConstructor.yaml_constructors['tag:yaml.org,2002:float']
+
+        def finite_float_constructor(constructor, node):
+            value = float_constructor(constructor, node)
+            if isinstance(value, float) and not math.isfinite(value):
+                return None
+            return value
+
+        JcConstructor.add_constructor('tag:yaml.org,2002:float', finite_float_constructor)
 
         # use the default `typ` to correctly load values that start with a literal "="
         yaml = JcYAML(typ=None)
