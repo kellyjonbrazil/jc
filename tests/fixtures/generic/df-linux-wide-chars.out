@@ -1,0 +1,6 @@
+Filesystem 1K-blocks      Used Available Use% Mounted on
+overlay    123638648 106861900  16760364  87% /
+共有メモリ   4064872      1024   4063848   1% /mnt/共有
+x⁣1⁣2⁣3⁣4%       4064872         0   4064872   0% /mnt/data
+café            2048        16      2032   1% /mnt/café
+zw​fs            8192      4096      4096  50% /mnt/zw

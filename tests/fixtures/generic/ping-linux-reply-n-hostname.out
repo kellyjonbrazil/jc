@@ -1,0 +1,8 @@
+PING example.com (198.51.100.7) 56(84) bytes of data.
+64 bytes from 198.51.100.7: icmp_seq=1 ttl=57 time=23.4 ms
+64 bytes from 198.51.100.7: icmp_seq=1 ttl=57 time=23.6 ms (DUP!)
+64 bytes from 198.51.100.7: icmp_seq=2 ttl=57 time=23.1 ms
+
+--- example.com ping statistics ---
+2 packets transmitted, 2 received, +1 duplicates, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 23.100/23.366/23.600/0.205 ms

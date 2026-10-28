@@ -55,5 +55,19 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_toml_existing_iso_key(self):
+        """
+        Test 'toml' with a key that has the same name as a generated _iso key
+        """
+        data = 'built = 1979-05-27T07:32:00Z\nbuilt_iso = "my own value"\n[nested]\nwhen = 2020-01-01T00:00:00Z\nwhen_iso = 5\n[[arr]]\nd = 2021-01-01T00:00:00Z\nd_iso = "x"\n'
+        expected = {
+            'built': 296638320,
+            'built_iso': 'my own value',
+            'nested': {'when': 1577836800, 'when_iso': 5},
+            'arr': [{'d': 1609459200, 'd_iso': 'x'}]
+        }
+        self.assertEqual(parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

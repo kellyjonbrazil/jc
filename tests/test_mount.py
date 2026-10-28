@@ -78,6 +78,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-options-in-mountpoint-bsd.json'), 'r', encoding='utf-8') as f:
         generic_mount_options_in_mountpoint_bsd_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-aix-header-text.out'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_aix_header_text = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-osx-aix-header-text.json'), 'r', encoding='utf-8') as f:
+        generic_mount_osx_aix_header_text_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-quoted-and-escaped-commas.out'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_quoted_and_escaped_commas = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-linux-quoted-and-escaped-commas.json'), 'r', encoding='utf-8') as f:
+        generic_mount_linux_quoted_and_escaped_commas_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-aix-spaces-in-mountpoint.out'), 'r', encoding='utf-8') as f:
+        generic_mount_aix_spaces_in_mountpoint = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mount-aix-spaces-in-mountpoint.json'), 'r', encoding='utf-8') as f:
+        generic_mount_aix_spaces_in_mountpoint_json = json.loads(f.read())
+
     def test_mount_nodata(self):
         """
         Test 'mount' with no data
@@ -179,6 +197,23 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.mount.parse(self.generic_mount_options_in_mountpoint_bsd, quiet=True), self.generic_mount_options_in_mountpoint_bsd_json)
 
+    def test_mount_aix_header_text_in_osx(self):
+        """
+        Test 'mount' on OSX with mount names that contain AIX header words
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_osx_aix_header_text, quiet=True), self.generic_mount_osx_aix_header_text_json)
+
+    def test_mount_linux_quoted_and_escaped_commas(self):
+        """
+        Test 'mount' on Linux with quoted and backslash-escaped commas in options
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_linux_quoted_and_escaped_commas, quiet=True), self.generic_mount_linux_quoted_and_escaped_commas_json)
+
+    def test_mount_aix_spaces_in_mountpoint(self):
+        """
+        Test 'mount' on AIX with spaces in mount points and remote devices
+        """
+        self.assertEqual(jc.parsers.mount.parse(self.generic_mount_aix_spaces_in_mountpoint, quiet=True), self.generic_mount_aix_spaces_in_mountpoint_json)
 
 
 if __name__ == '__main__':

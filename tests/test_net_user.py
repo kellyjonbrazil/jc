@@ -32,6 +32,9 @@ class MyTests(unittest.TestCase):
             'windows_11_net_user': (
                 'fixtures/windows/windows-11/net_user.out',
                 'fixtures/windows/windows-11/net_user.json'),
+            'generic_net_user_header_like_names': (
+                'fixtures/generic/net_user-header-like-names.out',
+                'fixtures/generic/net_user-header-like-names.json'),
         }
 
         for file, filepaths in fixtures.items():
@@ -127,6 +130,16 @@ class MyTests(unittest.TestCase):
         result = parse(data, quiet=True)
         self.assertEqual(result['user_accounts'][0]['local_group_memberships'], [])
         self.assertEqual(result['user_accounts'][0]['global_group_memberships'], ['Users'])
+
+
+    def test_net_user_header_like_names(self):
+        """
+        Test 'net_user' with user names that look like the header or the dashed line
+        """
+        self.assertEqual(
+            parse(self.f_in['generic_net_user_header_like_names'], quiet=True),
+            self.f_json['generic_net_user_header_like_names']
+        )
 
 
 if __name__ == '__main__':

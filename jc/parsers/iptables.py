@@ -184,6 +184,14 @@ class info():
 
 __version__ = info.version
 
+# a chain heading: 'Chain NAME (policy ...)' or 'Chain NAME (N references)'
+_CHAIN_RE = re.compile(r'Chain \S+ \(')
+
+_HEADER_WORDS = {
+    'num', 'pkts', 'bytes', 'target', 'prot', 'opt', 'in', 'out', 'source',
+    'destination'
+}
+
 chain_pkt_byte_pattern = re.compile(
     r'''
         \s\(policy\s
@@ -236,6 +244,20 @@ def _process(proc_data):
     return proc_data
 
 
+def _is_header(line):
+    # the full column header line, e.g. 'target prot opt source destination'
+    # or ' pkts bytes target prot opt in out source destination'. A rule's
+    # opt column is never the word 'opt'.
+    words = line.split()
+    return (
+        'target' in words
+        and 'prot' in words
+        and 'opt' in words
+        and words[-2:] == ['source', 'destination']
+        and all(w in _HEADER_WORDS for w in words)
+    )
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -261,7 +283,7 @@ def parse(data, raw=False, quiet=False):
 
         for line in list(filter(None, jc.utils.splitlines(data))):
 
-            if line.startswith('Chain'):
+            if _CHAIN_RE.match(line):
                 if chain:
                     raw_output.append(chain)
 
@@ -283,9 +305,7 @@ def parse(data, raw=False, quiet=False):
 
                 continue
 
-            elif line.startswith('target') or \
-                 (line.find('pkts') >= 1 and line.find('pkts') <= 5) or \
-                 line.startswith('num'):
+            elif _is_header(line):
 
                 headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
                 headers.append("options")

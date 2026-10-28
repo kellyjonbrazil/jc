@@ -1,0 +1,7 @@
+PING 127.0.0.1 (127.0.0.1) 4(32) bytes of data.
+12 bytes from 127.0.0.1: icmp_req=1 ttl=64
+12 bytes from localhost (127.0.0.1): icmp_req=2 ttl=64
+12 bytes from 127.0.0.1: icmp_req=2 ttl=64 (DUP!)
+
+--- 127.0.0.1 ping statistics ---
+2 packets transmitted, 2 received, +1 duplicates, 0% packet loss, time 1001ms

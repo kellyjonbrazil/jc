@@ -39,6 +39,12 @@ class MyTests(unittest.TestCase):
         generic_pidstat_ht_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-hl-hash-line.out'), 'r', encoding='utf-8') as f:
+        generic_pidstat_hl_hash_line = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/pidstat-hl-hash-line.json'), 'r', encoding='utf-8') as f:
+        generic_pidstat_hl_hash_line_json = json.loads(f.read())
+
     def test_pidstat_nodata(self):
         """
         Test 'pidstat' with no data
@@ -74,6 +80,12 @@ class MyTests(unittest.TestCase):
         Test 'pidstat -hT'
         """
         self.assertEqual(jc.parsers.pidstat.parse(self.generic_pidstat_ht, quiet=True), self.generic_pidstat_ht_json)
+
+    def test_pidstat_hl_hash_line(self):
+        """
+        Test 'pidstat -hl' with a '#' line that is not the pidstat header
+        """
+        self.assertEqual(jc.parsers.pidstat.parse(self.generic_pidstat_hl_hash_line, quiet=True), self.generic_pidstat_hl_hash_line_json)
 
 
 if __name__ == '__main__':

@@ -160,9 +160,17 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     return proc_data
 
 
+# a complete CSI sequence (e.g. an SGR color code): parameter bytes and a
+# final byte. `|` is not taken as the final byte so an incomplete sequence at
+# the end of a cell does not remove the padding and separator after it.
+_ansi_escape = re.compile(r'(?:\x9B|\x1B\[)[0-?]*[@-{}~]')
+
+# characters that make up a row separator line
+_separator_chars = frozenset('-=+|: \t' + ''.join(chr(c) for c in range(0x2500, 0x2580)))
+
+
 def _remove_ansi(string: str) -> str:
-    ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
-    return ansi_escape.sub('', string)
+    return _ansi_escape.sub('', string)
 
 
 def _lstrip(string: str) -> str:
@@ -193,6 +201,11 @@ def _is_separator(line: str) -> bool:
     """returns true if a table separator line is found"""
     # This function is cacheable since tables have identical separators
     strip_line = line.strip()
+
+    # a data row can start and end like a separator (e.g. `--name  1  --`)
+    if not _separator_chars.issuperset(strip_line):
+        return False
+
     if any((
         strip_line.startswith('|-') and strip_line.endswith('-|'),
         strip_line.startswith('━━') and strip_line.endswith('━━'),
