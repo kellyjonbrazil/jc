@@ -52,12 +52,13 @@ Examples:
       ...
     }
 """
+import math
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`upsc` command parser'
     author = 'Mayoka'
     author_email = 'j.mayoka@mayokajohn.com'
@@ -85,7 +86,8 @@ def _safe_numeric(value):
 
     try:
         as_float = float(value)
-        if str(as_float) == value:
+        # keep the text of inf and nan
+        if str(as_float) == value and math.isfinite(as_float):
             return as_float
     except (ValueError, TypeError):
         pass
