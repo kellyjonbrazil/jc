@@ -75,6 +75,15 @@ key2: value2
         expected = {'key1': 'value1', 'key2': 'value2'}
         self.assertEqual(jc.parsers.kv.parse(data, quiet=True), expected)
 
+    def test_kv_leaves_ini_parser_info_alone(self):
+        """
+        Test 'kv' (an alias of the ini parser) does not change the metadata
+        of the ini parser
+        """
+        self.assertEqual(jc.parsers.kv.parse('name = value', quiet=True), {'name': 'value'})
+        self.assertEqual(jc.parser_info('ini')['name'], 'ini')
+        self.assertEqual(jc.parser_info('ini')['description'], 'INI file parser')
+
 
 if __name__ == '__main__':
     unittest.main()

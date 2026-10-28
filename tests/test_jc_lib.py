@@ -55,6 +55,46 @@ class MyTests(unittest.TestCase):
         for name in ('ini_dup', 'ini-dup', '--ini-dup'):
             self.assertEqual(jc.lib.get_parser(name).__name__, 'jc.parsers.ini_dup')
 
+    def test_lib_alias_parsers_keep_wrapped_parser_info(self):
+        """
+        Test parser_info and all_parser_info after each alias parser has run:
+        the parsers they call are still reported as themselves
+        """
+        aliases = {
+            'kv': 'a=1\n',
+            'kv_dup': 'a=1\n',
+            'os_release': 'NAME=x\n',
+            'lsb_release': 'Distributor ID:\tUbuntu\n',
+            'apt_cache_show': 'Package: x\nVersion: 1\n',
+            'pkg_index_deb': 'Package: x\nVersion: 1\n',
+            'curl_head': 'HTTP/1.1 200 OK\nX-A: b\n',
+            'path_list': '/a/b:/c\n',
+        }
+        for name, data in aliases.items():
+            jc.lib.parse(name, data, quiet=True)
+
+        wrapped = {
+            'ini': ('--ini', 'INI file parser'),
+            'ini_dup': ('--ini-dup', 'INI with duplicate key file parser'),
+            'rpm_qi': ('--rpm-qi', '`rpm -qi` command parser'),
+            'http_headers': ('--http-headers', 'HTTP headers parser'),
+            'path': ('--path', 'POSIX path string parser'),
+        }
+        for name, (argument, description) in wrapped.items():
+            info = jc.lib.parser_info(name)
+            self.assertEqual(info['name'], name)
+            self.assertEqual(info['argument'], argument)
+            self.assertEqual(info['description'], description)
+
+        self.assertEqual(jc.lib.parser_info('rpm_qi')['compatible'], ['linux'])
+        self.assertEqual(jc.lib.parser_info('curl_head')['magic_commands'], ['curl'])
+        self.assertNotIn('magic_commands', jc.lib.parser_info('http_headers'))
+
+        names = [p['name'] for p in jc.lib.all_parser_info(show_hidden=True, show_deprecated=True)]
+        self.assertEqual(len(names), len(set(names)))
+        for name in list(aliases) + list(wrapped):
+            self.assertIn(name, names)
+
     def test_lib_get_parser_module(self):
         p = jc.lib.get_parser(csv_parser)
         self.assertIsInstance(p, ModuleType)
