@@ -110,5 +110,26 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['0'], 'r\x0cino:1\x0cmnt_id:1\x0cpos:7')
 
 
+    def test_proc_pid_fdinfo_octal_flags(self):
+        """
+        Test 'proc_pid_fdinfo' with octal open flags
+        """
+        data = 'pos:\t0\nflags:\t02100000\nmnt_id:\t44\nino:\t9658574\n'
+        expected = {'pos': 0, 'flags': 557056, 'mnt_id': 44, 'ino': 9658574}
+        self.assertEqual(jc.parsers.proc_pid_fdinfo.parse(data, quiet=True), expected)
+
+    def test_proc_pid_fdinfo_inotify_hex_wd(self):
+        """
+        Test 'proc_pid_fdinfo' with hexadecimal inotify watch descriptors
+        """
+        data = 'pos:\t0\nflags:\t02004000\nmnt_id:\t19\nino:\t84\ninotify wd:1a ino:9360d7 sdev:fc00000 mask:2 ignored_mask:0 fhandle-bytes:c fhandle-type:81 f_handle:d7609300000000005bcd4b8d\n'
+        result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
+        self.assertEqual((result['flags'], result['inotify']['wd'], result['inotify']['ino']), (526336, 26, '9360d7'))
+
+        data = data.replace('wd:1a', 'wd:a')
+        result = jc.parsers.proc_pid_fdinfo.parse(data, quiet=True)
+        self.assertEqual((result['inotify']['wd'], result['inotify']['ino']), (10, '9360d7'))
+
+
 if __name__ == '__main__':
     unittest.main()

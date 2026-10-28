@@ -28,7 +28,7 @@ Any unspecified fields are strings.
 
     {
       "pos":                        integer,
-      "flags":                      integer,
+      "flags":                      integer,  # [0]
       "mnt_id":                     integer,
       "scm_fds":                    string,
       "ino":                        integer,
@@ -42,7 +42,7 @@ Any unspecified fields are strings.
         "sdev":                     string
       },
       "inotify": {
-        "wd":                       integer,
+        "wd":                       integer,  # [1]
         "ino":                      string,
         "sdev":                     string,
         "mask":                     string,
@@ -66,7 +66,7 @@ Any unspecified fields are strings.
       },
       "clockid":                    integer,
       "ticks":                      integer,
-      "settime flags":              integer,
+      "settime flags":              integer,  # [0]
       "it_value": [
                                     integer
       ],
@@ -74,6 +74,9 @@ Any unspecified fields are strings.
                                     integer
       ]
     }
+
+    [0] converted from octal
+    [1] converted from hexadecimal
 
 Examples:
 
@@ -127,14 +130,17 @@ def _process(proc_data: Dict) -> Dict:
 
         Dictionary. Structured to conform to the schema.
     """
-    root_int_list = {'pos', 'flags', 'mnt_id', 'ino', 'clockid', 'ticks',
-                     'settime flags', 'size', 'count'}
+    root_int_list = {'pos', 'mnt_id', 'ino', 'clockid', 'ticks', 'size', 'count'}
+    root_octal_list = {'flags', 'settime flags'}
     epoll_int_list = {'tfd', 'pos'}
-    inotify_int_list = {'wd'}
+    inotify_hex_list = {'wd'}
 
     for key, val in proc_data.items():
         if key in root_int_list:
             proc_data[key] = int(val)
+
+        if key in root_octal_list:
+            proc_data[key] = int(val, 8)
 
     if 'epoll' in proc_data:
         for key, val in proc_data['epoll'].items():
@@ -143,8 +149,8 @@ def _process(proc_data: Dict) -> Dict:
 
     if 'inotify' in proc_data:
         for key, val in proc_data['inotify'].items():
-            if key in inotify_int_list:
-                proc_data['inotify'][key] = int(val)
+            if key in inotify_hex_list:
+                proc_data['inotify'][key] = int(val, 16)
 
     return proc_data
 
