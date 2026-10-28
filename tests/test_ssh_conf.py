@@ -287,6 +287,14 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(parse(data, quiet=True), expected)
 
+    def test_ssh_conf_keyword_without_value(self):
+        """
+        Test 'ssh_conf' with lines that have only one word
+        """
+        data = 'Host\nPort\nHost a\n    Port\n    User one\n    Compression\n'
+        expected = [{'host': 'a', 'host_list': ['a'], 'user': 'one'}]
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

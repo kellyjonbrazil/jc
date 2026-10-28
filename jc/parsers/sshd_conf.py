@@ -708,6 +708,10 @@ def parse(
             if match_block_found:
                 continue
 
+            # skip keywords with no value
+            if len(tokens) < 2:
+                continue
+
             key, val = line.split(maxsplit=1)
 
             # support configuration file by converting to lower case

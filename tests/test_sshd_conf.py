@@ -218,6 +218,13 @@ class MyTests(unittest.TestCase):
         expected = {'logingracetime': '2m', 'rekeylimit': '1G 1h'}
         self.assertEqual(jc.parsers.sshd_conf.parse(data, raw=True, quiet=True), expected)
 
+    def test_sshd_conf_keyword_without_value(self):
+        """
+        Test 'sshd_conf' with lines that have only one word
+        """
+        data = 'Port\nBanner\nPermitRootLogin no\nAllowUsers\n'
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), {'permitrootlogin': 'no'})
+
 
 if __name__ == '__main__':
     unittest.main()
