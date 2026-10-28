@@ -152,6 +152,44 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(parse(data, quiet=True), expected)
 
+    def test_ssh_conf_first_value_wins(self):
+        """
+        Test 'ssh_conf' with repeated keywords
+        """
+        data = (
+            'Host a\n'
+            '    User one\n'
+            '    User two\n'
+            '    StrictHostKeyChecking no\n'
+            '    StrictHostKeyChecking yes\n'
+            '    IdentityFile ~/.ssh/k1\n'
+            '    IdentityFile ~/.ssh/k2\n'
+            '    LocalForward 8080 localhost:80\n'
+            '    LocalForward 8443 localhost:443\n'
+            '    Ciphers +aes128-ctr\n'
+            '    Ciphers aes256-ctr\n'
+            'Host b\n'
+            '    User three\n'
+        )
+        expected = [
+            {
+                'host': 'a',
+                'host_list': ['a'],
+                'user': 'one',
+                'stricthostkeychecking': 'no',
+                'identityfile': ['~/.ssh/k1', '~/.ssh/k2'],
+                'localforward': ['8080 localhost:80', '8443 localhost:443'],
+                'ciphers': ['aes128-ctr'],
+                'ciphers_strategy': '+'
+            },
+            {
+                'host': 'b',
+                'host_list': ['b'],
+                'user': 'three'
+            }
+        ]
+        self.assertEqual(parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

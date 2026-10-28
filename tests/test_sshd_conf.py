@@ -82,6 +82,65 @@ class MyTests(unittest.TestCase):
         }
         self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
 
+    def test_sshd_conf_first_value_wins(self):
+        """
+        Test 'sshd_conf' with repeated keywords
+        """
+        data = (
+            'Port 22\n'
+            'PermitRootLogin yes\n'
+            'PasswordAuthentication yes\n'
+            'Ciphers +aes128-ctr\n'
+            'Subsystem sftp /usr/lib/openssh/sftp-server\n'
+            'AllowUsers alice bob\n'
+            'AllowUsers carol\n'
+            'DenyUsers dave\n'
+            'AllowGroups staff\n'
+            'DenyGroups guests\n'
+            'DenyGroups temps\n'
+            'Port 2222\n'
+            'PermitRootLogin no\n'
+            'PasswordAuthentication no\n'
+            'Ciphers aes256-ctr\n'
+            'Subsystem sftp internal-sftp\n'
+            'HostKey /etc/ssh/ssh_host_rsa_key\n'
+            'HostKey /etc/ssh/ssh_host_ed25519_key\n'
+            'ListenAddress 0.0.0.0\n'
+            'ListenAddress ::\n'
+            'AcceptEnv LANG\n'
+            'AcceptEnv LC_*\n'
+        )
+        expected = {
+            'port': [22, 2222],
+            'permitrootlogin': 'yes',
+            'passwordauthentication': 'yes',
+            'ciphers': ['aes128-ctr'],
+            'ciphers_strategy': '+',
+            'subsystem': 'sftp',
+            'subsystem_command': '/usr/lib/openssh/sftp-server',
+            'allowusers': 'alice bob carol',
+            'denyusers': 'dave',
+            'allowgroups': 'staff',
+            'denygroups': 'guests temps',
+            'hostkey': ['/etc/ssh/ssh_host_rsa_key', '/etc/ssh/ssh_host_ed25519_key'],
+            'listenaddress': ['0.0.0.0', '::'],
+            'acceptenv': ['LANG', 'LC_*']
+        }
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
+
+    def test_sshd_conf_sshd_T_repeated_allow_deny(self):
+        """
+        Test 'sshd -T' output with one AllowUsers line per user
+        """
+        data = (
+            'allowusers alice\n'
+            'allowusers bob\n'
+            'denygroups guests\n'
+            'denygroups temps\n'
+        )
+        expected = {'allowusers': 'alice bob', 'denygroups': 'guests temps'}
+        self.assertEqual(jc.parsers.sshd_conf.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

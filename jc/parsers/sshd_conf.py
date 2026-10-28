@@ -610,6 +610,10 @@ def parse(
 
     multi_fields: Set[str] = {'acceptenv', 'hostkey', 'include', 'listenaddress', 'port'}
 
+    accumulate_fields: Set[str] = {
+        'allowgroups', 'allowusers', 'denygroups', 'denyusers'
+    }
+
     modified_fields: Set[str] = {
         'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
         'kexalgorithms', 'macs', 'pubkeyacceptedalgorithms'
@@ -651,6 +655,14 @@ def parse(
                 if key not in raw_output:
                     raw_output[key] = []
                 raw_output[key].append(val)
+                continue
+
+            # for each keyword the first obtained value is used
+            if key in raw_output:
+                # these keywords add to the list
+                if key in accumulate_fields:
+                    raw_output[key] += ' ' + val
+
                 continue
 
             if key in modified_fields and val[0] in modifiers:

@@ -677,6 +677,10 @@ def parse(
                 host[key].append(val)
                 continue
 
+            # for each keyword the first obtained value is used
+            if key in host:
+                continue
+
             if key in modified_fields and val[0] in modifiers:
                 host[key] = val[1:]
                 host[key + '_strategy'] = val[0]
