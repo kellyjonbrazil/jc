@@ -379,21 +379,21 @@ def parse(data, raw=False, quiet=False):
 
         # find multiple mount points and add to a single entry
         for entry in raw_output:
-            if entry['name']:
+            if entry.get('name'):
                 if 'mountpoints' in entry:
                     if entry['mountpoints']:
                         entry['mountpoints'] = [entry['mountpoints']]
                     else:
                         entry['mountpoints'] = []
                 new_list.append(entry)
-            elif 'mountpoints' in entry and entry['mountpoints']:
+            elif new_list and 'mountpoints' in entry and entry['mountpoints']:
                 new_list[-1]['mountpoints'].append(entry['mountpoints'])
 
         # clean up tree characters, if any
         for entry in new_list:
             tree_chars = ['`-', '|-', '├─', '└─']
             for chars in tree_chars:
-                if entry['name'][0:2] == chars:
+                if entry.get('name', '')[0:2] == chars:
                     entry['name'] = entry['name'][2:]
 
     return new_list if raw else _process(new_list)
