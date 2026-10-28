@@ -302,5 +302,40 @@ class MyTests(unittest.TestCase):
         self.assertEqual(opts['timer'], {'timer_name': 'keepalive', 'expire_time': '', 'retrans': '0'})
 
 
+    def test_ss_netlink_name_with_space(self):
+        """
+        Test 'ss' netlink rows whose process name has spaces and slashes
+        """
+        data = ('Netid State  Recv-Q Send-Q        Local Address:Port  Peer Address:Port\n'
+                'nl    UNCONN 0      0           rtnl:my proc/123                  *\n'
+                'nl    UNCONN 0      0           rtnl:kernel                       *\n'
+                'nl    UNCONN 0      0           rtnl:a/b c/1 x/77                 *\n'
+                'nl    UNCONN 0      0           rtnl:x  y/5                       *\n'
+                'nl    UNCONN 0      0           rtnl:systemd/1                    *\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual([(r['channel'], r.get('pid'), r['peer_address'], r.get('peer_port')) for r in result], [
+            ('rtnl:my proc', 123, '*', None),
+            ('rtnl:kernel', None, '*', None),
+            ('rtnl:a/b c/1 x', 77, '*', None),
+            ('rtnl:x  y', 5, '*', None),
+            ('rtnl:systemd', 1, '*', None)
+        ])
+
+    def test_ss_unix_percent_in_path(self):
+        """
+        Test 'ss' unix socket paths with a '%' that is not an interface
+        """
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port\n'
+                'u_str LISTEN 0      4096   @foo%bar 1234       * 0\n'
+                'u_str LISTEN 0      4096   /run/a%b 1235       * 0\n'
+                'udp   UNCONN 0      0      127.0.0.53%lo:53    0.0.0.0:*\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result[0]['path'], '@foo%bar')
+        self.assertNotIn('interface', result[0])
+        self.assertEqual(result[1]['path'], '/run/a%b')
+        self.assertNotIn('interface', result[1])
+        self.assertEqual((result[2]['local_address'], result[2]['interface']), ('127.0.0.53', 'lo'))
+
+
 if __name__ == '__main__':
     unittest.main()
