@@ -4,6 +4,7 @@ JC cli module
 
 import io
 import sys
+import math
 import os
 import posixpath
 import re
@@ -11,7 +12,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Iterable, Union, Optional, TextIO, Tuple
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO, Tuple
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
@@ -56,6 +57,55 @@ YAML11_NON_STR_RE = re.compile(r'''^(?:y|Y|yes|Yes|YES|n|N|no|No|NO|on|On|ON|off
     |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*)$''',  # sexagesimal float
     re.VERBOSE)
 
+
+
+def _non_finite_to_null(data: Any) -> Any:
+    """
+    Return `data` with non-finite floats (inf, -inf, nan) in nested
+    dictionaries and lists replaced by None, since JSON has no such
+    numbers. Dictionaries and lists are changed in place and tuples are
+    turned into lists. Dictionary keys that are non-finite floats become
+    the strings json.dumps() would write for them.
+    """
+    def fix(value: Any) -> Any:
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        if isinstance(value, tuple):
+            return list(value)
+        return value
+
+    def key_name(key: float) -> str:
+        if key != key:
+            return 'NaN'
+        return 'Infinity' if key > 0 else '-Infinity'
+
+    data = fix(data)
+    stack = [data]
+    seen = set()
+
+    # walk without recursion so deeply nested data cannot hit the limit
+    while stack:
+        obj = stack.pop()
+        if id(obj) in seen:
+            continue
+        seen.add(id(obj))
+
+        if isinstance(obj, dict):
+            items = []
+            for key, value in obj.items():
+                if isinstance(key, float) and not math.isfinite(key):
+                    key = key_name(key)
+                items.append((key, fix(value)))
+            obj.clear()
+            obj.update(items)
+            stack.extend(v for v in obj.values() if isinstance(v, (dict, list)))
+
+        elif isinstance(obj, list):
+            for index, value in enumerate(obj):
+                obj[index] = fix(value)
+            stack.extend(v for v in obj if isinstance(v, (dict, list)))
+
+    return data
 
 class info():
     version: str = __version__
@@ -437,13 +487,23 @@ class JcCli():
         def string_serializer(data):
             return str(data)
 
-        j_string = json.dumps(
-            self.data_out,
-            indent=self.json_indent,
-            separators=self.json_separators,
-            ensure_ascii=self.ascii_only,
-            default=string_serializer
-        )
+        def dumps(data: Any) -> str:
+            return json.dumps(
+                data,
+                indent=self.json_indent,
+                separators=self.json_separators,
+                ensure_ascii=self.ascii_only,
+                default=string_serializer,
+                allow_nan=False
+            )
+
+        try:
+            j_string = dumps(self.data_out)
+        except ValueError:
+            # JSON has no inf or nan: write them as null. Only done when
+            # needed, so normal output costs nothing extra.
+            self.data_out = _non_finite_to_null(self.data_out)
+            j_string = dumps(self.data_out)
 
         # these characters can only appear inside JSON strings
         j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)

@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import tempfile
+import types
 import unittest
 from unittest import mock
 from datetime import datetime, timezone
@@ -232,6 +233,94 @@ class MyTests(unittest.TestCase):
             cli.mono = True
             cli.data_out = test_dict
             self.assertEqual(cli.json_out(), expected_json)
+
+    def test_cli_json_out_non_finite(self):
+        """
+        Test JSON output with inf and nan floats nested in lists, dictionaries
+        and tuples, and as dictionary keys: they are written as null
+        """
+        inf = float('inf')
+        nan = float('nan')
+        test_input = [
+            inf,
+            [1.5, -inf, {'a': nan, 'b': [nan, (inf, 2)]}],
+            {'x': {'y': [inf]}, nan: 1, inf: 2, 'z': 'inf'},
+        ]
+        expected_output = [
+            'null',
+            '[1.5,null,{"a":null,"b":[null,[null,2]]}]',
+            '{"x":{"y":[null]},"NaN":1,"Infinity":2,"z":"inf"}',
+        ]
+
+        for test_data, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_data
+            self.assertEqual(cli.json_out(), expected_json)
+
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.pretty = True
+        cli.data_out = {'a': [inf]}
+        self.assertEqual(cli.json_out(), '{\n  "a": [\n    null\n  ]\n}')
+
+    def test_cli_json_out_finite_unchanged(self):
+        """
+        Test JSON output without inf or nan is the same as plain json.dumps()
+        and the data is not changed
+        """
+        test_data = [
+            {'a': 1.5, 'b': [1e308, -0.0, 2], 'c': {'d': None, 'e': 'caf\xe9'}, 'f': True},
+            [[[[1]]], (1, 2), {'g': 3.14}],
+        ]
+        for data in test_data:
+            expected = json.dumps(data, separators=(',', ':'), ensure_ascii=False)
+            original = repr(data)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = data
+            self.assertEqual(cli.json_out(), expected)
+            self.assertIs(cli.data_out, data)
+            self.assertEqual(repr(data), original)
+
+    def test_cli_non_finite_standard_and_streaming_output(self):
+        """
+        Test standard and streaming parser output with inf and nan: each JSON
+        document or line has null in their place
+        """
+        inf = float('inf')
+        nan = float('nan')
+        parser = types.ModuleType('fake_parser')
+
+        def parse(data, raw=False, quiet=False, ignore_exceptions=False):
+            return [{'a': inf, 'b': [nan, 1.5]}, {'c': {'d': -inf}}]
+
+        def parse_s(data, raw=False, quiet=False, ignore_exceptions=False):
+            for line in data:
+                yield {'line': line.rstrip('\n'), 'v': [inf, {'w': nan}]}
+
+        parser.parse = parse
+        cli = JcCli()
+        cli.parser_module = parser
+        cli.mono = True
+        f = io.StringIO()
+        stdin = io.TextIOWrapper(io.BytesIO(b'x\n'), encoding='utf-8')
+        with mock.patch('sys.stdin', stdin), contextlib.redirect_stdout(f):
+            cli.standard_parse_and_print()
+        self.assertEqual(f.getvalue(), '[{"a":null,"b":[null,1.5]},{"c":{"d":null}}]\n')
+
+        parser.parse = parse_s
+        cli = JcCli()
+        cli.parser_module = parser
+        cli.mono = True
+        f = io.StringIO()
+        stdin = io.TextIOWrapper(io.BytesIO(b'x\ny\n'), encoding='utf-8')
+        with mock.patch('sys.stdin', stdin), contextlib.redirect_stdout(f):
+            cli.streaming_parse_and_print()
+        self.assertEqual(f.getvalue(), '{"line":"x","v":[null,{"w":null}]}\n{"line":"y","v":[null,{"w":null}]}\n')
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out_pretty(self):
