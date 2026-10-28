@@ -19,7 +19,10 @@ class MyTests(unittest.TestCase):
         fixtures = {
             'clf_s': (
                 'fixtures/generic/common-log-format.log',
-                'fixtures/generic/common-log-format-streaming.json')
+                'fixtures/generic/common-log-format-streaming.json'),
+            'clf_s_escaped_quotes': (
+                'fixtures/generic/common-log-format-escaped-quotes.log',
+                'fixtures/generic/common-log-format-escaped-quotes-streaming.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -58,6 +61,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             list(parse(crlf_data.splitlines(keepends=True), quiet=True)),
             self.f_json['clf_s']
+        )
+
+
+    def test_clf_s_escaped_quotes(self):
+        """
+        Test 'clf-s' with backslash-escaped quotes and backslashes in quoted fields
+        """
+        self.assertEqual(
+            list(parse(self.f_in['clf_s_escaped_quotes'].splitlines(), quiet=True)),
+            self.f_json['clf_s_escaped_quotes']
         )
 
 
