@@ -1,0 +1,32 @@
+commit fc90e145f43d8465caffa590d0337973480711a9
+Author: Test User <test@example.com>
+
+    rename quoted names
+
+0	0	"p q/d\303\251.txt" => p q/f.txt
+0	0	"p q/t\t.txt" => p q/u.txt
+0	0	"a\"b" => "sub_a\"b"
+
+commit eaa5df0dc3cc27789fc2c99edbd69f3aa01f440d
+Author: Test User <test@example.com>
+
+    add quoted names
+
+1	0	".github/workflows/d\303\251ploy.yml"
+1	0	"a\"b"
+1	0	"back\\slash"
+1	0	"new\nline"
+1	0	plain.txt
+1	0	"tab\there"
+1	0	x | y.txt
+1	0	"\346\227\245\346\234\254.txt"
+
+commit b4f0f5183d941ca3ff1025cd4a48c4b2155db9c1
+Author: Test User <test@example.com>
+
+    base
+
+1	0	README.md
+1	0	"bad\377.txt"
+4	0	"p q/d\303\251.txt"
+4	0	"p q/t\t.txt"
