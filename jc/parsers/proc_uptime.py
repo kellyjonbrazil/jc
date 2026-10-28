@@ -29,6 +29,8 @@ Schema:
       "idle_time":                  float
     }
 
+Non-finite numbers are converted to `None`/`null`
+
 Examples:
 
     $ cat /proc/uptime | jc --proc -p
