@@ -207,6 +207,18 @@ def normalize_header(header: str) -> str:
                  .lower()
 
 
+def _check_row(header: str, line: str) -> None:
+    """
+    The last column (Command) takes the rest of the line, so a row can have
+    more fields than the header, and may have no Command at all, but it
+    cannot have fewer fields than that. The Time column of `pidstat -h` is
+    always an epoch integer.
+    """
+    fields = line.split()
+    if len(fields) < len(header.split()) - 1 or not fields[0].isdecimal():
+        raise ParseError('Not pidstat data')
+
+
 def parse(
     data: str,
     raw: bool = False,
@@ -234,9 +246,11 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        data_list = list(filter(None, data.splitlines()))
+        for line in jc.utils.splitlines(data):
+            # skip blank lines
+            if not line.strip():
+                continue
 
-        for line in data_list:
             if _is_header(line):
                 header_found = True
                 if len(table_list) > 1:
@@ -246,6 +260,7 @@ def parse(
 
             # a data row never starts with '#'
             if header_found and not line.startswith('#'):
+                _check_row(table_list[0], line)
                 table_list.append(line)
 
         if len(table_list) > 1:

@@ -1,6 +1,7 @@
 import os
 import json
 import unittest
+from jc.exceptions import ParseError
 import jc.parsers.mpstat_s
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -12,6 +13,9 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 class MyTests(unittest.TestCase):
 
     # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mpstat-linux-stray-line.out'), 'r', encoding='utf-8') as f:
+        generic_mpstat_stray_line = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/mpstat-many-cpus.out'), 'r', encoding='utf-8') as f:
         generic_mpstat_many_cpus = f.read()
 
@@ -83,16 +87,32 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.mpstat_s.parse(self.generic_mpstat_many_cpus.splitlines(), quiet=True)), self.generic_mpstat_many_cpus_streaming_json)
 
+    def test_mpstat_s_stray_line(self):
+        """
+        Test 'mpstat' with a line that is not mpstat data after the header. Should raise ParseError
+        """
+        self.assertRaises(ParseError, list, jc.parsers.mpstat_s.parse(self.generic_mpstat_stray_line.splitlines(), quiet=True))
+
+    def test_mpstat_s_stray_line_ignore_exceptions(self):
+        """
+        Test 'mpstat' with a line that is not mpstat data after the header. Should yield an error record for that line and continue
+        """
+        result = list(jc.parsers.mpstat_s.parse(self.generic_mpstat_stray_line.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual([r.get('cpu') for r in result], ['all', None, 'all'])
+        self.assertEqual(result[1], {"_jc_meta": {"success": False, "error": "ParseError: Not mpstat data", "line": "cp: cannot stat 'backup.tar': No such file or directory"}})
+
     def test_mpstat_s_ragged_rows(self):
         """
-        Test 'mpstat' rows with fewer or more fields than the header
+        Test 'mpstat' rows with fewer or more fields than the header. Each should raise ParseError and a good row after it still parses
         """
-        data = ['12:00:01 AM  CPU    %usr   %nice', '12:00:02 AM  all   1.50', '12:00:02 AM    0   2.50   3.50   4.50']
-        expected = [
-            {"cpu": "all", "percent_usr": 1.5, "type": "cpu", "time": "12:00:02 AM"},
-            {"cpu": "0", "percent_usr": 2.5, "percent_nice": None, "type": "cpu", "time": "12:00:02 AM"}
-        ]
-        self.assertEqual(list(jc.parsers.mpstat_s.parse(data, quiet=True)), expected)
+        header = '12:00:01 AM  CPU    %usr   %nice'
+        for bad in ('12:00:02 AM  all   1.50', '12:00:02 AM    0   2.50   3.50   4.50', 'random'):
+            with self.assertRaises(ParseError):
+                list(jc.parsers.mpstat_s.parse([header, bad], quiet=True))
+
+        result = list(jc.parsers.mpstat_s.parse([header, '12:00:02 AM  all   1.50', '12:00:02 AM    0   2.50   3.50\r'], quiet=True, ignore_exceptions=True))
+        self.assertEqual(result[1], {"cpu": "0", "percent_usr": 2.5, "percent_nice": 3.5, "type": "cpu", "time": "12:00:02 AM", "_jc_meta": {"success": True}})
+        self.assertEqual(len(result), 2)
 
 
 if __name__ == '__main__':

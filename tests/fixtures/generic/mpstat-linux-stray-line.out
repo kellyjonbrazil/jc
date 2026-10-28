@@ -1,0 +1,4 @@
+03:14:20 PM  CPU    %usr   %nice    %sys %iowait    %irq   %soft  %steal  %guest  %gnice   %idle
+03:14:20 PM  all    0.23    0.00    0.37    0.01    0.00    0.00    0.00    0.00    0.00   99.39
+cp: cannot stat 'backup.tar': No such file or directory
+03:14:20 PM  all    0.23    0.00    0.37    0.01    0.00    0.00    0.00    0.00    0.00   99.39

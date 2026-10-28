@@ -2,11 +2,16 @@ import os
 import unittest
 import json
 import jc.parsers.iostat
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # new input fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iostat-linux-stray-line.out'), 'r', encoding='utf-8') as f:
+        generic_iostat_stray_line = f.read()
 
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/iostat.out'), 'r', encoding='utf-8') as f:
@@ -184,6 +189,27 @@ class MyTests(unittest.TestCase):
         Test 'iostat -mx' on Ubuntu 20.10
         """
         self.assertEqual(jc.parsers.iostat.parse(self.ubuntu_20_10_iostat_mx, quiet=True), self.ubuntu_20_10_iostat_mx_json)
+
+
+    def test_iostat_stray_line(self):
+        """
+        Test 'iostat' with a line that is not iostat data inside a table. Should raise ParseError
+        """
+        self.assertRaises(ParseError, jc.parsers.iostat.parse, self.generic_iostat_stray_line, quiet=True)
+
+    def test_iostat_ragged_rows(self):
+        """
+        Test 'iostat' rows with fewer or more fields than the header. Each should raise ParseError
+        """
+        for bad in ('sda 1.5', 'sdb 2.5 3.5 4.5', 'random'):
+            self.assertRaises(ParseError, jc.parsers.iostat.parse, 'Device: r/s w/s\n' + bad, quiet=True)
+
+    def test_iostat_whitespace_only_line(self):
+        """
+        Test 'iostat' with whitespace-only lines inside a table. They are skipped like blank lines
+        """
+        data = 'Device: r/s w/s\nsda 1.5 2.5\n   \n\t\nsdb 3.5 4.5\n'
+        self.assertEqual([d['device'] for d in jc.parsers.iostat.parse(data, quiet=True)], ['sda', 'sdb'])
 
 
 if __name__ == '__main__':
