@@ -111,6 +111,7 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -161,7 +162,12 @@ def _parse_row(header_list: List[str], line: str) -> Dict:
     Same result as `simple_table_parse([header, line])[0]` for a header that
     has already been split into `header_list`.
     """
-    return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
+    # mpstat values never contain spaces: one value per header column
+    row = line.split()
+    if len(row) != len(header_list):
+        raise ParseError('Not mpstat data')
+
+    return dict(zip(header_list, row))
 
 
 def parse(
@@ -194,7 +200,11 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in data.splitlines():
+
+            # skip blank lines
+            if not line.strip():
+                continue
 
             # check for header, normalize it, and fix the time column
             if ' CPU ' in line or ' NODE ' in line:
