@@ -180,6 +180,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record-streaming.json'), 'r', encoding='utf-8') as f:
         generic_git_log_short_stat_bad_record_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_name_separator = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_name_separator_json = json.loads(f.read())
+
     def test_git_log_s_nodata(self):
         """
         Test 'git_log' with no data
@@ -385,6 +391,12 @@ class MyTests(unittest.TestCase):
         result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
         self.assertEqual(result, self.generic_git_log_short_stat_bad_record_streaming_json)
         self.assertEqual([r['_jc_meta']['success'] for r in result], [True, False, True])
+
+    def test_git_log_stat_name_separator_s(self):
+        """
+        Test 'git_log --stat' with file names that contain ' | ' and '|'
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_name_separator.splitlines(), quiet=True)), self.generic_git_log_stat_name_separator_json)
 
 
 if __name__ == '__main__':

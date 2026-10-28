@@ -104,6 +104,9 @@ import jc.utils
 
 DATE_RE = re.compile(r'[MTWFS][ouerha][nedritnu] [JFMASOND][aepuco][nbrynlgptvc]')
 LAST_F_DATE_RE = re.compile(r'\d\d:\d\d:\d\d \d\d\d\d')
+# a console or X display such as `:0`, `:0.0` or `:pts/0:S.0`, not an IPv6
+# address such as `::1` or `::ffff:203.0.113.5`
+CONSOLE_HOST_RE = re.compile(r':(?!:)')
 LOGIN_LOGOUT_EPOCH_RE = re.compile(r'.*\d\d:\d\d:\d\d \d\d\d\d.*')
 LOGOUT_IGNORED_EVENTS = ['down', 'crash']
 
@@ -158,7 +161,7 @@ def _process(proc_data):
         if 'hostname' in entry and entry['hostname'] == '-':
             entry['hostname'] = None
 
-        if 'hostname' in entry and entry['hostname'] is not None and entry['hostname'][0] == ":":
+        if 'hostname' in entry and entry['hostname'] is not None and CONSOLE_HOST_RE.match(entry['hostname']):
             entry['hostname'] = f'CONSOLE{entry["hostname"]}'
 
         if 'logout' in entry and entry['logout'] == 'still_logged_in':

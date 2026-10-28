@@ -128,5 +128,37 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.url.parse(data, quiet=True), expected)
 
 
+    def test_url_encoded_delimiters_in_netloc(self):
+        """
+        Test URL with an encoded '/' in the user info keeps the decoded netloc and host separate
+        """
+        result = jc.parsers.url.parse(r'http://good.com%2F@other.com/', quiet=True)
+        self.assertEqual(result['netloc'], 'good.com%2F@other.com')
+        self.assertEqual(result['hostname'], 'other.com')
+        self.assertEqual(result['decoded']['netloc'], 'good.com/@other.com')
+        self.assertEqual(result['decoded']['path'], '/')
+        self.assertEqual(result['decoded']['hostname'], 'other.com')
+
+    def test_url_encoded_delimiters_in_path(self):
+        """
+        Test URL with an encoded '#' in the path stays in the decoded path
+        """
+        result = jc.parsers.url.parse(r'http://example.com/a%23b?x=1', quiet=True)
+        self.assertEqual(result['path'], '/a%23b')
+        self.assertEqual(result['decoded']['path'], '/a#b')
+        self.assertEqual(result['decoded']['filename'], 'a#b')
+        self.assertEqual(result['decoded']['query'], 'x=1')
+        self.assertEqual(result['decoded']['fragment'], None)
+
+    def test_url_encoded_bracket_in_netloc(self):
+        """
+        Test URL with an encoded '[' in the host name does not raise an error
+        """
+        result = jc.parsers.url.parse(r'http://a%5Bb/', quiet=True)
+        self.assertEqual(result['netloc'], 'a%5Bb')
+        self.assertEqual(result['decoded']['netloc'], 'a[b')
+        self.assertEqual(result['decoded']['url'], 'http://a[b/')
+
+
 if __name__ == '__main__':
     unittest.main()

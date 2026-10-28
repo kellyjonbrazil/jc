@@ -247,7 +247,7 @@ def parse(
             # match each optional field as a whole space-terminated token
             (?P<optional_fields>(?:(?:[^\s:]+:\S+|unbindable)\s)*)-\s
             (?P<fs_type>\S+)\s
-            (?P<mount_source>\S+)\s
+            (?P<mount_source>\S*)\s
             (?P<super_options>\S+)?
             ''', re.VERBOSE | re.ASCII
         )

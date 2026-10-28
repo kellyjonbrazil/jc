@@ -12,6 +12,30 @@ class MyTests(unittest.TestCase):
     # input
     #
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-freebsd-protocol-names.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_freebsd_protocol_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-freebsd-protocol-names.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_freebsd_protocol_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-osx-peer-host-udp.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_osx_peer_host_udp = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-osx-peer-host-udp.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_osx_peer_host_udp_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-freebsd-route-host-names.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_freebsd_route_host_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-freebsd-route-host-names.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_freebsd_route_host_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-service-port-names.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_service_port_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-service-port-names.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_service_port_names_json = json.loads(f.read())
+
     # netstat
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/netstat.out'), 'r', encoding='utf-8') as f:
         centos_7_7_netstat = f.read()
@@ -575,6 +599,30 @@ class MyTests(unittest.TestCase):
         Test 'netstat -lnpe' with state words in the PID/Program name column
         """
         self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_state_words_e, quiet=True), self.generic_netstat_state_words_e_json)
+
+    def test_netstat_freebsd_protocol_names(self):
+        """
+        Test 'netstat' with tcp46, sctp46 and divert protocol names
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_freebsd_protocol_names, quiet=True), self.generic_netstat_freebsd_protocol_names_json)
+
+    def test_netstat_osx_peer_host_udp(self):
+        """
+        Test 'netstat -A' with a peer host name that contains 'udp' on a tcp4 row
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_osx_peer_host_udp, quiet=True), self.generic_netstat_osx_peer_host_udp_json)
+
+    def test_netstat_freebsd_route_host_names(self):
+        """
+        Test 'netstat -r' with route rows for hosts named 'Name' and 'Destination'
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_freebsd_route_host_names, quiet=True), self.generic_netstat_freebsd_route_host_names_json)
+
+    def test_netstat_service_port_names(self):
+        """
+        Test 'netstat' with service names that contain digits as ports
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_service_port_names, quiet=True), self.generic_netstat_linux_service_port_names_json)
 
 
 
