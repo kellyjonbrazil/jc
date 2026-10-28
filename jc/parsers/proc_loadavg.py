@@ -24,8 +24,6 @@ or
 
 Schema:
 
-All values are integers.
-
     {
       "load_1m":              float,
       "load_5m":              float,
@@ -34,6 +32,8 @@ All values are integers.
       "available":            integer,
       "last_pid":             integer
     }
+
+Non-finite number conversions become strings. (e.g. NAN and Inf)
 
 Examples:
 
