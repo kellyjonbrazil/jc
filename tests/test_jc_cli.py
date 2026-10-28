@@ -349,6 +349,27 @@ class MyTests(unittest.TestCase):
             cli.data_out = test_dict
             self.assertEqual(cli.yaml_out(), expected_json)
 
+    @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
+    def test_cli_yaml_out_no_side_effects(self):
+        """
+        Test YAML output leaves the ruamel.yaml classes unchanged for other
+        code in the same process
+        """
+        representer = ruamel.yaml.representer.RoundTripRepresenter
+        # official_plug_ins() was added in ruamel.yaml 0.15.x
+        plug_ins = getattr(ruamel.yaml.YAML, 'official_plug_ins', None)
+        ignore_aliases = representer.ignore_aliases
+        representers = representer.yaml_representers.copy()
+        shared = ['a']
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.data_out = {'key1': shared, 'key2': shared}
+        self.assertEqual(cli.yaml_out(), '---\nkey1:\n- a\nkey2:\n- a')
+        self.assertIs(getattr(ruamel.yaml.YAML, 'official_plug_ins', None), plug_ins)
+        self.assertIs(representer.ignore_aliases, ignore_aliases)
+        self.assertEqual(representer.yaml_representers, representers)
+
     def test_cli_about_jc(self):
         """
         Test the about information and parser count

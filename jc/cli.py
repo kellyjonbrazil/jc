@@ -371,15 +371,23 @@ class JcCli():
         if YAML_INSTALLED:
             y_string_buf = io.BytesIO()
 
-            # monkey patch to disable plugins since we don't use them and in
-            # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
-            # plugin code is incompatible with the pyoxidizer packager
-            YAML.official_plug_ins = lambda a: []  # type: ignore
+            # the changes below are made on subclasses so the ruamel.yaml
+            # classes stay unchanged for other code in the same process
 
-            # monkey patch to disable aliases
-            representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True  # type: ignore
+            # disable plugins since we don't use them and in ruamel.yaml
+            # versions prior to 0.17.0 the use of __file__ in the plugin code
+            # is incompatible with the pyoxidizer packager
+            class JcYAML(YAML):
+                def official_plug_ins(self):
+                    return []
 
-            yaml = YAML()
+            # disable aliases
+            class JcRepresenter(representer.RoundTripRepresenter):
+                def ignore_aliases(self, data):
+                    return True
+
+            yaml = JcYAML()
+            yaml.Representer = JcRepresenter
             yaml.default_flow_style = False
             yaml.explicit_start = True  # type: ignore
             yaml.allow_unicode = not self.ascii_only
