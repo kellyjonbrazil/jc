@@ -108,6 +108,29 @@ def _process(proc_data):
     return proc_data
 
 
+# a backslash and the character after it, a double-quoted string, or a comma
+_OPTION_TOKEN = re.compile(r'\\.|"[^"]*"|,')
+
+
+def _split_options(options):
+    """
+    Split a comma-separated option list. Commas inside a double-quoted
+    string (e.g. an SELinux `context="...:c12,c34"`) or escaped with a
+    backslash (e.g. an overlay `upperdir=/a\\,b`) do not split. The option
+    text is kept as printed.
+    """
+    result = []
+    start = 0
+
+    for match in _OPTION_TOKEN.finditer(options):
+        if match.group() == ',':
+            result.append(options[start:match.start()])
+            start = match.end()
+
+    result.append(options[start:])
+    return result
+
+
 # The options are at the end of the line, so the entry is matched from the
 # end: the last `type <type> (<options>)` (Linux) or ` (<options>)` (macOS and
 # BSD) ends the mount point, and the last ` on ` before it ends the filesystem.
@@ -185,7 +208,7 @@ def _linux_parse(data):
             output_line['filesystem'] = groups["filesystem"]
             output_line['mount_point'] = groups["mount_point"]
             output_line['type'] = tail["type"]
-            output_line['options'] = tail["options"].split(',')
+            output_line['options'] = _split_options(tail["options"])
             output.append(output_line)
 
     return output
@@ -219,7 +242,7 @@ def _aix_parse(data):
         output_line['filesystem'] = parsed_line[0]
         output_line['mount_point'] = parsed_line[1]
         output_line['type'] = parsed_line[2]
-        output_line['options'] = parsed_line[6].lstrip('(').rstrip(')').split(',')
+        output_line['options'] = _split_options(parsed_line[6].lstrip('(').rstrip(')'))
 
         output.append(output_line)
 
