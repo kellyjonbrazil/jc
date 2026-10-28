@@ -76,6 +76,7 @@ Examples:
     $ stat | jc --stat-s -r
     {"file":"(stdin)","unix_device":"1027739696","inode":"1155","flag...}
 """
+import re
 import shlex
 import jc.utils
 from jc.streaming import (
@@ -84,6 +85,15 @@ from jc.streaming import (
 from typing import Dict, Iterable, Set
 from jc.jc_types import JSONDictType, StreamingOutputType
 from jc.exceptions import ParseError
+
+# The default FreeBSD/macOS `stat` format: device, inode, mode, links, user,
+# group, rdev, size, four quoted timestamps, block size, blocks, flags, then
+# the file name, which is printed as is and can contain any character.
+_BSD_STAT_RE = re.compile(
+    r'(\d+) (\d+) (\S+) (\S+) (\S+) (\S+) (\S+) (\S+)'
+    r' "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"'
+    r' (\S+) (\S+) (\S+) (.*)\Z'
+)
 
 
 class info():
@@ -193,6 +203,9 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            # only the line terminator is dropped from the `File:` line, as
+            # the name can end with, or consist of, whitespace
+            file_line = line.rstrip('\r\n')
             line = line.rstrip()
 
             # ignore blank lines
@@ -200,19 +213,18 @@ def parse(
                 continue
 
             # linux output
-            if line.startswith('  File: '):
+            if file_line.startswith('  File: '):
                 os_type = 'linux'
 
             if os_type == 'linux':
                 # stats output contains 9 lines
                 # line #1
-                if line.startswith('  File: '):
+                if file_line.startswith('  File: '):
                     if output_line:
                         yield output_line if raw else _process(output_line)
 
                     output_line = {}
-                    line_list = line.split(maxsplit=1)
-                    file_field = line_list[1]
+                    file_field = file_line[len('  File: '):]
 
                     # link_to is split off once the file type is known
                     output_line['file'] = _strip_quotes(file_field)
@@ -285,13 +297,18 @@ def parse(
 
             # FreeBSD/OSX output
             if os_type != 'linux':
-                value = shlex.split(line)
+                match = _BSD_STAT_RE.match(file_line)
+                if match:
+                    value = list(match.groups())
+                else:
+                    value = shlex.split(line)
+                    if not value[0].isdigit() or not value[1].isdigit():
+                        raise ParseError('Not stat data')
 
-                if not value[0].isdigit() or not value[1].isdigit():
-                    raise ParseError('Not stat data')
+                    value[15:] = [' '.join(value[15:])]
 
                 output_line = {
-                    'file': ' '.join(value[15:]),
+                    'file': value[15],
                     'unix_device': value[0],
                     'inode': value[1],
                     'flags': value[2],

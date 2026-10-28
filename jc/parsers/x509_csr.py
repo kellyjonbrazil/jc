@@ -257,7 +257,7 @@ from jc.parsers.x509_cert import _fix_objects, _process
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'X.509 PEM and DER certificate request file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'

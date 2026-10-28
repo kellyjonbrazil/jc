@@ -160,6 +160,7 @@ Examples:
     ]
 """
 import re
+import math
 import json
 from typing import List, Dict, Optional
 import jc.utils
@@ -181,6 +182,14 @@ class info():
 __version__ = info.version
 
 
+def _finite_float(value: str) -> float:
+    """float() that raises ValueError for inf and nan, so the text is kept"""
+    float_value = float(value)
+    if not math.isfinite(float_value):
+        raise ValueError('not a finite number')
+    return float_value
+
+
 def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
@@ -199,7 +208,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             # use normal int/float conversions since jc.utils.convert_to_int is too greedy
             try:
                 if '.' in entry[key]:
-                    entry[key] = float(entry[key])
+                    entry[key] = _finite_float(entry[key])
                 else:
                     entry[key] = int(entry[key])
             except Exception:
@@ -209,7 +218,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 for k in entry[key]:
                     try:
                         if '.' in entry[key][k]:
-                            entry[key][k] = float(entry[key][k])
+                            entry[key][k] = _finite_float(entry[key][k])
                         else:
                             entry[key][k] = int(entry[key][k])
                     except Exception:

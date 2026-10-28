@@ -52,6 +52,28 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.iw_scan.parse(self.centos_7_7_iw_scan2, quiet=True), self.centos_7_7_iw_scan2_json)
 
+    def test_iw_scan_non_finite_values(self):
+        """
+        Test 'iw dev wlan0 scan' with an SSID of inf and a WPS model of nan:
+        the text is kept
+        """
+        data = (
+            'BSS 00:19:a9:cd:c6:80 (on wlan0)\n'
+            '\tfreq: 2412\n'
+            '\tsignal: -45.00 dBm\n'
+            '\tSSID: inf\n'
+            '\tSupported rates: 1.0* 5.5 Infinity \n'
+            '\tWPS:\t * Version: 1.0\n'
+            '\t\t * Model: nan\n'
+        )
+        result = jc.parsers.iw_scan.parse(data, quiet=True)
+        self.assertEqual(result[0]['ssid'], 'inf')
+        self.assertEqual(result[0]['model'], 'nan')
+        self.assertEqual(result[0]['freq'], 2412)
+        self.assertEqual(result[0]['signal_dbm'], -45.0)
+        self.assertEqual(result[0]['supported_rates'], [1.0, 5.5, 'Infinity'])
+        self.assertEqual(result[0]['selected_rates'], [1.0])
+
 
 if __name__ == '__main__':
     unittest.main()

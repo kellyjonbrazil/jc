@@ -162,6 +162,7 @@ Examples:
     {"time":"11:24:50","uptime":"2 min","users":"2","load_1m":"0.23","lo...}
     ...
 """
+import re
 from typing import List, Dict, Set, Iterable, Union
 import jc.utils
 from jc.streaming import (
@@ -184,6 +185,16 @@ class info():
 
 
 __version__ = info.version
+
+
+# top pads its summary numbers to a fixed width, so a number that fills the
+# width (e.g. 100.0 or a large memory value) touches the text before it.
+_GLUED_RE = re.compile(r'(?:(?<=[A-Za-z]),|:|(?<=used)\.)(?=\S)')
+
+
+def _split_summary(line: str) -> List[str]:
+    """Split a summary line into fields, even if a number touches its label."""
+    return _GLUED_RE.sub(lambda m: m.group(0) + ' ', line).split()
 
 
 def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[str]:
@@ -463,7 +474,7 @@ def parse(
 
             if line.startswith('Tasks:'):
                 # Tasks: 112 total,   1 running, 111 sleeping,   0 stopped,   0 zombie
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'tasks_total': line_list[1],
@@ -477,7 +488,7 @@ def parse(
 
             if line.startswith('%Cpu(s):'):
                 # %Cpu(s):  5.9 us,  5.9 sy,  0.0 ni, 88.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'cpu_user': line_list[1],
@@ -494,7 +505,7 @@ def parse(
 
             if line[1:].startswith('iB Mem :'):
                 # KiB Mem :  3861332 total,  3446476 free,   216940 used,   197916 buff/cache
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'mem_unit': line_list[0],
@@ -508,7 +519,7 @@ def parse(
 
             if line[1:].startswith('iB Swap:'):
                 # KiB Swap:  2097148 total,  2097148 free,        0 used.  3419356 avail Mem
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'swap_unit': line_list[0],

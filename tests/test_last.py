@@ -190,9 +190,9 @@ class MyTests(unittest.TestCase):
         """
         Test 'lastb -w' with spaces in, and an empty, user name
         """
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-blank-in-user.out'), 'r', encoding='utf-8') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-blank-in-user.out'), 'r', encoding='utf-8') as f:
             data = f.read()
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-blank-in-user.json'), 'r', encoding='utf-8') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-blank-in-user.json'), 'r', encoding='utf-8') as f:
             expected = json.loads(f.read())
         self.assertEqual(jc.parsers.last.parse(data, quiet=True), expected)
 
@@ -200,9 +200,9 @@ class MyTests(unittest.TestCase):
         """
         Test 'last -w' with spaces in the hostname column
         """
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-w-blank-in-hostname.out'), 'r', encoding='utf-8') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-w-blank-in-hostname.out'), 'r', encoding='utf-8') as f:
             data = f.read()
-        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-w-blank-in-hostname.json'), 'r', encoding='utf-8') as f:
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-w-blank-in-hostname.json'), 'r', encoding='utf-8') as f:
             expected = json.loads(f.read())
         self.assertEqual(jc.parsers.last.parse(data, quiet=True), expected)
 

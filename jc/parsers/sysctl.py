@@ -52,6 +52,7 @@ Examples:
       ...
     }
 """
+import math
 import jc.utils
 
 
@@ -86,7 +87,10 @@ def _process(proc_data):
             proc_data[key] = int(proc_data[key])
         except (ValueError):
             try:
-                proc_data[key] = float(proc_data[key])
+                float_value = float(proc_data[key])
+                # keep the text of inf and nan
+                if math.isfinite(float_value):
+                    proc_data[key] = float_value
             except (ValueError):
                 pass
     return proc_data

@@ -91,4 +91,4 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    return jc_csv_s.parse(data, raw, quiet, ignore_exceptions, implicit_header=True, tsv=True)
+    return jc_csv_s.parse(data, raw, quiet, ignore_exceptions=ignore_exceptions, implicit_header=True, tsv=True)
