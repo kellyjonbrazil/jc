@@ -169,8 +169,18 @@ Examples:
       ...
     ]
 """
+import re
 import shlex
 import jc.utils
+
+# The default FreeBSD/macOS `stat` format: device, inode, mode, links, user,
+# group, rdev, size, four quoted timestamps, block size, blocks, flags, then
+# the file name, which is printed as is and can contain any character.
+_BSD_STAT_RE = re.compile(
+    r'(\d+) (\d+) (\S+) (\S+) (\S+) (\S+) (\S+) (\S+)'
+    r' "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"'
+    r' (\S+) (\S+) (\S+) (.*)\Z'
+)
 
 
 class info():
@@ -283,8 +293,8 @@ def parse(data, raw=False, quiet=False):
                     raw_output.append(output_line)
                     output_line = {}
 
-                line_list = line.split(maxsplit=1)
-                file_field = line_list[1]
+                # the name can be only whitespace, so slice after the prefix
+                file_field = line[len('  File: '):]
 
                 # link_to is split off once the file type is known
                 output_line['file'] = _strip_quotes(file_field)
@@ -353,9 +363,15 @@ def parse(data, raw=False, quiet=False):
     # FreeBSD/OSX output
     else:
         for line in cleandata:
-            value = shlex.split(line)
+            match = _BSD_STAT_RE.match(line)
+            if match:
+                value = list(match.groups())
+            else:
+                value = shlex.split(line)
+                value[15:] = [' '.join(value[15:])]
+
             output_line = {
-                'file': ' '.join(value[15:]),
+                'file': value[15],
                 'unix_device': value[0],
                 'inode': value[1],
                 'flags': value[2],

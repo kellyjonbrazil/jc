@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import tempfile
+import types
 import unittest
 from unittest import mock
 from datetime import datetime, timezone
@@ -22,6 +23,7 @@ except ImportError:
     RUAMELYAML_INSTALLED = False
 
 from jc.cli import JcCli
+from jc.exceptions import ParseError
 import jc.parsers.url as url_parser
 import jc.parsers.proc as proc_parser
 import jc.parsers.ls_s as ls_s_parser
@@ -232,6 +234,94 @@ class MyTests(unittest.TestCase):
             cli.data_out = test_dict
             self.assertEqual(cli.json_out(), expected_json)
 
+    def test_cli_json_out_non_finite(self):
+        """
+        Test JSON output with inf and nan floats nested in lists, dictionaries
+        and tuples, and as dictionary keys: they are written as null
+        """
+        inf = float('inf')
+        nan = float('nan')
+        test_input = [
+            inf,
+            [1.5, -inf, {'a': nan, 'b': [nan, (inf, 2)]}],
+            {'x': {'y': [inf]}, nan: 1, inf: 2, 'z': 'inf'},
+        ]
+        expected_output = [
+            'null',
+            '[1.5,null,{"a":null,"b":[null,[null,2]]}]',
+            '{"x":{"y":[null]},"NaN":1,"Infinity":2,"z":"inf"}',
+        ]
+
+        for test_data, expected_json in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_data
+            self.assertEqual(cli.json_out(), expected_json)
+
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.pretty = True
+        cli.data_out = {'a': [inf]}
+        self.assertEqual(cli.json_out(), '{\n  "a": [\n    null\n  ]\n}')
+
+    def test_cli_json_out_finite_unchanged(self):
+        """
+        Test JSON output without inf or nan is the same as plain json.dumps()
+        and the data is not changed
+        """
+        test_data = [
+            {'a': 1.5, 'b': [1e308, -0.0, 2], 'c': {'d': None, 'e': 'caf\xe9'}, 'f': True},
+            [[[[1]]], (1, 2), {'g': 3.14}],
+        ]
+        for data in test_data:
+            expected = json.dumps(data, separators=(',', ':'), ensure_ascii=False)
+            original = repr(data)
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = data
+            self.assertEqual(cli.json_out(), expected)
+            self.assertIs(cli.data_out, data)
+            self.assertEqual(repr(data), original)
+
+    def test_cli_non_finite_standard_and_streaming_output(self):
+        """
+        Test standard and streaming parser output with inf and nan: each JSON
+        document or line has null in their place
+        """
+        inf = float('inf')
+        nan = float('nan')
+        parser = types.ModuleType('fake_parser')
+
+        def parse(data, raw=False, quiet=False, ignore_exceptions=False):
+            return [{'a': inf, 'b': [nan, 1.5]}, {'c': {'d': -inf}}]
+
+        def parse_s(data, raw=False, quiet=False, ignore_exceptions=False):
+            for line in data:
+                yield {'line': line.rstrip('\n'), 'v': [inf, {'w': nan}]}
+
+        parser.parse = parse
+        cli = JcCli()
+        cli.parser_module = parser
+        cli.mono = True
+        f = io.StringIO()
+        stdin = io.TextIOWrapper(io.BytesIO(b'x\n'), encoding='utf-8')
+        with mock.patch('sys.stdin', stdin), contextlib.redirect_stdout(f):
+            cli.standard_parse_and_print()
+        self.assertEqual(f.getvalue(), '[{"a":null,"b":[null,1.5]},{"c":{"d":null}}]\n')
+
+        parser.parse = parse_s
+        cli = JcCli()
+        cli.parser_module = parser
+        cli.mono = True
+        f = io.StringIO()
+        stdin = io.TextIOWrapper(io.BytesIO(b'x\ny\n'), encoding='utf-8')
+        with mock.patch('sys.stdin', stdin), contextlib.redirect_stdout(f):
+            cli.streaming_parse_and_print()
+        self.assertEqual(f.getvalue(), '{"line":"x","v":[null,{"w":null}]}\n{"line":"y","v":[null,{"w":null}]}\n')
+
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_json_out_pretty(self):
         """
@@ -348,6 +438,84 @@ class MyTests(unittest.TestCase):
             cli.mono = True
             cli.data_out = test_dict
             self.assertEqual(cli.yaml_out(), expected_json)
+
+    @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
+    def test_cli_yaml_out_yaml11_strings_quoted(self):
+        """
+        Test YAML output quotes strings that a YAML 1.1 reader would load as
+        a boolean or a number (yes/no/on/off, sexagesimal), in values and keys
+        """
+        test_input = [
+            {'filename': 'yes'},
+            {'filename': 'No'},
+            {'filename': 'ON'},
+            {'filename': 'off'},
+            {'filename': 'y'},
+            {'filename': 'N'},
+            {'login_at': '1:30'},
+            {'login_at': '10:25'},
+            {'login_at': '12:30:45'},
+            {'login_at': '-1:30.5'},
+            {'login_at': '09:53'},
+            {'filename': 'yesterday'},
+            {'filename': 'yEs'},
+            {'filename': 'normal.txt'},
+            {'yes': '1', 'on': '2'},
+            {'filename': 'true'},
+            {'key1': 'value1', 'key2': 2, 'key3': None, 'key4': 3.14, 'key5': True}
+        ]
+
+        expected_output = [
+            "---\nfilename: 'yes'",
+            "---\nfilename: 'No'",
+            "---\nfilename: 'ON'",
+            "---\nfilename: 'off'",
+            "---\nfilename: 'y'",
+            "---\nfilename: 'N'",
+            "---\nlogin_at: '1:30'",
+            "---\nlogin_at: '10:25'",
+            "---\nlogin_at: '12:30:45'",
+            "---\nlogin_at: '-1:30.5'",
+            '---\nlogin_at: 09:53',
+            '---\nfilename: yesterday',
+            '---\nfilename: yEs',
+            '---\nfilename: normal.txt',
+            "---\n'yes': '1'\n'on': '2'",
+            "---\nfilename: 'true'",
+            '---\nkey1: value1\nkey2: 2\nkey3:\nkey4: 3.14\nkey5: true'
+        ]
+
+        for test_dict, expected_yaml in zip(test_input, expected_output):
+            cli = JcCli()
+            cli.set_custom_colors()
+            cli.mono = True
+            cli.data_out = test_dict
+            output = cli.yaml_out()
+            self.assertEqual(output, expected_yaml)
+            # a YAML 1.1 reader loads the same data
+            yaml11 = ruamel.yaml.YAML(typ='safe', pure=True)
+            self.assertEqual(yaml11.load('%YAML 1.1\n' + output + '\n'), test_dict)
+
+    @unittest.skipIf(not RUAMELYAML_INSTALLED, 'ruamel.yaml library not installed')
+    def test_cli_yaml_out_no_side_effects(self):
+        """
+        Test YAML output leaves the ruamel.yaml classes unchanged for other
+        code in the same process
+        """
+        representer = ruamel.yaml.representer.RoundTripRepresenter
+        # official_plug_ins() was added in ruamel.yaml 0.15.x
+        plug_ins = getattr(ruamel.yaml.YAML, 'official_plug_ins', None)
+        ignore_aliases = representer.ignore_aliases
+        representers = representer.yaml_representers.copy()
+        shared = ['a']
+        cli = JcCli()
+        cli.set_custom_colors()
+        cli.mono = True
+        cli.data_out = {'key1': shared, 'key2': shared}
+        self.assertEqual(cli.yaml_out(), '---\nkey1:\n- a\nkey2:\n- a')
+        self.assertIs(getattr(ruamel.yaml.YAML, 'official_plug_ins', None), plug_ins)
+        self.assertIs(representer.ignore_aliases, ignore_aliases)
+        self.assertEqual(representer.yaml_representers, representers)
 
     def test_cli_about_jc(self):
         """
@@ -856,6 +1024,24 @@ power management:
         cli.do_magic()
         self.assertEqual('proc', cli.magic_found_parser)
         self.assertIsInstance(cli.magic_stdout, str)
+
+    @unittest.skipIf(not os.path.exists('/proc/uptime'), '/proc not available')
+    def test_magic_proc_empty_file_does_not_read_stdin(self):
+        """
+        Test magic syntax with an empty /proc file (e.g. /proc/<pid>/maps of a
+        zombie process): STDIN is not read
+        """
+        cli = JcCli()
+        cli.magic_run_command = ['/proc/uptime']
+        cli.magic_run_command_str = '/proc/uptime'
+        with mock.patch.object(JcCli, 'open_text_file', return_value=''):
+            cli.do_magic()
+        self.assertEqual('', cli.magic_stdout)
+        cli.parser_module = proc_parser
+        with mock.patch('sys.stdin') as mock_stdin:
+            mock_stdin.buffer.read.return_value = b'0.13 0.23 0.25 1/185 1758\n'
+            self.assertRaises(ParseError, cli.standard_parse_and_print)
+        mock_stdin.buffer.read.assert_not_called()
 
     @unittest.skipIf(not os.path.exists('/proc/self/status'), '/proc not available')
     def test_magic_proc_symlinked_file(self):

@@ -108,6 +108,17 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.cef.parse(self.cef_escaped_backslash, quiet=True), self.cef_escaped_backslash_json)
 
+    def test_cef_float_non_finite(self):
+        """
+        Test 'cef' with float fields of inf, nan and 1e999: the text is kept
+        """
+        data = 'CEF:0|Acme|Sensor|1|100|heartbeat|3|cfp1=1e999 cfp2=nan cfp3=-inf cfp4=2.5\n'
+        result = jc.parsers.cef.parse(data, quiet=True)
+        self.assertEqual(result[0]['cfp1'], '1e999')
+        self.assertEqual(result[0]['cfp2'], 'nan')
+        self.assertEqual(result[0]['cfp3'], '-inf')
+        self.assertEqual(result[0]['cfp4'], 2.5)
+
 
 if __name__ == '__main__':
     unittest.main()
