@@ -1,0 +1,12 @@
+55a9e753c000-55a9e7570000 r--p 00000000 fd:00 798126                     /usr/lib/systemd/systemd
+Size:                208 kB
+Rss:                 208 kB
+VmFlags: rd mr mw me dw sd
+7f1234560000-7f1234570000 rw-s 1000000000 103:02 4242                    /dev/dri/card0
+Size:                 64 kB
+Rss:                  32 kB
+VmFlags: rd wr sh mr mw me ms
+7f1234580000-7f1234590000 r--p 00000000 00:00 0 
+Size:                 64 kB
+Rss:                   0 kB
+VmFlags: rd mr mw me

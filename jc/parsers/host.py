@@ -156,8 +156,22 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
         for line in filter(None, data.splitlines()):
             line = line.strip()
 
+            # the record type words directly follow the owner name, which
+            # has no spaces. The same words can also appear in record data.
+            rrtype = line.partition(' ')[2]
+
+            # TXT parsing
+            if rrtype.startswith('descriptive text '):
+                linedata = line.split(' ', maxsplit=3)
+                hostname = linedata[0]
+                txt = linedata[3].strip('"')
+                text.append(txt)
+                rrdata.update({'hostname': hostname})
+                rrdata.update({'text': text})
+                continue
+
             # default
-            if ' has address ' in line:
+            if rrtype.startswith('has address '):
                 linedata = line.split(' ', maxsplit=3)
                 hostname = linedata[0]
                 address = linedata[3]
@@ -166,7 +180,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'address': addresses})
                 continue
 
-            if ' has IPv6 address ' in line:
+            if rrtype.startswith('has IPv6 address '):
                 linedata = line.split(' ', maxsplit=4)
                 hostname = linedata[0]
                 v6address = linedata[4]
@@ -175,7 +189,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'v6-address': v6addresses})
                 continue
 
-            if ' mail is handled by ' in line:
+            if rrtype.startswith('mail is handled by '):
                 linedata = line.split(' ', maxsplit=6)
                 hostname = linedata[0]
                 mx = linedata[6]
@@ -183,18 +197,6 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'hostname': hostname})
                 rrdata.update({'mail': mail})
                 continue
-
-
-            # TXT parsing
-            if ' descriptive text ' in line:
-                linedata = line.split('descriptive text "', maxsplit=1)
-                hostname = linedata[0]
-                txt = linedata[1].strip('"')
-                text.append(txt)
-                rrdata.update({'hostname': hostname})
-                rrdata.update({'text': text})
-                continue
-
 
             # -C / SOA parsing
             if line.startswith('Nameserver '):
@@ -205,7 +207,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'nameserver': nameserverip})
                 continue
 
-            if ' has SOA record ' in line:
+            if rrtype.startswith('has SOA record '):
                 linedata = line.split(' ', maxsplit=10)
 
                 zone = linedata[0]

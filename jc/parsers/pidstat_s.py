@@ -131,6 +131,28 @@ def _process(proc_data: Dict) -> Dict:
     return proc_data
 
 
+# id columns: one of these is in every pidstat header
+_ID_COLUMNS = {'PID', 'UID', 'TGID', 'TID', 'USER'}
+
+
+def _is_header(line: str) -> bool:
+    """
+    True for a pidstat -h header line such as
+    '#      Time   UID       PID    %usr ... Command'. Other lines that start
+    with '#' (e.g. part of a command name) are not headers.
+    """
+    if not line.startswith('#'):
+        return False
+
+    words = line[1:].split()
+    return (
+        len(words) > 2
+        and words[0] == 'Time'
+        and words[-1] == 'Command'
+        and any(w in _ID_COLUMNS for w in words)
+    )
+
+
 def normalize_header(header: str) -> str:
     return header.replace('#', ' ')\
                  .replace('-', '_')\
@@ -145,6 +167,18 @@ def _parse_row(header_list: List[str], line: str) -> Dict:
     has already been split into `header_list`.
     """
     return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
+
+
+def _check_row(header_list: List[str], line: str) -> None:
+    """
+    The last column (Command) takes the rest of the line, so a row can have
+    more fields than the header, and may have no Command at all, but it
+    cannot have fewer fields than that. The Time column of `pidstat -h` is
+    always an epoch integer.
+    """
+    fields = line.split()
+    if len(fields) < len(header_list) - 1 or not fields[0].isdecimal():
+        raise ParseError('Not pidstat data')
 
 
 @add_jc_meta
@@ -186,7 +220,7 @@ def parse(
                 # skip blank lines
                 continue
 
-            if line.startswith('#'):
+            if _is_header(line):
                 if len(table_list) > 1:
                     output_line = _parse_row(table_list[0].split(), table_list[1])
                     yield output_line if raw else _process(output_line)
@@ -197,7 +231,9 @@ def parse(
                 table_list = [header]
                 continue
 
-            if header:
+            # a data row never starts with '#'
+            if header and not line.startswith('#'):
+                _check_row(header_list, line)
                 table_list.append(line)
                 output_line = _parse_row(header_list, table_list[1])
                 yield output_line if raw else _process(output_line)

@@ -13,6 +13,9 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 class MyTests(unittest.TestCase):
 
     # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iostat-linux-stray-line.out'), 'r', encoding='utf-8') as f:
+        generic_iostat_stray_line = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iostat-many-devices.out'), 'r', encoding='utf-8') as f:
         generic_iostat_many_devices = f.read()
 
@@ -213,18 +216,32 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.iostat_s.parse(self.generic_iostat_many_devices.splitlines(), quiet=True)), self.generic_iostat_many_devices_streaming_json)
 
+    def test_iostat_s_stray_line(self):
+        """
+        Test 'iostat' with a line that is not iostat data inside a table. Should raise ParseError
+        """
+        self.assertRaises(ParseError, list, jc.parsers.iostat_s.parse(self.generic_iostat_stray_line.splitlines(), quiet=True))
+
+    def test_iostat_s_stray_line_ignore_exceptions(self):
+        """
+        Test 'iostat' with a line that is not iostat data inside a table. Should yield an error record for that line and continue
+        """
+        result = list(jc.parsers.iostat_s.parse(self.generic_iostat_stray_line.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual([r.get('device') for r in result], ['sda', None, 'dm-0'])
+        self.assertEqual(result[1], {"_jc_meta": {"success": False, "error": "ParseError: Not iostat data", "line": "cp: cannot stat 'backup.tar': No such file or directory"}})
+
     def test_iostat_s_ragged_rows(self):
         """
-        Test 'iostat' rows with fewer or more fields than the header
+        Test 'iostat' rows with fewer or more fields than the header. Each should raise ParseError and a good row after it still parses
         """
-        data = ['avg-cpu:  %user   %nice %system', '  1.00 2.00', '', 'Device: r/s w/s', 'sda 1.5', 'sdb 2.5 3.5 extra words', '   sdc   4.5   5.5  ']
-        expected = [
-            {"percent_user": 1.0, "percent_nice": 2.0, "type": "cpu"},
-            {"device": "sda", "r_s": 1.5, "type": "device"},
-            {"device": "sdb", "r_s": 2.5, "w_s": 3.5, "type": "device"},
-            {"device": "sdc", "r_s": 4.5, "w_s": 5.5, "type": "device"}
-        ]
-        self.assertEqual(list(jc.parsers.iostat_s.parse(data, quiet=True)), expected)
+        header = ['Device: r/s w/s']
+        for bad in ('sda 1.5', 'sdb 2.5 3.5 extra words', 'random'):
+            with self.assertRaises(ParseError):
+                list(jc.parsers.iostat_s.parse(header + [bad], quiet=True))
+
+        result = list(jc.parsers.iostat_s.parse(header + ['sda 1.5', 'sdb 2.5 3.5 4.5', '   sdc   4.5   5.5  ', 'sdd 6.5 7.5\r'], quiet=True, ignore_exceptions=True))
+        self.assertEqual([r.get('device') for r in result], [None, None, 'sdc', 'sdd'])
+        self.assertEqual(result[2], {"device": "sdc", "r_s": 4.5, "w_s": 5.5, "type": "device", "_jc_meta": {"success": True}})
 
 
 if __name__ == '__main__':

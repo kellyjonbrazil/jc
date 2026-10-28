@@ -248,40 +248,68 @@ def _is_block_declaration(statement: str) -> bool:
 _MAX_BLOCK_LINES = 8
 
 
-def _statements(data: str) -> Iterator[Tuple[str, Optional[str]]]:
+def _statements(data: str) -> Iterator[Tuple[Optional[str], Optional[str]]]:
     """
     Yield `(statement, handle)` pairs. Lines that wrap inside `{ }`, such as
     a long `elements = { ... }` list, are joined into a single statement.
+    A line break inside a quoted string (e.g. a multi-line comment) is part
+    of the string and does not end the statement. Yields `(None, None)` when
+    the input ends inside a quoted string.
     """
     pending: List[str] = []
+    pending_lines = 0
     depth = 0
     in_quotes = False
 
-    for line in data.splitlines():
-        line = line.strip()
+    for raw_line in data.splitlines(keepends=True):
+        line = raw_line.splitlines()[0]
+        line_end = raw_line[len(line):]
+        continued = in_quotes
 
-        if not line:
-            continue
+        if not continued:
+            line = line.lstrip()
 
-        pending.append(line)
+            if not line:
+                continue
+
         depth, in_quotes = _scan_braces(line, depth, in_quotes)
+
+        if in_quotes:
+            piece = line + line_end
+        else:
+            piece = line.rstrip()
+
+        if continued:
+            pending.append(piece)
+        else:
+            if pending:
+                pending.append(' ')
+            pending.append(piece)
+            pending_lines += 1
+
+        # the statement can not end inside a quoted string
+        if in_quotes:
+            continue
 
         # a block declaration or a closing brace is complete even though its
         # brace is unbalanced
-        if len(pending) <= _MAX_BLOCK_LINES:
-            statement, handle = _split_handle(' '.join(pending))
+        if pending_lines <= _MAX_BLOCK_LINES:
+            statement, handle = _split_handle(''.join(pending))
 
             if statement == '}' or _is_block_declaration(statement):
                 yield statement, handle
                 pending = []
+                pending_lines = 0
                 depth = 0
-                in_quotes = False
                 continue
 
         if depth == 0:
-            yield _split_handle(' '.join(pending))
+            yield _split_handle(''.join(pending))
             pending = []
-            in_quotes = False
+            pending_lines = 0
+
+    if in_quotes:
+        yield None, None
 
 
 def _comment_value(statement: str) -> str:
@@ -553,6 +581,10 @@ def parse(
     if jc.utils.has_data(data):
 
         for statement, handle in _statements(data):
+
+            if statement is None:
+                skipped = True
+                continue
 
             if statement == '}':
                 if stack:

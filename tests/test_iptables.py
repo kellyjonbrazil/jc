@@ -101,6 +101,18 @@ class MyTests(unittest.TestCase):
         generic_iptables_chain_header_long_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-target-looks-like-header.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_target_looks_like_header = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-target-looks-like-header.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_target_looks_like_header_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-target-looks-like-header-line-numbers.out'), 'r', encoding='utf-8') as f:
+        generic_iptables_target_looks_like_header_line_numbers = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/iptables-target-looks-like-header-line-numbers.json'), 'r', encoding='utf-8') as f:
+        generic_iptables_target_looks_like_header_line_numbers_json = json.loads(f.read())
+
     def test_iptables_nodata(self):
         """
         Test 'sudo iptables' with no data
@@ -254,6 +266,18 @@ Chain DOCKER (2 references)'''
         self.assertEqual(result[0]['rules'][0]['target'], 'DROP')
         self.assertEqual(result[0]['rules'][0]['source'], '203.0.113.7')
         self.assertEqual(result[0]['rules'][0]['options'], '/* note */\u2028ACCEPT     all  --  anywhere             anywhere             /* ticket 4711 */')
+
+    def test_iptables_target_looks_like_header(self):
+        """
+        Test 'iptables' with rule targets that look like a header or chain heading
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_target_looks_like_header, quiet=True), self.generic_iptables_target_looks_like_header_json)
+
+    def test_iptables_target_looks_like_header_line_numbers(self):
+        """
+        Test 'iptables --line-numbers' with rule targets that look like a header or chain heading
+        """
+        self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_target_looks_like_header_line_numbers, quiet=True), self.generic_iptables_target_looks_like_header_line_numbers_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,39 @@
+
+Windows IP Configuration
+
+   Host Name . . . . . . . . . . . . : WIN-SERVER16
+   Primary Dns Suffix  . . . . . . . : somecompany.corp
+   Node Type . . . . . . . . . . . . : Hybrid
+   IP Routing Enabled. . . . . . . . : No
+   WINS Proxy Enabled. . . . . . . . : No
+   DNS Suffix Search List. . . . . . : somecompany.corp
+
+PPP adapter Windows IP Configuration:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Windows IP Configuration
+   Physical Address. . . . . . . . . :
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   IPv4 Address. . . . . . . . . . . : 203.0.113.66(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.255
+   Default Gateway . . . . . . . . . : 0.0.0.0
+   DNS Servers . . . . . . . . . . . : 203.0.113.53
+   NetBIOS over Tcpip. . . . . . . . : Disabled
+
+Ethernet adapter Ethernet0:
+
+   Connection-specific DNS Suffix  . :
+   Description . . . . . . . . . . . : Intel(R) 82574L Gigabit Network Connection
+   Physical Address. . . . . . . . . : 00-0C-29-D6-12-2E
+   DHCP Enabled. . . . . . . . . . . : No
+   Autoconfiguration Enabled . . . . : Yes
+   Link-local IPv6 Address . . . . . : fe80::40c:2f5f:6658:9ec3%2(Preferred)
+   IPv4 Address. . . . . . . . . . . : 192.168.22.153(Preferred)
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : 192.168.22.1
+   DHCPv6 IAID . . . . . . . . . . . : 50334761
+   DHCPv6 Client DUID. . . . . . . . : 00-01-00-01-29-4D-1C-4C-00-0C-29-A3-37-4E
+   DNS Servers . . . . . . . . . . . : 192.168.22.151
+   NetBIOS over Tcpip. . . . . . . . : Enabled
+

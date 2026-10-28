@@ -92,7 +92,7 @@ from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
 from jc.exceptions import ParseError
-from jc.parsers.cef import _pycef_parse
+from jc.parsers.cef import _pycef_parse, _unescape
 
 
 class info():
@@ -239,8 +239,7 @@ def _process(proc_data: Dict) -> Dict:
             proc_data[key] = value.strip()
 
             # fixup escaped characters
-            for esc, esc_sub in escape_map.items():
-                proc_data[key] = proc_data[key].replace(esc, esc_sub)
+            proc_data[key] = _unescape(proc_data[key], escape_map)
 
         # normalize keynames
         new_key = key.strip()

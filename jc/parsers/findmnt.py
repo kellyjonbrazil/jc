@@ -91,6 +91,7 @@ import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 from jc.parsers.universal import simple_table_parse, sparse_table_parse
+from jc.parsers.mount import _split_options
 import jc.utils
 
 
@@ -126,11 +127,16 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         kv_options = {}
 
         if item.get('options'):
-            opt_list = item['options'].split(',')
+            opt_list = _split_options(item['options'])
 
             for option in opt_list:
                 if '=' in option:
                     k, v = option.split('=', maxsplit=1)
+
+                    # remove one pair of quotes around the value
+                    if len(v) > 1 and v.startswith('"') and v.endswith('"'):
+                        v = v[1:-1]
+
                     kv_options[k] = v
 
                 else:

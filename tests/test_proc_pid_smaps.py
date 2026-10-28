@@ -20,7 +20,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_smaps.json'),
             'proc_pid_smaps_unknown_flag': (
                 'fixtures/linux-proc/pid_smaps_unknown_flag',
-                'fixtures/linux-proc/pid_smaps_unknown_flag.json')
+                'fixtures/linux-proc/pid_smaps_unknown_flag.json'),
+            'proc_pid_smaps_wide_fields': (
+                'fixtures/generic/proc-pid-smaps-wide-fields.out',
+                'fixtures/generic/proc-pid-smaps-wide-fields.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -67,6 +70,13 @@ class MyTests(unittest.TestCase):
         self.assertEqual(['read', 'private'], result[0]['perms'])
         self.assertEqual(16, result[0]['Size'])
         self.assertEqual(result, jc.parse('proc', data, quiet=True))
+
+    def test_proc_pid_smaps_wide_fields(self):
+        """
+        Test '/proc/<pid>/smaps' with a long offset and a three digit device number
+        """
+        self.assertEqual(jc.parsers.proc_pid_smaps.parse(self.f_in['proc_pid_smaps_wide_fields'], quiet=True),
+                                                         self.f_json['proc_pid_smaps_wide_fields'])
 
 
 if __name__ == '__main__':

@@ -1,0 +1,6 @@
+Chain INPUT (policy DROP)
+num  target     prot opt source               destination
+1    pkts_in    all  --  anywhere             anywhere
+2    ACCEPT     all  --  anywhere             anywhere
+3    Chain1     all  --  anywhere             anywhere
+4    ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:ssh

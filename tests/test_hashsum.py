@@ -89,6 +89,12 @@ class MyTests(unittest.TestCase):
         generic_sha256sum_line_separator_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/hashsum-bsd-style.out'), 'r', encoding='utf-8') as f:
+        generic_hashsum_bsd_style = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/hashsum-bsd-style.json'), 'r', encoding='utf-8') as f:
+        generic_hashsum_bsd_style_json = json.loads(f.read())
+
     def test_hashsum_nodata(self):
         """
         Test 'hashsum' parser with no data
@@ -215,6 +221,13 @@ class MyTests(unittest.TestCase):
         the line must stay a single record
         """
         self.assertEqual(jc.parsers.hashsum.parse(self.generic_sha256sum_line_separator, quiet=True), self.generic_sha256sum_line_separator_json)
+
+    def test_hashsum_bsd_style(self):
+        """
+        Test 'md5' and 'shasum' BSD style output with parentheses and equals signs in file names
+        """
+        self.assertEqual(jc.parsers.hashsum.parse(self.generic_hashsum_bsd_style, quiet=True), self.generic_hashsum_bsd_style_json)
+
 
 if __name__ == '__main__':
     unittest.main()

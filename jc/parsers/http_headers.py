@@ -301,7 +301,7 @@ Examples:
       }
     ]
 """
-from typing import List, Dict
+from typing import List, Dict, Tuple
 from jc.jc_types import JSONDictType
 import jc.utils
 
@@ -465,6 +465,12 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
+def _split_header(line: str) -> Tuple[str, str]:
+    """Split a header line at the first ':' into a lower-case name and value"""
+    key, value = line.split(':', maxsplit=1)
+    return key.lower(), value.strip()
+
+
 def parse(
     data: str,
     raw: bool = False,
@@ -497,37 +503,42 @@ def parse(
         for line in cleandata:
 
             first_word = line.split(maxsplit=1)[0]
-            first_word = first_word.rstrip(':')
-            first_word = first_word.lower()
 
-            if first_word in METHODS:
-                if output_object:
-                    raw_output.append(output_object)
+            # a start line never has a colon in its first word (the method or
+            # the HTTP version), so such a line is always a header
+            if ':' not in first_word:
+                first_word = first_word.lower()
 
-                method, uri, version = line.split(maxsplit=2)
-                output_object = {}
-                output_object['_type'] = 'request'
-                output_object['_request_method'] = method
-                output_object['_request_uri'] = uri
-                output_object['_request_version'] = version
-                continue
+                if first_word in METHODS:
+                    if output_object:
+                        raw_output.append(output_object)
 
-            if first_word.startswith('http/'):
-                if output_object:
-                    raw_output.append(output_object)
+                    method, uri, version = line.split(maxsplit=2)
+                    output_object = {}
+                    output_object['_type'] = 'request'
+                    output_object['_request_method'] = method
+                    output_object['_request_uri'] = uri
+                    output_object['_request_version'] = version
+                    continue
 
-                reason = None
-                version, status, *reason = line.split(maxsplit=2)
-                output_object = {}
-                output_object['_type'] = 'response'
-                output_object['_response_version'] = version
-                output_object['_response_status'] = int(status)
-                output_object['_response_reason'] = reason or None
-                continue
+                if first_word.startswith('http/'):
+                    if output_object:
+                        raw_output.append(output_object)
 
-            if first_word in SPLIT_AND_MULTI_HEADERS:
-                key, value = line.split(': ', maxsplit=1)
-                key = key.lower()
+                    reason = None
+                    version, status, *reason = line.split(maxsplit=2)
+                    output_object = {}
+                    output_object['_type'] = 'response'
+                    output_object['_response_version'] = version
+                    output_object['_response_status'] = int(status)
+                    output_object['_response_reason'] = reason or None
+                    continue
+
+            # headers: the name ends at the first ':'
+            key, value = _split_header(line)
+            header_name = key.strip()
+
+            if header_name in SPLIT_AND_MULTI_HEADERS:
                 value_list = value.split(',')
                 value_list = [x.strip() for x in value_list]
                 if key in output_object:
@@ -537,9 +548,7 @@ def parse(
                     output_object[key].extend(value_list)
                 continue
 
-            if first_word in MULTI_HEADERS:
-                key, value = line.split(': ', maxsplit=1)
-                key = key.lower()
+            if header_name in MULTI_HEADERS:
                 if key in output_object:
                     output_object[key].append(value)
                 else:
@@ -548,9 +557,6 @@ def parse(
                 continue
 
             # All other headers
-            key, value = line.split(': ', maxsplit=1)
-            key = key.lower()
-
             if key in GENERATED_KEYS:
                 if not quiet:
                     jc.utils.warning_message([f'Ignoring header with reserved name: {key}'])

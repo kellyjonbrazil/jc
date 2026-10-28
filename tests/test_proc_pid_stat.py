@@ -3,6 +3,7 @@ import unittest
 import json
 from typing import Dict
 import jc.parsers.proc_pid_stat
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -22,7 +23,10 @@ class MyTests(unittest.TestCase):
                 'fixtures/linux-proc/pid_stat_w_space_and_nl_in_comm.json'),
             'pid_stat_hack': (
                 'fixtures/linux-proc/pid_stat_hack',
-                'fixtures/linux-proc/pid_stat_hack.json')
+                'fixtures/linux-proc/pid_stat_hack.json'),
+            'pid_stat_signed_fields': (
+                'fixtures/linux-proc/pid_stat_signed_fields',
+                'fixtures/linux-proc/pid_stat_signed_fields.json')
         }
 
         for file, filepaths in fixtures.items():
@@ -58,6 +62,20 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['pid_stat_hack'], quiet=True),
                                                         self.f_json['pid_stat_hack'])
+
+    def test_proc_pid_stat_signed_fields(self):
+        """
+        Test '/proc/<pid>/stat' with an empty comm, negative priority and nice, and an exit signal of -1
+        """
+        self.assertEqual(jc.parsers.proc_pid_stat.parse(self.f_in['pid_stat_signed_fields'], quiet=True),
+                                                       self.f_json['pid_stat_signed_fields'])
+
+    def test_proc_pid_stat_bad_line(self):
+        """
+        Test '/proc/<pid>/stat' with a line that does not match
+        """
+        with self.assertRaises(ParseError):
+            jc.parsers.proc_pid_stat.parse('1 (systemd) S 0 1 1', quiet=True)
 
 
 if __name__ == '__main__':

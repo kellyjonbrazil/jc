@@ -350,6 +350,7 @@ Examples:
       }
     ]
 """
+import re
 import jc.utils
 
 
@@ -367,6 +368,12 @@ class info():
 __version__ = info.version
 
 WINDOWS_NETSTAT_HEADER = "Active Connections"
+
+
+def _is_port_number(value):
+    """Return True if the port value consists only of ASCII digits."""
+    return isinstance(value, str) and re.fullmatch(r'[0-9]+', value) is not None
+
 
 def _process(proc_data):
     """
@@ -401,12 +408,14 @@ def _process(proc_data):
                 entry[key] = jc.utils.convert_to_float(entry[key])
 
         # add number keys
-        if 'local_port' in entry:
+        # only a port written as digits is a number: a service name such as
+        # `x11` or `pop3` contains digits but is not a port number
+        if 'local_port' in entry and _is_port_number(entry['local_port']):
             local_num = jc.utils.convert_to_int(entry['local_port'])
             if local_num:
                 entry['local_port_num'] = local_num
 
-        if 'foreign_port' in entry:
+        if 'foreign_port' in entry and _is_port_number(entry['foreign_port']):
             foreign_num = jc.utils.convert_to_int(entry['foreign_port'])
             if foreign_num:
                 entry['foreign_port_num'] = foreign_num

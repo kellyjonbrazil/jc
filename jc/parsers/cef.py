@@ -135,6 +135,10 @@ class info():
 __version__ = info.version
 
 
+# a backslash and the character after it
+_escape_re = re.compile(r'\\.', re.DOTALL)
+
+
 ############################################################################
 """
 The MIT License (MIT)
@@ -238,6 +242,15 @@ def _pycef_parse(str_input):
     return values
 
 ############################################################################
+
+
+def _unescape(string: str, escape_map: Dict[str, str]) -> str:
+    """
+    Decode escape sequences in one left-to-right pass so the backslash
+    from an escaped backslash does not start another escape sequence.
+    Unknown escape sequences are left as-is.
+    """
+    return _escape_re.sub(lambda m: escape_map.get(m.group(), m.group()), string)
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -370,8 +383,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 item[key] = value.strip()
 
                 # fixup escaped characters
-                for esc, esc_sub in escape_map.items():
-                    item[key] = item[key].replace(esc, esc_sub)
+                item[key] = _unescape(item[key], escape_map)
 
             # normalize keynames
             new_key = key.strip()

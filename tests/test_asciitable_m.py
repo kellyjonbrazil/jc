@@ -457,6 +457,26 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_m_incomplete_ansi_escape(self):
+        """
+        Test 'asciitable_m' with an incomplete ANSI escape at the end of a cell
+        """
+        for code in ('\x1b[', '\x9b ', '\x1b[0;1'):
+            with self.subTest(code=repr(code)):
+                cell = ('bob' + code).ljust(9)
+                input = ('+-----------+-------+--------+\n'
+                         '| user      | admin | active |\n'
+                         '+-----------+-------+--------+\n'
+                         '| \x1b[31malice\x1b[0m     | yes   | yes    |\n'
+                         '+-----------+-------+--------+\n'
+                         '| ' + cell + ' | no    | yes    |\n'
+                         '+-----------+-------+--------+\n')
+                expected = [
+                    {'user': 'alice', 'admin': 'yes', 'active': 'yes'},
+                    {'user': ('bob' + code).strip(), 'admin': 'no', 'active': 'yes'}
+                ]
+                self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

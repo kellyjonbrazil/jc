@@ -1,0 +1,1 @@
+[{"hostname": "example.net", "address": ["192.0.2.10"], "text": ["v=spf1 mx -all", "x has address 203.0.113.66", "x has IPv6 address 2001:db8::66", "x mail is handled by 1 mx.example.org.", "x has SOA record a. b. 1 2 3 4 5"]}]

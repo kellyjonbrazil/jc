@@ -162,6 +162,9 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
 
+    # quoted fields end at the first quote that is not escaped with a
+    # backslash. The plain lazy match is kept as a fallback for logs that
+    # do not escape quotes.
     clf_pattern = re.compile(r'''
         ^(?P<host>-|\S+)\s
         (?P<ident>-|\S+)\s
@@ -177,11 +180,11 @@ def parse(
             (?P<tz>\S+)
         )
         \]\s
-        \"(?P<request>.*?)\"\s
+        \"(?P<request>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s
         (?P<status>-|\d\d\d)\s
         (?P<bytes>-|\d+)\s?
-        (?:\"(?P<referer>.*?)\"\s?)?
-        (?:\"(?P<user_agent>.*?)\"\s?)?
+        (?:\"(?P<referer>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
+        (?:\"(?P<user_agent>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
         (?P<extra>.*)
         ''', re.VERBOSE
     )

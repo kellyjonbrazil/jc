@@ -1,5 +1,9 @@
 r"""jc - JSON Convert `iftop` command output parser
 
+> Note: `iftop` shortens long host names and addresses to fit its host
+> column, so `host_name` can be a shortened name or address. The brackets
+> `iftop` prints around an IPv6 address followed by a port are removed.
+
 Usage (cli):
 
     $ iftop -i <device> -t -B -s1 | jc --iftop
@@ -181,6 +185,7 @@ Examples:
     ]
 """
 import re
+import ipaddress
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -254,6 +259,39 @@ def _header_only(item: Dict) -> Dict:
     return {k: item[k] for k in _HEADER_KEYS if k in item}
 
 
+def _host_name(host_field: str) -> str:
+    """
+    Remove the brackets iftop prints around an IPv6 address that is
+    followed by a port. A shortened address may be missing the closing
+    bracket.
+    """
+    if host_field.startswith('['):
+        host_field = host_field[1:]
+        if host_field.endswith(']'):
+            host_field = host_field[:-1]
+
+    return host_field
+
+
+def _has_port(host_field: str) -> bool:
+    """
+    Return True if the host field of a flow line ends in a port. iftop puts
+    an IPv6 address in brackets when a port follows it, so an unbracketed
+    field that is a whole IPv6 address has no port.
+    """
+    if ":" not in host_field:
+        return False
+
+    if host_field.count(":") >= 2 and "[" not in host_field and "]" not in host_field:
+        try:
+            ipaddress.IPv6Address(host_field)
+            return False
+        except ValueError:
+            pass
+
+    return True
+
+
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
     """
     Main text parsing function
@@ -282,9 +320,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     before_arrow = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+):(?P<host_port>[^\s:]*[^\s])\s+"
     before_arrow_no_port = r"\s+(?P<index>\d+)\s+(?P<host_name>[^\s]+)\s+"
     after_arrow_before_newline = r"\s+(?P<send_last_2s>[^\s]+)\s+(?P<send_last_10s>[^\s]+)\s+(?P<send_last_40s>[^\s]+)\s+(?P<send_cumulative>[^\s]+)"
-    newline_before_arrow = r"\s+(?P<receive_ip>[^\s]+):(?P<receive_port>\w+)\s+"
-    # receive_ip keeps the padding before the arrow, all but one blank
-    newline_before_arrow_no_port = r"\s+(?P<receive_ip>[^\s]+\s*)\s"
+    # the port is the text after the last colon of the host field
+    newline_before_arrow = r"\s+(?P<receive_ip>[^\s]+):(?P<receive_port>[^\s:]+)\s+"
+    newline_before_arrow_no_port = r"\s+(?P<receive_ip>[^\s]+)\s+"
     after_arrow_till_end = r"\s+(?P<receive_last_2s>[^\s]+)\s+(?P<receive_last_10s>[^\s]+)\s+(?P<receive_last_40s>[^\s]+)\s+(?P<receive_cumulative>[^\s]+)"
     re_linux_clients_before_newline = re.compile(
         rf"{before_arrow}=>{after_arrow_before_newline}"
@@ -323,6 +361,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         return raw_output if raw else _process(raw_output, quiet=quiet)
 
     for line in filter(None, data.splitlines()):
+        has_port = False
+        if "=>" in line or "<=" in line:
+            fields = line.split(None, 2)
+            if "=>" in line and len(fields) > 1:
+                has_port = _has_port(fields[1])
+            elif fields:
+                has_port = _has_port(fields[0])
+
         if line.startswith("interface:"):
             # Example:
             # interface: enp0s3
@@ -363,11 +409,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         ):
             interface_item = _header_only(interface_item)
 
-        elif "=>" in line and is_previous_line_interface and ":" in line:
+        elif "=>" in line and is_previous_line_interface and has_port:
             # should not happen
             pass
 
-        elif "=>" in line and not is_previous_line_interface and ":" in line:
+        elif "=>" in line and not is_previous_line_interface and has_port:
             # Example:
             #    1 ubuntu-2004-clean-01:ssh                 =>       448b       448b       448b       112B
             match_raw = re_linux_clients_before_newline.match(line)
@@ -383,7 +429,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["index"] = int(match_dict["index"])
             current_client["connections"] = []
             current_client_send = {
-                "host_name": match_dict["host_name"],
+                "host_name": _host_name(match_dict["host_name"]),
                 "host_port": match_dict["host_port"],
                 "last_2s": match_dict["send_last_2s"],
                 "last_10s": match_dict["send_last_10s"],
@@ -394,11 +440,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_send)
             # not adding yet as the receive part is not yet parsed
 
-        elif "=>" in line and not is_previous_line_interface and ":" not in line:
+        elif "=>" in line and is_previous_line_interface and not has_port:
             # should not happen
             pass
 
-        elif "=>" in line and is_previous_line_interface and ":" not in line:
+        elif "=>" in line and not is_previous_line_interface and not has_port:
+            # Example:
+            #    1 ubuntu-2004-clean-01                     =>     4.82KB     4.82KB     4.82KB     9.63KB
             match_raw = re_linux_clients_before_newline_no_port.match(line)
             # only expect a receive line if the send line was parsed
             is_previous_line_interface = bool(match_raw)
@@ -412,7 +460,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["index"] = int(match_dict["index"])
             current_client["connections"] = []
             current_client_send = {
-                "host_name": match_dict["host_name"],
+                "host_name": _host_name(match_dict["host_name"]),
                 "last_2s": match_dict["send_last_2s"],
                 "last_10s": match_dict["send_last_10s"],
                 "last_40s": match_dict["send_last_40s"],
@@ -422,11 +470,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_send)
             # not adding yet as the receive part is not yet parsed
 
-        elif "<=" in line and not is_previous_line_interface and ":" in line:
+        elif "<=" in line and not is_previous_line_interface and has_port:
             # should not happen
             pass
 
-        elif "<=" in line and is_previous_line_interface and ":" in line:
+        elif "<=" in line and is_previous_line_interface and has_port:
             # Example:
             #      10.10.15.72:40876                        <=       208b       208b       208b        52B
             is_previous_line_interface = False
@@ -438,7 +486,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             match_dict = match_raw.groupdict()
             current_client_receive = {
-                "host_name": match_dict["receive_ip"],
+                "host_name": _host_name(match_dict["receive_ip"]),
                 "host_port": match_dict["receive_port"],
                 "last_2s": match_dict["receive_last_2s"],
                 "last_10s": match_dict["receive_last_10s"],
@@ -450,13 +498,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
             current_client["connections"].append(current_client_receive)
             clients.append(current_client)
 
-        elif "<=" in line and not is_previous_line_interface and ":" not in line:
+        elif "<=" in line and not is_previous_line_interface and not has_port:
             # should not happen
             pass
 
-        elif "<=" in line and is_previous_line_interface and ":" not in line:
+        elif "<=" in line and is_previous_line_interface and not has_port:
             # Example:
-            #      10.10.15.72:40876                        <=       208b       208b       208b        52B
+            #      10.10.15.72                              <=     14.5KB     14.5KB     14.5KB     29.1KB
             is_previous_line_interface = False
             match_raw = re_linux_clients_after_newline_no_port.match(line)
 
@@ -466,7 +514,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             match_dict = match_raw.groupdict()
             current_client_receive = {
-                "host_name": match_dict["receive_ip"],
+                "host_name": _host_name(match_dict["receive_ip"]),
                 "last_2s": match_dict["receive_last_2s"],
                 "last_10s": match_dict["receive_last_10s"],
                 "last_40s": match_dict["receive_last_40s"],

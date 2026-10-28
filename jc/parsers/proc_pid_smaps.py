@@ -292,9 +292,9 @@ def parse(
             ^(?P<start>[0-9a-f]{8,16})-
             (?P<end>[0-9a-f]{8,16})\s
             (?P<perms>[rwxsp\-]{4})\s
-            (?P<offset>[0-9a-f]{8,9})\s
-            (?P<maj>[0-9a-f]{2}):
-            (?P<min>[0-9a-f]{2})\s
+            (?P<offset>[0-9a-f]+)\s
+            (?P<maj>[0-9a-f]+):
+            (?P<min>[0-9a-f]+)\s
             (?P<inode>\d+)\s+
             (?P<pathname>.*)?
             ''', re.VERBOSE

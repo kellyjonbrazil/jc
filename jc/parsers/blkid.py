@@ -233,6 +233,33 @@ def _parse_device_line(line):
     return output_line
 
 
+_TAG_START_RE = re.compile(r'[A-Z0-9_]+="')
+_KEY_VALUE_RE = re.compile(r'[A-Z0-9_]+=')
+
+
+def _is_device_format(data):
+    """
+    True for the default `DEVICE: KEY="value" ...` format, False for the
+    `KEY=value` lines of `-o udev` and `-o export`. A value or a device name
+    can contain `:` and spaces, so look at the structure of the first line.
+    """
+    first_line = ''
+    for line in jc.utils.splitlines(data):
+        if line.strip():
+            first_line = line.strip()
+            break
+
+    # the device ends at the first `: ` and a quoted tag follows
+    colon = first_line.find(': ')
+    if colon != -1 and _TAG_START_RE.match(first_line, colon + 2):
+        return True
+
+    if _KEY_VALUE_RE.match(first_line):
+        return False
+
+    return first_line.split(maxsplit=1)[0].endswith(':')
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -254,8 +281,8 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        # if the first field is a device, use normal parsing:
-        if data.split(maxsplit=1)[0][-1] == ':':
+        # if the first line starts with a device, use normal parsing:
+        if _is_device_format(data):
             linedata = jc.utils.splitlines(data)
 
             for line in linedata:
