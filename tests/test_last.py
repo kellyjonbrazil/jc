@@ -95,6 +95,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-ipv6-hostname.json'), 'r', encoding='utf-8') as f:
         generic_last_linux_ipv6_hostname_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-boot-time-user.out'), 'r', encoding='utf-8') as f:
+        generic_last_linux_boot_time_user = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/last-linux-boot-time-user.json'), 'r', encoding='utf-8') as f:
+        generic_last_linux_boot_time_user_json = json.loads(f.read())
+
     def test_last_nodata(self):
         """
         Test plain 'last' with no data
@@ -226,6 +232,14 @@ class MyTests(unittest.TestCase):
         Test 'last' with IPv6 addresses and X displays as the hostname
         """
         self.assertEqual(jc.parsers.last.parse(self.generic_last_linux_ipv6_hostname, quiet=True), self.generic_last_linux_ipv6_hostname_json)
+
+    def test_last_linux_boot_time_user(self):
+        """
+        Test 'last' on Linux with a user named boot_time keeps the user
+        name unchanged (only the FreeBSD/macOS boot time row is renamed)
+        """
+        self.assertEqual(jc.parsers.last.parse(self.generic_last_linux_boot_time_user, quiet=True), self.generic_last_linux_boot_time_user_json)
+        self.assertEqual(jc.parsers.last.parse(self.generic_last_linux_boot_time_user, raw=True, quiet=True)[0]['user'], 'boot_time')
 
 
 if __name__ == '__main__':
