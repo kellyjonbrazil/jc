@@ -279,6 +279,87 @@ Chain DOCKER (2 references)'''
         """
         self.assertEqual(jc.parsers.iptables.parse(self.generic_iptables_target_looks_like_header_line_numbers, quiet=True), self.generic_iptables_target_looks_like_header_line_numbers_json)
 
+    def test_iptables_packet_suffixes(self):
+        """
+        Test 'iptables' with K, M and G suffixes on packet counts and policy packets
+        """
+        data = (
+            'Chain INPUT (policy ACCEPT 1250K packets, 3M bytes)\n'
+            ' pkts bytes target     prot opt in     out     source               destination\n'
+            ' 1250K  900M ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0\n'
+            '   12M   3G DROP       tcp  --  *      *       0.0.0.0/0            0.0.0.0/0\n'
+            '   42    10 DROP       udp  --  *      *       0.0.0.0/0            0.0.0.0/0\n'
+        )
+        result = jc.parsers.iptables.parse(data, quiet=True)
+        self.assertEqual(result[0]['default_packets'], 1250000)
+        self.assertEqual(result[0]['default_bytes'], 3000000)
+        self.assertEqual([r['pkts'] for r in result[0]['rules']], [1250000, 12000000, 42])
+        self.assertEqual([r['bytes'] for r in result[0]['rules']], [900000000, 3000000000, 10])
+
+    def test_iptables_blank_target_line_numbers(self):
+        """
+        Test 'iptables' with a blank target and --line-numbers, with and without -v
+        """
+        data = (
+            'Chain FORWARD (policy ACCEPT)\n'
+            'num  target     prot opt source               destination\n'
+            '1               all  --  10.0.0.0/8           0.0.0.0/0\n'
+            '2    ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22\n'
+        )
+        result = jc.parsers.iptables.parse(data, quiet=True)
+        rules = result[0]['rules']
+        self.assertEqual(rules[0]['num'], 1)
+        self.assertIsNone(rules[0]['target'])
+        self.assertEqual(rules[0]['prot'], 'all')
+        self.assertIsNone(rules[0]['opt'])
+        self.assertEqual(rules[0]['source'], '10.0.0.0/8')
+        self.assertEqual(rules[0]['destination'], '0.0.0.0/0')
+        self.assertEqual(rules[1]['target'], 'ACCEPT')
+        self.assertEqual(rules[1]['options'], 'tcp dpt:22')
+
+        data = (
+            'Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)\n'
+            'num   pkts bytes target     prot opt in     out     source               destination\n'
+            '1       10   840            all  --  *      *       10.0.0.0/8           0.0.0.0/0\n'
+            '2        5   300 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22\n'
+        )
+        result = jc.parsers.iptables.parse(data, quiet=True)
+        rules = result[0]['rules']
+        self.assertEqual(rules[0]['num'], 1)
+        self.assertEqual(rules[0]['pkts'], 10)
+        self.assertEqual(rules[0]['bytes'], 840)
+        self.assertIsNone(rules[0]['target'])
+        self.assertEqual(rules[0]['prot'], 'all')
+        self.assertEqual(rules[0]['in'], '*')
+        self.assertEqual(rules[0]['source'], '10.0.0.0/8')
+        self.assertEqual(rules[1]['target'], 'ACCEPT')
+        self.assertEqual(rules[1]['options'], 'tcp dpt:22')
+
+    def test_iptables_target_is_invisible_separator(self):
+        """
+        Test 'iptables' with a real target that is the invisible separator character
+        """
+        data = (
+            'Chain INPUT (policy ACCEPT)\n'
+            'target     prot opt source               destination\n'
+            '\u2063          all  --  0.0.0.0/0            0.0.0.0/0\n'
+            '           all  --  10.0.0.0/8           0.0.0.0/0\n'
+        )
+        rules = jc.parsers.iptables.parse(data, quiet=True)[0]['rules']
+        self.assertEqual(rules[0]['target'], '\u2063')
+        self.assertEqual(rules[0]['source'], '0.0.0.0/0')
+        self.assertIsNone(rules[1]['target'])
+        self.assertEqual(rules[1]['source'], '10.0.0.0/8')
+
+        data = (
+            'Chain INPUT (policy ACCEPT 0 packets, 0 bytes)\n'
+            ' pkts bytes target     prot opt in     out     source               destination\n'
+            '    1    60 \u2063          all  --  *      *       0.0.0.0/0            0.0.0.0/0\n'
+        )
+        rules = jc.parsers.iptables.parse(data, quiet=True)[0]['rules']
+        self.assertEqual(rules[0]['target'], '\u2063')
+        self.assertEqual(rules[0]['source'], '0.0.0.0/0')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -110,7 +110,6 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # This parser uses path.py
-    path.info = info  # type: ignore
 
     raw_output = []
 

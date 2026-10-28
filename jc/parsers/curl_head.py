@@ -339,7 +339,7 @@ def parse(
         data_list = [_remove_extra_chars(x, verbose=curl_verbose) for x in data_list]
         data_str = '\n'.join(data_list)
 
-        headers_parser.info = info  # type: ignore
+        # quiet is passed on for the warnings about header names
         raw_output = headers_parser.parse(data_str, raw, quiet)
 
     return raw_output

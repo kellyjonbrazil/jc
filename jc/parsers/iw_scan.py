@@ -117,12 +117,13 @@ Examples:
     ]
 """
 import re
+import math
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.75'
+    version = '0.85'
     description = '`iw dev [device] scan` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -155,7 +156,10 @@ def _process(proc_data):
                 item[key] = int(item[key])
             except (Exception):
                 try:
-                    item[key] = float(item[key])
+                    float_value = float(item[key])
+                    # keep the text of inf and nan (e.g. an SSID)
+                    if math.isfinite(float_value):
+                        item[key] = float_value
                 except (Exception):
                     pass
             # convert ints and floats for lists
@@ -166,7 +170,11 @@ def _process(proc_data):
                         new_list.append(int(list_item))
                     except (Exception):
                         try:
-                            new_list.append(float(list_item))
+                            float_value = float(list_item)
+                            if math.isfinite(float_value):
+                                new_list.append(float_value)
+                            else:
+                                new_list.append(list_item)
                         except (Exception):
                             pass
                 item[key] = new_list

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadCertificateFingerprint</key>
+	<data>aGVsbG8=</data>
+	<key>TrustedCertificates</key>
+	<array>
+		<data>aGVsbG8=</data>
+		<data>d29ybGQ=</data>
+	</array>
+	<key>ValidFrom</key>
+	<date>2020-01-01T00:00:00Z</date>
+	<key>RotationDates</key>
+	<array>
+		<date>2020-01-01T00:00:00Z</date>
+		<dict>
+			<key>Renewed</key>
+			<date>2021-06-15T12:30:00Z</date>
+		</dict>
+		<array>
+			<data>AQID</data>
+			<date>2022-07-31T16:34:30Z</date>
+		</array>
+	</array>
+</dict>
+</plist>

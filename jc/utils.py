@@ -1,6 +1,7 @@
 """jc - JSON Convert utils"""
 import sys
 import re
+import math
 import locale
 import shutil
 from itertools import islice
@@ -392,16 +393,27 @@ def convert_to_int(value: object) -> Optional[int]:
         try:
             return int(str_val)
         except (ValueError, TypeError):
+            # also reached for digit strings longer than the int() digit
+            # limit (Python 3.11+), where float() overflows to inf
             try:
                 return int(float(str_val))
-            except (ValueError, TypeError):
+            except (ValueError, TypeError, OverflowError):
                 return None
 
     elif isinstance(value, (int, float)):
-        return int(value)
+        # int() raises on inf and nan
+        try:
+            return int(value)
+        except (ValueError, OverflowError):
+            return None
 
     else:
         return None
+
+
+def _str_to_float(value: str) -> float:
+    """float() of a string with all non-numeric characters removed"""
+    return float(re.sub(r'[^0-9\-\.]', '', value))
 
 
 def convert_to_float(value: object) -> Optional[float]:
@@ -415,19 +427,27 @@ def convert_to_float(value: object) -> Optional[float]:
 
     Returns:
 
-        float/None     Float if successful conversion, otherwise None
+        float/None     Float if successful conversion, otherwise None.
+                       Infinite and NaN results also return None.
     """
     if isinstance(value, str):
         try:
-            return float(re.sub(r'[^0-9\-\.]', '', value))
+            result = _str_to_float(value)
         except (ValueError, TypeError):
             return None
 
     elif isinstance(value, (int, float)):
-        return float(value)
+        try:
+            result = float(value)
+        except OverflowError:
+            return None
 
     else:
         return None
+
+    # JSON has no inf or nan, and a digit string that is too long for a
+    # float overflows to inf
+    return result if math.isfinite(result) else None
 
 
 def convert_to_bool(value: object) -> bool:
@@ -456,9 +476,9 @@ def convert_to_bool(value: object) -> bool:
 
     if isinstance(value, str):
         try:
-            test_value = convert_to_float(value)
-            if test_value is not None:
-                return bool(test_value)
+            # not convert_to_float(), which returns None for numbers too
+            # large for a float
+            return bool(_str_to_float(value))
         except Exception:
             pass
 
