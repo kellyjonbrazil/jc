@@ -184,7 +184,10 @@ def parse(
             if not field.strip():
                 continue
             if field.startswith(" " * 4):
-                value = field.strip(' "')
+                # remove the indent and exactly one pair of surrounding quotes
+                value = field[4:]
+                if len(value) >= 2 and value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1]
                 if value_next:
                     dt = jc.utils.timestamp(timestamp, format_hint=(1750, 1755))
                     cells.append({
