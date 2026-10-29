@@ -363,17 +363,19 @@ def parse(
 
             file_line_log = file_line_log_re.match(line)
             if file_line_log:
-                if process != last_process:
-                    if summary:
-                        yield output_line if raw else _process(output_line)
-                    last_process = process
-                    summary = {}
-
                 filename = file_line_log.group('name')
                 date = file_line_log.group('date')
                 time = file_line_log.group('time')
                 process = file_line_log.group('process')
                 meta = file_line_log.group('meta')
+
+                # a new process id starts a new run: emit the summary of
+                # the previous run
+                if process != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = process
+                    summary = {}
 
                 output_line = {
                     'type': 'file',
@@ -399,17 +401,19 @@ def parse(
 
             file_line_log_mac = file_line_log_mac_re.match(line)
             if file_line_log_mac:
-                if process != last_process:
-                    if summary:
-                        yield output_line if raw else _process(output_line)
-                    last_process = process
-                    summary = {}
-
                 filename = file_line_log_mac.group('name')
                 date = file_line_log_mac.group('date')
                 time = file_line_log_mac.group('time')
                 process = file_line_log_mac.group('process')
                 meta = file_line_log_mac.group('meta')
+
+                # a new process id starts a new run: emit the summary of
+                # the previous run
+                if process != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = process
+                    summary = {}
 
                 output_line = {
                     'type': 'file',
