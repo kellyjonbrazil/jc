@@ -1147,8 +1147,8 @@ class MyTests(unittest.TestCase):
             '92 bytes from 10.0.0.1: Source Quench'
         ]
         expected = [
-            {'type': 'parameter_problem', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'},
-            {'type': 'source_quench', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'}
+            {'type': 'parameter_problem', 'response_bytes': 92, 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'},
+            {'type': 'source_quench', 'response_bytes': 92, 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'}
         ]
         self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
 
@@ -1242,7 +1242,7 @@ class MyTests(unittest.TestCase):
                           'destination_unreachable_beyond_scope', 'packet_too_big',
                           'destination_unreachable_bad_code', 'reply', 'summary'])
         self.assertEqual(result[1]['response_ip'], 'fe80::1%em0')
-        self.assertEqual(result[3]['sent_bytes'], 1280)
+        self.assertEqual(result[3]['response_bytes'], 1280)
 
     def test_ping_s_error_tables_match_ping(self):
         """
