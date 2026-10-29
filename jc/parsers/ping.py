@@ -830,12 +830,19 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
+        lines = [line for line in data.splitlines() if line.strip()]
+
         # the linux statistics line ('..., time 4149ms') is followed by the
         # rtt line, or is the last line when nothing was received. Look at the
         # last two non-blank lines since trailing blank lines may be stripped.
-        last_lines = [line for line in data.splitlines() if line.strip()][-2:]
+        last_lines = lines[-2:]
 
-        if any(' time ' in line for line in last_lines):
+        # without the statistics lines (e.g. ping was stopped at once) the
+        # linux header line tells
+        header = next((line.strip() for line in lines if line.startswith('PING ')), '')
+        linux_header = header.endswith(' bytes of data.') or _LINUX_HEADER_RE.match(header)
+
+        if linux_header or any(' time ' in line for line in last_lines):
             raw_output = _linux_parse(data)
         else:
             raw_output = _bsd_parse(data)

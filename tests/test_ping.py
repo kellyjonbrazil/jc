@@ -1197,6 +1197,20 @@ class MyTests(unittest.TestCase):
             result = jc.parsers.ping.parse(data + footer, quiet=True)
             self.assertEqual(result['responses'], [expected], data)
 
+    def test_ping_linux_header_only(self):
+        """
+        Test 'ping' and 'ping6' on linux when only the header line was printed (stopped at once)
+        """
+        tests = [
+            ('PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n', '10.0.0.1', 56, []),
+            ('PING ::1(::1) 56 data bytes\n', '::1', 56, []),
+            ('PING 10.0.0.1 (10.0.0.1) 56(84) bytes of data.\n64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.040 ms\n', '10.0.0.1', 56,
+             [{'type': 'reply', 'timestamp': None, 'bytes': 64, 'response_ip': '10.0.0.1', 'icmp_seq': 1, 'ttl': 64, 'time_ms': 0.04, 'duplicate': False}])
+        ]
+        for data, dest, data_bytes, responses in tests:
+            result = jc.parsers.ping.parse(data, quiet=True)
+            self.assertEqual(result, {'destination_ip': dest, 'data_bytes': data_bytes, 'pattern': None, 'responses': responses}, data)
+
 
 if __name__ == '__main__':
     unittest.main()
