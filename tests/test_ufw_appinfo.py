@@ -113,6 +113,32 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['normalized_tcp_list'], [12, 20])
         self.assertNotIn('normalized_udp_ranges', result)
 
+    def test_ufw_appinfo_whitespace_line_and_repeated_protocol(self):
+        """
+        Test 'ufw_appinfo' with a whitespace-only line, repeated protocol lines and a token containing 'any'
+        """
+        data = (
+            'Profile: App\n'
+            'Title: App\n'
+            'Description: App\n'
+            '\n'
+            'Ports:\n'
+            '  80/tcp\n'
+            '   \n'
+            '  443,8000:8010/tcp\n'
+            '  53/udp\n'
+            '  67,/udp\n'
+            '  70/udp\n'
+        )
+        result = jc.parsers.ufw_appinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['tcp_list'], [80, 443])
+        self.assertEqual(result[0]['tcp_ranges'], [{'start': 8000, 'end': 8010}])
+        self.assertEqual(result[0]['udp_list'], [53, 67, 70])
+
+        # a token that only contains 'any' is not the 'any' keyword
+        raw_result = jc.parsers.ufw_appinfo.parse(data.replace('67,', 'many,'), raw=True, quiet=True)
+        self.assertEqual(raw_result[0]['udp_list'], ['53', 'many', '70'])
+
 
 if __name__ == '__main__':
     unittest.main()

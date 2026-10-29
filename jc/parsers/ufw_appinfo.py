@@ -239,7 +239,7 @@ def _parse_port_list(data, port_list=None):
         port_list = []
 
     data = data.split(',')
-    data_list = [p.strip() for p in data if ':' not in p and 'any' not in p]
+    data_list = [p.strip() for p in data if ':' not in p and p.strip() and p.strip() != 'any']
     port_list.extend(data_list)
 
     return port_list
@@ -257,7 +257,7 @@ def _parse_port_range(data, range_list=None):
     ranges = [p.strip() for p in data if ':' in p]
     range_obj = {}
 
-    if 'any' in data:
+    if 'any' in [p.strip() for p in data]:
         range_list.append(
             {
                 'start': 0,
@@ -327,21 +327,21 @@ def parse(data, raw=False, quiet=False):
             if ports:
                 line_list = line.rsplit('/', maxsplit=1)
                 if len(line_list) == 2:
-                    if line_list[1] == 'tcp':
-                        tcp_prot_list = _parse_port_list(line_list[0])
+                    if line_list[1].strip() == 'tcp':
+                        tcp_prot_list = _parse_port_list(line_list[0], item_obj.get('tcp_list', []))
                         if tcp_prot_list:
                             item_obj['tcp_list'] = tcp_prot_list
 
-                        tcp_prot_range = _parse_port_range(line_list[0])
+                        tcp_prot_range = _parse_port_range(line_list[0], item_obj.get('tcp_ranges', []))
                         if tcp_prot_range:
                             item_obj['tcp_ranges'] = tcp_prot_range
 
-                    elif line_list[1] == 'udp':
-                        udp_prot_list = _parse_port_list(line_list[0])
+                    elif line_list[1].strip() == 'udp':
+                        udp_prot_list = _parse_port_list(line_list[0], item_obj.get('udp_list', []))
                         if udp_prot_list:
                             item_obj['udp_list'] = udp_prot_list
 
-                        udp_prot_range = _parse_port_range(line_list[0])
+                        udp_prot_range = _parse_port_range(line_list[0], item_obj.get('udp_ranges', []))
                         if udp_prot_range:
                             item_obj['udp_ranges'] = udp_prot_range
 
