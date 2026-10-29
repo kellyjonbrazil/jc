@@ -28,9 +28,13 @@ Schema:
           "milliseconds":     int,
           "timestamp":        string
         },
-        "content":            string
+        "content":            string,
+        "proprietary":        string    # [0]
       }
     ]
+
+    [0] text after the end timestamp, such as positional coordinates.
+        Only present when there is such text.
 
 Examples:
 
@@ -152,10 +156,13 @@ RGX_TIMESTAMP = '(?<![0-9]){field}{separator}{field}{separator}{field}(?:{separa
 )
 RGX_INDEX = r"-?(?<![0-9])[0-9]+(?:\.[0-9]*)?"  # int\float\negative.
 RGX_CONTENT = r".*?"  # Anything(except newline) but lazy.
+RGX_PROPRIETARY = r"[^\r\n]*"  # The rest of the timestamp line.
 RGX_NEWLINE = r"\r?\n"  # Newline(CRLF\LF).
 SRT_REGEX = re.compile(
     # No leading whitespace: finditer() skips anything that does not match.
-    r"(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?(?:{newline}|\Z)({content})"
+    # Text after the end timestamp (e.g. positional coordinates like
+    # "X1:40 X2:600 Y1:20 Y2:50") is kept as proprietary data.
+    r"(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?({proprietary})(?:{newline}|\Z)({content})"
     # Many sub editors don't add a blank line to the end, and many editors and
     # players accept that. We allow it to be missing in input.
     #
@@ -175,6 +182,7 @@ SRT_REGEX = re.compile(
     r"(?=(?:(?:{index}\s*{newline})?{ts}|\Z))".format(
         index=RGX_INDEX,
         ts=RGX_TIMESTAMP,
+        proprietary=RGX_PROPRIETARY,
         content=RGX_CONTENT,
         newline=RGX_NEWLINE,
     ),
@@ -274,14 +282,17 @@ def parse(
         return raw_output
 
     for subtitle in SRT_REGEX.finditer(data):
-        index, start, end, content = subtitle.groups()
-        raw_output.append(
-            {
-                "index": index,
-                "start": parse_timestamp(start),
-                "end": parse_timestamp(end),
-                "content": content.replace("\r\n", "\n")
-            }
-        )
+        index, start, end, proprietary, content = subtitle.groups()
+        entry = {
+            "index": index,
+            "start": parse_timestamp(start),
+            "end": parse_timestamp(end),
+            "content": content.replace("\r\n", "\n")
+        }
+
+        if proprietary.strip():
+            entry["proprietary"] = proprietary.strip()
+
+        raw_output.append(entry)
 
     return raw_output if raw else _process(raw_output)
