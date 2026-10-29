@@ -316,6 +316,10 @@ def parse(data, raw=False, quiet=False):
                     raw_output.append(section)
                     section = {}
 
+                # a header line from the previous BSS must not prefix the
+                # keys of this one
+                header = ''
+
                 split_line = line.replace('(', ' ').replace(')', ' ').split()
                 section['bssid'] = split_line[1]
                 section['interface'] = split_line[3]
