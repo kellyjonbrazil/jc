@@ -1,15 +1,28 @@
 jc changelog
 
-20261024 v1.26.2
+20261029 v1.26.2
+Note: this release changes the output schema of some parsers:
+  `x509-cert`/`x509-csr`/`x509-crl`, `proc-net-packet`, `proc-pid-fdinfo`, `ssh-conf`, `iw-scan`, `ping-s`, `proc-pid-numa-maps`, `plist`, and `ifconfig`. Please see the parsers' documentation for the updated schemas.
+
+Note: the Windows .msi and .zip now include the python 3.14 runtime. The
+  executable file is now significantly smaller.
+
 - Enhance many parsers to avoid slow parsing of long or unusual field values,
   including `cef`, `syslog`, `who`, `iptables`, `nftables`, `mount`, `ss`,
-  `ping`, `traceroute`, and the `/proc` file parsers
+  `ping`, `traceroute`, `ifconfig`, and the `/proc` file parsers
+- Enhance table parsers to use less time and memory on wide or ragged tables
+- Enhance `yaml`, `plist`, and `xml` parsers to stop with an error when shared
+  references or DTD attribute defaults would make the output extremely large
 - Fix many parsers to split lines only on LF and CRLF line endings so other
   line-break characters inside a field no longer split a record. This also
   applies to `--slurp` and line slicing
 - Fix several parsers to split fields only on spaces and tabs, and enhance the
   `netrc` parser to support quoted values, escapes, comments, and the `user`
   keyword
+- Fix several parsers where text inside a value could be mistaken for a new
+  record, section, or field (e.g. `rpm-qi`, `pacman`, `cbt`, `http-headers`)
+- Fix `dig`, `host`, `rpm-qi`, and `iftop` parsers where data from one record
+  could carry into later records
 - Fix "magic" syntax and `/proc` file input to pass line endings to the parser
   unchanged, matching `STDIN` input
 - Fix streaming parsers to read `STDIN` as UTF-8 lines split on LF and CRLF on
@@ -19,6 +32,60 @@ jc changelog
   when used as a python library. Library usage examples now use `split('\n')`
 - Fix `proc` parser to report an error instead of empty output for input that
   is not a recognized `/proc` file
+- Fix many parsers where a header-like, keyword-like or separator-like value
+  changed how later lines were read (e.g. `arp`, `host`, `iptables`,
+  `iwconfig`, `blkid`, `crontab`, `http-headers`, `netstat`, `asciitable`)
+- Fix many parsers to keep field values exactly as printed: file names with
+  spaces or " -> " (`ls`, `stat`, `dir`), quoted or escaped values (`cef`,
+  `syslog`, `clf`, `findmnt`, `mount`, `nftables`), git C-quoted paths, ping
+  replies, `ss` unix sockets, and `iftop` port-less flows
+- Fix `sparse_table_parse` based parsers (`df`, `lsblk`, ...) to align columns
+  by display width and keep cell text intact
+- Fix `proc` parser to identify `/proc/net/packet` on 64-bit kernels and
+  `/proc/net/protocols` on current kernels
+- Fix `iostat`, `mpstat`, `pidstat` and their streaming parsers to reject rows
+  that do not fit the header
+- Fix CLI to escape C1 control characters in JSON output and control
+  characters in warning and error messages
+- Fix `-M` to replace a `_jc_meta` field found in the parsed data
+- Enhance several parsers to avoid repeated scans of long input (e.g.
+  `dmidecode`, `ics`, `crontab`, `cef`, `apachectl`, `netstat`, `asciitable`)
+- `proc-net-packet` now returns a list of all rows (previously only the first
+  row, as an object)
+- Fix `x509-crl` parser to convert every CRL in PEM files with more than one
+  CRL. The output is now a list of CRL objects (like `x509-cert`), even for
+  one CRL. This is a schema change
+- Fix `ssh-conf` parser so `remoteforward` and `dynamicforward` are arrays
+  of strings (schema change), and add `rekeylimit_bytes`,
+  `rekeylimit_seconds` and `controlpersist_seconds`
+- Fix `proc-pid-fdinfo` parser to convert octal `flags`/`settime flags` and
+  hex inotify `wd`, and to output every lock, epoll target, inotify watch and
+  fanotify mark. This is a breaking schema change: `flags` values change,
+  `lock`, `epoll` and `inotify` are now lists, and fanotify marks are in a
+  `fanotify.marks` list
+- Fix `proc-pid-numa-maps` parser so `address` is always a string (all-digit
+  addresses such as `00400000` were converted to integers)
+- Add `proc-net-udp` parser for `/proc/net/udp` and `/proc/net/udp6`
+- Add GeneralName type keys (`*_general_names`, `*_type`) to the `x509-cert`,
+  `x509-csr` and `x509-crl` parsers so DNS, email, URI, IP and other names can
+  be told apart
+- Fix `ifconfig` parser to read BSD and macOS `flags` and `nd6_options` as
+  hexadecimal, as `ifconfig` prints them (e.g. `flags=8843` is now `34883`).
+  Linux `flags` values are unchanged
+- Fix many parsers to split lines only on LF and CRLF (all line-oriented
+  parsers except `ping`)
+- Fix `iw-scan` parser so a header line from one BSS no longer prefixes the
+  keys of the following BSS records. Keys like `config_methods_freq` and
+  `bss_load_signal` are now `freq` and `signal_dbm`
+- Fix `ping-s` parser to use the integer `response_bytes` field for BSD IPv6
+  replies and BSD error records (previously a string `bytes` field, or
+  `sent_bytes` for IPv6 errors)
+- Fix `ping` and `ping-s` parsers to read the FreeBSD 13+ `ping -6` header
+- Fix `ss` parser so the detail lines printed by `-e`, `-i` and `-m` no
+  longer create extra records
+- Fix `host`, `df`, `rpm-qi`, `pkg-index-deb`, `apt-cache-show` and
+  `proc-pid-mountinfo` edge cases (two SOA lines, whitespace-only rows,
+  repeated normalized field names, `unbindable` optional field)
 
 20261018 v1.26.1
 - Add `apachectl` command parser
