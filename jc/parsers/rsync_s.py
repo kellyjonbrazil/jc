@@ -560,6 +560,7 @@ def parse(
                     last_process = stat2_line_log_v.group('process')
                     summary = {}
 
+                summary['type'] = 'summary'
                 summary['sent'] = stat2_line_log_v.group('sent')
                 summary['received'] = stat2_line_log_v.group('received')
                 summary['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
@@ -573,6 +574,7 @@ def parse(
                     last_process = stat3_line_log_v.group('process')
                     summary = {}
 
+                summary['type'] = 'summary'
                 summary['total_size'] = stat3_line_log_v.group('total_size')
                 summary['speedup'] = stat3_line_log_v.group('speedup')
                 continue

@@ -288,6 +288,21 @@ total size is 221.79G  speedup is 25,388.23
         self.assertEqual(result[4]['received'], 42)
         self.assertEqual(result[4]['total_size'], 1000)
 
+    def test_rsync_s_i_v_logfile_summary_type(self):
+        """
+        Test 'rsync -i -v --log-file' where the summary starts with the 'sent' and 'total size' log lines
+        """
+        data = [
+            '2022/01/28 11:07:21 [10540] >f+++++++++ folder/file9',
+            '2022/01/28 11:07:21 [10540] sent 1,708 bytes  received 502 bytes  4,420.00 bytes/sec',
+            '2022/01/28 11:07:21 [10540] total size is 235  speedup is 0.11',
+            '2022/01/28 11:07:30 [10541] total size is 300  speedup is 0.50'
+        ]
+        result = list(jc.parsers.rsync_s.parse(data, quiet=True))
+        self.assertEqual([r['type'] for r in result], ['file', 'summary', 'summary'])
+        self.assertEqual(result[1], {'type': 'summary', 'sent': 1708, 'received': 502, 'bytes_sec': 4420.0, 'total_size': 235, 'speedup': 0.11})
+        self.assertEqual(result[2], {'type': 'summary', 'total_size': 300, 'speedup': 0.5})
+
 
 if __name__ == '__main__':
     unittest.main()
