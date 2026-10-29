@@ -207,6 +207,13 @@ _LINUX_HEADER_RE = re.compile(
 )
 
 
+# BSD header line:
+#   'PING <host> (<ip>)[ from <src>]: <n> data bytes'
+_BSD_HEADER_RE = re.compile(
+    r'^PING [^ ]+ \((?P<ip>[^ ()]+)\)(?: from [^ ]+)?: (?P<data_bytes>\d+) data bytes$'
+)
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -512,10 +519,18 @@ def _bsd_parse(data):
 
     for line in filter(None, linedata):
         if line.startswith('PING '):
+            m = _BSD_HEADER_RE.match(line.strip())
+            if m:
+                destination_ip = m.group('ip')
+                data_bytes = m.group('data_bytes')
+            else:
+                destination_ip = line.split()[2].lstrip('(').rstrip(':').rstrip(')')
+                data_bytes = line.split()[3]
+
             raw_output.update(
                 {
-                    'destination_ip': line.split()[2].lstrip('(').rstrip(':').rstrip(')'),
-                    'data_bytes': line.split()[3],
+                    'destination_ip': destination_ip,
+                    'data_bytes': data_bytes,
                     'pattern': pattern
                 }
             )

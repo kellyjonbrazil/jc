@@ -1205,6 +1205,18 @@ class MyTests(unittest.TestCase):
             result = list(jc.parsers.ping_s.parse(data, quiet=True))
             self.assertEqual((result[0]['destination_ip'], result[0]['sent_bytes']), (dest, data_bytes), header)
 
+    def test_ping_s_bsd_source_address_header(self):
+        """
+        Test 'ping -S <src>' on macOS/BSD where the header shows the source address
+        """
+        for header in ('PING 192.0.2.10 (192.0.2.10) from 192.168.1.221: 56 data bytes',
+                       'PING host.example.com (192.0.2.10) from 192.168.1.221: 1472 data bytes'):
+            data = [header, '64 bytes from 192.0.2.10: icmp_seq=0 ttl=56 time=12.345 ms']
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual(result[0]['destination_ip'], '192.0.2.10', header)
+            self.assertEqual(result[0]['sent_bytes'], int(header.split()[-3]), header)
+            self.assertEqual(result[0]['response_ip'], '192.0.2.10', header)
+
 
 if __name__ == '__main__':
     unittest.main()
