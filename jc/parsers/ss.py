@@ -708,6 +708,11 @@ def parse(data, raw=False, quiet=False):
                         row_header.append('opts')
                     entry_list[-1] = _parse_opts(entry_list[-1])
 
+            else:
+                # -e, -i and -m print socket details on indented lines below
+                # each row. They are not rows and are not parsed.
+                continue
+
             output_line = dict(zip(row_header, entry_list))
 
             # some post processing to pull out fields: interface, link_layer, path, pid, channel

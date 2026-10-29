@@ -1,0 +1,15 @@
+Netid State  Recv-Q Send-Q                   Local Address:Port                  Peer Address:Port
+p_dgr UNCONN 0      0                              [35085]:wlo1                              *       ino:10838 sk:1030
+	ver:0 cpy_thresh:0 flags( running ) skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)
+p_dgr UNCONN 0      0                              [34958]:*                                 *       ino:16781 sk:1031
+	ver:0 cpy_thresh:0 flags( running ) skmem:(r0,rb212992,t0,tb212992,f0,w0,o176,bl0,d0)
+icmp6 UNCONN 0      0                                    *:ipv6-icmp                        *:*      ino:14920 sk:106b cgroup:/system.slice/NetworkManager.service v6only:0 <->
+	 skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)
+udp   UNCONN 0      0                           127.0.0.54:domain                     0.0.0.0:*      uid:193 ino:11301 sk:106c cgroup:/system.slice/systemd-resolved.service <->
+	 skmem:(r0,rb212992,t0,tb212992,f0,w0,o0,bl0,d0)
+udp   UNCONN 0      0                        127.0.0.53%lo:domain                     0.0.0.0:*      uid:193 ino:11299 sk:106d cgroup:/system.slice/systemd-resolved.service <->
+	 skmem:(r0,rb212992,t0,tb212992,f4096,w0,o0,bl0,d0)
+tcp   LISTEN 0      128                            0.0.0.0:ssh                        0.0.0.0:*      ino:2611245 sk:1074 cgroup:/system.slice/sshd.service <->
+	 skmem:(r0,rb131072,t0,tb16384,f0,w0,o0,bl0,d0) cubic cwnd:10
+tcp   LISTEN 0      4096                        127.0.0.54:domain                     0.0.0.0:*      uid:193 ino:11302 sk:1075 cgroup:/system.slice/systemd-resolved.service <->
+	 skmem:(r0,rb131072,t0,tb16384,f0,w0,o0,bl0,d0) cubic cwnd:10

@@ -122,6 +122,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['optional_fields'], {'shared': 1, 'master': 2, 'foo': 'bar:baz'})
         self.assertEqual(result[0]['fs_type'], 'proc')
 
+    def test_proc_pid_mountinfo_unbindable_with_other_fields(self):
+        """
+        Test '/proc/<pid>/mountinfo' with unbindable next to other optional fields
+        """
+        data = ('64 69 8:2 / /x rw master:1 unbindable - ext4 /dev/sda2 rw\n'
+                '65 69 8:3 / /y rw unbindable - ext4 /dev/sda3 rw\n')
+        result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['optional_fields'], {'master': 1, 'unbindable': 0})
+        self.assertEqual(result[1]['optional_fields'], {'unbindable': 0})
+
     def test_proc_pid_mountinfo_octal_escapes(self):
         """
         Test '/proc/<pid>/mountinfo' with octal escapes in paths, source and options

@@ -52,6 +52,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.rpm_qi.parse(self.rpm_qi_description_header_lines, quiet=True), self.rpm_qi_description_header_lines_json)
 
+    def test_rpm_qi_normalized_name_collision(self):
+        """
+        Test 'rpm -qi' where a later field name normalizes to an earlier key
+        """
+        data = 'Name        : foo\nVersion     : 1.0\nVersion_    : 9.9\nRelease     : 1\n'
+        self.assertEqual(jc.parsers.rpm_qi.parse(data, quiet=True), [{'name': 'foo', 'version': '1.0', 'release': '1'}])
+
 
 if __name__ == '__main__':
     unittest.main()

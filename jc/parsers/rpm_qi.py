@@ -307,7 +307,11 @@ def parse(data, raw=False, quiet=False):
 
             if len(split_line) == 2:
                 keyname = jc.utils.normalize_key(split_line[0])
-                entry_obj[keyname] = split_line[1].strip()
+
+                # field names that normalize to the same key (e.g. 'Version'
+                # and 'Version_') don't replace the first value
+                if keyname not in entry_obj:
+                    entry_obj[keyname] = split_line[1].strip()
 
         if entry_obj:
             if description:

@@ -336,7 +336,8 @@ def _bsd_parse(line, s):
             s.sent_bytes = line.split()[3]
         return None
 
-    if line.startswith('PING6('):
+    # FreeBSD 13 and newer print 'PING(' instead of 'PING6('
+    if line.startswith(('PING6(', 'PING(')):
         s.ipv4 = False
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
         s.source_ip = line.split()[4]
@@ -402,7 +403,7 @@ def _bsd_parse(line, s):
             'type': err
         }
         try:
-            output_line['sent_bytes'] = line.split()[0]
+            output_line['response_bytes'] = line.split()[0]
             output_line['destination_ip'] = s.destination_ip
             output_line['response_ip'] = _bsd_error_sender(line)
         except Exception:
@@ -418,7 +419,7 @@ def _bsd_parse(line, s):
         }
 
         try:
-            output_line['bytes'] = line.split()[0]
+            output_line['response_bytes'] = line.split()[0]
             output_line['destination_ip'] = s.destination_ip
             output_line['response_ip'] = _bsd_error_sender(line)
         except Exception:
@@ -470,7 +471,7 @@ def _bsd_parse(line, s):
             'destination_ip': s.destination_ip or None,
             'sent_bytes': s.sent_bytes or None,
             'pattern': s.pattern or None,
-            'bytes': fields[0],
+            'response_bytes': fields[0],
             'response_ip': fields[3],
             'icmp_seq': fields[5],
             'ttl': fields[7],

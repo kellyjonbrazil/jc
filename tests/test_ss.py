@@ -88,6 +88,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-full-columns.json'), 'r', encoding='utf-8') as f:
         generic_ss_linux_full_columns_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-detail-lines.out'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_detail_lines = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-detail-lines.json'), 'r', encoding='utf-8') as f:
+        generic_ss_linux_detail_lines_json = json.loads(f.read())
+
     def test_ss_nodata(self):
         """
         Test 'ss' with no data
@@ -379,6 +385,21 @@ class MyTests(unittest.TestCase):
             '5': {'user': 'a b', 'file_descriptor': '4'},
             '6': {'user': 'a b', 'file_descriptor': '8'}
         }})
+
+    def test_ss_linux_detail_lines(self):
+        """
+        Test 'ss -a -e -i -m' where indented detail lines follow each socket row
+        """
+        self.assertEqual(jc.parsers.ss.parse(self.generic_ss_linux_detail_lines, quiet=True), self.generic_ss_linux_detail_lines_json)
+
+    def test_ss_linux_detail_lines_not_records(self):
+        """
+        Test 'ss' gives one record per socket row and ignores the indented detail lines
+        """
+        rows = jc.parsers.ss.parse(self.generic_ss_linux_detail_lines, quiet=True)
+        self.assertEqual([r['netid'] for r in rows], ['p_dgr', 'p_dgr', 'icmp6', 'udp', 'udp', 'tcp', 'tcp'])
+        self.assertEqual(rows[1]['interface'], '*')
+        self.assertNotIn('peer_port', rows[1])
 
 
 if __name__ == '__main__':

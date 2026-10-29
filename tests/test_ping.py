@@ -829,6 +829,14 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ping.parse(self.freebsd12_ping6_ip, quiet=True), self.freebsd12_ping6_ip_json)
 
+    def test_ping6_ip_freebsd_new_header(self):
+        """
+        Test 'ping -6 <ip>' on FreeBSD 13+, which prints 'PING(' instead of 'PING6('
+        """
+        data = self.freebsd12_ping6_ip.replace('PING6(', 'PING(', 1)
+        self.assertTrue(data.startswith('PING(56=40+8+8 bytes) '))
+        self.assertEqual(jc.parsers.ping.parse(data, quiet=True), self.freebsd12_ping6_ip_json)
+
     def test_ping_hostname_p_osx_10_14_6(self):
         """
         Test 'ping <hostname> -p' on osx 10.14.6

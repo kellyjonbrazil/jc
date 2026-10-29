@@ -194,6 +194,18 @@ class MyTests(unittest.TestCase):
         Test 'df' with wide, combining, zero-width and U+2063 characters
         """
         self.assertEqual(jc.parsers.df.parse(self.generic_df_linux_wide_chars, quiet=True), self.generic_df_linux_wide_chars_json)
+    def test_df_whitespace_only_line(self):
+        """
+        Test 'df' with a line that has only spaces between rows
+        """
+        data = ('Filesystem     1K-blocks    Used Available Use% Mounted on\n'
+                '/dev/sda1            100      50        50  50% /\n'
+                '   \n'
+                'tmpfs                 10       0        10   0% /tmp\n')
+        result = jc.parsers.df.parse(data, quiet=True)
+        self.assertEqual([x['filesystem'] for x in result], ['/dev/sda1', 'tmpfs'])
+        self.assertEqual(result[1]['mounted_on'], '/tmp')
+
 
 if __name__ == '__main__':
     unittest.main()

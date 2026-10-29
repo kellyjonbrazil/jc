@@ -617,7 +617,8 @@ def _bsd_parse(data):
             )
             continue
 
-        if line.startswith('PING6('):
+        # FreeBSD 13 and newer print 'PING(' instead of 'PING6('
+        if line.startswith(('PING6(', 'PING(')):
             ipv6 = True
             line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
             raw_output.update(
