@@ -73,6 +73,7 @@ Examples:
     ]
 """
 import csv
+import itertools
 import re
 from typing import List, Union, Type
 from jc.jc_types import JSONDictType
@@ -166,10 +167,12 @@ def parse(
     data = data.decode('utf-8-sig')
 
     raw_output = []
-    cleandata = jc.utils.splitlines(data, split_cr=True)
+    # keep the line endings so line breaks inside quoted fields are kept
+    cleandata = jc.utils.splitlines(data, keepends=True, split_cr=True)
 
-    # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    # Clear any blank lines before the header row. csv.DictReader skips the
+    # other blank rows and keeps blank lines inside quoted fields.
+    cleandata = itertools.dropwhile(lambda x: not x.strip('\r\n'), cleandata)
 
     if jc.utils.has_data(data):
 

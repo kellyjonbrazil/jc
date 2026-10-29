@@ -24,6 +24,7 @@ except ImportError:
 
 from jc.cli import JcCli
 from jc.exceptions import ParseError
+import jc.utils
 import jc.parsers.url as url_parser
 import jc.parsers.proc as proc_parser
 import jc.parsers.ls_s as ls_s_parser
@@ -969,6 +970,23 @@ power management:
         self.assertEqual(100, cm.exception.code)
         self.assertEqual('', out.getvalue())
         self.assertIn('path parser could not parse the input data', err.getvalue())
+
+    def test_streaming_error_message_qq(self):
+        """
+        Test the error message of a streaming parser error: the -qq hint is shown only when -qq is not used
+        """
+        for options, hint in ((['-q'], True), (['-qq'], False)):
+            err = io.StringIO()
+            with mock.patch('sys.argv', ['jc'] + options + ['--ls-s']), \
+                 mock.patch.object(JcCli, 'streaming_parse_and_print', side_effect=ValueError('x')), \
+                 mock.patch.object(jc.utils, 'CLI_QUIET', False), \
+                 contextlib.redirect_stdout(io.StringIO()), \
+                 contextlib.redirect_stderr(err):
+                with self.assertRaises(SystemExit) as cm:
+                    JcCli().run()
+            self.assertEqual(100, cm.exception.code)
+            self.assertIn('ls-s parser could not parse the input data', err.getvalue())
+            self.assertEqual(hint, 'Use the -qq option' in err.getvalue())
 
     def test_slice_multiple_proc_files(self):
         """

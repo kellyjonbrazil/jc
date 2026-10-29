@@ -149,5 +149,44 @@ novalue
             jc.parsers.ini_dup.parse(data, quiet=True)
 
 
+    def test_ini_dup_utf8_bom(self):
+        """
+        Test 'ini-test.ini' and a file without sections with a leading UTF-8 BOM
+        """
+        self.assertEqual(jc.parsers.ini_dup.parse('\ufeff' + self.generic_ini_test, quiet=True), self.generic_ini_dup_test_json)
+        self.assertEqual(jc.parsers.ini_dup.parse('\ufeffNAME="Debian"\nID=debian\n', quiet=True), {'NAME': ['Debian'], 'ID': ['debian']})
+
+
+    def test_ini_dup_comment_in_multiline_value(self):
+        """
+        Test 'ini_dup' with full-line comments inside multi-line values: the value continues after the comment, as in 'ini'
+        """
+        data = (
+            '[testenv]\n'
+            'deps =\n'
+            '    pytest\n'
+            '    # pinned\n'
+            '    requests==2.31.0\n'
+            '    ; other\n'
+            '    six\n'
+            '\n'
+            '[user1]\n'
+            'role = guest\n'
+            'bio = first line\n'
+            '\t#\n'
+            '\t[user2]\n'
+            '\trole = admin\n'
+            '\n'
+            '[user2]\n'
+            'role = user\n'
+        )
+        expected = {
+            'testenv': {'deps': ['', 'pytest', 'requests==2.31.0', 'six']},
+            'user1': {'role': ['guest'], 'bio': ['first line', '[user2]', 'role = admin']},
+            'user2': {'role': ['user']}
+        }
+        self.assertEqual(jc.parsers.ini_dup.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

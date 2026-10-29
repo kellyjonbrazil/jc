@@ -101,5 +101,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['cfp4'], 2.5)
 
 
+    def test_cef_s_unparsable_ignore_exceptions(self):
+        """
+        Test 'cef_s' with unparsable lines: an unparsable record without ignore_exceptions, an error record with it
+        """
+        data = ['CEF:0|Acme||1.0|100|Login failed|8|src=10.0.0.2', 'not a CEF line', 'CEF:0|Acme|Gateway|1.0|100|Login|3|src=10.0.0.3']
+        result = list(jc.parsers.cef_s.parse(data, quiet=True))
+        self.assertEqual(result[0], {'unparsable': data[0]})
+        self.assertEqual(result[1], {'unparsable': data[1]})
+        self.assertEqual(result[2]['src'], '10.0.0.3')
+
+        result = list(jc.parsers.cef_s.parse(data, quiet=True, ignore_exceptions=True))
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0], {'_jc_meta': {'success': False, 'error': 'ParseError: Blank field(s) in CEF header. Is it valid CEF format?', 'line': data[0]}})
+        self.assertEqual(result[1], {'_jc_meta': {'success': False, 'error': 'ParseError: Could not parse record. Is it valid CEF format?', 'line': data[1]}})
+        self.assertEqual(result[2]['src'], '10.0.0.3')
+        self.assertEqual(result[2]['deviceProduct'], 'Gateway')
+        self.assertEqual(result[2]['_jc_meta'], {'success': True})
+
+
 if __name__ == '__main__':
     unittest.main()

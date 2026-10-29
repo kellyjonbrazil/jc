@@ -166,5 +166,13 @@ novalue
         self.assertEqual(jc.parsers.ini.parse('[a]\nx=\ny:\nz\n', quiet=True), {'a': {'x': '', 'y': '', 'z': ''}})
 
 
+    def test_ini_utf8_bom(self):
+        """
+        Test 'ini-test.ini' and a file without sections with a leading UTF-8 BOM
+        """
+        self.assertEqual(jc.parsers.ini.parse('\ufeff' + self.generic_ini_test, quiet=True), self.generic_ini_test_json)
+        self.assertEqual(jc.parsers.ini.parse('\ufeffNAME="Debian"\nID=debian\n', quiet=True), {'NAME': 'Debian', 'ID': 'debian'})
+
+
 if __name__ == '__main__':
     unittest.main()

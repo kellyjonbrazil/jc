@@ -1110,7 +1110,7 @@ class JcCli():
                     raise
 
                 streaming_msg = ''
-                if _parser_is_streaming(self.parser_module):
+                if _parser_is_streaming(self.parser_module) and not self.ignore_exceptions:
                     streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
                 utils.error_message([
