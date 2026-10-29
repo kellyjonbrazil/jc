@@ -1,0 +1,36 @@
+PING6(56=40+8+8 bytes) 2001:db8::5 --> 2001:db8::9
+56 bytes from 2001:db8::1: No Route to Destination
+Vr TC  Flow Plen Nxt Hlim
+ 6 00 00000 0010  3a   40
+2001:db8::5->2001:db8::9
+ICMP6: type = 128, code = 0
+
+56 bytes from fe80::1%em0: Destination Administratively Unreachable
+Vr TC  Flow Plen Nxt Hlim
+ 6 00 00000 0010  3a   40
+2001:db8::5->2001:db8::9
+ICMP6: type = 128, code = 0
+
+56 bytes from 2001:db8::1: Destination Unreachable Beyond Scope
+Vr TC  Flow Plen Nxt Hlim
+ 6 00 00000 0010  3a   40
+2001:db8::5->2001:db8::9
+ICMP6: type = 128, code = 0
+
+1280 bytes from 2001:db8::1: Packet too big mtu = 1280
+Vr TC  Flow Plen Nxt Hlim
+ 6 00 00000 0010  3a   40
+2001:db8::5->2001:db8::9
+ICMP6: type = 128, code = 0
+
+56 bytes from 2001:db8::1: Destination Unreachable, Bad Code: 7
+Vr TC  Flow Plen Nxt Hlim
+ 6 00 00000 0010  3a   40
+2001:db8::5->2001:db8::9
+ICMP6: type = 128, code = 0
+
+16 bytes from 2001:db8::9, icmp_seq=5 hlim=64 time=0.412 ms
+
+--- 2001:db8::9 ping6 statistics ---
+6 packets transmitted, 1 packets received, 83.3% packet loss
+round-trip min/avg/max/std-dev = 0.412/0.412/0.412/0.000 ms
