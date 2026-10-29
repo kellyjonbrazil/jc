@@ -246,6 +246,16 @@ _entry_re = re.compile(
 )
 _effective_re = re.compile(r'^effective:(?P<effective>[r-][w-][x-])$')
 
+# getfacl writes a backslash as `\\` and the characters below as `\ooo`
+# octal escapes. Which characters are escaped depends on the field.
+_FILE_OCTAL_CHARS = '\n\r'
+_OWNER_OCTAL_CHARS = ' \t\n\r'
+_NAME_OCTAL_CHARS = ' \t\n\r:,'
+
+
+def _unquote(value: str, octal_chars: str) -> str:
+    return jc.utils.unescape_backslashes(value, octal_chars, {'\\': '\\'})
+
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
@@ -305,9 +315,11 @@ def parse(
                         value = raw_line.lstrip().partition(':')[2]
                         if value.startswith(' '):
                             value = value[1:]
-                        header[field] = value or None
-                    else:
+                        header[field] = _unquote(value, _FILE_OCTAL_CHARS) or None
+                    elif field == 'flags':
                         header[field] = value.strip() or None
+                    else:
+                        header[field] = _unquote(value.strip(), _OWNER_OCTAL_CHARS) or None
                 continue
 
             # The whole line is an entry unless it ends with the
@@ -330,7 +342,7 @@ def parse(
                 'group': header['group'],
                 'flags': header['flags'],
                 'type': match.group('type'),
-                'name': match.group('name') or None,
+                'name': _unquote(match.group('name'), _NAME_OCTAL_CHARS) or None,
                 'permissions': match.group('permissions'),
                 'effective': effective,
                 'default': bool(match.group('default')),
