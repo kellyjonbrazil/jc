@@ -119,7 +119,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`udevadm info` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -198,7 +198,7 @@ def parse(
     if e_list:
         raw_output['E'] = {}
         for item in e_list:
-            k, v = item.split('=')
+            k, v = item.split('=', maxsplit=1)
             raw_output['E'][k] = v
 
     return raw_output if raw else _process(raw_output)
