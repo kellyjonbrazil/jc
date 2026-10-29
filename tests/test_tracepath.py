@@ -29,6 +29,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tracepath-long-padding.json'), 'r', encoding='utf-8') as f:
         generic_tracepath_long_padding_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tracepath-keyword-hostnames.out'), 'r', encoding='utf-8') as f:
+        generic_tracepath_keyword_hostnames = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tracepath-keyword-hostnames.json'), 'r', encoding='utf-8') as f:
+        generic_tracepath_keyword_hostnames_json = json.loads(f.read())
+
 
     def test_tracepath_nodata(self):
         """
@@ -53,6 +59,18 @@ class MyTests(unittest.TestCase):
         Test 'tracepath' with a long run of spaces in a hop line
         """
         self.assertEqual(jc.parsers.tracepath.parse(self.generic_tracepath_long_padding, quiet=True), self.generic_tracepath_long_padding_json)
+
+    def test_tracepath_keyword_hostnames(self):
+        """
+        Test 'tracepath' with host names that start with the hop keywords
+        """
+        result = jc.parsers.tracepath.parse(self.generic_tracepath_keyword_hostnames, quiet=True)
+        self.assertEqual(result, self.generic_tracepath_keyword_hostnames_json)
+        self.assertEqual([hop['reached'] for hop in result['hops']], [False, False, False, False, False, False, True])
+        self.assertEqual(result['hops'][2]['host'], 'reached.example.net')
+        self.assertEqual(result['hops'][3]['asymmetric_difference'], 4)
+        self.assertEqual(result['hops'][4]['reply_ms'], 31.207)
+        self.assertEqual(result['hops'][5]['pmtu'], 1480)
 
 
 if __name__ == '__main__':

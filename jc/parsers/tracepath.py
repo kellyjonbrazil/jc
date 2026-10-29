@@ -211,13 +211,17 @@ def parse(data, raw=False, quiet=False):
         for line in filter(None, data.splitlines()):
             # grab hop information
             ttl_host = re.search(RE_TTL_HOST, line)
-            pmtu = re.search(RE_PMTU, line)
-            reply_ms = re.search(RE_REPLY_MS, line)
-            asymm = re.search(RE_ASYMM, line)
-            reached = re.search(RE_REACHED, line)
             summary = re.search(RE_SUMMARY, line)
 
             if ttl_host:
+                # the keywords follow the host field. The host name can
+                # contain them too, e.g. reached.example.net
+                rest = line[ttl_host.end():]
+                pmtu = re.search(RE_PMTU, rest)
+                reply_ms = re.search(RE_REPLY_MS, rest)
+                asymm = re.search(RE_ASYMM, rest)
+                reached = re.search(RE_REACHED, rest)
+
                 hop = {
                     'ttl': ttl_host.group('ttl'),
                     'guess': bool(ttl_host.group('ttl_guess')),
