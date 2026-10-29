@@ -23,6 +23,15 @@ class MyTests(unittest.TestCase):
         ubuntu_18_4_jobs_json = json.loads(f.read())
 
 
+    def test_jobs_line_separators(self):
+        """
+        Test 'jobs' with line-break characters other than LF in a command
+        """
+        data = '[1]   Running                 sleep a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j &\n[2]   Running                 sleep 12 &\n'
+        result = jc.parsers.jobs.parse(data, quiet=True)
+        self.assertEqual(result[0]['command'], 'sleep a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j &')
+        self.assertEqual(result[1]['command'], 'sleep 12 &')
+
     def test_jobs_nodata(self):
         """
         Test 'jobs' with no data

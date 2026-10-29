@@ -262,8 +262,8 @@ def _statements(data: str) -> Iterator[Tuple[Optional[str], Optional[str]]]:
     depth = 0
     in_quotes = False
 
-    for raw_line in data.splitlines(keepends=True):
-        line = raw_line.splitlines()[0]
+    for raw_line in jc.utils.splitlines(data, keepends=True):
+        line = jc.utils.splitlines(raw_line)[0]
         line_end = raw_line[len(line):]
         continued = in_quotes
 

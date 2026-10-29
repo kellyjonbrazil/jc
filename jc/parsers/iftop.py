@@ -370,7 +370,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     if not jc.utils.has_data(data):
         return raw_output if raw else _process(raw_output, quiet=quiet)
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         has_port = False
         if "=>" in line or "<=" in line:
             line = _aggregated_host(line)

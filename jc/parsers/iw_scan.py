@@ -310,7 +310,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             if line.startswith('BSS'):
                 if section:
                     raw_output.append(section)

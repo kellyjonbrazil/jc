@@ -363,13 +363,13 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
     raw_output = []
     new_list = []
 
     if jc.utils.has_data(data):
 
-        cleandata = data.splitlines()
+        cleandata = jc.utils.splitlines(data)
 
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace(':', '_')

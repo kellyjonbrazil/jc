@@ -404,7 +404,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # device line
             if line.startswith('/') and line.endswith(':'):
                 raw_output['device'] = line[:-1]

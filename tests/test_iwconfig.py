@@ -38,6 +38,15 @@ class iwconfigTests(unittest.TestCase):
         iwconfig_essid_variants_json = json.loads(f.read())
 
 
+    def test_iwconfig_line_separators(self):
+        """
+        Test 'iwconfig' with line-break characters other than LF in an ESSID
+        """
+        data = 'wlp5s0    IEEE 802.11  ESSID:"BLa\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j"  \n          Mode:Managed  Frequency:5.18 GHz  Access Point: E6:63:DA:16:50:BF   \n'
+        result = jc.parsers.iwconfig.parse(data, quiet=True)
+        self.assertEqual(result[0]['essid'], 'BLa\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[0]['mode'], 'Managed')
+
     def test_iwconfig_nodata(self):
         """
         Test 'iwconfig' with no data
