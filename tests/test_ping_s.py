@@ -532,6 +532,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping6_linux_hostname_from_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-icmp-errors.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_icmp_errors = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-icmp-errors-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_icmp_errors_streaming_json = json.loads(f.read())
+
     def test_ping_s_nodata(self):
         """
         Test 'ping' with no data
@@ -1216,6 +1222,31 @@ class MyTests(unittest.TestCase):
             self.assertEqual(result[0]['destination_ip'], '192.0.2.10', header)
             self.assertEqual(result[0]['sent_bytes'], int(header.split()[-3]), header)
             self.assertEqual(result[0]['response_ip'], '192.0.2.10', header)
+
+    def test_ping6_s_bsd_icmp_errors(self):
+        """
+        Test 'ping6' on macOS/FreeBSD with the ICMPv6 error messages of BSD ping6
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping6_bsd_icmp_errors.splitlines(), quiet=True))
+        self.assertEqual(result, self.generic_ping6_bsd_icmp_errors_streaming_json)
+        self.assertEqual([r['type'] for r in result],
+                         ['no_route_to_destination', 'destination_administratively_unreachable',
+                          'destination_unreachable_beyond_scope', 'packet_too_big',
+                          'destination_unreachable_bad_code', 'reply', 'summary'])
+        self.assertEqual(result[1]['response_ip'], 'fe80::1%em0')
+        self.assertEqual(result[3]['sent_bytes'], 1280)
+
+    def test_ping_s_error_tables_match_ping(self):
+        """
+        Test 'ping_s' and 'ping' with the same table of ICMP error messages
+        """
+        import jc.parsers.ping
+        for message in ('No Route to Destination', 'Destination Administratively Unreachable',
+                        'Destination Unreachable Beyond Scope', 'Packet too big mtu = 1280',
+                        'Destination Unreachable, Bad Code: 7', 'Destination Host Unreachable',
+                        'Communication prohibited by filter', 'Weird error message'):
+            line = '56 bytes from 192.0.2.1: ' + message
+            self.assertEqual(jc.parsers.ping_s._error_type_v4(line), jc.parsers.ping._error_type(line), message)
 
 
 if __name__ == '__main__':

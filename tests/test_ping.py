@@ -523,6 +523,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from.json'), 'r', encoding='utf-8') as f:
         generic_ping6_linux_hostname_from_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-icmp-errors.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_icmp_errors = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-icmp-errors.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_bsd_icmp_errors_json = json.loads(f.read())
+
     def test_ping_nodata(self):
         """
         Test 'ping' with no data
@@ -1144,6 +1150,19 @@ class MyTests(unittest.TestCase):
             self.assertEqual(result['destination_ip'], '192.0.2.10', header)
             self.assertEqual(result['data_bytes'], int(header.split()[-3]), header)
             self.assertEqual(result['responses'][0]['response_ip'], '192.0.2.10', header)
+
+    def test_ping6_bsd_icmp_errors(self):
+        """
+        Test 'ping6' on macOS/FreeBSD with the ICMPv6 error messages of BSD ping6
+        """
+        result = jc.parsers.ping.parse(self.generic_ping6_bsd_icmp_errors, quiet=True)
+        self.assertEqual(result, self.generic_ping6_bsd_icmp_errors_json)
+        self.assertEqual([r['type'] for r in result['responses']],
+                         ['no_route_to_destination', 'destination_administratively_unreachable',
+                          'destination_unreachable_beyond_scope', 'packet_too_big',
+                          'destination_unreachable_bad_code', 'reply'])
+        self.assertEqual(result['responses'][1]['response_ip'], 'fe80::1%em0')
+        self.assertEqual(result['responses'][3]['bytes'], 1280)
 
 
 if __name__ == '__main__':

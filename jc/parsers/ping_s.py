@@ -209,6 +209,9 @@ def _error_type_v4(line):
     # https://github.com/iputils/iputils/blob/master/ping/ping.c
     # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping.c
     # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping.tproj/ping.c
+    # and IPv6 ICMP error messages from pr_icmph() in:
+    # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping6.c
+    # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping6.tproj/ping6.c
     type_map = {
         'Destination Net Unreachable': 'destination_net_unreachable',
         'Destination Host Unreachable': 'destination_host_unreachable',
@@ -238,7 +241,13 @@ def _error_type_v4(line):
         'Time to live exceeded': 'time_to_live_exceeded',
         'Frag reassembly time exceeded': 'frag_reassembly_time_exceeded',
         'Time exceeded, Bad Code': 'time_exceeded_bad_code',
-        'Parameter problem': 'parameter_problem'
+        'Parameter problem': 'parameter_problem',
+        # IPv6 messages of BSD ping6 that are not in the list above
+        'No Route to Destination': 'no_route_to_destination',
+        'Destination Administratively Unreachable': 'destination_administratively_unreachable',
+        'Destination Unreachable Beyond Scope': 'destination_unreachable_beyond_scope',
+        'Destination Unreachable, Bad Code': 'destination_unreachable_bad_code',
+        'Packet too big': 'packet_too_big'
     }
 
     # longest first, so 'Destination Net Unreachable for Type of Service'
@@ -400,6 +409,23 @@ def _bsd_parse(line, s):
             pass
         return output_line
 
+    # error responses, also on IPv6 when the sender is a scoped address
+    # or the message is not in _error_type_v6()
+    err = _error_type_v4(line)
+    if err:
+        output_line = {
+            'type': err
+        }
+
+        try:
+            output_line['bytes'] = line.split()[0]
+            output_line['destination_ip'] = s.destination_ip
+            output_line['response_ip'] = _bsd_error_sender(line)
+        except Exception:
+            pass
+
+        return output_line
+
     # ipv4 lines
     if not _ipv6_in(line):
 
@@ -412,22 +438,6 @@ def _bsd_parse(line, s):
                 'pattern': s.pattern or None,
                 'icmp_seq': line.split()[4]
             }
-
-            return output_line
-
-        # catch error responses
-        err = _error_type_v4(line)
-        if err:
-            output_line = {
-                'type': err
-            }
-
-            try:
-                output_line['bytes'] = line.split()[0]
-                output_line['destination_ip'] = s.destination_ip
-                output_line['response_ip'] = _bsd_error_sender(line)
-            except Exception:
-                pass
 
             return output_line
 

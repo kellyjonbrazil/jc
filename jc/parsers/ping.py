@@ -272,6 +272,9 @@ def _error_type(line):
     # https://github.com/iputils/iputils/blob/master/ping/ping.c
     # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping.c
     # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping.tproj/ping.c
+    # and IPv6 ICMP error messages from pr_icmph() in:
+    # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping6.c
+    # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping6.tproj/ping6.c
     type_map = {
         'Destination Net Unreachable': 'destination_net_unreachable',
         'Destination Host Unreachable': 'destination_host_unreachable',
@@ -301,7 +304,13 @@ def _error_type(line):
         'Time to live exceeded': 'time_to_live_exceeded',
         'Frag reassembly time exceeded': 'frag_reassembly_time_exceeded',
         'Time exceeded, Bad Code': 'time_exceeded_bad_code',
-        'Parameter problem': 'parameter_problem'
+        'Parameter problem': 'parameter_problem',
+        # IPv6 messages of BSD ping6 that are not in the list above
+        'No Route to Destination': 'no_route_to_destination',
+        'Destination Administratively Unreachable': 'destination_administratively_unreachable',
+        'Destination Unreachable Beyond Scope': 'destination_unreachable_beyond_scope',
+        'Destination Unreachable, Bad Code': 'destination_unreachable_bad_code',
+        'Packet too big': 'packet_too_big'
     }
 
     # longest first, so 'Destination Net Unreachable for Type of Service'
@@ -510,6 +519,7 @@ def _bsd_parse(data):
     pattern = None
     footer = False
     ping_error = False
+    ipv6 = False
 
     linedata = data.splitlines()
 
@@ -537,6 +547,7 @@ def _bsd_parse(data):
             continue
 
         if line.startswith('PING6('):
+            ipv6 = True
             line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
             raw_output.update(
                 {
@@ -590,6 +601,24 @@ def _bsd_parse(data):
 
         # ping response lines
         else:
+            # ipv6 error lines. The returned IPv6 header that follows them
+            # is not read.
+            if ipv6:
+                err = _error_type(line)
+                if err:
+                    response = {
+                        'type': err
+                    }
+
+                    try:
+                        response['bytes'] = line.split()[0]
+                        response['response_ip'] = _bsd_error_sender(line)
+                    except Exception:
+                        pass
+
+                    ping_responses.append(response)
+                    continue
+
             # ipv4 lines
             if not _ipv6_in(line):
 
