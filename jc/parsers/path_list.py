@@ -3,6 +3,10 @@ r"""jc - JSON Convert POSIX path list string parser
 Parse a colon-separated POSIX path list, commonly found in environment
 variables.
 
+> Note: An empty entry (for example `/usr/bin::/bin`) means the current
+> directory and is reported as `.`. An entry that only contains spaces
+> is kept as a path.
+
 Usage (cli):
 
     $ echo "/Users/admin/.docker/bin:/Users/admin/.asdf/shims" | jc --path-list
@@ -118,12 +122,14 @@ def parse(data, raw=False, quiet=False):
         windows = _is_windows(data)
         delimiter = ";" if windows else ":"
 
-        for line in data.split(delimiter):
-            if not jc.utils.has_data(line):
-                raw_output.append({})
-                continue
+        for line in data.rstrip('\r\n').split(delimiter):
+            line = line.rstrip('\n')
 
-            line = line.rstrip("\n")
+            # an empty entry means the current directory. A whitespace-only
+            # entry is a valid directory name and is kept as is.
+            if line == '':
+                line = '.'
+
             raw_output.append(path._parse_path(line, windows, raw))
 
     return raw_output

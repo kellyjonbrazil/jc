@@ -537,6 +537,74 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.mdadm.parse(self.mdadm_query_raid5_ok, quiet=True), self.mdadm_query_raid5_ok_json)
 
+    def test_mdadm_odd_name_and_uuid_values(self):
+        """
+        Test 'mdadm' with names and UUIDs that end in ')' or are empty, and an exact homehost match
+        """
+        def run(name):
+            data = '/dev/md0:\n          Name : ' + name + '\n         UUID : ' + name + '\n'
+            return jc.parsers.mdadm.parse(data, quiet=True)
+
+        result = run('x)')
+        self.assertEqual(result['name_val'], 'x)')
+        self.assertEqual(result['uuid_val'], 'x)')
+        self.assertNotIn('homehost', result)
+
+        result = run('a:backup(old)')
+        self.assertEqual(result['name_val'], 'a:backup(old)')
+        self.assertNotIn('homehost', result)
+
+        result = run('x:0  (local to host nas)')
+        self.assertEqual(result['name_val'], 'x:0')
+        self.assertEqual(result['uuid_val'], 'x:0')
+        self.assertEqual(result['homehost'], 'nas')
+
+        result = run('x:0  (local to host my nas)')
+        self.assertEqual(result['name_val'], 'x:0')
+        self.assertEqual(result['homehost'], 'my nas')
+
+        result = run('')
+        self.assertEqual(result['name'], '')
+        self.assertNotIn('name_val', result)
+        self.assertNotIn('uuid_val', result)
+
+    def test_mdadm_empty_values(self):
+        """
+        Test 'mdadm' with empty Unused Space, Array State, Array Size and similar values
+        """
+        data = (
+            '/dev/md0:\n'
+            '   Array Size : \n'
+            '  Unused Space : \n'
+            '  Array State : \n'
+            '  Data Offset : \n'
+            '     Checksum : \n'
+            '         Name : n1\n'
+        )
+        self.assertEqual(
+            jc.parsers.mdadm.parse(data, quiet=True),
+            {
+                'device': '/dev/md0',
+                'array_size': '',
+                'unused_space': '',
+                'array_state': '',
+                'data_offset': None,
+                'checksum': '',
+                'name': 'n1',
+                'name_val': 'n1',
+                'array_state_list': []
+            }
+        )
+
+    def test_mdadm_unused_space(self):
+        """
+        Test 'mdadm' with a normal Unused Space line
+        """
+        data = '/dev/md0:\n  Unused Space : before=1968 sectors, after=0 sectors\n'
+        result = jc.parsers.mdadm.parse(data, quiet=True)
+        self.assertEqual(result['unused_space_before'], 1968)
+        self.assertEqual(result['unused_space_after'], 0)
+
 
 if __name__ == '__main__':
     unittest.main()

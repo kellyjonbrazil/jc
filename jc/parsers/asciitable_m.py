@@ -105,6 +105,7 @@ import re
 from functools import lru_cache
 from typing import Iterable, Tuple, List, Dict, Optional
 import jc.utils
+from jc.parsers.universal import _char_width
 from jc.exceptions import ParseError
 
 
@@ -153,6 +154,9 @@ _ansi_escape = re.compile(r'(?:\x9B|\x1B\[)[0-?]*[@-{}~]')
 # characters that make up a row separator line
 _separator_chars = frozenset('-=+|: \t' + ''.join(chr(c) for c in range(0x2500, 0x2580)))
 
+# characters a right table border or frame ends with
+_RIGHT_EDGE_CHARS = frozenset('+|' + ''.join(chr(c) for c in range(0x2500, 0x2580)))
+
 
 def _remove_ansi(string: str) -> str:
     return _ansi_escape.sub('', string)
@@ -167,16 +171,50 @@ def _lstrip(string: str) -> str:
     return '\n'.join(new_lstrip_list)
 
 
+def _display_width(string: str) -> int:
+    """number of terminal cells a string fills"""
+    return sum(1 if c < '\x80' else _char_width(c) for c in string)
+
+
+def _cut_cells(string: str, cells: int) -> str:
+    """return the leading characters of a string that fit in the given cells"""
+    used = 0
+    for i, char in enumerate(string):
+        used += 1 if char < '\x80' else _char_width(char)
+        if used > cells:
+            return string[:i]
+
+    return string
+
+
 def _rstrip(string: str) -> str:
     """
-    find the rightmost non-whitespace character and rstrip to that index.
-    Lines shorter than that index get one trailing space so they still end
-    in whitespace, the same as if they were padded to the full width.
+    Remove the padding after the right edge of the table. If the table has a
+    right border (decided once for the whole table) the border is the last
+    character of every line. Otherwise find the rightmost
+    non-whitespace cell and rstrip to that cell. Lines shorter than that cell
+    get one trailing space so they still end in whitespace, the same as if
+    they were padded to the full width. Widths are display widths, so wide
+    characters count as two cells.
     """
     rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
-    end_points = (len(x.rstrip()) for x in rstrip_list)
-    max_point = max(end_points)
-    new_rstrip_list = (x[:max_point] if len(x) >= max_point else x + ' ' for x in rstrip_list)
+
+    # a table has a right border if its first line ends with one and every
+    # line ends at the same place, measured in cells or in characters
+    first = rstrip_list[0].rstrip()
+    if first[-1] in _RIGHT_EDGE_CHARS:
+        first_width = _display_width(first)
+        if all(
+            len(x.rstrip()) == len(first) or _display_width(x.rstrip()) == first_width
+            for x in rstrip_list
+        ):
+            return '\n'.join(x.rstrip() for x in rstrip_list)
+
+    max_point = max(_display_width(x.rstrip()) for x in rstrip_list)
+    new_rstrip_list = (
+        _cut_cells(x, max_point) if _display_width(x) >= max_point else x + ' '
+        for x in rstrip_list
+    )
     return '\n'.join(new_rstrip_list)
 
 

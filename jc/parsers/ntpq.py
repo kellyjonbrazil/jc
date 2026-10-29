@@ -207,7 +207,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`ntpq -p` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -278,19 +278,29 @@ def parse(data, raw=False, quiet=False):
         # delete header delimiter
         del cleandata[1]
 
-        # separate first character with a space for easier parsing
-        for i, line in list(enumerate(cleandata[1:])):
-            if line[0] == ' ':
-                # fixup for no-state
-                cleandata[i + 1] = '~  ' + line[1:]
-            else:
-                # fixup - realign columns since we added the 's' column
-                cleandata[i + 1] = line[:1] + '  ' + line[1:]
+        headers = cleandata[0].split()
+        num_cols = len(headers) - 3     # columns after 's', 'remote' and 'refid'
+
+        for line in cleandata[1:]:
+            if not line.strip():
+                continue
+
+            # first character is the tally code. A space means no state
+            tally = '~' if line[0] == ' ' else line[0]
 
             # fixup for occasional ip/hostname fields with a space
-            cleandata[i + 1] = cleandata[i + 1].replace(' (', '_(')
+            tokens = line[1:].replace(' (', '_(').split()
 
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+            if num_cols > 0 and len(tokens) >= num_cols + 2:
+                # take the numeric columns from the right so a space in the
+                # refid doesn't shift them
+                remote = tokens[0]
+                refid = ' '.join(tokens[1:-num_cols])
+                values = [tally, remote, refid] + tokens[-num_cols:]
+            else:
+                values = [tally] + tokens
+
+            raw_output.append(dict(zip(headers, values)))
 
     if raw:
         return raw_output

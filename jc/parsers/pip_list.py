@@ -109,7 +109,7 @@ def parse(data, raw=False, quiet=False):
         # otherwise normal table output
         else:
             # clear separator line
-            cleandata = [line for line in cleandata if '---' not in line]
+            cleandata = [line for line in cleandata if not line.strip().startswith('---')]
 
             cleandata[0] = cleandata[0].lower()
 

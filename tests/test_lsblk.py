@@ -120,5 +120,47 @@ sr0                   11:0    1    1073741312  0 rom'''
         """
         self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_zero_width, quiet=True), self.generic_lsblk_zero_width_json)
 
+    def test_lsblk_tree_multiple_mountpoints_non_last(self):
+        """
+        Test 'lsblk' with ASCII and Unicode tree output where devices that are not last have several mountpoints
+        """
+        data = (
+            'NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS\n'
+            'sda         8:0    0  20G  0 disk\n'
+            '|-sda1      8:1    0   1G  0 part /boot\n'
+            '|                                 /boot2\n'
+            '|-sda2      8:2    0   1G  0 part\n'
+            '| |-vg-a  253:0    0   1G  0 lvm  /a\n'
+            '| |                               /b\n'
+            '| `-vg-b  253:1    0   1G  0 lvm  /c\n'
+            '`-sda3      8:3    0   1G  0 part /x\n'
+        )
+        unicode_data = data.replace('|-', '\u251c\u2500').replace('`-', '\u2514\u2500').replace('|', '\u2502')
+        expected = [
+            ('sda', []),
+            ('sda1', ['/boot', '/boot2']),
+            ('sda2', []),
+            ('vg-a', ['/a', '/b']),
+            ('vg-b', ['/c']),
+            ('sda3', ['/x'])
+        ]
+
+        for text in (data, unicode_data):
+            result = jc.parsers.lsblk.parse(text, quiet=True)
+            self.assertEqual([(d['name'], d['mountpoints']) for d in result], expected)
+
+    def test_lsblk_orphan_continuation_line(self):
+        """
+        Test 'lsblk' with a mountpoint continuation line before any device
+        """
+        data = (
+            'NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS\n'
+            '|                           /orphan\n'
+            'sda    8:0    0  20G  0 disk /x\n'
+        )
+        result = jc.parsers.lsblk.parse(data, quiet=True)
+        self.assertEqual([(d['name'], d['mountpoints']) for d in result], [('sda', ['/x'])])
+
+
 if __name__ == '__main__':
     unittest.main()
