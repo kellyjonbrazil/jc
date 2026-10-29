@@ -1,0 +1,73 @@
+[
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 40001,
+    "program_name": "systemd",
+    "path": "/run/[a]/b",
+    "kind": "socket",
+    "pid": 1898
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 40002,
+    "program_name": "systemd",
+    "path": "[/var/run/notify",
+    "kind": "socket",
+    "pid": 1899
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 40003,
+    "program_name": "systemd",
+    "path": "[/var/run/docker.sock",
+    "kind": "socket",
+    "pid": 31337
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 40004,
+    "program_name": "sshd: u [pri]",
+    "path": "/run/sshd/[x]",
+    "kind": "socket",
+    "pid": 3138
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 40005,
+    "program_name": "sshd: u [pri]",
+    "path": "/run/sshd/notify]",
+    "kind": "socket",
+    "pid": 3139
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "W",
+    "type": "STREAM",
+    "state": "CONNECTING",
+    "inode": 40006,
+    "program_name": null,
+    "path": "@/tmp/[dbus]-x",
+    "kind": "socket"
+  }
+]
