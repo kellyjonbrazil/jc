@@ -155,7 +155,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -516,6 +516,12 @@ def parse(
 
             stat_line_log = stat_line_log_re.match(line)
             if stat_line_log:
+                # a new process id without file lines is a new run
+                if stat_line_log.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat_line_log.group('process')
+
                 rsync_run['summary'].update({
                     'date': stat_line_log.group('date'),
                     'time': stat_line_log.group('time'),
@@ -528,6 +534,11 @@ def parse(
 
             stat1_line_log_v = stat1_line_log_v_re.match(line)
             if stat1_line_log_v:
+                if stat1_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat1_line_log_v.group('process')
+
                 rsync_run['summary'].update({
                     'date': stat1_line_log_v.group('date'),
                     'time': stat1_line_log_v.group('time'),
@@ -541,6 +552,11 @@ def parse(
 
             stat2_line_log_v = stat2_line_log_v_re.match(line)
             if stat2_line_log_v:
+                if stat2_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat2_line_log_v.group('process')
+
                 rsync_run['summary']['sent'] = stat2_line_log_v.group('sent')
                 rsync_run['summary']['received'] = stat2_line_log_v.group('received')
                 rsync_run['summary']['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
@@ -548,6 +564,11 @@ def parse(
 
             stat3_line_log_v = stat3_line_log_v_re.match(line)
             if stat3_line_log_v:
+                if stat3_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat3_line_log_v.group('process')
+
                 rsync_run['summary']['total_size'] = stat3_line_log_v.group('total_size')
                 rsync_run['summary']['speedup'] = stat3_line_log_v.group('speedup')
                 continue
