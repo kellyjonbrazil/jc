@@ -313,6 +313,8 @@ def _bsd_parse(line, s):
         s.footer = True
         return None
 
+    # the summary is sent at the end of the stream: the round-trip line is
+    # missing with 100% packet loss and has no stddev value on BusyBox
     if s.footer:
         if 'packets transmitted' in line:
             if ' duplicates,' in line:
@@ -320,16 +322,20 @@ def _bsd_parse(line, s):
                 s.packets_received = line.split()[3]
                 s.packet_loss_percent = line.split()[8].rstrip('%')
                 s.duplicates = line.split()[6].lstrip('+')
-                return None
 
-            s.packets_transmitted = line.split()[0]
-            s.packets_received = line.split()[3]
-            s.packet_loss_percent = line.split()[6].rstrip('%')
-            s.duplicates = '0'
-            return None
+            else:
+                s.packets_transmitted = line.split()[0]
+                s.packets_received = line.split()[3]
+                s.packet_loss_percent = line.split()[6].rstrip('%')
+                s.duplicates = '0'
 
-        split_line = line.split(' = ')[1]
-        split_line = split_line.split('/')
+        else:
+            split_line = line.split(' = ')[1]
+            split_line = split_line.replace(' ms', '').split('/')
+            s.round_trip_ms_min = split_line[0]
+            s.round_trip_ms_avg = split_line[1]
+            s.round_trip_ms_max = split_line[2]
+            s.round_trip_ms_stddev = split_line[3] if len(split_line) == 4 else None
 
         output_line = {
             'type': 'summary',
@@ -340,10 +346,10 @@ def _bsd_parse(line, s):
             'packets_received': s.packets_received or None,
             'packet_loss_percent': s.packet_loss_percent or None,
             'duplicates': s.duplicates or None,
-            'round_trip_ms_min': split_line[0],
-            'round_trip_ms_avg': split_line[1],
-            'round_trip_ms_max': split_line[2],
-            'round_trip_ms_stddev': split_line[3].replace(' ms', '')
+            'round_trip_ms_min': s.round_trip_ms_min,
+            'round_trip_ms_avg': s.round_trip_ms_avg,
+            'round_trip_ms_max': s.round_trip_ms_max,
+            'round_trip_ms_stddev': s.round_trip_ms_stddev
         }
 
         return output_line
@@ -688,17 +694,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             if s.os_detected and s.linux:
                 output_line = _linux_parse(line, s)
 
-                # summary can be multiple lines so don't output until the end
-                if output_line:
-                    if output_line.get('type', None) == 'summary':
-                        summary_obj = output_line
-                        continue
-
             elif s.os_detected and s.bsd:
                 output_line = _bsd_parse(line, s)
 
             else:
                 raise ParseError('Could not detect ping OS')
+
+            # summary can be multiple lines so don't output until the end
+            if output_line and output_line.get('type', None) == 'summary':
+                summary_obj = output_line
+                continue
 
             # yield the output line if it has data
             if output_line:

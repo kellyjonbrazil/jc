@@ -508,6 +508,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping_osx_icmp_errors_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip.out'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_ip = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_ip_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname.out'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_hostname = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_hostname_streaming_json = json.loads(f.read())
+
     def test_ping_s_nodata(self):
         """
         Test 'ping' with no data
@@ -1111,6 +1123,40 @@ class MyTests(unittest.TestCase):
         expected = [
             {'type': 'parameter_problem', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'},
             {'type': 'source_quench', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'}
+        ]
+        self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
+
+    def test_ping_s_ip_alpine_linux(self):
+        """
+        Test 'ping <ip>' on alpine linux
+        """
+        result = list(jc.parsers.ping_s.parse(self.alpine_linux_3_13_ping_ip.splitlines(), quiet=True))
+        self.assertEqual(result, self.alpine_linux_3_13_ping_ip_streaming_json)
+        self.assertEqual(result[-1]['round_trip_ms_max'], 1.637)
+        self.assertIsNone(result[-1]['round_trip_ms_stddev'])
+
+    def test_ping_s_hostname_alpine_linux(self):
+        """
+        Test 'ping <hostname>' on alpine linux
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.alpine_linux_3_13_ping_hostname.splitlines(), quiet=True)), self.alpine_linux_3_13_ping_hostname_streaming_json)
+
+    def test_ping_s_osx_all_lost_summary(self):
+        """
+        Test 'ping' on macOS/BSD with 100% packet loss and no round-trip line
+        """
+        data = [
+            'PING 192.0.2.1 (192.0.2.1): 56 data bytes',
+            'Request timeout for icmp_seq 0',
+            '',
+            '--- 192.0.2.1 ping statistics ---',
+            '2 packets transmitted, 0 packets received, 100.0% packet loss'
+        ]
+        expected = [
+            {'type': 'timeout', 'destination_ip': '192.0.2.1', 'sent_bytes': 56, 'pattern': None, 'icmp_seq': 0},
+            {'type': 'summary', 'destination_ip': '192.0.2.1', 'sent_bytes': 56, 'pattern': None, 'packets_transmitted': 2,
+             'packets_received': 0, 'packet_loss_percent': 100.0, 'duplicates': 0, 'round_trip_ms_min': None,
+             'round_trip_ms_avg': None, 'round_trip_ms_max': None, 'round_trip_ms_stddev': None}
         ]
         self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
 
