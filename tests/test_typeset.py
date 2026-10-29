@@ -137,6 +137,15 @@ class MyTests(unittest.TestCase):
                     result = str(e)
                 self.assertEqual(result, expected)
 
+    def test_typeset_associative_keys_with_equals(self):
+        """
+        Test 'declare -p' associative arrays with keys that contain '=' or ']='
+        """
+        data = 'declare -A x=(["s]=p"]="3" ["q\\"x"]="2" [a=b]="c" [k]="v=w" [$\'t\\tu\']="4" ["s]p"]="1" )\n'
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(result[0]['value'], {'s]=p': '3', 'q"x': '2', 'a=b': 'c', 'k': 'v=w', 't\tu': '4', 's]p': '1'})
+        self.assertEqual(result[0]['type'], 'associative')
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -321,14 +321,35 @@ def _get_simple_array_vals(body: str) -> List[str]:
     return values
 
 
+def _split_key_value(word: str):
+    """
+    Split a `[key]=value` word at the first `]=` outside of quotes, so a key
+    can contain `=`. Returns None if there is no such `]=`.
+    """
+    if not word.startswith('['):
+        return None
+
+    for part in _SHELL_PART.finditer(word, 1):
+        if part.group(0)[0] not in '\'"\\':
+            idx = part.group(0).find(']=')
+            if idx != -1:
+                idx += part.start()
+                return _shell_unquote(word[1:idx]), _shell_unquote(word[idx + 2:])
+
+    return None
+
+
 def _get_associative_array_vals(body: str) -> Dict[str, str]:
     body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    body_split = _shell_split(body)
     values: Dict = {}
-    for item in body_split:
-        key, val = item.split('=', maxsplit=1)
-        key = _remove_bookends(key, '[', ']')
+    for word in _shell_words(body):
+        key_value = _split_key_value(word)
+        if key_value:
+            key, val = key_value
+        else:
+            key, val = _shell_unquote(word).split('=', maxsplit=1)
+            key = _remove_bookends(key, '[', ']')
         values.update({key: val})
     return values
 
