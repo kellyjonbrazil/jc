@@ -187,7 +187,8 @@ _ct_block_pattern = re.compile(r'^ct\s+(?:helper|timeout|expectation)\s+\S+\s*\{
 
 _chain_type_pattern = re.compile(r'^type\s+(?P<type>\S+)')
 _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
-_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
+# a quoted device name can contain `}`
+_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{(?:[^}"]|"[^"]*")*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
 
