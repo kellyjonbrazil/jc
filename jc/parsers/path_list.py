@@ -4,7 +4,8 @@ Parse a colon-separated POSIX path list, commonly found in environment
 variables.
 
 > Note: An empty entry (for example `/usr/bin::/bin`) means the current
-> directory and is reported as `.`.
+> directory and is reported as `.`. An entry that only contains spaces
+> is kept as a path.
 
 Usage (cli):
 
@@ -122,16 +123,13 @@ def parse(data, raw=False, quiet=False):
         delimiter = ";" if windows else ":"
 
         for line in data.rstrip('\r\n').split(delimiter):
-            # an empty entry means the current directory
+            line = line.rstrip('\n')
+
+            # an empty entry means the current directory. A whitespace-only
+            # entry is a valid directory name and is kept as is.
             if line == '':
                 line = '.'
 
-            elif not jc.utils.has_data(line):
-                raw_output.append({})
-                continue
-
-
-            line = line.rstrip("\n")
             raw_output.append(path._parse_path(line, windows, raw))
 
     return raw_output

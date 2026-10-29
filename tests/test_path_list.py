@@ -47,6 +47,18 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.path_list.parse('C:\\a;;D:\\b\n', quiet=True)
         self.assertEqual([r['path'] for r in result], ['C:\\a', '.', 'D:\\b'])
 
+    def test_path_list_whitespace_only_entry(self):
+        """
+        Test 'path_list' with a whitespace-only entry, which is a valid directory name
+        """
+        result = jc.parsers.path_list.parse('a: :b', quiet=True)
+        self.assertEqual(result[1], {'path': ' ', 'parent': '.', 'filename': ' ', 'stem': ' ', 'extension': '', 'path_list': [' ']})
+        self.assertEqual([r['path'] for r in result], ['a', ' ', 'b'])
+
+        result = jc.parsers.path_list.parse('C:\\a; ;D:\\b', quiet=True)
+        self.assertEqual([r['path'] for r in result], ['C:\\a', ' ', 'D:\\b'])
+        self.assertEqual(result[1]['filename'], ' ')
+
 
 if __name__ == '__main__':
     unittest.main()
