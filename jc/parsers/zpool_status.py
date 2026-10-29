@@ -176,7 +176,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
 def _build_config_list(string: str) -> List[Dict]:
     config_list: List = []
-    for line in filter(None, string.splitlines()):
+    for line in filter(None, jc.utils.splitlines(string)):
         if line.strip().endswith('READ WRITE CKSUM'):
             continue
 

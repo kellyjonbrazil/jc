@@ -299,7 +299,7 @@ def parse(data, raw=False, quiet=False):
 
         ports = False
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.startswith('--'):
                 if item_obj:

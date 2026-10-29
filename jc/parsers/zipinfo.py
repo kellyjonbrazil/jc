@@ -77,7 +77,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`zipinfo` command parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
@@ -143,7 +143,7 @@ def parse(data, raw=False, quiet=False):
     archives = []
 
     if jc.utils.has_data(data):
-        datalines = data.splitlines()
+        datalines = jc.utils.splitlines(data)
 
         # remove last line of multi-archive output since it is not needed
         if datalines[-1].endswith('archives were successfully processed.'):

@@ -537,7 +537,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     jc.utils.input_type_check(data)
 
     index = 0
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     screen, device = None, None
 
     # temporary fix to ignore specific unhandled lines
