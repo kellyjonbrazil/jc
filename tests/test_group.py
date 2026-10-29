@@ -83,6 +83,35 @@ class MyTests(unittest.TestCase):
         ]
         self.assertEqual(jc.parsers.group.parse(data, quiet=True), expected)
 
+    def test_group_whitespace(self):
+        """
+        Test 'group' with blanks before members, group names and comments
+        """
+        data = ('sudo:x:27:joeuser, www-data\n'
+                ' \tadm:x:4:\t syslog ,bin\n'
+                '  # wheel:x:10:jdoe\n'
+                '   #\n'
+                'users:x:100: \n')
+        self.assertEqual(jc.parsers.group.parse(data, quiet=True), [
+            {'group_name': 'sudo', 'password': 'x', 'gid': 27, 'members': ['joeuser', 'www-data']},
+            {'group_name': 'adm', 'password': 'x', 'gid': 4, 'members': ['syslog', 'bin']},
+            {'group_name': 'users', 'password': 'x', 'gid': 100, 'members': []}
+        ])
+
+    def test_group_nul_byte(self):
+        """
+        Test 'group' with a NUL byte inside an entry
+        """
+        data = 'dev:x:1\x0023:bob\nops:x:5:amy,bo\x00b\nlast:x:6:z\n'
+        self.assertEqual(jc.parsers.group.parse(data, quiet=True), [
+            {'group_name': 'dev', 'password': 'x', 'gid': 1, 'members': []},
+            {'group_name': 'ops', 'password': 'x', 'gid': 5, 'members': ['amy', 'bo']},
+            {'group_name': 'last', 'password': 'x', 'gid': 6, 'members': ['z']}
+        ])
+        self.assertEqual(jc.parsers.group.parse('dev:x\x00:1:a\n', quiet=True), [
+            {'group_name': 'dev', 'password': 'x', 'gid': None, 'members': []}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

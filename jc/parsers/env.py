@@ -84,7 +84,7 @@ class info():
 
 __version__ = info.version
 
-VAR_DEF_PATTERN = re.compile(r'^[a-zA-Z_][a-zA-Z0-9_]*=\S*.*$')
+VAR_DEF_PATTERN = re.compile(r'^[^=\s]+=', re.ASCII)
 
 def _process(proc_data):
     """

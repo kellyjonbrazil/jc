@@ -81,6 +81,17 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.cbt.parse(self.dashes_in_values, quiet=True), self.dashes_in_values_json)
 
+    def test_cbt_value_quotes_and_spaces(self):
+        """
+        Test 'cbt' with values that have their own leading and trailing
+        spaces and quotes
+        """
+        sep = '-' * 40
+        cell = '  f:%s                                 @ 2024/03/01-09:00:00.000000\n    %s\n'
+        data = sep + '\nrow\n' + cell % ('a', '"  padded  "') + cell % ('b', '"\\"quoted\\""') + cell % ('c', '""')
+        result = jc.parsers.cbt.parse(data, quiet=True)
+        self.assertEqual(result[0]['cells']['f'], {'a': '  padded  ', 'b': '\\"quoted\\"', 'c': ''})
+
 
 if __name__ == '__main__':
     unittest.main()

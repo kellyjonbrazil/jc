@@ -221,6 +221,20 @@ def parse(
 
             raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
+            # incomplete entries have blank HWtype, HWaddress and Flags
+            # cells, so the row is short and its columns are shifted
+            for i, entry in enumerate(raw_output):
+                if entry.get('hwtype') == '(incomplete)':
+                    rest = [v for k, v in entry.items()
+                            if k not in ('address', 'hwtype')]
+                    raw_output[i] = {
+                        'address': entry['address'],
+                        'hwtype': None,
+                        'hwaddress': None,
+                        'flags_mask': None,
+                        'iface': rest[-1] if rest else None
+                    }
+
         # otherwise, try bsd style
         else:
             for line in cleandata:

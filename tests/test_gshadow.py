@@ -69,6 +69,28 @@ class MyTests(unittest.TestCase):
         expected = [{'group_name': 'sudo', 'password': '*', 'administrators': [], 'members': ['alice', 'x:', 'bob']}]
         self.assertEqual(jc.parsers.gshadow.parse(data, quiet=True), expected)
 
+    def test_gshadow_whitespace(self):
+        """
+        Test 'gshadow' with blanks before names, members and comments
+        """
+        data = (' \tsudo:*:root, joe:amy,\t bob\n'
+                '  # wheel:*::\n'
+                'users:!: :\n')
+        self.assertEqual(jc.parsers.gshadow.parse(data, quiet=True), [
+            {'group_name': 'sudo', 'password': '*', 'administrators': ['root', 'joe'], 'members': ['amy', 'bob']},
+            {'group_name': 'users', 'password': '!', 'administrators': [], 'members': []}
+        ])
+
+    def test_gshadow_nul_byte(self):
+        """
+        Test 'gshadow' with a NUL byte inside an entry
+        """
+        data = 'dev:*:root\x00:bob\nops:!::amy\n'
+        self.assertEqual(jc.parsers.gshadow.parse(data, quiet=True), [
+            {'group_name': 'dev', 'password': '*', 'administrators': ['root'], 'members': []},
+            {'group_name': 'ops', 'password': '!', 'administrators': [], 'members': ['amy']}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

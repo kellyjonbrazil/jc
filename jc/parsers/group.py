@@ -171,18 +171,23 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for entry in cleandata:
-            if entry.startswith('#'):
+            # an entry ends at the first NUL byte, as it does in the C library,
+            # and leading blanks are skipped before the comment test
+            entry = entry.split('\0', maxsplit=1)[0].lstrip(' \t')
+
+            if not entry or entry.startswith('#'):
                 continue
 
             output_line = {}
             # the last field is the rest of the line: a colon after the
             # third one is part of that field and does not end it
             fields = entry.split(':', maxsplit=3)
+            fields.extend([''] * (4 - len(fields)))
 
             output_line['group_name'] = fields[0]
             output_line['password'] = fields[1]
             output_line['gid'] = fields[2]
-            output_line['members'] = fields[3].split(',')
+            output_line['members'] = [member.strip(' \t') for member in fields[3].split(',')]
 
             raw_output.append(output_line)
 

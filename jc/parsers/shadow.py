@@ -159,11 +159,15 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for entry in cleandata:
-            if entry.startswith('#'):
+            # an entry ends at the first NUL byte, as it does in the C library
+            entry = entry.split('\0', maxsplit=1)[0]
+
+            if not entry or entry.startswith('#'):
                 continue
 
             output_line = {}
             fields = entry.split(':')
+            fields.extend([''] * (8 - len(fields)))
 
             output_line['username'] = fields[0]
             output_line['password'] = fields[1]

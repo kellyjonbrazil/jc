@@ -38,6 +38,18 @@ class MyTests(unittest.TestCase):
         Test 'find' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.find.parse(self.ubuntu_18_4_find, quiet=True), self.ubuntu_18_4_find_json)
+    def test_find_no_slash(self):
+        """
+        Test 'find' with lines that have no slash
+        """
+        self.assertEqual(jc.parsers.find.parse('file.txt\n.\n./\n./a/b\n/etc\n', quiet=True), [
+            {'path': None, 'node': 'file.txt'},
+            {'path': None, 'node': '.'},
+            {'path': '.', 'node': None},
+            {'path': './a', 'node': 'b'},
+            {'path': None, 'node': 'etc'}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

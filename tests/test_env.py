@@ -82,6 +82,20 @@ class MyTests(unittest.TestCase):
         data = 'A=1\nb\nc\nD=\nE=x\n\n'
         self.assertEqual(jc.parsers.env.parse(data, raw=True), {'A': '1\nb\nc', 'D': '', 'E': 'x\n'})
 
+    def test_env_non_identifier_names(self):
+        """
+        Test 'env' with variable names that are not shell identifiers
+        """
+        data = 'PWD=/src\nBASH_FUNC_which%%=() {  /usr/bin/which "$@"\n}\nmy.var=1\nmy-var=2\nProgramFiles(x86)=C:\\x\n_=/usr/bin/env\n'
+        self.assertEqual(jc.parsers.env.parse(data, raw=True), {
+            'PWD': '/src',
+            'BASH_FUNC_which%%': '() {  /usr/bin/which "$@"\n}',
+            'my.var': '1',
+            'my-var': '2',
+            'ProgramFiles(x86)': 'C:\\x',
+            '_': '/usr/bin/env'
+        })
+
 
 if __name__ == '__main__':
     unittest.main()
