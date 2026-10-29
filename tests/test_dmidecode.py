@@ -16,6 +16,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dmidecode-multiple-descriptions.json'), 'r', encoding='utf-8') as f:
         generic_dmidecode_multiple_descriptions_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dmidecode-quiet.out'), 'r', encoding='utf-8') as f:
+        generic_dmidecode_quiet = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dmidecode-quiet.json'), 'r', encoding='utf-8') as f:
+        generic_dmidecode_quiet_json = json.loads(f.read())
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dmidecode.out'), 'r', encoding='utf-8') as f:
         centos_7_7_dmidecode = f.read()
@@ -130,6 +136,29 @@ class MyTests(unittest.TestCase):
         expected = [
             {'handle': '0x0001', 'type': 1, 'bytes': 8, 'description': 'System',
              'values': {'key': 'v', 'key_data': ['data 1', 'data 2']}}
+        ]
+        self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
+
+    def test_dmidecode_quiet(self):
+        """
+        Test 'dmidecode -q -t 0,1,2' (no header rows or Handle lines)
+        """
+        result = jc.parsers.dmidecode.parse(self.generic_dmidecode_quiet, quiet=True)
+        self.assertEqual(result, self.generic_dmidecode_quiet_json)
+        self.assertEqual([x['description'] for x in result],
+                         ['BIOS Information', 'System Information', 'Base Board Information'])
+        self.assertEqual(result[0]['values']['vendor'], 'Phoenix Technologies LTD')
+        self.assertEqual(result[0]['values']['firmware_revision'], '0.0')
+
+    def test_dmidecode_quiet_multiple_descriptions(self):
+        """
+        Test 'dmidecode -q' with an entry that has a second description
+        """
+        data = 'BIOS Information\n\tVendor: Acme\n\nOEM Strings\n\tString 1: a\nSecond Description\n\tString 2: b\n\n'
+        expected = [
+            {'description': 'BIOS Information', 'values': {'vendor': 'Acme'}},
+            {'description': 'OEM Strings', 'values': {'string_1': 'a'}},
+            {'description': 'Second Description', 'values': {'string_2': 'b'}}
         ]
         self.assertEqual(jc.parsers.dmidecode.parse(data, quiet=True), expected)
 
