@@ -161,7 +161,7 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
 
     # parse lines. The cut positions of each row are found from the right
     # and the row is sliced at those positions. The character at each cut
-    # position is dropped.
+    # position (a whitespace character) is dropped.
     for entry in data:
         # rows with non-ASCII characters map the column positions from
         # display cells to character indexes
@@ -203,6 +203,11 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
             while h_end > 0 and not entry[h_end].isspace():
                 h_end -= 1
 
+            # a value that runs back to the start of the line is kept whole
+            # in the next column: the cut goes before the line
+            if h_end == 0 and not entry[0].isspace():
+                h_end = -1
+
             if not cuts or h_end != cuts[-1]:
                 cuts.append(h_end)
 
@@ -210,7 +215,7 @@ def sparse_table_parse(data: Iterable[str], delim: str = '\u2063') -> List[Dict]
         entry_list = []
         col_start = 0
         for h_end in reversed(cuts):
-            entry_list.append(entry[col_start:h_end])
+            entry_list.append(entry[col_start:h_end] if h_end >= 0 else '')
             col_start = h_end + 1
         entry_list.append(entry[col_start:])
         entry_list.extend([''] * trailing_cuts)
