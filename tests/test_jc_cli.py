@@ -977,7 +977,10 @@ power management:
         """
         for options, hint in ((['-q'], True), (['-qq'], False)):
             err = io.StringIO()
+            # STDIN must look piped, or run() stops at 'Missing piped data' when
+            # the tests are run from a terminal
             with mock.patch('sys.argv', ['jc'] + options + ['--ls-s']), \
+                 mock.patch('sys.stdin', io.StringIO()), \
                  mock.patch.object(JcCli, 'streaming_parse_and_print', side_effect=ValueError('x')), \
                  mock.patch.object(jc.utils, 'CLI_QUIET', False), \
                  contextlib.redirect_stdout(io.StringIO()), \
