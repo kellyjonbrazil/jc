@@ -240,7 +240,7 @@ def parse(data, raw=False, quiet=False):
             field_hash, field_value = _long_filesystem_hash(filesystem_col_len, line)
             if field_hash:
                 filesystem_map.update({field_hash: field_value})
-                newline = line.replace(field_value, field_hash)
+                newline = line.replace(field_value, field_hash, 1)
                 fix_data.append(newline)
             else:
                 fix_data.append(line)

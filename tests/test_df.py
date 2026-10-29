@@ -45,6 +45,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-wide-chars.json'), 'r', encoding='utf-8') as f:
         generic_df_linux_wide_chars_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem-in-mount-point.out'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem_in_mount_point = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/df-linux-long-filesystem-in-mount-point.json'), 'r', encoding='utf-8') as f:
+        generic_df_linux_long_filesystem_in_mount_point_json = json.loads(f.read())
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/df.json'), 'r', encoding='utf-8') as f:
         centos_7_7_df_json = json.loads(f.read())
@@ -148,6 +154,16 @@ class MyTests(unittest.TestCase):
         Test older version of 'df' with long filesystem data
         """
         self.assertEqual(jc.parsers.df.parse(self.generic_df_linux_long_filesystem, quiet=True), self.generic_df_linux_long_filesystem_json)
+
+    def test_df_long_filesystem_in_mount_point(self):
+        """
+        Test older version of 'df' with a long filesystem name that is also
+        part of the mount point
+        """
+        result = jc.parsers.df.parse(self.generic_df_linux_long_filesystem_in_mount_point, quiet=True)
+        self.assertEqual(result, self.generic_df_linux_long_filesystem_in_mount_point_json)
+        self.assertEqual(result[0]['filesystem'], '/dev/mapper/VolGroup00-LogVol00')
+        self.assertEqual(result[0]['mounted_on'], '/mnt//dev/mapper/VolGroup00-LogVol00')
 
     def test_df_long_filesystem_many_rows(self):
         """
