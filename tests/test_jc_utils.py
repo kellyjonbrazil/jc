@@ -757,6 +757,57 @@ line5
         self.assertNotIn('...', out)
         self.assertEqual(len(line), out.count('y'))
 
+    def test_utils_unescape_backslashes_octal(self):
+        """
+        Test unescape_backslashes decoding every octal escape like libmount
+        """
+        cases = {
+            'plain/path': 'plain/path',
+            '/mnt/my\\040disk': '/mnt/my disk',
+            'rw,\\145xec,\\163uid': 'rw,exec,suid',
+            'a\\011b\\012c\\134d': 'a\tb\nc\\d',
+            'caf\\303\\251': 'café',
+            'bad\\377': 'bad\\xff',
+            'mask\\777': 'mask\\xff',
+            'x\\\\040y': 'x\\ y',
+            'short\\12': 'short\\12',
+            'not\\089octal': 'not\\089octal',
+            'end\\': 'end\\',
+            'nul\\000kept': 'nul\x00kept',
+            '\\040\\040': '  ',
+            '\\041a\\042': '!a"'
+        }
+
+        for escaped, expected in cases.items():
+            with self.subTest(escaped):
+                self.assertEqual(jc.utils.unescape_backslashes(escaped), expected)
+
+    def test_utils_unescape_backslashes_variants(self):
+        """
+        Test unescape_backslashes with a limited octal set and extra escapes
+        """
+        acl = (' \t\n\r', {'\\': '\\'})
+        md5sum = ('', {'\\': '\\', 'n': '\n', 'r': '\r'})
+        cases = [
+            ('CORP\\\\domain\\040users', acl, 'CORP\\domain users'),
+            ('\\\\040x', acl, '\\040x'),
+            ('a\\\\\\\\b', acl, 'a\\\\b'),
+            ('tab\\011name\\012', acl, 'tab\tname\n'),
+            ('dash\\055kept', acl, 'dash\\055kept'),
+            ('caf\\303\\251', acl, 'caf\\303\\251'),
+            ('end\\', acl, 'end\\'),
+            ('back\\\\slash', md5sum, 'back\\slash'),
+            ('line\\nfeed\\r', md5sum, 'line\nfeed\r'),
+            ('\\\\n', md5sum, '\\n'),
+            ('octal\\040kept\\t', md5sum, 'octal\\040kept\\t')
+        ]
+
+        for escaped, (octal_chars, escapes), expected in cases:
+            with self.subTest(escaped):
+                self.assertEqual(
+                    jc.utils.unescape_backslashes(escaped, octal_chars, escapes),
+                    expected)
+
     # def test_utils_warning_message(self):
     #     msg = [
     #         'this is a long first line that will be wrapped yada yada yada yada yada yada yada.',

@@ -1360,3 +1360,85 @@ class timestamp:
             timestamp_obj['iso'] = iso_string
 
         return timestamp_obj
+
+
+def unescape_backslashes(
+    data: str,
+    octal_chars: Optional[str] = None,
+    escapes: Optional[Dict[str, str]] = None
+) -> str:
+    r"""
+    Decode the backslash escapes that tools such as `mount` (fstab, mtab),
+    `getfacl` and `md5sum` use for special characters in names. The input is
+    read from left to right in a single pass, so an escaped backslash is never
+    used to start another escape.
+
+    A backslash followed by three octal digits (`\040`) is decoded to the
+    byte it stands for (the value is masked to 8 bits, as in libmount). A run
+    of these bytes is interpreted as UTF-8 and invalid UTF-8 is shown as
+    backslash escapes. A backslash that is not followed by three octal digits
+    or by a key of `escapes` is kept as it is, along with the character after
+    it.
+
+    Parameters:
+
+        data:         (string) Input value
+        octal_chars:  (string) Decode an octal escape only when it stands for
+                      one of these characters and keep any other octal escape
+                      as it is. `None` (default) decodes every octal escape
+                      and an empty string decodes none.
+        escapes:      (dictionary) Maps the character that follows a
+                      backslash to its replacement, e.g. `{'\\': '\\'}`
+                      decodes `\\` to a single backslash. Octal escapes are
+                      checked first.
+
+    Returns:
+
+        string
+    """
+    if '\\' not in data:
+        return data
+
+    escapes = escapes or {}
+    result: List[str] = []
+    octal_run = bytearray()
+    start = 0
+    idx = data.find('\\')
+
+    while idx >= 0:
+        seq = data[idx + 1:idx + 4]
+
+        if (octal_chars != '' and len(seq) == 3
+                and all(char in '01234567' for char in seq)):
+            value = int(seq, 8) & 0xff
+
+            if octal_chars is None or (value < 0x80 and chr(value) in octal_chars):
+                if idx > start:
+                    if octal_run:
+                        result.append(octal_run.decode('utf-8', 'backslashreplace'))
+                        octal_run = bytearray()
+                    result.append(data[start:idx])
+
+                octal_run.append(value)
+                start = idx + 4
+                idx = data.find('\\', start)
+                continue
+
+        if seq[:1] and seq[:1] in escapes:
+            if octal_run:
+                result.append(octal_run.decode('utf-8', 'backslashreplace'))
+                octal_run = bytearray()
+
+            result.append(data[start:idx])
+            result.append(escapes[seq[:1]])
+            start = idx + 2
+            idx = data.find('\\', start)
+            continue
+
+        idx = data.find('\\', idx + 1)
+
+    if octal_run:
+        result.append(octal_run.decode('utf-8', 'backslashreplace'))
+
+    result.append(data[start:])
+    return ''.join(result)
