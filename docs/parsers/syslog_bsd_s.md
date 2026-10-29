@@ -43,7 +43,8 @@ Schema:
     }
 
     [0] this field exists if the syslog line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -89,4 +90,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/syslog_bsd_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/syslog_bsd_s.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

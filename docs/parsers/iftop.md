@@ -5,6 +5,10 @@
 
 jc - JSON Convert `iftop` command output parser
 
+> Note: `iftop` shortens long host names and addresses to fit its host
+> column, so `host_name` can be a shortened name or address. The brackets
+> `iftop` prints around an IPv6 address followed by a port are removed.
+
 Usage (cli):
 
     $ iftop -i <device> -t -B -s1 | jc --iftop

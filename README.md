@@ -684,7 +684,7 @@ $ export LANG=C
 $ export LC_NUMERIC=C
 ```
 
-On some older systems UTF-8 output will be downgraded to ASCII with `\\u`
+On some older systems UTF-8 output will be downgraded to ASCII with `\u`
 escape sequences if the `C` locale does not support UTF-8 encoding.
 
 #### Timezones

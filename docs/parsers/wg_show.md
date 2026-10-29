@@ -169,4 +169,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/wg_show.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/wg_show.py)
 
-Version 1.0 by Hamza Saht (hamzasaht01@gmail.com)
+Version 1.1 by Hamza Saht (hamzasaht01@gmail.com)

@@ -33,9 +33,13 @@ Schema:
           "milliseconds":     int,
           "timestamp":        string
         },
-        "content":            string
+        "content":            string,
+        "proprietary":        string    # [0]
       }
     ]
+
+    [0] text after the end timestamp, such as positional coordinates.
+        Only present when there is such text.
 
 Examples:
 

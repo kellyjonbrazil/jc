@@ -212,4 +212,4 @@ These process input line by line and output JSON Lines instead of a single JSON 
 
 ## /proc Files
 
-`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 51 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).
+`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 52 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).

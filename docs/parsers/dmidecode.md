@@ -5,6 +5,9 @@
 
 jc - JSON Convert `dmidecode` command output parser
 
+> Note: `dmidecode -q` prints no Handle lines, so its entries have no
+> `handle`, `type` or `bytes` fields.
+
 Usage (cli):
 
     $ dmidecode | jc --dmidecode

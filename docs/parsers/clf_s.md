@@ -65,11 +65,20 @@ Schema:
       "epoch":                        integer,  # [0]
       "epoch_utc":                    integer,  # [1]
       "unparsable":                   string    # [2]
+
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] naive timestamp
     [1] timezone-aware timestamp. Only available if timezone field is UTC
-    [2] exists if the line was not able to be parsed
+    [2] exists if the line was not able to be parsed. With -qq or
+        ignore_exceptions=True the line is reported in the _jc_meta object
+        instead.
 
 Examples:
 

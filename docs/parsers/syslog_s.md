@@ -66,7 +66,8 @@ Blank values converted to `null`/`None`.
     [0] naive timestamp if "timestamp" field is parsable, else null
     [1] timezone aware timestamp available for UTC, else null
     [2] this field exists if the syslog line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 

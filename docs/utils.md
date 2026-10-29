@@ -21,6 +21,8 @@
   * [normalize_key](#jc.utils.normalize_key)
   * [remove_quotes](#jc.utils.remove_quotes)
   * [splitlines](#jc.utils.splitlines)
+  * [unescape_backslashes](#jc.utils.unescape_backslashes)
+  * [unquote_git_path](#jc.utils.unquote_git_path)
   * [warning_message](#jc.utils.warning_message)
   * [xml_defaults_check](#jc.utils.xml_defaults_check)
 
@@ -146,7 +148,8 @@ Parameters:
 
 Returns:
 
-    float/None     Float if successful conversion, otherwise None
+    float/None     Float if successful conversion, otherwise None.
+                   Infinite and NaN results also return None.
 
 <a id="jc.utils.convert_to_int"></a>
 
@@ -380,6 +383,69 @@ Returns:
 
     List of strings. Like `str.splitlines()`, a trailing line terminator
     does not produce an empty final line.
+
+<a id="jc.utils.unescape_backslashes"></a>
+
+### unescape_backslashes
+
+```python
+def unescape_backslashes(data: str,
+                         octal_chars: str | None = None,
+                         escapes: Dict[str, str] | None = None) -> str
+```
+
+Decode the backslash escapes that tools such as `mount` (fstab, mtab),
+`getfacl` and `md5sum` use for special characters in names. The input is
+read from left to right in a single pass, so an escaped backslash is never
+used to start another escape.
+
+A backslash followed by three octal digits (`\040`) is decoded to the
+byte it stands for (the value is masked to 8 bits, as in libmount). A run
+of these bytes is interpreted as UTF-8 and invalid UTF-8 is shown as
+backslash escapes. A backslash that is not followed by three octal digits
+or by a key of `escapes` is kept as it is, along with the character after
+it.
+
+Parameters:
+
+    data:         (string) Input value
+    octal_chars:  (string) Decode an octal escape only when it stands for
+                  one of these characters and keep any other octal escape
+                  as it is. `None` (default) decodes every octal escape
+                  and an empty string decodes none.
+    escapes:      (dictionary) Maps the character that follows a
+                  backslash to its replacement, e.g. `{'\\': '\\'}`
+                  decodes `\\` to a single backslash. Octal escapes are
+                  checked first.
+
+Returns:
+
+    string
+
+<a id="jc.utils.unquote_git_path"></a>
+
+### unquote_git_path
+
+```python
+def unquote_git_path(data: str) -> str
+```
+
+Decode a file path as printed by git. By default (`core.quotePath`) git
+wraps a path that has non-ASCII characters, double quotes, backslashes or
+control characters in double quotes and C-style escapes those characters
+(e.g. `"d\303\251ploy.yml"`). The escapes are decoded and the bytes are
+interpreted as UTF-8. Invalid UTF-8 is shown as backslash escapes.
+
+A path that is not quoted is returned unmodified. Each side of a rename
+in the `"old" => new` or `old => "new"` form is decoded separately.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
 
 <a id="jc.utils.warning_message"></a>
 

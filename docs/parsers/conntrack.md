@@ -80,7 +80,8 @@ Schema:
         "stop":              string,        # [14]
         "stop_epoch":        integer,       # [14]
         "id":                integer,       # [15]
-        "portid":            integer        # [16]
+        "portid":            integer,       # [16]
+        "progname":          string         # [16]
       }
     ]
 
