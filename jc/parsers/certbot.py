@@ -138,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`certbot` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -208,7 +208,7 @@ def parse(
         else:
             cmd_option = 'account'
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if cmd_option == 'certificates':
                 if line.startswith('  Certificate Name:'):

@@ -181,7 +181,7 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
 

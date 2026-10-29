@@ -122,6 +122,15 @@ class MyTests(unittest.TestCase):
         generic_tsv_simple_double_quote_json = json.loads(f.read())
 
 
+    def test_csv_line_separators(self):
+        """
+        Test 'csv' with a line-break character other than LF in the first data row
+        """
+        data = 'name;note\nfoo;a\u2028b,c\nbar;c\n'
+        result = jc.parsers.csv.parse(data, quiet=True)
+        self.assertEqual(result[0], {'name': 'foo', 'note': 'a\u2028b,c'})
+        self.assertEqual(result[1], {'name': 'bar', 'note': 'c'})
+
     def test_csv_nodata(self):
         """
         Test with no data

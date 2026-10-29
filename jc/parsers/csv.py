@@ -121,7 +121,7 @@ def _sniff(data: str) -> Type[csv.Dialect]:
     cannot be detected.
     """
     masked = re.sub(r'"[^"]*("|$)', '""', data[:1024]).replace("'", '')
-    rows = [row for row in masked.splitlines() if row.strip()]
+    rows = [row for row in jc.utils.splitlines(masked, split_cr=True) if row.strip()]
 
     # the last row is incomplete if the sample was cut off
     if len(data) > 1024 and len(rows) > 1:

@@ -138,7 +138,7 @@ def parse(
 
         # classify each line by its prefix, since a boot entry label or
         # device path can contain the other key names
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.startswith("BootCurrent:"):
                 raw_output["boot_current"] = line.split(':')[1].strip()

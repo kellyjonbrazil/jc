@@ -420,7 +420,7 @@ def parse(
     raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if _summary_re.search(line):
                 continue
 

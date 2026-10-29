@@ -200,7 +200,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        data = data.splitlines()
+        data = jc.utils.splitlines(data)
 
         # remove header rows (everything before the first blank line)
         for idx, row in enumerate(data):
