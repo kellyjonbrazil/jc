@@ -336,6 +336,35 @@ class MyTests(unittest.TestCase):
         self.assertNotIn('interface', result[1])
         self.assertEqual((result[2]['local_address'], result[2]['interface']), ('127.0.0.53', 'lo'))
 
+    def test_ss_packet_sockets(self):
+        """
+        Test 'ss -0' and 'ss -0e' with p_raw and p_dgr rows
+        """
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'p_raw UNCONN 0      0               LLDP:ens33                  *        ino:30371 sk:1 cgroup:/system.slice/lldpd.service <->\n'
+                'p_dgr UNCONN 0      0            [35020]:wlp2s0                 *        ino:28737 sk:2 cgroup:/system.slice/NetworkManager.service <->\n'
+                'p_dgr UNCONN 0      0                 ip:*                      *        ino:28738 sk:3 cgroup:/ <->\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'netid': 'p_raw', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '30371', 'cookie': '1', 'cgroup': '/system.slice/lldpd.service'},
+             'link_layer': 'LLDP', 'interface': 'ens33'},
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '28737', 'cookie': '2', 'cgroup': '/system.slice/NetworkManager.service'},
+             'link_layer': '[35020]', 'interface': 'wlp2s0'},
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '28738', 'cookie': '3', 'cgroup': '/'},
+             'link_layer': 'ip', 'interface': '*'}
+        ])
+
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'p_dgr UNCONN 0      0            [35020]:wlp2s0                 *\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'link_layer': '[35020]', 'interface': 'wlp2s0'}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

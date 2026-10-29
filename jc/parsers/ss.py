@@ -310,6 +310,9 @@ _NL_LOCAL_RE = re.compile(r'(nl\s+\S+\s+\d+\s+\d+\s+)([^\s:]+:.*/\d+)(?=\s+\*(?:
 #: paths and netlink channels can contain a `%` that is not an interface.
 _INTERFACE_NETIDS = {'tcp', 'udp', 'raw', 'icmp6', 'sctp', 'dccp', 'mptcp', 'udplite'}
 
+#: Netids of packet sockets: the local field is `<link layer>:<interface>`
+_PACKET_NETIDS = {'p_raw', 'p_dgr'}
+
 #: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
 #: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
 #: parentheses inside it are preserved rather than rewritten.
@@ -573,7 +576,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
+    contains_colon = ['nl', 'p_raw', 'p_dgr', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
     ONE_OR_MORE_SPACE_PATTERN = r'[ ]{1,}'
     TWO_OR_MORE_SPACES_PATTERN = r'[ ]{2,}'
@@ -675,6 +678,10 @@ def parse(data, raw=False, quiet=False):
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
 
+                # packet sockets print only '*' for the peer, without a port
+                elif entry_list[0] in _PACKET_NETIDS and 'peer_port' in row_header:
+                    row_header.remove('peer_port')
+
                 # The options region is one logical field, but it can itself
                 # contain runs of two or more spaces: newer iproute2 pads after
                 # the users: block to align the column. The two-or-more split
@@ -714,7 +721,7 @@ def parse(data, raw=False, quiet=False):
 
                 output_line['channel'] = channel
 
-            if output_line['netid'] == 'p_raw':
+            if output_line['netid'] in _PACKET_NETIDS:
                 output_line['link_layer'] = output_line.pop('local_address')
                 output_line['interface'] = output_line.pop('local_port')
 
