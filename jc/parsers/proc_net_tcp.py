@@ -171,7 +171,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/net/tcp` and `/proc/net/tcp6` file parser'
     author = 'Alvin Solomon'
     author_email = 'alvinms01@gmail.com'
@@ -271,7 +271,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        line_data = data.splitlines()[1:]
+        line_data = jc.utils.splitlines(data)[1:]
 
         for entry in line_data:
             line = entry.split()

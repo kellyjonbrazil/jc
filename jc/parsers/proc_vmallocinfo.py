@@ -159,7 +159,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             area, size, details = line.split(maxsplit=2)
             start, end = area.split('-', maxsplit=1)
             detail_split = details.split()

@@ -113,7 +113,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata =  list(filter(None, data.splitlines()))
+        cleandata =  list(filter(None, jc.utils.splitlines(data)))
         cleandata[0] = 'counter ' + cleandata[0]
         raw_output = simple_table_parse(cleandata)
 

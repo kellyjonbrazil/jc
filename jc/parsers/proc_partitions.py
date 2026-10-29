@@ -138,7 +138,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata = list(filter(None, data.splitlines()))
+        cleandata = list(filter(None, jc.utils.splitlines(data)))
         cleandata[0] = cleandata[0].replace('#', 'num_')
         raw_output = simple_table_parse(cleandata)
 

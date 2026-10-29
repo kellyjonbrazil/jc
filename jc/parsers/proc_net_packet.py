@@ -135,6 +135,6 @@ def parse(
     raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
-        raw_output = simple_table_parse(data.splitlines())
+        raw_output = simple_table_parse(jc.utils.splitlines(data))
 
     return raw_output if raw else _process(raw_output)
