@@ -290,7 +290,7 @@ def _split_routes(value: str) -> Dict:
     output_dict = {}
     val_list = value.split(',')
     for val in val_list:
-        k, v = val.split('=')
+        k, v = val.split('=', maxsplit=1)
         output_dict[k.strip()] = v.strip()
 
     return output_dict
@@ -300,7 +300,7 @@ def _split_options(value: str) -> Dict:
     # ip_address = 192.168.71.180
     # requested_broadcast_address = 1
     output_dict = {}
-    k, v = value.split('=')
+    k, v = value.split('=', maxsplit=1)
     output_dict['name'] = k.strip()
     output_dict['value'] = v.strip()
 

@@ -309,6 +309,23 @@ class MyTests(unittest.TestCase):
         }]
         self.assertEqual(jc.parsers.nmcli.parse(data, quiet=True), expected)
 
+    def test_nmcli_equals_in_values(self):
+        """
+        Test 'nmcli' with '=' characters in DHCP option and route values
+        """
+        data = (
+            'GENERAL.DEVICE:                         ens33\n'
+            'IP4.ADDRESS[1]:                         192.168.71.180/24\n'
+            'DHCP4.OPTION[1]:                        domain_search = a=b.example.com\n'
+            'DHCP4.OPTION[2]:                        ip_address = 192.168.71.180\n'
+            'IP4.ROUTE[1]:                           dst = 192.168.71.0/24, nh = 0.0.0.0, mt = 100\n'
+        )
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(result[0]['dhcp4_option_1'], {'name': 'domain_search', 'value': 'a=b.example.com'})
+        self.assertEqual(result[0]['dhcp4_option_2'], {'name': 'ip_address', 'value': '192.168.71.180'})
+        self.assertEqual(result[0]['ip4_route_1'], {'dst': '192.168.71.0/24', 'nh': '0.0.0.0', 'mt': 100})
+        self.assertEqual(jc.parsers.nmcli._split_routes('dst = 1.2.3.0/24, nh = a=b, mt = 100'), {'dst': '1.2.3.0/24', 'nh': 'a=b', 'mt': '100'})
+
 
 if __name__ == '__main__':
     unittest.main()
