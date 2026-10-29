@@ -374,7 +374,7 @@ def parse(
     stat_ex_file_list_transfer_time_re = re.compile(r'File\slist\stransfer\stime:\s(?P<file_list_transfer_time>[,.0123456789]+\S?)\sseconds$')
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             file_line = file_line_re.match(line)
             if file_line:

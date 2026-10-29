@@ -589,7 +589,7 @@ def parse(data, raw=False, quiet=False):
     TWO_OR_MORE_SPACES_PATTERN = r'[ ]{2,}'
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
         header_text = cleandata[0].lower()

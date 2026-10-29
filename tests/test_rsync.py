@@ -89,6 +89,15 @@ class MyTests(unittest.TestCase):
         generic_rsync_i_stats_json = json.loads(f.read())
 
 
+    def test_rsync_line_separators(self):
+        """
+        Test 'rsync' with line-break characters other than LF in a file name
+        """
+        data = '>f+++++++++ some/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.txt\n.f....og..x some/dir/b.txt\n'
+        result = jc.parsers.rsync.parse(data, quiet=True)
+        self.assertEqual(result[0]['files'][0]['filename'], 'some/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.txt')
+        self.assertEqual(result[0]['files'][1]['filename'], 'some/dir/b.txt')
+
     def test_rsync_nodata(self):
         """
         Test 'rsync' with no data
