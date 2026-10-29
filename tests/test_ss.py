@@ -365,6 +365,21 @@ class MyTests(unittest.TestCase):
              'link_layer': '[35020]', 'interface': 'wlp2s0'}
         ])
 
+    def test_ss_users_with_contexts_and_threads(self):
+        """
+        Test 'ss -pZ', 'ss -pz' and 'ss -pT' process records
+        """
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1023,proc_ctx=system_u:system_r:sshd_t:s0-s0:c0.c1023,fd=3))\n'
+                'tcp   LISTEN 0      128          0.0.0.0:23         0.0.0.0:*    users:(("a b",pid=5,proc_ctx=u:r:t:s0:c1,c5,fd=4,sock_ctx=u:r:t:s0),("a b",pid=6,tid=7,fd=8))\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result[0]['opts'], {'process_id': {'1023': {'user': 'sshd', 'file_descriptor': '3'}}})
+        self.assertEqual(result[0]['local_port'], '22')
+        self.assertEqual(result[1]['opts'], {'process_id': {
+            '5': {'user': 'a b', 'file_descriptor': '4'},
+            '6': {'user': 'a b', 'file_descriptor': '8'}
+        }})
+
 
 if __name__ == '__main__':
     unittest.main()

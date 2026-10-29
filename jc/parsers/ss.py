@@ -315,8 +315,13 @@ _PACKET_NETIDS = {'p_raw', 'p_dgr'}
 
 #: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
 #: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
-#: parentheses inside it are preserved rather than rewritten.
-_USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),fd=(?P<fd>\d+)\)')
+#: parentheses inside it are preserved rather than rewritten. With -T and
+#: -Z/-z the fields after the pid are `[tid=N,][proc_ctx=X,]fd=M[,sock_ctx=Y]`.
+_USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),(?P<fields>[^()"]*)\)')
+
+#: The `fd=M` field among the fields after the pid. SELinux contexts can
+#: contain commas, so `fd=` must be followed by `,sock_ctx=` or the end.
+_USERS_FD_RE = re.compile(r'(?:^|,)fd=(?P<fd>\d+)(?:,sock_ctx=|$)')
 
 #: Marks a field belonging to the headerless options region added by -e, -o
 #: and -p. Used both to recognize that region and to find where it starts.
@@ -499,10 +504,12 @@ def _parse_opts(proc_data):
         block = users.group(0)
         record = _match_first(_USERS_RE, '("', block)
         while record:
-            opts['process_id'][record.group('pid')] = {
-                'user': record.group('user'),
-                'file_descriptor': record.group('fd')
-            }
+            fd = _USERS_FD_RE.search(record.group('fields'))
+            if fd:
+                opts['process_id'][record.group('pid')] = {
+                    'user': record.group('user'),
+                    'file_descriptor': fd.group('fd')
+                }
             record = _match_first(_USERS_RE, '("', block, record.end())
         proc_data = proc_data[:users.start()] + proc_data[users.end():]
 
