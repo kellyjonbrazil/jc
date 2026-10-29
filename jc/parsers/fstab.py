@@ -96,6 +96,11 @@ class info():
 __version__ = info.version
 
 
+def _unescape(field):
+    r"""Decode `\ooo` octal escapes like libmount (a decoded NUL ends the field)"""
+    return jc.utils.unescape_backslashes(field).split('\x00', 1)[0]
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -155,10 +160,10 @@ def parse(data, raw=False, quiet=False):
             if len(line_list) in (4, 5):
                 line_list += ['0'] * (6 - len(line_list))
 
-            fs_spec = line_list[0]
-            fs_file = line_list[1]
-            fs_vfstype = line_list[2]
-            fs_mntops = line_list[3]
+            fs_spec = _unescape(line_list[0])
+            fs_file = _unescape(line_list[1])
+            fs_vfstype = _unescape(line_list[2])
+            fs_mntops = _unescape(line_list[3])
             fs_freq = line_list[4]
             fs_passno = line_list[5]
 
