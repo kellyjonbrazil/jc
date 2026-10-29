@@ -75,6 +75,10 @@ import jc.utils
 
 _BSD_LINE_RE = re.compile(r'(?![0-9a-fA-F]+ )([\w-]+) \((.*)\) = ([0-9a-fA-F]+)[ \t]*\Z')
 
+# GNU coreutils and Perl shasum start the line with a backslash when the file
+# name contains a backslash, newline or carriage return and escape them
+_FILENAME_ESCAPES = {'\\': '\\', 'n': '\n', 'r': '\r'}
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
@@ -142,6 +146,11 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, jc.utils.splitlines(data)):
+            original_line = line
+            escaped = line.startswith('\\')
+            if escaped:
+                line = line[1:]
+
             # BSD style output: `MD5 (file name) = hash`. The file name is
             # everything between the first ` (` and the last `) = `
             bsd = _BSD_LINE_RE.match(line)
@@ -161,8 +170,11 @@ def parse(data, raw=False, quiet=False):
             else:
                 m = re.match('([0-9a-f]+) (.)(.*)$', line)
                 if not m:
-                    raise ValueError(f'Invalid line format: "{line}"')
+                    raise ValueError(f'Invalid line format: "{original_line}"')
                 file_hash, file_mode, file_name = m.groups()
+
+            if escaped:
+                file_name = jc.utils.unescape_backslashes(file_name, '', _FILENAME_ESCAPES)
 
             item = {
                 'filename': file_name,
