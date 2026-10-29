@@ -145,6 +145,31 @@ class MyTests(unittest.TestCase):
             self.generic_findmnt_quoted_and_escaped_commas_json
         )
 
+    def test_findmnt_single_space_header_with_spaces_in_values(self):
+        """
+        Test 'findmnt' aligned output whose header columns are one space apart and a value has spaces
+        """
+        data = (
+            'FSTYPE TARGET SOURCE\n'
+            'ext4   /a b   /dev/sda1\n'
+            'xfs    /      /dev/sdb1\n'
+        )
+        self.assertEqual(parse(data, quiet=True), [
+            {'fstype': 'ext4', 'target': '/a b', 'source': '/dev/sda1'},
+            {'fstype': 'xfs', 'target': '/', 'source': '/dev/sdb1'}
+        ])
+
+        # -r output escapes the spaces
+        data = (
+            'TARGET SOURCE FSTYPE\n'
+            '/a\\x20b /dev/sda1 ext4\n'
+            '/ /dev/sdb1 xfs\n'
+        )
+        self.assertEqual(parse(data, quiet=True), [
+            {'target': '/a\\x20b', 'source': '/dev/sda1', 'fstype': 'ext4'},
+            {'target': '/', 'source': '/dev/sdb1', 'fstype': 'xfs'}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()
