@@ -502,6 +502,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-reply-n-hostname.json'), 'r', encoding='utf-8') as f:
         generic_ping6_linux_reply_n_hostname_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-no-time.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_reply_no_time = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors.out'), 'r', encoding='utf-8') as f:
         generic_ping_osx_icmp_errors = f.read()
 
@@ -1052,6 +1055,38 @@ class MyTests(unittest.TestCase):
             {'type': 'reply', 'bytes': 16, 'response_ip': '2001:db8::9', 'icmp_seq': 3, 'ttl': 64, 'time_ms': 0.412, 'duplicate': False}
         ]
         self.assertEqual(jc.parsers.ping.parse(data, quiet=True)['responses'], expected)
+
+    def test_ping_ip_O_pi_trailing_blank_lines(self):
+        """
+        Test 'ping <ip> -O' on raspberry pi (100% packet loss) with any number of trailing blank lines
+        """
+        for ending in ('', '\n', '\n\n', '\n\n\n\n', '\n \n'):
+            result = jc.parsers.ping.parse(self.pi_ping_ip_O.rstrip() + ending, quiet=True)
+            self.assertEqual(result, self.pi_ping_ip_O_json, repr(ending))
+            self.assertEqual(result['packet_loss_percent'], 100.0)
+            self.assertEqual(result['data_bytes'], 56)
+
+    def test_ping_linux_reply_no_time_no_trailing_blank_line(self):
+        """
+        Test 'ping' on linux with replies and no rtt or trailing blank line
+        """
+        result = jc.parsers.ping.parse(self.generic_ping_linux_reply_no_time, quiet=True)
+        self.assertEqual(result['data_bytes'], 4)
+        self.assertEqual(result['duplicates'], 1)
+        self.assertEqual(result['packet_loss_percent'], 0.0)
+        self.assertEqual(result['time_ms'], 1001.0)
+        self.assertEqual(
+            result['responses'][2],
+            {'type': 'reply', 'timestamp': None, 'bytes': 12, 'response_ip': '127.0.0.1', 'icmp_seq': 2, 'ttl': 64, 'time_ms': None, 'duplicate': True}
+        )
+
+    def test_ping_short_input(self):
+        """
+        Test 'ping' with fewer than three lines of input
+        """
+        self.assertEqual(jc.parsers.ping.parse('PING 192.0.2.1 (192.0.2.1): 56 data bytes\n', quiet=True),
+                         {'destination_ip': '192.0.2.1', 'data_bytes': 56, 'pattern': None, 'responses': []})
+        self.assertEqual(jc.parsers.ping.parse('foo', quiet=True), {'responses': []})
 
 
 if __name__ == '__main__':

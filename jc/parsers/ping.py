@@ -692,7 +692,12 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        if ' time ' in data.splitlines()[-2] or ' time ' in data.splitlines()[-3]:
+        # the linux statistics line ('..., time 4149ms') is followed by the
+        # rtt line, or is the last line when nothing was received. Look at the
+        # last two non-blank lines since trailing blank lines may be stripped.
+        last_lines = [line for line in data.splitlines() if line.strip()][-2:]
+
+        if any(' time ' in line for line in last_lines):
             raw_output = _linux_parse(data)
         else:
             raw_output = _bsd_parse(data)
