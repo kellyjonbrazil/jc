@@ -105,6 +105,25 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.centos_7_7_rsync_i.splitlines(), quiet=True)), self.centos_7_7_rsync_i_streaming_json)
 
+    def test_rsync_s_logfile_run_without_file_lines(self):
+        """
+        Test 'rsync_s' log file with a run that has a summary but no file lines
+        """
+        data = [
+            '2022/01/28 03:53:52 [9190] building file list',
+            '2022/01/28 03:53:52 [9190] >f+++++++++ a.txt',
+            '2022/01/28 03:53:52 [9190] sent 1,713 bytes  received 507 bytes  total size 235',
+            '2022/01/28 03:55:00 [9198] building file list',
+            '2022/01/28 03:55:00 [9198] sent 120 bytes  received 12 bytes  total size 235'
+        ]
+        result = list(jc.parsers.rsync_s.parse(data, quiet=True))
+        self.assertEqual([(x['type'], x['process']) for x in result],
+                         [('file', 9190), ('summary', 9190), ('summary', 9198)])
+        self.assertEqual(result[0]['filename'], 'a.txt')
+        self.assertEqual(result[1]['sent'], 1713)
+        self.assertEqual(result[2]['sent'], 120)
+        self.assertEqual(result[2]['received'], 12)
+
     def test_rsync_s_i_generic(self):
         """
         Test 'rsync -i'
