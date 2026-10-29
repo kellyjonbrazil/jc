@@ -28,6 +28,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/fstab-optional-fields.json'), 'r', encoding='utf-8') as f:
         generic_fstab_optional_fields_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/fstab-octal-escapes.out'), 'r', encoding='utf-8') as f:
+        generic_fstab_octal_escapes = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/fstab-octal-escapes.json'), 'r', encoding='utf-8') as f:
+        generic_fstab_octal_escapes_json = json.loads(f.read())
+
 
     def test_fstab_nodata(self):
         """
@@ -86,6 +92,29 @@ class MyTests(unittest.TestCase):
         """
         data = '\xa0#tmpfs /usr/local/bin tmpfs rw,exec,suid,dev 0 0\n \t# comment\n'
         expected = [{'fs_spec': '\xa0#tmpfs', 'fs_file': '/usr/local/bin', 'fs_vfstype': 'tmpfs', 'fs_mntops': 'rw,exec,suid,dev', 'fs_freq': 0, 'fs_passno': 0}]
+        self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
+
+    def test_fstab_octal_escapes(self):
+        """
+        Test 'fstab' with octal escapes in the first four fields
+        """
+        self.assertEqual(jc.parsers.fstab.parse(self.generic_fstab_octal_escapes, quiet=True),
+                         self.generic_fstab_octal_escapes_json)
+
+    def test_fstab_octal_escapes_raw(self):
+        """
+        Test 'fstab' decodes octal escapes in raw output
+        """
+        data = '//server/My\\040Share /mnt/my\\040disk e\\170t4 rw,\\145xec 1 2\n'
+        expected = [{'fs_spec': '//server/My Share', 'fs_file': '/mnt/my disk', 'fs_vfstype': 'ext4', 'fs_mntops': 'rw,exec', 'fs_freq': '1', 'fs_passno': '2'}]
+        self.assertEqual(jc.parsers.fstab.parse(data, raw=True, quiet=True), expected)
+
+    def test_fstab_octal_escape_nul(self):
+        """
+        Test 'fstab' ends a field at a decoded NUL like libmount
+        """
+        data = '/dev/sdb1 /mnt/a\\000b ext4 defaults\\000,noexec 0 0\n'
+        expected = [{'fs_spec': '/dev/sdb1', 'fs_file': '/mnt/a', 'fs_vfstype': 'ext4', 'fs_mntops': 'defaults', 'fs_freq': 0, 'fs_passno': 0}]
         self.assertEqual(jc.parsers.fstab.parse(data, quiet=True), expected)
 
 
