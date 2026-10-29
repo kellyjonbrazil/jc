@@ -214,6 +214,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 continue
 
             if rrtype.startswith('has SOA record '):
+                # without -C, a second SOA line is a separate record
+                if not soaparse and 'zone' in rrdata:
+                    raw_output.append(rrdata)
+                    rrdata = {}
+
                 linedata = line.split(' ', maxsplit=10)
 
                 zone = linedata[0]
