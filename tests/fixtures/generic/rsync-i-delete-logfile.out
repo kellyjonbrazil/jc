@@ -1,0 +1,11 @@
+2022/01/28 03:53:52 [9190] building file list
+2022/01/28 03:53:52 [9190] .d..t...... ./
+2022/01/28 03:53:52 [9190] *deleting   old/stale.conf
+2022/01/28 03:53:52 [9190] *deleting   old/file with spaces.txt
+2022/01/28 03:53:52 [9190] *deleting   old/
+2022/01/28 03:53:52 [9190] >f+++++++++ new-file.txt
+2022/01/28 03:53:52 [9190] sent 256 bytes  received 83 bytes  total size 42
+2022/01/28 03:55:00 [9198] building file list
+2022/01/28 03:55:00 [9198] *deleting   new-file.txt
+2022/01/28 03:55:00 [9198] >f+++++++++ another-file.txt
+2022/01/28 03:55:00 [9198] sent 128 bytes  received 40 bytes  total size 21

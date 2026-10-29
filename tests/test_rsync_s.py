@@ -52,6 +52,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats.out'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-logfile.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_logfile = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_rsync_i_streaming_json = json.loads(f.read())
@@ -91,6 +97,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats-streaming.json'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-logfile-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_logfile_streaming_json = json.loads(f.read())
 
 
     def test_rsync_s_nodata(self):
@@ -188,6 +200,32 @@ total size is 221.79G  speedup is 25,388.23
         Test 'rsync -i --stats' or 'rsync -i --info=stats[1-3]'
         """
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_stats.splitlines(), quiet=True)), self.generic_rsync_i_stats_streaming_json)
+
+    def test_rsync_s_i_delete(self):
+        """
+        Test 'rsync -i --delete' with deleted files
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_delete.splitlines(), quiet=True)), self.generic_rsync_i_delete_streaming_json)
+
+    def test_rsync_s_i_delete_logfile(self):
+        """
+        Test 'rsync -i --delete --log-file' with deleted files in two runs
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_delete_logfile.splitlines(), quiet=True)), self.generic_rsync_i_delete_logfile_streaming_json)
+
+    def test_rsync_s_logfile_skipping_message(self):
+        """
+        Test 'rsync --log-file' with a "*** Skipping" message, which is not a file
+        """
+        data = (
+            '2022/01/28 03:53:52 [9190] *** Skipping any contents from this failed directory ***\n'
+            '2022/01/28 03:53:52 [9190] *deleting   old/stale.conf\n'
+        )
+        result = list(jc.parsers.rsync_s.parse(data.splitlines(), quiet=True))
+        self.assertEqual([x['filename'] for x in result], ['old/stale.conf'])
+        self.assertEqual(result[0]['metadata'], '*deleting')
+        self.assertEqual(result[0]['update_type'], 'message')
+        self.assertEqual(result[0]['process'], 9190)
 
 
     def test_rsync_s_crlf_lines(self):

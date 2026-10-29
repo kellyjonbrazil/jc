@@ -285,6 +285,9 @@ def parse(
 
     file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
     file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
+    # a "*" in the first position means the rest of the 11 character itemized
+    # area is a message instead of attribute flags (e.g. "*deleting  ")
+    message_line_re = re.compile(r'(?:(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+)?(?P<meta>\*[a-z][a-z ]{9}) (?P<name>.+)')
     stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
 
     stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
@@ -431,6 +434,48 @@ def parse(
                     'owner_different': owner_different[meta[6]],
                     'group_different': group_different[meta[7]]
                 }
+
+                yield output_line if raw else _process(output_line)
+                continue
+
+            message_line = message_line_re.match(line)
+            if message_line:
+                output_line = {
+                    'type': 'file',
+                    'filename': message_line.group('name')
+                }
+
+                # log file lines have a date, time, and process prefix
+                if message_line.group('process'):
+                    process = message_line.group('process')
+
+                    # a new process id starts a new run: emit the summary of
+                    # the previous run
+                    if process != last_process:
+                        if summary:
+                            yield summary if raw else _process(summary)
+                        last_process = process
+                        summary = {}
+
+                    output_line.update({
+                        'date': message_line.group('date'),
+                        'time': message_line.group('time'),
+                        'process': process
+                    })
+
+                output_line.update({
+                    'metadata': message_line.group('meta').rstrip(),
+                    'update_type': update_type['*'],
+                    'file_type': None,
+                    'checksum_or_value_different': None,
+                    'size_different': None,
+                    'modification_time_different': None,
+                    'permissions_different': None,
+                    'owner_different': None,
+                    'group_different': None,
+                    'acl_different': None,
+                    'extended_attribute_different': None
+                })
 
                 yield output_line if raw else _process(output_line)
                 continue
