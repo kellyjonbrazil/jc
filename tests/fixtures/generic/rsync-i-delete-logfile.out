@@ -1,0 +1,13 @@
+2026/10/28 18:42:45 [2638676] building file list
+2026/10/28 18:42:45 [2638676] *deleting   old/notes.txt
+2026/10/28 18:42:45 [2638676] *deleting   old/file with spaces.txt
+2026/10/28 18:42:45 [2638676] *deleting   old/
+2026/10/28 18:42:45 [2638676] *deleting   stale.conf
+2026/10/28 18:42:45 [2638676] *deleting   docs/obsolete.md
+2026/10/28 18:42:45 [2638676] >f+++++++++ new-file.txt
+2026/10/28 18:42:45 [2638676] >f+++++++++ docs/readme.txt
+2026/10/28 18:42:45 [2638676] sent 247 bytes  received 147 bytes  total size 18
+2026/10/28 18:42:53 [2638747] building file list
+2026/10/28 18:42:53 [2638747] *deleting   new-file.txt
+2026/10/28 18:42:53 [2638747] >f+++++++++ another-file.txt
+2026/10/28 18:42:53 [2638747] sent 210 bytes  received 57 bytes  total size 17

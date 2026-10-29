@@ -128,8 +128,10 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         datalines = jc.utils.splitlines(data, split_cr=True)
 
-        # remove last line of multi-archive output since it is not needed
-        if datalines[-1].endswith('archives were successfully processed.'):
+        # remove last line of multi-archive output since it is not needed.
+        # match the whole unzip summary line so other text that ends with
+        # the same words is kept
+        if re.match(r'\d+ archives? (?:was|were) successfully processed\.$', datalines[-1]):
             datalines.pop(-1)
 
         # extract each archive into its own list of lines.
@@ -152,6 +154,7 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             attributes = []
+            unzip_status_line = False
 
             # an unzip "inflating" status line is only recognized when it
             # directly follows the unindented "Archive:" line that starts
@@ -165,6 +168,7 @@ def parse(data, raw=False, quiet=False):
                 if line.startswith(' '):
                     if (i == 1 and unzip_header and
                             re.match(r'\s+\w+\s*:\s*META-INF/MANIFEST\.MF', line, re.IGNORECASE)):
+                        unzip_status_line = True
                         continue
 
                     if attributes:
@@ -176,9 +180,23 @@ def parse(data, raw=False, quiet=False):
 
             if attributes:
                 this_manifest = {}
-                for k, parts in attributes:
-                    k = re.sub(r'\s', '', k)
+                raw_keys = {}
+                for index, (raw_key, parts) in enumerate(attributes):
+                    k = re.sub(r'\s', '', raw_key)
                     k = re.sub(r'-', '_', k)
+
+                    if k in raw_keys:
+                        # a manifest attribute named "Archive" must not
+                        # replace the file name from the unzip header line
+                        if unzip_status_line and raw_keys[k] == 0:
+                            continue
+
+                        # keys that only differ in "-" and "_" (e.g.
+                        # Main-Class and Main_Class): keep the first one
+                        if attributes[raw_keys[k]][0] != raw_key:
+                            continue
+
+                    raw_keys[k] = index
                     this_manifest[k] = ''.join(parts).strip()
                 raw_output.append(this_manifest)
 

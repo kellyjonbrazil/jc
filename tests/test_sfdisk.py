@@ -186,6 +186,16 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.sfdisk.parse(self.debian_10_sfdisk_F2, quiet=True), self.debian_10_sfdisk_F2_json)
 
+    def test_sfdisk_l_model_like_header_debian10(self):
+        """
+        Test 'sfdisk -l' on Debian 10 with disk models that look like a disk header line
+        """
+        for model in ('1 2 3 44 sectors', 'ABC 2 3 sectors', 'a sectors/track', 'a b c d e f 63 sectors/track'):
+            data = self.debian_10_sfdisk_l.replace('Disk model: VMware Virtual S', 'Disk model: ' + model)
+            expected = [dict(self.debian_10_sfdisk_l_json[0])]
+            expected[0]['disk_model'] = model
+            self.assertEqual(jc.parsers.sfdisk.parse(data, quiet=True), expected, model)
+
 
 if __name__ == '__main__':
     unittest.main()

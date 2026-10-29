@@ -52,6 +52,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats.out'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-logfile.out'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_logfile = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/rsync-i-streaming.json'), 'r', encoding='utf-8') as f:
         centos_7_7_rsync_i_streaming_json = json.loads(f.read())
@@ -91,6 +97,12 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-stats-streaming.json'), 'r', encoding='utf-8') as f:
         generic_rsync_i_stats_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/rsync-i-delete-logfile-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_rsync_i_delete_logfile_streaming_json = json.loads(f.read())
 
 
     def test_rsync_s_nodata(self):
@@ -189,6 +201,32 @@ total size is 221.79G  speedup is 25,388.23
         """
         self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_stats.splitlines(), quiet=True)), self.generic_rsync_i_stats_streaming_json)
 
+    def test_rsync_s_i_delete(self):
+        """
+        Test 'rsync -i --delete' with deleted files
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_delete.splitlines(), quiet=True)), self.generic_rsync_i_delete_streaming_json)
+
+    def test_rsync_s_i_delete_logfile(self):
+        """
+        Test 'rsync -i --delete --log-file' with deleted files in two runs
+        """
+        self.assertEqual(list(jc.parsers.rsync_s.parse(self.generic_rsync_i_delete_logfile.splitlines(), quiet=True)), self.generic_rsync_i_delete_logfile_streaming_json)
+
+    def test_rsync_s_logfile_skipping_message(self):
+        """
+        Test 'rsync --log-file' with a "*** Skipping" message, which is not a file
+        """
+        data = (
+            '2022/01/28 03:53:52 [9190] *** Skipping any contents from this failed directory ***\n'
+            '2022/01/28 03:53:52 [9190] *deleting   old/stale.conf\n'
+        )
+        result = list(jc.parsers.rsync_s.parse(data.splitlines(), quiet=True))
+        self.assertEqual([x['filename'] for x in result], ['old/stale.conf'])
+        self.assertEqual(result[0]['metadata'], '*deleting')
+        self.assertEqual(result[0]['update_type'], 'message')
+        self.assertEqual(result[0]['process'], 9190)
+
 
     def test_rsync_s_crlf_lines(self):
         """
@@ -197,6 +235,39 @@ total size is 221.79G  speedup is 25,388.23
         crlf_data = self.centos_7_7_rsync_i.replace('\n', '\r\n')
         self.assertEqual(list(jc.parsers.rsync_s.parse(crlf_data.split('\n'), quiet=True)), self.centos_7_7_rsync_i_streaming_json)
         self.assertEqual(list(jc.parsers.rsync_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.centos_7_7_rsync_i_streaming_json)
+
+    def test_rsync_s_logfile_several_runs(self):
+        """
+        Test rsync log file with several runs, each with its own summary
+        """
+        data = (
+            '2022/01/28 03:53:52 [9190] building file list\n'
+            '2022/01/28 03:53:52 [9190] .d..t...... ./\n'
+            '2022/01/28 03:53:52 [9190] >f+++++++++ a.txt\n'
+            '2022/01/28 03:53:52 [9190] sent 1713 bytes  received 507 bytes  total size 235\n'
+            '2022/01/28 03:55:00 [9198] building file list\n'
+            '2022/01/28 03:55:00 [9198] >f.st...... a.txt\n'
+            '2022/01/28 03:55:00 [9198] sent 999 bytes  received 42 bytes  total size 1000\n'
+            '2022/01/28 03:56:00 [9205] building file list\n'
+            '2022/01/28 03:56:00 [9205] .d..t...... ./\n'
+            '2022/01/28 03:56:00 [9205] sent 10 bytes  received 20 bytes  total size 30\n'
+        )
+        result = list(jc.parsers.rsync_s.parse(data.splitlines(), quiet=True))
+        self.assertEqual(
+            [(x['type'], x['process'], x.get('filename'), x.get('sent')) for x in result],
+            [
+                ('file', 9190, './', None),
+                ('file', 9190, 'a.txt', None),
+                ('summary', 9190, None, 1713),
+                ('file', 9198, 'a.txt', None),
+                ('summary', 9198, None, 999),
+                ('file', 9205, './', None),
+                ('summary', 9205, None, 10)
+            ]
+        )
+        self.assertEqual(result[2], {'type': 'summary', 'date': '2022/01/28', 'time': '03:53:52', 'process': 9190, 'sent': 1713, 'received': 507, 'total_size': 235, 'epoch': 1643370832})
+        self.assertEqual(result[4]['received'], 42)
+        self.assertEqual(result[4]['total_size'], 1000)
 
 
 if __name__ == '__main__':

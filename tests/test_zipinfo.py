@@ -53,6 +53,13 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.zipinfo.parse(self.rhel_8_zipinfo_space_in_name, quiet=True), self.rhel_8_zipinfo_space_in_name_json)
 
+    def test_zipinfo_unzip_summary_line(self):
+        """
+        Test 'zipinfo' with the unzip summary line, which is not a file
+        """
+        data = self.rhel_8_zipinfo + '\n2 archives were successfully processed.\n'
+        self.assertEqual(jc.parsers.zipinfo.parse(data, quiet=True), self.rhel_8_zipinfo_json)
+
 
 if __name__ == '__main__':
     unittest.main()
