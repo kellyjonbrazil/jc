@@ -214,6 +214,37 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.ifconfig.parse(self.generic_ifconfig_free_text, quiet=True), self.generic_ifconfig_free_text_json)
 
 
+    def test_ifconfig_openbsd_lladdr_and_media_without_flags(self):
+        """
+        Test 'ifconfig' on OpenBSD with lladdr and a media line without <flags>
+        """
+        data = (
+            'em0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tlladdr 00:0c:29:12:34:56\n'
+            '\tindex 1 priority 0 llprio 3\n'
+            '\tgroups: egress\n'
+            '\tmedia: Ethernet autoselect (1000baseT full-duplex)\n'
+            '\tstatus: active\n'
+            '\tinet 192.168.1.10 netmask 0xffffff00 broadcast 192.168.1.255\n'
+            'en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tether ac:de:48:00:13:23\n'
+            '\tmedia: autoselect\n'
+            '\tstatus: active\n'
+            'en1: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tmedia: autoselect <full-duplex>\n'
+            '\tstatus: inactive\n'
+        )
+        result = jc.parsers.ifconfig.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], ['em0', 'en0', 'en1'])
+        self.assertEqual(result[0]['mac_addr'], '00:0c:29:12:34:56')
+        self.assertEqual(result[0]['media'], 'Ethernet autoselect (1000baseT full-duplex)')
+        self.assertNotIn('media_flags', result[0])
+        self.assertEqual(result[0]['status'], 'active')
+        self.assertEqual(result[0]['ipv4_addr'], '192.168.1.10')
+        self.assertEqual(result[1]['mac_addr'], 'ac:de:48:00:13:23')
+        self.assertEqual(result[1]['media'], 'autoselect')
+        self.assertEqual((result[2]['media'], result[2]['media_flags']), ('autoselect', ['full-duplex']))
+
 
 if __name__ == '__main__':
     unittest.main()

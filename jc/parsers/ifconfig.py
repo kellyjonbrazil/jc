@@ -577,8 +577,9 @@ def parse(
         (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # OpenBSD prints `lladdr` for the MAC address
     re_freebsd_details = re.compile(r'''
-        ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
+        (?:ether|lladdr)\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_status = re.compile(r'''
@@ -594,6 +595,12 @@ def parse(
     re_freebsd_media = re.compile(r'''
         ^\s*media:\s(?P<media>.+)
         (?:\s<(?P<media_flags>[^<]+)>)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    # media without <flags> (e.g. `media: autoselect` or OpenBSD's
+    # `media: Ethernet autoselect (1000baseT full-duplex)`)
+    re_freebsd_media_no_flags = re.compile(r'''
+        ^\s*media:\s(?P<media>[^<\s](?:[^<]*[^<\s])?)\s*$
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_nd6_options = re.compile(r'''
@@ -652,6 +659,7 @@ def parse(
         re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
         re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
         re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
+        re_freebsd_media_no_flags,
         re_freebsd_tx_rx_power, re_freebsd_options
     ]
 
