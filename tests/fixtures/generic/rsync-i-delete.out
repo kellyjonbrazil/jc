@@ -1,11 +1,11 @@
 sending incremental file list
-.d..t...... ./
-*deleting   old/stale.conf
+*deleting   old/notes.txt
 *deleting   old/file with spaces.txt
 *deleting   old/
+*deleting   stale.conf
+*deleting   docs/obsolete.md
 >f+++++++++ new-file.txt
-cd+++++++++ docs/
 >f+++++++++ docs/readme.txt
 
-sent 256 bytes  received 83 bytes  678.00 bytes/sec
-total size is 42  speedup is 0.12
+sent 242 bytes  received 142 bytes  768.00 bytes/sec
+total size is 18  speedup is 0.05
