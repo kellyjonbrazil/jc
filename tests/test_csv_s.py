@@ -1,3 +1,4 @@
+import csv
 import os
 import json
 import unittest
@@ -356,6 +357,71 @@ class MyTests(unittest.TestCase):
         Test 'tsv_s' with empty fields at the end of a row in the first 100 lines
         """
         self.assertEqual(list(jc.parsers.tsv_s.parse(['a\tb\tc', '1\t\t'], quiet=True)), [{'a': '1', 'b': '', 'c': ''}])
+
+
+    def test_csv_s_reader_error_ignore_exceptions(self):
+        """
+        Test 'csv_s' with ignore_exceptions=True and rows the csv module rejects (a field over the size limit, a CR in an unquoted field): parsing continues at the next row
+        """
+        long_field = 'A' * 131073
+        data = ['user,comment', 'alice,first', 'bob,' + long_field, 'carol,second', 'dave,x\ry', 'erin,third']
+        result = list(jc.parsers.csv_s.parse(data, quiet=True, ignore_exceptions=True))
+        self.assertEqual(len(result), 5)
+        self.assertEqual(result[0], {'user': 'alice', 'comment': 'first', '_jc_meta': {'success': True}})
+        self.assertFalse(result[1]['_jc_meta']['success'])
+        self.assertEqual(result[1]['_jc_meta']['error'], 'Error: field larger than field limit (131072)')
+        self.assertEqual(result[1]['_jc_meta']['line'], 'bob,' + long_field)
+        self.assertEqual(result[2], {'user': 'carol', 'comment': 'second', '_jc_meta': {'success': True}})
+        self.assertFalse(result[3]['_jc_meta']['success'])
+        self.assertIn('new-line character seen in unquoted field', result[3]['_jc_meta']['error'])
+        self.assertEqual(result[3]['_jc_meta']['line'], 'dave,x\ry')
+        self.assertEqual(result[4], {'user': 'erin', 'comment': 'third', '_jc_meta': {'success': True}})
+
+    def test_csv_s_reader_error_multiline_ignore_exceptions(self):
+        """
+        Test 'csv_s' with ignore_exceptions=True and a field over the size limit inside a multi-line quoted field: the rest of the quoted field is not parsed as rows
+        """
+        long_field = 'A' * 131073
+        data = ['user,role', 'alice,user', 'bob,"x', long_field, 'root,admin', 'erin,admin"', 'carol,user']
+        result = list(jc.parsers.csv_s.parse(data, quiet=True, ignore_exceptions=True))
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0], {'user': 'alice', 'role': 'user', '_jc_meta': {'success': True}})
+        self.assertFalse(result[1]['_jc_meta']['success'])
+        self.assertEqual(result[1]['_jc_meta']['line'], '\n'.join(data[2:4]))
+        self.assertEqual(result[2], {'user': 'carol', 'role': 'user', '_jc_meta': {'success': True}})
+
+    def test_csv_s_reader_error(self):
+        """
+        Test 'csv_s' without ignore_exceptions and a field over the size limit: the error is raised
+        """
+        data = ['user,comment', 'alice,first', 'bob,' + 'A' * 131073, 'carol,second']
+        g = jc.parsers.csv_s.parse(data, quiet=True)
+        self.assertEqual(next(g), {'user': 'alice', 'comment': 'first'})
+        with self.assertRaises(csv.Error):
+            next(g)
+
+    def test_csv_s_reader_error_header(self):
+        """
+        Test 'csv_s' with ignore_exceptions=True and a header row the csv module rejects: ParseError is raised
+        """
+        data = ['user,' + 'A' * 131073, '1,2', '3,4']
+        with self.assertRaises(ParseError):
+            list(jc.parsers.csv_s.parse(data, quiet=True, ignore_exceptions=True))
+
+    def test_csv_s_reader_error_wrappers_ignore_exceptions(self):
+        """
+        Test 'tsv_s', 'csv_ih_s' and 'tsv_ih_s' with ignore_exceptions=True and a CR in an unquoted field
+        """
+        cases = [
+            (jc.parsers.tsv_s, ['a\tb', '1\tx\ry', '2\tz'], {'a': '2', 'b': 'z', '_jc_meta': {'success': True}}),
+            (jc.parsers.csv_ih_s, ['0,w', '1,x\ry', '2,z'], {'c0': '2', 'c1': 'z', '_jc_meta': {'success': True}}),
+            (jc.parsers.tsv_ih_s, ['0\tw', '1\tx\ry', '2\tz'], {'c0': '2', 'c1': 'z', '_jc_meta': {'success': True}}),
+        ]
+        for parser, data, last in cases:
+            result = list(parser.parse(data, quiet=True, ignore_exceptions=True))
+            self.assertFalse(result[-2]['_jc_meta']['success'])
+            self.assertEqual(result[-2]['_jc_meta']['line'], data[1])
+            self.assertEqual(result[-1], last)
 
 
 if __name__ == '__main__':
