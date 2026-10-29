@@ -700,9 +700,9 @@ timestamp will be timezone aware and have a `_utc` suffix on the key name.
 #### Line Endings
 
 `jc` passes input to the parser without translating line endings, whether it
-comes from `STDIN`, a "magic" command, or a `/proc` file. Many parsers split
-lines at LF and CRLF line endings only, so other characters that can appear
-inside a value, such as a lone CR, form feed, or Unicode line separator, stay
+comes from `STDIN`, a "magic" command, or a `/proc` file. All line-based
+parsers split lines at LF and CRLF line endings only, so other characters that
+can appear inside a value, such as a lone CR, form feed, or Unicode line separator, stay
 part of that line. Parsers for file formats that can use CR-only line endings (`csv`,
 `hosts`, `jar-manifest`, and `m3u`) also accept a lone CR as a line ending.
 
