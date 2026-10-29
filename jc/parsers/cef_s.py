@@ -71,7 +71,8 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         will be null if a UTC timezone cannot be extracted from the original
         timestamp string value.
     [3] This field exists if the CEF line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -318,6 +319,10 @@ def parse(
                 output_line = _pycef_parse(line)
 
             except Exception:
+                # report the line in _jc_meta with success = false
+                if ignore_exceptions:
+                    raise
+
                 output_line = {
                     'unparsable': line.rstrip()
                 }

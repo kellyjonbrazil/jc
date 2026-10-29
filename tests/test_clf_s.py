@@ -74,5 +74,22 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_clf_s_unparsable_ignore_exceptions(self):
+        """
+        Test 'clf_s' with an unparsable line: an unparsable record without ignore_exceptions, an error record with it
+        """
+        data = ['not a log line', '1.2.3.4 - - [20/Oct/2026:10:00:00 +0000] "GET /a HTTP/1.1" 200 5']
+        result = list(parse(data, quiet=True))
+        self.assertEqual(result[0], {'unparsable': data[0]})
+        self.assertEqual(result[1]['host'], '1.2.3.4')
+
+        result = list(parse(data, quiet=True, ignore_exceptions=True))
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0], {'_jc_meta': {'success': False, 'error': 'ParseError: Not Common Log Format data', 'line': data[0]}})
+        self.assertEqual(result[1]['host'], '1.2.3.4')
+        self.assertEqual(result[1]['request_url'], '/a')
+        self.assertEqual(result[1]['_jc_meta'], {'success': True})
+
+
 if __name__ == '__main__':
     unittest.main()
