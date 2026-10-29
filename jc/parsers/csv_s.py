@@ -56,7 +56,7 @@ Examples:
 """
 import csv
 import itertools
-from typing import Iterable, Union, Type
+from typing import Iterable, Iterator, Union, Type
 import jc.utils
 from jc.streaming import streaming_input_type_check, add_jc_meta, raise_or_yield
 from jc.jc_types import StreamingOutputType
@@ -96,6 +96,18 @@ def _process(proc_data):
     return proc_data
 
 
+def _with_line_endings(data: Iterable[str]) -> Iterator[str]:
+    """
+    Yield the lines with a line ending, so line breaks inside quoted fields
+    are kept by the csv module. A line ending in a lone CR (from splitting
+    CRLF text on LF) gets its LF back.
+    """
+    for line in data:
+        if isinstance(line, str) and not line.endswith('\n'):
+            line += '\n'
+        yield line
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -124,18 +136,19 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
 
-    # convert data to an iterable in case a sequence like a list is used as input.
+    # convert data to an iterator in case a sequence like a list is used as input.
     # this allows the exhaustion of the input so we don't double-process later.
-    data = iter(data)
+    # the lines keep their line endings for the csv module.
+    data = _with_line_endings(data)
     temp_list = []
 
     # first, load the first 100 lines into a list to detect the CSV dialect
     for line in itertools.islice(data, 100):
-        temp_list.append(line.rstrip())
+        temp_list.append(line)
 
     # check for Python bug that does not split on `\r` newlines from sys.stdin correctly
     # https://bugs.python.org/issue45617
-    if len(temp_list) == 1 and temp_list[0]:
+    if len(temp_list) == 1 and temp_list[0].rstrip():
         raise ParseError('Unable to detect line endings. Please try the non-streaming CSV parser instead.')
 
     # remove BOM bytes from first row, if present
@@ -145,7 +158,7 @@ def parse(
 
         temp_list[0] = temp_list[0].decode('utf-8-sig')
 
-    sniffdata = '\r\n'.join(temp_list)
+    sniffdata = '\r\n'.join(line.rstrip() for line in temp_list)
     dialect: Union[str, Type[csv.Dialect]] = (
             'excel-tab' if tsv
             else 'excel'  # default in csv module

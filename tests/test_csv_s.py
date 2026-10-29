@@ -308,5 +308,55 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(jc.parsers.tsv_s.parse(data, quiet=True, ignore_exceptions=True)), expected)
 
 
+    def test_csv_s_multiline_cell(self):
+        """
+        Test 'csv_s' with line breaks and a blank line inside quoted fields, with and without line endings in the input lines
+        """
+        data = 'id,name,note\n7,"ad\nmin",x\n8,"para one\n\npara two",y\n\n9,z,"last"\n'
+        expected = [
+            {'id': '7', 'name': 'ad\nmin', 'note': 'x'},
+            {'id': '8', 'name': 'para one\n\npara two', 'note': 'y'},
+            {'id': '9', 'name': 'z', 'note': 'last'}
+        ]
+        self.assertEqual(list(jc.parsers.csv_s.parse(data.splitlines(keepends=True), quiet=True)), expected)
+        self.assertEqual(list(jc.parsers.csv_s.parse(data.split('\n'), quiet=True)), expected)
+
+    def test_csv_s_multiline_cell_crlf(self):
+        """
+        Test 'csv_s' with a line break inside a quoted field in CRLF text split on LF
+        """
+        data = 'id,name\r\n7,"ad\r\nmin"\r\n8,b\r\n'
+        expected = [
+            {'id': '7', 'name': 'ad\r\nmin'},
+            {'id': '8', 'name': 'b'}
+        ]
+        self.assertEqual(list(jc.parsers.csv_s.parse(data.split('\n'), quiet=True)), expected)
+
+    def test_csv_s_multiline_cell_after_100_lines(self):
+        """
+        Test 'csv_s' with the same multi-line quoted field in the first 100 lines and after them
+        """
+        data = ['id,name', '7,"ad', 'min"'] + [f'{i},x' for i in range(100)] + ['8,"ad', 'min"']
+        result = list(jc.parsers.csv_s.parse(data, quiet=True))
+        self.assertEqual(len(result), 102)
+        self.assertEqual(result[0], {'id': '7', 'name': 'ad\nmin'})
+        self.assertEqual(result[1], {'id': '0', 'name': 'x'})
+        self.assertEqual(result[-1], {'id': '8', 'name': 'ad\nmin'})
+
+    def test_csv_s_multiline_cell_wrappers(self):
+        """
+        Test 'tsv_s', 'csv_ih_s' and 'tsv_ih_s' with a line break inside a quoted field
+        """
+        self.assertEqual(list(jc.parsers.tsv_s.parse(['a\tb', '1\t"x', 'y"'], quiet=True)), [{'a': '1', 'b': 'x\ny'}])
+        self.assertEqual(list(jc.parsers.csv_ih_s.parse(['1,"x', 'y"', '2,z'], quiet=True)), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+        self.assertEqual(list(jc.parsers.tsv_ih_s.parse(['1\t"x', 'y"', '2\tz'], quiet=True)), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+
+    def test_tsv_s_trailing_empty_fields(self):
+        """
+        Test 'tsv_s' with empty fields at the end of a row in the first 100 lines
+        """
+        self.assertEqual(list(jc.parsers.tsv_s.parse(['a\tb\tc', '1\t\t'], quiet=True)), [{'a': '1', 'b': '', 'c': ''}])
+
+
 if __name__ == '__main__':
     unittest.main()

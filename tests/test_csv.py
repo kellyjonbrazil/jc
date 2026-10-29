@@ -269,5 +269,49 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
 
 
+    def test_csv_multiline_cell(self):
+        """
+        Test 'csv' with line breaks and a blank line inside quoted fields and a blank line between rows
+        """
+        data = 'id,name,note\n7,"ad\nmin",x\n8,"para one\n\npara two",y\n\n9,z,"last"\n'
+        expected = [
+            {'id': '7', 'name': 'ad\nmin', 'note': 'x'},
+            {'id': '8', 'name': 'para one\n\npara two', 'note': 'y'},
+            {'id': '9', 'name': 'z', 'note': 'last'}
+        ]
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
+
+    def test_csv_multiline_cell_crlf_cr(self):
+        """
+        Test 'csv' with line breaks inside quoted fields and blank lines in CRLF and CR-only files
+        """
+        for eol in ('\r\n', '\r'):
+            data = f'{eol}{eol}id,name{eol}{eol}7,"ad{eol}min"{eol}{eol}8,b{eol}'
+            expected = [
+                {'id': '7', 'name': f'ad{eol}min'},
+                {'id': '8', 'name': 'b'}
+            ]
+            self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
+
+    def test_csv_multiline_cell_wrappers(self):
+        """
+        Test 'tsv', 'csv_ih' and 'tsv_ih' with a line break inside a quoted field
+        """
+        self.assertEqual(jc.parsers.tsv.parse('a\tb\n1\t"x\ny"\n', quiet=True), [{'a': '1', 'b': 'x\ny'}])
+        self.assertEqual(jc.parsers.csv_ih.parse('1,"x\ny"\n2,z\n', quiet=True), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+        self.assertEqual(jc.parsers.tsv_ih.parse('1\t"x\ny"\n2\tz\n', quiet=True), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+
+    def test_tsv_ih_empty_first_row(self):
+        """
+        Test 'tsv_ih' with a first row of empty fields after leading blank lines
+        """
+        data = '\n\n\t\t\n1\t2\t3\n'
+        expected = [
+            {'c0': '', 'c1': '', 'c2': ''},
+            {'c0': '1', 'c1': '2', 'c2': '3'}
+        ]
+        self.assertEqual(jc.parsers.tsv_ih.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()
