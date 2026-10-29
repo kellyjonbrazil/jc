@@ -298,6 +298,9 @@ def parse(data, raw=False, quiet=False):
                 description.append(line)
                 continue
 
+            # the description ends at the next field
+            desc_en_entry = False
+
             # other indented lines continue the previous field and are not keys
             if line.startswith((' ', '\t')):
                 continue
