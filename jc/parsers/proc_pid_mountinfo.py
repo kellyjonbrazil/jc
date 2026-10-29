@@ -200,14 +200,14 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             entry['mount_options'] = [_unescape(x) for x in entry['mount_options'].split(',')]
 
         if 'optional_fields' in entry:
-            if 'unbindable' in  entry['optional_fields']:
-                entry['optional_fields'] = {'unbindable': 0}
-            else:
-                optional_fields = {}
-                for x in entry['optional_fields'].split():
-                    key, _, val = x.partition(':')
-                    optional_fields[key] = int(val) if re.match(r'^[0-9]+$', val) else val
-                entry['optional_fields'] = optional_fields
+            optional_fields = {}
+            for x in entry['optional_fields'].split():
+                if x == 'unbindable':
+                    optional_fields['unbindable'] = 0
+                    continue
+                key, _, val = x.partition(':')
+                optional_fields[key] = int(val) if re.match(r'^[0-9]+$', val) else val
+            entry['optional_fields'] = optional_fields
 
         if 'super_options' in entry:
             if entry['super_options']:
