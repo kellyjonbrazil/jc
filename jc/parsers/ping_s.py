@@ -114,6 +114,20 @@ _LINUX_REPLY_RE = re.compile(
 )
 
 
+# Linux header line:
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n>(<m>) bytes of data.'
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n> data bytes' (IPv6)
+#   'PING <host>(<ip>) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+#   'PING <host>(<name> (<ip>)) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+# 'from' can be part of a host name, so the header is matched as a whole.
+_LINUX_HEADER_RE = re.compile(
+    r'^PING [^ ()]* ?\((?:[^ ()]+ \((?P<named_ip>[^ ()]+)\)|(?P<ip>[^ ()]+))\) '
+    r'(?:, flow 0x[0-9a-fA-F]+, )?'
+    r'(?:from [^ ]+ [^ ]*: )?'
+    r'(?P<data_bytes>\d+)(?:\(\d+\))? (?:bytes of data\.|data bytes)$'
+)
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -461,7 +475,7 @@ def _linux_parse(line, s):
 
     if line.startswith('PING '):
         s.ipv4 = 'bytes of data' in line
-        s.source_ip = 'from' in line
+        s.source_ip = ' from ' in line
 
         if s.ipv4 and line[5] not in string.digits:
             s.hostname = True
@@ -489,9 +503,15 @@ def _linux_parse(line, s):
             else:
                 dst_ip, dta_byts = (2, 3)
 
-        line = line.replace('(', ' ').replace(')', ' ')
-        s.destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
-        s.sent_bytes = line.split()[dta_byts]
+        m = _LINUX_HEADER_RE.match(line.strip())
+        if m:
+            s.destination_ip = m.group('named_ip') or m.group('ip')
+            s.sent_bytes = m.group('data_bytes')
+
+        else:
+            line = line.replace('(', ' ').replace(')', ' ')
+            s.destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
+            s.sent_bytes = line.split()[dta_byts]
 
         return None
 

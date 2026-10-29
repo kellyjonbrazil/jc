@@ -520,6 +520,18 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
         alpine_linux_3_13_ping_hostname_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-hostname-from.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_hostname_from = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-hostname-from-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_hostname_from_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_hostname_from = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_hostname_from_streaming_json = json.loads(f.read())
+
     def test_ping_s_nodata(self):
         """
         Test 'ping' with no data
@@ -1159,6 +1171,39 @@ class MyTests(unittest.TestCase):
              'round_trip_ms_avg': None, 'round_trip_ms_max': None, 'round_trip_ms_stddev': None}
         ]
         self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
+
+    def test_ping_s_linux_hostname_from(self):
+        """
+        Test 'ping <hostname>' on linux with 'from' in the host name
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping_linux_hostname_from.splitlines(), quiet=True))
+        self.assertEqual(result, self.generic_ping_linux_hostname_from_streaming_json)
+        self.assertEqual(result[0]['sent_bytes'], 56)
+
+    def test_ping6_s_linux_hostname_from(self):
+        """
+        Test 'ping6 <hostname>' on linux with 'from' in the host name
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping6_linux_hostname_from.splitlines(), quiet=True))
+        self.assertEqual(result, self.generic_ping6_linux_hostname_from_streaming_json)
+        self.assertEqual(result[0]['destination_ip'], '2001:db8::1')
+
+    def test_ping_s_linux_header_formats(self):
+        """
+        Test 'ping' and 'ping6' on linux with the header line formats of old and new iputils
+        """
+        headers = [
+            ('PING fromage.example.com (198.51.100.7) from 10.0.0.2 eth0: 56(84) bytes of data.', '198.51.100.7', 56),
+            ('PING 2001:db8:53::(2001:db8:53::) 56 data bytes', '2001:db8:53::', 56),
+            ('PING 2001:db8::1(2001:db8::1) from 2001:db8::2 : 56 data bytes', '2001:db8::1', 56),
+            ('PING example.com(example.com (2001:db8::1)) , flow 0x00001, 56 data bytes', '2001:db8::1', 56),
+            ('PING example.com (2001:db8::1) 1400 data bytes', '2001:db8::1', 1400),
+            ('PING 2001:db8::1 (2001:db8::1) from 2001:db8::2 eth0: 56 data bytes', '2001:db8::1', 56)
+        ]
+        for header, dest, data_bytes in headers:
+            data = [header, '64 bytes from 192.0.2.1: icmp_seq=1 ttl=64 time=0.040 ms']
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual((result[0]['destination_ip'], result[0]['sent_bytes']), (dest, data_bytes), header)
 
 
 if __name__ == '__main__':

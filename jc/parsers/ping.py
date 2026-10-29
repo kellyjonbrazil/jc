@@ -193,6 +193,20 @@ _LINUX_REPLY_RE = re.compile(
 )
 
 
+# Linux header line:
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n>(<m>) bytes of data.'
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n> data bytes' (IPv6)
+#   'PING <host>(<ip>) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+#   'PING <host>(<name> (<ip>)) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+# 'from' can be part of a host name, so the header is matched as a whole.
+_LINUX_HEADER_RE = re.compile(
+    r'^PING [^ ()]* ?\((?:[^ ()]+ \((?P<named_ip>[^ ()]+)\)|(?P<ip>[^ ()]+))\) '
+    r'(?:, flow 0x[0-9a-fA-F]+, )?'
+    r'(?:from [^ ]+ [^ ]*: )?'
+    r'(?P<data_bytes>\d+)(?:\(\d+\))? (?:bytes of data\.|data bytes)$'
+)
+
+
 def _process(proc_data):
     """
     Final processing to conform to the schema.
@@ -337,27 +351,36 @@ def _linux_parse(data):
 
     for line in filter(None, linedata):
         if line.startswith('PING '):
-            source_ip = 'from' in line
-            if ipv4:
-                if source_ip:
-                    dst_ip, dta_byts = (2, 6)
-                else:
-                    dst_ip, dta_byts = (2, 3)
-            else:
-                if source_ip and hostname:
-                    dst_ip, dta_byts = (3, 7)
-                elif source_ip and not hostname:
-                    dst_ip, dta_byts = (2, 6)
-                elif not source_ip and hostname:
-                    dst_ip, dta_byts = (3, 4)
-                else:
-                    dst_ip, dta_byts = (2, 3)
+            m = _LINUX_HEADER_RE.match(line)
+            if m:
+                destination_ip = m.group('named_ip') or m.group('ip')
+                data_bytes = m.group('data_bytes')
 
-            line = line.replace('(', ' ').replace(')', ' ')
+            else:
+                source_ip = ' from ' in line
+                if ipv4:
+                    if source_ip:
+                        dst_ip, dta_byts = (2, 6)
+                    else:
+                        dst_ip, dta_byts = (2, 3)
+                else:
+                    if source_ip and hostname:
+                        dst_ip, dta_byts = (3, 7)
+                    elif source_ip and not hostname:
+                        dst_ip, dta_byts = (2, 6)
+                    elif not source_ip and hostname:
+                        dst_ip, dta_byts = (3, 4)
+                    else:
+                        dst_ip, dta_byts = (2, 3)
+
+                line = line.replace('(', ' ').replace(')', ' ')
+                destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
+                data_bytes = line.split()[dta_byts]
+
             raw_output.update(
                 {
-                    'destination_ip': line.split()[dst_ip].lstrip('(').rstrip(')'),
-                    'data_bytes': line.split()[dta_byts],
+                    'destination_ip': destination_ip,
+                    'data_bytes': data_bytes,
                     'pattern': pattern
                 }
             )
