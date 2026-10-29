@@ -128,8 +128,10 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         datalines = jc.utils.splitlines(data, split_cr=True)
 
-        # remove last line of multi-archive output since it is not needed
-        if datalines[-1].endswith('archives were successfully processed.'):
+        # remove last line of multi-archive output since it is not needed.
+        # match the whole unzip summary line so other text that ends with
+        # the same words is kept
+        if re.match(r'\d+ archives? (?:was|were) successfully processed\.$', datalines[-1]):
             datalines.pop(-1)
 
         # extract each archive into its own list of lines.

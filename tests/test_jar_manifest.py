@@ -156,6 +156,21 @@ class MyTests(unittest.TestCase):
         expected = [{'Manifest_Version': '1.0', 'Main_Class': 'com.example.Main', 'X_Y': '2'}]
         self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
 
+    def test_jar_manifest_value_ends_like_unzip_summary(self):
+        """
+        Test 'jar_manifest' with a last attribute that ends like the unzip summary line
+        """
+        data = 'Manifest-Version: 1.0\nMain-Class: org.example.app.Main\nClass-Path: lib/plugin.jar archives were successfully processed.'
+        expected = [{'Manifest_Version': '1.0', 'Main_Class': 'org.example.app.Main', 'Class_Path': 'lib/plugin.jar archives were successfully processed.'}]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+    def test_jar_manifest_unzip_summary_line(self):
+        """
+        Test 'jar_manifest' with the unzip summary line after several archives
+        """
+        data = self.rhel_8_manifest_mf_multi + '3 archives were successfully processed.\n'
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), self.rhel_8_manifest_mf_multi_json)
+
 
 if __name__ == '__main__':
     unittest.main()
