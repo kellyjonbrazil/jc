@@ -245,7 +245,7 @@ def _remove_ansi_c(line, shell_quote=False):
             decoded = inner_content.encode('utf-8').decode('unicode_escape')
 
         if shell_quote:
-            # array bodies are split with shlex.split() afterwards, so quote
+            # array bodies are split with _shell_split() afterwards, so quote
             # the text to keep it one word
             return shlex.quote(decoded)
 
@@ -257,10 +257,63 @@ def _remove_ansi_c(line, shell_quote=False):
     return _ANSI_C_PATTERN.sub(decode_ansi_c, line)
 
 
+# a word: runs of plain characters, quoted strings and escaped characters
+_SHELL_WORD = re.compile(r'''(?:[^ \t\r\n'"\\]+|'[^']*'|"(?:[^"\\]|\\.)*"|\\.)+''', re.DOTALL)
+_SHELL_PART = re.compile(r'''[^'"\\]+|'([^']*)'|"((?:[^"\\]|\\.)*)"|\\(.)''', re.DOTALL)
+_DQ_ESCAPE = re.compile(r'\\([\\"])')
+_DQ_TAIL = re.compile(r'(?:[^"\\]|\\.)*\\', re.DOTALL)
+
+
+def _shell_words(data):
+    """Split like shlex.split() (POSIX mode, no comments), keeping the quotes"""
+    words = []
+    pos = 0
+    end = len(data)
+    while True:
+        while pos < end and data[pos] in ' \t\r\n':
+            pos += 1
+        if pos >= end:
+            return words
+        match = _SHELL_WORD.match(data, pos)
+        stop = match.end() if match else pos
+        if stop < end and data[stop] not in ' \t\r\n':
+            # the same errors as shlex: the input ends after a backslash
+            # (outside of single quotes) or inside quotes
+            if data[stop] == '\\' or (data[stop] == '"' and _DQ_TAIL.fullmatch(data, stop + 1)):
+                raise ValueError('No escaped character')
+            raise ValueError('No closing quotation')
+        words.append(data[pos:stop])
+        pos = stop
+
+
+def _shell_unquote(word):
+    """Remove the quotes and escapes from a word of _shell_words()"""
+    result = []
+    for part in _SHELL_PART.finditer(word):
+        single, double, escaped = part.groups()
+        if single is not None:
+            result.append(single)
+        elif double is not None:
+            result.append(_DQ_ESCAPE.sub(r'\1', double))
+        elif escaped is not None:
+            result.append(escaped)
+        else:
+            result.append(part.group(0))
+    return ''.join(result)
+
+
+def _shell_split(data):
+    """
+    Same result as shlex.split(data), which takes quadratic time on a long
+    word
+    """
+    return [_shell_unquote(word) for word in _shell_words(data)]
+
+
 def _get_simple_array_vals(body: str) -> List[str]:
     body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    body_split = shlex.split(body)
+    body_split = _shell_split(body)
     values = []
     for item in body_split:
         _, val = item.split('=', maxsplit=1)
@@ -271,7 +324,7 @@ def _get_simple_array_vals(body: str) -> List[str]:
 def _get_associative_array_vals(body: str) -> Dict[str, str]:
     body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    body_split = shlex.split(body)
+    body_split = _shell_split(body)
     values: Dict = {}
     for item in body_split:
         key, val = item.split('=', maxsplit=1)
@@ -284,7 +337,7 @@ def _get_bare_array_vals(body: str) -> List[str]:
     # ksh/zsh indexed arrays are printed as bare values with no [index]=
     body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    return shlex.split(body)
+    return _shell_split(body)
 
 
 def _get_flags(line: str) -> str:
