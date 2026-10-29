@@ -458,6 +458,34 @@ class BluetoothctlTests(unittest.TestCase):
         self.assertEqual(result[0]['name'], 'Kbd\u2028Trusted: yes\u2028-')
         self.assertEqual(result[0]['trusted'], 'no')
 
+    def test_bluetoothctl_controllers_and_devices(self):
+        """
+        Test 'bluetoothctl' with controller and device records in one input
+        """
+        data = (
+            'Controller CC:BB:AF:27:6A:E4 arch [default]\n'
+            'Device EB:06:EF:62:B3:19 TaoTronics TT-BH026\n'
+            'Device 00:11:22:33:44:55 Speaker\n'
+            'Controller CC:BB:AF:27:6A:E5 (public)\n'
+            '\tName: arch2\n'
+            '\tPowered: yes\n'
+            'Device EB:06:EF:62:B3:20 (public)\n'
+            '\tName: Headset\n'
+            '\tPaired: no\n'
+        )
+        result = parse(data, quiet=True)
+        self.assertEqual([x['address'] for x in result],
+                         ['CC:BB:AF:27:6A:E4', 'EB:06:EF:62:B3:19', '00:11:22:33:44:55',
+                          'CC:BB:AF:27:6A:E5', 'EB:06:EF:62:B3:20'])
+        self.assertEqual(result[0]['is_default'], True)
+        self.assertEqual(result[1]['name'], 'TaoTronics TT-BH026')
+        self.assertEqual(result[2]['name'], 'Speaker')
+        self.assertEqual(result[3]['name'], 'arch2')
+        self.assertEqual(result[3]['powered'], 'yes')
+        self.assertEqual(result[4]['name'], 'Headset')
+        self.assertEqual(result[4]['paired'], 'no')
+        self.assertNotIn('powered', result[4])
+
     def test_bluetoothctl_devices_names(self):
         """
         Test 'bluetoothctl devices' with names that end in 'not available' and '(random)'

@@ -41,6 +41,15 @@ class MyTests(unittest.TestCase):
         generic_lsof_long_name_json = json.loads(f.read())
 
 
+    def test_lsof_line_separators(self):
+        """
+        Test 'lsof' with line-break characters other than LF in a file name
+        """
+        data = 'COMMAND    PID  TID    USER   FD      TYPE DEVICE  SIZE/OFF     NODE NAME\nsystemd      1         root  cwd       DIR  253,0       224       64 /tmp/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nsystemd      1         root  rtd       DIR  253,0       224       64 /\n'
+        result = jc.parsers.lsof.parse(data, quiet=True)
+        self.assertEqual(result[0]['name'], '/tmp/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['fd'], 'rtd')
+
     def test_lsof_nodata(self):
         """
         Test 'lsof' with no data

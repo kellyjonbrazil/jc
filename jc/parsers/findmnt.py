@@ -183,7 +183,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # remove initial drawing characters
             line = re.sub(r'^([│ ├─└─|`-]+)/', _replace, line, count=1)
             table.append(line)
@@ -193,7 +193,12 @@ def parse(
         # `findmnt -r` separates the columns with a single space and escapes
         # spaces in values. Otherwise the columns are aligned under the
         # header and values can contain spaces, so use the column positions.
-        if '  ' in table[0].strip():
+        # Aligned headers can also be one space apart when no value is
+        # wider than its column name: then a row with more space-separated
+        # fields than the header has a value with spaces in it.
+        header_count = len(table[0].split())
+        if '  ' in table[0].strip() or any(
+                len([x for x in row.split(' ') if x]) > header_count for row in table[1:]):
             raw_output = sparse_table_parse(table, delim='\x00')
         else:
             raw_output = simple_table_parse(table)

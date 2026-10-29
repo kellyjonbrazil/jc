@@ -64,10 +64,24 @@ class MyTests(unittest.TestCase):
 
     def test_proc_version_long(self):
         """
-        Test '/proc/version' with a long build number and no weekday in the date
+        Test '/proc/version' with a long build number and flags
         """
         self.assertEqual(jc.parsers.proc_version.parse(self.f_in['proc_version_long'], quiet=True),
                                                        self.f_json['proc_version_long'])
+
+    def test_proc_version_debian_date(self):
+        """
+        Test '/proc/version' with the date format Debian uses
+        """
+        data = 'Linux version 6.1.0-18-amd64 (debian-kernel@lists.debian.org) (gcc-12 (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40) #1 SMP PREEMPT_DYNAMIC Debian 6.1.76-1 (2024-02-01)\n'
+        self.assertEqual(jc.parsers.proc_version.parse(data, quiet=True), {
+            'version': '6.1.0-18-amd64',
+            'email': 'debian-kernel@lists.debian.org',
+            'gcc': 'gcc-12 (Debian 12.2.0-14) 12.2.0, GNU ld (GNU Binutils for Debian) 2.40',
+            'build': '#1',
+            'flags': 'SMP PREEMPT_DYNAMIC Debian 6.1.76-1',
+            'date': '2024-02-01'
+        })
 
 
 if __name__ == '__main__':

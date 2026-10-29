@@ -208,7 +208,7 @@ def parse(
         else:
             cmd_option = 'account'
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if cmd_option == 'certificates':
                 if line.startswith('  Certificate Name:'):

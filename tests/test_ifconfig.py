@@ -204,8 +204,8 @@ class MyTests(unittest.TestCase):
     inet6 fe80::3af9:d3ff:fe69:1732%utun2 prefixlen 64 scopeid 0xd
     inet6 fdae:f7e0:9f37:64::146 prefixlen 128
     nd6 options=201<PERFORMNUD,DAD>'''
-        expected = [{"name":"utun2","flags":8051,"state":["UP","POINTOPOINT","RUNNING","MULTICAST"],"mtu":1400,"type":None,"mac_addr":None,"ipv4_addr":"10.85.40.243","ipv4_mask":"255.255.255.255","ipv4_bcast":None,"ipv6_addr":"fdae:f7e0:9f37:64::146","ipv6_mask":128,"ipv6_scope":None,"ipv6_type":None,"metric":None,"rx_packets":None,"rx_errors":None,"rx_dropped":None,"rx_overruns":None,"rx_frame":None,"tx_packets":None,"tx_errors":None,"tx_dropped":None,"tx_overruns":None,"tx_carrier":None,"tx_collisions":None,"rx_bytes":None,"tx_bytes":None,"ipv6_scope_id":None,"nd6_options":201,"nd6_flags":["PERFORMNUD","DAD"],"ipv4":[{"address":"10.85.40.243","mask":"255.255.255.255"}],"ipv6":[{"address":"fe80::3af9:d3ff:fe69:1732","scope_id":"utun2","mask":64,"scope":"0xd"},{"address":"fdae:f7e0:9f37:64::146","scope_id":None,"mask":128,"scope":None}]}]
-        self.assertEqual(jc.parsers.ifconfig.parse(self.osx_freebsd12_ifconfig_extra_fields4, quiet=True), self.freebsd12_ifconfig_extra_fields4_json)
+        expected = [{"name":"utun2","flags":32849,"state":["UP","POINTOPOINT","RUNNING","MULTICAST"],"mtu":1400,"type":None,"mac_addr":None,"ipv4_addr":"10.85.40.243","ipv4_mask":"255.255.255.255","ipv4_bcast":None,"ipv6_addr":"fdae:f7e0:9f37:64::146","ipv6_mask":128,"ipv6_scope":None,"ipv6_type":None,"metric":None,"rx_packets":None,"rx_errors":None,"rx_dropped":None,"rx_overruns":None,"rx_frame":None,"tx_packets":None,"tx_errors":None,"tx_dropped":None,"tx_overruns":None,"tx_carrier":None,"tx_collisions":None,"rx_bytes":None,"tx_bytes":None,"ipv6_scope_id":None,"nd6_options":513,"nd6_flags":["PERFORMNUD","DAD"],"ipv4":[{"address":"10.85.40.243","mask":"255.255.255.255"}],"ipv6":[{"address":"fe80::3af9:d3ff:fe69:1732","scope_id":"utun2","mask":64,"scope":"0xd"},{"address":"fdae:f7e0:9f37:64::146","scope_id":None,"mask":128,"scope":None}]}]
+        self.assertEqual(jc.parsers.ifconfig.parse(data, quiet=True), expected)
 
     def test_ifconfig_free_text(self):
         """
@@ -213,6 +213,67 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ifconfig.parse(self.generic_ifconfig_free_text, quiet=True), self.generic_ifconfig_free_text_json)
 
+
+    def test_ifconfig_openbsd_lladdr_and_media_without_flags(self):
+        """
+        Test 'ifconfig' on OpenBSD with lladdr and a media line without <flags>
+        """
+        data = (
+            'em0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tlladdr 00:0c:29:12:34:56\n'
+            '\tindex 1 priority 0 llprio 3\n'
+            '\tgroups: egress\n'
+            '\tmedia: Ethernet autoselect (1000baseT full-duplex)\n'
+            '\tstatus: active\n'
+            '\tinet 192.168.1.10 netmask 0xffffff00 broadcast 192.168.1.255\n'
+            'en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tether ac:de:48:00:13:23\n'
+            '\tmedia: autoselect\n'
+            '\tstatus: active\n'
+            'en1: flags=8963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tmedia: autoselect <full-duplex>\n'
+            '\tstatus: inactive\n'
+        )
+        result = jc.parsers.ifconfig.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], ['em0', 'en0', 'en1'])
+        self.assertEqual(result[0]['mac_addr'], '00:0c:29:12:34:56')
+        self.assertEqual(result[0]['media'], 'Ethernet autoselect (1000baseT full-duplex)')
+        self.assertNotIn('media_flags', result[0])
+        self.assertEqual(result[0]['status'], 'active')
+        self.assertEqual(result[0]['ipv4_addr'], '192.168.1.10')
+        self.assertEqual(result[1]['mac_addr'], 'ac:de:48:00:13:23')
+        self.assertEqual(result[1]['media'], 'autoselect')
+        self.assertEqual((result[2]['media'], result[2]['media_flags']), ('autoselect', ['full-duplex']))
+
+
+    def test_ifconfig_hex_flags(self):
+        """
+        Test 'ifconfig' with hexadecimal BSD flags and nd6 options and decimal Linux flags
+        """
+        data = (
+            'cxl0: flags=8c43<UP,BROADCAST,RUNNING,DRV_OACTIVE,SIMPLEX,MULTICAST> metric 0 mtu 1500\n'
+            '\toptions=6ec07bb<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU>\n'
+            '\tnd6 options=2b<PERFORMNUD,ACCEPT_RTADV,IFDISABLED,AUTO_LINKLOCAL>\n'
+            'en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500\n'
+            '\tnd6 options=201<PERFORMNUD,DAD>\n'
+            'ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500\n'
+            '        inet 192.168.71.137  netmask 255.255.255.0  broadcast 192.168.71.255\n'
+        )
+        result = jc.parsers.ifconfig.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], ['cxl0', 'en0', 'ens33'])
+        self.assertEqual(result[0]['flags'], 0x8c43)
+        self.assertEqual(result[0]['state'], ['UP', 'BROADCAST', 'RUNNING', 'DRV_OACTIVE', 'SIMPLEX', 'MULTICAST'])
+        self.assertEqual(result[0]['options'], '6ec07bb')
+        self.assertEqual(result[0]['nd6_options'], 0x2b)
+        self.assertEqual(result[0]['nd6_flags'], ['PERFORMNUD', 'ACCEPT_RTADV', 'IFDISABLED', 'AUTO_LINKLOCAL'])
+        self.assertEqual(result[1]['flags'], 0x8863)
+        self.assertEqual(result[1]['nd6_options'], 0x201)
+        self.assertEqual(result[2]['flags'], 4163)
+        self.assertEqual(result[2]['ipv4_addr'], '192.168.71.137')
+
+        raw = jc.parsers.ifconfig.parse(data, raw=True, quiet=True)
+        self.assertEqual([x['flags'] for x in raw], ['8c43', '8863', '4163'])
+        self.assertEqual([x.get('nd6_options') for x in raw], ['2b', '201', None])
 
 
 if __name__ == '__main__':

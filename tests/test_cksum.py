@@ -34,6 +34,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_sum_json = json.loads(f.read())
 
+    def test_cksum_line_separators(self):
+        """
+        Test 'cksum' with line-break characters other than LF in a file name
+        """
+        data = '3194693727 24150660 a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.rpm\n1851496064 1196 digout\n'
+        result = jc.parsers.cksum.parse(data, quiet=True)
+        self.assertEqual(result[0]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.rpm')
+        self.assertEqual(result[1]['filename'], 'digout')
+
     def test_cksum_nodata(self):
         """
         Test 'cksum' parser with no data

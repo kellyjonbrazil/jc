@@ -549,7 +549,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data)
     # remove blank lines
     cleandata = list(filter(None, cleandata))
 

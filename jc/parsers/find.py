@@ -130,7 +130,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        raw_output = data.splitlines()
+        raw_output = jc.utils.splitlines(data)
 
     if raw:
         return raw_output

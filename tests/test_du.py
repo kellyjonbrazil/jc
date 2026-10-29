@@ -35,6 +35,15 @@ class MyTests(unittest.TestCase):
         osx_10_14_6_du_json = json.loads(f.read())
 
 
+    def test_du_line_separators(self):
+        """
+        Test 'du' with line-break characters other than LF in a file name
+        """
+        data = '134164\t/usr/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n43188\t/usr/sbin\n'
+        result = jc.parsers.du.parse(data, quiet=True)
+        self.assertEqual(result[0]['name'], '/usr/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['name'], '/usr/sbin')
+
     def test_du_nodata(self):
         """
         Test 'du' with no data

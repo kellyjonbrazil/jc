@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.mount
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -214,6 +215,17 @@ class MyTests(unittest.TestCase):
         Test 'mount' on AIX with spaces in mount points and remote devices
         """
         self.assertEqual(jc.parsers.mount.parse(self.generic_mount_aix_spaces_in_mountpoint, quiet=True), self.generic_mount_aix_spaces_in_mountpoint_json)
+
+    def test_mount_unrecognized_line(self):
+        """
+        Test 'mount' with a line that is not a mount entry
+        """
+        # a newline in a mount point splits the entry into two lines
+        data = 'sysfs on /sys type sysfs (rw,nosuid)\n/dev/sda1 on /a\nb type ext4 (rw)\n'
+        self.assertRaises(ParseError, jc.parsers.mount.parse, data, quiet=True)
+        self.assertRaises(ParseError, jc.parsers.mount.parse, 'foo\n', quiet=True)
+        self.assertEqual(jc.parsers.mount.parse('sysfs on /sys type sysfs (rw,nosuid)\n', quiet=True),
+                         [{'filesystem': 'sysfs', 'mount_point': '/sys', 'type': 'sysfs', 'options': ['rw', 'nosuid']}])
 
 
 if __name__ == '__main__':

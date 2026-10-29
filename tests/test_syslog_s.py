@@ -44,6 +44,18 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.syslog_s.parse(self.syslog.splitlines(), quiet=True)), self.syslog_streaming_json)
 
+    def test_syslog_s_5424_escaped_quote_in_param_value(self):
+        """
+        Test 'syslog_s' with escaped quotes, backslashes and brackets in structured data parameter values
+        """
+        data = '<34>1 2003-10-11T22:14:15.003Z mymachine.example.com su - ID47 [exampleSDID@32473 iut="3" eventSource="App \\"lication\\"" path="C:\\\\dir\\\\" note="a\\]b" eventID="1011"] message'
+        result = list(jc.parsers.syslog_s.parse([data], quiet=True))[0]
+        self.assertEqual(result['structured_data'], [{
+            'identity': 'exampleSDID@32473',
+            'parameters': {'iut': '3', 'eventSource': 'App "lication"', 'path': 'C:\\dir\\', 'note': 'a]b', 'eventID': '1011'}
+        }])
+        self.assertEqual(result['message'], 'message')
+
     def test_syslog_s_5424_long_sd(self):
         """
         Test syslog_s with a long word in structured data

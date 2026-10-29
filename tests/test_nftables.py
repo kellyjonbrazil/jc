@@ -199,6 +199,25 @@ class MyTests(unittest.TestCase):
                 self.assertEqual(result[0]['name'], 't')
                 self.assertIn('Some input was skipped', stderr.getvalue())
 
+    def test_nftables_quoted_device_with_brace(self):
+        """
+        Test 'nftables' with a quoted device name that contains '}'
+        """
+        data = (
+            'table netdev t {\n'
+            '\tchain c1 {\n'
+            '\t\ttype filter hook ingress devices = { "a}b", "eth0" } priority filter; policy accept;\n'
+            '\t}\n'
+            '\n'
+            '\tchain c2 {\n'
+            '\t\ttype filter hook ingress device "a}b" priority filter; policy accept;\n'
+            '\t}\n'
+            '}\n'
+        )
+        chains = jc.parse('nftables', data, quiet=True)[0]['chains']
+        self.assertEqual([(x['name'], x['devices']) for x in chains], [('c1', ['a}b', 'eth0']), ('c2', ['a}b'])])
+        self.assertEqual([(x['priority'], x['policy']) for x in chains], [('filter', 'accept'), ('filter', 'accept')])
+
 
 if __name__ == '__main__':
     unittest.main()

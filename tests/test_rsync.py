@@ -101,6 +101,15 @@ class MyTests(unittest.TestCase):
         generic_rsync_i_delete_logfile_json = json.loads(f.read())
 
 
+    def test_rsync_line_separators(self):
+        """
+        Test 'rsync' with line-break characters other than LF in a file name
+        """
+        data = '>f+++++++++ some/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.txt\n.f....og..x some/dir/b.txt\n'
+        result = jc.parsers.rsync.parse(data, quiet=True)
+        self.assertEqual(result[0]['files'][0]['filename'], 'some/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.txt')
+        self.assertEqual(result[0]['files'][1]['filename'], 'some/dir/b.txt')
+
     def test_rsync_nodata(self):
         """
         Test 'rsync' with no data
@@ -112,6 +121,27 @@ class MyTests(unittest.TestCase):
         Test 'rsync -i' on Centos 7.7
         """
         self.assertEqual(jc.parsers.rsync.parse(self.centos_7_7_rsync_i, quiet=True), self.centos_7_7_rsync_i_json)
+
+    def test_rsync_logfile_run_without_file_lines(self):
+        """
+        Test 'rsync' log file with a run that has a summary but no file lines
+        """
+        data = (
+            '2022/01/28 03:53:52 [9190] building file list\n'
+            '2022/01/28 03:53:52 [9190] >f+++++++++ a.txt\n'
+            '2022/01/28 03:53:52 [9190] sent 1,713 bytes  received 507 bytes  total size 235\n'
+            '2022/01/28 03:55:00 [9198] building file list\n'
+            '2022/01/28 03:55:00 [9198] sent 120 bytes  received 12 bytes  total size 235\n'
+        )
+        result = jc.parsers.rsync.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual([x['filename'] for x in result[0]['files']], ['a.txt'])
+        self.assertEqual(result[0]['summary']['process'], 9190)
+        self.assertEqual(result[0]['summary']['sent'], 1713)
+        self.assertEqual(result[1]['files'], [])
+        self.assertEqual(result[1]['summary']['process'], 9198)
+        self.assertEqual(result[1]['summary']['sent'], 120)
+        self.assertEqual(result[1]['summary']['received'], 12)
 
     def test_rsync_generic_rsync_i(self):
         """

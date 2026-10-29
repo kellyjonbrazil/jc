@@ -81,7 +81,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/dev_mcast` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,7 +145,7 @@ def parse(
 
         header = 'index interface dmi_u dmi_g dmi_address\n'
         data = header + data
-        data_splitlines = data.splitlines()
+        data_splitlines = jc.utils.splitlines(data)
         raw_output = simple_table_parse(data_splitlines)
 
     return raw_output if raw else _process(raw_output)

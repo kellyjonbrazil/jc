@@ -29,6 +29,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/systemctl-description-load.json'), 'r', encoding='utf-8') as f:
         generic_systemctl_description_load_json = json.loads(f.read())
 
+    def test_systemctl_line_separators(self):
+        """
+        Test 'systemctl' with line-break characters other than LF in a unit description
+        """
+        data = '  UNIT                                LOAD      ACTIVE   SUB       DESCRIPTION\n  dev-cdrom.device                    loaded    active   plugged   Drive a\rb\x0bc\x0cd\x1ce\x1df\x1eg CDROM\n  sshd.service                        loaded    active   running   OpenSSH\n'
+        result = jc.parsers.systemctl.parse(data, quiet=True)
+        self.assertEqual(result[0]['description'], 'Drive a\rb\x0bc\x0cd\x1ce\x1df\x1eg CDROM')
+        self.assertEqual(result[1]['unit'], 'sshd.service')
+
     def test_systemctl_nodata(self):
         """
         Test 'systemctl' with no data

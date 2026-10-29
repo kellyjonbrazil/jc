@@ -74,7 +74,8 @@ version_pattern = re.compile(r'''
     \((?P<gcc>gcc.+)\)\s
     (?P<build>\#\d\S*)\s
     (?P<flags>[^#\n]*)
-    (?P<date>(Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)
+    # Debian prints the date as (YYYY-MM-DD)
+    (?P<date>(Sun|Mon|Tue|Wed|Thu|Fri|Sat).+|\(\d{4}-\d{2}-\d{2}\)\s*$)
     ''', re.VERBOSE
 )
 
@@ -124,5 +125,8 @@ def parse(
 
             ver_dict = version_match.groupdict()
             raw_output = {x: y.strip() or None for x, y in ver_dict.items()}
+
+            if raw_output['date'] and raw_output['date'].startswith('('):
+                raw_output['date'] = raw_output['date'][1:-1]
 
     return raw_output if raw else _process(raw_output)

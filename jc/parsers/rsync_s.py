@@ -514,6 +514,13 @@ def parse(
 
             stat_line_log = stat_line_log_re.match(line)
             if stat_line_log:
+                # a new process id without file lines is a new run
+                if stat_line_log.group('process') != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = stat_line_log.group('process')
+                    summary = {}
+
                 summary.update({
                     'type': 'summary',
                     'date': stat_line_log.group('date'),
@@ -527,6 +534,12 @@ def parse(
 
             stat1_line_log_v = stat1_line_log_v_re.match(line)
             if stat1_line_log_v:
+                if stat1_line_log_v.group('process') != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = stat1_line_log_v.group('process')
+                    summary = {}
+
                 summary.update({
                     'type': 'summary',
                     'date': stat1_line_log_v.group('date'),
@@ -541,6 +554,12 @@ def parse(
 
             stat2_line_log_v = stat2_line_log_v_re.match(line)
             if stat2_line_log_v:
+                if stat2_line_log_v.group('process') != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = stat2_line_log_v.group('process')
+                    summary = {}
+
                 summary['sent'] = stat2_line_log_v.group('sent')
                 summary['received'] = stat2_line_log_v.group('received')
                 summary['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
@@ -548,6 +567,12 @@ def parse(
 
             stat3_line_log_v = stat3_line_log_v_re.match(line)
             if stat3_line_log_v:
+                if stat3_line_log_v.group('process') != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = stat3_line_log_v.group('process')
+                    summary = {}
+
                 summary['total_size'] = stat3_line_log_v.group('total_size')
                 summary['speedup'] = stat3_line_log_v.group('speedup')
                 continue

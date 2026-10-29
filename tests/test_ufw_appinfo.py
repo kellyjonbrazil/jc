@@ -54,6 +54,16 @@ class MyTests(unittest.TestCase):
         generic_ufw_appinfo_multiline_description_json = json.loads(f.read())
 
 
+    def test_ufw_appinfo_line_separators(self):
+        """
+        Test 'ufw app info' with line-break characters other than LF in the title and description
+        """
+        data = 'Profile: TEST2\nTitle: My a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j app2\nDescription: a longer a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.\n\nPorts:\n  53\n'
+        result = jc.parsers.ufw_appinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['title'], 'My a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j app2')
+        self.assertEqual(result[0]['description'], 'a longer a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.')
+        self.assertEqual(result[0]['tcp_list'], [53])
+
     def test_ufw_appinfo_nodata(self):
         """
         Test 'ufw_appinfo' with no data

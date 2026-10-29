@@ -115,7 +115,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # comments start with # or ; and can be inline
             userdata_str = re.split(r'[#;]', line, maxsplit=1)[0].strip()

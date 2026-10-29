@@ -144,7 +144,7 @@ def parse(data, raw=False, quiet=False):
     archives = []
 
     if jc.utils.has_data(data):
-        datalines = data.splitlines()
+        datalines = jc.utils.splitlines(data)
 
         # remove last line of multi-archive output since it is not needed.
         # match the whole unzip summary line so other text that ends with

@@ -40,10 +40,8 @@ class MyTests(unittest.TestCase):
     def test_sparse_table_parse_data_crosses_column_end(self):
         """
         Test sparse_table_parse with data that is wider than its column.
-        This pins the existing behavior, which is not the ideal result: when
-        the search for whitespace reaches the start of the line, the first
-        character is replaced by the delimiter, so the value loses its first
-        character and moves one column to the right.
+        When the search for whitespace reaches the start of the line, the
+        value moves one column to the right.
         """
         data = [
             'col_1 col_2 col_3',
@@ -53,8 +51,8 @@ class MyTests(unittest.TestCase):
         ]
         expected = [
             {'col_1': 'a', 'col_2': None, 'col_3': 'bbbbbbbbb c'},
-            {'col_1': None, 'col_2': 'aaaaaaaaaaaaaaaa'},
-            {'col_1': None, 'col_2': 'aaaaaaaaaa', 'col_3': 'bbbbbbbbbbbb c'}
+            {'col_1': None, 'col_2': 'aaaaaaaaaaaaaaaaa'},
+            {'col_1': None, 'col_2': 'aaaaaaaaaaa', 'col_3': 'bbbbbbbbbbbb c'}
         ]
         self.assertEqual(sparse_table_parse(data), expected)
 
@@ -149,7 +147,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(sparse_table_parse(data), [expected_row] * 100)
 
         data = [' '.join(names)] + ['b' * 20000] * 20
-        self.assertEqual(sparse_table_parse(data), [{'c0': None, 'c1': 'b' * 19999}] * 20)
+        self.assertEqual(sparse_table_parse(data), [{'c0': None, 'c1': 'b' * 20000}] * 20)
 
         data = ['a ' * 2000] + ['b'] * 100
         self.assertEqual(sparse_table_parse(data), [{'a': None}] * 100)
@@ -188,6 +186,19 @@ class MyTests(unittest.TestCase):
             {'\u540d\u524d': '\u5171\u6709', '\u30b5\u30a4\u30ba': '3\u0301', 'note': '\u65e5'}
         ]
         self.assertEqual(sparse_table_parse(data), expected)
+
+    def test_sparse_table_parse_value_from_line_start(self):
+        """
+        Test 'sparse_table_parse' with a value that starts the line and runs past its column
+        """
+        data = ['a    b    c', 'longvalue x', ' ongvalue x', 'q    r    t']
+        expected = [
+            {'a': None, 'b': 'longvalue', 'c': 'x'},
+            {'a': None, 'b': 'ongvalue', 'c': 'x'},
+            {'a': 'q', 'b': 'r', 'c': 't'}
+        ]
+        self.assertEqual(sparse_table_parse(data), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

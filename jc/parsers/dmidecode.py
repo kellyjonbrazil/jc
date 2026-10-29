@@ -1,5 +1,8 @@
 r"""jc - JSON Convert `dmidecode` command output parser
 
+> Note: `dmidecode -q` prints no Handle lines, so its entries have no
+> `handle`, `type` or `bytes` fields.
+
 Usage (cli):
 
     $ dmidecode | jc --dmidecode
@@ -200,15 +203,26 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        data = data.splitlines()
+        data = jc.utils.splitlines(data)
 
-        # remove header rows (everything before the first blank line)
-        for idx, row in enumerate(data):
-            if not row:
-                data = data[idx:]
-                break
+        # `dmidecode -q` prints no header rows and no Handle lines, so the
+        # first line is the description of the first entry and the next
+        # line is one of its indented values
+        quiet_output = len(data) > 1 \
+            and not data[0].startswith('#') \
+            and data[1].startswith('\t') \
+            and not any(row.startswith('Handle ') for row in data)
+
+        if quiet_output:
+            data = [''] + data
         else:
-            data = []
+            # remove header rows (everything before the first blank line)
+            for idx, row in enumerate(data):
+                if not row:
+                    data = data[idx:]
+                    break
+            else:
+                data = []
 
         # main parsing loop
         for line in data:
@@ -273,13 +287,13 @@ def parse(data, raw=False, quiet=False):
                         item['values'][f'{key}_data'] = key_data
                     raw_output.append(item)
 
-                item = {
-                    'handle': header[0],
-                    'type': header[1],
-                    'bytes': header[2],
-                    'description': line,
-                    'values': {}
-                }
+                item = {}
+                if header:
+                    item['handle'] = header[0]
+                    item['type'] = header[1]
+                    item['bytes'] = header[2]
+                item['description'] = line
+                item['values'] = {}
 
                 key = None
                 val = None

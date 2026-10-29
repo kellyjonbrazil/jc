@@ -29,6 +29,15 @@ class VeracryptTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/veracrypt-long-line.json'), 'r', encoding='utf-8') as f:
         generic_veracrypt_long_line_json = json.loads(f.read())
 
+    def test_veracrypt_line_separators(self):
+        """
+        Test 'veracrypt' with line-break characters other than LF in a mount directory
+        """
+        data = 'Slot: 1\nVolume: /dev/sdb1\nVirtual Device: /dev/mapper/veracrypt1\nMount Directory: /home/bob/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nSize: 498 MiB\nType: Normal\nRead-Only: No\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result[0]['mountpoint'], '/home/bob/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[0]['size'], '498 MiB')
+
     def test_veracrypt_nodata(self):
         """
         Test 'veracrypt' with no data

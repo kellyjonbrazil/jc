@@ -267,7 +267,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data)
     raw_output = []
 
     if jc.utils.has_data(data):

@@ -159,6 +159,23 @@ class info():
 
 __version__ = info.version
 
+# matches a run of `\ooo` octal escapes
+_OCTAL_RUN = re.compile(r'(?:\\[0-7]{3})+')
+
+
+def _unescape(field: str) -> str:
+    r"""Decode the `\ooo` octal escapes the kernel writes for special characters"""
+    # can switch to jc.utils.unescape_backslashes() once it is available
+    if '\\' not in field:
+        return field
+
+    def _decode(match):
+        octets = bytes(int(match.group(0)[i + 1:i + 4], 8) & 0xff
+                       for i in range(0, len(match.group(0)), 4))
+        return octets.decode('utf-8', 'backslashreplace')
+
+    return _OCTAL_RUN.sub(_decode, field)
+
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
     """
@@ -180,7 +197,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 entry[key] = int(entry[key])
 
         if 'mount_options' in entry:
-            entry['mount_options'] = entry['mount_options'].split(',')
+            entry['mount_options'] = [_unescape(x) for x in entry['mount_options'].split(',')]
 
         if 'optional_fields' in entry:
             if 'unbindable' in  entry['optional_fields']:
@@ -195,7 +212,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         if 'super_options' in entry:
             if entry['super_options']:
                 super_options_split = entry['super_options'].split(',')
-                s_options = [x for x in super_options_split if '=' not in x]
+                s_options = [_unescape(x) for x in super_options_split if '=' not in x]
                 s_options_fields = [x for x in super_options_split if '=' in x]
 
                 if s_options:
@@ -209,6 +226,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
                     for field in s_options_fields:
                         key, val = field.split('=', maxsplit=1)
+                        key, val = _unescape(key), _unescape(val)
                         if re.match(r'^-?[0-9]+[kKmMgGtTpPeE]?$', val):
                             val = jc.utils.convert_to_int(val)
 
@@ -265,6 +283,9 @@ def parse(
 
             line_match = line_pattern.search(line)
             if line_match:
-                raw_output.append(line_match.groupdict())
+                entry = line_match.groupdict()
+                for key in ('root', 'mount_point', 'fs_type', 'mount_source'):
+                    entry[key] = _unescape(entry[key])
+                raw_output.append(entry)
 
     return raw_output if raw else _process(raw_output)

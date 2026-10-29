@@ -50,7 +50,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ip route` command parser'
     author = 'Julian Jackson'
     author_email = 'jackson.julian55@yahoo.com'
@@ -81,7 +81,7 @@ def parse(data, raw=False, quiet=False):
 
     structure = {}
     items = []
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     index = 0
     place = 0
     inc = 0

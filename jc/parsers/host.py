@@ -153,7 +153,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
         rrdata = {}
         soaparse = False
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             line = line.strip()
 
             # the record type words directly follow the owner name, which

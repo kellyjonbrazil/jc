@@ -233,7 +233,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         jc.utils.compatibility(__name__, info.compatible, quiet)
         jc.utils.input_type_check(data)
 
-        linedata = data.splitlines()
+        linedata = jc.utils.splitlines(data)
 
         first_line = linedata[0]
         line_mode = re.match(_volume_line_pattern, first_line)

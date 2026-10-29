@@ -162,7 +162,7 @@ def parse(
     raw_output: List = []
 
     if jc.utils.has_data(data):
-        data_lines = data.splitlines()
+        data_lines = jc.utils.splitlines(data)
 
         # get the number of cpus
         cpu_num = len(data_lines[0].split())

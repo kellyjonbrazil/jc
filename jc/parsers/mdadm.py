@@ -83,7 +83,7 @@ Schema:
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
-                                      string
+                                      string/null
       ],
       "member_arrays":                string,
       "member_arrays_list": [
@@ -364,7 +364,7 @@ def _process(proc_data: Dict) -> Dict:
         array_state_text = _first_token(proc_data['array_state']) or ''
 
         for item in array_state_text:
-            array_state_list.append(array_state_map[item])
+            array_state_list.append(array_state_map.get(item))
 
         proc_data['array_state_list'] = array_state_list
 
@@ -432,7 +432,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # device line
             if line.startswith('/') and line.endswith(':'):
                 raw_output['device'] = line[:-1]

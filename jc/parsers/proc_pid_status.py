@@ -362,7 +362,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             key, val = line.split(':', maxsplit=1)
             raw_output[key] = val.strip()
 

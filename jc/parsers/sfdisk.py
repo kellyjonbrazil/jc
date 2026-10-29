@@ -283,7 +283,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             # deprecated - only for older versions of util-linux
             if line.startswith('# partition table of'):
                 if item:

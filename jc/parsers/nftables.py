@@ -187,7 +187,8 @@ _ct_block_pattern = re.compile(r'^ct\s+(?:helper|timeout|expectation)\s+\S+\s*\{
 
 _chain_type_pattern = re.compile(r'^type\s+(?P<type>\S+)')
 _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
-_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
+# a quoted device name can contain `}`
+_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{(?:[^}"]|"[^"]*")*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
 
@@ -261,8 +262,8 @@ def _statements(data: str) -> Iterator[Tuple[Optional[str], Optional[str]]]:
     depth = 0
     in_quotes = False
 
-    for raw_line in data.splitlines(keepends=True):
-        line = raw_line.splitlines()[0]
+    for raw_line in jc.utils.splitlines(data, keepends=True):
+        line = jc.utils.splitlines(raw_line)[0]
         line_end = raw_line[len(line):]
         continued = in_quotes
 

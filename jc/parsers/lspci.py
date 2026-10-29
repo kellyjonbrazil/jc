@@ -121,7 +121,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`lspci -mmv` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -191,7 +191,7 @@ def parse(
         item_id_p = re.compile(r'(?P<id>^[0-9a-f]{4}$)')
         item_id_bracket_p = re.compile(r' \[(?P<id>[0-9a-f]{4})\]$')
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             if line.startswith('Slot:'):
                 if device_output:
                     raw_output.append(device_output)

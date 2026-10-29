@@ -310,10 +310,18 @@ _NL_LOCAL_RE = re.compile(r'(nl\s+\S+\s+\d+\s+\d+\s+)([^\s:]+:.*/\d+)(?=\s+\*(?:
 #: paths and netlink channels can contain a `%` that is not an interface.
 _INTERFACE_NETIDS = {'tcp', 'udp', 'raw', 'icmp6', 'sctp', 'dccp', 'mptcp', 'udplite'}
 
+#: Netids of packet sockets: the local field is `<link layer>:<interface>`
+_PACKET_NETIDS = {'p_raw', 'p_dgr'}
+
 #: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
 #: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
-#: parentheses inside it are preserved rather than rewritten.
-_USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),fd=(?P<fd>\d+)\)')
+#: parentheses inside it are preserved rather than rewritten. With -T and
+#: -Z/-z the fields after the pid are `[tid=N,][proc_ctx=X,]fd=M[,sock_ctx=Y]`.
+_USERS_RE = re.compile(r'\("(?P<user>.*?)",pid=(?P<pid>\d+),(?P<fields>[^()"]*)\)')
+
+#: The `fd=M` field among the fields after the pid. SELinux contexts can
+#: contain commas, so `fd=` must be followed by `,sock_ctx=` or the end.
+_USERS_FD_RE = re.compile(r'(?:^|,)fd=(?P<fd>\d+)(?:,sock_ctx=|$)')
 
 #: Marks a field belonging to the headerless options region added by -e, -o
 #: and -p. Used both to recognize that region and to find where it starts.
@@ -496,10 +504,12 @@ def _parse_opts(proc_data):
         block = users.group(0)
         record = _match_first(_USERS_RE, '("', block)
         while record:
-            opts['process_id'][record.group('pid')] = {
-                'user': record.group('user'),
-                'file_descriptor': record.group('fd')
-            }
+            fd = _USERS_FD_RE.search(record.group('fields'))
+            if fd:
+                opts['process_id'][record.group('pid')] = {
+                    'user': record.group('user'),
+                    'file_descriptor': fd.group('fd')
+                }
             record = _match_first(_USERS_RE, '("', block, record.end())
         proc_data = proc_data[:users.start()] + proc_data[users.end():]
 
@@ -573,13 +583,13 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    contains_colon = ['nl', 'p_raw', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
+    contains_colon = ['nl', 'p_raw', 'p_dgr', 'raw', 'udp', 'tcp', 'v_str', 'icmp6']
     raw_output = []
     ONE_OR_MORE_SPACE_PATTERN = r'[ ]{1,}'
     TWO_OR_MORE_SPACES_PATTERN = r'[ ]{2,}'
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
         header_text = cleandata[0].lower()
@@ -675,6 +685,10 @@ def parse(data, raw=False, quiet=False):
                     entry_list[6] = p_address
                     entry_list.insert(7, p_port)
 
+                # packet sockets print only '*' for the peer, without a port
+                elif entry_list[0] in _PACKET_NETIDS and 'peer_port' in row_header:
+                    row_header.remove('peer_port')
+
                 # The options region is one logical field, but it can itself
                 # contain runs of two or more spaces: newer iproute2 pads after
                 # the users: block to align the column. The two-or-more split
@@ -714,7 +728,7 @@ def parse(data, raw=False, quiet=False):
 
                 output_line['channel'] = channel
 
-            if output_line['netid'] == 'p_raw':
+            if output_line['netid'] in _PACKET_NETIDS:
                 output_line['link_layer'] = output_line.pop('local_address')
                 output_line['interface'] = output_line.pop('local_port')
 

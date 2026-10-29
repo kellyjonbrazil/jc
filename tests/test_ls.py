@@ -286,6 +286,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-arrows.json'), 'r', encoding='utf-8') as f:
         ls_l_arrows_json = json.loads(f.read())
 
+    def test_ls_line_separators(self):
+        """
+        Test 'ls' with line-break characters other than LF in a file name
+        """
+        data = 'total 20\n-rw-r--r--.   1 root root    7 Aug 15 10:53 a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nlrwxrwxrwx.   1 root root    7 Aug 15 10:53 bin -> usr/bin\n'
+        result = jc.parsers.ls.parse(data, quiet=True)
+        self.assertEqual(result[0]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['link_to'], 'usr/bin')
+
     def test_ls_empty_dir(self):
         """
         Test plain 'ls' on an empty directory

@@ -161,6 +161,24 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.iftop.parse(self.generic_iftop_linux_ipv6_no_port, quiet=True), self.generic_iftop_linux_ipv6_no_port_json)
 
+    def test_iftop_aggregated_hosts(self):
+        """
+        Test 'iftop -t' with hide-source or hide-destination, which prints the hidden host as '*'
+        """
+        for send_host, receive_host, send_expected, receive_expected in (
+                (' * :ssh                ', '10.10.15.72:40876      ', ('*', 'ssh'), ('10.10.15.72', '40876')),
+                ('ubuntu-2004-clean-01:ssh', ' * :40876              ', ('ubuntu-2004-clean-01', 'ssh'), ('*', '40876')),
+                (' *                     ', ' *                     ', ('*', None), ('*', None)),
+                ('[ * ]:22               ', '[2001:db8::1]:40876    ', ('*', '22'), ('2001:db8::1', '40876'))):
+            with self.subTest(send_host=send_host, receive_host=receive_host):
+                lines = self.ubuntu_20_10_iftop_b_n1.splitlines()
+                lines[6] = '   1 ' + send_host + '                 =>       448b       448b       448b       112B'
+                lines[7] = '     ' + receive_host + '                    <=       208b       208b       208b        52B'
+                connections = jc.parsers.iftop.parse('\n'.join(lines), quiet=True)[0]['clients'][0]['connections']
+                self.assertEqual((connections[0]['host_name'], connections[0].get('host_port')), send_expected)
+                self.assertEqual((connections[1]['host_name'], connections[1].get('host_port')), receive_expected)
+                self.assertEqual((connections[0]['last_2s'], connections[1]['cumulative']), (448, 52))
+
 
 if __name__ == '__main__':
     unittest.main()

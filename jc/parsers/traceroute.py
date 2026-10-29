@@ -308,7 +308,7 @@ def _loads(data: str, quiet: bool):
     lines = []
 
     # remove any warning lines
-    for data_line in data.splitlines():
+    for data_line in jc.utils.splitlines(data):
         if 'traceroute: Warning: ' not in data_line and 'traceroute6: Warning: ' not in data_line:
             lines.append(data_line)
         else:

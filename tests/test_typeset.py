@@ -2,6 +2,7 @@ import unittest
 import os
 import sys
 import json
+import shlex
 sys.path.append(os.getcwd())
 from tests import utils_for_test as test_utils
 sys.path.pop()
@@ -113,6 +114,37 @@ class MyTests(unittest.TestCase):
         Test 'declare -p' associative arrays declared with -A whose first key is a number
         """
         self.assertEqual(jc.parsers.typeset.parse(self.generic_numeric_first_key, quiet=True), self.generic_numeric_first_key_json)
+
+    def test_typeset_shell_split_like_shlex(self):
+        """
+        Test 'typeset' array word splitting against shlex.split()
+        """
+        samples = [
+            '', '  ', 'a b', '[0]="a b" [1]=c', "[0]='a \\ b' [1]=\"x\\\"y\"",
+            'a"b c"d', "a'b c'd", '"\\$x" "\\\\" "\\n"', 'a\\ b\\\\ c', "'' \"\"",
+            '\ta\r\nb\xa0c', '[k]="v" [a=b]="c"', '"a\\"', '"a', "'a", 'a\\', '"a\\',
+            '[0]="' + 'x' * 1000 + '"'
+        ]
+        for sample in samples:
+            with self.subTest(sample=sample):
+                try:
+                    expected = shlex.split(sample)
+                except ValueError as e:
+                    expected = str(e)
+                try:
+                    result = jc.parsers.typeset._shell_split(sample)
+                except ValueError as e:
+                    result = str(e)
+                self.assertEqual(result, expected)
+
+    def test_typeset_associative_keys_with_equals(self):
+        """
+        Test 'declare -p' associative arrays with keys that contain '=' or ']='
+        """
+        data = 'declare -A x=(["s]=p"]="3" ["q\\"x"]="2" [a=b]="c" [k]="v=w" [$\'t\\tu\']="4" ["s]p"]="1" )\n'
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(result[0]['value'], {'s]=p': '3', 'q"x': '2', 'a=b': 'c', 'k': 'v=w', 't\tu': '4', 's]p': '1'})
+        self.assertEqual(result[0]['type'], 'associative')
 
 
 if __name__ == '__main__':

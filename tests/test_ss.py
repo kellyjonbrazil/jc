@@ -336,6 +336,50 @@ class MyTests(unittest.TestCase):
         self.assertNotIn('interface', result[1])
         self.assertEqual((result[2]['local_address'], result[2]['interface']), ('127.0.0.53', 'lo'))
 
+    def test_ss_packet_sockets(self):
+        """
+        Test 'ss -0' and 'ss -0e' with p_raw and p_dgr rows
+        """
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'p_raw UNCONN 0      0               LLDP:ens33                  *        ino:30371 sk:1 cgroup:/system.slice/lldpd.service <->\n'
+                'p_dgr UNCONN 0      0            [35020]:wlp2s0                 *        ino:28737 sk:2 cgroup:/system.slice/NetworkManager.service <->\n'
+                'p_dgr UNCONN 0      0                 ip:*                      *        ino:28738 sk:3 cgroup:/ <->\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'netid': 'p_raw', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '30371', 'cookie': '1', 'cgroup': '/system.slice/lldpd.service'},
+             'link_layer': 'LLDP', 'interface': 'ens33'},
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '28737', 'cookie': '2', 'cgroup': '/system.slice/NetworkManager.service'},
+             'link_layer': '[35020]', 'interface': 'wlp2s0'},
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'opts': {'inode_number': '28738', 'cookie': '3', 'cgroup': '/'},
+             'link_layer': 'ip', 'interface': '*'}
+        ])
+
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'p_dgr UNCONN 0      0            [35020]:wlp2s0                 *\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'netid': 'p_dgr', 'state': 'UNCONN', 'recv_q': 0, 'send_q': 0, 'peer_address': '*',
+             'link_layer': '[35020]', 'interface': 'wlp2s0'}
+        ])
+
+    def test_ss_users_with_contexts_and_threads(self):
+        """
+        Test 'ss -pZ', 'ss -pz' and 'ss -pT' process records
+        """
+        data = ('Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:Port Process\n'
+                'tcp   LISTEN 0      128          0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=1023,proc_ctx=system_u:system_r:sshd_t:s0-s0:c0.c1023,fd=3))\n'
+                'tcp   LISTEN 0      128          0.0.0.0:23         0.0.0.0:*    users:(("a b",pid=5,proc_ctx=u:r:t:s0:c1,c5,fd=4,sock_ctx=u:r:t:s0),("a b",pid=6,tid=7,fd=8))\n')
+        result = jc.parsers.ss.parse(data, quiet=True)
+        self.assertEqual(result[0]['opts'], {'process_id': {'1023': {'user': 'sshd', 'file_descriptor': '3'}}})
+        self.assertEqual(result[0]['local_port'], '22')
+        self.assertEqual(result[1]['opts'], {'process_id': {
+            '5': {'user': 'a b', 'file_descriptor': '4'},
+            '6': {'user': 'a b', 'file_descriptor': '8'}
+        }})
+
 
 if __name__ == '__main__':
     unittest.main()

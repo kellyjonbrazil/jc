@@ -141,7 +141,8 @@ def _extract_ident(struct_string) -> Optional[str]:
 
 
 def _extract_kv(struct_string) -> List[Dict]:
-    key_vals = re.compile(r'\b(?P<key>\w+)=(?P<val>\"[^\"]*\")')
+    # PARAM-VALUE can contain the escapes \", \\ and \]
+    key_vals = re.compile(r'\b(?P<key>\w+)=(?P<val>"(?:[^"\\]|\\.)*")', re.DOTALL)
     key_vals_match = key_vals.findall(struct_string)
     kv_list = []
 

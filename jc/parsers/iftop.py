@@ -273,6 +273,16 @@ def _host_name(host_field: str) -> str:
     return host_field
 
 
+# iftop prints ' * ' (or '[ * ]' before an IPv6 port) for the host when the
+# source or destination is hidden (hide-source, hide-destination)
+_AGGREGATED_HOST_RE = re.compile(r'^(\s*\d+ | {5})(?: \* |\[ \* \])(?=:|\s)')
+
+
+def _aggregated_host(line: str) -> str:
+    """Write an aggregated host as '*' so it reads as one field"""
+    return _AGGREGATED_HOST_RE.sub(r'\1*', line, count=1)
+
+
 def _has_port(host_field: str) -> bool:
     """
     Return True if the host field of a flow line ends in a port. iftop puts
@@ -360,9 +370,10 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     if not jc.utils.has_data(data):
         return raw_output if raw else _process(raw_output, quiet=quiet)
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         has_port = False
         if "=>" in line or "<=" in line:
+            line = _aggregated_host(line)
             fields = line.split(None, 2)
             if "=>" in line and len(fields) > 1:
                 has_port = _has_port(fields[1])

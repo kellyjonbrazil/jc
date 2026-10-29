@@ -26,6 +26,15 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
+    def test_proc_pid_status_line_separators(self):
+        """
+        Test '/proc/<pid>/status' with line-break characters other than LF in the process name
+        """
+        data = 'Name:\ta\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nUmask:\t0000\nState:\tS (sleeping)\nPid:\t1\n'
+        result = jc.parsers.proc_pid_status.parse(data, quiet=True)
+        self.assertEqual(result['Name'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['Umask'], '0000')
+
     def test_proc_pid_status_nodata(self):
         """
         Test 'proc_pid_status' with no data

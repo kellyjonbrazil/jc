@@ -335,7 +335,7 @@ def parse(data, raw=False, quiet=False):
     next_is_parent = False
     new_section = False
 
-    linedata = data.splitlines()
+    linedata = jc.utils.splitlines(data)
 
     if jc.utils.has_data(data):
 

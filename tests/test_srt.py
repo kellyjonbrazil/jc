@@ -116,5 +116,22 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.srt.parse_timestamp('1:2'), {})
         self.assertEqual(jc.parsers.srt.parse_timestamp('1:2:' + '3' * 50 + 'x'), {})
 
+    def test_srt_positional_coordinates(self):
+        """
+        Test 'srt' with positional coordinates after the end timestamp
+        """
+        data = (
+            '1\n00:00:01,000 --> 00:00:04,000 X1:40 X2:600 Y1:20 Y2:50\nHello\n\n'
+            '2\n00:00:05,000 --> 00:00:06,000\nWorld\n\n'
+        )
+        result = jc.parsers.srt.parse(data, quiet=True)
+        self.assertEqual([x['index'] for x in result], [1, 2])
+        self.assertEqual(result[0]['proprietary'], 'X1:40 X2:600 Y1:20 Y2:50')
+        self.assertEqual(result[0]['content'], 'Hello')
+        self.assertEqual(result[0]['end']['timestamp'], '00:00:04,000')
+        self.assertNotIn('proprietary', result[1])
+        self.assertEqual(result[1]['content'], 'World')
+
+
 if __name__ == '__main__':
     unittest.main()

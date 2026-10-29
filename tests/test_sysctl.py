@@ -35,6 +35,15 @@ class MyTests(unittest.TestCase):
         freebsd12_sysctl_json = json.loads(f.read())
 
 
+    def test_sysctl_line_separators(self):
+        """
+        Test 'sysctl' with line-break characters other than LF in a value
+        """
+        data = 'kernel.hostname = ha\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nkernel.ostype = Linux\n'
+        result = jc.parsers.sysctl.parse(data, quiet=True)
+        self.assertEqual(result['kernel.hostname'], 'ha\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['kernel.ostype'], 'Linux')
+
     def test_sysctl_nodata(self):
         """
         Test plain 'sysctl' with no data

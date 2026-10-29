@@ -426,6 +426,19 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
 
     return device
 
+def _next_head(next_lines: List[str]) -> str:
+    """
+    Return the next controller or device head line (the lines are in
+    reverse order), or '' if there is none.
+    """
+    for line in reversed(next_lines):
+        if (line.startswith(("Controller ", "Device "))
+                and not re.fullmatch(_not_available_pattern, line.strip())):
+            return line
+
+    return ''
+
+
 def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictType]:
     """
     Main text parsing function
@@ -468,6 +481,9 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
             if element:
                 result.append(element)
+
+                # input can mix controller and device records
+                data = _next_head(linedata)
             else:
                 break
 
