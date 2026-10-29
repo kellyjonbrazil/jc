@@ -68,7 +68,7 @@ class MyTests(unittest.TestCase):
         data = '24 30 0:22 / /sys rw,nosuid - sysfs sysfs rw\n429 30 0:55 / /home/u/x\x1e99\\0401\\0400:99\\040/\\040/tmp rw,relatime - tmpfs tmpfs rw,inode64\n'
         result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
         self.assertEqual([x['mount_id'] for x in result], [24, 429])
-        self.assertEqual(result[1]['mount_point'], '/home/u/x\x1e99\\0401\\0400:99\\040/\\040/tmp')
+        self.assertEqual(result[1]['mount_point'], '/home/u/x\x1e99 1 0:99 / /tmp')
         self.assertEqual(result[1]['mount_options'], ['rw', 'relatime'])
         self.assertEqual(result[1]['fs_type'], 'tmpfs')
         self.assertEqual(result[1]['mount_source'], 'tmpfs')
@@ -121,6 +121,28 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
         self.assertEqual(result[0]['optional_fields'], {'shared': 1, 'master': 2, 'foo': 'bar:baz'})
         self.assertEqual(result[0]['fs_type'], 'proc')
+
+    def test_proc_pid_mountinfo_octal_escapes(self):
+        """
+        Test '/proc/<pid>/mountinfo' with octal escapes in paths, source and options
+        """
+        data = (
+            '36 35 98:0 /my\\040dir /mnt/a\\040b\\011c rw,noatime master:1 - ext3 /dev/my\\040disk rw,data=ord\\054ered,x\\075y=a\\075b\\134c\n'
+            '37 35 98:0 / /mnt/d\\134040e rw shared:2 - fuse.my\\040fs src rw\n'
+        )
+        result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['root'], '/my dir')
+        self.assertEqual(result[0]['mount_point'], '/mnt/a b\tc')
+        self.assertEqual(result[0]['mount_source'], '/dev/my disk')
+        self.assertEqual(result[0]['super_options'], ['rw'])
+        self.assertEqual(result[0]['super_options_fields'], {'data': 'ord,ered', 'x=y': 'a=b\\c'})
+        self.assertEqual(result[1]['mount_point'], '/mnt/d\\040e')
+        self.assertEqual(result[1]['fs_type'], 'fuse.my fs')
+        self.assertEqual(result[1]['mount_source'], 'src')
+
+        raw = jc.parsers.proc_pid_mountinfo.parse(data, raw=True, quiet=True)
+        self.assertEqual(raw[0]['mount_point'], '/mnt/a b\tc')
+        self.assertEqual(raw[0]['super_options'], 'rw,data=ord\\054ered,x\\075y=a\\075b\\134c')
 
 
 if __name__ == '__main__':
