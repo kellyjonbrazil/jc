@@ -203,7 +203,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 soaparse = True
                 rrdata = {}
                 linedata = line.split(' ', maxsplit=1)
-                nameserverip = linedata[1].rstrip(':')
+                nameserverip = linedata[1]
+
+                # host prints 'Nameserver <address>:'. Remove only that colon,
+                # an IPv6 address can end with colons too. (e.g. 2001:db8::)
+                if nameserverip.endswith(':'):
+                    nameserverip = nameserverip[:-1]
+
                 rrdata.update({'nameserver': nameserverip})
                 continue
 
