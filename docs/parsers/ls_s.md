@@ -19,6 +19,13 @@ Block (`b`) and character (`c`) device entries report `major_number` and
 `minor_number` instead of `size`, since `ls` prints the device's major and
 minor numbers in that column rather than a byte count.
 
+Entries that `ls` cannot stat (e.g. `-????????? ? ? ? ?  ? name`) report
+`null` for `links`, `owner`, `group`, `size`, and `date`.
+
+Only symbolic link (`l`) entries have a `link_to` field. The filename is
+split at the first ` -> `, so a link whose name contains ` -> ` reports
+the rest of its name as part of `link_to`.
+
 `--time-style=iso` is not supported since its date field is a different
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.

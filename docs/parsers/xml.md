@@ -10,6 +10,11 @@ to a `_` prefix by using the `-r` (cli) or `raw=True` (module) option.
 
 Text values for nodes will have the key-name of `#text`.
 
+> Note: In raw output, which uses the `_` prefix, an attribute and a child
+> element named like the attribute with a leading `_` (e.g. attribute `b`
+> and element `<_b>`) share the same key, so they cannot be told apart. The
+> default output uses the `@` prefix and is not affected.
+
 Usage (cli):
 
     $ cat foo.xml | jc --xml

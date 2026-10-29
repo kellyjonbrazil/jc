@@ -11,7 +11,11 @@ Binary values are converted into an ASCII hex representation.
 
 Datetime objects are converted into Unix epoch timestamps and ISO strings.
 The timestamp and ISO string will maintain the same naive or timezone-aware
-properties as the object in the original PLIST file.
+properties as the object in the original PLIST file. Datetime objects inside
+arrays are converted into ISO strings.
+
+UID objects (binary PLIST files) are converted into `{"CF$UID": <integer>}`
+objects.
 
 Usage (cli):
 

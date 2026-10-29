@@ -68,7 +68,8 @@ Schema:
     }
 
     [0] 'reply', 'timeout', 'unparsable_line', etc. See
-        `_error_type.type_map` for all options
+        `_error_type.type_map` and `_error_type_v6.type_map` for all
+        options
     [1] only if an 'unparsable_line' type
     [2] hex value converted to decimal
 

@@ -27,6 +27,9 @@ local time of the system the parser is run on)
 The `epoch_utc` calculated timestamp field is timezone-aware and is
 only available if the timezone field is UTC.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git log | jc --git-log-s
