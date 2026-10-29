@@ -1422,6 +1422,33 @@ class EDIPartyName(Sequence):
     ]
 
 
+class TypedGeneralNameStr(str):
+    """
+    jc: native value of a GeneralName whose chosen alternative is a string.
+    It behaves like the plain string; general_name_type holds the name of
+    the chosen alternative (dns_name, rfc822_name, etc.)
+    """
+
+    general_name_type = None
+
+
+class TypedGeneralNameDict(OrderedDict):
+    """
+    jc: native value of a GeneralName whose chosen alternative is a mapping
+    (directory_name, other_name, etc.). It behaves like the plain
+    OrderedDict; general_name_type holds the name of the chosen alternative
+    """
+
+    general_name_type = None
+
+
+class GeneralNamesList(list):
+    """
+    jc: native value of a GeneralNames. It behaves like the plain list and
+    marks the list as holding GeneralName values, even when it is empty
+    """
+
+
 class GeneralName(Choice):
     _alternatives = [
         ('other_name', AnotherName, {'implicit': 0}),
@@ -1471,9 +1498,44 @@ class GeneralName(Choice):
 
         return self.chosen == other.chosen
 
+    @property
+    def native(self):
+        """
+        jc: the native value of the chosen alternative, wrapped so that it
+        keeps the name of the alternative in general_name_type
+
+        :return:
+            A TypedGeneralNameStr or TypedGeneralNameDict, or the plain
+            native value if it is neither a string nor a mapping
+        """
+
+        value = self.chosen.native
+        if isinstance(value, str):
+            value = TypedGeneralNameStr(value)
+        elif isinstance(value, OrderedDict):
+            value = TypedGeneralNameDict(value)
+        else:
+            return value
+        value.general_name_type = self.name
+        return value
+
 
 class GeneralNames(SequenceOf):
     _child_spec = GeneralName
+
+    @property
+    def native(self):
+        """
+        jc: the native list, marked as a list of GeneralName values
+
+        :return:
+            A GeneralNamesList or None
+        """
+
+        value = super().native
+        if value is None:
+            return None
+        return GeneralNamesList(value)
 
 
 class Time(Choice):
