@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.date
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -40,6 +41,19 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-20.04/date2.json'), 'r', encoding='utf-8') as f:
         ubuntu_20_04_date2_json = json.loads(f.read())
 
+
+    def test_date_unparsable_raises_parseerror(self):
+        """
+        Test 'date' strings the parser cannot read: `date -I` and a non-C
+        locale. These used to reach `dt.year` with `dt` still None and raise
+        AttributeError, which a caller cannot catch as a parse failure.
+        """
+        for data in ('2026-10-28\n', 'mar. 28 oct. 2026 09:15:00 CET\n'):
+            with self.assertRaises(ParseError):
+                jc.parsers.date.parse(data, quiet=True)
+
+        # empty input keeps returning an empty result
+        self.assertEqual(jc.parsers.date.parse('', quiet=True), {})
 
     def test_date_nodata(self):
         """
