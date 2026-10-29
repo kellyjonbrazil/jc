@@ -529,6 +529,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-bsd-icmp-errors.json'), 'r', encoding='utf-8') as f:
         generic_ping6_bsd_icmp_errors_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-error-resolved-sender.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_error_resolved_sender = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-error-resolved-sender.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_error_resolved_sender_json = json.loads(f.read())
+
     def test_ping_nodata(self):
         """
         Test 'ping' with no data
@@ -1163,6 +1169,33 @@ class MyTests(unittest.TestCase):
                           'destination_unreachable_bad_code', 'reply'])
         self.assertEqual(result['responses'][1]['response_ip'], 'fe80::1%em0')
         self.assertEqual(result['responses'][3]['bytes'], 1280)
+
+    def test_ping_linux_error_resolved_sender(self):
+        """
+        Test 'ping' on linux with error lines from a sender shown as '<name> (<ip>)' and as '<ip>'
+        """
+        result = jc.parsers.ping.parse(self.generic_ping_linux_error_resolved_sender, quiet=True)
+        self.assertEqual(result, self.generic_ping_linux_error_resolved_sender_json)
+        self.assertEqual(result['responses'][0], {'type': 'destination_host_unreachable', 'response_ip': '203.0.113.5', 'icmp_seq': 1, 'timestamp': None})
+        self.assertEqual(result['responses'][2]['type'], 'reply')
+        self.assertEqual(result['responses'][3]['icmp_seq'], 4)
+
+    def test_ping_linux_error_lines(self):
+        """
+        Test 'ping' and 'ping6' on linux with error lines, with and without -D timestamps
+        """
+        footer = '\n--- x ping statistics ---\n1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms\n'
+        tests = [
+            ('PING 10.0.3.22 (10.0.3.22) 56(84) bytes of data.\n[1700000000.123456] From 10.0.0.1 icmp_seq=7 Destination Host Unreachable\n',
+             {'type': 'destination_host_unreachable', 'response_ip': '10.0.0.1', 'icmp_seq': 7, 'timestamp': 1700000000.123456}),
+            ('PING 10.0.3.22 (10.0.3.22) 56(84) bytes of data.\nFrom 10.0.0.1 icmp_seq=2 Frag needed and DF set (mtu = 1400)\n',
+             {'type': 'frag_needed_and_df_set', 'response_ip': '10.0.0.1', 'icmp_seq': 2, 'timestamp': None}),
+            ('PING 2001:db8::9(2001:db8::9) 56 data bytes\nFrom 2001:db8::1 icmp_seq=3 Destination unreachable: Address unreachable\n',
+             {'type': 'destination_unreachable_address_unreachable', 'response_ip': '2001:db8::1', 'icmp_seq': 3, 'timestamp': None})
+        ]
+        for data, expected in tests:
+            result = jc.parsers.ping.parse(data + footer, quiet=True)
+            self.assertEqual(result['responses'], [expected], data)
 
 
 if __name__ == '__main__':

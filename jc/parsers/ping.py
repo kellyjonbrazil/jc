@@ -63,7 +63,8 @@ Schema:
     }
 
     [0] 'reply', 'timeout', 'unparsable_line', etc. See
-        `_error_type.type_map` for all options
+        `_error_type.type_map` and `_error_type_v6.type_map` for all
+        options
     [1] only if an 'unparsable_line' type
     [2] hex value converted to decimal
 
@@ -322,6 +323,60 @@ def _error_type(line):
     return None
 
 
+def _error_type_v6(line):
+    # IPv6 ICMP error messages from pr_icmph() in:
+    # https://github.com/iputils/iputils/blob/master/ping/ping6_common.c
+    type_map = {
+        'Destination unreachable': 'destination_unreachable',
+        'Packet too big': 'packet_too_big',
+        'Time exceeded:': 'time_exceeded',
+        'Parameter problem:': 'parameter_problem',
+    }
+    code_map = {
+        'destination_unreachable': {
+            'No route': 'no_route',
+            'Administratively prohibited': 'administratively_prohibited',
+            "Beyond scope of source address": 'beyond_scope_of_source_address',
+            'Address unreachable': 'address_unreachable',
+            'Port unreachable': 'port_unreachable',
+        },
+        'time_exceeded': {
+            'Hop limit': 'hop_limit',
+            'Defragmentation failure': 'fragment_reassembly_time_exceeded',
+        },
+    }
+
+    return_code = None
+    for err_type, code in type_map.items():
+        if err_type in line:
+            return_code = code
+            for err_code, code_name in code_map.get(code, {}).items():
+                if err_code in line:
+                    return_code += '_' + code_name
+    return return_code
+
+
+def _linux_error_response(line, err):
+    # 'From <ip> icmp_seq=N <message>' or, if ping resolved the sender to a
+    # name, 'From <name> (<ip>) icmp_seq=N <message>'. With -D the line
+    # starts with '[<timestamp>] '.
+    line_list = line.split()
+    timestamp = line.startswith('[')
+    timestamp_offset = 1 if timestamp else 0
+    shift = 0
+    response_ip = line_list[timestamp_offset + 1]
+    if len(line_list) > timestamp_offset + 2 and line_list[timestamp_offset + 2].startswith('('):
+        shift = 1
+        response_ip = line_list[timestamp_offset + 2].strip('()')
+
+    return {
+        'type': err,
+        'response_ip': response_ip,
+        'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 3 + shift],
+        'timestamp': line_list[0].lstrip('[').rstrip(']') if timestamp else None
+    }
+
+
 def _bsd_reply_fields(line):
     # '<bytes> bytes from <ip>: icmp_seq=N ttl=N time=X ms' (IPv4) or
     # '<bytes> bytes from <ip>, icmp_seq=N hlim=N time=X ms' (IPv6) once ':'
@@ -472,7 +527,7 @@ def _linux_parse(data):
                 continue
 
             # normal responses
-            elif ' bytes from ' in line:
+            if ' bytes from ' in line:
                 m = _LINUX_REPLY_RE.match(line.strip())
                 if m:
                     response = {
@@ -485,12 +540,28 @@ def _linux_parse(data):
                         'time_ms': m.group('time_ms'),
                         'duplicate': 'DUP!' in m.group('rest')
                     }
-                else:
+                    ping_responses.append(response)
+                    continue
+
+            # error responses
+            err = _error_type(line) if ipv4 else _error_type_v6(line)
+            if err:
+                try:
+                    response = _linux_error_response(line, err)
+                except Exception:
                     response = {
                         'type': 'unparsable_line',
                         'unparsed_line': line
                     }
 
+                ping_responses.append(response)
+                continue
+
+            if ' bytes from ' in line:
+                response = {
+                    'type': 'unparsable_line',
+                    'unparsed_line': line
+                }
                 ping_responses.append(response)
                 continue
 
