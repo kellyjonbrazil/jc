@@ -77,6 +77,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['sha256'], 'aaaa')
         self.assertNotIn('note', result[0])
 
+    def test_pkg_index_deb_normalized_name_collision(self):
+        """
+        Test 'pkg-index-deb' where a later field name normalizes to an earlier key
+        """
+        data = 'Package: foo\nVersion: 1.0\nVersion_: 9.9\nVersion-: 8.8\nArchitecture: all\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result, [{'package': 'foo', 'version': '1.0', 'architecture': 'all'}])
+
 
 if __name__ == '__main__':
     unittest.main()
