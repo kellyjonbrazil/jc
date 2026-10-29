@@ -477,6 +477,25 @@ class MyTests(unittest.TestCase):
                 ]
                 self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
 
+    def test_asciitable_m_wide_chars_on_continuation_line(self):
+        """
+        Test 'asciitable_m' with East Asian wide characters on a continuation line of a bordered table
+        """
+        data = (
+            '\u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n'
+            '\u2503 name \u2503 desc   \u2503\n'
+            '\u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n'
+            '\u2502 a    \u2502 one    \u2502\n'
+            '\u2502      \u2502 \u65e5\u672c\u8a9e \u2502\n'
+            '\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n'
+            '\u2502 b    \u2502 two    \u2502\n'
+            '\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n'
+        )
+        self.assertEqual(
+            jc.parsers.asciitable_m.parse(data, quiet=True),
+            [{'name': 'a', 'desc': 'one\n\u65e5\u672c\u8a9e'}, {'name': 'b', 'desc': 'two'}]
+        )
+
 
 if __name__ == '__main__':
     unittest.main()
