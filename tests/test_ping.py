@@ -1211,6 +1211,23 @@ class MyTests(unittest.TestCase):
             result = jc.parsers.ping.parse(data, quiet=True)
             self.assertEqual(result, {'destination_ip': dest, 'data_bytes': data_bytes, 'pattern': None, 'responses': responses}, data)
 
+    def test_ping_line_separators_in_line(self):
+        """
+        Test 'ping' with form feed and Unicode line separator characters inside a line
+        """
+        data = ('PING host.example.com (10.0.0.1) 56(84) bytes of data.\n'
+                '64 bytes from host name (10.0.0.1): icmp_seq=1 ttl=64 time=0.040 ms\n'
+                '64 bytes from host\x0cname (10.0.0.1): icmp_seq=2 ttl=64 time=0.050 ms\n'
+                '\n--- host.example.com ping statistics ---\n'
+                '2 packets transmitted, 2 received, 0% packet loss, time 1001ms\n'
+                'rtt min/avg/max/mdev = 0.040/0.045/0.050/0.005 ms\n')
+        result = jc.parsers.ping.parse(data, quiet=True)
+        self.assertEqual(result['responses'], [
+            {'type': 'reply', 'timestamp': None, 'bytes': 64, 'response_ip': '10.0.0.1', 'icmp_seq': 1, 'ttl': 64, 'time_ms': 0.04, 'duplicate': False},
+            {'type': 'reply', 'timestamp': None, 'bytes': 64, 'response_ip': '10.0.0.1', 'icmp_seq': 2, 'ttl': 64, 'time_ms': 0.05, 'duplicate': False}
+        ])
+        self.assertEqual(result['packets_received'], 2)
+
 
 if __name__ == '__main__':
     unittest.main()

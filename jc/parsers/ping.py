@@ -398,7 +398,7 @@ def _linux_parse(data):
     pattern = None
     footer = False
 
-    linedata = data.splitlines()
+    linedata = jc.utils.splitlines(data)
 
     # check for PATTERN
     if linedata[0].startswith('PATTERN: '):
@@ -592,7 +592,7 @@ def _bsd_parse(data):
     ping_error = False
     ipv6 = False
 
-    linedata = data.splitlines()
+    linedata = jc.utils.splitlines(data)
 
     # check for PATTERN
     if linedata[0].startswith('PATTERN: '):
@@ -830,7 +830,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        lines = [line for line in data.splitlines() if line.strip()]
+        lines = [line for line in jc.utils.splitlines(data) if line.strip()]
 
         # the linux statistics line ('..., time 4149ms') is followed by the
         # rtt line, or is the last line when nothing was received. Look at the
