@@ -668,7 +668,7 @@ def parse(
     ipv6_patterns = [re_linux_ipv6, re_openbsd_ipv6, re_freebsd_ipv6]
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # Find new interface lines
             interface_match = _header_match(interface_patterns, line)

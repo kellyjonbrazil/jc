@@ -288,7 +288,7 @@ def parse(
     if jc.utils.has_data(data):
         header: Dict = {field: None for field in _header_fields}
 
-        for raw_line in data.splitlines():
+        for raw_line in jc.utils.splitlines(data):
             line = raw_line.strip()
             if not line:
                 continue

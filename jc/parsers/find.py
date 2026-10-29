@@ -59,7 +59,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`find` command parser'
     author = 'Solomon Leang'
     author_email = 'solomonleang@gmail.com'
@@ -133,7 +133,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        raw_output = data.splitlines()
+        raw_output = jc.utils.splitlines(data)
 
     if raw:
         return raw_output
