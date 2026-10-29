@@ -296,11 +296,13 @@ def _bsd_parse(line, s):
     output_line = {}
 
     if line.startswith('PING '):
+        s.ipv4 = True
         s.destination_ip = line.split()[2].lstrip('(').rstrip(':').rstrip(')')
         s.sent_bytes = line.split()[3]
         return None
 
     if line.startswith('PING6('):
+        s.ipv4 = False
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
         s.source_ip = line.split()[4]
         s.destination_ip = line.split()[6]
@@ -348,10 +350,10 @@ def _bsd_parse(line, s):
 
     # ping response lines
 
+    # ipv6 error lines. ipv4 error lines are matched below, so an ipv4
+    # 'Parameter problem: ...' is not taken for the ipv6 message.
     err = None
-    if s.ipv4:
-        err = _error_type_v4(line)
-    else:
+    if not s.ipv4:
         err = _error_type_v6(line)
 
     if err:

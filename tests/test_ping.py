@@ -1036,6 +1036,23 @@ class MyTests(unittest.TestCase):
             self.assertEqual(result['responses'][0]['response_ip'], '10.0.0.1')
             self.assertEqual(result['responses'][0]['id'], 22139)
 
+    def test_ping6_bsd_error_not_reply(self):
+        """
+        Test 'ping6' on macOS/BSD with an error line that is not a reply
+        """
+        data = ('PING6(56=40+8+8 bytes) 2001:db8::5 --> 2001:db8::9\n'
+                '72 bytes from 2001:db8::1: Destination unreachable: Address unreachable\n'
+                '16 bytes from 2001:db8::9, icmp_seq=3 hlim=64 time=0.412 ms\n'
+                '\n'
+                '--- 2001:db8::9 ping6 statistics ---\n'
+                '4 packets transmitted, 1 packets received, 75.0% packet loss\n'
+                'round-trip min/avg/max/std-dev = 0.412/0.412/0.412/0.000 ms\n')
+        expected = [
+            {'type': 'unparsable_line', 'unparsed_line': '72 bytes from 2001 db8  1  Destination unreachable  Address unreachable'},
+            {'type': 'reply', 'bytes': 16, 'response_ip': '2001:db8::9', 'icmp_seq': 3, 'ttl': 64, 'time_ms': 0.412, 'duplicate': False}
+        ]
+        self.assertEqual(jc.parsers.ping.parse(data, quiet=True)['responses'], expected)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1099,6 +1099,21 @@ class MyTests(unittest.TestCase):
             self.assertEqual(result[0]['response_ip'], '2001:db8::fe')
             self.assertEqual(result[0]['icmp_seq'], 1)
 
+    def test_ping_s_bsd_parameter_problem(self):
+        """
+        Test 'ping' on macOS/BSD with an IPv4 'Parameter problem' error message
+        """
+        data = [
+            'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+            '92 bytes from 10.0.0.1: Parameter problem: pointer = 0x14',
+            '92 bytes from 10.0.0.1: Source Quench'
+        ]
+        expected = [
+            {'type': 'parameter_problem', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'},
+            {'type': 'source_quench', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'}
+        ]
+        self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
