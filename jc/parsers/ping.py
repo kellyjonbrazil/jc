@@ -753,8 +753,7 @@ def _bsd_parse(data):
                 # normal response
                 elif ' bytes from ' in line:
                     try:
-                        line = line.replace(':', ' ').replace('=', ' ')
-                        fields = _bsd_reply_fields(line)
+                        fields = _bsd_reply_fields(line.replace(':', ' ').replace('=', ' '))
 
                         response = {
                             'type': 'reply',
@@ -776,8 +775,7 @@ def _bsd_parse(data):
             # ipv6 lines
             elif ' bytes from ' in line:
                 try:
-                    line = line.replace(',', ' ').replace('=', ' ')
-                    fields = _bsd_reply_fields(line)
+                    fields = _bsd_reply_fields(line.replace(',', ' ').replace('=', ' '))
 
                     response = {
                         'type': 'reply',

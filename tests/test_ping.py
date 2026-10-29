@@ -1075,7 +1075,7 @@ class MyTests(unittest.TestCase):
                 '4 packets transmitted, 1 packets received, 75.0% packet loss\n'
                 'round-trip min/avg/max/std-dev = 0.412/0.412/0.412/0.000 ms\n')
         expected = [
-            {'type': 'unparsable_line', 'unparsed_line': '72 bytes from 2001 db8  1  Destination unreachable  Address unreachable'},
+            {'type': 'unparsable_line', 'unparsed_line': '72 bytes from 2001:db8::1: Destination unreachable: Address unreachable'},
             {'type': 'reply', 'bytes': 16, 'response_ip': '2001:db8::9', 'icmp_seq': 3, 'ttl': 64, 'time_ms': 0.412, 'duplicate': False}
         ]
         self.assertEqual(jc.parsers.ping.parse(data, quiet=True)['responses'], expected)
@@ -1227,6 +1227,20 @@ class MyTests(unittest.TestCase):
             {'type': 'reply', 'timestamp': None, 'bytes': 64, 'response_ip': '10.0.0.1', 'icmp_seq': 2, 'ttl': 64, 'time_ms': 0.05, 'duplicate': False}
         ])
         self.assertEqual(result['packets_received'], 2)
+
+    def test_ping_bsd_unparsable_line_text(self):
+        """
+        Test 'ping' and 'ping6' on macOS/BSD where unparsable lines keep their original text
+        """
+        tests = [
+            ('PING 192.0.2.1 (192.0.2.1): 56 data bytes\n', '64 bytes from 192.0.2.1: icmp_seq=1 odd=yes: message'),
+            ('PING6(56=40+8+8 bytes) 2001:db8::5 --> 2001:db8::9\n', '16 bytes from 2001:db8::9, icmp_seq=1, odd=yes')
+        ]
+        for header, line in tests:
+            data = header + line + '\n\n--- x ping statistics ---\n1 packets transmitted, 0 packets received, 100.0% packet loss\n'
+            result = jc.parsers.ping.parse(data, quiet=True)
+            self.assertEqual(result['responses'], [{'type': 'unparsable_line', 'unparsed_line': line}], line)
+            self.assertEqual(result['packets_transmitted'], 1)
 
 
 if __name__ == '__main__':
