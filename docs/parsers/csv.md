@@ -82,7 +82,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False,
           implicit_header: bool = False,
@@ -108,4 +108,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/csv.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/csv.py)
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

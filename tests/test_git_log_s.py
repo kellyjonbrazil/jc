@@ -174,6 +174,48 @@ class MyTests(unittest.TestCase):
         generic_git_log_fuller_stat_patch_streaming_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat_bad_record = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-short-stat-bad-record-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_short_stat_bad_record_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-ambiguous-refname.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_ambiguous_refname = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-ambiguous-refname-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_ambiguous_refname_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_name_separator = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_name_separator_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-stat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_quoted_paths_stat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-stat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_quoted_paths_stat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-numstat.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_quoted_paths_numstat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-numstat-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_quoted_paths_numstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-summary-name.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_summary_name = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-summary-name-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_summary_name_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar.out'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_no_bar = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_git_log_stat_no_bar_json = json.loads(f.read())
+
     def test_git_log_s_nodata(self):
         """
         Test 'git_log' with no data
@@ -361,6 +403,67 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=fuller --stat --patch'
         """
         self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_fuller_stat_patch.splitlines(), quiet=True)), self.generic_git_log_fuller_stat_patch_streaming_json)
+
+
+    def test_git_log_s_crlf_lines(self):
+        """
+        Test git_log with CRLF line endings, split on LF or with line endings kept
+        """
+        crlf_data = self.generic_git_log.replace('\n', '\r\n')
+        self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.split('\n'), quiet=True)), self.generic_git_log_streaming_json)
+        self.assertEqual(list(jc.parsers.git_log_s.parse(crlf_data.splitlines(keepends=True), quiet=True)), self.generic_git_log_streaming_json)
+
+    def test_git_log_s_bad_record_ignore_exceptions(self):
+        """
+        Test 'git log --stat 2>&1' with a git warning line before the first
+        commit: one error record is emitted and the commits parse normally
+        """
+        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_ambiguous_refname.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_git_log_stat_ambiguous_refname_streaming_json)
+        self.assertEqual([r['_jc_meta']['success'] for r in result], [False, True, True])
+        self.assertEqual(result[0]['_jc_meta']['line'], "warning: refname 'release' is ambiguous.")
+
+    def test_git_log_s_huge_line_count(self):
+        """
+        Test 'git log --stat' with a file line count too large for a float:
+        the count is null and the commit parses normally
+        """
+        result = list(jc.parsers.git_log_s.parse(self.generic_git_log_short_stat_bad_record.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_git_log_short_stat_bad_record_streaming_json)
+        self.assertEqual(result[1]['stats']['file_stats'][0], {'name': 'docs/big.md', 'lines_changed': None})
+
+    def test_git_log_stat_name_separator_s(self):
+        """
+        Test 'git_log --stat' with file names that contain ' | ' and '|'
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_name_separator.splitlines(), quiet=True)), self.generic_git_log_stat_name_separator_json)
+
+
+    def test_git_log_quoted_paths_stat_s(self):
+        """
+        Test 'git_log --stat' with quoted file names (non-ASCII, escapes, renames)
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_quoted_paths_stat.splitlines(), quiet=True)), self.generic_git_log_quoted_paths_stat_json)
+
+    def test_git_log_quoted_paths_numstat_s(self):
+        """
+        Test 'git_log --numstat' with quoted file names (non-ASCII, escapes, renames)
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_quoted_paths_numstat.splitlines(), quiet=True)), self.generic_git_log_quoted_paths_numstat_json)
+
+
+    def test_git_log_stat_summary_name_s(self):
+        """
+        Test 'git_log --stat' with file names that contain 'changed, '
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_summary_name.splitlines(), quiet=True)), self.generic_git_log_stat_summary_name_json)
+
+
+    def test_git_log_stat_no_bar_s(self):
+        """
+        Test 'git_log --stat --summary' with lines that have no '|' separator
+        """
+        self.assertEqual(list(jc.parsers.git_log_s.parse(self.generic_git_log_stat_no_bar.splitlines(), quiet=True)), self.generic_git_log_stat_no_bar_json)
 
 
 if __name__ == '__main__':

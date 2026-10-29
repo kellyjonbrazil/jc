@@ -114,11 +114,23 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-devices.out'), 'r', encoding='utf-8') as f:
         ls_l_devices = f.read()
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.out'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-long-iso.out'), 'r', encoding='utf-8') as f:
         ls_l_long_iso = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-entry-like-dirnames.out'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-newline-structure-like-names.out'), 'r', encoding='utf-8') as f:
+        ls_l_newline_structure_like_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-entry-like-names.out'), 'r', encoding='utf-8') as f:
+        ls_entry_like_names = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-total.out'), 'r', encoding='utf-8') as f:
+        ls_l_no_total = f.read()
 
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/ls.json'), 'r', encoding='utf-8') as f:
@@ -226,12 +238,62 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/ls-l-iso.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_ls_l_iso_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-devices.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-devices.json'), 'r', encoding='utf-8') as f:
         ls_l_devices_json = json.loads(f.read())
 
-    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-l-long-iso.json'), 'r', encoding='utf-8') as f:
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-long-iso.json'), 'r', encoding='utf-8') as f:
         ls_l_long_iso_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-entry-like-dirnames.json'), 'r', encoding='utf-8') as f:
+        ls_l_entry_like_dirnames_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-newline-structure-like-names.json'), 'r', encoding='utf-8') as f:
+        ls_l_newline_structure_like_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-entry-like-names.json'), 'r', encoding='utf-8') as f:
+        ls_entry_like_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-total.json'), 'r', encoding='utf-8') as f:
+        ls_l_no_total_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-spaces.out'), 'r', encoding='utf-8') as f:
+        ls_lR_spaces = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-spaces-long-iso.out'), 'r', encoding='utf-8') as f:
+        ls_l_spaces_long_iso = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-spaces.json'), 'r', encoding='utf-8') as f:
+        ls_lR_spaces_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-spaces-long-iso.json'), 'r', encoding='utf-8') as f:
+        ls_l_spaces_long_iso_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-no-stat.out'), 'r', encoding='utf-8') as f:
+        ls_lR_no_stat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-stat-long-iso.out'), 'r', encoding='utf-8') as f:
+        ls_l_no_stat_long_iso = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-lR-no-stat.json'), 'r', encoding='utf-8') as f:
+        ls_lR_no_stat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-no-stat-long-iso.json'), 'r', encoding='utf-8') as f:
+        ls_l_no_stat_long_iso_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-arrows.out'), 'r', encoding='utf-8') as f:
+        ls_l_arrows = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ls-linux-l-arrows.json'), 'r', encoding='utf-8') as f:
+        ls_l_arrows_json = json.loads(f.read())
+
+    def test_ls_line_separators(self):
+        """
+        Test 'ls' with line-break characters other than LF in a file name
+        """
+        data = 'total 20\n-rw-r--r--.   1 root root    7 Aug 15 10:53 a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nlrwxrwxrwx.   1 root root    7 Aug 15 10:53 bin -> usr/bin\n'
+        result = jc.parsers.ls.parse(data, quiet=True)
+        self.assertEqual(result[0]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['link_to'], 'usr/bin')
 
     def test_ls_empty_dir(self):
         """
@@ -465,6 +527,138 @@ class MyTests(unittest.TestCase):
         confirm link_to parsing still works with the narrower date width.
         """
         self.assertEqual(jc.parsers.ls.parse(self.ls_l_long_iso, quiet=True), self.ls_l_long_iso_json)
+
+    def test_ls_l_entry_like_dirnames(self):
+        """
+        Test 'ls -l -- *' where some directory names look like 'ls -l'
+        entry lines or a 'total' line, and a filename ends in ':'. The
+        'name:' headers are only recognized by position (first line or
+        after a blank line, and followed by a 'total' line).
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_entry_like_dirnames, quiet=True), self.ls_l_entry_like_dirnames_json)
+
+    def test_ls_l_newline_structure_like_names(self):
+        """
+        Test 'ls -l' with filenames containing a newline followed by text
+        that looks like a 'total' line or a 'name:' header. These are
+        part of the filename, not structure lines.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_newline_structure_like_names, quiet=True), self.ls_l_newline_structure_like_names_json)
+
+    def test_ls_l_total_only(self):
+        """
+        Test 'ls -l' on an empty directory (only a 'total 0' line)
+        """
+        self.assertEqual(jc.parsers.ls.parse('total 0\n', quiet=True), [])
+
+    def test_ls_entry_like_names(self):
+        """
+        Test plain 'ls' where the first filenames look like 'ls -l' entry
+        lines. The output has no 'total' line and not every line looks
+        like an 'ls -l' entry, so it is parsed as plain 'ls' output.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_entry_like_names, quiet=True), self.ls_entry_like_names_json)
+
+    def test_ls_entry_like_permission_name(self):
+        """
+        Test plain 'ls' where the first filename is only a permission string
+        """
+        self.assertEqual(jc.parsers.ls.parse('----------\nbin\netc\n', quiet=True), [{'filename': '----------'}, {'filename': 'bin'}, {'filename': 'etc'}])
+
+    def test_ls_l_no_total(self):
+        """
+        Test 'ls -l file1 file2 dir' which has no leading 'total' line.
+        Every entry looks like an 'ls -l' entry, so it is parsed as
+        'ls -l' output. Includes a filename that looks like an entry line.
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_no_total, quiet=True), self.ls_l_no_total_json)
+
+    def test_ls_l_filename_with_newlines_sections(self):
+        """
+        Test 'ls -l' filenames with newlines across multiple sections
+        """
+        data = '/dir:\ntotal 8\n-rw-r--r-- 1 u g 0 Jan  1 10:00 a\nb\nc\n-rw-r--r-- 1 u g 0 Jan  1 10:00 d\n\n/dir2:\ntotal 0\n-rw-r--r-- 1 u g 0 Jan  1 10:00 e\nf\n'
+        result = jc.parsers.ls.parse(data, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['a\nb\nc', 'd', 'e\nf'])
+        self.assertEqual([r['parent'] for r in result], ['/dir', '/dir', '/dir2'])
+
+    def test_ls_lR_empty_folders_osx_layout(self):
+        """
+        Test macOS 'ls -lR' layout with several empty directories in a row (no 'total' lines)
+        """
+        data = 'total 8\ndrwxr-xr-x  2 u  staff   64 Jan  3 14:46 a\ndrwxr-xr-x  2 u  staff   64 Jan  3 14:46 b\n-rw-r--r--  1 u  staff  400 Jan  3 14:46 id_rsa.pub\n\n./a:\n\n./b:\n\n./c:\ntotal 8\n-rw-r--r--  1 u  staff  12 Jan  3 14:46 notes\nmore\n\n./d:\n'
+        result = jc.parsers.ls.parse(data, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['a', 'b', 'id_rsa.pub', 'notes\nmore'])
+        self.assertEqual([r.get('parent') for r in result], [None, None, None, './c'])
+
+    def test_ls_lR_spaces(self):
+        """
+        Test 'ls -lR' with filenames and a directory name that start or end with whitespace
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_lR_spaces, quiet=True), self.ls_lR_spaces_json)
+
+    def test_ls_lR_spaces_names(self):
+        """
+        Test that leading, trailing, repeated, and whitespace-only filenames are kept as printed
+        """
+        result = jc.parsers.ls.parse(self.ls_lR_spaces, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['  ', ' lead', ' sub ', 'co:lon', 'plain', 'trail ', 'two  sp', '\xa0nbsp', '\xfcn\xef', 'x '])
+        self.assertEqual(result[-1]['parent'], './ sub ')
+        self.assertEqual(result[0]['date'], 'Oct 1 12:00')
+
+    def test_ls_l_spaces_long_iso(self):
+        """
+        Test 'ls -l --time-style=long-iso' with filenames that start or end with whitespace
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_spaces_long_iso, quiet=True), self.ls_l_spaces_long_iso_json)
+
+    def test_ls_l_device_leading_space(self):
+        """
+        Test a device entry whose filename starts with a space
+        """
+        result = jc.parsers.ls.parse('crw-rw-rw- 1 root root 1, 3 Sep 16 08:00  null\n', quiet=True)
+        self.assertEqual(result, [{'filename': ' null', 'flags': 'crw-rw-rw-', 'links': 1, 'owner': 'root', 'group': 'root', 'major_number': 1, 'minor_number': 3, 'date': 'Sep 16 08:00'}])
+
+    def test_ls_lR_no_stat(self):
+        """
+        Test 'ls -lR' with entries in a directory that can be read but not searched
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_lR_no_stat, quiet=True), self.ls_lR_no_stat_json)
+
+    def test_ls_lR_no_stat_names(self):
+        """
+        Test that entries ls cannot stat are separate entries with null fields
+        """
+        result = jc.parsers.ls.parse(self.ls_lR_no_stat, raw=True, quiet=True)
+        self.assertEqual([(r['parent'], r['filename']) for r in result], [('.', 'locked'), ('.', 'open'), ('./locked', 'afile'), ('./locked', 'alink'), ('./locked', 'fifo'), ('./locked', 'sub'), ('./locked', 'two  sp'), ('./open', 'zfile')])
+        self.assertEqual(result[3], {'filename': 'alink', 'parent': './locked', 'flags': 'l?????????', 'links': None, 'owner': None, 'group': None, 'size': None, 'date': None})
+
+    def test_ls_l_no_stat_long_iso(self):
+        """
+        Test 'ls -l --time-style=long-iso' where the first entries cannot be stat'ed
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_no_stat_long_iso, quiet=True), self.ls_l_no_stat_long_iso_json)
+
+    def test_ls_l_no_stat_device(self):
+        """
+        Test a character device entry that cannot be stat'ed
+        """
+        result = jc.parsers.ls.parse('c????????? ? ? ? ?            ? tty0\n', quiet=True)
+        self.assertEqual(result, [{'filename': 'tty0', 'flags': 'c?????????', 'links': None, 'owner': None, 'group': None, 'size': None, 'date': None}])
+
+    def test_ls_l_arrows(self):
+        """
+        Test 'ls -l' with ' -> ' in the names of files, directories, and symbolic links
+        """
+        self.assertEqual(jc.parsers.ls.parse(self.ls_l_arrows, quiet=True), self.ls_l_arrows_json)
+
+    def test_ls_l_arrows_link_to(self):
+        """
+        Test that only symbolic links get link_to, split at the first ' -> '
+        """
+        result = jc.parsers.ls.parse(self.ls_l_arrows, raw=True, quiet=True)
+        self.assertEqual([(r['filename'], r.get('link_to')) for r in result], [('arrowtarget', 'a -> b'), ('deploy.key', None), ('deploy.key -> old', None), ('dir -> y', None), ('lnk', 'x -> target'), ('normallnk', 'tgt')])
+        self.assertEqual(result[2]['flags'], '-rw-r--r--.')
 
 
 if __name__ == '__main__':

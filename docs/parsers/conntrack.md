@@ -80,7 +80,8 @@ Schema:
         "stop":              string,        # [14]
         "stop_epoch":        integer,       # [14]
         "id":                integer,       # [15]
-        "portid":            integer        # [16]
+        "portid":            integer,       # [16]
+        "progname":          string         # [16]
       }
     ]
 
@@ -164,4 +165,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/conntrack.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/conntrack.py)
 
-Version 1.0 by Tung Lam (53996158+tunglambk@users.noreply.github.com)
+Version 1.1 by Tung Lam (53996158+tunglambk@users.noreply.github.com)

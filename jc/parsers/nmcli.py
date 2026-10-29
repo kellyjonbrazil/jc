@@ -160,6 +160,7 @@ Examples:
     ]
 """
 import re
+import math
 import json
 from typing import List, Dict, Optional
 import jc.utils
@@ -169,7 +170,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`nmcli` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -179,6 +180,14 @@ class info():
 
 
 __version__ = info.version
+
+
+def _finite_float(value: str) -> float:
+    """float() that raises ValueError for inf and nan, so the text is kept"""
+    float_value = float(value)
+    if not math.isfinite(float_value):
+        raise ValueError('not a finite number')
+    return float_value
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -199,7 +208,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             # use normal int/float conversions since jc.utils.convert_to_int is too greedy
             try:
                 if '.' in entry[key]:
-                    entry[key] = float(entry[key])
+                    entry[key] = _finite_float(entry[key])
                 else:
                     entry[key] = int(entry[key])
             except Exception:
@@ -209,7 +218,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 for k in entry[key]:
                     try:
                         if '.' in entry[key][k]:
-                            entry[key][k] = float(entry[key][k])
+                            entry[key][k] = _finite_float(entry[key][k])
                         else:
                             entry[key][k] = int(entry[key][k])
                     except Exception:
@@ -232,8 +241,10 @@ def _normalize_value(value: str) -> Optional[str]:
     if value == '--':
         return None
 
-    if value.startswith('"') and value.endswith('"'):
-        value = value.strip('"')
+    # nmcli prints an empty string value as "". Other quote characters are
+    # part of the value (e.g. a connection named with quotes).
+    if value == '""':
+        return ''
 
     return value
 
@@ -267,7 +278,8 @@ def _remove_text_from_value(value: Optional[str]) -> Optional[str]:
     summary k/v pair are added.
     """
     if value:
-        return re.sub(r"\s+\((\w+)\)$", '', value)
+        # start only at the first blank of a run so a long run is scanned once
+        return re.sub(r"(?<!\s)\s+\((\w+)\)$", '', value)
 
     return None
 
@@ -278,7 +290,7 @@ def _split_routes(value: str) -> Dict:
     output_dict = {}
     val_list = value.split(',')
     for val in val_list:
-        k, v = val.split('=')
+        k, v = val.split('=', maxsplit=1)
         output_dict[k.strip()] = v.strip()
 
     return output_dict
@@ -288,7 +300,7 @@ def _split_options(value: str) -> Dict:
     # ip_address = 192.168.71.180
     # requested_broadcast_address = 1
     output_dict = {}
-    k, v = value.split('=')
+    k, v = value.split('=', maxsplit=1)
     output_dict['name'] = k.strip()
     output_dict['value'] = v.strip()
 
@@ -349,7 +361,7 @@ def _is_wifi_list_line(line: str) -> bool:
 def _wifi_list_parse(data: str) -> List[Dict]:
     raw_output = []
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         values = _split_terse_line(line)
         if len(values) != len(_WIFI_HEADERS):
             raise ParseError(
@@ -369,7 +381,7 @@ def _device_show_parse(data: str) -> List[Dict]:
     item: Dict = {}
     current_item = ''
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         key, value = line.split(':', maxsplit=1)
         key_n = _normalize_key(key)
         value_n = _normalize_value(value)
@@ -405,7 +417,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
     in_team_config: bool = False
     team_config_value: List = []
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
 
         # fix for team.config and team-port.config, which are multi-line JSON
         if line.startswith('team.config:') or line.startswith('team-port.config:'):
@@ -461,7 +473,7 @@ def _connection_show_x_parse(data: str) -> List[Dict]:
 def _general_permissions_parse(data: str) -> List[Dict]:
     raw_output = []
     output_dict = {}
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         key, value = line.split()
         key_n = _normalize_key(key)
         output_dict[key_n] = value
@@ -473,7 +485,7 @@ def _general_permissions_parse(data: str) -> List[Dict]:
 
 
 def _table_parse(data: str) -> List[Dict]:
-    data_list = list(filter(None, data.splitlines()))
+    data_list = list(filter(None, jc.utils.splitlines(data)))
     data_list[0] = _normalize_header(data_list[0])
     raw_output = sparse_table_parse(data_list)
 
@@ -509,7 +521,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        data_lines = data.splitlines()
+        data_lines = jc.utils.splitlines(data)
         first_line = next(line for line in data_lines if line.strip())
 
         # nmcli -t device wifi list

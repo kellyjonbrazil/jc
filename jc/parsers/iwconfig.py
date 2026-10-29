@@ -79,13 +79,13 @@ Examples:
     ]
 """
 import re
-from typing import List, Dict
+from typing import List, Dict, Optional, Tuple
 from jc.jc_types import JSONDictType
 import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`iwconfig` command parser'
     author = 'Thomas Vincent'
     author_email = 'vrince@gmail.com'
@@ -123,6 +123,61 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
+# first line of an interface: unindented name, then the protocol name
+_INTERFACE_RE = re.compile(r'(?P<name>\S+)\s+(?P<rest>\S.*)')
+
+# the ESSID text is not limited to certain characters, so it ends at the
+# quote followed by an optional [index], then a Nickname field or the end
+_ESSID_RE = re.compile(r'ESSID:"(?P<essid>.*?)"(?: \[[0-9]+\])?\s*(?:Nickname:"|$)')
+
+
+def _parse_interface_line(line: str) -> Optional[Tuple[Optional[Dict], str]]:
+    """
+    Return (interface dict, remaining text) for an interface start line,
+    (None, '') for a 'no wireless extensions' line, or None otherwise.
+    """
+    if line[0].isspace():
+        return None
+
+    match = _INTERFACE_RE.match(line)
+    if not match:
+        return None
+
+    name = match.group('name')
+    rest = match.group('rest')
+
+    if rest.startswith('no wireless extensions'):
+        return None, ''
+
+    # the protocol is the words before the first field (e.g. ESSID:,
+    # Mode:, Tx-Power=)
+    words = rest.split(' ')
+    protocol_words: List[str] = []
+    fields = ''
+    for i, word in enumerate(words):
+        if ':' in word or '=' in word:
+            fields = ' '.join(words[i:])
+            break
+        protocol_words.append(word)
+
+    protocol = ' '.join(protocol_words).strip()
+
+    if not protocol or not fields:
+        return None
+
+    interface: Dict = {'name': name, 'protocol': protocol}
+
+    if fields.startswith('ESSID:') or fields.startswith('Nickname:'):
+        essid_match = _ESSID_RE.match(fields)
+        if essid_match:
+            interface['essid'] = essid_match.group('essid')
+
+        # the rest of this line is ESSID and Nickname text
+        return interface, ''
+
+    return interface, fields
+
+
 def parse(
     data: str,
     raw: bool = False,
@@ -146,7 +201,6 @@ def parse(
 
     raw_output: List[Dict] = []
 
-    re_interface = re.compile(r'^(?P<name>[a-zA-Z0-9:._\-]+)\s+(?P<protocol>([a-zA-Z0-9]+\s)*[a-zA-Z0-9.]+)\s+ESSID:\"(?P<essid>[a-zA-Z0-9:._\s\-^!#%&\'()*,/:;<>@`{|}~]+)\"')
     re_mode = re.compile(r'Mode:(?P<mode>\w+)')
     re_frequency = re.compile(r'Frequency:(?P<frequency>[0-9.]+)\s(?P<frequency_unit>\w+)')
     re_access_point = re.compile(r'Access Point:\s*(?P<access_point>[0-9A-F:]+)')
@@ -174,17 +228,19 @@ def parse(
 
     interface_item = None
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # Find new interface lines
-            interface_match = re.search(re_interface, line)
-            if interface_match:
+            interface_line = _parse_interface_line(line)
+            if interface_line is not None:
                 if interface_item is not None:
                     raw_output.append(interface_item)
 
-                interface_item = dict()
-                interface_item.update(interface_match.groupdict())
-                continue
+                interface_item, line = interface_line
+
+                # nothing else to read on this line
+                if interface_item is None or not line:
+                    continue
 
             # we do not have any interface yet continue to search for it --> next line
             if interface_item is None:

@@ -117,13 +117,14 @@ Examples:
 """
 from typing import List, Dict
 import re
+import math
 import jc.utils
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'CEF string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,6 +134,10 @@ class info():
 
 
 __version__ = info.version
+
+
+# a backslash and the character after it
+_escape_re = re.compile(r'\\.', re.DOTALL)
 
 
 ############################################################################
@@ -172,7 +177,9 @@ def _pycef_parse(str_input):
     # This regex separates the string into the CEF header and the extension
     # data.  Once we do this, it's easier to use other regexes to parse each
     # part.
-    header_re = r'((CEF:\d+)([^=\\]+\|){,7})(.*)'
+    # Header fields can contain '=' (only '|' and '\\' are escaped in the
+    # header) so the extension starts after the 7th unescaped '|'.
+    header_re = r'((CEF:\d+)\|((?:\\.|[^|\\])*\|){,6})(.*)'
 
     res = re.search(header_re, str_input)
 
@@ -180,10 +187,10 @@ def _pycef_parse(str_input):
         header = res.group(1)
         extension = res.group(4)
 
-        # Split the header on the "|" char.  Uses a negative lookbehind
-        # assertion to ensure we don't accidentally split on escaped chars,
-        # though.
-        spl = re.split(r'(?<!\\)\|', header)
+        # Split the header on the "|" char, skipping escaped chars (including
+        # an escaped backslash right before the delimiter). The trailing empty
+        # item represents what follows the final '|' delimiter.
+        spl = re.findall(r'((?:\\.|[^|\\])*)\|', header) + ['']
 
         # If the input entry had any blanks in the required headers, that's wrong
         # and we should return.  Note we explicitly don't check the last item in the
@@ -215,11 +222,20 @@ def _pycef_parse(str_input):
         # The ugly, gnarly regex here finds a single key=value pair,
         # taking into account multiple whitespaces, escaped '=' and '|'
         # chars.  It returns an iterator of tuples.
-        spl = re.findall(r'([^=\s]+)=((?:[\\]=|[^=])+)(?:\s|$)', extension)
+        #
+        # Keys can only start at a token boundary and runs of escaped '='
+        # are consumed in one pass so long tokens are not rescanned.
+        # Empty values are skipped below.
+        spl = re.findall(
+            r'(?:^|(?<=[\s=]))([^=\s]+)='
+            r'(?:((?:[\\]=|[^=])+)(?:\s|$)|(?:[^=\s]*[\\]=)*)',
+            extension
+        )
 
         for i in spl:
             # Split the tuples and put them into the dictionary
-            values[i[0]] = i[1]
+            if i[1]:
+                values[i[0]] = i[1]
 
     else:
         raise ParseError('Could not parse record. Is it valid CEF format?')
@@ -227,6 +243,15 @@ def _pycef_parse(str_input):
     return values
 
 ############################################################################
+
+
+def _unescape(string: str, escape_map: Dict[str, str]) -> str:
+    """
+    Decode escape sequences in one left-to-right pass so the backslash
+    from an escaped backslash does not start another escape sequence.
+    Unknown escape sequences are left as-is.
+    """
+    return _escape_re.sub(lambda m: escape_map.get(m.group(), m.group()), string)
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -306,7 +331,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
             if key in extended_floats:
                 try:
-                    item[key] = float(value)
+                    float_value = float(value)
+                    # keep the text of inf and nan, which JSON cannot represent
+                    if math.isfinite(float_value):
+                        item[key] = float_value
                 except Exception:
                     pass
 
@@ -323,10 +351,15 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
         # Process custom field labels (adapted from pycef library)
         cleanup_list = []
         custom_fields = list(item.keys())
+        field_pos = {k: i for i, k in enumerate(custom_fields)}
         for key in custom_fields:
             if key.endswith('Label'):
                 customlabel = key[:-5]
-                for customfield in custom_fields:
+                # look up the related fields directly, keeping original key order
+                related = [f for f in (customlabel, customlabel + '_epoch', customlabel + '_epoch_utc')
+                           if f in field_pos]
+                related.sort(key=field_pos.get)
+                for customfield in related:
                     new_name = item[key]
                     # check for normal custom fields
                     if customfield == customlabel:
@@ -354,8 +387,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 item[key] = value.strip()
 
                 # fixup escaped characters
-                for esc, esc_sub in escape_map.items():
-                    item[key] = item[key].replace(esc, esc_sub)
+                item[key] = _unescape(item[key], escape_map)
 
             # normalize keynames
             new_key = key.strip()
@@ -410,7 +442,7 @@ def parse(
     raw_output: List = []
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             try:
                 raw_output.append(_pycef_parse(line))
             except Exception:

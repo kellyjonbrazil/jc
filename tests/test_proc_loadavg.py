@@ -39,6 +39,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_loadavg.parse(self.f_in['proc_loadavg'], quiet=True),
                                                        self.f_json['proc_loadavg'])
 
+    def test_proc_loadavg_non_finite(self):
+        """
+        Test '/proc/loadavg' with load values of nan, inf and 1e999: they are null
+        """
+        data = 'nan inf 1e999 1/100 1234\n'
+        expected = {'load_1m': None, 'load_5m': None, 'load_15m': None, 'running': 1, 'available': 100, 'last_pid': 1234}
+        self.assertEqual(jc.parsers.proc_loadavg.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

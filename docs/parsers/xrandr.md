@@ -219,4 +219,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/xrandr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/xrandr.py)
 
-Version 2.1 by Kevin Lyter (code (at) lyterk.com)
+Version 2.2 by Kevin Lyter (code (at) lyterk.com)

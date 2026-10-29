@@ -16,6 +16,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/airport-I.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_airport_I_json = json.loads(f.read())
 
+    def test_airport_line_separators(self):
+        """
+        Test 'airport -I' with line-break characters other than LF in an SSID
+        """
+        data = '     agrCtlRSSI: -66\n          BSSID: 3c:37:86:15:ad:f9\n           SSID: Xa\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n            MCS: 0\n'
+        result = jc.parsers.airport.parse(data, quiet=True)
+        self.assertEqual(result['ssid'], 'Xa\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['mcs'], 0)
+
     def test_airport_I_nodata(self):
         """
         Test 'airport -I' with no data

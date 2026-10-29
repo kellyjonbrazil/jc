@@ -50,5 +50,46 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.hosts.parse(self.ubuntu_18_4_hosts, quiet=True), self.ubuntu_18_4_hosts_json)
 
 
+    def test_hosts_line_separator(self):
+        """
+        Test 'hosts' with a line-break character other than LF inside a field
+        """
+        data = '203.0.113.66\tmirror.example.net\x0c10.0.0.5\tupdates.example.com\n'
+        result = jc.parsers.hosts.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['ip'], '203.0.113.66')
+        self.assertEqual(result[0]['hostname'], ['mirror.example.net', '10.0.0.5', 'updates.example.com'])
+
+    def test_hosts_cr_line_endings(self):
+        """
+        Test 'hosts' with CR-only line endings
+        """
+        data = '127.0.0.1\tlocalhost\r10.0.0.1\thost1 h1\r'
+        expected = [{'ip': '127.0.0.1', 'hostname': ['localhost']}, {'ip': '10.0.0.1', 'hostname': ['host1', 'h1']}]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
+
+    def test_hosts_other_whitespace_in_field(self):
+        """
+        Test 'hosts' splits fields on ASCII whitespace only
+        """
+        data = '10.0.0.5\xa0vault.example.com\n0.0.0.0 ads.example.net\xa0tracker.example.net\n'
+        expected = [{'ip': '10.0.0.5\xa0vault.example.com', 'hostname': []}, {'ip': '0.0.0.0', 'hostname': ['ads.example.net\xa0tracker.example.net']}]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
+    def test_hosts_comment_inside_word(self):
+        """
+        Test 'hosts' cuts each line at the first '#' even when it is in the middle of a word
+        """
+        data = '127.0.0.1 localhost#c\n10.0.0.2#x host2\n10.0.0.3 a b#c d\n10.0.0.4\tvault\t# note\n'
+        expected = [
+            {'ip': '127.0.0.1', 'hostname': ['localhost']},
+            {'ip': '10.0.0.2', 'hostname': []},
+            {'ip': '10.0.0.3', 'hostname': ['a', 'b']},
+            {'ip': '10.0.0.4', 'hostname': ['vault']}
+        ]
+        self.assertEqual(jc.parsers.hosts.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

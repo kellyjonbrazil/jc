@@ -78,6 +78,25 @@ class MyTests(unittest.TestCase):
             self.f_json['resolve_conf_4']
         )
 
+    def test_resolve_conf_empty_comment_and_bare_keywords(self):
+        """
+        Test 'resolve_conf' with empty inline comments and keywords without values
+        """
+        data = (
+            'nameserver 1.2.3.4 #\n'
+            'nameserver\n'
+            'domain\n'
+            'search\n'
+            'search a.example b.example ; comment\n'
+            '# nameserver 9.9.9.9\n'
+            ';options debug\n'
+            'nameserver 5.6.7.8\n'
+        )
+        self.assertEqual(
+            parse(data, quiet=True),
+            {'search': ['a.example', 'b.example'], 'nameservers': ['1.2.3.4', '5.6.7.8']}
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

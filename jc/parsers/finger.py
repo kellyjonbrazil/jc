@@ -92,7 +92,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`finger` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -179,7 +179,7 @@ def parse(data, raw=False, quiet=False):
         # unviversal.sparse_table_parse function. All data after that spot can
         # be run through regex to find the login datetime and possibly other fields.
 
-        data_lines = list(filter(None, data.splitlines()))
+        data_lines = list(filter(None, jc.utils.splitlines(data)))
         sep_col = data_lines[0].find('Idle') + 4
         first_half = []
         second_half = []

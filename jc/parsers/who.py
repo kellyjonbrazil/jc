@@ -137,7 +137,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`who` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -195,7 +195,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
 
@@ -258,7 +258,7 @@ def parse(data, raw=False, quiet=False):
             # some output contains process name between the username and pts
             # pull the process name for use later if we can find it
             user_process = None
-            if re.match(r'^\S+\s+[^ +-]+\s+pts\/\d+\s', line):
+            if re.match(r'^\S+\s+[^\s+-]+\s+pts\/\d+\s', line):
                 user_process = linedata.pop(1)
 
             # user logins

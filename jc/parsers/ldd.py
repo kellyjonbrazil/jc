@@ -119,7 +119,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ldd` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -130,13 +130,59 @@ class info():
 
 __version__ = info.version
 
-_ARROW_LINE = re.compile(r'^(?P<name>\S+)\s*=>\s*(?P<rest>.+)$')
-_PATH_AND_ADDRESS = re.compile(r'^(?P<path>\S+)\s*\((?P<address>0x[0-9a-fA-F]+)\)$')
-_NAME_AND_ADDRESS = re.compile(r'^(?P<name>\S+)\s*\((?P<address>0x[0-9a-fA-F]+)\)$')
+_ADDRESS = re.compile(r'0x[0-9a-fA-F]+')
 _VERSION_INFO_HEADER = 'Version information:'
-_VERSION_OBJECT = re.compile(r'^(?P<obj>\S+):$')
-_VERSION_REQUIREMENT = re.compile(r'^(?P<name>\S+)\s*\((?P<version>[^)]+)\)\s*=>\s*(?P<path>\S+)$')
-_FILE_HEADER = re.compile(r'^(?P<file>\S+):$')
+_VERSION_OBJECT = re.compile(r'^(?P<obj>.+):$')
+_FILE_HEADER = re.compile(r'^(?P<file>.+):$')
+
+
+def _split_address(text):
+    """
+    Split `<text> (0x...)` into the text and the address. Returns None if
+    `text` does not end with a parenthesized hex address or has nothing in
+    front of it. The text may contain spaces. Only string methods are used
+    so the cost is linear in the length of the line.
+    """
+    if not text.endswith(')'):
+        return None
+
+    idx = text.rfind('(')
+    if idx < 1:
+        return None
+
+    address = text[idx + 1:-1]
+    head = text[:idx].rstrip()
+    if not head or not _ADDRESS.fullmatch(address):
+        return None
+
+    return head, address
+
+
+def _split_requirement(text):
+    """
+    Split `<name> (<version>) => <path>` into name, version and path. The
+    name and path may contain spaces. Returns None if the line is not a
+    requirement.
+    """
+    left, arrow, path = text.partition('=>')
+    left = left.rstrip()
+    path = path.strip()
+
+    # a `not found` requirement has no path to report and is skipped, as
+    # it was when the path had to be a single token
+    if not arrow or not path or path == 'not found' or not left.endswith(')'):
+        return None
+
+    idx = left.rfind('(')
+    if idx < 1 or not left[idx - 1].isspace():
+        return None
+
+    name = left[:idx].rstrip()
+    version = left[idx + 1:-1]
+    if not name or not version or ')' in version:
+        return None
+
+    return name, version, path
 
 
 def _process(proc_data):
@@ -185,7 +231,7 @@ def parse(data, raw=False, quiet=False):
         return current_file
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             stripped = line.strip()
 
             if not stripped:
@@ -219,39 +265,39 @@ def parse(data, raw=False, quiet=False):
                     continue
 
                 if current_object is not None:
-                    requirement_match = _VERSION_REQUIREMENT.match(stripped)
-                    if requirement_match:
+                    requirement = _split_requirement(stripped)
+                    if requirement:
                         current_object['requires'].append({
-                            'name': requirement_match.group('name'),
-                            'version': requirement_match.group('version'),
-                            'path': requirement_match.group('path'),
+                            'name': requirement[0],
+                            'version': requirement[1],
+                            'path': requirement[2],
                         })
                 continue
 
-            arrow_match = _ARROW_LINE.match(stripped)
-            if arrow_match:
-                name = arrow_match.group('name')
-                rest = arrow_match.group('rest').strip()
+            name, arrow, rest = stripped.partition('=>')
+            name = name.rstrip()
+            if arrow and name:
+                rest = rest.strip()
 
                 if rest == 'not found':
                     ensure_current_file()['dependencies'].append({'name': name, 'path': None, 'address': None})
                     continue
 
-                path_match = _PATH_AND_ADDRESS.match(rest)
+                path_match = _split_address(rest)
                 if path_match:
                     ensure_current_file()['dependencies'].append({
                         'name': name,
-                        'path': path_match.group('path'),
-                        'address': path_match.group('address'),
+                        'path': path_match[0],
+                        'address': path_match[1],
                     })
                 continue
 
-            name_match = _NAME_AND_ADDRESS.match(stripped)
+            name_match = _split_address(stripped)
             if name_match:
                 ensure_current_file()['dependencies'].append({
-                    'name': name_match.group('name'),
+                    'name': name_match[0],
                     'path': None,
-                    'address': name_match.group('address'),
+                    'address': name_match[1],
                 })
 
     return raw_output if raw else _process(raw_output)

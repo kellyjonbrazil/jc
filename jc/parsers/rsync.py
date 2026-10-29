@@ -155,7 +155,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`rsync` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -356,6 +356,9 @@ def parse(
 
     file_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][u.+ ?][a.+ ?][x.+ ?]) (?P<name>.+)')
     file_line_log_mac_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+(?P<meta>[<>ch.*][fdlDS][c.+ ?][s.+ ?][t.+ ?][p.+ ?][o.+ ?][g.+ ?][x.+ ?]) (?P<name>.+)')
+    # a "*" in the first position means the rest of the 11 character itemized
+    # area is a message instead of attribute flags (e.g. "*deleting  ")
+    message_line_re = re.compile(r'(?:(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+)?(?P<meta>\*[a-z][a-z ]{9}) (?P<name>.+)')
     stat_line_log_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)\]\s+sent\s+(?P<sent>[\d,]+)\s+bytes\s+received\s+(?P<received>[\d,]+)\s+bytes\s+total\s+size\s+(?P<total_size>[\d,]+)')
 
     stat1_line_log_v_re = re.compile(r'(?P<date>\d\d\d\d/\d\d/\d\d)\s+(?P<time>\d\d:\d\d:\d\d)\s+\[(?P<process>\d+)]\s+total:\s+matches=(?P<matches>[\d,]+)\s+hash_hits=(?P<hash_hits>[\d,]+)\s+false_alarms=(?P<false_alarms>[\d,]+)\s+data=(?P<data>[\d,]+)')
@@ -374,7 +377,7 @@ def parse(
     stat_ex_file_list_transfer_time_re = re.compile(r'File\slist\stransfer\stime:\s(?P<file_list_transfer_time>[,.0123456789]+\S?)\sseconds$')
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             file_line = file_line_re.match(line)
             if file_line:
@@ -484,6 +487,42 @@ def parse(
                 rsync_run['files'].append(output_line)
                 continue
 
+            message_line = message_line_re.match(line)
+            if message_line:
+                process = message_line.group('process')
+                output_line = {
+                    'filename': message_line.group('name')
+                }
+
+                # log file lines have a date, time, and process prefix
+                if process:
+                    if process != last_process:
+                        raw_output.append(rsync_run)
+                        rsync_run = deepcopy(rsync_run_new)
+                        last_process = process
+
+                    output_line.update({
+                        'date': message_line.group('date'),
+                        'time': message_line.group('time'),
+                        'process': process
+                    })
+
+                output_line.update({
+                    'metadata': message_line.group('meta').rstrip(),
+                    'update_type': update_type['*'],
+                    'file_type': None,
+                    'checksum_or_value_different': None,
+                    'size_different': None,
+                    'modification_time_different': None,
+                    'permissions_different': None,
+                    'owner_different': None,
+                    'group_different': None,
+                    'acl_different': None,
+                    'extended_attribute_different': None
+                })
+                rsync_run['files'].append(output_line)
+                continue
+
             stat1_line = stat1_line_re.match(line)
             if stat1_line:
                 rsync_run['summary'].update({
@@ -516,6 +555,12 @@ def parse(
 
             stat_line_log = stat_line_log_re.match(line)
             if stat_line_log:
+                # a new process id without file lines is a new run
+                if stat_line_log.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat_line_log.group('process')
+
                 rsync_run['summary'].update({
                     'date': stat_line_log.group('date'),
                     'time': stat_line_log.group('time'),
@@ -528,6 +573,11 @@ def parse(
 
             stat1_line_log_v = stat1_line_log_v_re.match(line)
             if stat1_line_log_v:
+                if stat1_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat1_line_log_v.group('process')
+
                 rsync_run['summary'].update({
                     'date': stat1_line_log_v.group('date'),
                     'time': stat1_line_log_v.group('time'),
@@ -541,6 +591,11 @@ def parse(
 
             stat2_line_log_v = stat2_line_log_v_re.match(line)
             if stat2_line_log_v:
+                if stat2_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat2_line_log_v.group('process')
+
                 rsync_run['summary']['sent'] = stat2_line_log_v.group('sent')
                 rsync_run['summary']['received'] = stat2_line_log_v.group('received')
                 rsync_run['summary']['bytes_sec'] = stat2_line_log_v.group('bytes_sec')
@@ -548,6 +603,11 @@ def parse(
 
             stat3_line_log_v = stat3_line_log_v_re.match(line)
             if stat3_line_log_v:
+                if stat3_line_log_v.group('process') != last_process:
+                    raw_output.append(rsync_run)
+                    rsync_run = deepcopy(rsync_run_new)
+                    last_process = stat3_line_log_v.group('process')
+
                 rsync_run['summary']['total_size'] = stat3_line_log_v.group('total_size')
                 rsync_run['summary']['speedup'] = stat3_line_log_v.group('speedup')
                 continue

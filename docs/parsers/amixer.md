@@ -114,4 +114,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/amixer.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/amixer.py)
 
-Version 1.0 by Eden Refael (edenraf@hotmail.com)
+Version 1.1 by Eden Refael (edenraf@hotmail.com)

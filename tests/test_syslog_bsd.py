@@ -30,5 +30,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.syslog_bsd.parse(self.syslog, quiet=True), self.syslog_json)
 
 
+    def test_syslog_bsd_line_separator(self):
+        """
+        Test 'syslog_bsd' with a line-break character other than LF inside a field
+        """
+        data = 'Jan  1 00:00:00 web01 webapp: user bob\u2028Jan  1 00:00:00 dc01 sshd[4242]: Accepted password for root\n'
+        result = jc.parsers.syslog_bsd.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['content'], 'user bob\u2028Jan  1 00:00:00 dc01 sshd[4242]: Accepted password for root')
+
+
 if __name__ == '__main__':
     unittest.main()

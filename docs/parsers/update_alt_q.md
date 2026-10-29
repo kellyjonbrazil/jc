@@ -156,4 +156,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/update_alt_q.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/update_alt_q.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

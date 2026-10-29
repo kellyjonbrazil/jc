@@ -132,4 +132,4 @@ Source: [`jc/parsers/id.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)

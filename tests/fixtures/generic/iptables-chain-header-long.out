@@ -1,0 +1,17 @@
+Chain INPUT (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets, (policy DROP 0 packets,
+ pkts bytes target     prot opt in     out     source               destination         
+ 4175 1130K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+ 2383  204K INPUT_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 2383  204K INPUT_ZONES_SOURCE  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+ 2383  204K INPUT_ZONES  all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+ 2382  204K REJECT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            reject-with icmp-host-prohibited
+Chain FORWARD (policy DROP 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate INVALID
+
+Chain OUTPUT (policy ACCEPT 3954 packets, 1182K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+ 3954 1182K OUTPUT_direct  all  --  *      *       0.0.0.0/0            0.0.0.0/0           

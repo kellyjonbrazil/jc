@@ -73,10 +73,16 @@ Examples:
 import re
 import jc.utils
 
+_BSD_LINE_RE = re.compile(r'(?![0-9a-fA-F]+ )([\w-]+) \((.*)\) = ([0-9a-fA-F]+)[ \t]*\Z')
+
+# GNU coreutils and Perl shasum start the line with a backslash when the file
+# name contains a backslash, newline or carriage return and escape them
+_FILENAME_ESCAPES = {'\\': '\\', 'n': '\n', 'r': '\r'}
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = 'hashsum command parser (`md5sum`, `shasum`, etc.)'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -139,9 +145,21 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
+            original_line = line
+            escaped = line.startswith('\\')
+            if escaped:
+                line = line[1:]
+
+            # BSD style output: `MD5 (file name) = hash`. The file name is
+            # everything between the first ` (` and the last `) = `
+            bsd = _BSD_LINE_RE.match(line)
+            if bsd:
+                file_name, file_hash = bsd.group(2), bsd.group(3)
+                # filler, BSD style output does not show a mode
+                file_mode = None
             # check for legacy md5 command output
-            if line.startswith('MD5 ('):
+            elif line.startswith('MD5 ('):
                 file_hash = line.split('=', maxsplit=1)[1].strip()
                 file_name = line.split('=', maxsplit=1)[0].strip()
                 file_name = file_name[5:]
@@ -152,8 +170,11 @@ def parse(data, raw=False, quiet=False):
             else:
                 m = re.match('([0-9a-f]+) (.)(.*)$', line)
                 if not m:
-                    raise ValueError(f'Invalid line format: "{line}"')
+                    raise ValueError(f'Invalid line format: "{original_line}"')
                 file_hash, file_mode, file_name = m.groups()
+
+            if escaped:
+                file_name = jc.utils.unescape_backslashes(file_name, '', _FILENAME_ESCAPES)
 
             item = {
                 'filename': file_name,

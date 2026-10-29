@@ -1,0 +1,1 @@
+[{"file": "a", "dependencies": [{"name": "libc.so.6", "path": "/lib/libc.so.6", "address": "0x1"}], "version_info": []}, {"file": "m\f/usr/bin/b", "dependencies": [{"name": "libother.so", "path": null, "address": null}], "version_info": []}]

@@ -88,7 +88,7 @@ Schema:
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
-                                      string
+                                      string/null
       ],
       "member_arrays":                string,
       "member_arrays_list": [
@@ -251,4 +251,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/mdadm.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/mdadm.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

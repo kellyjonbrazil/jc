@@ -5,6 +5,11 @@ to a `_` prefix by using the `-r` (cli) or `raw=True` (module) option.
 
 Text values for nodes will have the key-name of `#text`.
 
+> Note: In raw output, which uses the `_` prefix, an attribute and a child
+> element named like the attribute with a leading `_` (e.g. attribute `b`
+> and element `<_b>`) share the same key, so they cannot be told apart. The
+> default output uses the `@` prefix and is not affected.
+
 Usage (cli):
 
     $ cat foo.xml | jc --xml
@@ -76,7 +81,7 @@ from jc.exceptions import LibraryNotInstalled
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = 'XML file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -145,6 +150,10 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         has_data = True
+
+        # attribute default values declared in a DTD are added to every
+        # matching element, so limit how much the output can grow from them
+        jc.utils.xml_defaults_check(data)
 
     if raw and has_data:
         # modified output with _ prefix for attributes

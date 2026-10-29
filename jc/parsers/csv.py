@@ -73,6 +73,8 @@ Examples:
     ]
 """
 import csv
+import itertools
+import re
 from typing import List, Union, Type
 from jc.jc_types import JSONDictType
 import jc.utils
@@ -80,7 +82,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = 'CSV file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -108,6 +110,29 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
     # No further processing
     return proc_data
+
+
+def _sniff(data: str) -> Type[csv.Dialect]:
+    """
+    Detect the CSV dialect from the start of the text. The quote character
+    is always a double quote. The delimiter can only be a punctuation or
+    whitespace character that is found in the first row outside of quoted
+    fields, and quoted fields and apostrophes are removed from the sample so
+    they do not influence the detection. Raises an exception if the dialect
+    cannot be detected.
+    """
+    masked = re.sub(r'"[^"]*("|$)', '""', data[:1024]).replace("'", '')
+    rows = [row for row in jc.utils.splitlines(masked, split_cr=True) if row.strip()]
+
+    # the last row is incomplete if the sample was cut off
+    if len(data) > 1024 and len(rows) > 1:
+        rows.pop()
+
+    delimiters = re.sub(r'[\w"]', '', rows[0])
+    dialect = csv.Sniffer().sniff('\n'.join(rows), delimiters)
+    dialect.quotechar = '"'
+    dialect.doublequote = True
+    return dialect
 
 
 def parse(
@@ -142,10 +167,12 @@ def parse(
     data = data.decode('utf-8-sig')
 
     raw_output = []
-    cleandata = data.splitlines()
+    # keep the line endings so line breaks inside quoted fields are kept
+    cleandata = jc.utils.splitlines(data, keepends=True, split_cr=True)
 
-    # Clear any blank lines
-    cleandata = list(filter(None, cleandata))
+    # Clear any blank lines before the header row. csv.DictReader skips the
+    # other blank rows and keeps blank lines inside quoted fields.
+    cleandata = itertools.dropwhile(lambda x: not x.strip('\r\n'), cleandata)
 
     if jc.utils.has_data(data):
 
@@ -154,9 +181,7 @@ def parse(
             else 'excel'  # default in csv module
         )
         try:
-            dialect = csv.Sniffer().sniff(data[:1024])
-            if '""' in data:
-                dialect.doublequote = True
+            dialect = _sniff(data)
             if tsv:
                 dialect.delimiter = '\t'
         except Exception:

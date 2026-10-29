@@ -68,7 +68,8 @@ Schema:
     }
 
     [0] 'reply', 'timeout', 'unparsable_line', etc. See
-        `_error_type.type_map` for all options
+        `_error_type.type_map` and `_error_type_v6.type_map` for all
+        options
     [1] only if an 'unparsable_line' type
     [2] hex value converted to decimal
 
@@ -189,4 +190,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/ping.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ping.py)
 
-Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)

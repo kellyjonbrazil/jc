@@ -28,7 +28,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('cef_s', cef_command_output.splitlines())
+    result = jc.parse('cef_s', cef_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -71,7 +71,8 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         will be null if a UTC timezone cannot be extracted from the original
         timestamp string value.
     [3] This field exists if the CEF line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -87,17 +88,18 @@ Examples:
 """
 from typing import Dict, Iterable, Union
 import re
+import math
 import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
 from jc.exceptions import ParseError
-from jc.parsers.cef import _pycef_parse
+from jc.parsers.cef import _pycef_parse, _unescape
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'CEF string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -186,7 +188,10 @@ def _process(proc_data: Dict) -> Dict:
 
         if key in extended_floats:
             try:
-                proc_data[key] = float(value)
+                float_value = float(value)
+                # keep the text of inf and nan, which JSON cannot represent
+                if math.isfinite(float_value):
+                    proc_data[key] = float_value
             except Exception:
                 pass
 
@@ -203,10 +208,15 @@ def _process(proc_data: Dict) -> Dict:
     # Process custom field labels (adapted from pycef library)
     cleanup_list = []
     custom_fields = list(proc_data.keys())
+    field_pos = {k: i for i, k in enumerate(custom_fields)}
     for key in custom_fields:
         if key.endswith('Label'):
             customlabel = key[:-5]
-            for customfield in custom_fields:
+            # look up the related fields directly, keeping original key order
+            related = [f for f in (customlabel, customlabel + '_epoch', customlabel + '_epoch_utc')
+                       if f in field_pos]
+            related.sort(key=field_pos.get)
+            for customfield in related:
                 new_name = proc_data[key]
                 # check for normal custom fields
                 if customfield == customlabel:
@@ -234,8 +244,7 @@ def _process(proc_data: Dict) -> Dict:
             proc_data[key] = value.strip()
 
             # fixup escaped characters
-            for esc, esc_sub in escape_map.items():
-                proc_data[key] = proc_data[key].replace(esc, esc_sub)
+            proc_data[key] = _unescape(proc_data[key], escape_map)
 
         # normalize keynames
         new_key = key.strip()
@@ -279,7 +288,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -296,6 +305,10 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
+                line = line[:-1]
             output_line: Dict = {}
 
             #skip blank lines
@@ -306,6 +319,10 @@ def parse(
                 output_line = _pycef_parse(line)
 
             except Exception:
+                # report the line in _jc_meta with success = false
+                if ignore_exceptions:
+                    raise
+
                 output_line = {
                     'unparsable': line.rstrip()
                 }

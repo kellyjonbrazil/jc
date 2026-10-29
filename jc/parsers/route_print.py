@@ -177,7 +177,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`route print` command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -221,7 +221,7 @@ def parse(data, raw=False, quiet=False):
                 }
             }
 
-        lines = data.splitlines()
+        lines = jc.utils.splitlines(data)
         _parse_interface_list(raw_data, _PushbackIterator(iter(lines)))
         _parse_ipv4_route_table(raw_data, _PushbackIterator(iter(lines)))
         _parse_ipv6_route_table(raw_data, _PushbackIterator(iter(lines)))

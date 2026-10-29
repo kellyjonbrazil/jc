@@ -173,7 +173,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`iptables` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -184,14 +184,22 @@ class info():
 
 __version__ = info.version
 
+# a chain heading: 'Chain NAME (policy ...)' or 'Chain NAME (N references)'
+_CHAIN_RE = re.compile(r'Chain \S+ \(')
+
+_HEADER_WORDS = {
+    'num', 'pkts', 'bytes', 'target', 'prot', 'opt', 'in', 'out', 'source',
+    'destination'
+}
+
 chain_pkt_byte_pattern = re.compile(
     r'''
         \s\(policy\s
-        (?P<policy_name>.+)
+        (?P<policy_name>\S+)
         \s
-        (?P<packets>.+)
+        (?P<packets>\S+)
         \spackets,\s
-        (?P<bytes>.+)
+        (?P<bytes>\S+)
         \sbytes\)
     ''', re.VERBOSE
 )
@@ -211,16 +219,17 @@ def _process(proc_data):
     for entry in proc_data:
 
         if 'default_packets' in entry:
-            entry['default_packets'] = jc.utils.convert_to_int(entry['default_packets'])
+            entry['default_packets'] = jc.utils.convert_size_to_int(entry['default_packets'])
 
         if 'default_bytes' in entry:
             entry['default_bytes'] = jc.utils.convert_size_to_int(entry['default_bytes'])
 
         for rule in entry['rules']:
-            int_list = ['num', 'pkts']
-            for key in rule:
-                if key in int_list:
-                    rule[key] = jc.utils.convert_to_int(rule[key])
+            if 'num' in rule:
+                rule['num'] = jc.utils.convert_to_int(rule['num'])
+
+            if 'pkts' in rule:
+                rule['pkts'] = jc.utils.convert_size_to_int(rule['pkts'])
 
             if 'bytes' in rule:
                 rule['bytes'] = jc.utils.convert_size_to_int(rule['bytes'])
@@ -234,6 +243,20 @@ def _process(proc_data):
                     rule['target'] = None
 
     return proc_data
+
+
+def _is_header(line):
+    # the full column header line, e.g. 'target prot opt source destination'
+    # or ' pkts bytes target prot opt in out source destination'. A rule's
+    # opt column is never the word 'opt'.
+    words = line.split()
+    return (
+        'target' in words
+        and 'prot' in words
+        and 'opt' in words
+        and words[-2:] == ['source', 'destination']
+        and all(w in _HEADER_WORDS for w in words)
+    )
 
 
 def parse(data, raw=False, quiet=False):
@@ -259,9 +282,9 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in list(filter(None, data.splitlines())):
+        for line in list(filter(None, jc.utils.splitlines(data))):
 
-            if line.startswith('Chain'):
+            if _CHAIN_RE.match(line):
                 if chain:
                     raw_output.append(chain)
 
@@ -283,9 +306,7 @@ def parse(data, raw=False, quiet=False):
 
                 continue
 
-            elif line.startswith('target') or \
-                 (line.find('pkts') >= 1 and line.find('pkts') <= 5) or \
-                 line.startswith('num'):
+            elif _is_header(line):
 
                 headers = [h for h in ' '.join(line.lower().strip().split()).split() if h]
                 headers.append("options")
@@ -296,18 +317,25 @@ def parse(data, raw=False, quiet=False):
                 # sometimes the "target" column is blank. Stuff in a dummy character
                 opt_values = {'--', '-f', '!f'}
                 line_split = line.split()
-                if headers[0] == 'target' and line.startswith(' '):           # standard output
-                    line = '\u2063' + line
+                blank_target = False
+                t_idx = headers.index('target') if 'target' in headers else -1
 
-                elif headers[0] == 'pkts' and line_split[3] in opt_values:    # verbose output
-                    first_section = line_split[:2]
-                    second_section = line_split[2:]
-                    line = ' '.join(first_section) + ' \u2063 ' + ' '.join(second_section)
+                if t_idx == 0:                                    # standard output
+                    if line.startswith(' '):
+                        line = '\u2063' + line
+                        blank_target = True
+
+                elif t_idx > 0:                                   # verbose and/or line numbers
+                    if len(line_split) > t_idx + 1 and line_split[t_idx + 1] in opt_values:
+                        first_section = line_split[:t_idx]
+                        second_section = line_split[t_idx:]
+                        line = ' '.join(first_section) + ' \u2063 ' + ' '.join(second_section)
+                        blank_target = True
 
                 rule = line.split(maxsplit=len(headers) - 1)
                 temp_rule = dict(zip(headers, rule))
                 if temp_rule:
-                    if temp_rule.get('target') == '\u2063':
+                    if blank_target:
                         temp_rule['target'] = ''
                     chain['rules'].append(temp_rule)
 

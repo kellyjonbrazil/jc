@@ -41,18 +41,20 @@ Schema:
         "fs_type":                  string,
         "mount_source":             string,
         "super_options": [
-                                    integer    # [2]
+                                    string
         ],
         "super_options_fields": {
-          "<key>":                  string
+          "<key>":                  string/integer    # [2]
         }
       }
     ]
 
     [0] if empty, then private mount
     [1] unbindable will always have a value of 0
-    [2] integer conversions are attempted. Use --raw or raw=True for
-        original string values.
+    [2] integer conversions are attempted for values that are numbers,
+        optionally followed by a size suffix (k, M, G, etc.). Other values
+        are left as strings. Use --raw or raw=True for original string
+        values.
 
 Examples:
 
@@ -146,7 +148,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/mountinfo` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -156,6 +158,23 @@ class info():
 
 
 __version__ = info.version
+
+# matches a run of `\ooo` octal escapes
+_OCTAL_RUN = re.compile(r'(?:\\[0-7]{3})+')
+
+
+def _unescape(field: str) -> str:
+    r"""Decode the `\ooo` octal escapes the kernel writes for special characters"""
+    # can switch to jc.utils.unescape_backslashes() once it is available
+    if '\\' not in field:
+        return field
+
+    def _decode(match):
+        octets = bytes(int(match.group(0)[i + 1:i + 4], 8) & 0xff
+                       for i in range(0, len(match.group(0)), 4))
+        return octets.decode('utf-8', 'backslashreplace')
+
+    return _OCTAL_RUN.sub(_decode, field)
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -178,18 +197,22 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                 entry[key] = int(entry[key])
 
         if 'mount_options' in entry:
-            entry['mount_options'] = entry['mount_options'].split(',')
+            entry['mount_options'] = [_unescape(x) for x in entry['mount_options'].split(',')]
 
         if 'optional_fields' in entry:
-            if 'unbindable' in  entry['optional_fields']:
-                entry['optional_fields'] = {'unbindable': 0}
-            else:
-                entry['optional_fields'] = {x.split(':')[0]: int(x.split(':')[1]) for x in entry['optional_fields'].split()}
+            optional_fields = {}
+            for x in entry['optional_fields'].split():
+                if x == 'unbindable':
+                    optional_fields['unbindable'] = 0
+                    continue
+                key, _, val = x.partition(':')
+                optional_fields[key] = int(val) if re.match(r'^[0-9]+$', val) else val
+            entry['optional_fields'] = optional_fields
 
         if 'super_options' in entry:
             if entry['super_options']:
                 super_options_split = entry['super_options'].split(',')
-                s_options = [x for x in super_options_split if '=' not in x]
+                s_options = [_unescape(x) for x in super_options_split if '=' not in x]
                 s_options_fields = [x for x in super_options_split if '=' in x]
 
                 if s_options:
@@ -202,8 +225,12 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
                         entry['super_options_fields'] = {}
 
                     for field in s_options_fields:
-                        key, val = field.split('=')
-                        entry['super_options_fields'][key] = jc.utils.convert_to_int(val)
+                        key, val = field.split('=', maxsplit=1)
+                        key, val = _unescape(key), _unescape(val)
+                        if re.match(r'^-?[0-9]+[kKmMgGtTpPeE]?$', val):
+                            val = jc.utils.convert_to_int(val)
+
+                        entry['super_options_fields'][key] = val
 
             else:
                 del entry['super_options']
@@ -243,19 +270,22 @@ def parse(
             (?P<min>\d+)\s
             (?P<root>\S+)\s
             (?P<mount_point>\S+)\s
-            (?P<mount_options>\S+)\s?
-            # (?P<optional_fields>(?:\s?\S+:\S+\s?)*)\s?-\s
-            (?P<optional_fields>(?:\s?(?:\S+:\S+|unbindable)\s?)*)\s?-\s
+            (?P<mount_options>\S+)\s
+            # match each optional field as a whole space-terminated token
+            (?P<optional_fields>(?:(?:[^\s:]+:\S+|unbindable)\s)*)-\s
             (?P<fs_type>\S+)\s
-            (?P<mount_source>\S+)\s
+            (?P<mount_source>\S*)\s
             (?P<super_options>\S+)?
-            ''', re.VERBOSE
+            ''', re.VERBOSE | re.ASCII
         )
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             line_match = line_pattern.search(line)
             if line_match:
-                raw_output.append(line_match.groupdict())
+                entry = line_match.groupdict()
+                for key in ('root', 'mount_point', 'fs_type', 'mount_source'):
+                    entry[key] = _unescape(entry[key])
+                raw_output.append(entry)
 
     return raw_output if raw else _process(raw_output)

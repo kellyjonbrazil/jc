@@ -94,7 +94,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`amixer` command parser'
     author = 'Eden Refael'
     author_email = 'edenraf@hotmail.com'
@@ -216,7 +216,7 @@ def parse(
 
     if jc.utils.has_data(data):
         # split lines and than work on each line
-        lines = data.splitlines()
+        lines = jc.utils.splitlines(data)
         first_line = lines[0].strip()
 
         # Extract the control name from the first line

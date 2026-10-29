@@ -8,6 +8,10 @@ jc - JSON Convert POSIX path list string parser
 Parse a colon-separated POSIX path list, commonly found in environment
 variables.
 
+> Note: An empty entry (for example `/usr/bin::/bin`) means the current
+> directory and is reported as `.`. An entry that only contains spaces
+> is kept as a path.
+
 Usage (cli):
 
     $ echo "/Users/admin/.docker/bin:/Users/admin/.asdf/shims" | jc --path-list
@@ -92,4 +96,4 @@ Source: [`jc/parsers/path_list.py`](https://github.com/kellyjonbrazil/jc/blob/ma
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.0 by Michael Nietzold (https://github.com/muescha)
+Version 1.1 by Michael Nietzold (https://github.com/muescha)

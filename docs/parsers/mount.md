@@ -5,6 +5,10 @@
 
 jc - JSON Convert `mount` command output parser
 
+> Note: Mount points that contain ` on ` (space, on, space) are not
+> supported because `mount` output does not mark where the mount point
+> begins.
+
 Usage (cli):
 
     $ mount | jc --mount
@@ -100,4 +104,4 @@ Compatibility:  linux, darwin, freebsd, aix
 
 Source: [`jc/parsers/mount.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/mount.py)
 
-Version 1.11 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)

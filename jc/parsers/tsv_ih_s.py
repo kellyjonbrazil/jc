@@ -18,7 +18,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('tsv_ih_s', tsv_output.splitlines())
+    result = jc.parse('tsv_ih_s', tsv_output.split('\n'))
 
 Schema:
 
@@ -91,4 +91,4 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    return jc_csv_s.parse(data, raw, quiet, ignore_exceptions, implicit_header=True, tsv=True)
+    return jc_csv_s.parse(data, raw, quiet, ignore_exceptions=ignore_exceptions, implicit_header=True, tsv=True)

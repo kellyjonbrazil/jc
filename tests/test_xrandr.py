@@ -1,5 +1,6 @@
 import pprint
 import json
+import os
 import re
 import unittest
 from typing import Optional
@@ -22,8 +23,57 @@ from jc.parsers.xrandr import (
     parse,
 )
 
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 class XrandrTests(unittest.TestCase):
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_2.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_2 = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_3.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_3 = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_simple.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_simple = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_properties_1.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_properties_1 = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_extra_hv_lines.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_extra_hv_lines = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr-long-mode.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_long_mode = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_issue_525.out'), 'r', encoding='utf-8') as f:
+        generic_xrandr_issue_525 = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_2.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_2_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_3.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_3_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_simple.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_simple_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_properties_1.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_properties_1_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr_extra_hv_lines.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_extra_hv_lines_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/xrandr-long-mode.json'), 'r', encoding='utf-8') as f:
+        generic_xrandr_long_mode_json = json.loads(f.read())
+
     def test_xrandr_nodata(self):
         """
         Test 'xrandr' with no data
@@ -197,11 +247,9 @@ class XrandrTests(unittest.TestCase):
 
     def test_complete_1(self):
         self.maxDiff = None
-        with open("tests/fixtures/generic/xrandr.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_json
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
@@ -210,11 +258,9 @@ class XrandrTests(unittest.TestCase):
         self.assertEqual(actual, reference)
 
     def test_complete_2(self):
-        with open("tests/fixtures/generic/xrandr_2.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr_2, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr_2.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_2_json
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
@@ -223,11 +269,9 @@ class XrandrTests(unittest.TestCase):
         self.assertEqual(actual, reference)
 
     def test_complete_3(self):
-        with open("tests/fixtures/generic/xrandr_3.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr_3, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr_3.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_3_json
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
@@ -237,22 +281,18 @@ class XrandrTests(unittest.TestCase):
         self.assertEqual(actual, reference)
 
     def test_complete_4(self):
-        with open("tests/fixtures/generic/xrandr_simple.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr_simple, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr_simple.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_simple_json
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(2, len(actual["screens"][0]["devices"][0]["resolution_modes"]))
         self.assertEqual(actual, reference)
 
     def test_complete_5(self):
-        with open("tests/fixtures/generic/xrandr_properties_1.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr_properties_1, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr_properties_1.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_properties_1_json
 
         self.assertEqual(1, len(actual["screens"]))
         self.assertEqual(
@@ -331,9 +371,7 @@ default connected 1024x600+0+0 0mm x 0mm
 
     def test_issue_525(self):
         self.maxDiff = None
-        with open("tests/fixtures/generic/xrandr_issue_525.out", "r") as f:
-            txt = f.read()
-        actual = parse(txt, quiet=True)
+        actual = parse(self.generic_xrandr_issue_525, quiet=True)
         dp4 = actual["screens"][0]["devices"][0]["props"]["Broadcast RGB"][1]  # type: ignore
         # pprint.pprint(actual)
         self.assertEqual("supported: Automatic, Full, Limited 16:235", dp4)
@@ -364,11 +402,17 @@ default connected 1024x600+0+0 0mm x 0mm
 
     def test_issue_549(self):
         """https://github.com/kellyjonbrazil/jc/issues/549"""
-        with open("tests/fixtures/generic/xrandr_extra_hv_lines.out", "r") as f:
-            actual = parse(f.read(), quiet=True)
+        actual = parse(self.generic_xrandr_extra_hv_lines, quiet=True)
 
-        with open('tests/fixtures/generic/xrandr_extra_hv_lines.json', 'r') as f:
-            reference = json.loads(f.read())
+        reference = self.generic_xrandr_extra_hv_lines_json
+
+        self.assertEqual(actual, reference)
+
+    def test_long_mode_line(self):
+        """Mode line followed by a long run of digits with no frequency"""
+        actual = parse(self.generic_xrandr_long_mode, quiet=True)
+
+        reference = self.generic_xrandr_long_mode_json
 
         self.assertEqual(actual, reference)
 

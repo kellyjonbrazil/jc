@@ -1,0 +1,1 @@
+[{"netid": "tcp", "state": "LISTEN", "recv_q": 0, "send_q": 128, "local_address": "0.0.0.0", "local_port": "22", "peer_address": "0.0.0.0", "peer_port": "*", "opts": {"inode_number": "21385", "cookie": "1", "cgroup": "/system.slice/sshd.service"}, "local_port_num": 22}]

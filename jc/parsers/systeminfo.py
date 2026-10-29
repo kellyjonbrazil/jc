@@ -212,7 +212,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.3"
+    version = "1.4"
     description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
@@ -323,7 +323,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         # keepends = True, so that multiline data retains return chars
-        lines = [line for line in data.splitlines(keepends=True) if line.strip() != ""]
+        lines = [line for line in jc.utils.splitlines(data, keepends=True) if line.strip() != ""]
 
         # find the character position of the value in the k/v pair of the first line
         # all subsequent lines of data use the same character position
@@ -339,11 +339,14 @@ def parse(data, raw=False, quiet=False):
                 # the value data doesn't start where it should
                 # so this is multiline data
                 if delim not in key:
-                    raw_data[last_key] += line
+                    raw_data[last_key].append(line)
                     continue
 
-            raw_data[key] = value
+            raw_data[key] = [value]
             last_key = key
+
+        # join the collected lines of each value once
+        raw_data = {k: ''.join(v) for k, v in raw_data.items()}
 
     # clean up keys; strip values
     raw_output = {}
@@ -391,7 +394,7 @@ def _parse_hotfixs_or_processors(data):
         data: (string) Input string
     """
     arr_output = []
-    for i, l in enumerate(data.splitlines()):
+    for i, l in enumerate(jc.utils.splitlines(data)):
         # skip line that says how many are installed
         if i == 0:
             continue
@@ -415,7 +418,7 @@ def _parse_hyperv_requirements(data):
         data: (string) Input string
     """
     output = {}
-    for i, l in enumerate(data.splitlines()):
+    for i, l in enumerate(jc.utils.splitlines(data)):
         if ":" in l:
             k, v = l.split(":")
             # discard the number sequence
@@ -437,7 +440,7 @@ def _parse_network_cards(data):
     is_ip = False
     nic_value_pos = 0
 
-    for i, line in enumerate(data.splitlines()):
+    for i, line in enumerate(jc.utils.splitlines(data)):
         # skip first line
         if i == 0:
             continue

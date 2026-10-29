@@ -138,7 +138,7 @@ from jc.parsers.kv import parse as kv_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`zpool status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -176,7 +176,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
 
 def _build_config_list(string: str) -> List[Dict]:
     config_list: List = []
-    for line in filter(None, string.splitlines()):
+    for line in filter(None, jc.utils.splitlines(string)):
         if line.strip().endswith('READ WRITE CKSUM'):
             continue
 
@@ -220,7 +220,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.lstrip().startswith('pool: '):
                 if pool_str:

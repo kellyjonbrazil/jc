@@ -108,4 +108,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/timedatectl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/timedatectl.py)
 
-Version 1.8 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.9 by Kelly Brazil (kellyjonbrazil@gmail.com)

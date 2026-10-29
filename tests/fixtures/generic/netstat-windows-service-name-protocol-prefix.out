@@ -1,0 +1,18 @@
+
+Active Connections
+
+  Proto  Local Address          Foreign Address        State           PID
+  TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       1712
+  RpcSs
+ [svchost.exe]
+  TCP    0.0.0.0:4325           0.0.0.0:0              LISTENING       5876
+  TCPSvc
+ [svchost.exe]
+  TCP    0.0.0.0:3389           0.0.0.0:0              LISTENING       4
+  TCPRelay Service
+ [svchost.exe]
+  UDP    0.0.0.0:5353           *:*                                    2048
+  UDPProxy
+ [svchost.exe]
+  TCP    0.0.0.0:445            0.0.0.0:0              LISTENING       4
+ Can not obtain ownership information

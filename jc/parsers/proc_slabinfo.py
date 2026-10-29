@@ -75,7 +75,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/slabinfo` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -127,7 +127,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata = data.splitlines()[2:]
+        cleandata = jc.utils.splitlines(data)[2:]
 
         for line in filter(None, cleandata):
 

@@ -87,6 +87,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.out'), 'r', encoding='utf-8') as f:
         git_log_fuller_stat_patch = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-line-separator.out'), 'r', encoding='utf-8') as f:
+        git_log_line_separator = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log.json'), 'r', encoding='utf-8') as f:
         git_log_json = json.loads(f.read())
@@ -166,6 +169,39 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-fuller-stat-patch.json'), 'r', encoding='utf-8') as f:
         git_log_fuller_stat_patch_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-line-separator.json'), 'r', encoding='utf-8') as f:
+        git_log_line_separator_json = json.loads(f.read())
+
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.out'), 'r', encoding='utf-8') as f:
+        git_log_stat_name_separator = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-name-separator.json'), 'r', encoding='utf-8') as f:
+        git_log_stat_name_separator_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-stat.out'), 'r', encoding='utf-8') as f:
+        git_log_quoted_paths_stat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-stat.json'), 'r', encoding='utf-8') as f:
+        git_log_quoted_paths_stat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-numstat.out'), 'r', encoding='utf-8') as f:
+        git_log_quoted_paths_numstat = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-quoted-paths-numstat.json'), 'r', encoding='utf-8') as f:
+        git_log_quoted_paths_numstat_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-summary-name.out'), 'r', encoding='utf-8') as f:
+        git_log_stat_summary_name = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-summary-name.json'), 'r', encoding='utf-8') as f:
+        git_log_stat_summary_name_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar.out'), 'r', encoding='utf-8') as f:
+        git_log_stat_no_bar = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/git-log-stat-no-bar.json'), 'r', encoding='utf-8') as f:
+        git_log_stat_no_bar_json = json.loads(f.read())
 
     def test_git_log_nodata(self):
         """
@@ -334,6 +370,46 @@ class MyTests(unittest.TestCase):
         Test 'git_log --format=fuller --stat --patch'
         """
         self.assertEqual(jc.parsers.git_log.parse(self.git_log_fuller_stat_patch, quiet=True), self.git_log_fuller_stat_patch_json)
+
+    def test_git_log_line_separator(self):
+        """
+        Test 'git_log' with a commit message containing U+2028 (LINE
+        SEPARATOR) followed by a fake commit header: still a single commit
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_line_separator, quiet=True), self.git_log_line_separator_json)
+
+    def test_git_log_stat_name_separator(self):
+        """
+        Test 'git_log --stat' with file names that contain ' | ' and '|'
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_stat_name_separator, quiet=True), self.git_log_stat_name_separator_json)
+
+
+    def test_git_log_quoted_paths_stat(self):
+        """
+        Test 'git_log --stat' with quoted file names (non-ASCII, escapes, renames)
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_quoted_paths_stat, quiet=True), self.git_log_quoted_paths_stat_json)
+
+    def test_git_log_quoted_paths_numstat(self):
+        """
+        Test 'git_log --numstat' with quoted file names (non-ASCII, escapes, renames)
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_quoted_paths_numstat, quiet=True), self.git_log_quoted_paths_numstat_json)
+
+
+    def test_git_log_stat_summary_name(self):
+        """
+        Test 'git_log --stat' with file names that contain 'changed, '
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_stat_summary_name, quiet=True), self.git_log_stat_summary_name_json)
+
+
+    def test_git_log_stat_no_bar(self):
+        """
+        Test 'git_log --stat --summary' with lines that have no '|' separator
+        """
+        self.assertEqual(jc.parsers.git_log.parse(self.git_log_stat_no_bar, quiet=True), self.git_log_stat_no_bar_json)
 
 
 if __name__ == '__main__':

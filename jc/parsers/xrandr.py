@@ -207,7 +207,7 @@ except AttributeError:
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "2.1"
+    version = "2.2"
     description = "`xrandr` command parser"
     author = "Kevin Lyter"
     author_email = "code (at) lyterk.com"
@@ -327,7 +327,7 @@ _device_pattern = (
 # 1920x1080i     60.03*+  59.93
 # 1920x1080     60.00 +  50.00    59.94
 _resolution_mode_pattern = r"\s*(?P<resolution_width>\d+)x(?P<resolution_height>\d+)(?P<is_high_resolution>i)?\s+(?P<rest>.*)"
-_frequencies_pattern = r"(((?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)+)"
+_frequencies_pattern = r"(((?<!\d)(?P<frequency>\d+\.\d+)(?P<star>\*| |)(?P<plus>\+?)?)+)"
 
 
 # Values sometimes appear on the same lines as the keys (CscMatrix), sometimes on the line
@@ -537,7 +537,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> Response:
     jc.utils.input_type_check(data)
 
     index = 0
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     screen, device = None, None
 
     # temporary fix to ignore specific unhandled lines

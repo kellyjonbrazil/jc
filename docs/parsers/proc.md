@@ -129,7 +129,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> Union[List[Dict], Dict]
+          quiet: bool = False) -> List[Dict] | Dict
 ```
 
 Main text parsing function
@@ -151,4 +151,4 @@ Source: [`jc/parsers/proc.py`](https://github.com/kellyjonbrazil/jc/blob/master/
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

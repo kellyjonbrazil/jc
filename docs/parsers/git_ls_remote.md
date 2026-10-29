@@ -71,7 +71,7 @@ Examples:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> Union[Dict[str, Any], List[Dict[str, Any]]]
+          quiet: bool = False) -> Dict[str, Any] | List[Dict[str, Any]]
 ```
 
 Main text parsing function
@@ -91,4 +91,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_ls_remote.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_ls_remote.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

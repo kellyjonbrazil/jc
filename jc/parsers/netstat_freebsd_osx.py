@@ -1,4 +1,12 @@
 r"""jc - JSON Convert FreeBSD and OSX netstat Parser"""
+import re
+
+# complete header lines of the routing and interface tables. Matching the
+# whole header keeps a row whose first word is `Name` or `Destination` (for
+# example a route to a host with that name) from being read as a header.
+_ROUTE_HEADER_RE = re.compile(r'Destination\s+Gateway\s+Flags\s')
+_INTERFACE_HEADER_RE = re.compile(r'Name\s+Mtu\s+Network\s+Address\s')
+_TRANSPORT_SUFFIX_RE = re.compile(r'(tcp|udp|sctp)(46|4|6)')
 
 
 def normalize_headers(header):
@@ -31,18 +39,31 @@ def normalize_interface_headers(header):
     return header
 
 
-def parse_item(headers, entry, kind):
+def header_flags(headers):
+    """Check the header once for the columns that change how rows are parsed."""
+    return 'socket' in headers, '0_win' in headers
+
+
+def parse_item(headers, entry, kind, flags):
+    has_socket, has_0win = flags
     entry = entry.split(maxsplit=len(headers) - 1)
+
+    # only the protocol column says whether this is a udp row: other columns
+    # (for example a peer host name) can contain the text `udp`
+    proto_is_udp = False
+    if 'proto' in headers:
+        proto_index = headers.index('proto')
+        proto_is_udp = proto_index < len(entry) and entry[proto_index].startswith('udp')
 
     # fixup udp records with no state field entry
     if kind == 'network' and entry[0].startswith('udp'):
         entry.insert(5, None)
 
-    if kind == 'network' and 'socket' in headers and 'udp' in str(entry):
+    if kind == 'network' and has_socket and proto_is_udp:
         entry.insert(7, None)
 
     # fixup -T output on FreeBSD
-    if kind == 'network' and '0_win' in headers and entry[0].startswith('udp'):
+    if kind == 'network' and has_0win and entry[0].startswith('udp'):
         entry.insert(1, '')
         entry.insert(1, '')
         entry.insert(1, '')
@@ -81,12 +102,16 @@ def parse_post(raw_data):
 
         if 'proto' in entry and 'kind' in entry:
             if entry['kind'] == 'network':
-                if entry['proto'] == 'udp46':
-                    entry['transport_protocol'] = entry['proto'][:-2]
-                elif entry['proto'].startswith('icm'):
+                if entry['proto'].startswith('icm'):
                     entry['transport_protocol'] = 'icmp'
                 else:
-                    entry['transport_protocol'] = entry['proto'][:-1]
+                    # remove the address family suffix (4, 6 or 46) only
+                    # from tcp, udp and sctp
+                    suffixed = _TRANSPORT_SUFFIX_RE.fullmatch(entry['proto'])
+                    if suffixed:
+                        entry['transport_protocol'] = suffixed.group(1)
+                    else:
+                        entry['transport_protocol'] = entry['proto']
 
                 if '6' in entry['proto']:
                     entry['network_protocol'] = 'ipv6'
@@ -237,7 +262,7 @@ def parse(cleandata):
             interface_table = False
             continue
 
-        if line.startswith('Name  '):
+        if _INTERFACE_HEADER_RE.match(line):
             network = False
             multipath = False
             socket = False
@@ -252,41 +277,48 @@ def parse(cleandata):
         if network and (line.startswith('Socket ') or line.startswith('Proto ') or line.startswith('Tcpcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if socket and line.startswith('Address '):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if reg_kernel_control and (line.startswith('id ') or line.startswith('kctlref ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if active_kernel_event and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         if active_kernel_control and (line.startswith('Proto ') or line.startswith('             pcb ')):
             header_text = normalize_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
-        if routing_table and line.startswith('Destination '):
+        if routing_table and _ROUTE_HEADER_RE.match(line):
             header_text = normalize_route_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
-        if interface_table and line.startswith('Name  '):
+        if interface_table and _INTERFACE_HEADER_RE.match(line):
             header_text = normalize_interface_headers(line)
             headers = header_text.split()
+            flags = header_flags(headers)
             continue
 
         # get items
         if network:
-            raw_output.append(parse_item(headers, line, 'network'))
+            raw_output.append(parse_item(headers, line, 'network', flags))
             continue
 
         if multipath:
@@ -294,27 +326,27 @@ def parse(cleandata):
             continue
 
         if socket:
-            raw_output.append(parse_item(headers, line, 'socket'))
+            raw_output.append(parse_item(headers, line, 'socket', flags))
             continue
 
         if reg_kernel_control:
-            raw_output.append(parse_item(headers, line, 'Registered kernel control module'))
+            raw_output.append(parse_item(headers, line, 'Registered kernel control module', flags))
             continue
 
         if active_kernel_event:
-            raw_output.append(parse_item(headers, line, 'Active kernel event socket'))
+            raw_output.append(parse_item(headers, line, 'Active kernel event socket', flags))
             continue
 
         if active_kernel_control:
-            raw_output.append(parse_item(headers, line, 'Active kernel control socket'))
+            raw_output.append(parse_item(headers, line, 'Active kernel control socket', flags))
             continue
 
         if routing_table and not (line.startswith('Internet:') or line.startswith('Internet6:')):
-            raw_output.append(parse_item(headers, line, 'route'))
+            raw_output.append(parse_item(headers, line, 'route', flags))
             continue
 
         if interface_table:
-            raw_output.append(parse_item(headers, line, 'interface'))
+            raw_output.append(parse_item(headers, line, 'interface', flags))
             continue
 
     return parse_post(raw_output)

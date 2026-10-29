@@ -156,4 +156,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_net_protocols.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_net_protocols.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

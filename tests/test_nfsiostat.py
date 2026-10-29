@@ -39,6 +39,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--no-mounts.out'), 'r', encoding='utf-8') as f:
         generic_nfsiostat_no_mounts = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--long-mount-name.out'), 'r', encoding='utf-8') as f:
+        generic_nfsiostat_long_mount_name = f.read()
+
     def test_nfsiostat_nodata(self):
         """
         Test 'nfsiostat' with no data
@@ -151,6 +154,65 @@ class MyTests(unittest.TestCase):
         result, stderr = _parse_capturing_stderr(self.generic_nfsiostat_no_mounts)
         self.assertEqual(result, [])
         self.assertEqual(stderr, '')
+
+
+    def test_nfsiostat_other_whitespace_in_filesystem(self):
+        """
+        Test 'nfsiostat' with non-ASCII whitespace and a line separator in a mount header
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--two-mounts.out'), 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        for old, new in (('/mnt/secondmount', '/mnt/second\u3000mount'),
+                         ('/mnt/secondmount', '/mnt/second\xa0mount'),
+                         ('/mnt/secondmount', '/mnt/second\x1fmount'),
+                         ('192.168.128.221:/mnt/secondmount', 'other:/x\u2028192.168.128.221:/export')):
+            result = jc.parsers.nfsiostat.parse(data.replace(old, new), quiet=True)
+            self.assertEqual([(x['filesystem'], x['mount']) for x in result],
+                             [('192.168.128.220:/mnt/warm/archivedb', '/archive'),
+                              ('192.168.128.221:/mnt/secondmount'.replace(old, new), '/blah')])
+            self.assertEqual(result[1]['ops_sec'], 3.215)
+
+    def test_nfsiostat_second_ops_line_warns(self):
+        """
+        Test 'nfsiostat' warns when a mount block has more than one ops/s line
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/nfsiostat--two-mounts.out'), 'r', encoding='utf-8') as f:
+            data = f.read()
+
+        data = data.replace('192.168.128.221:/mnt/secondmount mounted on /blah:', 'unrecognized header')
+        _, stderr = _parse_capturing_stderr(data)
+        self.assertIn('/archive: more than one ops/s line in a mount block', stderr)
+
+    def test_nfsiostat_long_mount_name_warnings(self):
+        """
+        Test 'nfsiostat' shortens a very long mount point name in warnings
+        but not in the output
+        """
+        result, stderr = _parse_capturing_stderr(self.generic_nfsiostat_long_mount_name)
+        long_name = result[0]['mount']
+        self.assertGreater(len(long_name), 256)
+        self.assertNotIn(long_name, stderr.replace('\n', '').replace(' ', ''))
+        # warning text wraps lines, so compare without whitespace
+        flat = stderr.replace('\n', '').replace(' ', '')
+        short_label = long_name[:256].replace(' ', '') + '...'
+        self.assertIn(short_label + ':skippingunknownoperationtable:commit', flat)
+        self.assertIn(short_label + ':missingthevaluesline', flat)
+        self.assertNotIn(long_name[:257], flat)
+
+    def test_nfsiostat_mount_name_at_limit_is_not_shortened(self):
+        """
+        Test 'nfsiostat' keeps a 256 character mount point name as is in warnings
+        """
+        name = '/' + 'a' * 255
+        data = '\n'.join([
+            f'192.168.1.10:/export/home mounted on {name}:',
+            '           ops/s       rpc bklog',
+            '           1.000'
+        ])
+        _, stderr = _parse_capturing_stderr(data)
+        self.assertIn(name, stderr.replace('\n', '').replace(' ', ''))
+        self.assertNotIn('...', stderr)
 
 
 if __name__ == '__main__':

@@ -323,7 +323,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.5'
+    version = '2.6'
     description = '`dig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -549,7 +549,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data)
     # remove blank lines
     cleandata = list(filter(None, cleandata))
 
@@ -576,6 +576,7 @@ def parse(data, raw=False, quiet=False):
                 if output_entry:
                     raw_output.append(output_entry)
                 output_entry = {}
+                answer_list = []
                 output_entry.update(_parse_header(line))
                 continue
 

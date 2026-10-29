@@ -95,14 +95,13 @@ Example:
       },
     ]
 """
-import re
 from typing import List, Dict, Union
 import jc.utils
 
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.0"
+    version = "1.1"
     description = "Alpine Linux Package Index file parser"
     author = "Roey Darwish Dror"
     author_email = "roey.ghost@gmail.com"
@@ -154,9 +153,10 @@ def _value(key: str, value: str) -> Union[str, int, List[str], Dict[str, str]]:
         return split_value
 
     if key == "m":
-        m = re.match(r'(.*) <(.*)>', value)
-        if m:
-            return {'name': m.group(1), 'email': m.group(2)}
+        # the email ends at the last `>` and starts after the last ` <` before it
+        name, sep, email = value.rpartition('>')[0].rpartition(' <')
+        if sep:
+            return {'name': name, 'email': email}
         else:
             return {'name': value}
 
@@ -199,7 +199,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]:
 
     package: Dict = {}
     if jc.utils.has_data(data):
-        lines = iter(data.splitlines())
+        lines = iter(jc.utils.splitlines(data))
         for line in lines:
             line = line.strip()
             if not line:

@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`git ls-remote` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -128,9 +128,15 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
-            commit, reference = line.split()
+            # git prints `<hash>\t<ref>`. A ref name has no spaces or tabs
+            # but can hold any other character, so split on the first tab
+            # (or space, for input without tabs) only
+            sep = '\t' if '\t' in line else ' '
+            commit, reference = line.strip(' \t').split(sep, 1)
+            commit = commit.strip(' \t')
+            reference = reference.strip(' \t')
             output_line = {
                 'reference': reference,
                 'commit': commit

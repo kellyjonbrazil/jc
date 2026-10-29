@@ -57,7 +57,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/arp` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,7 +110,7 @@ def parse(
     if jc.utils.has_data(data):
 
         header = 'IP_address       HW_type     Flags       HW_address            Mask     Device'
-        data_splitlines = data.splitlines()
+        data_splitlines = jc.utils.splitlines(data)
         data_splitlines[0] = header
         raw_output = simple_table_parse(data_splitlines)
 

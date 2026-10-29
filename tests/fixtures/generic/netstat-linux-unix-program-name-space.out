@@ -1,0 +1,9 @@
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path
+unix  2      [ ]         DGRAM                    34693    1898/aaaaaaaaaa xxx  /run/user/1000/systemd/notify
+unix  2      [ ]         DGRAM                    34694    1899/aaaaaaaaaaa xx  /run/user/1000/systemd/notify
+unix  2      [ ]         DGRAM                    34695    1900/aaaaaaaaaaaa x  /run/user/1000/systemd/private
+unix  2      [ ACC ]     STREAM     LISTENING     34696    1901/aaaaaaaaaaa xx  /run/user/1000/bus
+unix  2      [ ACC ]     STREAM     LISTENING     34697    902/avahi-daemon: r  /run/avahi-daemon/socket
+unix  2      [ ]         DGRAM                    34698    903/avahi-daemon: r  /run/avahi-daemon/notify
+unix  2      [ ACC ]     STREAM     LISTENING     34699    -                    /run/dbus/system_bus_socket

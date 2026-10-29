@@ -1,0 +1,5 @@
+VirtualHost configuration:
+*:80                   is a NameVirtualHost
+         port 80 namevhost a.example.com (/etc/apache2/a.conf:1)
+                 alias www.a.example.com port 80 namevhost other.example.com (/etc/apache2/o.conf:1) Define: x
+         port 80 namevhost b.example.com (/etc/apache2/b.conf:1)

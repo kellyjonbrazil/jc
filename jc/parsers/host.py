@@ -88,7 +88,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`host` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
@@ -153,11 +153,25 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
         rrdata = {}
         soaparse = False
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             line = line.strip()
 
+            # the record type words directly follow the owner name, which
+            # has no spaces. The same words can also appear in record data.
+            rrtype = line.partition(' ')[2]
+
+            # TXT parsing
+            if rrtype.startswith('descriptive text '):
+                linedata = line.split(' ', maxsplit=3)
+                hostname = linedata[0]
+                txt = linedata[3].strip('"')
+                text.append(txt)
+                rrdata.update({'hostname': hostname})
+                rrdata.update({'text': text})
+                continue
+
             # default
-            if ' has address ' in line:
+            if rrtype.startswith('has address '):
                 linedata = line.split(' ', maxsplit=3)
                 hostname = linedata[0]
                 address = linedata[3]
@@ -166,7 +180,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'address': addresses})
                 continue
 
-            if ' has IPv6 address ' in line:
+            if rrtype.startswith('has IPv6 address '):
                 linedata = line.split(' ', maxsplit=4)
                 hostname = linedata[0]
                 v6address = linedata[4]
@@ -175,7 +189,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'v6-address': v6addresses})
                 continue
 
-            if ' mail is handled by ' in line:
+            if rrtype.startswith('mail is handled by '):
                 linedata = line.split(' ', maxsplit=6)
                 hostname = linedata[0]
                 mx = linedata[6]
@@ -184,28 +198,27 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                 rrdata.update({'mail': mail})
                 continue
 
-
-            # TXT parsing
-            if ' descriptive text ' in line:
-                linedata = line.split('descriptive text "', maxsplit=1)
-                hostname = linedata[0]
-                txt = linedata[1].strip('"')
-                text.append(txt)
-                rrdata.update({'hostname': hostname})
-                rrdata.update({'text': text})
-                continue
-
-
             # -C / SOA parsing
             if line.startswith('Nameserver '):
                 soaparse = True
                 rrdata = {}
                 linedata = line.split(' ', maxsplit=1)
-                nameserverip = linedata[1].rstrip(':')
+                nameserverip = linedata[1]
+
+                # host prints 'Nameserver <address>:'. Remove only that colon,
+                # an IPv6 address can end with colons too. (e.g. 2001:db8::)
+                if nameserverip.endswith(':'):
+                    nameserverip = nameserverip[:-1]
+
                 rrdata.update({'nameserver': nameserverip})
                 continue
 
-            if ' has SOA record ' in line:
+            if rrtype.startswith('has SOA record '):
+                # without -C, a second SOA line is a separate record
+                if not soaparse and 'zone' in rrdata:
+                    raw_output.append(rrdata)
+                    rrdata = {}
+
                 linedata = line.split(' ', maxsplit=10)
 
                 zone = linedata[0]
@@ -230,7 +243,13 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
                             'minimum': minimum 
                         },
                     )
-                    raw_output.append(rrdata)
+
+                    # -C output: each SOA line completes a record, so start a
+                    # new one. Otherwise the single record is appended after
+                    # the loop.
+                    if soaparse:
+                        raw_output.append(rrdata)
+                        rrdata = {}
 
                 except IndexError:
                     if not warned:

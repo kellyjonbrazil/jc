@@ -60,7 +60,10 @@ Schema:
         "controlmaster":                              string,
         "controlpath":                                string,
         "controlpersist":                             string,
-        "dynamicforward":                             string,
+        "controlpersist_seconds":                     integer,
+        "dynamicforward": [
+                                                      string
+        ],
         "enableescapecommandline":                    string,
         "enablesshkeysign":                           string,
         "escapechar":                                 string,
@@ -85,6 +88,7 @@ Schema:
         "hostkeyalgorithms": [
                                                       string
         ],
+        "hostkeyalgorithms_strategy":                 string,
         "hostkeyalias":                               string,
         "hostname":                                   string,
         "identitiesonly":                             string,
@@ -144,8 +148,12 @@ Schema:
         "pubkeyacceptedalgorithms_strategy":          string,
         "pubkeyauthentication":                       string,
         "rekeylimit":                                 string,
+        "rekeylimit_bytes":                           integer,
+        "rekeylimit_seconds":                         integer,
         "remotecommand":                              string,
-        "remoteforward":                              string,
+        "remoteforward": [
+                                                      string
+        ],
         "requesttty":                                 string,
         "requiredrsasize":                            integer,
         "revokedhostkeys":                            string,
@@ -359,7 +367,10 @@ Examples:
         ],
         "rekeylimit": "0 0",
         "streamlocalbindmask": "0177",
-        "syslogfacility": "USER"
+        "syslogfacility": "USER",
+        "controlpersist_seconds": null,
+        "rekeylimit_bytes": 0,
+        "rekeylimit_seconds": 0
       }
     ]
 
@@ -517,12 +528,13 @@ Examples:
 """
 from typing import Set, List, Dict
 from jc.jc_types import JSONDictType
+from jc.parsers.sshd_conf import _convert_time, _convert_size
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ssh` config file and `ssh -G` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -559,9 +571,13 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     }
 
     int_list: Set[str] = {
-        'canonicalizemaxdots', 'connectionattempts', 'connecttimeout',
-        'forwardx11timeout', 'numberofpasswordprompts', 'port', 'protocol',
-        'requiredrsasize', 'serveralivecountmax', 'serveraliveinterval'
+        'canonicalizemaxdots', 'connectionattempts', 'numberofpasswordprompts',
+        'port', 'protocol', 'requiredrsasize', 'serveralivecountmax'
+    }
+
+    # values in seconds that can use time qualifiers (20m, 1h30m)
+    time_list: Set[str] = {
+        'connecttimeout', 'forwardx11timeout', 'serveraliveinterval'
     }
 
     for host in proc_data:
@@ -575,6 +591,21 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                 host[key] = new_list
                 continue
 
+            if key == 'rekeylimit':
+                # size in bytes and optional time in seconds. The keywords
+                # 'default' and 'none' and unparsable values are null
+                rekey_split = val.split(maxsplit=1)
+                host[key + '_bytes'] = _convert_size(rekey_split[0])
+                host[key + '_seconds'] = None
+                if len(rekey_split) > 1:
+                    host[key + '_seconds'] = _convert_time(rekey_split[1])
+                continue
+
+            if key == 'controlpersist':
+                # time in seconds. yes, no and unparsable values are null
+                host[key + '_seconds'] = _convert_time(val)
+                continue
+
             if key in split_fields_space:
                 host[key] = val.split()
                 continue
@@ -586,6 +617,9 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         for key, val in host.items():
             if key in int_list:
                 host[key] = jc.utils.convert_to_int(val)
+
+            if key in time_list:
+                host[key] = _convert_time(val)
 
     return proc_data
 
@@ -615,13 +649,13 @@ def parse(
     host: Dict = {}
 
     multi_fields: Set[str] = {
-        'certificatefile', 'identityfile', 'include', 'localforward',
-        'sendenv', 'setenv'
+        'certificatefile', 'dynamicforward', 'identityfile', 'include',
+        'localforward', 'remoteforward', 'sendenv', 'setenv'
     }
 
     modified_fields: Set[str] = {
         'casignaturealgorithms', 'ciphers', 'hostbasedacceptedalgorithms',
-        'HostKeyAlgorithms', 'kexalgorithms', 'macs',
+        'hostkeyalgorithms', 'kexalgorithms', 'macs',
         'pubkeyacceptedalgorithms'
     }
 
@@ -631,7 +665,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # skip any lines with only whitespace
             if not line.strip():
                 continue
@@ -640,7 +674,10 @@ def parse(
             if line.strip().startswith('#'):
                 continue
 
-            if line.strip().startswith('Host '):
+            tokens = line.split()
+
+            # a Host line starts a new block and ends any Match block
+            if tokens[0].lower() == 'host' and len(tokens) > 1:
                 if host:
                     raw_output.append(host)
 
@@ -649,18 +686,22 @@ def parse(
                     'host': hostnames,
                     'host_list': hostnames.split()
                 }
-
-            # support configuration file by ignoring all lines between
-            # Match xxx and Match any
-            if line.strip().startswith('Match all'):
                 match_block_found = False
                 continue
 
-            if line.strip().startswith('Match'):
-                match_block_found = True
+            # support configuration file by ignoring all lines between
+            # Match xxx and Match all. Keywords are case-insensitive.
+            if tokens[0].lower() == 'match':
+                match_block_found = not (
+                    len(tokens) == 2 and tokens[1].lower() == 'all'
+                )
                 continue
 
             if match_block_found:
+                continue
+
+            # skip keywords with no value
+            if len(tokens) < 2:
                 continue
 
             key, val = line.split(maxsplit=1)
@@ -672,6 +713,10 @@ def parse(
                 if key not in host:
                     host[key] = []
                 host[key].append(val)
+                continue
+
+            # for each keyword the first obtained value is used
+            if key in host:
                 continue
 
             if key in modified_fields and val[0] in modifiers:

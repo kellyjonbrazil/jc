@@ -293,14 +293,13 @@ Examples:
       ...
     ]
 """
-from typing import List, Dict
+from typing import List, Dict, Set
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/netstat` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -354,29 +353,28 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    rows: List = []
+    rows: Set[str] = set()
     this_row: str = ''
-    headers: str = ''
+    header_list: List[str] = []
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             row_name, header_data = line.split(':', maxsplit=1)
 
             if row_name in rows:
                 # this is data
                 _, row_data = line.split(':', maxsplit=1)
-                data_table = headers + row_data
-                output_line = simple_table_parse(data_table.splitlines())
-                output_line[0]['type'] = this_row
-                raw_output.extend(output_line)
+                output_line = dict(zip(header_list, row_data.strip().split(None, len(header_list) - 1)))
+                output_line['type'] = this_row
+                raw_output.append(output_line)
                 continue
 
             else:
                 # this is a header row
-                rows.append(row_name)
+                rows.add(row_name)
                 this_row = row_name
-                headers = header_data + '\n'
+                header_list = header_data.split()
                 continue
 
     return raw_output if raw else _process(raw_output)

@@ -33,9 +33,13 @@ Schema:
           "milliseconds":     int,
           "timestamp":        string
         },
-        "content":            string
+        "content":            string,
+        "proprietary":        string    # [0]
       }
     ]
+
+    [0] text after the end timestamp, such as positional coordinates.
+        Only present when there is such text.
 
 Examples:
 
@@ -118,4 +122,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/srt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/srt.py)
 
-Version 1.0 by Mark Rotner (rotner.mr@gmail.com)
+Version 1.1 by Mark Rotner (rotner.mr@gmail.com)

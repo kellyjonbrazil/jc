@@ -172,7 +172,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ethtool` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -254,7 +254,7 @@ def _parse_default(data: str) -> JSONDictType:
     mode: str = ''  # supported_link_modes, supported_fec_modes, advertised_link_modes,
                     # link_partner_advertised_link_modes, advertised_fec_modes, current_message_level
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
 
         if line.startswith('Settings for '):
             raw_output['name'] = line.split()[2][:-1]
@@ -381,7 +381,7 @@ def _parse_module_info(data: str) -> JSONDictType:
     previous_key: str = ''
     multi_value: List[str] = []
 
-    for line in filter(None, data.splitlines()):
+    for line in filter(None, jc.utils.splitlines(data)):
         key, val = line.strip().split(':', maxsplit=1)
         key = jc.utils.normalize_key(key)
         val = val.strip()

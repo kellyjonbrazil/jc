@@ -1,0 +1,54 @@
+[
+  {
+    "id": 4121,
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "flags": [
+      "qr",
+      "rd",
+      "ra"
+    ],
+    "query_num": 1,
+    "answer_num": 1,
+    "authority_num": 0,
+    "additional_num": 0,
+    "answer": [
+      {
+        "name": "example.com.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 3600,
+        "data": "93.184.216.34"
+      }
+    ],
+    "query_time": 12
+  },
+  {
+    "id": 4122,
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "answer": [
+      {
+        "name": "www.example.org.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 300,
+        "data": "192.0.2.10"
+      }
+    ]
+  },
+  {
+    "id": 4123,
+    "opcode": "QUERY",
+    "status": "NOERROR",
+    "answer": [
+      {
+        "name": "mail.example.org.",
+        "class": "IN",
+        "type": "A",
+        "ttl": 300,
+        "data": "192.0.2.20"
+      }
+    ]
+  }
+]

@@ -4,6 +4,9 @@ Supports `-a`, `-l`, or no `findmnt` options.
 
 > Note: Newer versions of `findmnt` have a JSON output option.
 
+> Note: Names that contain wide (e.g. CJK) characters can misalign the
+> columns. Use `findmnt -l` or `findmnt -J` for those.
+
 Usage (cli):
 
     $ findmnt | jc --findmnt
@@ -87,13 +90,14 @@ Examples:
 import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
-from jc.parsers.universal import simple_table_parse
+from jc.parsers.universal import simple_table_parse, sparse_table_parse
+from jc.parsers.mount import _split_options
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`findmnt` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -122,12 +126,17 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
         reg_options = []
         kv_options = {}
 
-        if 'options' in item:
-            opt_list = item['options'].split(',')
+        if item.get('options'):
+            opt_list = _split_options(item['options'])
 
             for option in opt_list:
                 if '=' in option:
                     k, v = option.split('=', maxsplit=1)
+
+                    # remove one pair of quotes around the value
+                    if len(v) > 1 and v.startswith('"') and v.endswith('"'):
+                        v = v[1:-1]
+
                     kv_options[k] = v
 
                 else:
@@ -174,12 +183,24 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # remove initial drawing characters
             line = re.sub(r'^([│ ├─└─|`-]+)/', _replace, line, count=1)
             table.append(line)
 
         table[0] = table[0].lower()
-        raw_output = simple_table_parse(table)
+
+        # `findmnt -r` separates the columns with a single space and escapes
+        # spaces in values. Otherwise the columns are aligned under the
+        # header and values can contain spaces, so use the column positions.
+        # Aligned headers can also be one space apart when no value is
+        # wider than its column name: then a row with more space-separated
+        # fields than the header has a value with spaces in it.
+        header_count = len(table[0].split())
+        if '  ' in table[0].strip() or any(
+                len([x for x in row.split(' ') if x]) > header_count for row in table[1:]):
+            raw_output = sparse_table_parse(table, delim='\x00')
+        else:
+            raw_output = simple_table_parse(table)
 
     return raw_output if raw else _process(raw_output)

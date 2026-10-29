@@ -395,5 +395,38 @@ class MyTests(unittest.TestCase):
         self.assertEqual(err.getvalue(), '')
 
 
+    def test_ics_lone_cr_in_value(self):
+        """
+        Test that a lone CR in a value is not a line break when the data
+        has LF or CRLF line endings
+        """
+        data = (
+            'BEGIN:VEVENT\r\n'
+            'UID:2\r\n'
+            'SUMMARY:Lunch\rEND:VEVENT\rBEGIN:VEVENT\rUID:9\r\n'
+            'END:VEVENT\r\n'
+        )
+        expected = [{'type': 'VEVENT', 'uid': '2', 'summary': 'Lunch\rEND:VEVENT\rBEGIN:VEVENT\rUID:9'}]
+        self.assertEqual(jc.parsers.ics.parse(data, quiet=True), expected)
+        self.assertEqual(jc.parsers.ics.parse(data.replace('\r\n', '\n'), quiet=True), expected)
+
+    def test_ics_cr_only_line_endings(self):
+        """
+        Test that CR is a line break when the data has no LF at all
+        """
+        data = 'BEGIN:VEVENT\rUID:2\rSUMMARY:Lunch\rEND:VEVENT\r'
+        expected = [{'type': 'VEVENT', 'uid': '2', 'summary': 'Lunch'}]
+        self.assertEqual(jc.parsers.ics.parse(data, quiet=True), expected)
+
+    def test_ics_folded_lines_and_unmatched_end(self):
+        """
+        Test 'ics' folded lines with several continuations and an END
+        that has no matching BEGIN
+        """
+        data = 'BEGIN:VCALENDAR\nBEGIN:VEVENT\nUID:1\nSUMMARY:a\n b\n\tc\nBEGIN:VALARM\nBEGIN:VALARM\nACTION:DISPLAY\nEND:VALARM\nEND:VEVENT\nEND:VEVENT\nEND:VCALENDAR\n'
+        expected = [{'type': 'VEVENT', 'uid': '1', 'summary': 'abc', 'alarms': [{}]}]
+        self.assertEqual(jc.parsers.ics.parse(data, raw=True, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

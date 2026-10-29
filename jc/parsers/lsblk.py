@@ -294,13 +294,14 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
 import jc.parsers.universal
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`lsblk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -310,6 +311,8 @@ class info():
 
 
 __version__ = info.version
+
+_TREE_RE = re.compile(r'^(?:[|\u2502][ \t]+)*(?:[|\u2502]$|[|`\u251c\u2514][-\u2500])?')
 
 
 def _process(proc_data):
@@ -345,6 +348,11 @@ def _process(proc_data):
     return proc_data
 
 
+def _clean_name(name):
+    """Remove the ASCII or Unicode tree-drawing prefix from a NAME cell"""
+    return _TREE_RE.sub('', name) if name else name
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -363,13 +371,13 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
     raw_output = []
     new_list = []
 
     if jc.utils.has_data(data):
 
-        cleandata = data.splitlines()
+        cleandata = jc.utils.splitlines(data)
 
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace(':', '_')
@@ -379,6 +387,9 @@ def parse(data, raw=False, quiet=False):
 
         # find multiple mount points and add to a single entry
         for entry in raw_output:
+            # remove the tree characters, if any, before checking for a device
+            entry['name'] = _clean_name(entry['name'])
+
             if entry['name']:
                 if 'mountpoints' in entry:
                     if entry['mountpoints']:
@@ -386,14 +397,7 @@ def parse(data, raw=False, quiet=False):
                     else:
                         entry['mountpoints'] = []
                 new_list.append(entry)
-            elif 'mountpoints' in entry and entry['mountpoints']:
+            elif new_list and 'mountpoints' in entry and entry['mountpoints']:
                 new_list[-1]['mountpoints'].append(entry['mountpoints'])
-
-        # clean up tree characters, if any
-        for entry in new_list:
-            tree_chars = ['`-', '|-', '├─', '└─']
-            for chars in tree_chars:
-                if entry['name'][0:2] == chars:
-                    entry['name'] = entry['name'][2:]
 
     return new_list if raw else _process(new_list)

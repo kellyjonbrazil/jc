@@ -1,0 +1,4 @@
+/dev/disk2s1 on /Volumes/my  node  b (exfat, local, nodev, nosuid, noowners)
+/dev/disk3s1 on /Volumes/BACKUP (exfat, local, nodev, nosuid, noowners)
+//user@server/a  node  mounted over vfs on /Volumes/share (smbfs, nodev, nosuid, mounted by user)
+/dev/disk4s1 on /Volumes/PHOTOS (exfat, local, nodev, nosuid, read-only, noowners)

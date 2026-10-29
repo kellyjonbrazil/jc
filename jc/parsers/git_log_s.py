@@ -22,6 +22,9 @@ local time of the system the parser is run on)
 The `epoch_utc` calculated timestamp field is timezone-aware and is
 only available if the timezone field is UTC.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git log | jc --git-log-s
@@ -30,7 +33,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('git_log_s', git_log_command_output.splitlines())
+    result = jc.parse('git_log_s', git_log_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -99,14 +102,14 @@ from jc.exceptions import ParseError
 
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
-changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
+changes_pattern = re.compile(r'^\s*(?P<files>\d+) files? changed(?:, (?P<insertions>\d+) insertions?\(\+\))?(?:, (?P<deletions>\d+) deletions?\(-\))?\s*$')
 numstat_pattern = re.compile(r'^(?P<insertions>\d+|-)\t(?P<deletions>\d+|-)\t(?P<name>.+)$')
 patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`git log` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -163,6 +166,23 @@ def _is_commit_hash(hash_string: str) -> bool:
     return False
 
 
+def _finish_record(output_line, message_lines, file_list, file_stats_list, patch_lines, use_message, raw):
+    """Assemble a completed commit record and process it unless raw"""
+    if use_message and message_lines:
+        output_line['message'] = '\n'.join(message_lines)
+
+    if file_list:
+        output_line['stats']['files'] = file_list
+
+    if file_stats_list:
+        output_line['stats']['file_stats'] = file_stats_list
+
+    if patch_lines:
+        output_line['patch'] = '\n'.join(patch_lines)
+
+    return output_line if raw else _process(output_line)
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -176,7 +196,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -200,6 +220,10 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
+                line = line[:-1]
 
             if line == '' or line == '\n':
                 continue
@@ -209,23 +233,19 @@ def parse(
             # oneline style
             if not line.startswith(' ') and line_list and _is_commit_hash(line_list[0]):
                 if output_line:
-                    if file_list:
-                        output_line['stats']['files'] = file_list
-
-                    if file_stats_list:
-                        output_line['stats']['file_stats'] = file_stats_list
-
-                    if patch_lines:
-                        output_line['patch'] = '\n'.join(patch_lines)
-
-                    yield output_line if raw else _process(output_line)
-
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished = (output_line, message_lines, file_list, file_stats_list, patch_lines)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
                     numstat_found = False
                     patch_lines = []
+                    try:
+                        yield _finish_record(*finished, use_message=False, raw=raw)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
                 output_line = {
                     'commit': line_list[0],
                     'message': line_list[1]
@@ -235,26 +255,19 @@ def parse(
             # all other styles
             if line.startswith('commit '):
                 if output_line:
-                    if message_lines:
-                        output_line['message'] = '\n'.join(message_lines)
-
-                    if file_list:
-                        output_line['stats']['files'] = file_list
-
-                    if file_stats_list:
-                        output_line['stats']['file_stats'] = file_stats_list
-
-                    if patch_lines:
-                        output_line['patch'] = '\n'.join(patch_lines)
-
-                    yield output_line if raw else _process(output_line)
-
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished = (output_line, message_lines, file_list, file_stats_list, patch_lines)
                     output_line = {}
                     message_lines = []
                     file_list = []
                     file_stats_list = []
                     numstat_found = False
                     patch_lines = []
+                    try:
+                        yield _finish_record(*finished, use_message=True, raw=raw)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
                 output_line['commit'] = line_list[1]
                 continue
 
@@ -296,27 +309,36 @@ def parse(
             numstat = numstat_pattern.match(line)
             if numstat:
                 # this is a --numstat line
+                numstat_name = jc.utils.unquote_git_path(numstat['name'])
                 file_stats_list.append({
-                    'name': numstat['name'],
+                    'name': numstat_name,
                     'insertions': numstat['insertions'],
                     'deletions': numstat['deletions']
                 })
-                file_list.append(numstat['name'])
+                file_list.append(numstat_name)
                 output_line.setdefault('stats', {})
                 numstat_found = True
                 continue
 
-            if line.startswith(' ') and 'changed, ' not in line:
+            changes = changes_pattern.match(line) if line.startswith(' ') else None
+
+            if line.startswith(' ') and not changes:
                 # this is a file name from `--stat`. Ignore if `--numstat`
                 # output was already found for this commit since it is
                 # more detailed.
                 if numstat_found:
                     continue
 
-                file_line_split = line.split('|')
-                file_name = file_line_split[0].strip()
+                # git separates the name from the stats with the last ` | `
+                # (a name can contain ` | ` too)
+                if ' | ' in line:
+                    file_line_split = line.rsplit(' | ', maxsplit=1)
+                else:
+                    file_line_split = line.split('|')
+                file_name = jc.utils.unquote_git_path(file_line_split[0].strip())
                 file_list.append(file_name)
 
+                lines_changed_count_str = None
                 if len(file_line_split) > 1:
                     file_stats = file_line_split[1].strip()
                     lines_changed_str = file_stats.split(' ')
@@ -328,18 +350,12 @@ def parse(
                 file_stats_list.append(file_stat)
                 continue
 
-            if line.startswith(' ') and 'changed, ' in line:
+            if changes:
                 # this is the stat summary
-                changes = changes_pattern.match(line)
-                if changes:
-                    files = changes['files']
-                    insertions = changes['insertions']
-                    deletions = changes['deletions']
-
                 output_line['stats'] = {
-                    'files_changed': files or '0',
-                    'insertions': insertions or '0',
-                    'deletions':  deletions or '0'
+                    'files_changed': changes['files'],
+                    'insertions': changes['insertions'] or '0',
+                    'deletions': changes['deletions'] or '0'
                 }
                 continue
 
@@ -355,19 +371,10 @@ def parse(
 
     try:
         if output_line:
-            if message_lines:
-                output_line['message'] = '\n'.join(message_lines)
-
-            if file_list:
-                output_line['stats']['files'] = file_list
-
-            if file_stats_list:
-                output_line['stats']['file_stats'] = file_stats_list
-
-            if patch_lines:
-                output_line['patch'] = '\n'.join(patch_lines)
-
-            yield output_line if raw else _process(output_line)
+            yield _finish_record(
+                output_line, message_lines, file_list, file_stats_list, patch_lines,
+                use_message=True, raw=raw
+            )
 
     except Exception as e:
         yield raise_or_yield(ignore_exceptions, e, line)

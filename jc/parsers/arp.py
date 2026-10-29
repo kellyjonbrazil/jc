@@ -119,7 +119,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.12'
+    version = '1.13'
     description = '`arp` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -129,6 +129,8 @@ class info():
 
 
 __version__ = info.version
+
+_LINUX_HEADER = ['Address', 'HWtype', 'HWaddress', 'Flags', 'Mask', 'Iface']
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -179,7 +181,7 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
 
@@ -209,14 +211,29 @@ def parse(
 
                 raw_output.append(output_line)
 
-        # detect if linux style was used
-        elif cleandata[0].startswith('Address'):
+        # detect if linux style was used (full header row only, since an
+        # `arp -a` line can start with a host name such as Addressbook)
+        elif cleandata[0].split() == _LINUX_HEADER:
 
             # fix header row to change Flags Mask to flags_mask
             cleandata[0] = cleandata[0].replace('Flags Mask', 'flags_mask')
             cleandata[0] = cleandata[0].lower()
 
             raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+
+            # incomplete entries have blank HWtype, HWaddress and Flags
+            # cells, so the row is short and its columns are shifted
+            for i, entry in enumerate(raw_output):
+                if entry.get('hwtype') == '(incomplete)':
+                    rest = [v for k, v in entry.items()
+                            if k not in ('address', 'hwtype')]
+                    raw_output[i] = {
+                        'address': entry['address'],
+                        'hwtype': None,
+                        'hwaddress': None,
+                        'flags_mask': None,
+                        'iface': rest[-1] if rest else None
+                    }
 
         # otherwise, try bsd style
         else:

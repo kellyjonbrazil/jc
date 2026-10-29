@@ -37,7 +37,7 @@ Schema:
         "options": [
                                   string
         ],
-        "phys":                   string
+        "phys":                   string,
         "pages":                  integer,
         "N<id>":                  integer
       }
@@ -54,8 +54,7 @@ Examples:
         "caller": "map_irq_stack+0x93/0xe0",
         "options": [
           "vmap"
-        ],
-        "phys": "0x00000000bfefe000"
+        ]
       },
       {
         "start": "0xffffb3c1c0005000",
@@ -65,7 +64,7 @@ Examples:
         "options": [
           "ioremap"
         ],
-        "phys": "0x00000000bfeff000"
+        "phys": "0x00000000bfefe000"
       },
       ...
     ]
@@ -79,8 +78,7 @@ Examples:
         "caller": "map_irq_stack+0x93/0xe0",
         "options": [
           "vmap"
-        ],
-        "phys": "0x00000000bfefe000"
+        ]
       },
       {
         "start": "0xffffb3c1c0005000",
@@ -90,7 +88,7 @@ Examples:
         "options": [
           "ioremap"
         ],
-        "phys": "0x00000000bfeff000"
+        "phys": "0x00000000bfefe000"
       },
       ...
     ]
@@ -101,7 +99,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/vmallocinfo` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -158,16 +156,16 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List = []
-    output_line: Dict = {}
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             area, size, details = line.split(maxsplit=2)
             start, end = area.split('-', maxsplit=1)
             detail_split = details.split()
             caller = ''
             options: List = []
+            details_fields: Dict = {}
 
             if details == 'unpurged vm_area':
                 caller = 'unpurged vm_area'
@@ -176,8 +174,8 @@ def parse(
                 caller = detail_split[0]
                 for item in detail_split[1:]:
                     if '=' in item:
-                        key, val = item.split('=')
-                        output_line.update({key: val})
+                        key, val = item.split('=', maxsplit=1)
+                        details_fields[key] = val
                     else:
                         options.append(item)
 
@@ -189,7 +187,10 @@ def parse(
                 'options': options
             }
 
-            if output_line:
-                raw_output.append(output_line)
+            for key, val in details_fields.items():
+                if key not in output_line:
+                    output_line[key] = val
+
+            raw_output.append(output_line)
 
     return raw_output if raw else _process(raw_output)

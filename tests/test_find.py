@@ -21,6 +21,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/find.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_find_json = json.loads(f.read())
 
+    def test_find_line_separators(self):
+        """
+        Test 'find' with line-break characters other than LF in a file name
+        """
+        data = './a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n./b\n'
+        result = jc.parsers.find.parse(data, quiet=True)
+        self.assertEqual(result[0]['node'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['node'], 'b')
+
     def test_find_nodata(self):
         """
         Test 'find' with no data
@@ -38,6 +47,18 @@ class MyTests(unittest.TestCase):
         Test 'find' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.find.parse(self.ubuntu_18_4_find, quiet=True), self.ubuntu_18_4_find_json)
+    def test_find_no_slash(self):
+        """
+        Test 'find' with lines that have no slash
+        """
+        self.assertEqual(jc.parsers.find.parse('file.txt\n.\n./\n./a/b\n/etc\n', quiet=True), [
+            {'path': None, 'node': 'file.txt'},
+            {'path': None, 'node': '.'},
+            {'path': '.', 'node': None},
+            {'path': './a', 'node': 'b'},
+            {'path': None, 'node': 'etc'}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

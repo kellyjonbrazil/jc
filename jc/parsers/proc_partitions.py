@@ -76,7 +76,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/partitions` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -102,6 +102,9 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     for entry in proc_data:
         for key in entry:
+            if key == 'name':
+                continue
+
             try:
                 entry[key] = int(entry[key])
             except Exception:
@@ -135,7 +138,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata = list(filter(None, data.splitlines()))
+        cleandata = list(filter(None, jc.utils.splitlines(data)))
         cleandata[0] = cleandata[0].replace('#', 'num_')
         raw_output = simple_table_parse(cleandata)
 

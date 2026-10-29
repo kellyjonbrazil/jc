@@ -212,14 +212,14 @@ Examples:
 """
 import re
 from ipaddress import IPv4Network
-from typing import List, Dict
+from typing import List, Dict, Optional
 from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.5'
+    version = '2.6'
     description = '`ifconfig` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -235,29 +235,52 @@ def _convert_cidr_to_quad(string: str) -> str:
     return str(IPv4Network('0.0.0.0/' + string).netmask)
 
 
-def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
+def _hex_to_int(value: Optional[str]) -> Optional[int]:
+    try:
+        return int(value, 16)  # type: ignore
+    except (ValueError, TypeError):
+        return None
+
+
+def _process(
+    proc_data: List[JSONDictType],
+    hex_flags: Optional[List[bool]] = None
+) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
     Parameters:
 
         proc_data:   (List of Dictionaries) raw structured data to process
+        hex_flags:   (List of booleans) True for each entry whose `flags`
+                     value is hexadecimal
 
     Returns:
 
         List of Dictionaries. Structured to conform to the schema.
     """
     int_list = {
-        'flags', 'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
+        'mtu', 'ipv6_mask', 'rx_packets', 'rx_bytes', 'rx_errors', 'rx_dropped',
         'rx_overruns', 'rx_frame', 'tx_packets', 'tx_bytes', 'tx_errors', 'tx_dropped',
-        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'nd6_options', 'lane'
+        'tx_overruns', 'tx_carrier', 'tx_collisions', 'metric', 'lane'
     }
     float_list = {'rx_power_mw', 'rx_power_dbm', 'tx_bias_ma'}
 
-    for entry in proc_data:
+    for idx, entry in enumerate(proc_data):
         for key in entry:
             if key in int_list:
                 entry[key] = jc.utils.convert_to_int(entry[key])
+
+        # BSD and macOS ifconfig print flags in hexadecimal, Linux in decimal
+        if 'flags' in entry:
+            if hex_flags and hex_flags[idx]:
+                entry['flags'] = _hex_to_int(entry['flags'])
+            else:
+                entry['flags'] = jc.utils.convert_to_int(entry['flags'])
+
+        # only BSD and macOS print nd6 options, always in hexadecimal
+        if 'nd6_options' in entry:
+            entry['nd6_options'] = _hex_to_int(entry['nd6_options'])
 
         # convert OSX-style subnet mask to dotted quad
         if 'ipv4_mask' in entry:
@@ -327,12 +350,26 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _bundle_match(pattern_list, string):
-    """Returns a match object if a string matches one of a list of patterns.
+def _header_match(pattern_list, string):
+    """Returns a match object if the start of a string (column 0) matches one
+    of a list of interface header patterns. Indented lines are never headers.
     If no match is found, returns None"""
     for pattern in pattern_list:
-        match = re.search(pattern, string)
+        match = pattern.match(string)
         if match:
+            return match
+    return None
+
+
+def _bundle_match(pattern_list, string):
+    """Returns a match object if a string matches one of a list of patterns
+    at its first word, ignoring indentation. Text later in the line (an SSID
+    or a description, for example) does not count.
+    If no match is found, returns None"""
+    indent = len(string) - len(string.lstrip())
+    for pattern in pattern_list:
+        match = pattern.search(string)
+        if match and match.start() <= indent:
             return match
     return None
 
@@ -392,6 +429,8 @@ def parse(
     }
 
     interface_item: Dict = interface_obj.copy()
+    hex_flags: List[bool] = []
+    item_hex_flags = False
     ipv4_info: List = []
     ipv6_info: List = []
     lane_info: List = []
@@ -424,7 +463,7 @@ def parse(
 
     # Linux syntax
     re_linux_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+)\s+
+        (?P<name>\S+)\s+
         Link\sencap:(?P<type>\S+\s?\S+)
         (\s+HWaddr\s+\b(?P<mac_addr>[0-9A-Fa-f:?]+))?
         ''', re.IGNORECASE | re.VERBOSE
@@ -441,8 +480,11 @@ def parse(
         Scope:(?P<scope>Link|Host)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # state words are only tried from the start of a run of words separated by
+    # single spaces. A start further into the run cannot match where an earlier
+    # start did not, so the result is the same with less searching.
     re_linux_state = re.compile(r'''
-        \W+(?P<state>(?:\w+\s)+)(?:\s+)?
+        (?:^\w+\s|\W(?<!\w\s))(?P<state>(?:\w+\s)+)(?:\s+)?
         MTU:(?P<mtu>[0-9]+)\s+
         Metric:(?P<metric>[0-9]+)
         ''', re.IGNORECASE | re.VERBOSE
@@ -464,7 +506,7 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_linux_bytes = re.compile(r'''
-        \W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
+        ^\W+RX\sbytes:(?P<rx_bytes>\d+)\s+\(.*\)\s+
         TX\sbytes:(?P<tx_bytes>\d+)\s+\(.*\)
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -476,8 +518,8 @@ def parse(
 
     # OpenBSD syntax
     re_openbsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
-        flags=(?P<flags>[0-9]+)
+        (?P<name>\S+):\s+
+        flags=(?P<flags>[0-9A-Fa-f]+)
         <(?P<state>\S+)?>\s+
         mtu\s+(?P<mtu>[0-9]+)
         ''', re.IGNORECASE | re.VERBOSE
@@ -491,14 +533,14 @@ def parse(
     re_openbsd_ipv6 = re.compile(r'''
         inet6\s+(?P<address>\S+)\s+
         prefixlen\s+(?P<mask>[0-9]+)\s+
-        scopeid\s+(?P<scope>\w+x\w+)
+        scopeid\s+(?P<scope>\w[^\Wx]*x\w+)
         <(?P<type>link|host|global)>
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_details = re.compile(r'''
-        \S+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+)?
+        (?<!\S)[a-z]+\s+(?:(?P<mac_addr>[0-9A-Fa-f:?]+)\s+|[0-9A-Fa-f-]+\s+)?
         txqueuelen\s+[0-9]+\s+
-        \((?P<type>\S+\s?\S+)\)
+        \((?P<type>\S(?:\S*\s)?\S+)\)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_openbsd_rx = re.compile(r'''
@@ -529,8 +571,8 @@ def parse(
 
     # FreeBSD syntax
     re_freebsd_interface = re.compile(r'''
-        (?P<name>[a-zA-Z0-9:._-]+):\s+
-        flags=(?P<flags>[0-9]+)
+        (?P<name>\S+):\s+
+        flags=(?P<flags>[0-9A-Fa-f]+)
         <(?P<state>\S+)>\s+
         metric\s+(?P<metric>[0-9]+)\s+
         mtu\s+(?P<mtu>[0-9]+)
@@ -554,14 +596,15 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_ipv6 = re.compile(r'''
-        \s?inet6\s(?P<address>.*?)
-        (?:\%(?P<scope_id>\w+\d+))?\s
+        ^\s*inet6\s(?P<address>.*?)
+        (?:\%(?P<scope_id>\w+\d))?\s
         prefixlen\s(?P<mask>\d+).*?(?=scopeid|$)  # positive lookahead for scopeid or end of line
         (?:scopeid\s(?P<scope>0x\w+))?
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # OpenBSD prints `lladdr` for the MAC address
     re_freebsd_details = re.compile(r'''
-        ether\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
+        (?:ether|lladdr)\s+(?P<mac_addr>[0-9A-Fa-f:?]+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_status = re.compile(r'''
@@ -571,16 +614,22 @@ def parse(
     re_freebsd_hwaddr = re.compile(r'''
         hwaddr\s(?P<hw_address>[0-9A-Fa-f:?]+)
         (?:\s+media:\s(?P<media>.+)\s
-        <(?P<media_flags>.+)>)?
+        <(?P<media_flags>[^<]+)>)?
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_media = re.compile(r'''
-        media:\s(?P<media>.+)
-        (?:\s+?<(?P<media_flags>.+)>)
+        ^\s*media:\s(?P<media>.+)
+        (?:\s<(?P<media_flags>[^<]+)>)
+        ''', re.IGNORECASE | re.VERBOSE
+    )
+    # media without <flags> (e.g. `media: autoselect` or OpenBSD's
+    # `media: Ethernet autoselect (1000baseT full-duplex)`)
+    re_freebsd_media_no_flags = re.compile(r'''
+        ^\s*media:\s(?P<media>[^<\s](?:[^<]*[^<\s])?)\s*$
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_nd6_options = re.compile(r'''
-        nd6\soptions=(?P<nd6_options>\d+)
+        nd6\soptions=(?P<nd6_options>[0-9A-Fa-f]+)
         <(?P<nd6_flags>\S+)>
         ''', re.IGNORECASE | re.VERBOSE
     )
@@ -588,26 +637,27 @@ def parse(
         plugged:\s(?P<plugged>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
+    # each value runs up to the first occurrence of the next label
     re_freebsd_vendor_pn_sn_date = re.compile(r'''
-        vendor:\s(?P<vendor>.+)\s
-        PN:\s(?P<vendor_pn>.+)\s
-        SN:\s(?P<vendor_sn>.+)\s
+        ^\s*vendor:\s(?P<vendor>(?:(?!\sPN:\s).)+)\s
+        PN:\s(?P<vendor_pn>(?:(?!\sSN:\s).)+)\s
+        SN:\s(?P<vendor_sn>(?:(?!\sDATE:\s).)+)\s
         DATE:\s(?P<vendor_date>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_temp_volts = re.compile(r'''
-        module\stemperature:\s(?P<module_temperature>.+)\s
+        ^\s*module\stemperature:\s(?P<module_temperature>.+)\s
         voltage:\s(?P<module_voltage>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_tx_rx_power = re.compile(r'''
-        RX:\s+(?P<rx_power>.+)\s+
+        ^\s*RX:\s+(?P<rx_power>\S.*)\s
         TX:\s(?P<tx_pwer>.+)
         ''', re.IGNORECASE | re.VERBOSE
     )
     re_freebsd_options = re.compile(r'''
         options=(?P<options>[0-9A-Fa-f]+)
-        <(?P<options_flags>.+)>
+        <(?P<options_flags>[^<]+)>
         ''', re.IGNORECASE | re.VERBOSE
     )
 
@@ -620,18 +670,21 @@ def parse(
         ''', re.IGNORECASE | re.VERBOSE
     )
 
+    # interface header patterns are only tried at column 0, so they are not
+    # part of the lists of patterns for the other lines
     re_linux = [
-        re_linux_interface, re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
+        re_linux_ipv4, re_linux_ipv6, re_linux_state, re_linux_rx, re_linux_tx,
         re_linux_bytes, re_linux_tx_stats
     ]
     re_openbsd = [
-        re_openbsd_interface, re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
+        re_openbsd_ipv4, re_openbsd_ipv6, re_openbsd_details, re_openbsd_rx,
         re_openbsd_rx_stats, re_openbsd_tx, re_openbsd_tx_stats
     ]
     re_freebsd = [
-        re_freebsd_interface, re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
+        re_freebsd_ipv4, re_freebsd_ipv4_v2, re_freebsd_ipv4_utun, re_freebsd_ipv6,
         re_freebsd_details, re_freebsd_status, re_freebsd_nd6_options, re_freebsd_plugged,
         re_freebsd_vendor_pn_sn_date, re_freebsd_temp_volts, re_freebsd_hwaddr, re_freebsd_media,
+        re_freebsd_media_no_flags,
         re_freebsd_tx_rx_power, re_freebsd_options
     ]
 
@@ -640,10 +693,10 @@ def parse(
     ipv6_patterns = [re_linux_ipv6, re_openbsd_ipv6, re_freebsd_ipv6]
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # Find new interface lines
-            interface_match = _bundle_match(interface_patterns, line)
+            interface_match = _header_match(interface_patterns, line)
             if interface_match:
                 if interface_item['name'] is not None:
                     if ipv4_info:
@@ -653,11 +706,19 @@ def parse(
                     if lane_info:
                         interface_item['lanes'] = lane_info
                     raw_output.append(interface_item)
+                    hex_flags.append(item_hex_flags)
                     interface_item = interface_obj.copy()
                     ipv4_info = []
                     ipv6_info = []
                     lane_info = []
 
+                # net-tools (Linux) prints `flags=%d<...>  mtu` (decimal,
+                # two spaces before mtu). BSD and macOS print `flags=%x<...>`
+                # followed by a single space.
+                item_hex_flags = not (
+                    interface_match.re is re_openbsd_interface
+                    and '>  mtu' in interface_match.group(0)
+                )
                 interface_item.update(interface_match.groupdict())
                 continue
 
@@ -710,7 +771,7 @@ def parse(
                 continue
 
             # lane information lines
-            lane_match = re.search(re_freebsd_lane, line)
+            lane_match = _bundle_match([re_freebsd_lane], line)
             if lane_match:
                 lane_info.append(lane_match.groupdict())
                 continue
@@ -729,5 +790,6 @@ def parse(
             if lane_info:
                 interface_item['lanes'] = lane_info
             raw_output.append(interface_item)
+            hex_flags.append(item_hex_flags)
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output if raw else _process(raw_output, hex_flags)

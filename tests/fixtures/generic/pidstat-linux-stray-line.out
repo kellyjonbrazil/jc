@@ -1,0 +1,4 @@
+#      Time   UID       PID    %usr %system  %guest    %CPU   CPU  Command
+ 1646859134     0         1    0.00    0.03    0.00    0.03     0  /usr/lib/systemd/systemd --switched-root --system --deserialize 22 
+cp: cannot stat 'backup.tar': No such file or directory
+ 1646859134     0         6    0.00    0.00    0.00    0.00     0  ksoftirqd/0

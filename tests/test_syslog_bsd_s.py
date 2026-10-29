@@ -33,5 +33,22 @@ class MyTests(unittest.TestCase):
         self.assertEqual(list(jc.parsers.syslog_bsd_s.parse(self.syslog_bsd.splitlines(), quiet=True)), self.syslog_bsd_streaming_json)
 
 
+    def test_syslog_bsd_s_unparsable_ignore_exceptions(self):
+        """
+        Test 'syslog_bsd_s' with an unparsable line: an unparsable record without ignore_exceptions, an error record with it
+        """
+        data = ['<3444>Oct 11 22:14:15 mymachine su: failed', '<34>Oct 11 22:14:15 mymachine su: failed']
+        result = list(jc.parsers.syslog_bsd_s.parse(data, quiet=True))
+        self.assertEqual(result[0], {'unparsable': data[0]})
+        self.assertEqual(result[1]['hostname'], 'mymachine')
+
+        result = list(jc.parsers.syslog_bsd_s.parse(data, quiet=True, ignore_exceptions=True))
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0], {'_jc_meta': {'success': False, 'error': 'ParseError: Not syslog data', 'line': data[0]}})
+        self.assertEqual(result[1]['hostname'], 'mymachine')
+        self.assertEqual(result[1]['content'], 'failed')
+        self.assertEqual(result[1]['_jc_meta'], {'success': True})
+
+
 if __name__ == '__main__':
     unittest.main()

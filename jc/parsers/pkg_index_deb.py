@@ -122,12 +122,13 @@ Examples:
 """
 from typing import List
 from jc.jc_types import JSONDictType
+import jc.utils
 import jc.parsers.rpm_qi as rpm_qi
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'Debian Package Index file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -158,6 +159,5 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     # This parser is an alias of rpm_qi.py
-    rpm_qi.info = info  # type: ignore
-    rpm_qi.__name__ = __name__
-    return rpm_qi.parse(data, raw, quiet)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    return rpm_qi.parse(data, raw, quiet=True)

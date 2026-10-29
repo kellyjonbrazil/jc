@@ -321,6 +321,7 @@ Examples:
       }
     ]
 """
+import re
 from typing import List, Dict, Set
 import jc.utils
 from jc.parsers.uptime import parse as parse_uptime
@@ -329,7 +330,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`top -b` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -339,6 +340,16 @@ class info():
 
 
 __version__ = info.version
+
+
+# top pads its summary numbers to a fixed width, so a number that fills the
+# width (e.g. 100.0 or a large memory value) touches the text before it.
+_GLUED_RE = re.compile(r'(?:(?<=[A-Za-z]),|:|(?<=used)\.)(?=\S)')
+
+
+def _split_summary(line: str) -> List[str]:
+    """Split a summary line into fields, even if a number touches its label."""
+    return _GLUED_RE.sub(lambda m: m.group(0) + ' ', line).split()
 
 
 def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[str]:
@@ -587,7 +598,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if line.startswith('top - '):
                 if item_obj:
                     if process_list:
@@ -603,7 +614,7 @@ def parse(
 
             if line.startswith('Tasks:'):
                 # Tasks: 112 total,   1 running, 111 sleeping,   0 stopped,   0 zombie
-                line_list = line.split()
+                line_list = _split_summary(line)
                 item_obj.update(
                     {
                         'tasks_total': line_list[1],
@@ -617,7 +628,7 @@ def parse(
 
             if line.startswith('%Cpu(s):'):
                 # %Cpu(s):  5.9 us,  5.9 sy,  0.0 ni, 88.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-                line_list = line.split()
+                line_list = _split_summary(line)
                 item_obj.update(
                     {
                         'cpu_user': line_list[1],
@@ -634,7 +645,7 @@ def parse(
 
             if line[1:].startswith('iB Mem :'):
                 # KiB Mem :  3861332 total,  3446476 free,   216940 used,   197916 buff/cache
-                line_list = line.split()
+                line_list = _split_summary(line)
                 item_obj.update(
                     {
                         'mem_unit': line_list[0],
@@ -648,7 +659,7 @@ def parse(
 
             if line[1:].startswith('iB Swap:'):
                 # KiB Swap:  2097148 total,  2097148 free,        0 used.  3419356 avail Mem
-                line_list = line.split()
+                line_list = _split_summary(line)
                 item_obj.update(
                     {
                         'swap_unit': line_list[0],

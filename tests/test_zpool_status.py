@@ -91,5 +91,17 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_zpool_status_line_separator(self):
+        """
+        Test 'zpool_status' with a line-break character other than LF inside a field
+        """
+        data = '  pool: tank\n state: DEGRADED\nerrors: Permanent errors have been detected in the following files:\n\n        /tank/home/u/report.txt\u2028state: ONLINE\u2028errors: No known data errors\u2028pool: backup\u2028state: FAULTED\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['pool'], 'tank')
+        self.assertEqual(result[0]['state'], 'DEGRADED')
+        self.assertEqual(result[0]['errors'], 'Permanent errors have been detected in the following files:\n/tank/home/u/report.txt\u2028state: ONLINE\u2028errors: No known data errors\u2028pool: backup\u2028state: FAULTED')
+
+
 if __name__ == '__main__':
     unittest.main()

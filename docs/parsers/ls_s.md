@@ -19,6 +19,13 @@ Block (`b`) and character (`c`) device entries report `major_number` and
 `minor_number` instead of `size`, since `ls` prints the device's major and
 minor numbers in that column rather than a byte count.
 
+Entries that `ls` cannot stat (e.g. `-????????? ? ? ? ?  ? name`) report
+`null` for `links`, `owner`, `group`, `size`, and `date`.
+
+Only symbolic link (`l`) entries have a `link_to` field. The filename is
+split at the first ` -> `, so a link whose name contains ` -> ` reports
+the rest of its name as part of `link_to`.
+
 `--time-style=iso` is not supported since its date field is a different
 width depending on how old each file is, which this parser cannot detect
 reliably. Use `--time-style=long-iso` or `--time-style=full-iso` instead.
@@ -40,7 +47,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('ls_s', ls_command_output.splitlines())
+    result = jc.parse('ls_s', ls_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -105,7 +112,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -120,4 +127,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/ls_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ls_s.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -1,4 +1,5 @@
 import os
+import json
 import unittest
 from jc.exceptions import ParseError
 import jc.parsers.asciitable_m
@@ -7,6 +8,21 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # input
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable_m-wrapped-cells.out'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_wrapped_cells = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable-m--long-row.out'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_long_row = f.read()
+
+    # output
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable_m-wrapped-cells.json'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_wrapped_cells_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/asciitable-m--long-row.json'), 'r', encoding='utf-8') as f:
+        generic_asciitable_m_long_row_json = json.loads(f.read())
+
 
     def test_asciitable_m_nodata(self):
         """
@@ -389,6 +405,96 @@ class MyTests(unittest.TestCase):
         '''
 
         self.assertRaises(ParseError, jc.parsers.asciitable_m.parse, input, quiet=True)
+
+
+    def test_asciitable_m_line_separator(self):
+        """
+        Test 'asciitable_m' with a line-break character other than LF inside a field
+        """
+        data = '+---------+-------+-------------+\n| user    | role  | note        |\n+---------+-------+-------------+\n| alice   | admin | on call     |\n+---------+-------+-------------+\n| carol   | guest | hi\u2028+-+\u2028root |\n+---------+-------+-------------+\n| bob     | guest | intern      |\n+---------+-------+-------------+\n'
+        result = jc.parsers.asciitable_m.parse(data, quiet=True)
+        self.assertEqual([x['user'] for x in result], ['alice', 'carol', 'bob'])
+        self.assertEqual(result[1]['note'], 'hi\u2028+-+\u2028root')
+
+    def test_asciitable_m_wrapped_cells(self):
+        """
+        Test 'asciitable_m' with many wrapped lines in header and data cells
+        """
+        self.assertEqual(jc.parsers.asciitable_m.parse(self.generic_asciitable_m_wrapped_cells, quiet=True), self.generic_asciitable_m_wrapped_cells_json)
+
+    def test_asciitable_m_empty_lines_in_cell(self):
+        """
+        Test 'asciitable_m' with blank continuation lines inside a cell
+        """
+        data = '+------+------+\n| a    | b    |\n+------+------+\n|      | one  |\n| x    |      |\n|      | two  |\n| y    |      |\n+------+------+\n'
+        expected = [{'a': 'x\ny', 'b': 'one\ntwo'}]
+        self.assertEqual(jc.parsers.asciitable_m.parse(data, quiet=True), expected)
+
+    def test_asciitable_m_long_row(self):
+        """
+        Test 'asciitable_m' with one very long row and many short rows
+        """
+        self.assertEqual(jc.parsers.asciitable_m.parse(self.generic_asciitable_m_long_row, quiet=True), self.generic_asciitable_m_long_row_json)
+
+    def test_asciitable_m_ragged_rows(self):
+        """
+        Test 'asciitable_m' with a data row that is longer than the header
+        row
+        """
+        input = '''
++-----+-----+
+| foo | bar |
++=====+=====+
+| 1   | 2   |
++-----+-----+
+| 3   | 4   |  extra |
++-----+-----+
+        '''
+        expected = [
+            {"foo": "1", "bar": "2", "": None},
+            {"foo": "3", "bar": "4", "": "extra"}
+        ]
+
+        self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
+    def test_asciitable_m_incomplete_ansi_escape(self):
+        """
+        Test 'asciitable_m' with an incomplete ANSI escape at the end of a cell
+        """
+        for code in ('\x1b[', '\x9b ', '\x1b[0;1'):
+            with self.subTest(code=repr(code)):
+                cell = ('bob' + code).ljust(9)
+                input = ('+-----------+-------+--------+\n'
+                         '| user      | admin | active |\n'
+                         '+-----------+-------+--------+\n'
+                         '| \x1b[31malice\x1b[0m     | yes   | yes    |\n'
+                         '+-----------+-------+--------+\n'
+                         '| ' + cell + ' | no    | yes    |\n'
+                         '+-----------+-------+--------+\n')
+                expected = [
+                    {'user': 'alice', 'admin': 'yes', 'active': 'yes'},
+                    {'user': ('bob' + code).strip(), 'admin': 'no', 'active': 'yes'}
+                ]
+                self.assertEqual(jc.parsers.asciitable_m.parse(input, quiet=True), expected)
+
+    def test_asciitable_m_wide_chars_on_continuation_line(self):
+        """
+        Test 'asciitable_m' with East Asian wide characters on a continuation line of a bordered table
+        """
+        data = (
+            '\u250f\u2501\u2501\u2501\u2501\u2501\u2501\u2533\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2513\n'
+            '\u2503 name \u2503 desc   \u2503\n'
+            '\u2521\u2501\u2501\u2501\u2501\u2501\u2501\u2547\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2529\n'
+            '\u2502 a    \u2502 one    \u2502\n'
+            '\u2502      \u2502 \u65e5\u672c\u8a9e \u2502\n'
+            '\u251c\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524\n'
+            '\u2502 b    \u2502 two    \u2502\n'
+            '\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2534\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n'
+        )
+        self.assertEqual(
+            jc.parsers.asciitable_m.parse(data, quiet=True),
+            [{'name': 'a', 'desc': 'one\n\u65e5\u672c\u8a9e'}, {'name': 'b', 'desc': 'two'}]
+        )
 
 
 if __name__ == '__main__':

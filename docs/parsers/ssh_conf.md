@@ -65,7 +65,10 @@ Schema:
         "controlmaster":                              string,
         "controlpath":                                string,
         "controlpersist":                             string,
-        "dynamicforward":                             string,
+        "controlpersist_seconds":                     integer,
+        "dynamicforward": [
+                                                      string
+        ],
         "enableescapecommandline":                    string,
         "enablesshkeysign":                           string,
         "escapechar":                                 string,
@@ -90,6 +93,7 @@ Schema:
         "hostkeyalgorithms": [
                                                       string
         ],
+        "hostkeyalgorithms_strategy":                 string,
         "hostkeyalias":                               string,
         "hostname":                                   string,
         "identitiesonly":                             string,
@@ -149,8 +153,12 @@ Schema:
         "pubkeyacceptedalgorithms_strategy":          string,
         "pubkeyauthentication":                       string,
         "rekeylimit":                                 string,
+        "rekeylimit_bytes":                           integer,
+        "rekeylimit_seconds":                         integer,
         "remotecommand":                              string,
-        "remoteforward":                              string,
+        "remoteforward": [
+                                                      string
+        ],
         "requesttty":                                 string,
         "requiredrsasize":                            integer,
         "revokedhostkeys":                            string,
@@ -364,7 +372,10 @@ Examples:
         ],
         "rekeylimit": "0 0",
         "streamlocalbindmask": "0177",
-        "syslogfacility": "USER"
+        "syslogfacility": "USER",
+        "controlpersist_seconds": null,
+        "rekeylimit_bytes": 0,
+        "rekeylimit_seconds": 0
       }
     ]
 
@@ -547,4 +558,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/ssh_conf.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ssh_conf.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

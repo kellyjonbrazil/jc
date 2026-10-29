@@ -1,0 +1,12 @@
+BootCurrent: 0002
+Timeout: 0 seconds
+BootOrder: 0003,0002,0000,0001
+BootNext: 0003
+Boot0000* WARNING
+Boot0001* Embedded NIC 1 Port 1 Partition 1
+Boot0002* opensuse-secureboot
+Boot0003* BootOrder: 0002,0000,0001
+Boot0004  Timeout: 30 seconds
+Boot0005* BootCurrent: 0001	HD(1,GPT,66b2a325-3129-45d3-84dd-c1a4e4bd846b,0x800,0x100000)/File(\EFI\BootOrder\x: 0003.efi)
+MirroredPercentageAbove4G: 0.00
+MirrorMemoryBelow4GB: false

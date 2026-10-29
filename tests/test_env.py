@@ -64,5 +64,38 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.env.parse(self.env_multiline, quiet=True, raw=True), self.env_multiline_raw_json)
 
 
+    def test_env_line_separator(self):
+        """
+        Test 'env' with a line-break character other than LF inside a field
+        """
+        data = 'PATH=/usr/bin:/bin\nUSER=root\nREF=x\u2028PATH=/tmp/other\u2028USER=nobody\n'
+        result = jc.parsers.env.parse(data, quiet=True)
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0]['value'], '/usr/bin:/bin')
+        self.assertEqual(result[1]['value'], 'root')
+        self.assertEqual(result[2]['value'], 'x\u2028PATH=/tmp/other\u2028USER=nobody')
+
+    def test_env_multiline_values(self):
+        """
+        Test 'env' values that span several lines
+        """
+        data = 'A=1\nb\nc\nD=\nE=x\n\n'
+        self.assertEqual(jc.parsers.env.parse(data, raw=True), {'A': '1\nb\nc', 'D': '', 'E': 'x\n'})
+
+    def test_env_non_identifier_names(self):
+        """
+        Test 'env' with variable names that are not shell identifiers
+        """
+        data = 'PWD=/src\nBASH_FUNC_which%%=() {  /usr/bin/which "$@"\n}\nmy.var=1\nmy-var=2\nProgramFiles(x86)=C:\\x\n_=/usr/bin/env\n'
+        self.assertEqual(jc.parsers.env.parse(data, raw=True), {
+            'PWD': '/src',
+            'BASH_FUNC_which%%': '() {  /usr/bin/which "$@"\n}',
+            'my.var': '1',
+            'my-var': '2',
+            'ProgramFiles(x86)': 'C:\\x',
+            '_': '/usr/bin/env'
+        })
+
+
 if __name__ == '__main__':
     unittest.main()
