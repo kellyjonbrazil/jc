@@ -59,7 +59,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`find` command parser'
     author = 'Solomon Leang'
     author_email = 'solomonleang@gmail.com'
@@ -92,10 +92,7 @@ def _process(proc_data):
         elif index.startswith('find: '):
             error = index
         else:
-            try:
-                path, node = index.rsplit('/', maxsplit=1)
-            except ValueError:
-                pass
+            path, _, node = index.rpartition('/')
 
         proc_line = {
             'path': path if path else None,
