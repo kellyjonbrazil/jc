@@ -76,6 +76,7 @@ Example:
 """
 import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -175,14 +176,24 @@ def _trim_entry(entry):
     return entry[:entry.rfind(')') + 1]
 
 
+def _match_entry(tail_pattern, entry):
+    """Return the tail and head groupdicts of an entry or raise ParseError"""
+    tail = tail_pattern.match(_trim_entry(entry))
+    head = _HEAD.match(tail.group('head')) if tail else None
+
+    if not head:
+        raise ParseError('Unrecognized mount line')
+
+    return tail.groupdict(), head.groupdict()
+
+
 def _osx_parse(data):
     output = []
 
     for entry in data:
         output_line = {}
 
-        tail = _OSX_TAIL.match(_trim_entry(entry)).groupdict()
-        groups = _HEAD.match(tail['head']).groupdict()
+        tail, groups = _match_entry(_OSX_TAIL, entry)
 
         if groups:
             output_line['filesystem'] = groups['filesystem']
@@ -201,8 +212,7 @@ def _linux_parse(data):
     for entry in data:
         output_line = {}
 
-        tail = _LINUX_TAIL.match(_trim_entry(entry)).groupdict()
-        groups = _HEAD.match(tail['head']).groupdict()
+        tail, groups = _match_entry(_LINUX_TAIL, entry)
 
         if groups:
             output_line['filesystem'] = groups["filesystem"]
