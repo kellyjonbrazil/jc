@@ -103,6 +103,39 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result, [])
         self.assertEqual(stderr.getvalue(), '')
 
+    def test_conntrack_progname_spaces(self):
+        """
+        Test 'conntrack -E -o userspace' with process names that contain
+        spaces and text that looks like fields
+        """
+        line = ('[DESTROY] tcp      6 LAST_ACK src=192.168.136.128 dst=185.125.188.55 '
+                'sport=57236 dport=443 src=185.125.188.55 dst=192.168.136.128 '
+                'sport=443 dport=57236 [ASSURED] [USERSPACE] portid=4242 progname=%s\n')
+        data = ''.join(line % name for name in (
+            'tmux: server', 'x orig_dport=22', 'init portid=1', 'x event=NEW', 'a [OFFLOAD] b'))
+        result = jc.parse('conntrack', data, quiet=True)
+
+        self.assertEqual([r['progname'] for r in result], [
+            'tmux: server', 'x orig_dport=22', 'init portid=1', 'x event=NEW', 'a [OFFLOAD] b'])
+
+        for r in result:
+            self.assertEqual(r['event'], 'DESTROY')
+            self.assertEqual(r['orig_dport'], 443)
+            self.assertEqual(r['reply_dport'], 57236)
+            self.assertEqual(r['portid'], 4242)
+            self.assertEqual(r['status'], ['ASSURED', 'USERSPACE'])
+
+    def test_conntrack_trailing_field_does_not_overwrite(self):
+        """
+        Test 'conntrack' with a trailing field that repeats an earlier key
+        """
+        data = ('tcp      6 100 ESTABLISHED src=10.0.0.1 dst=10.0.0.2 sport=1 dport=2 '
+                'src=10.0.0.2 dst=10.0.0.1 sport=2 dport=1 mark=5 mark=9 src=1.1.1.1\n')
+        result = jc.parse('conntrack', data, quiet=True)
+        self.assertEqual(result[0]['mark'], 5)
+        self.assertEqual(result[0]['orig_src'], '10.0.0.1')
+        self.assertEqual(result[0]['reply_src'], '10.0.0.2')
+
 
 if __name__ == '__main__':
     unittest.main()

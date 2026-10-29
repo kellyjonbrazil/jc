@@ -75,7 +75,8 @@ Schema:
         "stop":              string,        # [14]
         "stop_epoch":        integer,       # [14]
         "id":                integer,       # [15]
-        "portid":            integer        # [16]
+        "portid":            integer,       # [16]
+        "progname":          string         # [16]
       }
     ]
 
@@ -245,6 +246,16 @@ def _parse_line(line: str) -> Optional[Dict]:
     Parse a single `conntrack -L` or `conntrack -E` line. Returns `None` if
     the line is not a conntrack tuple.
     """
+    # `-o userspace` ends an event with `progname=<name>`, where the name is
+    # the process's comm printed unquoted, so it can contain spaces, brackets
+    # and `=`. Take everything after the first ` progname=` as the name.
+    progname = None
+    prog_idx = line.find(' progname=')
+
+    if prog_idx != -1:
+        progname = line[prog_idx + len(' progname='):]
+        line = line[:prog_idx]
+
     tokens = _token_re.findall(line)
 
     if not tokens:
@@ -341,6 +352,9 @@ def _parse_line(line: str) -> Optional[Dict]:
         else:
             return None
 
+    if progname is not None:
+        fields.append(('progname', progname))
+
     # a per-tuple zone sits inside the tuple it belongs to, so pull it out
     # before the reply tuple is compared with the original
     tuple_zones: Dict[str, str] = {}
@@ -348,7 +362,7 @@ def _parse_line(line: str) -> Optional[Dict]:
 
     for key, value in fields:
         if key in _tuple_zone_keys:
-            tuple_zones[key] = value
+            tuple_zones.setdefault(key, value)
         else:
             tuple_fields.append((key, value))
 
@@ -391,7 +405,10 @@ def _parse_line(line: str) -> Optional[Dict]:
     entry.update({f'reply_{key}': value for key, value in reply})
     if 'zone_reply' in tuple_zones:
         entry['reply_zone'] = tuple_zones['zone_reply']
-    entry.update({key: value for key, value in extra})
+
+    # a trailing field never replaces a field that is already set
+    for key, value in extra:
+        entry.setdefault(key, value)
 
     return entry
 
