@@ -163,6 +163,10 @@ def parse(
             if line.lstrip().startswith('#EXTINF:'):
                 splitline = line.strip().split(':', maxsplit=1)
 
+                # each #EXTINF: line starts a new entry. Drop the fields of
+                # a previous #EXTINF: line that had no path line
+                output_line = {}
+
                 # best-effort to parse additional extended fields
                 # if a parsing error occurs, a warning message will be
                 # printed to STDERR and `unparsed_info` added

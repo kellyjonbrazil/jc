@@ -42,6 +42,46 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.m3u.parse(self.m3u_dirty, quiet=True), self.m3u_dirty_json)
 
 
+    def test_m3u_extinf_without_path(self):
+        """
+        Test 'm3u' with #EXTINF: lines that are not followed by a path line
+        """
+        data = (
+            '#EXTM3U\n'
+            '#EXTINF:-1 tvg-id="movies.tv" group-title="Movies" tvg-logo="http://example.com/logo.png",Movies TV\n'
+            '#http://example.com/movies\n'
+            '#EXTINF:-1 tvg-id="kids.tv",Kids TV\n'
+            'http://example.com/kids\n'
+            '#EXTINF:105,Artist - 7" mix\n'
+            '#EXTINF:321,Other Artist - Title\n'
+            'music/b.ogg\n'
+            '#EXTINF:-1 tvg-id="news.tv" group-title="News",News TV\n'
+            '#EXTVLCOPT:network-caching=1000\n'
+            'http://example.com/news\n'
+            '#EXTINF:-1 tvg-id="last.tv",Last TV\n'
+        )
+        expected = [
+            {
+                'tvg-id': 'kids.tv',
+                'runtime': -1,
+                'display': 'Kids TV',
+                'path': 'http://example.com/kids'
+            },
+            {
+                'runtime': 321,
+                'display': 'Other Artist - Title',
+                'path': 'music/b.ogg'
+            },
+            {
+                'tvg-id': 'news.tv',
+                'group-title': 'News',
+                'runtime': -1,
+                'display': 'News TV',
+                'path': 'http://example.com/news'
+            }
+        ]
+        self.assertEqual(jc.parsers.m3u.parse(data, quiet=True), expected)
+
     def test_m3u_line_separator(self):
         """
         Test 'm3u' with a line-break character other than LF inside a field
