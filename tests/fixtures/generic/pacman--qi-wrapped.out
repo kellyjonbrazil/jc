@@ -1,0 +1,25 @@
+Name            : coolprompt
+Version         : 1.0-1
+Description     : A shell prompt theme with a description that is long enough
+                  to be wrapped
+Architecture    : any
+URL             : https://example.org/coolprompt
+Licenses        : MIT  custom:The Coolprompt Public License  BSD-3-Clause
+                  custom:Public Domain
+Groups          : None
+Provides        : None
+Depends On      : bash
+Optional Deps   : None
+Required By     : None
+Optional For    : None
+Conflicts With  : coolprompt-git  coolprompt-bin  coolprompt-legacy-themes-git
+                  sudo  openssh
+Replaces        : coolprompt-classic  coolprompt-themes  coolprompt-extras-git
+                  sudo
+Installed Size  : 12.00 KiB
+Packager        : Unknown Packager
+Build Date      : Fri 05 Aug 2022 04:06:57 AM +08
+Install Date    : Fri 05 Aug 2022 04:07:04 AM +08
+Install Reason  : Explicitly installed
+Install Script  : No
+Validated By    : None
