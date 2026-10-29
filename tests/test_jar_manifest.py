@@ -117,6 +117,45 @@ class MyTests(unittest.TestCase):
         result = jc.parsers.jar_manifest.parse(data, quiet=True)
         self.assertEqual(result, [{'Manifest_Version': '1.0', 'Class_Path': 'a' + 'ab' * 20000, 'Created_By': '1.8'}])
 
+    def test_jar_manifest_unzip_archive_attribute(self):
+        """
+        Test 'jar_manifest' with unzip output where a manifest has an Archive attribute
+        """
+        data = (
+            'Archive:  reporting-core-1.4.2.jar\n'
+            '  inflating: META-INF/MANIFEST.MF    \n'
+            'Manifest-Version: 1.0\n'
+            'Main-Class: org.example.app.Main\n'
+            '\n'
+            '\n'
+            'Archive:  upload-7f3a.jar\n'
+            ' extracting: META-INF/MANIFEST.MF    \n'
+            'Manifest-Version: 1.0\n'
+            'Main-Class: com.example.Other\n'
+            'Archive: reporting-core-1.4.2.jar\n'
+            '\n'
+        )
+        expected = [
+            {'Archive': 'reporting-core-1.4.2.jar', 'Manifest_Version': '1.0', 'Main_Class': 'org.example.app.Main'},
+            {'Archive': 'upload-7f3a.jar', 'Manifest_Version': '1.0', 'Main_Class': 'com.example.Other'}
+        ]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
+    def test_jar_manifest_archive_attribute_without_unzip(self):
+        """
+        Test 'jar_manifest' with an Archive attribute in a manifest that is not unzip output
+        """
+        data = 'Manifest-Version: 1.0\nArchive: a.jar\n'
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), [{'Manifest_Version': '1.0', 'Archive': 'a.jar'}])
+
+    def test_jar_manifest_keys_differ_in_dash_and_underscore(self):
+        """
+        Test 'jar_manifest' with attribute names that only differ in "-" and "_"
+        """
+        data = 'Manifest-Version: 1.0\nMain-Class: com.example.Main\nMain_Class: com.example.Other\nX-Y: 1\nX-Y: 2\n'
+        expected = [{'Manifest_Version': '1.0', 'Main_Class': 'com.example.Main', 'X_Y': '2'}]
+        self.assertEqual(jc.parsers.jar_manifest.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()
