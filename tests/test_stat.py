@@ -52,6 +52,16 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/stat-linux-arrows.json'), 'r', encoding='utf-8') as f:
         generic_stat_linux_arrows_json = json.loads(f.read())
 
+    def test_stat_line_separators(self):
+        """
+        Test 'stat' with line-break characters other than LF in a file name
+        """
+        data = '  File: /tmp/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n  Size: 41488     \tBlocks: 88         IO Block: 4096   regular file\nDevice: fd00h/64768d\tInode: 50332811    Links: 1\nAccess: (0755/-rwxr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)\nAccess: 2019-08-19 23:25:31.000000000 -0700\nModify: 2019-08-19 23:25:31.000000000 -0700\nChange: 2019-10-16 09:21:27.422473404 -0700\n Birth: -\n'
+        result = jc.parsers.stat.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['file'], '/tmp/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[0]['size'], 41488)
+
     def test_stat_nodata(self):
         """
         Test 'stat' with no data

@@ -38,6 +38,15 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
+    def test_ssh_conf_line_separators(self):
+        """
+        Test 'ssh config file' with line-break characters other than LF in a value
+        """
+        data = 'Host x\n  IdentityFile ~/.ssh/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n  Port 22\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result[0]['identityfile'], ['~/.ssh/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j'])
+        self.assertEqual(result[0]['port'], 22)
+
     def test_ssh_nodata(self):
         """
         Test 'ssh' with no data

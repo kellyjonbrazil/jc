@@ -32,6 +32,15 @@ class MyTests(unittest.TestCase):
                 cls.f_json[file] = json.loads(b.read())
 
 
+    def test_sshd_conf_line_separators(self):
+        """
+        Test 'sshd config file' with line-break characters other than LF in a value
+        """
+        data = 'Banner /etc/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nPort 22\n'
+        result = jc.parsers.sshd_conf.parse(data, quiet=True)
+        self.assertEqual(result['banner'], '/etc/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['port'], [22])
+
     def test_sshd_conf_nodata(self):
         """
         Test 'sshd_conf' with no data

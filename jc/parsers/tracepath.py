@@ -208,7 +208,7 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         hops = []
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # grab hop information
             ttl_host = re.search(RE_TTL_HOST, line)
             pmtu = re.search(RE_PMTU, line)

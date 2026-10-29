@@ -104,7 +104,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # Clear any blank lines
-    linedata = list(filter(None, data.splitlines()))
+    linedata = list(filter(None, jc.utils.splitlines(data)))
     raw_output = []
 
     if jc.utils.has_data(data):

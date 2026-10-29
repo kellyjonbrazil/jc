@@ -116,7 +116,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-        data = data.splitlines()
+        data = jc.utils.splitlines(data)
 
         # linux uses = and bsd uses :
         if ' = ' in data[0]:
