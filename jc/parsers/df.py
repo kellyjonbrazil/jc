@@ -218,8 +218,8 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    # remove blank lines
-    cleandata = list(filter(None, jc.utils.splitlines(data)))
+    # remove blank and whitespace-only lines
+    cleandata = [x for x in jc.utils.splitlines(data) if x.strip()]
 
     fix_data = []
     raw_output = []
