@@ -336,7 +336,8 @@ def _bsd_parse(line, s):
             s.sent_bytes = line.split()[3]
         return None
 
-    if line.startswith('PING6('):
+    # FreeBSD 13 and newer print 'PING(' instead of 'PING6('
+    if line.startswith(('PING6(', 'PING(')):
         s.ipv4 = False
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
         s.source_ip = line.split()[4]
