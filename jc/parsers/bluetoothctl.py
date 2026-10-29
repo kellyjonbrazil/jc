@@ -249,6 +249,11 @@ def _parse_controller(next_lines: List[str]) -> Optional[Controller]:
         result = re.match(_controller_line_pattern, next_line)
 
         if not result:
+            # only the head of the next record ends this one. Skip unknown
+            # properties (e.g. Roles, Advertising Features)
+            if not next_line.startswith(("Controller ", "Device ")):
+                continue
+
             next_lines.append(next_line)
             return controller
 
@@ -357,6 +362,11 @@ def _parse_device(next_lines: List[str], quiet: bool) -> Optional[Device]:
         result = re.match(_device_line_pattern, next_line)
 
         if not result:
+            # only the head of the next record ends this one. Skip unknown
+            # properties (e.g. ManufacturerData, ServiceData, WakeAllowed)
+            if not next_line.startswith(("Controller ", "Device ")):
+                continue
+
             next_lines.append(next_line)
             return device
 
@@ -443,6 +453,14 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
 
         while linedata:
             element = None
+
+            # skip blank and "Device <address> not available" lines between
+            # records
+            next_line = linedata[-1].strip()
+            if not next_line or re.fullmatch(_not_available_pattern, next_line):
+                linedata.pop()
+                continue
+
             if data.startswith("Controller"):
                 element = _parse_controller(linedata)
             elif data.startswith("Device"):

@@ -26,6 +26,13 @@ class BluetoothctlTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/bluetoothctl_devices_names.json'), 'r', encoding='utf-8') as f:
         generic_devices_names_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/bluetoothctl_device_with_manufacturer_data.out'), 'r', encoding='utf-8') as f:
+        generic_device_with_manufacturer_data = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/bluetoothctl_device_with_manufacturer_data.json'), 'r', encoding='utf-8') as f:
+        generic_device_with_manufacturer_data_json = json.loads(f.read())
+
     def test_bluetoothctl_nodata(self):
         """
         Test 'bluetoothctl' with no data
@@ -462,6 +469,37 @@ class BluetoothctlTests(unittest.TestCase):
         Test 'bluetoothctl info' for an unknown device
         """
         self.assertEqual(parse('Device EB:06:EF:62:B3:33 not available\n', quiet=True), [])
+
+    def test_bluetoothctl_device_with_manufacturer_data(self):
+        """
+        Test 'bluetoothctl info' with unknown properties (ManufacturerData, ServiceData, WakeAllowed) and an unavailable device between two devices
+        """
+        self.assertEqual(parse(self.generic_device_with_manufacturer_data, quiet=True), self.generic_device_with_manufacturer_data_json)
+
+    def test_bluetoothctl_controllers_w_unknown_properties(self):
+        """
+        Test 'bluetoothctl show' with unknown properties and a blank line before a second controller
+        """
+        data = (
+            'Controller 48:A4:72:3C:96:63 (public)\n'
+            '\tName: ubuntu\n'
+            '\tRoles: central\n'
+            'Advertising Features:\n'
+            '\tSupportedIncludes: tx-power\n'
+            '\tDiscoverable: yes\n'
+            '\n'
+            'Controller CC:52:AF:17:6A:E4 (public)\n'
+            '\tName: starbase\n'
+            '\tPowered: yes\n'
+        )
+        result = parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[0]['address'], '48:A4:72:3C:96:63')
+        self.assertEqual(result[0]['name'], 'ubuntu')
+        self.assertEqual(result[0]['discoverable'], 'yes')
+        self.assertEqual(result[1]['address'], 'CC:52:AF:17:6A:E4')
+        self.assertEqual(result[1]['name'], 'starbase')
+        self.assertEqual(result[1]['powered'], 'yes')
 
 
 if __name__ == '__main__':
