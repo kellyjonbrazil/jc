@@ -38,6 +38,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-crl-multi.pem'), 'r', encoding='utf-8') as f:
         x509_crl_multi_pem = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-crl-general-names.pem'), 'r', encoding='utf-8') as f:
+        x509_crl_general_names_pem = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-crl-der.json'), 'r', encoding='utf-8') as f:
         x509_crl_der_json = json.loads(f.read())
@@ -50,6 +53,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-crl-multi.json'), 'r', encoding='utf-8') as f:
         x509_crl_multi_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/x509-crl-general-names.json'), 'r', encoding='utf-8') as f:
+        x509_crl_general_names_json = json.loads(f.read())
 
 
     def test_x509_crl_nodata(self):
@@ -125,6 +131,52 @@ class MyTests(unittest.TestCase):
             self.assertEqual(tbs['next_update_iso'], '2040-01-02T00:00:00+00:00')
             self.assertEqual(tbs['revoked_certificates'][0]['revocation_date'], 1361182932)
             self.assertEqual(result, self.x509_crl_no_zone_json)
+
+    def test_x509_crl_general_names(self):
+        """
+        Test 'cat x509-crl-general-names.pem' (GeneralNames in CRL and CRL entry extensions)
+        """
+        result = jc.parsers.x509_crl.parse(self.x509_crl_general_names_pem, quiet=True)
+        self.assertEqual(result, self.x509_crl_general_names_json)
+        tbs = result[0]['tbs_cert_list']
+        ext = {e['extn_id']: e for e in tbs['crl_extensions']}
+        self.assertEqual(ext['issuer_alt_name']['extn_value'], ['ca.example.net', 'http://example.net/'])
+        self.assertEqual(ext['issuer_alt_name']['extn_value_general_names'], [
+            {'type': 'dns_name', 'value': 'ca.example.net'},
+            {'type': 'uniform_resource_identifier', 'value': 'http://example.net/'}
+        ])
+        idp = ext['issuing_distribution_point']['extn_value']
+        self.assertEqual(idp['distribution_point'], ['http://example.com/ca.crl', 'crl.example.com'])
+        self.assertEqual(idp['distribution_point_general_names'], [
+            {'type': 'uniform_resource_identifier', 'value': 'http://example.com/ca.crl'},
+            {'type': 'dns_name', 'value': 'crl.example.com'}
+        ])
+        self.assertEqual(list(idp)[:2], ['distribution_point', 'distribution_point_general_names'])
+        self.assertTrue(idp['indirect_crl'])
+        entry = {e['extn_id']: e for e in tbs['revoked_certificates'][0]['crl_entry_extensions']}
+        other_ca = {'country_name': 'US', 'organization_name': 'Example Org', 'common_name': 'Other Example CA'}
+        self.assertEqual(entry['certificate_issuer'], {
+            'extn_id': 'certificate_issuer',
+            'critical': True,
+            'extn_value': [other_ca, 'other-ca.example.net'],
+            'extn_value_general_names': [
+                {'type': 'directory_name', 'value': other_ca},
+                {'type': 'dns_name', 'value': 'other-ca.example.net'}
+            ]
+        })
+        self.assertEqual(entry['crl_reason']['extn_value'], 'key_compromise')
+
+    def test_x509_crl_der_issuing_distribution_point(self):
+        """
+        Test 'cat x509-crl.der' issuing_distribution_point gets the GeneralName types
+        """
+        result = jc.parsers.x509_crl.parse(self.x509_crl_der, quiet=True)
+        ext = {e['extn_id']: e for e in result[0]['tbs_cert_list']['crl_extensions']}
+        idp = ext['issuing_distribution_point']['extn_value']
+        self.assertEqual(idp['distribution_point'], ['http://www.sk.ee/repository/crls/eid2011.crl'])
+        self.assertEqual(idp['distribution_point_general_names'], [
+            {'type': 'uniform_resource_identifier', 'value': 'http://www.sk.ee/repository/crls/eid2011.crl'}
+        ])
 
 
 if __name__ == '__main__':
