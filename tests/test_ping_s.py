@@ -502,7 +502,35 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-reply-no-time-streaming.json'), 'r', encoding='utf-8') as f:
         generic_ping_linux_reply_no_time_streaming_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors.out'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-osx-icmp-errors-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_osx_icmp_errors_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip.out'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_ip = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-ip-streaming.json'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_ip_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname.out'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_hostname = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/alpine-linux-3.13/ping-hostname-streaming.json'), 'r', encoding='utf-8') as f:
+        alpine_linux_3_13_ping_hostname_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-hostname-from.out'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_hostname_from = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping-linux-hostname-from-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping_linux_hostname_from_streaming_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from.out'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_hostname_from = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ping6-linux-hostname-from-streaming.json'), 'r', encoding='utf-8') as f:
+        generic_ping6_linux_hostname_from_streaming_json = json.loads(f.read())
 
     def test_ping_s_nodata(self):
         """
@@ -1020,6 +1048,163 @@ class MyTests(unittest.TestCase):
         Test 'ping -s 4 <ip>' on linux with reply lines that have no time field
         """
         self.assertEqual(list(jc.parsers.ping_s.parse(self.generic_ping_linux_reply_no_time.splitlines(), quiet=True)), self.generic_ping_linux_reply_no_time_streaming_json)
+
+    def test_ping_s_osx_icmp_errors(self):
+        """
+        Test 'ping' on macOS/BSD with ICMP error messages that look like replies
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping_osx_icmp_errors.splitlines(), quiet=True, ignore_exceptions=True))
+        self.assertEqual(result, self.generic_ping_osx_icmp_errors_streaming_json)
+        self.assertEqual(
+            [r.get('type') for r in result],
+            [
+                'frag_needed_and_df_set',
+                'redirect_type_of_service_and_host',
+                'destination_host_unreachable_for_type_of_service',
+                'communication_prohibited_by_filter',
+                None,
+                'reply',
+                'summary'
+            ]
+        )
+        self.assertFalse(result[4]['_jc_meta']['success'])
+        self.assertEqual(result[0]['response_ip'], '10.0.0.1')
+
+    def test_ping_s_osx_long_unknown_error(self):
+        """
+        Test 'ping' on macOS/BSD with an unknown error message as long as a reply line
+        """
+        data = [
+            'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+            '36 bytes from 10.0.0.1: an error message that is long enough to look like a reply'
+        ]
+        self.assertRaises(IndexError, list, jc.parsers.ping_s.parse(data, quiet=True))
+
+    def test_ping_s_error_types(self):
+        """
+        Test 'ping' with error messages of iputils, FreeBSD and macOS
+        """
+        messages = [
+            ('Frag needed and DF set (mtu = 1400)', 'frag_needed_and_df_set'),
+            ('frag needed and DF set (MTU 1400)', 'frag_needed_and_df_set'),
+            ('Destination Host Unreachable for Type of Service', 'destination_host_unreachable_for_type_of_service'),
+            ('Destination Host Unreachable', 'destination_host_unreachable'),
+            ('Redirect Type of Service and Host(New addr: 10.0.0.254)', 'redirect_type_of_service_and_host'),
+            ('Source Quench', 'source_quench'),
+            ('Parameter problem: pointer = 0x14', 'parameter_problem')
+        ]
+        for message, expected in messages:
+            data = [
+                'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+                '92 bytes from 10.0.0.1: ' + message
+            ]
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual(result[0]['type'], expected, message)
+            self.assertEqual(result[0]['response_ip'], '10.0.0.1')
+
+    def test_ping6_s_linux_error_types(self):
+        """
+        Test 'ping6' on linux with the IPv6 error messages of iputils
+        """
+        messages = [
+            ('Time exceeded: Defragmentation failure', 'time_exceeded_fragment_reassembly_time_exceeded'),
+            ('Time exceeded: Hop limit', 'time_exceeded_hop_limit'),
+            ('Destination unreachable: Address unreachable', 'destination_unreachable_address_unreachable'),
+            ('Packet too big: mtu=1280', 'packet_too_big'),
+            ('Parameter problem: Wrong header field 40', 'parameter_problem')
+        ]
+        for message, expected in messages:
+            data = [
+                'PING 2001:db8::1(2001:db8::1) 56 data bytes',
+                'From 2001:db8::fe icmp_seq=1 ' + message
+            ]
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual(result[0]['type'], expected, message)
+            self.assertEqual(result[0]['response_ip'], '2001:db8::fe')
+            self.assertEqual(result[0]['icmp_seq'], 1)
+
+    def test_ping_s_bsd_parameter_problem(self):
+        """
+        Test 'ping' on macOS/BSD with an IPv4 'Parameter problem' error message
+        """
+        data = [
+            'PING 192.0.2.10 (192.0.2.10): 56 data bytes',
+            '92 bytes from 10.0.0.1: Parameter problem: pointer = 0x14',
+            '92 bytes from 10.0.0.1: Source Quench'
+        ]
+        expected = [
+            {'type': 'parameter_problem', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'},
+            {'type': 'source_quench', 'bytes': '92', 'destination_ip': '192.0.2.10', 'response_ip': '10.0.0.1'}
+        ]
+        self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
+
+    def test_ping_s_ip_alpine_linux(self):
+        """
+        Test 'ping <ip>' on alpine linux
+        """
+        result = list(jc.parsers.ping_s.parse(self.alpine_linux_3_13_ping_ip.splitlines(), quiet=True))
+        self.assertEqual(result, self.alpine_linux_3_13_ping_ip_streaming_json)
+        self.assertEqual(result[-1]['round_trip_ms_max'], 1.637)
+        self.assertIsNone(result[-1]['round_trip_ms_stddev'])
+
+    def test_ping_s_hostname_alpine_linux(self):
+        """
+        Test 'ping <hostname>' on alpine linux
+        """
+        self.assertEqual(list(jc.parsers.ping_s.parse(self.alpine_linux_3_13_ping_hostname.splitlines(), quiet=True)), self.alpine_linux_3_13_ping_hostname_streaming_json)
+
+    def test_ping_s_osx_all_lost_summary(self):
+        """
+        Test 'ping' on macOS/BSD with 100% packet loss and no round-trip line
+        """
+        data = [
+            'PING 192.0.2.1 (192.0.2.1): 56 data bytes',
+            'Request timeout for icmp_seq 0',
+            '',
+            '--- 192.0.2.1 ping statistics ---',
+            '2 packets transmitted, 0 packets received, 100.0% packet loss'
+        ]
+        expected = [
+            {'type': 'timeout', 'destination_ip': '192.0.2.1', 'sent_bytes': 56, 'pattern': None, 'icmp_seq': 0},
+            {'type': 'summary', 'destination_ip': '192.0.2.1', 'sent_bytes': 56, 'pattern': None, 'packets_transmitted': 2,
+             'packets_received': 0, 'packet_loss_percent': 100.0, 'duplicates': 0, 'round_trip_ms_min': None,
+             'round_trip_ms_avg': None, 'round_trip_ms_max': None, 'round_trip_ms_stddev': None}
+        ]
+        self.assertEqual(list(jc.parsers.ping_s.parse(data, quiet=True)), expected)
+
+    def test_ping_s_linux_hostname_from(self):
+        """
+        Test 'ping <hostname>' on linux with 'from' in the host name
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping_linux_hostname_from.splitlines(), quiet=True))
+        self.assertEqual(result, self.generic_ping_linux_hostname_from_streaming_json)
+        self.assertEqual(result[0]['sent_bytes'], 56)
+
+    def test_ping6_s_linux_hostname_from(self):
+        """
+        Test 'ping6 <hostname>' on linux with 'from' in the host name
+        """
+        result = list(jc.parsers.ping_s.parse(self.generic_ping6_linux_hostname_from.splitlines(), quiet=True))
+        self.assertEqual(result, self.generic_ping6_linux_hostname_from_streaming_json)
+        self.assertEqual(result[0]['destination_ip'], '2001:db8::1')
+
+    def test_ping_s_linux_header_formats(self):
+        """
+        Test 'ping' and 'ping6' on linux with the header line formats of old and new iputils
+        """
+        headers = [
+            ('PING fromage.example.com (198.51.100.7) from 10.0.0.2 eth0: 56(84) bytes of data.', '198.51.100.7', 56),
+            ('PING 2001:db8:53::(2001:db8:53::) 56 data bytes', '2001:db8:53::', 56),
+            ('PING 2001:db8::1(2001:db8::1) from 2001:db8::2 : 56 data bytes', '2001:db8::1', 56),
+            ('PING example.com(example.com (2001:db8::1)) , flow 0x00001, 56 data bytes', '2001:db8::1', 56),
+            ('PING example.com (2001:db8::1) 1400 data bytes', '2001:db8::1', 1400),
+            ('PING 2001:db8::1 (2001:db8::1) from 2001:db8::2 eth0: 56 data bytes', '2001:db8::1', 56)
+        ]
+        for header, dest, data_bytes in headers:
+            data = [header, '64 bytes from 192.0.2.1: icmp_seq=1 ttl=64 time=0.040 ms']
+            result = list(jc.parsers.ping_s.parse(data, quiet=True))
+            self.assertEqual((result[0]['destination_ip'], result[0]['sent_bytes']), (dest, data_bytes), header)
+
 
 if __name__ == '__main__':
     unittest.main()

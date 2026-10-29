@@ -92,5 +92,23 @@ class MyTests(unittest.TestCase):
         self.assertEqual([x['nameserver'] for x in result], ['192.0.2.1', '192.0.2.2'])
         self.assertEqual([x['serial'] for x in result], [1, 2])
 
+    def test_host_C_ipv6_trailing_colons(self):
+        """
+        Test 'host -C' with nameserver IPv6 addresses that end with '::'
+        """
+        data = (
+            'Nameserver 2001:db8:53::1:\n'
+            '\texample.net has SOA record ns1.example.net. hostmaster.example.net. 2024010101 7200 3600 1209600 300\n'
+            'Nameserver 2001:db8:53:::\n'
+            '\texample.net has SOA record ns1.example.net. hostmaster.example.net. 2024010101 7200 3600 1209600 300\n'
+            'Nameserver :::\n'
+            '\texample.net has SOA record ns1.example.net. hostmaster.example.net. 2024010101 7200 3600 1209600 300\n'
+        )
+        result = parse(data, quiet=True)
+        self.assertEqual([x['nameserver'] for x in result], ['2001:db8:53::1', '2001:db8:53::', '::'])
+        self.assertEqual(result[1]['zone'], 'example.net')
+        self.assertEqual(result[1]['serial'], 2024010101)
+
+
 if __name__ == '__main__':
     unittest.main()

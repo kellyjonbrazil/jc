@@ -1,0 +1,24 @@
+PING 192.0.2.10 (192.0.2.10): 1472 data bytes
+36 bytes from gw.example.net (10.0.0.1): frag needed and DF set (MTU 1400)
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 05dc 567b   2 0000  3f  01 a024 192.168.1.221  192.0.2.10 
+
+36 bytes from 10.0.0.1: Redirect Type of Service and Host(New addr: 10.0.0.254)
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 05dc 567c   2 0000  3f  01 a023 192.168.1.221  192.0.2.10 
+
+36 bytes from 10.0.0.1: Destination Host Unreachable for Type of Service
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 05dc 567d   2 0000  3f  01 a022 192.168.1.221  192.0.2.10 
+
+36 bytes from 10.0.0.1: Communication prohibited by filter
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 05dc 567e   2 0000  3f  01 a021 192.168.1.221  192.0.2.10 
+
+36 bytes from 10.0.0.1: an error message that is long enough to look like a reply
+
+1480 bytes from 192.0.2.10: icmp_seq=5 ttl=56 time=12.345 ms
+
+--- 192.0.2.10 ping statistics ---
+6 packets transmitted, 1 packets received, 83.3% packet loss
+round-trip min/avg/max/stddev = 12.345/12.345/12.345/0.000 ms
