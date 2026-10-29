@@ -258,6 +258,23 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.mdadm.parse('', quiet=True), {})
 
 
+    def test_mdadm_examine_unknown_array_state_char(self):
+        """
+        Test 'mdadm --examine' with an Array State character that has no known meaning
+        """
+        data = (
+            '/dev/sdb1:\n'
+            '          Magic : a92b4efc\n'
+            '        Version : 1.2\n'
+            '   Raid Devices : 3\n'
+            '   Device Role : Active device 0\n'
+            "   Array State : A?R ('A' == active, '.' == missing, 'R' == replacing)\n"
+        )
+        result = jc.parsers.mdadm.parse(data, quiet=True)
+        self.assertEqual(result['array_state'], "A?R ('A' == active, '.' == missing, 'R' == replacing)")
+        self.assertEqual(result['array_state_list'], ['active', None, 'replacing'])
+        self.assertEqual(result['device_role'], 'Active device 0')
+
     def test_mdadm_examine_raid0_offline(self):
         """
         Test 'mdadm --examine' with offline RAID array

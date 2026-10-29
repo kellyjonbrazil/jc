@@ -83,7 +83,7 @@ Schema:
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
-                                      string
+                                      string/null
       ],
       "member_arrays":                string,
       "member_arrays_list": [
@@ -229,7 +229,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`mdadm` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -336,7 +336,7 @@ def _process(proc_data: Dict) -> Dict:
         array_state_text = proc_data['array_state'].split(maxsplit=1)[0]
 
         for item in array_state_text:
-            array_state_list.append(array_state_map[item])
+            array_state_list.append(array_state_map.get(item))
 
         proc_data['array_state_list'] = array_state_list
 
