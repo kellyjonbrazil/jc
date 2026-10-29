@@ -177,7 +177,7 @@ def parse(
     clf_pattern = re.compile(r'''
         ^(?P<host>-|\S+)\s
         (?P<ident>-|\S+)\s
-        (?P<authuser>-|\S+)\s
+        (?P<authuser>-|\S+|(?<=\s-\s)(?:\\"|[^"])+?)\s  # spaces allowed if ident is '-'
         \[
         (?P<date>
             (?P<day>\d+)/
