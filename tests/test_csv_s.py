@@ -284,6 +284,29 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(list(jc.parsers.tsv_ih_s.parse([''], quiet=True)), [])
 
+    def test_tsv_csv_ih_wrappers_ignore_exceptions(self):
+        """
+        Test 'tsv_s', 'tsv_ih_s' and 'csv_ih_s' with ignore_exceptions=True:
+        every row has the _jc_meta success object
+        """
+        cases = [
+            (jc.parsers.tsv_s, self.generic_tsv_dpkg_query_tsv, self.generic_tsv_dpkg_query_streaming_json),
+            (jc.parsers.tsv_ih_s, self.generic_tsv_ih_dpkg_query_tsv, self.generic_tsv_ih_dpkg_query_streaming_json),
+            (jc.parsers.csv_ih_s, self.generic_csv_ih_homes_csv, self.generic_csv_ih_homes_streaming_json),
+        ]
+        for parser, data, expected in cases:
+            expected = [dict(row, _jc_meta={'success': True}) for row in expected]
+            self.assertEqual(list(parser.parse(data.splitlines(), quiet=True, ignore_exceptions=True)), expected)
+
+    def test_tsv_s_jc_meta_column_ignore_exceptions(self):
+        """
+        Test 'tsv_s' with a column named _jc_meta and ignore_exceptions=True:
+        the column is replaced by the _jc_meta success object
+        """
+        data = ['a\t_jc_meta', '1\tfrom the file']
+        expected = [{'a': '1', '_jc_meta': {'success': True}}]
+        self.assertEqual(list(jc.parsers.tsv_s.parse(data, quiet=True, ignore_exceptions=True)), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

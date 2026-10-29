@@ -78,5 +78,16 @@ class MyTests(unittest.TestCase):
             jc.parsers.proc_pid_stat.parse('1 (systemd) S 0 1 1', quiet=True)
 
 
+    def test_proc_pid_stat_comm_that_looks_like_a_number(self):
+        """
+        Test '/proc/<pid>/stat' with a process name that looks like a number
+        """
+        data = self.f_in['proc_pid_stat'].replace('(systemd)', '(007)', 1)
+        result = jc.parsers.proc_pid_stat.parse(data, quiet=True)
+        self.assertEqual(result['comm'], '007')
+        self.assertEqual(result['pid'], 1)
+        self.assertEqual(result['state'], 'S')
+
+
 if __name__ == '__main__':
     unittest.main()

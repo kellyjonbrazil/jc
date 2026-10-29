@@ -182,6 +182,31 @@ class MyTests(unittest.TestCase):
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_to_float(input_string), expected_output)
 
+    def test_utils_convert_to_int_non_finite(self):
+        """
+        Test converting inf, nan and very long digit strings to integers
+        """
+        self.assertIsNone(jc.utils.convert_to_int(float('inf')))
+        self.assertIsNone(jc.utils.convert_to_int(float('-inf')))
+        self.assertIsNone(jc.utils.convert_to_int(float('nan')))
+        self.assertEqual(jc.utils.convert_to_int('9' * 400), 10**400 - 1)
+        # above the int() digit limit of Python 3.11+ this used to raise
+        # OverflowError. Older Pythons have no limit and return the number.
+        self.assertIn(jc.utils.convert_to_int('9' * 5000), (None, 10**5000 - 1))
+
+    def test_utils_convert_to_float_non_finite(self):
+        """
+        Test converting inf, nan and numbers too large for a float to floats
+        """
+        self.assertIsNone(jc.utils.convert_to_float(float('inf')))
+        self.assertIsNone(jc.utils.convert_to_float(float('-inf')))
+        self.assertIsNone(jc.utils.convert_to_float(float('nan')))
+        self.assertIsNone(jc.utils.convert_to_float(10**400))
+        self.assertIsNone(jc.utils.convert_to_float('9' * 310))
+        self.assertIsNone(jc.utils.convert_to_float('-' + '9' * 310))
+        self.assertEqual(jc.utils.convert_to_float('9' * 300), float('9' * 300))
+        self.assertTrue(jc.utils.convert_to_bool('9' * 310))
+
     def test_utils_convert_to_bool(self):
         """
         Test converting values to booleans

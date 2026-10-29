@@ -1,6 +1,7 @@
 import os
 import unittest
 import json
+import datetime
 import jc.parsers.yaml
 from jc.exceptions import ParseError
 
@@ -96,6 +97,28 @@ class MyTests(unittest.TestCase):
         data = '\n'.join(lines) + '\n'
         self.assertRaises(ParseError, jc.parsers.yaml.parse, data, quiet=True)
         self.assertRaises(ParseError, jc.parsers.yaml.parse, data, raw=True, quiet=True)
+
+    def test_yaml_no_side_effects(self):
+        """
+        Test 'yaml' leaves the ruamel.yaml classes unchanged for other code
+        in the same process
+        """
+        data = 'a: 2022-04-18\nb: =\n'
+        # official_plug_ins() was added in ruamel.yaml 0.15.x
+        plug_ins = getattr(ruamel.yaml.YAML, 'official_plug_ins', None)
+        constructors = ruamel.yaml.constructor.RoundTripConstructor.yaml_constructors.copy()
+        self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), [{'a': '2022-04-18', 'b': '='}])
+        self.assertIs(getattr(ruamel.yaml.YAML, 'official_plug_ins', None), plug_ins)
+        self.assertEqual(ruamel.yaml.constructor.RoundTripConstructor.yaml_constructors, constructors)
+        self.assertEqual(ruamel.yaml.YAML().load('a: 2022-04-18\n')['a'], datetime.date(2022, 4, 18))
+
+    def test_yaml_non_finite(self):
+        """
+        Test 'yaml' with nan and inf values: they are null
+        """
+        data = 'a: .nan\nb: -.inf\nc: [.inf, 1.5, 1e400]\nd: !!float .NaN\ne: 2.5\nf: nan\n'
+        expected = [{'a': None, 'b': None, 'c': [None, 1.5, None], 'd': None, 'e': 2.5, 'f': 'nan'}]
+        self.assertEqual(jc.parsers.yaml.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

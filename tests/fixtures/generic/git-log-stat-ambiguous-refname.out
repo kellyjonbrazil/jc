@@ -1,0 +1,19 @@
+warning: refname 'release' is ambiguous.
+commit 52f4e7bb47e9b2809152509b9fead44bf31fc88c
+Author: Kelly Brazil <kbrazil@example.com>
+Date:   Wed Oct 28 10:30:00 2026 -0700
+
+    add app and update readme
+
+ README.md | 1 +
+ app.py    | 2 ++
+ 2 files changed, 3 insertions(+)
+
+commit 940d8fa70a92e663d4f2a658af68d436aab697e4
+Author: Kelly Brazil <kbrazil@example.com>
+Date:   Wed Oct 28 09:15:00 2026 -0700
+
+    add readme
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)

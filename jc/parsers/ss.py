@@ -300,6 +300,16 @@ _SPACE_HOLD = '\x00'
 #: Applied with _match_first, as is _USERS_RE below.
 _USERS_BLOCK_RE = re.compile(r'users:\(\(.*?\)\)(?=\s|$)')
 
+#: The local field of a netlink row, `<proto>:<process name>/<pid>`. The name
+#: is read from /proc/<pid>/stat, so it can contain spaces and slashes. The
+#: field ends at the last `/<pid>` that is followed by the peer address,
+#: which is always `*` for netlink sockets.
+_NL_LOCAL_RE = re.compile(r'(nl\s+\S+\s+\d+\s+\d+\s+)([^\s:]+:.*/\d+)(?=\s+\*(?:\s|$))')
+
+#: Netids whose local address can carry a `%<interface>` suffix. Unix socket
+#: paths and netlink channels can contain a `%` that is not an interface.
+_INTERFACE_NETIDS = {'tcp', 'udp', 'raw', 'icmp6', 'sctp', 'dccp', 'mptcp', 'udplite'}
+
 #: One `("name",pid=N,fd=M)` record inside a `users:` block. The name is
 #: non-greedy up to the quote that precedes `,pid=`, so spaces, colons and
 #: parentheses inside it are preserved rather than rewritten.
@@ -620,6 +630,15 @@ def parse(data, raw=False, quiet=False):
                              + users_here.group(0).replace(' ', _SPACE_HOLD)
                              + entry[users_here.end():])
 
+                # Same for the netlink local field, `<proto>:<name>/<pid>`: a
+                # space in the name would move the pid and the rest of the
+                # name into the peer columns.
+                nl_local = _NL_LOCAL_RE.match(entry.lstrip())
+                if nl_local:
+                    entry = (nl_local.group(1)
+                             + nl_local.group(2).replace(' ', _SPACE_HOLD)
+                             + entry.lstrip()[nl_local.end():])
+
                 entry_list = re.split(ONE_OR_MORE_SPACE_PATTERN, entry.strip())
                 main_columns = None
 
@@ -679,7 +698,7 @@ def parse(data, raw=False, quiet=False):
 
             # some post processing to pull out fields: interface, link_layer, path, pid, channel
             # Information from https://www.cyberciti.biz/files/ss.html used to define field names
-            if '%' in output_line['local_address']:
+            if output_line['netid'] in _INTERFACE_NETIDS and '%' in output_line['local_address']:
                 i_field = output_line['local_address'].rsplit('%', maxsplit=1)
                 output_line['local_address'] = i_field[0]
                 output_line['interface'] = i_field[1]
@@ -687,6 +706,7 @@ def parse(data, raw=False, quiet=False):
             if output_line['netid'] == 'nl':
                 channel = output_line.pop('local_address')
                 channel = channel + ':' + output_line.pop('local_port')
+                channel = channel.replace(_SPACE_HOLD, ' ')
                 if '/' in channel:
                     pid = channel.rsplit('/', maxsplit=1)[1]
                     channel = channel.rsplit('/', maxsplit=1)[0]

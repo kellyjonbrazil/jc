@@ -98,5 +98,30 @@ class MyTests(unittest.TestCase):
                                                              self.f_json['proc_pid_mountinfo_empty_source'])
 
 
+    def test_proc_pid_mountinfo_text_super_option_values(self):
+        """
+        Test '/proc/<pid>/mountinfo' with text values in super options
+        """
+        data = (
+            '448 432 0:55 / /a rw,relatime - proc proc rw,hidepid=invisible\n'
+            '453 432 0:58 / /m rw,relatime - overlay ov ro,lowerdir=/x/l1:/x/l2,upperdir=/x/u,opt=a=b,size=4096k,mode=755\n'
+        )
+        result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['super_options'], ['rw'])
+        self.assertEqual(result[0]['super_options_fields'], {'hidepid': 'invisible'})
+        self.assertEqual(result[1]['super_options'], ['ro'])
+        self.assertEqual(result[1]['super_options_fields'],
+                         {'lowerdir': '/x/l1:/x/l2', 'upperdir': '/x/u', 'opt': 'a=b', 'size': 4096, 'mode': 755})
+
+    def test_proc_pid_mountinfo_unusual_optional_fields(self):
+        """
+        Test '/proc/<pid>/mountinfo' with optional fields that are not numbers
+        """
+        data = '448 432 0:55 / /a rw,relatime shared:1 master:2 foo:bar:baz - proc proc rw\n'
+        result = jc.parsers.proc_pid_mountinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['optional_fields'], {'shared': 1, 'master': 2, 'foo': 'bar:baz'})
+        self.assertEqual(result[0]['fs_type'], 'proc')
+
+
 if __name__ == '__main__':
     unittest.main()

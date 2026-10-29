@@ -103,7 +103,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/dev` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,6 +132,9 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             item['interface'] = item['interface'][:-1]
 
         for key, val in item.items():
+            if key == 'interface':
+                continue
+
             try:
                 item[key] = int(val)
             except Exception:

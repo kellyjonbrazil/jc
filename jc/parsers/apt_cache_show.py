@@ -147,6 +147,7 @@ Examples:
 """
 from typing import List
 from jc.jc_types import JSONDictType
+import jc.utils
 import jc.parsers.rpm_qi as rpm_qi
 
 
@@ -184,6 +185,5 @@ def parse(
         List of Dictionaries. Raw or processed structured data.
     """
     # This parser is an alias of rpm_qi.py
-    rpm_qi.info = info  # type: ignore
-    rpm_qi.__name__ = __name__
-    return rpm_qi.parse(data, raw, quiet)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    return rpm_qi.parse(data, raw, quiet=True)

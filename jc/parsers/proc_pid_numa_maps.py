@@ -126,8 +126,13 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    no_convert = {'address', 'policy'}
+
     for entry in proc_data:
         for key, val in entry.items():
+            if key in no_convert:
+                continue
+
             try:
                 entry[key] = int(val)
             except Exception:

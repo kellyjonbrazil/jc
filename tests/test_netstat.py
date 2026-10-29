@@ -311,6 +311,30 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-program-name-state-words-e.json'), 'r', encoding='utf-8') as f:
         generic_netstat_state_words_e_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-program-name-space.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_program_name_space = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-program-name-space.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_program_name_space_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-brackets.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_brackets = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-brackets.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_brackets_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-path-whitespace.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_path_whitespace = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-unix-path-whitespace.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_linux_unix_path_whitespace_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-service-name-protocol-prefix.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_service_name_protocol_prefix = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-service-name-protocol-prefix.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_service_name_protocol_prefix_json = json.loads(f.read())
+
     def test_netstat_nodata(self):
         """
         Test 'netstat' with no data
@@ -573,7 +597,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]['inode'], 55555)
         self.assertEqual(result[0]['pid'], 31337)
-        self.assertEqual(result[0]['path'], '@x\x1eunix  2        ACC       STREAM     LISTENING     99999    1/init               /run/other.sock')
+        self.assertEqual(result[0]['path'], '@x\x1eunix  2      [ ACC ]     STREAM     LISTENING     99999    1/init               /run/other.sock')
 
 
     def test_netstat_other_whitespace_in_program_name(self):
@@ -638,6 +662,92 @@ class MyTests(unittest.TestCase):
         full header line: it is skipped and the header in use is kept
         """
         self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_proto_text_in_program_name, quiet=True), self.generic_netstat_linux_proto_text_in_program_name_json)
+
+    def test_netstat_linux_unix_program_name_space(self):
+        """
+        Test Linux 'netstat -xp' with a space near the end of the program name column
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_unix_program_name_space, quiet=True), self.generic_netstat_linux_unix_program_name_space_json)
+
+    def test_netstat_linux_unix_program_name_space_fields(self):
+        """
+        Test Linux 'netstat -xp' program name and path with a space in the last columns of the name
+        """
+        data = (
+            'Active UNIX domain sockets (servers and established)\n'
+            'Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\n'
+            'unix  2      [ ]         DGRAM                    34693    1899/aaaaaaaaaaa xx  /run/user/1000/systemd/notify\n'
+        )
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(result[0]['program_name'], 'aaaaaaaaaaa xx')
+        self.assertEqual(result[0]['pid'], 1899)
+        self.assertEqual(result[0]['path'], '/run/user/1000/systemd/notify')
+
+    def test_netstat_linux_unix_brackets(self):
+        """
+        Test Linux 'netstat -xp' with brackets in program names and paths
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_unix_brackets, quiet=True), self.generic_netstat_linux_unix_brackets_json)
+
+    def test_netstat_linux_unix_brackets_fields(self):
+        """
+        Test Linux 'netstat -xp' keeps brackets outside the Flags column
+        """
+        data = (
+            'Active UNIX domain sockets (servers and established)\n'
+            'Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\n'
+            'unix  2      [ ]         DGRAM                    40001    1898/systemd         /run/[a]/b\n'
+            'unix  2      [ ACC ]     STREAM     LISTENING     40003    31337/systemd        [/var/run/docker.sock\n'
+        )
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(result[0]['flags'], None)
+        self.assertEqual(result[0]['path'], '/run/[a]/b')
+        self.assertEqual(result[1]['flags'], 'ACC')
+        self.assertEqual(result[1]['path'], '[/var/run/docker.sock')
+
+    def test_netstat_linux_unix_path_whitespace(self):
+        """
+        Test Linux 'netstat -xp' with whitespace characters in paths on rows with and without a state
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_linux_unix_path_whitespace, quiet=True), self.generic_netstat_linux_unix_path_whitespace_json)
+
+    def test_netstat_linux_unix_path_whitespace_fields(self):
+        """
+        Test Linux 'netstat -xp' path with a 0x1f character is the same with and without a state
+        """
+        data = (
+            'Active UNIX domain sockets (servers and established)\n'
+            'Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path\n'
+            'unix  2      [ ACC ]     STREAM     LISTENING     34696    1898/systemd         /run/bus\x1f/hidden\n'
+            'unix  2      [ ]         DGRAM                    34693    1898/systemd         /run/bus\x1f/hidden\n'
+        )
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(result[0]['path'], '/run/bus\x1f/hidden')
+        self.assertEqual(result[1]['path'], '/run/bus\x1f/hidden')
+        self.assertEqual(result[1]['state'], None)
+        self.assertEqual(result[1]['inode'], 34693)
+
+    def test_netstat_windows_service_name_protocol_prefix(self):
+        """
+        Test Windows 'netstat -b' with service names that start with a protocol name
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_windows_service_name_protocol_prefix, quiet=True), self.generic_netstat_windows_service_name_protocol_prefix_json)
+
+    def test_netstat_windows_service_name_protocol_prefix_fields(self):
+        """
+        Test Windows 'netstat -b' keeps one record per socket for a service named TCPSvc
+        """
+        data = (
+            'Active Connections\n\n'
+            '  Proto  Local Address          Foreign Address        State           PID\n'
+            '  TCP    0.0.0.0:4325           0.0.0.0:0              LISTENING       5876\n'
+            '  TCPSvc\n'
+            ' [svchost.exe]\n'
+        )
+        result = jc.parsers.netstat.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['proto'], 'TCP')
+        self.assertEqual(result[0]['program_name'], '[svchost.exe]')
 
 
 if __name__ == '__main__':

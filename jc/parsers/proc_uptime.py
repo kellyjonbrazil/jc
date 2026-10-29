@@ -29,6 +29,8 @@ Schema:
       "idle_time":                  float
     }
 
+Non-finite numbers are converted to `None`/`null`
+
 Examples:
 
     $ cat /proc/uptime | jc --proc -p
@@ -37,13 +39,14 @@ Examples:
       "idle_time": 46856.66
     }
 """
-from typing import Dict
+import math
+from typing import Dict, Optional
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/uptime` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -53,6 +56,12 @@ class info():
 
 
 __version__ = info.version
+
+
+def _finite_float(value: str) -> Optional[float]:
+    """float(), but None for inf and nan, which JSON cannot represent"""
+    float_value = float(value)
+    return float_value if math.isfinite(float_value) else None
 
 
 def _process(proc_data: Dict) -> Dict:
@@ -98,8 +107,8 @@ def parse(
         uptime, idletime = data.split()
 
         raw_output = {
-            'up_time': float(uptime),
-            'idle_time': float(idletime)
+            'up_time': _finite_float(uptime),
+            'idle_time': _finite_float(idletime)
         }
 
     return raw_output if raw else _process(raw_output)
