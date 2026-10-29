@@ -196,6 +196,14 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
+        # remove full-line comments. With `empty_lines_in_values=False`
+        # configparser ends a multi-line value at a comment line like at a
+        # blank line, so the rest of the value would be parsed as keys.
+        data = '\n'.join(
+            line for line in data.split('\n')
+            if not line.strip().startswith(('#', ';'))
+        )
+
         ini_parser = configparser.ConfigParser(
             dict_type = MultiDict,
             allow_no_value=True,
