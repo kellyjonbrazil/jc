@@ -29,6 +29,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.path_list.parse('', quiet=True), [])
         self.assertEqual(len(jc.parsers.path_list.parse('/a::/b', quiet=True)), 3)
 
+    def test_path_list_empty_entry_is_current_directory(self):
+        """
+        Test 'path_list' with empty entries, which mean the current directory
+        """
+        for data in ('/usr/bin::/bin', '/usr/bin::/bin\n'):
+            result = jc.parsers.path_list.parse(data, quiet=True)
+            self.assertEqual([r['path'] for r in result], ['/usr/bin', '.', '/bin'])
+
+        result = jc.parsers.path_list.parse(':/bin\n', quiet=True)
+        self.assertEqual([r['path'] for r in result], ['.', '/bin'])
+
+        result = jc.parsers.path_list.parse('/bin:\n', quiet=True)
+        self.assertEqual([r['path'] for r in result], ['/bin', '.'])
+        self.assertEqual(result[1], {'path': '.', 'parent': '.', 'filename': '', 'stem': '', 'extension': '', 'path_list': []})
+
+        result = jc.parsers.path_list.parse('C:\\a;;D:\\b\n', quiet=True)
+        self.assertEqual([r['path'] for r in result], ['C:\\a', '.', 'D:\\b'])
+
 
 if __name__ == '__main__':
     unittest.main()
