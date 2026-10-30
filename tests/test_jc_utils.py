@@ -4,12 +4,26 @@ import os
 import contextlib
 import locale
 import unittest
+from datetime import datetime
 from unittest import mock
 import jc.utils
 from jc.exceptions import ParseError
 
 
 class MyTests(unittest.TestCase):
+
+    @unittest.skipIf(
+        sys.platform == 'win32',
+        'Windows timestamp() does not support these epoch boundary dates'
+    )
+    def test_utils_timestamp_epoch_zero(self):
+        local_epoch = datetime.fromtimestamp(0)
+        result = jc.utils.timestamp(
+            local_epoch.strftime('%a %b %d %H:%M:%S %Y')
+        )
+        self.assertEqual(result.naive, 0)
+        self.assertIsNone(result.utc)
+        self.assertEqual(result.iso, local_epoch.isoformat())
 
     def test_utils_timestamp(self):
         """
