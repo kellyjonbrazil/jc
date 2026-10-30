@@ -150,8 +150,14 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        cleandata.insert(0, 'size name')
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        for line in cleandata:
+            size, separator, name = line.partition('\t')
+            if separator:
+                raw_output.append({'size': size.strip(' '), 'name': name})
+            else:
+                raw_output.extend(jc.parsers.universal.simple_table_parse(
+                    ['size name', line]
+                ))
 
     if raw:
         return raw_output
