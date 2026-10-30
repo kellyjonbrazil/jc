@@ -1,0 +1,21 @@
+playbook: playbook.yaml
+
+  play #1 (all:!this): all:!this	TAGS: [some, tag]
+      TASK TAGS: [first, second, third]
+
+  play #2 (all,!this,&that): some name here	TAGS: []
+      TASK TAGS: [some, other]
+
+  play #3 (this): this	TAGS: []
+      TASK TAGS: [first, second, third]
+
+  play #4 (that): that	TAGS: [that]
+      TASK TAGS: [that]
+
+  play #5 (this:&that): this:&that	TAGS: []
+      TASK TAGS: []
+
+playbook: debug.yml
+
+  play #1 (all): dump all vars	TAGS: [debug]
+      TASK TAGS: []

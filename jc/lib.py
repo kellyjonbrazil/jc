@@ -17,6 +17,7 @@ parsers: List[str] = [
     'airport',
     'airport-s',
     'amixer',
+    'ansible-playbook-list-tags',
     'apachectl',
     'apt-cache-show',
     'apt-get-sqq',
