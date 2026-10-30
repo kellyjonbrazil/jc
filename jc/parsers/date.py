@@ -165,9 +165,9 @@ def parse(data, raw=False, quiet=False):
         dt_utc = None
 
         timestamp = jc.utils.timestamp(data, format_hint=(1000, 6000, 7000))
-        if timestamp.naive:
+        if timestamp.naive is not None:
             dt = datetime.fromtimestamp(timestamp.naive)
-        if timestamp.utc:
+        if timestamp.utc is not None:
             dt_utc = datetime.fromtimestamp(timestamp.utc, timezone.utc)
 
         if dt_utc:
@@ -192,7 +192,7 @@ def parse(data, raw=False, quiet=False):
             'iso': dt.isoformat(),
             'epoch': timestamp.naive,
             'epoch_utc': timestamp.utc,
-            'timezone_aware': True if timestamp.utc else False
+            'timezone_aware': timestamp.utc is not None
         }
 
     if raw:

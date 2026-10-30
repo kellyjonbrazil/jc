@@ -1354,7 +1354,7 @@ class timestamp:
             timestamp_utc = int(dt_utc.timestamp())
             iso_string = dt_utc.isoformat()
 
-        if timestamp_naive:
+        if timestamp_naive is not None:
             timestamp_obj['timestamp_naive'] = timestamp_naive
             timestamp_obj['timestamp_utc'] = timestamp_utc
             timestamp_obj['iso'] = iso_string
