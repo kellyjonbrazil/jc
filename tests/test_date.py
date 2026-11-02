@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.date
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -76,6 +77,15 @@ class MyTests(unittest.TestCase):
         Test 'date' on Ubuntu 20.4 with LANG=en_US.UTF-8 (uses 12-hour clock) with PM time
         """
         self.assertEqual(jc.parsers.date.parse(self.ubuntu_20_04_date2, quiet=True), self.ubuntu_20_04_date2_json)
+
+    def test_date_unparseable(self):
+        """
+        Test 'date' raises ParseError, not AttributeError, on input it cannot parse
+        """
+        for data in ('2023-01-01', 'unknown'):
+            with self.subTest(data=data):
+                with self.assertRaises(ParseError):
+                    jc.parsers.date.parse(data, quiet=True)
 
 
 if __name__ == '__main__':
