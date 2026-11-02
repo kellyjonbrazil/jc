@@ -1009,8 +1009,8 @@ power management:
             with self.assertRaises(SystemExit) as cm:
                 JcCli().run()
         self.assertEqual(100, cm.exception.code)
-        self.assertIn('ParseError: ' + msg[:300] + '...', err.getvalue())
-        self.assertNotIn('a' * 301, err.getvalue())
+        self.assertIn('ParseError: ' + msg[:500] + '...', err.getvalue())
+        self.assertNotIn('a' * 501, err.getvalue())
         self.assertNotIn('second line', err.getvalue())
 
         for option in ('-d', '-dd'):

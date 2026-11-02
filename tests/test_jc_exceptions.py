@@ -12,20 +12,20 @@ class MyTests(unittest.TestCase):
         self.assertEqual(e.short_message, 'Not date data')
         self.assertEqual(str(e), 'Not date data')
 
-    def test_short_message_exactly_300(self):
+    def test_short_message_exactly_500(self):
         """
-        Test that a 300 character message is not cut
+        Test that a 500 character message is not cut
         """
-        msg = 'x' * 300
+        msg = 'x' * 500
         self.assertEqual(ParseError(msg).short_message, msg)
 
     def test_short_message_long(self):
         """
-        Test that a message longer than 300 characters is cut to 300 and str() keeps it whole
+        Test that a message longer than 500 characters is cut to 500 and str() keeps it whole
         """
         msg = 'Unable to parse line: ' + 'a' * 1000
         e = ParseError(msg)
-        self.assertEqual(e.short_message, msg[:300] + '...')
+        self.assertEqual(e.short_message, msg[:500] + '...')
         self.assertEqual(str(e), msg)
 
     def test_short_message_multiline(self):
@@ -51,10 +51,10 @@ class MyTests(unittest.TestCase):
 
     def test_short_message_long_multiline(self):
         """
-        Test that a long first line of a multi-line message is cut to 300 characters
+        Test that a long first line of a multi-line message is cut to 500 characters
         """
-        e = ParseError('b' * 500 + '\nsecond')
-        self.assertEqual(e.short_message, 'b' * 300 + '...')
+        e = ParseError('b' * 800 + '\nsecond')
+        self.assertEqual(e.short_message, 'b' * 500 + '...')
 
     def test_short_message_no_args(self):
         """
