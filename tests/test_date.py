@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 import unittest
 import jc.parsers.date
@@ -76,6 +77,16 @@ class MyTests(unittest.TestCase):
         Test 'date' on Ubuntu 20.4 with LANG=en_US.UTF-8 (uses 12-hour clock) with PM time
         """
         self.assertEqual(jc.parsers.date.parse(self.ubuntu_20_04_date2, quiet=True), self.ubuntu_20_04_date2_json)
+
+    @unittest.skipIf(sys.platform == 'win32', 'zero epoch timestamps do not round-trip through Windows local time')
+    def test_date_epoch_zero(self):
+        """
+        Test 'date' with a zero epoch timestamp
+        """
+        result = jc.parsers.date.parse('1970-01-01T00:00:00.000Z', quiet=True)
+        self.assertEqual(result['epoch_utc'], 0)
+        self.assertTrue(result['timezone_aware'])
+        self.assertEqual(result['iso'], '1970-01-01T00:00:00+00:00')
 
 
 if __name__ == '__main__':

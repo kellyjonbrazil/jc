@@ -3,6 +3,7 @@ import io
 import os
 import contextlib
 import locale
+import time
 import unittest
 from unittest import mock
 import jc.utils
@@ -121,6 +122,34 @@ class MyTests(unittest.TestCase):
                     self.assertEqual(ts_dict, expected_output)
                 else:
                     raise
+
+    @unittest.skipIf(sys.platform == 'win32', 'zero epoch timestamps do not round-trip through Windows local time')
+    def test_utils_timestamp_zero_utc(self):
+        """
+        Test timestamp conversion of a zero UTC epoch timestamp
+        """
+        result = jc.utils.timestamp('1970-01-01T00:00:00.000Z')
+        self.assertEqual(result.utc, 0)
+        self.assertIsNotNone(result.naive)
+
+    @unittest.skipUnless(hasattr(time, 'tzset'), 'TZ switching requires time.tzset')
+    def test_utils_timestamp_zero_naive(self):
+        """
+        Test timestamp conversion of a zero naive epoch timestamp
+        """
+        old_tz = os.environ.get('TZ')
+        try:
+            os.environ['TZ'] = 'UTC'
+            time.tzset()
+            result = jc.utils.timestamp('1970-01-01T00:00:00.000')
+            self.assertEqual(result.naive, 0)
+            self.assertIsNone(result.utc)
+        finally:
+            if old_tz is None:
+                os.environ.pop('TZ', None)
+            else:
+                os.environ['TZ'] = old_tz
+            time.tzset()
 
     def test_utils_convert_to_int(self):
         """
