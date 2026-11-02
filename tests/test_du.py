@@ -75,5 +75,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.du.parse(self.osx_10_14_6_du, quiet=True), self.osx_10_14_6_du_json)
 
 
+    def test_du_whitespace_in_filenames(self):
+        """
+        Test 'du' keeps whitespace that belongs to the filename
+        """
+        data = '5\t leading.txt\n5\ttrailing.txt \n5\t\u00a0report.txt\n'
+        result = jc.parsers.du.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], [' leading.txt', 'trailing.txt ', '\u00a0report.txt'])
+
+
 if __name__ == '__main__':
     unittest.main()

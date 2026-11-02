@@ -150,8 +150,16 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        cleandata.insert(0, 'size name')
-        raw_output = jc.parsers.universal.simple_table_parse(cleandata)
+        # `du` separates the size from the filename with a tab, and the filename
+        # can legitimately start or end with whitespace, so split on that first
+        # tab instead of the whitespace-splitting table parser.
+        if all('\t' in line for line in cleandata):
+            for line in cleandata:
+                size, name = line.split('\t', 1)
+                raw_output.append({'size': size.strip(), 'name': name})
+        else:
+            cleandata.insert(0, 'size name')
+            raw_output = jc.parsers.universal.simple_table_parse(cleandata)
 
     if raw:
         return raw_output
