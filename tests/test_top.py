@@ -109,6 +109,19 @@ class MyTests(unittest.TestCase):
         self.assertEqual((r['swap_total'], r['swap_free'], r['swap_used'], r['mem_available']),
                          ('1234567894', '1234567895', '1234567896', '1234567897'))
 
+    def test_top_no_process_table(self):
+        """
+        Test 'top -b -n1' output cut before the process table, e.g.
+        `top -b -n1 | head -5 | jc --top`. _process() used to index
+        item['processes'] unconditionally and raise KeyError.
+        """
+        summary_only = (
+            'top - 10:00:00 up 1 day,  2:03,  1 user,  load average: 0.00, 0.01, 0.05\n'
+            'Tasks: 123 total,   1 running, 122 sleeping,   0 stopped,   0 zombie\n'
+        )
+        parsed = jc.parsers.top.parse(summary_only, quiet=True)
+        self.assertIsInstance(parsed, list)
+
 
 if __name__ == '__main__':
     unittest.main()
