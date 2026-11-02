@@ -1,0 +1,1 @@
+[{"_type": "response", "_response_version": "HTTP/1.1", "_response_status": 301, "_response_reason": ["Moved Permanently"], "location": "https://example.com/?a: b", "trace": "a b", "http/1.1": "503 x", "server": ["nginx"], "set-cookie": ["id=1; Path=/"], "x-empty": "", "content-length": 0}]

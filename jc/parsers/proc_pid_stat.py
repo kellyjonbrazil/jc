@@ -198,11 +198,12 @@ Examples:
 import re
 from typing import Dict
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`/proc/<pid>/stat` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -245,7 +246,12 @@ def _process(proc_data: Dict) -> Dict:
     if 'state' in proc_data:
         proc_data['state_pretty'] = state_map[proc_data['state']]
 
+    no_convert = {'comm', 'state', 'state_pretty'}
+
     for key, val in proc_data.items():
+        if key in no_convert:
+            continue
+
         try:
             proc_data[key] = int(val)
         except Exception:
@@ -281,7 +287,7 @@ def parse(
 
         line_re = re.compile(r'''
             ^(?P<pid>\d+)\s
-            \((?P<comm>.+)\)\s
+            \((?P<comm>.*)\)\s
             (?P<state>\S)\s
             (?P<ppid>\d+)\s
             (?P<pgrp>\d+)\s
@@ -297,8 +303,8 @@ def parse(
             (?P<stime>\d+)\s
             (?P<cutime>\d+)\s
             (?P<cstime>\d+)\s
-            (?P<priority>\d+)\s
-            (?P<nice>\d+)\s
+            (?P<priority>-?\d+)\s
+            (?P<nice>-?\d+)\s
             (?P<num_threads>\d+)\s
             (?P<itrealvalue>\d+)\s
             (?P<starttime>\d+)\s
@@ -317,7 +323,7 @@ def parse(
             (?P<wchan>\d+)\s
             (?P<nswap>\d+)\s
             (?P<cnswap>\d+)\s
-            (?P<exit_signal>\d+)\s
+            (?P<exit_signal>-?\d+)\s
             (?P<processor>\d+)\s
             (?P<rt_priority>\d+)\s
             (?P<policy>\d+)\s
@@ -337,7 +343,9 @@ def parse(
 
         line_match = line_re.search(data)
 
-        if line_match:
-            raw_output = line_match.groupdict()
+        if not line_match:
+            raise ParseError('Unable to parse /proc/<pid>/stat data')
+
+        raw_output = line_match.groupdict()
 
     return raw_output if raw else _process(raw_output)

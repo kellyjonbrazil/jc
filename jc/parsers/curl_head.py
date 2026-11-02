@@ -282,7 +282,7 @@ import jc.parsers.http_headers as headers_parser
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`curl --head` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -331,7 +331,7 @@ def parse(
     curl_verbose = False
 
     if jc.utils.has_data(data):
-        data_list = data.splitlines()
+        data_list = jc.utils.splitlines(data)
 
         if data_list[0].startswith('* '):
             curl_verbose = True
@@ -339,7 +339,7 @@ def parse(
         data_list = [_remove_extra_chars(x, verbose=curl_verbose) for x in data_list]
         data_str = '\n'.join(data_list)
 
-        headers_parser.info = info  # type: ignore
+        # quiet is passed on for the warnings about header names
         raw_output = headers_parser.parse(data_str, raw, quiet)
 
     return raw_output

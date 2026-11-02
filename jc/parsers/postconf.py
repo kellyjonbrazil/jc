@@ -91,7 +91,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`postconf -M` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -167,7 +167,7 @@ def parse(
 
     if jc.utils.has_data(data):
         table = ['service_name service_type private unprivileged chroot wake_up_time process_limit command']
-        data_list = list(filter(None, data.splitlines()))
+        data_list = list(filter(None, jc.utils.splitlines(data)))
         table.extend(data_list)
         raw_output = simple_table_parse(table)
 

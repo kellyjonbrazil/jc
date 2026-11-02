@@ -142,5 +142,16 @@ Foo: bar
         self.assertEqual(jc.parsers.pip_show.parse(data, quiet=True), expected)
 
 
+    def test_pip_show_line_separator(self):
+        """
+        Test 'pip_show' with a line-break character other than LF inside a field
+        """
+        data = 'Name: coolprompt\nVersion: 1.0\nSummary: A shell prompt theme\u2028---\u2028Name: cryptography\u2028Version: 42.0.8\nAuthor: Someone\n'
+        result = jc.parsers.pip_show.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['summary'], 'A shell prompt theme\u2028---\u2028Name: cryptography\u2028Version: 42.0.8')
+        self.assertEqual(result[0]['author'], 'Someone')
+
+
 if __name__ == '__main__':
     unittest.main()

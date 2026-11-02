@@ -115,5 +115,45 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['parent'], 'D:\\Users\\testuser')
 
 
+    def test_dir_line_separator(self):
+        """
+        Test 'dir' with a line-break character other than LF inside a field
+        """
+        data = ' Directory of C:\\Shared\r\n\r\n03/24/2021  03:15 PM                 0 a.txt\u2028 Directory of other\r\n03/24/2021  03:16 PM            54,784 payroll.xlsx\r\n'
+        result = jc.parsers.dir.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual([x['parent'] for x in result], ['C:\\Shared', 'C:\\Shared'])
+        self.assertEqual(result[0]['size'], 0)
+        self.assertEqual(result[1]['filename'], 'payroll.xlsx')
+
+    def test_dir_filename_whitespace(self):
+        """
+        Test that leading and repeated spaces in file and directory names are kept
+        """
+        data = (' Directory of C:\\Shared\n\n'
+                '01/01/1999  12:00 AM       999,999,999 file  name.txt\n'
+                '03/24/2021  03:15 PM                 0 file name.txt\n'
+                '03/24/2021  03:15 PM             1,088  lead.txt\n'
+                '03/24/2021  03:15 PM    <DIR>           lead dir\n'
+                '03/24/2021  03:15 PM    <DIR>          a  b\n')
+        result = jc.parsers.dir.parse(data, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['file  name.txt', 'file name.txt', ' lead.txt', ' lead dir', 'a  b'])
+        self.assertEqual([r['size'] for r in result], ['999,999,999', '0', '1,088', None, None])
+        self.assertEqual([r['dir'] for r in result], [False, False, False, True, True])
+
+    def test_dir_junction_symlink(self):
+        """
+        Test <JUNCTION>, <SYMLINKD>, and <SYMLINK> rows
+        """
+        data = (' Directory of C:\\Shared\n\n'
+                '03/24/2021  03:15 PM    <JUNCTION>     my  link [C:\\Target]\n'
+                '03/24/2021  03:15 PM    <SYMLINKD>     sdir [C:\\Other]\n'
+                '03/24/2021  03:15 PM    <SYMLINK>      f.txt [g.txt]\n')
+        result = jc.parsers.dir.parse(data, raw=True, quiet=True)
+        self.assertEqual([r['filename'] for r in result], ['my  link [C:\\Target]', 'sdir [C:\\Other]', 'f.txt [g.txt]'])
+        self.assertEqual([r['size'] for r in result], ['<JUNCTION>', '<SYMLINKD>', '<SYMLINK>'])
+        self.assertEqual(result[0]['parent'], 'C:\\Shared')
+
+
 if __name__ == '__main__':
     unittest.main()

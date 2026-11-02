@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`tracepath` and `tracepath6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -201,23 +201,27 @@ def parse(data, raw=False, quiet=False):
     RE_REPLY_MS = re.compile(r'\s(?P<reply_ms>\d*\.\d*)ms')   # group: reply_ms
     RE_ASYMM = re.compile(r'\sasymm\s+(?P<asymm>[\d]+)')      # group: asymm
     RE_REACHED = re.compile(r'\sreached')
-    RE_SUMMARY = re.compile(r'\s+Resume:\s+pmtu\s+(?P<pmtu>\d+)(?:\s+hops\s+(?P<hops>\d+))?(?:\s+back\s+(?P<back>\d+))?')  # groups: pmtu, hops, back
+    RE_SUMMARY = re.compile(r'\sResume:\s+pmtu\s+(?P<pmtu>\d+)(?:\s+hops\s+(?P<hops>\d+))?(?:\s+back\s+(?P<back>\d+))?')  # groups: pmtu, hops, back
 
     raw_output = {}
 
     if jc.utils.has_data(data):
         hops = []
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # grab hop information
             ttl_host = re.search(RE_TTL_HOST, line)
-            pmtu = re.search(RE_PMTU, line)
-            reply_ms = re.search(RE_REPLY_MS, line)
-            asymm = re.search(RE_ASYMM, line)
-            reached = re.search(RE_REACHED, line)
             summary = re.search(RE_SUMMARY, line)
 
             if ttl_host:
+                # the keywords follow the host field. The host name can
+                # contain them too, e.g. reached.example.net
+                rest = line[ttl_host.end():]
+                pmtu = re.search(RE_PMTU, rest)
+                reply_ms = re.search(RE_REPLY_MS, rest)
+                asymm = re.search(RE_ASYMM, rest)
+                reached = re.search(RE_REACHED, rest)
+
                 hop = {
                     'ttl': ttl_host.group('ttl'),
                     'guess': bool(ttl_host.group('ttl_guess')),

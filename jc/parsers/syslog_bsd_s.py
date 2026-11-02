@@ -15,7 +15,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('syslog_bsd_s', syslog_command_output.splitlines())
+    result = jc.parse('syslog_bsd_s', syslog_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -38,7 +38,8 @@ Schema:
     }
 
     [0] this field exists if the syslog line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -63,7 +64,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Syslog RFC 3164 string streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -109,7 +110,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -172,6 +173,9 @@ def parse(
                 }
 
             else:
+                if ignore_exceptions:
+                    raise ParseError('Not syslog data')
+
                 output_line = {
                     'unparsable': line.rstrip()
                 }

@@ -112,4 +112,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/host.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/host.py)
 
-Version 1.0 by Pettai (pettai@sunet.se)
+Version 1.1 by Pettai (pettai@sunet.se)

@@ -1,0 +1,28 @@
+{
+  "$archiver": "NSKeyedArchiver",
+  "$objects": [
+    "$null",
+    {
+      "$class": {
+        "CF$UID": 2
+      },
+      "name": "Example"
+    },
+    {
+      "$classname": "Item"
+    }
+  ],
+  "$top": {
+    "root": {
+      "CF$UID": 1
+    }
+  },
+  "uids": [
+    {
+      "CF$UID": 1
+    },
+    {
+      "CF$UID": 2
+    }
+  ]
+}

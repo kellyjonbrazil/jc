@@ -1,0 +1,10 @@
+A	".github/workflows/d\303\251ploy.yml"
+A	"back\\slash"
+A	"new\nline"
+R100	"p q/d\303\251.txt"	p q/f.txt
+R100	"p q/t\t.txt"	p q/u.txt
+A	plain.txt
+A	"sub_a\"b"
+A	"tab\there"
+A	x | y.txt
+A	"\346\227\245\346\234\254.txt"

@@ -12,13 +12,19 @@
   * [convert_to_float](#jc.utils.convert_to_float)
   * [convert_to_int](#jc.utils.convert_to_int)
   * [error_message](#jc.utils.error_message)
+  * [expansion_check](#jc.utils.expansion_check)
+  * [expansion_limit](#jc.utils.expansion_limit)
   * [has_data](#jc.utils.has_data)
   * [input_type_check](#jc.utils.input_type_check)
   * [is_compatible](#jc.utils.is_compatible)
   * [line_slice](#jc.utils.line_slice)
   * [normalize_key](#jc.utils.normalize_key)
   * [remove_quotes](#jc.utils.remove_quotes)
+  * [splitlines](#jc.utils.splitlines)
+  * [unescape_backslashes](#jc.utils.unescape_backslashes)
+  * [unquote_git_path](#jc.utils.unquote_git_path)
   * [warning_message](#jc.utils.warning_message)
+  * [xml_defaults_check](#jc.utils.xml_defaults_check)
 
 jc - JSON Convert utils
 
@@ -142,7 +148,8 @@ Parameters:
 
 Returns:
 
-    float/None     Float if successful conversion, otherwise None
+    float/None     Float if successful conversion, otherwise None.
+                   Infinite and NaN results also return None.
 
 <a id="jc.utils.convert_to_int"></a>
 
@@ -182,6 +189,51 @@ Parameters:
 Returns:
 
     None - just prints output to `STDERR`
+
+<a id="jc.utils.expansion_check"></a>
+
+### expansion_check
+
+```python
+def expansion_check(data: object, input_size: int) -> None
+```
+
+Ensure the JSON output for `data` will not be far larger than the
+input. Objects referenced more than once (e.g. YAML aliases or binary
+plist object references) are counted once per reference, as they are
+when serialized, but each object is only walked once. Raises
+`ParseError` if the estimated output size is larger than
+`expansion_limit(input_size)`.
+
+Parameters:
+
+    data:        (object) parsed data (dictionaries, lists, scalars)
+    input_size:  (int) length of the input data
+
+Returns:
+
+    None         raises `ParseError` if the output would be too large
+
+<a id="jc.utils.expansion_limit"></a>
+
+### expansion_limit
+
+```python
+def expansion_limit(input_size: int) -> int
+```
+
+Return the largest output size (in characters of JSON) accepted for
+an input of `input_size` characters or bytes. Used by parsers that
+limit how much the output can grow from shared references or
+declared default values.
+
+Parameters:
+
+    input_size:  (int) length of the input data
+
+Returns:
+
+    Integer      maximum accepted output size
 
 <a id="jc.utils.has_data"></a>
 
@@ -302,6 +354,99 @@ Returns:
 
     string
 
+<a id="jc.utils.splitlines"></a>
+
+### splitlines
+
+```python
+def splitlines(text: str,
+               keepends: bool = False,
+               split_cr: bool = False) -> List[str]
+```
+
+Split text into lines on LF and CRLF only (optionally also on a lone CR).
+
+Unlike `str.splitlines()`, this does not treat VT, FF, FS, GS, RS,
+NEL (U+0085), LINE SEPARATOR (U+2028) or PARAGRAPH SEPARATOR (U+2029)
+as line terminators, so those characters stay inside the line. By
+default a lone CR also stays inside the line.
+
+Parameters:
+
+    text:        (string)  text to split
+    keepends:    (boolean) keep the line terminators if True
+    split_cr:    (boolean) also treat a lone CR as a line terminator
+                           if True (for files that may use CR-only
+                           line endings)
+
+Returns:
+
+    List of strings. Like `str.splitlines()`, a trailing line terminator
+    does not produce an empty final line.
+
+<a id="jc.utils.unescape_backslashes"></a>
+
+### unescape_backslashes
+
+```python
+def unescape_backslashes(data: str,
+                         octal_chars: str | None = None,
+                         escapes: Dict[str, str] | None = None) -> str
+```
+
+Decode the backslash escapes that tools such as `mount` (fstab, mtab),
+`getfacl` and `md5sum` use for special characters in names. The input is
+read from left to right in a single pass, so an escaped backslash is never
+used to start another escape.
+
+A backslash followed by three octal digits (`\040`) is decoded to the
+byte it stands for (the value is masked to 8 bits, as in libmount). A run
+of these bytes is interpreted as UTF-8 and invalid UTF-8 is shown as
+backslash escapes. A backslash that is not followed by three octal digits
+or by a key of `escapes` is kept as it is, along with the character after
+it.
+
+Parameters:
+
+    data:         (string) Input value
+    octal_chars:  (string) Decode an octal escape only when it stands for
+                  one of these characters and keep any other octal escape
+                  as it is. `None` (default) decodes every octal escape
+                  and an empty string decodes none.
+    escapes:      (dictionary) Maps the character that follows a
+                  backslash to its replacement, e.g. `{'\\': '\\'}`
+                  decodes `\\` to a single backslash. Octal escapes are
+                  checked first.
+
+Returns:
+
+    string
+
+<a id="jc.utils.unquote_git_path"></a>
+
+### unquote_git_path
+
+```python
+def unquote_git_path(data: str) -> str
+```
+
+Decode a file path as printed by git. By default (`core.quotePath`) git
+wraps a path that has non-ASCII characters, double quotes, backslashes or
+control characters in double quotes and C-style escapes those characters
+(e.g. `"d\303\251ploy.yml"`). The escapes are decoded and the bytes are
+interpreted as UTF-8. Invalid UTF-8 is shown as backslash escapes.
+
+A path that is not quoted is returned unmodified. Each side of a rename
+in the `"old" => new` or `old => "new"` form is decoded separately.
+
+Parameters:
+
+    data:       (string) Input value
+
+Returns:
+
+    string
+
 <a id="jc.utils.warning_message"></a>
 
 ### warning_message
@@ -321,5 +466,30 @@ Parameters:
 Returns:
 
     None - just prints output to STDERR
+
+<a id="jc.utils.xml_defaults_check"></a>
+
+### xml_defaults_check
+
+```python
+def xml_defaults_check(data: str | bytes) -> None
+```
+
+Ensure attribute default values declared in an XML document's DTD
+(`<!ATTLIST>`) do not make the output far larger than the input. The
+XML parser adds the defaults to every matching element, so they are
+counted with a separate pass that keeps no per-element data. Raises
+`ParseError` if they would add more than `expansion_limit(len(data))`
+characters. Malformed documents and documents with entity declarations
+are left for the XML library to report.
+
+Parameters:
+
+    data:        (string, bytes) XML document. A string is parsed as
+                 UTF-8, bytes use the document's declared encoding.
+
+Returns:
+
+    None         raises `ParseError` if the output would be too large
 
 

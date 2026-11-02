@@ -48,7 +48,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`pip list` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -96,7 +96,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
 
@@ -109,9 +109,7 @@ def parse(data, raw=False, quiet=False):
         # otherwise normal table output
         else:
             # clear separator line
-            for i, line in reversed(list(enumerate(cleandata))):
-                if '---' in line:
-                    cleandata.pop(i)
+            cleandata = [line for line in cleandata if not line.strip().startswith('---')]
 
             cleandata[0] = cleandata[0].lower()
 

@@ -73,4 +73,4 @@ Source: [`jc/parsers/path.py`](https://github.com/kellyjonbrazil/jc/blob/master/
 
 This parser can be used with the `--slurp` command-line option.
 
-Version 1.0 by Michael Nietzold (https://github.com/muescha)
+Version 1.1 by Michael Nietzold (https://github.com/muescha)

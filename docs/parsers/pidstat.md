@@ -153,4 +153,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/pidstat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/pidstat.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

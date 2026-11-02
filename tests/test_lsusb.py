@@ -161,5 +161,18 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.lsusb.parse(self.generic_lsusb_audio_midi_class, quiet=True), self.generic_lsusb_audio_midi_class_json)
 
 
+    def test_lsusb_line_separator(self):
+        """
+        Test 'lsusb' with a line-break character other than LF inside a field
+        """
+        data = 'Bus 002 Device 002: ID 0e0f:0003 VMware, Inc. Virtual Mouse\nDevice Descriptor:\n  bLength                18\n  iProduct                2 Mouse\x0cBus 009 Device 099: ID 046d:c31c Logitech, Inc. Keyboard K120\x0cDevice Descriptor:\n  iSerial                 0 \n'
+        result = jc.parsers.lsusb.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['device'], '002')
+        self.assertIn('iSerial', result[0]['device_descriptor'])
+        self.assertEqual(result[0]['device_descriptor']['iProduct']['value'], '2')
+        self.assertEqual(result[0]['device_descriptor']['iProduct']['description'], 'Mouse\x0cBus 009 Device 099: ID 046d:c31c Logitech, Inc. Keyboard K120\x0cDevice Descriptor:')
+
+
 if __name__ == '__main__':
     unittest.main()

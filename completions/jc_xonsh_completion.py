@@ -310,6 +310,7 @@ jc_parsers = {
     '--proc-net-protocols': '`/proc/net/protocols` file parser',
     '--proc-net-route': '`/proc/net/route` file parser',
     '--proc-net-tcp': '`/proc/net/tcp` and `/proc/net/tcp6` file parser',
+    '--proc-net-udp': '`/proc/net/udp` and `/proc/net/udp6` file parser',
     '--proc-net-unix': '`/proc/net/unix` file parser',
     '--proc-pid-fdinfo': '`/proc/<pid>/fdinfo/<fd>` file parser',
     '--proc-pid-io': '`/proc/<pid>/io` file parser',

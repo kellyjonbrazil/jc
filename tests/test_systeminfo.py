@@ -42,6 +42,19 @@ class MyTests(unittest.TestCase):
 
             self.assertEqual(jc.parsers.systeminfo.parse(in_var, quiet=True), out_var)
 
+    def test_systeminfo_multiline_values(self):
+        """
+        Test 'systeminfo' values that span several lines
+        """
+        data = 'Host Name:                 H\nOS Name:                   X\nHotfix(s):                 2 Hotfix(s) Installed.\n                           [01]: KB1\n                           [02]: KB2\nBIOS Version:              abc\n                           def\n'
+        expected = {
+            'host_name': 'H',
+            'os_name': 'X',
+            'hotfixs': ['KB1', 'KB2'],
+            'bios_version': 'abc\n                           def'
+        }
+        self.assertEqual(jc.parsers.systeminfo.parse(data, raw=True, quiet=True), expected)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -63,7 +63,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`history` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -118,7 +118,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = {}
 
     if jc.utils.has_data(data):
-        linedata = data.splitlines()
+        linedata = jc.utils.splitlines(data)
 
         for entry in filter(None, linedata):
             try:

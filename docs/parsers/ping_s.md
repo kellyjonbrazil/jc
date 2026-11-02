@@ -25,7 +25,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('ping_s', ping_command_output.splitlines())
+    result = jc.parse('ping_s', ping_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -94,7 +94,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -109,4 +109,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/ping_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ping_s.py)
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

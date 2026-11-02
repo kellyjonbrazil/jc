@@ -1,0 +1,17 @@
+# file: srv/share/Q1\\report.txt
+# owner: CORP\\alice
+# group: CORP\\domain\040users
+user::rw-
+group::r--
+group:CORP\\domain\040admins:rw-
+user:a\054b\011c:r--
+user:\\040x:r--
+mask::rw-
+other::---
+
+# file: srv/share/line\012feed\015
+# owner: alice
+# group: finance
+user::rw-
+group::r--
+other::r--

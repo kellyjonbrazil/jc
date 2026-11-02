@@ -59,6 +59,15 @@ class MyTests(unittest.TestCase):
         osx_10_14_6_ps_axu_json = json.loads(f.read())
 
 
+    def test_ps_line_separators(self):
+        """
+        Test 'ps' with line-break characters other than LF in a command line
+        """
+        data = 'UID         PID   PPID  C STIME TTY          TIME CMD\nroot          1      0  0 Oct25 ?        00:00:03 echo a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nroot          2      0  0 Oct25 ?        00:00:00 [kthreadd]\n'
+        result = jc.parsers.ps.parse(data, quiet=True)
+        self.assertEqual(result[0]['cmd'], 'echo a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['pid'], 2)
+
     def test_ps_nodata(self):
         """
         Test 'ps' with no data

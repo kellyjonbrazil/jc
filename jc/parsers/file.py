@@ -1,5 +1,11 @@
 r"""jc - JSON Convert `file` command output parser
 
+> Note: `file` output does not mark where the file name ends, so each
+> line is split at the last `: ` (at the first `: ` for gzip files, whose
+> description includes `last modified: `). A description that contains
+> `: `, for example a symbolic link whose target contains it, puts part
+> of the description in `filename`.
+
 Usage (cli):
 
     $ file * | jc --file
@@ -63,7 +69,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`file` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -114,7 +120,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # fix case for gzip files where description contains ': ' delimiter
             if 'gzip compressed data, last modified: ' in line:

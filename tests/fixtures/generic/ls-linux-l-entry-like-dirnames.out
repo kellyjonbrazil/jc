@@ -1,0 +1,21 @@
+-rw-r--r-- 1 user user  0 Oct 25 07:40 notes:
+
+-rwsr-xr-x 1 root root 0 2020-01-01 00:00 sh:
+total 0
+-rw-r--r-- 1 user user 0 Oct 25 07:34 run.sh
+
+alpha:
+total 4
+-rw-r--r-- 1 user user 6 Oct 25 07:34 readme.txt
+
+drwsrwsrwx 2 root root 4096 Jan  1 00:00 bin:
+total 0
+-rw-r--r-- 1 user user 0 Oct 25 07:34 payload.sh
+
+total 1:
+total 0
+-rw-r--r-- 1 user user 0 Oct 25 07:34 sshd
+
+zeta:
+total 4
+-rw-r--r-- 1 user user 2 Oct 25 07:34 notes.txt

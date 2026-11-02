@@ -1,0 +1,226 @@
+# dmidecode 3.2
+Getting SMBIOS data from sysfs.
+SMBIOS 3.2.0 present.
+
+Handle 0x0100, DMI type 11, 5 bytes
+OEM Strings
+	String 1: vendor option 0
+	String 2: asset tag 0
+System Configuration Options 0.0
+	Option 0: value 0
+System Configuration Options 0.1
+	Option 1: value 0
+System Configuration Options 0.2
+	Option 2: value 0
+System Configuration Options 0.3
+	Option 3: value 0
+System Configuration Options 0.4
+	Option 4: value 0
+System Configuration Options 0.5
+	Option 5: value 0
+System Configuration Options 0.6
+	Option 6: value 0
+System Configuration Options 0.7
+	Option 7: value 0
+System Configuration Options 0.8
+	Option 8: value 0
+System Configuration Options 0.9
+	Option 9: value 0
+System Configuration Options 0.10
+	Option 10: value 0
+System Configuration Options 0.11
+	Option 11: value 0
+System Configuration Options 0.12
+	Option 12: value 0
+System Configuration Options 0.13
+	Option 13: value 0
+System Configuration Options 0.14
+	Option 14: value 0
+System Configuration Options 0.15
+	Option 15: value 0
+System Configuration Options 0.16
+	Option 16: value 0
+System Configuration Options 0.17
+	Option 17: value 0
+System Configuration Options 0.18
+	Option 18: value 0
+System Configuration Options 0.19
+	Option 19: value 0
+System Configuration Options 0.20
+	Option 20: value 0
+System Configuration Options 0.21
+	Option 21: value 0
+System Configuration Options 0.22
+	Option 22: value 0
+System Configuration Options 0.23
+	Option 23: value 0
+System Configuration Options 0.24
+	Option 24: value 0
+
+Handle 0x0101, DMI type 11, 5 bytes
+OEM Strings
+	String 1: vendor option 1
+	String 2: asset tag 1
+System Configuration Options 1.0
+	Option 0: value 0
+System Configuration Options 1.1
+	Option 1: value 1
+System Configuration Options 1.2
+	Option 2: value 2
+System Configuration Options 1.3
+	Option 3: value 3
+System Configuration Options 1.4
+	Option 4: value 4
+System Configuration Options 1.5
+	Option 5: value 5
+System Configuration Options 1.6
+	Option 6: value 6
+System Configuration Options 1.7
+	Option 7: value 7
+System Configuration Options 1.8
+	Option 8: value 8
+System Configuration Options 1.9
+	Option 9: value 9
+System Configuration Options 1.10
+	Option 10: value 10
+System Configuration Options 1.11
+	Option 11: value 11
+System Configuration Options 1.12
+	Option 12: value 12
+System Configuration Options 1.13
+	Option 13: value 13
+System Configuration Options 1.14
+	Option 14: value 14
+System Configuration Options 1.15
+	Option 15: value 15
+System Configuration Options 1.16
+	Option 16: value 16
+System Configuration Options 1.17
+	Option 17: value 17
+System Configuration Options 1.18
+	Option 18: value 18
+System Configuration Options 1.19
+	Option 19: value 19
+System Configuration Options 1.20
+	Option 20: value 20
+System Configuration Options 1.21
+	Option 21: value 21
+System Configuration Options 1.22
+	Option 22: value 22
+System Configuration Options 1.23
+	Option 23: value 23
+System Configuration Options 1.24
+	Option 24: value 24
+
+Handle 0x0102, DMI type 11, 5 bytes
+OEM Strings
+	String 1: vendor option 2
+	String 2: asset tag 2
+System Configuration Options 2.0
+	Option 0: value 0
+System Configuration Options 2.1
+	Option 1: value 2
+System Configuration Options 2.2
+	Option 2: value 4
+System Configuration Options 2.3
+	Option 3: value 6
+System Configuration Options 2.4
+	Option 4: value 8
+System Configuration Options 2.5
+	Option 5: value 10
+System Configuration Options 2.6
+	Option 6: value 12
+System Configuration Options 2.7
+	Option 7: value 14
+System Configuration Options 2.8
+	Option 8: value 16
+System Configuration Options 2.9
+	Option 9: value 18
+System Configuration Options 2.10
+	Option 10: value 20
+System Configuration Options 2.11
+	Option 11: value 22
+System Configuration Options 2.12
+	Option 12: value 24
+System Configuration Options 2.13
+	Option 13: value 26
+System Configuration Options 2.14
+	Option 14: value 28
+System Configuration Options 2.15
+	Option 15: value 30
+System Configuration Options 2.16
+	Option 16: value 32
+System Configuration Options 2.17
+	Option 17: value 34
+System Configuration Options 2.18
+	Option 18: value 36
+System Configuration Options 2.19
+	Option 19: value 38
+System Configuration Options 2.20
+	Option 20: value 40
+System Configuration Options 2.21
+	Option 21: value 42
+System Configuration Options 2.22
+	Option 22: value 44
+System Configuration Options 2.23
+	Option 23: value 46
+System Configuration Options 2.24
+	Option 24: value 48
+
+Handle 0x0103, DMI type 11, 5 bytes
+OEM Strings
+	String 1: vendor option 3
+	String 2: asset tag 3
+System Configuration Options 3.0
+	Option 0: value 0
+System Configuration Options 3.1
+	Option 1: value 3
+System Configuration Options 3.2
+	Option 2: value 6
+System Configuration Options 3.3
+	Option 3: value 9
+System Configuration Options 3.4
+	Option 4: value 12
+System Configuration Options 3.5
+	Option 5: value 15
+System Configuration Options 3.6
+	Option 6: value 18
+System Configuration Options 3.7
+	Option 7: value 21
+System Configuration Options 3.8
+	Option 8: value 24
+System Configuration Options 3.9
+	Option 9: value 27
+System Configuration Options 3.10
+	Option 10: value 30
+System Configuration Options 3.11
+	Option 11: value 33
+System Configuration Options 3.12
+	Option 12: value 36
+System Configuration Options 3.13
+	Option 13: value 39
+System Configuration Options 3.14
+	Option 14: value 42
+System Configuration Options 3.15
+	Option 15: value 45
+System Configuration Options 3.16
+	Option 16: value 48
+System Configuration Options 3.17
+	Option 17: value 51
+System Configuration Options 3.18
+	Option 18: value 54
+System Configuration Options 3.19
+	Option 19: value 57
+System Configuration Options 3.20
+	Option 20: value 60
+System Configuration Options 3.21
+	Option 21: value 63
+System Configuration Options 3.22
+	Option 22: value 66
+System Configuration Options 3.23
+	Option 23: value 69
+System Configuration Options 3.24
+	Option 24: value 72
+
+Handle 0x0200, DMI type 127, 4 bytes
+End Of Table

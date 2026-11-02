@@ -132,7 +132,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`/usr/bin/time` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -224,7 +224,7 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         time_type = None     # linux_brief, linux_long, bsd_brief, bsd_long, posix
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # linux default style:
             # 0.00user 0.00system 0:03.00elapsed 0%CPU (0avgtext+0avgdata 2148maxresident)k
             # 0inputs+0outputs (0major+71minor)pagefaults 0swaps

@@ -1,0 +1,17 @@
+[
+  {
+    "user": "boot_time",
+    "tty": "pts/0",
+    "hostname": "10.0.0.5",
+    "login": "Fri Feb 28 23:03",
+    "logout": "still logged in"
+  },
+  {
+    "user": "kbrazil",
+    "tty": "tty7",
+    "hostname": "CONSOLE:0",
+    "login": "Fri Feb 28 22:03",
+    "logout": "22:30",
+    "duration": "00:27"
+  }
+]

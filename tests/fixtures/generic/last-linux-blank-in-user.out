@@ -1,0 +1,7 @@
+root pts/0 198.51.100.7 ssh:notty    203.0.113.5      Tue Nov 14 22:14 - 22:14  (00:00)
+btmp begins x ssh:notty    203.0.113.5      Tue Nov 14 22:13 - 22:13  (00:00)
+         ssh:notty    203.0.113.5      Tue Nov 14 22:13 - 22:13  (00:00)
+a b host ssh:notty    192.0.2.11       Tue Nov 14 22:12 - 22:12  (00:00)
+root     ssh:notty    203.0.113.5      Tue Nov 14 22:11 - 22:11  (00:00)
+
+btmp begins Tue Nov 14 22:11:20 2023

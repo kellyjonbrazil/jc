@@ -1,12 +1,21 @@
 import os
 import unittest
 import json
+from jc.exceptions import ParseError
 import jc.parsers.ini_dup
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-many-keys.ini'), 'r', encoding='utf-8') as f:
+        generic_ini_many_keys = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-dup-many-keys.json'), 'r', encoding='utf-8') as f:
+        generic_ini_dup_many_keys_json = json.loads(f.read())
+
 
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-test.ini'), 'r', encoding='utf-8') as f:
@@ -115,6 +124,69 @@ novalue
 '''
         expected = {"data":{"novalue":[""]}}
         self.assertEqual(jc.parsers.ini_dup.parse(data, quiet=True), expected)
+
+    def test_ini_dup_many_keys(self):
+        """
+        Test 'ini_dup' with many sections and keys, including keys with no value
+        """
+        self.assertEqual(jc.parsers.ini_dup.parse(self.generic_ini_many_keys, quiet=True), self.generic_ini_dup_many_keys_json)
+
+    def test_ini_dup_empty_key(self):
+        """
+        Test 'ini_dup' with a line that has a delimiter but no key (raises ParseError)
+        """
+        for data in ('[a]\nx=1\n=oops\n y\n: z\n', 'x=1\n=oops\n', '[a]\n  = oops\n'):
+            with self.subTest(data):
+                with self.assertRaises(ParseError):
+                    jc.parsers.ini_dup.parse(data, quiet=True)
+
+    def test_ini_dup_many_empty_keys(self):
+        """
+        Test 'ini_dup' with many lines that have a delimiter but no key (raises ParseError)
+        """
+        data = '[a]\nx=1\n' + '=oops\n' * 20000
+        with self.assertRaises(ParseError):
+            jc.parsers.ini_dup.parse(data, quiet=True)
+
+
+    def test_ini_dup_utf8_bom(self):
+        """
+        Test 'ini-test.ini' and a file without sections with a leading UTF-8 BOM
+        """
+        self.assertEqual(jc.parsers.ini_dup.parse('\ufeff' + self.generic_ini_test, quiet=True), self.generic_ini_dup_test_json)
+        self.assertEqual(jc.parsers.ini_dup.parse('\ufeffNAME="Debian"\nID=debian\n', quiet=True), {'NAME': ['Debian'], 'ID': ['debian']})
+
+
+    def test_ini_dup_comment_in_multiline_value(self):
+        """
+        Test 'ini_dup' with full-line comments inside multi-line values: the value continues after the comment, as in 'ini'
+        """
+        data = (
+            '[testenv]\n'
+            'deps =\n'
+            '    pytest\n'
+            '    # pinned\n'
+            '    requests==2.31.0\n'
+            '    ; other\n'
+            '    six\n'
+            '\n'
+            '[user1]\n'
+            'role = guest\n'
+            'bio = first line\n'
+            '\t#\n'
+            '\t[user2]\n'
+            '\trole = admin\n'
+            '\n'
+            '[user2]\n'
+            'role = user\n'
+        )
+        expected = {
+            'testenv': {'deps': ['', 'pytest', 'requests==2.31.0', 'six']},
+            'user1': {'role': ['guest'], 'bio': ['first line', '[user2]', 'role = admin']},
+            'user2': {'role': ['user']}
+        }
+        self.assertEqual(jc.parsers.ini_dup.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

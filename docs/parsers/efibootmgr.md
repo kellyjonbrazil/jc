@@ -101,4 +101,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/efibootmgr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/efibootmgr.py)
 
-Version 1.0 by Yaofei Zheng (zyf26256@gmail.com, Yaofei.Zheng@dell.com)
+Version 1.1 by Yaofei Zheng (zyf26256@gmail.com, Yaofei.Zheng@dell.com)

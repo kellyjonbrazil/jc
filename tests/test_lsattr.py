@@ -40,6 +40,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsattr-e2fsprogs-1.47.json'), 'r', encoding='utf-8') as f:
         generic_lsattr_e2fsprogs_1_47_json = json.loads(f.read())
 
+    def test_lsattr_line_separators(self):
+        """
+        Test 'lsattr' with line-break characters other than LF in a file name
+        """
+        data = '---------------C------ ./a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n--------------e---x--m ./dax file\n'
+        result = jc.parsers.lsattr.parse(data, quiet=True)
+        self.assertEqual(result[0]['file'], './a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['file'], './dax file')
+
     def test_lsattr_nodata(self):
         """
         Test 'lsattr' with no data

@@ -26,7 +26,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('syslog_s', syslog_command_output.splitlines())
+    result = jc.parse('syslog_s', syslog_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -66,7 +66,8 @@ Blank values converted to `null`/`None`.
     [0] naive timestamp if "timestamp" field is parsable, else null
     [1] timezone aware timestamp available for UTC, else null
     [2] this field exists if the syslog line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -88,7 +89,7 @@ Examples:
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+          ignore_exceptions: bool = False) -> Iterable[Dict] | tuple
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -96,7 +97,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -112,4 +113,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/syslog_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/syslog_s.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

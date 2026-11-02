@@ -11,6 +11,10 @@ local time of the system the parser is run on)
 The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
 only available if the timezone field is UTC.
 
+Only symbolic links (`type` is `symbolic link`) have a `link_to` field. The
+`File:` line is split at the first ` -> `, so a link whose name contains
+` -> ` reports the rest of its name as part of `link_to`.
+
 Usage (cli):
 
     $ stat * | jc --stat
@@ -195,4 +199,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/stat.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/stat.py)
 
-Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.14 by Kelly Brazil (kellyjonbrazil@gmail.com)

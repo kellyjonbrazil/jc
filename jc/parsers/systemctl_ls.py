@@ -51,7 +51,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`systemctl list-sockets` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -97,7 +97,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # Clear any blank lines
-    linedata = list(filter(None, data.splitlines()))
+    linedata = list(filter(None, jc.utils.splitlines(data)))
     raw_output = []
 
     if jc.utils.has_data(data):

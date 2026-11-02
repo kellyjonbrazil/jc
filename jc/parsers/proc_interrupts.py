@@ -108,7 +108,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/interrupts` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -162,7 +162,7 @@ def parse(
     raw_output: List = []
 
     if jc.utils.has_data(data):
-        data_lines = data.splitlines()
+        data_lines = jc.utils.splitlines(data)
 
         # get the number of cpus
         cpu_num = len(data_lines[0].split())
@@ -175,24 +175,27 @@ def parse(
 
             # process data lines
             split_line = line.split()
-            irq = split_line.pop(0)[:-1]
+            irq = split_line[0][:-1]
+            rest = split_line[1:]
 
             interrupts = []
             if irq == 'ERR' or irq == 'MIS':
-                interrupts.extend(split_line)
+                interrupts.extend(rest)
 
             elif irq.isdigit():
-                for _ in range(cpu_num):
-                    interrupts.append(split_line.pop(0))
+                if len(rest) <= cpu_num:
+                    raise IndexError('pop from empty list')
 
-                interrupt_type = split_line.pop(0)
-                device = split_line
+                interrupts = rest[:cpu_num]
+                interrupt_type = rest[cpu_num]
+                device = rest[cpu_num + 1:]
 
             else:
-                for _ in range(cpu_num):
-                    interrupts.append(split_line.pop(0))
+                if len(rest) < cpu_num:
+                    raise IndexError('pop from empty list')
 
-                interrupt_type = ' '.join(split_line)
+                interrupts = rest[:cpu_num]
+                interrupt_type = ' '.join(rest[cpu_num:])
                 device = []
 
             raw_output.append(

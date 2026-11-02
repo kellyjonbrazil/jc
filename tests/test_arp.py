@@ -39,6 +39,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/arp-a.out'), 'r', encoding='utf-8') as f:
         freebsd_arp_a = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/arp-linux-a-address-hostname.out'), 'r', encoding='utf-8') as f:
+        generic_arp_linux_a_address_hostname = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-8/arp-a.out'), 'r', encoding='utf-8') as f:
         centos8_arp_a = f.read()
 
@@ -81,6 +84,15 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/aix-7.1/arp-a.json'), 'r', encoding='utf-8') as f:
         aix_7_1_arp_a_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/arp-linux-a-address-hostname.json'), 'r', encoding='utf-8') as f:
+        generic_arp_linux_a_address_hostname_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/arp-linux-n-incomplete.out'), 'r', encoding='utf-8') as f:
+        generic_arp_linux_n_incomplete = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/arp-linux-n-incomplete.json'), 'r', encoding='utf-8') as f:
+        generic_arp_linux_n_incomplete_json = json.loads(f.read())
 
     def test_arp_nodata(self):
         """
@@ -160,6 +172,21 @@ class MyTests(unittest.TestCase):
         entries
         """
         self.assertEqual(jc.parsers.arp.parse(self.aix_7_1_arp_a, quiet=True), self.aix_7_1_arp_a_json)
+
+    def test_arp_a_address_hostname(self):
+        """
+        Test 'arp -a' with a first host name that starts with 'Address'
+        """
+        self.assertEqual(jc.parsers.arp.parse(self.generic_arp_linux_a_address_hostname, quiet=True), self.generic_arp_linux_a_address_hostname_json)
+
+    def test_arp_n_incomplete(self):
+        """
+        Test 'arp -n' with incomplete entries that have blank columns
+        """
+        self.assertEqual(jc.parsers.arp.parse(self.generic_arp_linux_n_incomplete, quiet=True), self.generic_arp_linux_n_incomplete_json)
+        self.assertEqual(self.generic_arp_linux_n_incomplete_json[1], {
+            'address': '192.168.71.77', 'hwtype': None, 'hwaddress': None,
+            'flags_mask': None, 'iface': 'ens33'})
 
 
 if __name__ == '__main__':

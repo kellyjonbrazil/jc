@@ -55,7 +55,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/version` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -72,9 +72,10 @@ version_pattern = re.compile(r'''
     Linux\ version\ (?P<version>\S+)\s
     \((?P<email>\S+?)\)\s
     \((?P<gcc>gcc.+)\)\s
-    (?P<build>\#\d+(\S+)?)\s
-    (?P<flags>.*)?
-    (?P<date>(Sun|Mon|Tue|Wed|Thu|Fri|Sat).+)
+    (?P<build>\#\d\S*)\s
+    (?P<flags>[^#\n]*)
+    # Debian prints the date as (YYYY-MM-DD)
+    (?P<date>(Sun|Mon|Tue|Wed|Thu|Fri|Sat).+|\(\d{4}-\d{2}-\d{2}\)\s*$)
     ''', re.VERBOSE
 )
 
@@ -124,5 +125,8 @@ def parse(
 
             ver_dict = version_match.groupdict()
             raw_output = {x: y.strip() or None for x, y in ver_dict.items()}
+
+            if raw_output['date'] and raw_output['date'].startswith('('):
+                raw_output['date'] = raw_output['date'][1:-1]
 
     return raw_output if raw else _process(raw_output)

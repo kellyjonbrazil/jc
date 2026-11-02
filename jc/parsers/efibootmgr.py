@@ -71,13 +71,14 @@ Examples:
       ]
     }
 """
+import re
 from typing import List, Dict
 from jc.jc_types import JSONDictType
 import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`efibootmgr` command parser'
     author = 'Yaofei Zheng'
     author_email = "zyf26256@gmail.com, Yaofei.Zheng@dell.com"
@@ -86,6 +87,8 @@ class info():
     tags = ['command']
 
 __version__ = info.version
+
+_BOOT_ENTRY_RE = re.compile(r'Boot[0-9A-Fa-f]{4}')
 
 def _process(proc_data: JSONDictType) -> JSONDictType:
     if 'timeout_seconds' in proc_data:
@@ -133,18 +136,20 @@ def parse(
     if jc.utils.has_data(data):
         boot_opt_list: List = []
 
-        for line in filter(None, data.splitlines()):
+        # classify each line by its prefix, since a boot entry label or
+        # device path can contain the other key names
+        for line in filter(None, jc.utils.splitlines(data)):
 
-            if "BootCurrent" in line:
+            if line.startswith("BootCurrent:"):
                 raw_output["boot_current"] = line.split(':')[1].strip()
 
-            elif "Timeout" in line:
+            elif line.startswith("Timeout:"):
                 raw_output["timeout_seconds"] = line.split(':')[1].strip()
 
-            elif "BootOrder" in line:
+            elif line.startswith("BootOrder:"):
                 raw_output["boot_order"] = line.split(':')[1].strip()
 
-            elif "Boot" in line:
+            elif _BOOT_ENTRY_RE.match(line):
                 tmp_dict: Dict = {}
                 boot_record = line.split("\t")
                 tmp_dict["boot_option_reference"] = boot_record[0][0:8]
@@ -156,10 +161,10 @@ def parse(
                 tmp_dict["boot_option_enabled"] = boot_record[0][8]
                 boot_opt_list.append(tmp_dict)
 
-            elif "MirroredPercentageAbove4G" in line:
+            elif line.startswith("MirroredPercentageAbove4G:"):
                 raw_output["mirrored_percentage_above_4g"] = line.split(':')[1].strip()
 
-            elif "MirrorMemoryBelow4GB" in line:
+            elif line.startswith("MirrorMemoryBelow4GB:"):
                 raw_output["mirror_memory_below_4gb"] = line.split(':')[1].strip()
 
         raw_output["boot_options"] = boot_opt_list

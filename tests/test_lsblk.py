@@ -34,6 +34,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/lsblk-allcols.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_lsblk_allcols_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-invisible-separator.out'), 'r', encoding='utf-8') as f:
+        generic_lsblk_invisible_separator = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-invisible-separator.json'), 'r', encoding='utf-8') as f:
+        generic_lsblk_invisible_separator_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-wide-chars.out'), 'r', encoding='utf-8') as f:
+        generic_lsblk_wide_chars = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-wide-chars.json'), 'r', encoding='utf-8') as f:
+        generic_lsblk_wide_chars_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-zero-width.out'), 'r', encoding='utf-8') as f:
+        generic_lsblk_zero_width = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/lsblk-zero-width.json'), 'r', encoding='utf-8') as f:
+        generic_lsblk_zero_width_json = json.loads(f.read())
+
 
     def test_lsblk_nodata(self):
         """
@@ -83,6 +101,66 @@ sda                    8:0    0 5368709120000  0 disk
 sr0                   11:0    1    1073741312  0 rom'''
         expected = [{"name":"sda","maj_min":"8:0","rm":False,"size":"5368709120000","ro":False,"type":"disk","mountpoints":[],"size_bytes":5368709120000},{"name":"sda1","maj_min":"8:1","rm":False,"size":"1048576","ro":False,"type":"part","mountpoints":[],"size_bytes":1048576},{"name":"sda2","maj_min":"8:2","rm":False,"size":"1073741824","ro":False,"type":"part","mountpoints":["/boot"],"size_bytes":1073741824},{"name":"sda3","maj_min":"8:3","rm":False,"size":"1073741824","ro":False,"type":"part","mountpoints":["/boot/efi"],"size_bytes":1073741824},{"name":"sda4","maj_min":"8:4","rm":False,"size":"51536461824","ro":False,"type":"part","mountpoints":[],"size_bytes":51536461824},{"name":"almalinux-root","maj_min":"253:0","rm":False,"size":"36075208704","ro":False,"type":"lvm","mountpoints":["/"],"size_bytes":36075208704},{"name":"almalinux-docker","maj_min":"253:1","rm":False,"size":"1073741824","ro":False,"type":"lvm","mountpoints":["/opt/docker"],"size_bytes":1073741824},{"name":"almalinux-home","maj_min":"253:2","rm":False,"size":"5368709120","ro":False,"type":"lvm","mountpoints":["/home"],"size_bytes":5368709120},{"name":"almalinux-opt","maj_min":"253:3","rm":False,"size":"9017753600","ro":False,"type":"lvm","mountpoints":["/var/lib/kafka","/opt"],"size_bytes":9017753600},{"name":"sr0","maj_min":"11:0","rm":True,"size":"1073741312","ro":False,"type":"rom","mountpoints":[],"size_bytes":1073741312}]
         self.assertEqual(jc.parsers.lsblk.parse(data, quiet=True), expected)
+
+    def test_lsblk_invisible_separator(self):
+        """
+        Test 'lsblk' with a U+2063 invisible separator in a label
+        """
+        self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_invisible_separator, quiet=True), self.generic_lsblk_invisible_separator_json)
+
+    def test_lsblk_wide_chars(self):
+        """
+        Test 'lsblk' with wide, combining and zero-width characters in labels
+        """
+        self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_wide_chars, quiet=True), self.generic_lsblk_wide_chars_json)
+
+    def test_lsblk_zero_width(self):
+        """
+        Test 'lsblk' with a zero-width space at the end of a full-width label
+        """
+        self.assertEqual(jc.parsers.lsblk.parse(self.generic_lsblk_zero_width, quiet=True), self.generic_lsblk_zero_width_json)
+
+    def test_lsblk_tree_multiple_mountpoints_non_last(self):
+        """
+        Test 'lsblk' with ASCII and Unicode tree output where devices that are not last have several mountpoints
+        """
+        data = (
+            'NAME      MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS\n'
+            'sda         8:0    0  20G  0 disk\n'
+            '|-sda1      8:1    0   1G  0 part /boot\n'
+            '|                                 /boot2\n'
+            '|-sda2      8:2    0   1G  0 part\n'
+            '| |-vg-a  253:0    0   1G  0 lvm  /a\n'
+            '| |                               /b\n'
+            '| `-vg-b  253:1    0   1G  0 lvm  /c\n'
+            '`-sda3      8:3    0   1G  0 part /x\n'
+        )
+        unicode_data = data.replace('|-', '\u251c\u2500').replace('`-', '\u2514\u2500').replace('|', '\u2502')
+        expected = [
+            ('sda', []),
+            ('sda1', ['/boot', '/boot2']),
+            ('sda2', []),
+            ('vg-a', ['/a', '/b']),
+            ('vg-b', ['/c']),
+            ('sda3', ['/x'])
+        ]
+
+        for text in (data, unicode_data):
+            result = jc.parsers.lsblk.parse(text, quiet=True)
+            self.assertEqual([(d['name'], d['mountpoints']) for d in result], expected)
+
+    def test_lsblk_orphan_continuation_line(self):
+        """
+        Test 'lsblk' with a mountpoint continuation line before any device
+        """
+        data = (
+            'NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS\n'
+            '|                           /orphan\n'
+            'sda    8:0    0  20G  0 disk /x\n'
+        )
+        result = jc.parsers.lsblk.parse(data, quiet=True)
+        self.assertEqual([(d['name'], d['mountpoints']) for d in result], [('sda', ['/x'])])
+
 
 if __name__ == '__main__':
     unittest.main()

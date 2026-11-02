@@ -138,7 +138,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`certbot` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -208,7 +208,7 @@ def parse(
         else:
             cmd_option = 'account'
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if cmd_option == 'certificates':
                 if line.startswith('  Certificate Name:'):
@@ -230,10 +230,13 @@ def parse(
 
                 if line.startswith('    Expiry Date:'):
                     splitline = line.split(': ', maxsplit=1)[1]
-                    cert_datetime = splitline.split('(')[0]
-                    validity = splitline.split('(')[1]
+                    cert_datetime, _, validity = splitline.partition('(')
+                    if validity.endswith(')'):
+                        validity = validity[:-1]
+                    if validity.startswith('VALID: '):
+                        validity = validity[len('VALID: '):]
                     cert_dict['expiration_date'] = cert_datetime.strip()
-                    cert_dict['validity'] = validity[:-1].replace('VALID: ', '')
+                    cert_dict['validity'] = validity
 
                 if line.startswith('    Certificate Path:'):
                     cert_dict['certificate_path'] = line.split(': ', maxsplit=1)[1]

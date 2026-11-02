@@ -93,5 +93,15 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_dpkg_l_line_separator(self):
+        """
+        Test 'dpkg_l' with a line-break character other than LF inside a field
+        """
+        data = '||/ Name           Version      Architecture Description\n+++-==============-============-============-===========\nii  coolprompt     1.0          all          A shell prompt theme\u2028ii  openssl  3.0.15-1~deb12u1 amd64  Secure Sockets Layer toolkit\n'
+        result = jc.parsers.dpkg_l.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['description'], 'A shell prompt theme\u2028ii  openssl  3.0.15-1~deb12u1 amd64  Secure Sockets Layer toolkit')
+
+
 if __name__ == '__main__':
     unittest.main()

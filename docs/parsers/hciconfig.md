@@ -342,4 +342,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/hciconfig.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/hciconfig.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

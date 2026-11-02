@@ -1,0 +1,17 @@
+# file: dir/trailing 
+# owner: tunglpb
+# group: tunglpb
+user::rw-
+user:bob#ext:rw-
+user:carol#1:r--	#effective:r--
+group::rw-	#effective:rw-
+mask::rw-
+other::r--
+
+# file: dir/tab\011name
+# owner: root
+# group: root
+user::rwx
+user:a#effective:r-x
+mask::r-x
+other::---

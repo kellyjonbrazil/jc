@@ -1,0 +1,49 @@
+Name            : coolprompt
+Version         : 1.0-1
+Description     : A configurable shell prompt
+Architecture    : x86_64
+URL             : https://example.com/coolprompt
+Licenses        : MIT
+Groups          : None
+Provides        : None
+Depends On      : glibc
+Optional Deps   : git: show the branch name
+                  python-pygments: syntax highlighting : fast lexers
+                  name: : openssl
+                  packager: : Pierre Schmitz <pierre@archlinux.org>
+                  version: needs 3.3.2-1 or later
+                  install: reason : Installed as a dependency for another package
+                  coolprompt-doc: documentation
+Required By     : None
+Optional For    : None
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 120.00 KiB
+Packager        : Unknown Packager
+Build Date      : Sat 11 May 2024 06:14:19 AM +08
+Install Date    : Fri 24 May 2024 09:50:31 AM +08
+Install Reason  : Explicitly installed
+Install Script  : Yes
+Validated By    : None
+
+Name            : zstd
+Version         : 1.5.6-1
+Description     : Zstandard - Fast real-time compression algorithm
+Architecture    : x86_64
+URL             : https://facebook.github.io/zstd/
+Licenses        : BSD-3-Clause  GPL-2.0-only
+Groups          : None
+Provides        : libzstd.so=1-64
+Depends On      : glibc  gcc-libs  zlib  xz  lz4
+Optional Deps   : None
+Required By     : curl  file
+Optional For    : xarchiver
+Conflicts With  : None
+Replaces        : None
+Installed Size  : 1527.00 KiB
+Packager        : Levente Polyak <anthraxx@archlinux.org>
+Build Date      : Sat 11 May 2024 06:14:19 AM +08
+Install Date    : Fri 24 May 2024 09:50:31 AM +08
+Install Reason  : Installed as a dependency for another package
+Install Script  : No
+Validated By    : Signature

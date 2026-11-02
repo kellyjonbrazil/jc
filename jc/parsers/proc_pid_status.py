@@ -264,13 +264,13 @@ Examples:
       "nonvoluntary_ctxt_switches": "6620"
     }
 """
-from typing import Dict
+from typing import Dict, Optional
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/status` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -280,6 +280,13 @@ class info():
 
 
 __version__ = info.version
+
+
+def _to_int_or_none(value: str) -> Optional[int]:
+    try:
+        return int(value)
+    except ValueError:
+        return None
 
 
 def _process(proc_data: Dict) -> Dict:
@@ -305,15 +312,15 @@ def _process(proc_data: Dict) -> Dict:
             proc_data[key] = jc.utils.convert_to_int(val)
 
     if 'State' in proc_data:
-        st, st_pretty = proc_data['State'].split()
+        st, _, st_pretty = proc_data['State'].partition(' ')
         proc_data['State'] = st
-        proc_data['State_pretty'] = st_pretty.strip('()')
+        proc_data['State_pretty'] = st_pretty.strip().strip('()') or None
 
     if 'Uid' in proc_data:
-        proc_data['Uid'] = [int(x) for x in proc_data['Uid'].split()]
+        proc_data['Uid'] = [_to_int_or_none(x) for x in proc_data['Uid'].split()]
 
     if 'Gid' in proc_data:
-        proc_data['Gid'] = [int(x) for x in proc_data['Gid'].split()]
+        proc_data['Gid'] = [_to_int_or_none(x) for x in proc_data['Gid'].split()]
 
     if 'SigQ' in proc_data:
         current_q, limit_q = proc_data['SigQ'].split('/')
@@ -355,7 +362,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             key, val = line.split(':', maxsplit=1)
             raw_output[key] = val.strip()
 

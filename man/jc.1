@@ -1,4 +1,4 @@
-.TH jc 1 2026-10-18 1.26.1 "JSON Convert"
+.TH jc 1 2026-10-29 1.26.2 "JSON Convert"
 .SH NAME
 \fBjc\fP \- JSON Convert JSONifies the output of many CLI tools, file-types,
 and strings
@@ -889,6 +889,11 @@ PLIST file parser
 
 .TP
 .B
+\fB--proc-net-udp\fP
+`/proc/net/udp` and `/proc/net/udp6` file parser
+
+.TP
+.B
 \fB--proc-net-unix\fP
 `/proc/net/unix` file parser
 
@@ -1371,7 +1376,8 @@ slicing. This allows you to skip lines at the beginning and/or end of the
 \fBSTART\fP and \fBSTOP\fP can be positive or negative integers or blank and
 allow you to specify how many lines to skip and how many lines to process.
 Positive and blank slices are the most memory efficient. Any negative
-integers in the slice will use more memory.
+integers in the slice will use more memory. Lines are counted at LF and CRLF
+line endings; a lone CR does not start a new line.
 
 For example, to skip the first and last line of the following text, you
 could express the slice in a couple ways:
@@ -1727,6 +1733,20 @@ based on the local timezone of the system the \fBjc\fP parser was run on).
 If a UTC timezone can be detected in the text of the command output, the
 timestamp will be timezone aware and have a \fB_utc\fP suffix on the key name.
 (e.g. \fBepoch_utc\fP) No other timezones are supported for aware timestamps.
+
+\fBLine Endings\fP
+
+\fBjc\fP passes input to the parser without translating line endings, whether
+it comes from \fBSTDIN\fP, a "magic" command, or a \fB/proc\fP file. All
+line-based parsers split lines at LF and CRLF line endings only, so other characters that
+can appear inside a value, such as a lone CR, form feed, or Unicode line
+separator, stay part of that line. Parsers for file formats that can use CR-only line endings
+(\fBcsv\fP, \fBhosts\fP, \fBjar-manifest\fP, and \fBm3u\fP) also accept a
+lone CR as a line ending.
+
+Streaming parsers split \fBSTDIN\fP lines the same way (LF and CRLF only).
+Bytes in \fBSTDIN\fP that are not valid UTF-8 are shown as backslash escapes
+(e.g. \fB\\xff\fP) instead of stopping the parser.
 
 .SH EXAMPLES
 Standard Syntax:

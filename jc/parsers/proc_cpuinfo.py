@@ -216,13 +216,14 @@ Examples:
       ...
     ]
 """
+import math
 from typing import List, Dict
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/cpuinfo` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -264,7 +265,10 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
             try:
                 if isinstance(entry[key], str) and '.' in entry[key]:
-                    entry[key] = float(entry[key])
+                    float_value = float(entry[key])
+                    # keep the text of inf and nan
+                    if math.isfinite(float_value):
+                        entry[key] = float_value
             except Exception:
                 pass
 
@@ -314,7 +318,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.startswith('processor'):
                 if output_line:

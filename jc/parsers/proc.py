@@ -126,7 +126,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -162,7 +162,7 @@ def parse(
         buddyinfo_p = re.compile(r'^Node \d+, zone\s+\w+\s+(?:\d+\s+){11}\n')
         cmdline_p = re.compile(r'^BOOT_IMAGE=')
         consoles_p = re.compile(r'^\w+\s+[\-WUR]{3} \([ECBpba ]+\)\s+\d+:\d+\n')
-        cpuinfo_p = re.compile(r'^processor\t+: \d+.*bogomips\t+: \d+.\d\d\n', re.DOTALL)
+        cpuinfo_p = re.compile(r'^processor\t+: \d+\b.*bogomips\t+: \d+.\d\d\n', re.DOTALL)
         crypto_p = re.compile(r'^name\s+:.*\ndriver\s+:.*\nmodule\s+:.*\n')
         devices_p = re.compile(r'^Character devices:\n\s+\d+ .*\n')
         diskstats_p = re.compile(r'^\s*\d+\s+\d\s\w+\s(?:\d+\s){10,16}\d+\n')
@@ -177,14 +177,14 @@ def parse(
         mtrr_p = re.compile(r'^reg\d+: base=0x[0-9a-f]+ \(')
         pagetypeinfo_p = re.compile(r'^Page block order:\s+\d+\nPages per block:\s+\d+\n\n')
         partitions_p = re.compile(r'^major minor  #blocks  name\n\n\s*\d+\s+\d+\s+\d+ \w+\n')
-        slabinfo_p = re.compile(r'^slabinfo - version: \d+.\d+\n')
-        softirqs_p = re.compile(r'^\s+(CPU\d+\s+)+\n\s+HI:\s+\d')
-        stat_p = re.compile(r'^cpu\s+(?: \d+){7,10}.*intr ', re.DOTALL)
+        slabinfo_p = re.compile(r'^slabinfo - version: \d+\.\d+\n')
+        softirqs_p = re.compile(r'^\s+(CPU\d+ +)+\n\s+HI:\s+\d')
+        stat_p = re.compile(r'^cpu\s+(?: \d+){7,10}\b.*intr ', re.DOTALL)
         swaps_p = re.compile(r'^Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n')
         uptime_p = re.compile(r'^\d+.\d\d \d+.\d\d$')
-        version_p = re.compile(r'^.+\sversion\s[^\n]+$')
+        version_p = re.compile(r'^\S+\sversion\s[^\n]+$')
         vmallocinfo_p = re.compile(r'^0x[0-9a-f]{16}-0x[0-9a-f]{16}\s+\d+ \w+\+\w+/\w+ ')
-        vmstat_p = re.compile(r'nr_free_pages \d+\n.* \d$', re.DOTALL)
+        vmstat_p = re.compile(r'^nr_free_pages \d+\n.* \d$', re.DOTALL)
         zoneinfo_p = re.compile(r'^Node \d+, zone\s+\w+\n')
 
         driver_rtc_p = re.compile(r'^rtc_time\t: .*\nrtc_date\t: .*\nalrm_time\t: .*\n')
@@ -198,10 +198,11 @@ def parse(
         net_ipv6_route_p = re.compile(r'^[0-9a-f]{32} \d\d [0-9a-f]{32} \d\d [0-9a-f]{32} (?:[0-9a-f]{8} ){4}\s+\w+')
         net_netlink_p = re.compile(r'^sk\s+Eth Pid\s+Groups\s+Rmem\s+Wmem')
         net_netstat_p = re.compile(r'^TcpExt: SyncookiesSent SyncookiesRecv SyncookiesFailed')
-        net_packet_p = re.compile(r'^sk       RefCnt Type Proto  Iface R Rmem   User   Inode\n')
-        net_protocols_p = re.compile(r'^protocol  size sockets  memory press maxhdr  slab module     cl co di ac io in de sh ss gs se re sp bi br ha uh gp em\n')
+        net_packet_p = re.compile(r'^sk +RefCnt Type Proto +Iface R Rmem +User +Inode\n')
+        net_protocols_p = re.compile(r'^protocol  size sockets  memory press maxhdr  slab module     cl co di ac io in de sh ss gs se re (?:sp )?bi br ha uh gp em\n')
         net_route_p = re.compile(r'^Iface\tDestination\tGateway \tFlags\tRefCnt\tUse\tMetric\tMask\t\tMTU\tWindow\tIRTT\s+\n')
-        net_tcp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode')
+        net_tcp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode *(?:\n|$)')
+        net_udp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode\s+ref\s+pointer\s+drops *(?:\n|$)')
         net_unix_p = re.compile(r'^Num       RefCount Protocol Flags    Type St Inode Path\n')
 
         pid_fdinfo_p = re.compile(r'^pos:\t\d+\nflags:\t\d+\nmnt_id:\t\d+\n')
@@ -259,6 +260,7 @@ def parse(
             net_protocols_p: 'proc_net_protocols',
             net_route_p: 'proc_net_route',
             net_tcp_p: 'proc_net_tcp',
+            net_udp_p: 'proc_net_udp',
             net_unix_p: 'proc_net_unix',
             net_ipv6_route_p: 'proc_net_ipv6_route',  # before net_dev_mcast
             net_dev_mcast_p: 'proc_net_dev_mcast',    # after net_ipv6_route

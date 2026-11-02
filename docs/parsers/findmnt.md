@@ -9,6 +9,9 @@ Supports `-a`, `-l`, or no `findmnt` options.
 
 > Note: Newer versions of `findmnt` have a JSON output option.
 
+> Note: Names that contain wide (e.g. CJK) characters can misalign the
+> columns. Use `findmnt -l` or `findmnt -J` for those.
+
 Usage (cli):
 
     $ findmnt | jc --findmnt
@@ -116,4 +119,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/findmnt.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/findmnt.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

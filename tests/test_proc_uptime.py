@@ -39,6 +39,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_uptime.parse(self.f_in['proc_uptime'], quiet=True),
                                                       self.f_json['proc_uptime'])
 
+    def test_proc_uptime_non_finite(self):
+        """
+        Test '/proc/uptime' with values of nan and 1e999: they are null
+        """
+        expected = {'up_time': None, 'idle_time': None}
+        self.assertEqual(jc.parsers.proc_uptime.parse('nan 1e999\n', quiet=True), expected)
+        self.assertEqual(jc.parsers.proc_uptime.parse('nan 1e999\n', quiet=True, raw=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

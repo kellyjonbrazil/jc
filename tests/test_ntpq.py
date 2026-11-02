@@ -89,6 +89,31 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.ntpq.parse(self.freebsd12_ntpq_p, quiet=True), self.freebsd12_ntpq_p_json)
 
+    def test_ntpq_p_space_in_refid(self):
+        """
+        Test 'ntpq -p' with a space in the refid and a blank line
+        """
+        data = (
+            '     remote           refid      st t when poll reach   delay   offset  jitter\n'
+            '==============================================================================\n'
+            '*time.x.net      .GPS 1.          1 u   10   64  377    0.5   -1.0   0.2\n'
+            ' pool.ntp.org    10.1.2.3         2 u    -   64    1   93.0   -0.8   2.8\n'
+            '\n'
+            '+a.b             10.0.0.1         3 u   20   64    7    1.5    0.5   0.1\n'
+        )
+        result = jc.parsers.ntpq.parse(data, quiet=True)
+        self.assertEqual(len(result), 3)
+        self.assertEqual(result[0], {
+            'remote': 'time.x.net', 'refid': '.GPS 1.', 'st': 1, 't': 'u', 'when': 10,
+            'poll': 64, 'reach': 377, 'delay': 0.5, 'offset': -1.0, 'jitter': 0.2, 'state': '*'
+        })
+        self.assertEqual(result[1]['remote'], 'pool.ntp.org')
+        self.assertEqual(result[1]['refid'], '10.1.2.3')
+        self.assertIsNone(result[1]['state'])
+        self.assertIsNone(result[1]['when'])
+        self.assertEqual(result[2]['remote'], 'a.b')
+        self.assertEqual(result[2]['jitter'], 0.1)
+
 
 if __name__ == '__main__':
     unittest.main()

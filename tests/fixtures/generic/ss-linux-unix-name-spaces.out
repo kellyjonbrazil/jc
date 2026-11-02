@@ -1,0 +1,11 @@
+Netid State  Recv-Q Send-Q        Local Address:Port  Peer Address:Port 
+nl    UNCONN 0      0           rtnl:a b c d/893                  *     
+nl    UNCONN 0      0                rtnl:kernel                  *     
+u_str LISTEN 0      4096               /run/a b 111              * 0    
+u_str LISTEN 0      4096   /var/run/docker.sock 27362            * 0    
+u_str ESTAB  0      0          @abstract name 2 2001             * 2002 
+u_str ESTAB  0      0                         * 3001             * 3002 
+u_dgr UNCONN 0      0       /run/systemd/notify 8971             * 0    
+u_seq LISTEN 0      128       /run/udev/control 12345            * 0    
+tcp   LISTEN 0      128                 0.0.0.0:ssh        0.0.0.0:*    
+tcp   ESTAB  0      0                  10.0.0.5:ssh       10.0.0.9:51234

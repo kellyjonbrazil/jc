@@ -1,0 +1,3 @@
+a b.img: LABEL="scratch" UUID="0f55e7a1-3b2c-4d5e-8f90-1a2b3c4d5e6f" VERSION="1.0" BLOCK_SIZE="1024" TYPE="ext4" USAGE="filesystem"
+db.img: LABEL="db" UUID="8aa2ba8c-1d2e-4f30-9a8b-7c6d5e4f3a2b" VERSION="1.0" BLOCK_SIZE="1024" TYPE="ext4" USAGE="filesystem"
+c: d.img: LABEL="x: Y=\"q" TYPE="ext4"

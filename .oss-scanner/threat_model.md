@@ -14,7 +14,7 @@ jc converts the text output of CLI tools, file formats and strings into JSON, YA
 In scope (most important first):
 
 1. `jc/parsers/*.py`: the parsers themselves, including the streaming parsers (`*_s.py`) and the shared helpers in `jc/utils.py` and `jc/streaming.py`.
-2. Parsers for structured or encoded formats, where the risk is higher: `xml` (uses xmltodict/expat), `yaml` (ruamel.yaml), `plist`, `x509_cert`, `x509_csr`, `x509_crl` and other ASN.1/DER/PEM parsers (these use a vendored copy of asn1crypto in `jc/parsers/asn1crypto/`), `jwt`, `csv`, `ini`, `toml` (vendored tomli), and any parser that uses `ast.literal_eval` (such as `ss`).
+2. Parsers for structured or encoded formats, where the risk is higher: `xml` (uses xmltodict/expat), `yaml` (ruamel.yaml), `plist`, `x509_cert`, `x509_csr`, `x509_crl` and other ASN.1/DER/PEM parsers (these use a vendored copy of asn1crypto in `jc/parsers/asn1crypto/`), `jwt`, `csv`, `ini` and `toml` (vendored tomli). The vendored asn1crypto, tomli, pbPlist and pyedid copies carry local changes and are maintained as part of jc, so issues in them are in scope.
 3. Regex-heavy parsers. Catastrophic backtracking (ReDoS) on crafted input is a real concern.
 4. `jc/cli.py` and `jc/lib.py`: argument handling, output formatting, and the `jc.parse()` dispatch.
 
@@ -54,6 +54,29 @@ Do not report these unless they lead to something above:
 
 - Wrong output for genuinely ambiguous input formats.
 - Output differences between platforms or versions of the tool that produced the input.
+- Output that is large because the input describes a large table. Table parsers (`csv`, `asciitable`, and the parsers built on the simple and sparse table helpers in `jc/parsers/universal.py`) emit every header column as a key in every record, with `null` for missing cells. Output that grows with rows × columns, or long header names repeated in each record, is expected. Only growth beyond what the input describes counts, such as shared references or entity and alias expansion.
+- Large pretty-printed output (`-p`) from deeply nested input. The indentation grows with the nesting depth; the data itself is not duplicated.
+- Limitations documented in a parser's docstring, for example `mount` points containing ` on `, file names with newlines in `ls` output without `-b`, `find` output lines that start with `find: `, or `xml` raw output (`-r`) where an attribute and a child element named `_<attr>` share a key.
+- `finger` rows with multibyte characters in the name column: `finger` pads its columns in bytes, so such a row can shift.
+
+## Parsing rules jc follows
+
+These describe intended behavior. A parser that breaks one of them is in scope.
+
+- Lines end at LF or CRLF in every line-based parser. A lone CR also ends a line for `csv`, `hosts`, `jar_manifest`, `m3u`, `ics` files that use only CR, and `--slurp`. Other line-break characters (U+2028, U+2029, U+0085, VT, FF, 0x1C-0x1E) are part of the value they appear in.
+- Where the tool separates fields with spaces or tabs, other Unicode whitespace (such as NBSP or U+3000) is part of the value.
+- Values are decoded the way the tool encodes them: `\ooo` octal escapes in `fstab`, `/proc/<pid>/mountinfo` and `/proc/swaps` (as libmount and the kernel write them), the escapes `getfacl` and `md5sum`/`sha*sum` write in names, and git's C-quoted paths. Text that only looks like an escape in other parsers is left as is.
+- Each value stays in its own record and field. A value that looks like a header, separator, keyword or `key=value` pair does not start a new record or set another field.
+- Where a tool uses the first of several repeated keywords (`ssh_config`, `sshd_config`), jc does too. Where it uses every occurrence, jc outputs a list.
+- A field keeps its type for every input. A field that is a string is never turned into a number for some inputs; converted numbers go in separate fields such as `<field>_bytes`, `<field>_seconds` or `<field>_epoch`. A value that can't be converted is `null`.
+- JSON output never contains `NaN` or `Infinity`: non-finite numbers are written as `null`. Parsers that guess types from free text keep strings like `inf` as strings.
+- `-y` YAML output quotes strings that a YAML 1.1 reader would load as booleans or sexagesimal numbers (`yes`, `no`, `on`, `off`, `1:30`).
+- X.509 GeneralName values keep their type in `*_general_names` and `*_type` fields, so `DNS:example.com` and `email:example.com` can be told apart.
+- With `-qq` (`ignore_exceptions=True`), a line a streaming parser can't parse becomes a record with `"_jc_meta": {"success": false, ...}` and parsing continues. Without it, the parser raises `ParseError` or returns the documented `unparsable` record.
+- `jc.parse()`, `jc.get_parser()` and `jc.parser_info()` raise `ModuleNotFoundError` for a name that is not a registered parser.
+- `yaml`, `plist` and `xml` raise `ParseError` when the output would be larger than 1000 × the input size + 50 MB. Expansion below that limit is not High severity.
+- CLI JSON output escapes U+0000-U+001F, DEL, the C1 controls U+0080-U+009F and lone surrogates. Other printable Unicode is written as is.
+- Warning and error messages show control characters as `\xNN` escapes and shorten very long lines.
 
 ## How I'd like reports and patches
 

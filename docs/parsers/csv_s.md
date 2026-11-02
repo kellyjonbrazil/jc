@@ -23,7 +23,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('csv_s', csv_output.splitlines())
+    result = jc.parse('csv_s', csv_output.split('\n'))
     for item in result:
         # do something
 
@@ -65,13 +65,13 @@ Examples:
 
 ```python
 def parse(
-    data: Iterable[str],
-    raw: bool = False,
-    quiet: bool = False,
-    ignore_exceptions: bool = False,
-    implicit_header: bool = False,
-    tsv: bool = False
-) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
+        data: Iterable[str],
+        raw: bool = False,
+        quiet: bool = False,
+        ignore_exceptions: bool = False,
+        implicit_header: bool = False,
+        tsv: bool = False
+) -> Iterator[Dict[str, Any] | Tuple[BaseException, str]]
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -79,7 +79,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -94,4 +94,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/csv_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/csv_s.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

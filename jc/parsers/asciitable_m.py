@@ -105,12 +105,13 @@ import re
 from functools import lru_cache
 from typing import Iterable, Tuple, List, Dict, Optional
 import jc.utils
+from jc.parsers.universal import _char_width
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = 'multi-line ASCII and Unicode table parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -133,35 +134,87 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    # normalize keys: convert to lowercase
+    # normalize keys: convert to lowercase. Each distinct key is converted
+    # once and the result is shared by all rows.
+    lower_keys: Dict[str, str] = {}
     for item in proc_data:
         for key in item.copy():
-            k_new = key.lower()
-            item[k_new] = item.pop(key)
+            if key not in lower_keys:
+                lower_keys[key] = key.lower()
+            item[lower_keys[key]] = item.pop(key)
 
     return proc_data
 
 
+# a complete CSI sequence (e.g. an SGR color code): parameter bytes and a
+# final byte. `|` is not taken as the final byte so an incomplete sequence at
+# the end of a cell does not remove the padding and separator after it.
+_ansi_escape = re.compile(r'(?:\x9B|\x1B\[)[0-?]*[@-{}~]')
+
+# characters that make up a row separator line
+_separator_chars = frozenset('-=+|: \t' + ''.join(chr(c) for c in range(0x2500, 0x2580)))
+
+# characters a right table border or frame ends with
+_RIGHT_EDGE_CHARS = frozenset('+|' + ''.join(chr(c) for c in range(0x2500, 0x2580)))
+
+
 def _remove_ansi(string: str) -> str:
-    ansi_escape = re.compile(r'(\x9B|\x1B\[)[0-?]*[ -\/]*[@-~]')
-    return ansi_escape.sub('', string)
+    return _ansi_escape.sub('', string)
 
 
 def _lstrip(string: str) -> str:
     """find the leftmost non-whitespace character and lstrip to that index"""
-    lstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
+    lstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
     start_points = (len(x) - len(x.lstrip()) for x in lstrip_list)
     min_point = min(start_points)
     new_lstrip_list = (x[min_point:] for x in lstrip_list)
     return '\n'.join(new_lstrip_list)
 
 
+def _display_width(string: str) -> int:
+    """number of terminal cells a string fills"""
+    return sum(1 if c < '\x80' else _char_width(c) for c in string)
+
+
+def _cut_cells(string: str, cells: int) -> str:
+    """return the leading characters of a string that fit in the given cells"""
+    used = 0
+    for i, char in enumerate(string):
+        used += 1 if char < '\x80' else _char_width(char)
+        if used > cells:
+            return string[:i]
+
+    return string
+
+
 def _rstrip(string: str) -> str:
-    """find the rightmost non-whitespace character and rstrip and pad to that index"""
-    rstrip_list = [x for x in string.splitlines() if not len(x.strip()) == 0]
-    end_points = (len(x.rstrip()) for x in rstrip_list)
-    max_point = max(end_points)
-    new_rstrip_list = ((x + ' ' * max_point)[:max_point] for x in rstrip_list)
+    """
+    Remove the padding after the right edge of the table. If the table has a
+    right border (decided once for the whole table) the border is the last
+    character of every line. Otherwise find the rightmost
+    non-whitespace cell and rstrip to that cell. Lines shorter than that cell
+    get one trailing space so they still end in whitespace, the same as if
+    they were padded to the full width. Widths are display widths, so wide
+    characters count as two cells.
+    """
+    rstrip_list = [x for x in jc.utils.splitlines(string) if not len(x.strip()) == 0]
+
+    # a table has a right border if its first line ends with one and every
+    # line ends at the same place, measured in cells or in characters
+    first = rstrip_list[0].rstrip()
+    if first[-1] in _RIGHT_EDGE_CHARS:
+        first_width = _display_width(first)
+        if all(
+            len(x.rstrip()) == len(first) or _display_width(x.rstrip()) == first_width
+            for x in rstrip_list
+        ):
+            return '\n'.join(x.rstrip() for x in rstrip_list)
+
+    max_point = max(_display_width(x.rstrip()) for x in rstrip_list)
+    new_rstrip_list = (
+        _cut_cells(x, max_point) if _display_width(x) >= max_point else x + ' '
+        for x in rstrip_list
+    )
     return '\n'.join(new_rstrip_list)
 
 
@@ -174,7 +227,7 @@ def _strip(string: str) -> str:
 def _table_sniff(string: str) -> str:
     """find the table-type via heuristics"""
     # pretty tables
-    for line in string.splitlines():
+    for line in jc.utils.splitlines(string):
         line = line.strip()
         if any((
             line.startswith('╞') and line.endswith('╡'),
@@ -194,7 +247,7 @@ def _table_sniff(string: str) -> str:
             return 'pretty'
 
     # markdown tables
-    second_line = string.splitlines()[1]
+    second_line = jc.utils.splitlines(string)[1]
     if second_line.startswith('|-') and second_line.endswith('-|'):
         return 'markdown'
 
@@ -206,6 +259,11 @@ def _is_separator(line: str) -> bool:
     """returns true if a table separator line is found"""
     # This function is cacheable since tables have identical separators
     strip_line = line.strip()
+
+    # a data row can start and end like a separator (e.g. `--name  1  --`)
+    if not _separator_chars.issuperset(strip_line):
+        return False
+
     if any((
         strip_line.startswith('╒') and strip_line.endswith('╕'),
         strip_line.startswith('╞') and strip_line.endswith('╡'),
@@ -376,18 +434,29 @@ def _get_data(table: Iterable[Tuple[int, List]]) -> List[List[List[str]]]:
 
 def _collapse_headers(table: List[List[str]]) -> List[str]:
     """append each column string to return the full header list"""
-    result = table[0]
+    first = table[0]
+    # parts for each column; the width follows the most recent header line
+    parts: List[List[str]] = [[h] for h in first]
+    changed: List[bool] = [False] * len(first)
+
     for line in table[1:]:
-        new_line: List[str] = []
+        if len(line) > len(parts):
+            raise IndexError('list index out of range')
+
+        parts = parts[:len(line)]
+        changed = changed[:len(line)]
         for i, header in enumerate(line):
             if header:
-                new_header = result[i] + '_' + header
-                # remove consecutive underscores
-                new_header = re.sub(r'__+', '_', new_header)
-                new_line.append(new_header)
-            else:
-                new_line.append(result[i])
-        result = new_line
+                parts[i].append(header)
+                changed[i] = True
+
+    result: List[str] = []
+    for i, col in enumerate(parts):
+        if changed[i]:
+            # remove consecutive underscores
+            result.append(re.sub(r'__+', '_', '_'.join(col)))
+        else:
+            result.append(col[0])
 
     return result
 
@@ -397,18 +466,29 @@ def _collapse_data(table: List[List[List[str]]], quiet=False) -> List[List[str]]
     result: List[List[str]] = []
 
     for index, row in enumerate(table):
-        try:
-            new_row: List[str] = []
-            for line in row:
-                if new_row:
-                    for i, item in enumerate(line):
-                        new_row[i] = (new_row[i] + '\n' + item).strip()
-                else:
-                    new_row = line
+        first_line = row[0]
+        width = len(first_line)
+        cols: List[List[str]] = [[item] if item else [] for item in first_line]
+        failed = False
 
+        for line in row[1:]:
+            for i, item in enumerate(line):
+                if i >= width:
+                    failed = True
+                    break
+                if item:
+                    cols[i].append(item)
+            if failed:
+                break
+
+        # empty items are dropped so each cell is joined only once
+        new_row = ['\n'.join(c) for c in cols]
+
+        if not failed:
             result.append(new_row)
-        except IndexError:
+        else:
             if not quiet:
+                row[0] = new_row
                 row_string = '\n'.join([' | '.join(l) for l in row])
                 jc.utils.warning_message(
                     [f'Possible table separator character found in row {index}:  {row_string}. Skipping.']
@@ -432,7 +512,7 @@ def _create_table_dict(header: List[str], data: List[List[str]]) -> List[Dict[st
 
 
 def _parse_pretty(string: str, quiet: bool =False) -> List[Dict[str, Optional[str]]]:
-    string_lines: List[str] = string.splitlines()
+    string_lines: List[str] = jc.utils.splitlines(string)
     clean: List[Tuple[int, List[str]]] = _normalize_rows(string_lines)
     raw_headers: List[List[str]] = _get_headers(clean)
     raw_data: List[List[List[str]]] = _get_data(clean)

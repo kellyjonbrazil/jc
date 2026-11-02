@@ -101,4 +101,4 @@ Compatibility:  linux, darwin
 
 Source: [`jc/parsers/zipinfo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/zipinfo.py)
 
-Version 1.2 by Matt J (https://github.com/listuser)
+Version 1.3 by Matt J (https://github.com/listuser)

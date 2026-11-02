@@ -78,5 +78,37 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.top.parse(self.ubuntu_20_10_top_b_allfields, quiet=True), self.ubuntu_20_10_top_b_allfields_json)
 
 
+    def test_top_line_separator(self):
+        """
+        Test 'top' with a line-break character other than LF inside a field
+        """
+        data = 'top - 11:24:50 up 2 min,  2 users,  load average: 0.55, 0.28, 0.11\n\n    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND\n   1183 nobody    20   0    2500    900    800 S   0.0   0.0   0:00.00 x\u2028 999999 root      20   0  167000  11000   8000 S   0.0   0.1   0:01.00 /usr/sbin/sshd -D\n'
+        result = jc.parsers.top.parse(data, quiet=True)
+        self.assertEqual(len(result[0]['processes']), 1)
+        self.assertEqual(result[0]['processes'][0]['pid'], 1183)
+        self.assertEqual(result[0]['processes'][0]['command'], 'x\u2028 999999 root      20   0  167000  11000   8000 S   0.0   0.1   0:01.00 /usr/sbin/sshd -D')
+
+
+    def test_top_glued_summary_fields(self):
+        """
+        Test 'top -b' summary lines where a full-width number touches its label
+        """
+        data = ('top - 11:10:47 up  1:08,  2 users,  load average: 0.00, 0.01, 0.05\n'
+                'Tasks:12345 total,1000 running,11345 sleeping,   0 stopped,   0 zombie\n'
+                '%Cpu(s):100.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st\n'
+                'KiB Mem :1234567890 total,1234567891 free,1234567892 used,1234567893 buff/cache\n'
+                'KiB Swap:1234567894 total,1234567895 free,1234567896 used.1234567897 avail Mem \n')
+        result = jc.parsers.top.parse(data, raw=True, quiet=True)
+        r = result[0]
+        self.assertEqual((r['tasks_total'], r['tasks_running'], r['tasks_sleeping'], r['tasks_stopped'], r['tasks_zombie']),
+                         ('12345', '1000', '11345', '0', '0'))
+        self.assertEqual((r['cpu_user'], r['cpu_sys'], r['cpu_nice'], r['cpu_idle'], r['cpu_wait'], r['cpu_hardware'], r['cpu_software'], r['cpu_steal']),
+                         ('100.0', '0.0', '0.0', '100.0', '0.0', '0.0', '0.0', '0.0'))
+        self.assertEqual((r['mem_total'], r['mem_free'], r['mem_used'], r['mem_buff_cache']),
+                         ('1234567890', '1234567891', '1234567892', '1234567893'))
+        self.assertEqual((r['swap_total'], r['swap_free'], r['swap_used'], r['mem_available']),
+                         ('1234567894', '1234567895', '1234567896', '1234567897'))
+
+
 if __name__ == '__main__':
     unittest.main()

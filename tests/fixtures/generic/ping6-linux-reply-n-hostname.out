@@ -1,0 +1,8 @@
+PING host7.example.com(host7.example.com (2001:db8::7)) 56 data bytes
+[1700000000.100000] 64 bytes from 2001:db8::7: icmp_seq=1 ttl=58 time=30.2 ms
+[1700000001.100000] 64 bytes from 2001:db8::7: icmp_seq=2 ttl=58 time=30.4 ms
+[1700000001.200000] 64 bytes from 2001:db8::7: icmp_seq=2 ttl=58 time=30.8 ms (DUP!)
+
+--- host7.example.com ping statistics ---
+2 packets transmitted, 2 received, +1 duplicates, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 30.200/30.466/30.800/0.249 ms

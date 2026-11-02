@@ -164,13 +164,14 @@ Examples:
       ]
     }
 """
+import re
 import jc.utils
 import jc.parsers.universal
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`crontab` file parser with user support'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -179,6 +180,10 @@ class info():
 
 
 __version__ = info.version
+
+# a variable line: NAME=value or NAME = value, where NAME has no spaces (or
+# is quoted). A job line has its schedule fields before any '='.
+_VAR_RE = re.compile(r'''\s*(?:"[^"]*"|'[^']*'|[^\s=]+)\s*=''')
 
 
 def _process(proc_data):
@@ -193,6 +198,12 @@ def _process(proc_data):
 
         Dictionary. Structured data to conform to the schema.
     """
+    # remove one pair of matching quotes around variable values
+    for var in proc_data.get('variables') or []:
+        value = var['value']
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in ('"', "'"):
+            var['value'] = value[1:-1]
+
     # put items in lists
     try:
         for entry in proc_data['schedule']:
@@ -225,7 +236,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = {}
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data)
 
     # Clear any blank lines
     cleandata = [line for line in cleandata if line.strip()]
@@ -233,37 +244,45 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         # Clear any commented lines
-        for i, line in reversed(list(enumerate(cleandata))):
-            if line.strip().startswith('#'):
-                cleandata.pop(i)
+        cleandata = [line for line in cleandata if not line.strip().startswith('#')]
 
         # Pop any variable assignment lines
         cron_var = []
-        for i, line in reversed(list(enumerate(cleandata))):
-            if '=' in line \
+        remaining = []
+        for line in reversed(cleandata):
+            if _VAR_RE.match(line) \
                 and not line.strip()[0].isdigit() \
                 and not line.strip()[0] == '@' \
                 and not line.strip()[0] == '*':
 
-                var_line = cleandata.pop(i)
+                var_line = line
                 var_name = var_line.split('=', maxsplit=1)[0].strip()
                 var_value = var_line.split('=', maxsplit=1)[1].strip()
                 cron_var.append({'name': var_name,
                                  'value': var_value})
+            else:
+                remaining.append(line)
+
+        cleandata = remaining[::-1]
 
         raw_output['variables'] = cron_var
 
         # Pop any shortcut lines
         shortcut_list = []
-        for i, line in reversed(list(enumerate(cleandata))):
+        remaining = []
+        for line in reversed(cleandata):
             if line.strip().startswith('@'):
-                shortcut_line = cleandata.pop(i)
+                shortcut_line = line
                 occurrence = shortcut_line.split(maxsplit=1)[0].strip().lstrip('@')
                 usr = shortcut_line.split(maxsplit=2)[1].strip()
                 cmd = shortcut_line.split(maxsplit=2)[2].strip()
                 shortcut_list.append({'occurrence': occurrence,
                                       'user': usr,
                                       'command': cmd})
+            else:
+                remaining.append(line)
+
+        cleandata = remaining[::-1]
 
         # Add header row for parsing
         cleandata[:0] = ['minute hour day_of_month month day_of_week user command']

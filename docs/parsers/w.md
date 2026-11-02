@@ -128,4 +128,4 @@ Compatibility:  linux, darwin, cygwin, aix, freebsd
 
 Source: [`jc/parsers/w.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/w.py)
 
-Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.7 by Kelly Brazil (kellyjonbrazil@gmail.com)

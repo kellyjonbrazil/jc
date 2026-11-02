@@ -1,0 +1,4 @@
+CEF:0|Vendor|Product|1.0|100|Login failed for a=b|5|src=10.0.0.1 dst=10.0.0.2 msg=hello world
+Sep 19 08:26:10 host CEF:0|Vendor|Product|1.0|101|Escaped \| pipe and x=y|3|src=10.0.0.3 spt=514
+CEF:0|Vendor|Product|1.0|102|Plain name|1|act=blocked
+CEF:0|Vendor|Product|1.0|103|Path ends in backslash C:\\|4|src=10.0.0.4
