@@ -149,23 +149,24 @@ def _process(proc_data):
                 entry[k] = jc.utils.convert_to_int(entry[k])
 
         # remove percent sign from 'use_percent', 'capacity_percent', and 'iused_percent'
-        if 'use_percent' in entry:
+        # a row shorter than the header leaves the trailing fields as None
+        if entry.get('use_percent') is not None:
             entry['use_percent'] = entry['use_percent'].rstrip('%')
 
-        if 'capacity_percent' in entry:
+        if entry.get('capacity_percent') is not None:
             entry['capacity_percent'] = entry['capacity_percent'].rstrip('%')
 
-        if 'iused_percent' in entry:
+        if entry.get('iused_percent') is not None:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
 
         # parse the size, used, and available fields to bytes
         for key in entry:
-            if key in size_list:
+            if key in size_list and entry[key] is not None:
                 entry[key] = jc.utils.convert_size_to_int(entry[key], posix_mode=posix_mode)
 
         # convert integers
         for key in entry:
-            if key in int_list:
+            if key in int_list and entry[key] is not None:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
