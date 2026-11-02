@@ -991,6 +991,38 @@ power management:
             self.assertIn('ls-s parser could not parse the input data', err.getvalue())
             self.assertEqual(hint, 'Use the -qq option' in err.getvalue())
 
+    def test_parse_error_short_message(self):
+        """
+        Test that a long ParseError message is shortened in the CLI error and shown in full with -d
+        """
+        msg = 'Unable to parse line: ' + 'a' * 1000 + '\nsecond line'
+
+        err = io.StringIO()
+        # STDIN must look piped, or run() stops at 'Missing piped data' when
+        # the tests are run from a terminal
+        with mock.patch('sys.argv', ['jc', '--date']), \
+             mock.patch('sys.stdin', io.StringIO()), \
+             mock.patch.object(JcCli, 'standard_parse_and_print', side_effect=ParseError(msg)), \
+             mock.patch('shutil.get_terminal_size', return_value=os.terminal_size((2000, 24))), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+        self.assertEqual(100, cm.exception.code)
+        self.assertIn('ParseError: ' + msg[:300] + '...', err.getvalue())
+        self.assertNotIn('a' * 301, err.getvalue())
+        self.assertNotIn('second line', err.getvalue())
+
+        for option in ('-d', '-dd'):
+            with mock.patch('sys.argv', ['jc', option, '--date']), \
+                 mock.patch('sys.stdin', io.StringIO()), \
+                 mock.patch.object(JcCli, 'standard_parse_and_print', side_effect=ParseError(msg)), \
+                 contextlib.redirect_stdout(io.StringIO()), \
+                 contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(ParseError) as cm:
+                    JcCli().run()
+            self.assertEqual(msg, str(cm.exception))
+
     def test_slice_multiple_proc_files(self):
         """
         Test that line slicing a list of /proc files exits with an error
