@@ -1,0 +1,18 @@
+[
+  {
+    "name": "git",
+    "type": "formula"
+  },
+  {
+    "name": "gitup",
+    "type": "formula"
+  },
+  {
+    "name": "git-annex",
+    "type": "formula"
+  },
+  {
+    "name": "gitless",
+    "type": "formula"
+  }
+]

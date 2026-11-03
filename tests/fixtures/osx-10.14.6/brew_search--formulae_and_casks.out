@@ -1,0 +1,9 @@
+==> Formulae
+bagit                                    git-tig
+bash-git-prompt                          git-tools
+git                                      gitup
+git-annex                                gitless
+
+==> Casks
+adobe-digital-editions                   gitkraken
+caldigit-docking-utility                 gitkraken-cli
