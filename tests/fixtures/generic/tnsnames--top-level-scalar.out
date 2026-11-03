@@ -1,0 +1,12 @@
+# A top-level scalar that is not IFILE has no connect descriptor, so it is
+# skipped with a warning instead of becoming a key named after the input.
+
+IFILE = /etc/oracle/network/admin/tnsnames_shared.ora
+
+SCALAR_LINE = h:1521/svc
+
+SALES =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = sales1-svr)(PORT = 1521))
+    (CONNECT_DATA =
+      (SERVICE_NAME = sales.example.com)))

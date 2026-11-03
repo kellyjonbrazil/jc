@@ -1,0 +1,1 @@
+[{"name": null, "aliases": [], "ifile": "/etc/oracle/network/admin/tnsnames_shared.ora"}, {"name": "SALES", "aliases": ["SALES"], "description": {"address": [{"protocol": "tcp", "host": "sales1-svr", "port": 1521}], "connect_data": {"service_name": "sales.example.com"}}}]
