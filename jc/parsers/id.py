@@ -248,12 +248,13 @@ def parse(data, raw=False, quiet=False):
             pos += len(key) + 1
 
             if key == 'context':
+                # A context can carry fewer than four colon-separated parts
+                # (some SELinux setups omit the level), so only the parts that
+                # are present are assigned instead of indexing a fixed four.
                 context_parsed = data[pos:].split(':', maxsplit=3)
                 raw_output['context'] = {}
-                raw_output['context']['user'] = context_parsed[0]
-                raw_output['context']['role'] = context_parsed[1]
-                raw_output['context']['type'] = context_parsed[2]
-                raw_output['context']['level'] = context_parsed[3]
+                for field, value in zip(('user', 'role', 'type', 'level'), context_parsed):
+                    raw_output['context'][field] = value
                 break
 
             if key == 'groups':
