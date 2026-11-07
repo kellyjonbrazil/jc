@@ -39,7 +39,7 @@ def stream_error(e: BaseException, line: str) -> JSONDictType:
         '_jc_meta':
             {
                 'success': False,
-                'error': f'{e.__class__.__name__}: {e}',
+                'error': f'{e.__class__.__name__}: {getattr(e, "short_message", e)}',
                 'line': line.strip()
             }
     }
