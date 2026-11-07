@@ -10,31 +10,6 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
-    @unittest.skipIf(
-        sys.platform == 'win32',
-        'Windows timestamp() does not support these epoch boundary dates'
-    )
-    def test_date_utc_epoch_zero(self):
-        result = jc.parsers.date.parse(
-            'Thu Jan  1 00:00:00 UTC 1970', quiet=True
-        )
-        self.assertEqual(result['epoch_utc'], 0)
-        self.assertTrue(result['timezone_aware'])
-        self.assertEqual(result['iso'], '1970-01-01T00:00:00+00:00')
-
-    @unittest.skipIf(
-        sys.platform == 'win32',
-        'Windows timestamp() does not support these epoch boundary dates'
-    )
-    def test_date_local_epoch_zero(self):
-        local_epoch = datetime.fromtimestamp(0)
-        result = jc.parsers.date.parse(
-            local_epoch.strftime('%a %b %d %H:%M:%S %Y'), quiet=True
-        )
-        self.assertEqual(result['epoch'], 0)
-        self.assertEqual(result['iso'], local_epoch.isoformat())
-        self.assertFalse(result['timezone_aware'])
-
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/date.out'), 'r', encoding='utf-8') as f:
         generic_date = f.read()
@@ -103,6 +78,31 @@ class MyTests(unittest.TestCase):
         Test 'date' on Ubuntu 20.4 with LANG=en_US.UTF-8 (uses 12-hour clock) with PM time
         """
         self.assertEqual(jc.parsers.date.parse(self.ubuntu_20_04_date2, quiet=True), self.ubuntu_20_04_date2_json)
+
+    @unittest.skipIf(
+        sys.platform == 'win32',
+        'Windows timestamp() does not support these epoch boundary dates'
+    )
+    def test_date_utc_epoch_zero(self):
+        result = jc.parsers.date.parse(
+            'Thu Jan  1 00:00:00 UTC 1970', quiet=True
+        )
+        self.assertEqual(result['epoch_utc'], 0)
+        self.assertTrue(result['timezone_aware'])
+        self.assertEqual(result['iso'], '1970-01-01T00:00:00+00:00')
+
+    @unittest.skipIf(
+        sys.platform == 'win32',
+        'Windows timestamp() does not support these epoch boundary dates'
+    )
+    def test_date_local_epoch_zero(self):
+        local_epoch = datetime.fromtimestamp(0)
+        result = jc.parsers.date.parse(
+            local_epoch.strftime('%a %b %d %H:%M:%S %Y'), quiet=True
+        )
+        self.assertEqual(result['epoch'], 0)
+        self.assertEqual(result['iso'], local_epoch.isoformat())
+        self.assertFalse(result['timezone_aware'])
 
 
 if __name__ == '__main__':
