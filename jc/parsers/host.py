@@ -88,7 +88,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`host` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
