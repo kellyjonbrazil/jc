@@ -109,5 +109,16 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_id_short_context(self):
+        """
+        Test 'id' with an SELinux context that omits the level (fewer than
+        four colon-separated parts). It should not raise an IndexError.
+        """
+        self.assertEqual(
+            jc.parsers.id.parse('uid=0(root) gid=0(root) groups=0(root) context=u:r:t', quiet=True),
+            {'uid': {'id': 0, 'name': 'root'}, 'gid': {'id': 0, 'name': 'root'}, 'groups': [{'id': 0, 'name': 'root'}], 'context': {'user': 'u', 'role': 'r', 'type': 't'}}
+        )
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -105,7 +105,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.8'
+    version = '1.9'
     description = '`id` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -248,12 +248,11 @@ def parse(data, raw=False, quiet=False):
             pos += len(key) + 1
 
             if key == 'context':
+                # some SELinux setups omit the level, so assign only the parts that are present
                 context_parsed = data[pos:].split(':', maxsplit=3)
                 raw_output['context'] = {}
-                raw_output['context']['user'] = context_parsed[0]
-                raw_output['context']['role'] = context_parsed[1]
-                raw_output['context']['type'] = context_parsed[2]
-                raw_output['context']['level'] = context_parsed[3]
+                for field, value in zip(('user', 'role', 'type', 'level'), context_parsed):
+                    raw_output['context'][field] = value
                 break
 
             if key == 'groups':
