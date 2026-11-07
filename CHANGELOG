@@ -1,5 +1,20 @@
 jc changelog
 
+20261106 v1.26.3
+- Fix `date` parser to raise a parse error instead of crashing on input it
+  cannot parse
+- Fix `date` parser and the timestamp utility so a time of exactly the Unix
+  epoch (`1970-01-01 00:00:00 UTC`) gets an epoch value of `0` instead of
+  `null`
+- Fix `df` parser to not crash on a row that is shorter than the header
+- Fix `du` parser to keep whitespace in file names
+- Fix `host` parser to skip a truncated SOA record instead of crashing
+- Fix `id` parser to not crash on an SELinux context with fewer than four
+  fields (e.g. no level)
+- Enhance CLI and streaming parser error messages to show only the first line
+  of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
+  full message
+
 20261029 v1.26.2
 Note: this release changes the output schema of some parsers:
   `x509-cert`/`x509-csr`/`x509-crl`, `proc-net-packet`, `proc-pid-fdinfo`, `ssh-conf`, `iw-scan`, `ping-s`, `proc-pid-numa-maps`, `plist`, and `ifconfig`. Please see the parsers' documentation for the updated schemas.
