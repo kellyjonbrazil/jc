@@ -4,6 +4,7 @@ import json
 import unittest
 from datetime import datetime
 import jc.parsers.date
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -103,6 +104,17 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result['epoch'], 0)
         self.assertEqual(result['iso'], local_epoch.isoformat())
         self.assertFalse(result['timezone_aware'])
+
+
+    def test_date_unparsable_raises_parseerror(self):
+        """
+        An unparseable date string used to crash with AttributeError on
+        dt.year; it should raise ParseError instead. Empty input stays {}.
+        """
+        for data in ('2026-10-28\n', 'garbage not a date\n'):
+            with self.assertRaises(ParseError):
+                jc.parsers.date.parse(data, quiet=True)
+        self.assertEqual(jc.parsers.date.parse('', quiet=True), {})
 
 
 if __name__ == '__main__':

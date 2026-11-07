@@ -74,6 +74,7 @@ Examples:
 """
 from datetime import datetime, timezone
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
@@ -172,6 +173,13 @@ def parse(data, raw=False, quiet=False):
 
         if dt_utc:
             dt = dt_utc
+
+        if dt is None:
+            raise ParseError(
+                'Could not parse the date string. If you are not using the C '
+                'locale, try prepending LC_ALL=C to the date command '
+                '(e.g. LC_ALL=C date).'
+            )
 
         raw_output = {
             'year': dt.year,
