@@ -162,5 +162,16 @@ sr0                   11:0    1    1073741312  0 rom'''
         self.assertEqual([(d['name'], d['mountpoints']) for d in result], [('sda', ['/x'])])
 
 
+    def test_lsblk_missing_name_header(self):
+        """
+        Test lsblk output whose `NAME MAJ:MIN ...` header line was dropped, so
+        the first data row is treated as the header and no `name` column
+        exists. This used to raise `KeyError: 'name'`; it should now parse
+        without crashing.
+        """
+        data = 'sda      8:0   0  20G  0 disk\nsda1     8:1   0  10G  0 part\n'
+        self.assertEqual(jc.parsers.lsblk.parse(data, quiet=True), [])
+
+
 if __name__ == '__main__':
     unittest.main()
