@@ -1099,7 +1099,7 @@ class JcCli():
 
                 utils.error_message([
                     f'Parser issue with {self.parser_name}:',
-                    f'{e.__class__.__name__}: {e}',
+                    f'{e.__class__.__name__}: {getattr(e, "short_message", e)}',
                     'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                     f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
                 ])
@@ -1135,7 +1135,7 @@ class JcCli():
 
             utils.error_message([
                 'Exit due to unexpected error:',
-                f'{e.__class__.__name__}: {e}'
+                f'{e.__class__.__name__}: {getattr(e, "short_message", e)}'
             ])
             self.exit_error()
 
