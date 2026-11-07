@@ -100,11 +100,12 @@ Examples:
 """
 import string
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`w` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -160,6 +161,12 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
+
+        if not cleandata:
+            raise ParseError(
+                'The header line is missing (e.g. the command output was '
+                'truncated). w output must include the USER/TTY header row.'
+            )
 
         header_text = cleandata[0].lower()
         # fixup for 'from' column that can be blank

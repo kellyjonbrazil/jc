@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.w
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -76,6 +77,15 @@ class MyTests(unittest.TestCase):
         Test 'w' on nixos
         """
         self.assertEqual(jc.parsers.w.parse(self.nixos_w, quiet=True), self.nixos_w_json)
+
+    def test_w_uptime_line_only(self):
+        """
+        Test 'w' with only the uptime line (e.g. `w | head -1`) raises
+        ParseError instead of leaking an IndexError
+        """
+        uptime_line = '10:15  up 20 days, 19:44, 8 users, load averages: 0.86 0.45 0.37\n'
+        with self.assertRaises(ParseError):
+            jc.parsers.w.parse(uptime_line, quiet=True)
 
 
 if __name__ == '__main__':
