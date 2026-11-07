@@ -66,6 +66,25 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.wc.parse(self.generic_wc_line_separator, quiet=True), self.generic_wc_line_separator_json)
 
+    def test_wc_preserves_leading_filename_whitespace(self):
+        data = (
+            ' 1  2  4   quarterly.csv\n'
+            ' 1  2  4 \tarchive.csv\n'
+            ' 1  2  4 \u00a0exports.csv\n'
+            ' 1  2  4  \n'
+            ' 4  8 16 total\n'
+        )
+        self.assertEqual(
+            jc.parsers.wc.parse(data, quiet=True),
+            [
+                {'filename': '  quarterly.csv', 'lines': 1, 'words': 2, 'characters': 4},
+                {'filename': '\tarchive.csv', 'lines': 1, 'words': 2, 'characters': 4},
+                {'filename': '\u00a0exports.csv', 'lines': 1, 'words': 2, 'characters': 4},
+                {'filename': ' ', 'lines': 1, 'words': 2, 'characters': 4},
+                {'filename': 'total', 'lines': 4, 'words': 8, 'characters': 16},
+            ],
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

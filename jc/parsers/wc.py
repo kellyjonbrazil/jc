@@ -49,6 +49,7 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
 
 
@@ -110,12 +111,14 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, jc.utils.splitlines(data)):
-            split_line = line.split(maxsplit=3)
+            counts = re.split(r'[ \t]+', line.lstrip(' \t'), maxsplit=2)
+            # Consume only the delimiter after the final count.
+            characters, *filename = re.split(r'[ \t]', counts[2], maxsplit=1)
             item = {
-                'filename': split_line[3] if len(split_line) == 4 else None,
-                'lines': split_line[0],
-                'words': split_line[1],
-                'characters': split_line[2]
+                'filename': (filename[0] or None) if filename else None,
+                'lines': counts[0],
+                'words': counts[1],
+                'characters': characters
             }
             raw_output.append(item)
 
