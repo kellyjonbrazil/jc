@@ -122,5 +122,16 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[1]['serial'], 2024010101)
 
 
+    def test_host_truncated_soa(self):
+        """
+        Test a `has SOA record` line that was cut off before its fields (e.g.
+        truncated `host -t soa` output). The parser used to raise IndexError
+        while indexing the SOA fields; it should skip the incomplete record
+        instead of crashing.
+        """
+        data = 'example.com has SOA record ns1.example.com\n'
+        self.assertEqual(parse(data, quiet=True), [{}])
+
+
 if __name__ == '__main__':
     unittest.main()
