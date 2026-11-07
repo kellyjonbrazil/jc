@@ -489,7 +489,9 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
             if key in float_list:
                 item[key] = jc.utils.convert_to_float(item[key])
 
-        for p_idx, proc in enumerate(item['processes']):
+        # top cut before the process table (`top -b -n1 | head -5`) yields
+        # summary items carrying no processes key.
+        for p_idx, proc in enumerate(item.get('processes') or []):
             # rename processes keys to conform to schema
             proc_copy = proc.copy()
             for old_key in proc_copy.keys():
