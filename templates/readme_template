@@ -242,8 +242,34 @@ its input:
 The `-M` (`--meta-out`) option also adds the program's exit code to the
 output in the `_jc_meta` object:
 ```bash
-$ jc -M ping -c2 192.168.1.252
-{"destination_ip":"192.168.1.252", ... "_jc_meta":{"parser":"ping","timestamp":1661357115.27949,"magic_command":["ping","-c2","192.168.1.252"],"magic_command_exit":2}}
+$ jc --meta-out -p ping -c2 192.168.1.252
+{
+  "destination_ip": "192.168.1.252",
+  "data_bytes": 56,
+  "pattern": null,
+  "destination": "192.168.1.252",
+  "packets_transmitted": 2,
+  "packets_received": 0,
+  "packet_loss_percent": 100.0,
+  "duplicates": 0,
+  "responses": [
+    {
+      "type": "timeout",
+      "icmp_seq": 0,
+      "duplicate": false
+    }
+  ],
+  "_jc_meta": {
+    "parser": "ping",
+    "timestamp": 1661357115.27949,
+    "magic_command": [
+      "ping",
+      "-c2",
+      "192.168.1.252"
+    ],
+    "magic_command_exit": 2
+  }
+}
 $ echo $?
 2
 ```
@@ -276,10 +302,27 @@ for all of it. This uses much less memory on large inputs (e.g. `ls -lR /`).
 To keep a long-running pipeline going when a line can't be parsed, use the
 `-qq` option (or `ignore_exceptions=True` in `parse()`). Each output object
 then gets a `_jc_meta` object with a `success` field. Lines that failed also
-get `error` and `line` fields:
+get `error` and `line` fields.
+
+Successfully parsed line with `-qq` option:
 ```json
-{"command_data":"data","_jc_meta":{"success":true}}
-{"_jc_meta":{"success":false,"error":"error message","line":"original line data"}}
+{
+  "command_data": "data",
+  "_jc_meta": {
+    "success": true
+  }
+}
+```
+
+Unsuccessfully parsed line with `-qq` option:
+```json
+{
+  "_jc_meta": {
+    "success": false,
+    "error": "error message",
+    "line": "original line data"
+  }
+}
 ```
 
 #### Unbuffering Output
