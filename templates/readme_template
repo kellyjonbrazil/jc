@@ -1,15 +1,5 @@
 [![Pypi](https://img.shields.io/pypi/v/jc.svg)](https://pypi.org/project/jc/)
 
-> Check out the `jc` Python [package documentation](https://github.com/kellyjonbrazil/jc/tree/master/docs) for developers
-
-> Try the `jc` [web demo](https://jc-web.onrender.com/) and [REST API](https://github.com/kellyjonbrazil/jc-restapi)
-
-> `jc` is available as an
-[Ansible filter plugin](https://docs.ansible.com/ansible/latest/collections/community/general/jc_filter.html#ansible-collections-community-general-jc-filter)
-in the `community.general` collection. See this
-[blog post](https://blog.kellybrazil.com/2020/08/30/parsing-command-output-in-ansible-with-jc/)
-for an example.
-
 # JC
 JSON Convert
 
@@ -65,6 +55,9 @@ from the [**Parsers**](#parsers) table.
 
 Release notes are in the [Releases section](https://github.com/kellyjonbrazil/jc/releases) on Github.
 
+Try `jc` in the [web demo](https://jc-web.onrender.com/), or run it as a
+service with the [REST API](https://github.com/kellyjonbrazil/jc-restapi).
+
 ## Further Reading
 - [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/)
   (why `jc` exists) and an [interview with Console](https://console.substack.com/p/console-89)
@@ -102,7 +95,7 @@ pip3 install jc
 | Photon linux                         | `tdnf install jc`                                                             |
 | macOS                                | `brew install jc`                                                             |
 | FreeBSD                              | `portsnap fetch update && cd /usr/ports/textproc/py-jc && make install clean` |
-| Ansible filter plugin                | `ansible-galaxy collection install community.general`                         |
+| [Ansible filter plugin](https://docs.ansible.com/ansible/latest/collections/community/general/jc_filter.html) | `ansible-galaxy collection install community.general` |
 | FortiSOAR connector                  | Install from FortiSOAR Connector Marketplace                                  |
 
 > For more OS Packages, see https://repology.org/project/jc/versions.
