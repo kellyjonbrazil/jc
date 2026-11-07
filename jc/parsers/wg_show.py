@@ -233,7 +233,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                     "private_key": private_key if private_key != "(none)" else None,
                     "public_key": public_key if public_key != "(none)" else None,
                     "listen_port": int(listen_port) if listen_port != "0" else None,
-                    "fwmark": int(fwmark) if fwmark != "off" else None,
+                    "fwmark": int(fwmark,0) if fwmark != "off" else None,
                     "peers": {},
                 }
             elif len(fields) == 9:
