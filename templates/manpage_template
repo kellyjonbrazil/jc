@@ -24,12 +24,10 @@ Magic syntax:
 
 .SH DESCRIPTION
 \fBjc\fP JSONifies the output of many CLI tools, file-types, and common strings
-for easier parsing in scripts. \fBjc\fP accepts piped input from \fBSTDIN\fP and
-outputs a JSON representation of the previous command's output to \fBSTDOUT\fP.
-Alternatively, the "Magic" syntax can be used by prepending \fBjc\fP to the
-command to be converted. Options can be passed to \fBjc\fP immediately before
-the command is given. (Note: "Magic" syntax does not support shell builtins or
-command aliases)
+for easier parsing in scripts. It reads command output, a file, or a string from
+\fBSTDIN\fP and writes JSON to \fBSTDOUT\fP. With the "magic" syntax, put
+\fBjc\fP and its options in front of the command or \fB/proc\fP file path
+instead (command aliases and shell builtins are not supported).
 
 .SH OPTIONS
 .B
@@ -124,18 +122,13 @@ Generate Xonsh shell completion script
 .B
 Slice:
 .RS
-Line slicing is supported using the \fBSTART:STOP\fP syntax similar to Python
-slicing. This allows you to skip lines at the beginning and/or end of the
-\fBSTDIN\fP input you would like \fBjc\fP to convert.
+A \fBSTART:STOP\fP line slice selects which lines of the input to convert, like
+Python slicing. Lines are numbered from \fB0\fP at the start or from \fB-1\fP at
+the end, and \fBSTOP\fP is not included. Lines are counted at LF and CRLF line
+endings; a lone CR does not start a new line. Slices with negative numbers use
+more memory.
 
-\fBSTART\fP and \fBSTOP\fP can be positive or negative integers or blank and
-allow you to specify how many lines to skip and how many lines to process.
-Positive and blank slices are the most memory efficient. Any negative
-integers in the slice will use more memory. Lines are counted at LF and CRLF
-line endings; a lone CR does not start a new line.
-
-For example, to skip the first and last line of the following text, you
-could express the slice in a couple ways:
+For example, both of these slices skip the first and last lines:
 
 .RS
 .nf
@@ -152,15 +145,7 @@ $ cat table.txt | jc 1:4 --asciitable
 .fi
 .RE
 
-In this example \fB1:-1\fP and \fB1:4\fP line slices provide the same output.
-
-When using positive integers the index location of \fBSTOP\fP is non-inclusive.
-Positive slices count from the first line of the input toward the end
-starting at \fB0\fP as the first line. Negative slices count from the last line
-toward the beginning starting at \fB-1\fP as the last line. This is also the way
-Python's slicing feature works.
-
-Here is a breakdown of line slice options:
+Line slice options:
 
 .TP
 .B
@@ -200,13 +185,9 @@ lines from the beginning through \fBSTOP\fP lines from the end
 all lines
 
 .SH SLURP
-Some parsers support multi-item input and can output an array of results in a
-single pass. Slurping works for string parsers that accept a single line of
-input. (e.g. \fBurl\fP and \fBip-address\fP) To see a list of parsers that support
-the \fB--slurp\fP option, use \fBjc -hhh\fP.
-
-For example, you can send a file with multiple IP addresses (one per line) to
-\fBjc\fP with the \fB--slurp\fP option and an array of results will output:
+String parsers that read a single line (e.g. \fBurl\fP and \fBip-address\fP)
+can read many lines with the \fB--slurp\fP option and output an array of
+results. Use \fBjc -hhh\fP to see which parsers support it.
 
 .RS
 .nf
@@ -215,9 +196,8 @@ $ cat ip-addresses.txt | jc --slurp --ip-address
 .fi
 .RE
 
-The magic syntax for \fB/proc\fP files automatically supports slurping of multiple
-files (no need to use the \fB--slurp\fP option). For example, you can convert many
-PID files at once:
+The \fB/proc\fP magic syntax slurps multiple files automatically and adds a
+\fB_file\fP field to each output object:
 
 .RS
 .nf
@@ -226,13 +206,9 @@ $ jc /proc/*/status
 .fi
 .RE
 
-When the \fB/proc\fP magic syntax is used and multiple files are selected, an
-additional \fB_file\fP field is inserted in the output so it is easier to tell what
-file each output object refers to.
-
-Finally, the \fB--meta-out\fP option can be used in conjunction with slurped output.
-In this case, the slurped output is wrapped in an object with the following
-structure:
+With \fB--meta-out\fP, slurped output is wrapped in an object, and
+\fBinput_list\fP holds the input strings or \fB/proc\fP filenames so you can
+match each result to its input:
 
 .RS
 .nf
@@ -253,20 +229,11 @@ structure:
 .fi
 .RE
 
-With \fB--meta-out\fP, \fBinput_list\fP contains a list of inputs (actual input strings
-or \fB/proc\fP filenames) so you can identify which output object relates to each
-input string or \fB/proc\fP filename.
-
 .SH EXIT CODES
-Any fatal errors within \fBjc\fP will generate an exit code of \fB100\fP,
-otherwise the exit code will be \fB0\fP.
-
-When using the "magic" syntax (e.g. \fBjc ifconfig eth0\fP), \fBjc\fP will store
-the exit code of the program being parsed and add it to the \fBjc\fP exit code.
-This way it is easier to determine if an error was from the parsed program or
-\fBjc\fP.
-
-Consider the following examples using \fBifconfig\fP:
+\fBjc\fP exits with \fB100\fP on a fatal error, otherwise \fB0\fP. With the
+"magic" syntax (e.g. \fBjc ifconfig eth0\fP), the exit code of the parsed
+program is added to the \fBjc\fP exit code, so you can tell where an error came
+from:
 
 .RS
 ifconfig exit code = \fB0\fP, jc exit code = \fB0\fP, combined exit code = \fB0\fP (no errors)
@@ -278,12 +245,8 @@ ifconfig exit code = \fB0\fP, jc exit code = \fB100\fP, combined exit code = \fB
 ifconfig exit code = \fB1\fP, jc exit code = \fB100\fP, combined exit code = \fB101\fP (error in both ifconfig and jc)
 .RE
 
-When using the "magic" syntax you can also retrieve the exit code of the called
-program by using the \fB--meta-out\fP or \fB-M\fP option. This will append a
-\fB_jc_meta\fP object to the output that will include the magic command
-information, including the exit code.
-
-Here is an example with \fBping\fP:
+The \fB-M\fP (\fB--meta-out\fP) option also adds the program's exit code to the
+output in the \fB_jc_meta\fP object:
 .RS
 .nf
 $ jc --meta-out -p ping -c2 192.168.1.252
@@ -321,45 +284,33 @@ $ echo $?
 
 .SH ENVIRONMENT
 
-\fBCustom Colors\fP
+\fBJC_COLORS\fP
 
-You can specify custom colors via the \fBJC_COLORS\fP environment variable. The
-\fBJC_COLORS\fP environment variable takes four comma separated string values in
-the following format:
+Set custom colors as four comma-separated values:
 
 JC_COLORS=<keyname_color>,<keyword_color>,<number_color>,<string_color>
 
 Where colors are: \fBblack\fP, \fBred\fP, \fBgreen\fP, \fByellow\fP, \fBblue\fP,
 \fBmagenta\fP, \fBcyan\fP, \fBgray\fP, \fBbrightblack\fP, \fBbrightred\fP,
 \fBbrightgreen\fP, \fBbrightyellow\fP, \fBbrightblue\fP, \fBbrightmagenta\fP,
-\fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP
-
-For example, to set to the default colors:
+\fBbrightcyan\fP, \fBwhite\fP, or \fBdefault\fP. For example, the default
+colors are:
 
 .RS
 JC_COLORS=blue,brightblack,magenta,green
-
-or
-
-JC_COLORS=default,default,default,default
 .RE
 
-\fBDisable Color Output\fP
+This is the same as \fBJC_COLORS=default,default,default,default\fP.
 
-You can set the \fBNO_COLOR\fP environment variable to any value to disable
-color output in \fBjc\fP. Note that using the \fB-C\fP option to force color
-output will override both the \fBNO_COLOR\fP environment variable and the
-\fB-m\fP option.
+\fBNO_COLOR\fP
+
+Set to any value to disable colors. The \fB-C\fP option forces color output
+and overrides both \fBNO_COLOR\fP and \fB-m\fP.
 
 .SH STREAMING PARSERS
-Most parsers load all of the data from \fBSTDIN\fP, parse it, then output the
-entire JSON document serially. There are some streaming parsers (e.g.
-\fBls-s\fP, \fBping-s\fP, etc.) that immediately start processing and outputting
-the data line-by-line as JSON Lines (aka NDJSON) while it is being received from
-\fBSTDIN\fP. This can significantly reduce the amount of memory required to
-parse large amounts of command output (e.g. \fBls -lR /\fP) and can sometimes
-process the data more quickly. Streaming parsers have slightly different
-behavior than standard parsers as outlined below.
+Streaming parsers (e.g. \fBls-s\fP and \fBping-s\fP) output JSON Lines as the
+input arrives instead of waiting for all of it. This uses much less memory on
+large inputs (e.g. \fBls -lR /\fP).
 
 .RS
 Note: Streaming parsers cannot be used with the "magic" syntax
@@ -367,14 +318,10 @@ Note: Streaming parsers cannot be used with the "magic" syntax
 
 \fBIgnoring Errors\fP
 
-You may want to ignore parsing errors when using streaming parsers since these
-may be used in long-lived processing pipelines and errors can break the pipe. To
-ignore parsing errors, use the \fB-qq\fP cli option. This will add a
-\fB_jc_meta\fP object to the JSON output with a \fBsuccess\fP attribute. If
-\fBsuccess\fP is \fBtrue\fP, then there were no issues parsing the line. If
-\fBsuccess\fP is \fBfalse\fP, then a parsing issue was found and \fBerror\fP and
-\fBline\fP fields will be added to include a short error description and the
-contents of the unparsable line, respectively:
+To keep a long-running pipeline going when a line can't be parsed, use the
+\fB-qq\fP option. Each output object then gets a \fB_jc_meta\fP object with a
+\fBsuccess\fP field. Lines that failed also get \fBerror\fP and \fBline\fP
+fields.
 
 .RS
 Successfully parsed line with \fB-qq\fP option:
@@ -405,22 +352,9 @@ Unsuccessfully parsed line with \fB-qq\fP option:
 .RE
 \fBUnbuffering Output\fP
 
-Most operating systems will buffer output that is being piped from process to
-process. The buffer is usually around 4KB. When viewing the output in the
-terminal the OS buffer is not engaged so output is immediately displayed on the
-screen. When piping multiple processes together, though, it may seem as if the
-output is hanging when the input data is very slow (e.g. \fBping\fP):
-
-.RS
-.nf
-$ ping 1.1.1.1 | jc \fB--ping-s\fP | jq
-<slow output>
-.fi
-.RE
-
-This is because the OS engages the 4KB buffer between \fBjc\fP and \fBjq\fP in
-this example. To display the data on the terminal in realtime, you can disable
-the buffer with the \fB-u\fP (unbuffer) cli option:
+When \fBjc\fP output is piped to another program, the OS buffers it (usually
+about 4KB), so slow input like \fBping\fP can look stuck. Use the \fB-u\fP
+option to unbuffer the output:
 
 .RS
 .nf
@@ -434,8 +368,8 @@ Note: Unbuffered output can be slower for large data streams.
 .RE
 
 .SH PARSER PLUGINS
-Parser plugins may be placed in a \fBjc/jcparsers\fP folder in your
-local "App data directory":
+Parser plugins go in the \fBjcparsers\fP folder of your local app data
+directory:
 
 .RS
 .nf
@@ -445,15 +379,11 @@ local "App data directory":
 .fi
 .RE
 
-Parser plugins are standard python module files. Use the
-\fBjc/parsers/foo.py\fP or \fBjc/parsers/foo_s.py\fP (streaming) parser as a
-template and simply place a \fB.py\fP file in the \fBjcparsers\fP subfolder.
-Any dependencies can be placed in the \fBjc\fP folder above \fBjcparsers\fP
-and can be imported in the parser code.
-
-Parser plugin filenames must be valid python module names and therefore must
-start with a letter and consist entirely of alphanumerics and underscores. Local
-plugins may override default parsers.
+A plugin is a standard Python module. Use \fBjc/parsers/foo.py\fP or
+\fBjc/parsers/foo_s.py\fP (streaming) as a template. Plugin filenames must be
+valid Python module names (starting with a letter, and only letters, digits,
+and underscores). Dependencies can be placed in the \fBjc\fP folder above
+\fBjcparsers\fP. Local plugins may override built-in parsers.
 
 Note: The application data directory follows the \fBXDG Base Directory
 Specification\fP
