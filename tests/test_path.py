@@ -19,6 +19,19 @@ class MyTests(unittest.TestCase):
         """
         test_utils.run_all_fixtures(self, __file__)
 
+    def test_path_windows_crlf(self):
+        """
+        Test 'path' with Windows path terminated by CRLF (#897)
+        """
+        import jc
+        p = "C:\\work\\report.txt"
+        for ending in ("", chr(10), chr(13) + chr(10)):
+            data = p + ending
+            res = jc.parse("path", data)
+            self.assertEqual(res["filename"], "report.txt")
+            self.assertEqual(res["extension"], "txt")
+            self.assertEqual(res["path"], p)
+
 
 if __name__ == '__main__':
     unittest.main()

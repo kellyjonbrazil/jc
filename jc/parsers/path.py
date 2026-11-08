@@ -99,7 +99,7 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
-    data = data.rstrip("\n")
+    data = data.rstrip("\r\n")
 
     return _parse_path(data, _is_windows(data), raw)
 
