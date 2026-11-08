@@ -279,8 +279,13 @@ def parse(
             # scsi_scsi_p: 'proc_scsi_scsi'
         }
 
+        # The detection patterns below are written against LF line endings, while
+        # jc.utils.splitlines() accepts CRLF as well. Normalize the terminator
+        # before matching so a CRLF capture is identified as the same file type.
+        detect_data = data.replace('\r\n', '\n')
+
         for reg_pattern, parse_mod in procmap.items():
-            if reg_pattern.search(data):
+            if reg_pattern.search(detect_data):
                 try:
                     procparser = get_parser(parse_mod)
                     return procparser.parse(data, quiet=quiet, raw=raw)
