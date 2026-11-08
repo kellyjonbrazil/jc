@@ -87,6 +87,51 @@ class MyTests(unittest.TestCase):
         with self.assertRaises(ParseError):
             jc.parsers.w.parse(uptime_line, quiet=True)
 
+    def test_w_uptime_line_with_blank_line(self):
+        """
+        Test 'w' with the uptime line followed by an empty line raises the same
+        ParseError as the uptime line on its own
+        """
+        data = '10:15  up 20 days, 19:44, 8 users, load averages: 0.86 0.45 0.37\n\n'
+        with self.assertRaises(ParseError):
+            jc.parsers.w.parse(data, quiet=True)
+
+    def test_w_row_cut_before_from_column(self):
+        """
+        Test 'w' with output cut off after the header, inside a row that has
+        not reached the FROM column (e.g. `w | head -c 120`), returns the
+        columns that are present instead of raising IndexError
+        """
+        data = (
+            '10:15  up 20 days, 19:44, 8 users, load averages: 0.86 0.45 0.37\n'
+            'USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT\n'
+            'kbrazil  pts/0\n'
+        )
+        self.assertEqual(jc.parsers.w.parse(data, quiet=True), [{'user': 'kbrazil', 'tty': 'pts/0'}])
+
+    def test_w_blank_rows_are_skipped(self):
+        """
+        Test 'w' skips blank and whitespace-only rows instead of raising
+        IndexError
+        """
+        data = (
+            '10:15  up 20 days, 19:44, 8 users, load averages: 0.86 0.45 0.37\n'
+            'USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT\n'
+            '\n'
+            '   \n'
+            'kbrazil  pts/0    192.168.1.5      09:12    1.00s  0.05s  0.01s w\n'
+        )
+        self.assertEqual(jc.parsers.w.parse(data, quiet=True), [{
+            'user': 'kbrazil',
+            'tty': 'pts/0',
+            'from': '192.168.1.5',
+            'login_at': '09:12',
+            'idle': '1.00s',
+            'jcpu': '0.05s',
+            'pcpu': '0.01s',
+            'what': 'w'
+        }])
+
 
 if __name__ == '__main__':
     unittest.main()
