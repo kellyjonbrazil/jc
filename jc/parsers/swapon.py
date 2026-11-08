@@ -105,7 +105,7 @@ def _parse_size(size: str) -> int:
 
     multiplier = 1024**power if power is not None else 1024
 
-    return (int(size[:-1]) if power is not None else int(size)) * multiplier
+    return int((float(size[:-1]) if power is not None else float(size)) * multiplier)
 
 
 def _value(value: str, column: _Column) -> _Value:
