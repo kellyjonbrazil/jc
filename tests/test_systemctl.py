@@ -38,6 +38,25 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['description'], 'Drive a\rb\x0bc\x0cd\x1ce\x1df\x1eg CDROM')
         self.assertEqual(result[1]['unit'], 'sshd.service')
 
+    def test_systemctl_legend_footer(self):
+        """
+        Test 'systemctl --failed' with the 'Legend:' footer of newer systemd
+        """
+        data = (
+            '  UNIT                      LOAD   ACTIVE SUB    DESCRIPTION\n'
+            '\u25cf logrotate.service         loaded failed failed Rotate log files\n'
+            '\n'
+            'Legend: LOAD   \u2192 Reflects whether the unit definition was properly loaded.\n'
+            '        ACTIVE \u2192 The high-level unit activation state, i.e. generalization of SUB.\n'
+            '        SUB    \u2192 The low-level unit activation state, values depend on unit type.\n'
+            '\n'
+            '1 loaded units listed.\n'
+        )
+        self.assertEqual(jc.parsers.systemctl.parse(data, quiet=True), [{
+            'unit': 'logrotate.service', 'load': 'loaded', 'active': 'failed',
+            'sub': 'failed', 'description': 'Rotate log files'
+        }])
+
     def test_systemctl_nodata(self):
         """
         Test 'systemctl' with no data

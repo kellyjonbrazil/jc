@@ -120,7 +120,7 @@ def parse(data, raw=False, quiet=False):
         raw_output = []
 
         for entry in cleandata[1:]:
-            if entry.startswith('LOAD   = '):
+            if entry.startswith(('LOAD   = ', 'Legend:')):
                 break
 
             else:
