@@ -4,6 +4,8 @@
     "uid": "crlf-1",
     "description": "firstsecond",
     "dtstart": "2026-10-15",
+    "dtstart_epoch": 1792047600,
+    "dtstart_epoch_utc": null,
     "attendees": [
       {
         "name": "Doe: Jane",
