@@ -28,6 +28,10 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.ics'), 'r', encoding='utf-8', newline='') as f:
         generic_ics_google_export = f.read()
 
+    # newline='' keeps the CRLF line endings of the export
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-apple.ics'), 'r', encoding='utf-8', newline='') as f:
+        generic_ics_apple_export = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-test.json'), 'r', encoding='utf-8') as f:
         generic_ics_test_json = json.loads(f.read())
@@ -46,6 +50,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-outlook-shape.json'), 'r', encoding='utf-8') as f:
         generic_ics_outlook_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-apple.json'), 'r', encoding='utf-8') as f:
+        generic_ics_apple_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.json'), 'r', encoding='utf-8') as f:
         generic_ics_google_json = json.loads(f.read())
@@ -135,6 +142,22 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             jc.parsers.ics.parse(self.generic_ics_google_export, quiet=True),
             self.generic_ics_google_json
+        )
+
+
+    def test_ics_apple_export(self):
+        """
+        Test a file exported from Apple Calendar: CRLF line endings,
+        VTIMEZONEs written as RDATE lists (Phoenix, Kathmandu, Kolkata) and as
+        yearly rules that end with UNTIL followed by new ones (Los Angeles),
+        times next to DST changes, all-day, floating and UTC events, and
+        recurring events with EXDATE and RECURRENCE-ID
+        """
+        self.assertIn('\r\n', self.generic_ics_apple_export)
+
+        self.assertEqual(
+            jc.parsers.ics.parse(self.generic_ics_apple_export, quiet=True),
+            self.generic_ics_apple_json
         )
 
 
