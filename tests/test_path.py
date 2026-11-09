@@ -43,7 +43,9 @@ class MyTests(unittest.TestCase):
         for path in paths:
             for raw in (False, True):
                 expected = jc.parse('path', path, raw=raw, quiet=True)
-                for ending in ('', '\n', '\r\n'):
+                for ending in (
+                    '', '\n', '\r\n', '\r', '\r\n\r\n', '\r\n\n',
+                ):
                     with self.subTest(path=path, raw=raw, ending=ending):
                         self.assertEqual(
                             jc.parse('path', path + ending,
