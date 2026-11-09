@@ -100,11 +100,12 @@ Examples:
 """
 import string
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`w` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -161,6 +162,9 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
+        if not cleandata or not cleandata[0].strip():
+            raise ParseError('Missing the w header line (USER TTY ...)')
+
         header_text = cleandata[0].lower()
         # fixup for 'from' column that can be blank
         from_col = header_text.find('from')
@@ -171,20 +175,22 @@ def parse(data, raw=False, quiet=False):
 
         # parse lines
         raw_output = []
-        if cleandata:
-            for entry in cleandata[1:]:
-                output_line = {}
+        for entry in cleandata[1:]:
+            if not entry.strip():
+                continue
 
-                # normalize data by inserting Null for missing data
-                temp_line = entry.split(maxsplit=len(headers) - 1)
+            output_line = {}
 
-                # fix from column, always at column 2
-                if 'from' in headers:
-                    if entry[from_col] in string.whitespace:
-                        temp_line.insert(2, '-')
+            # normalize data by inserting Null for missing data
+            temp_line = entry.split(maxsplit=len(headers) - 1)
 
-                output_line = dict(zip(headers, temp_line))
-                raw_output.append(output_line)
+            # fix from column, always at column 2
+            if 'from' in headers and len(entry) > from_col:
+                if entry[from_col] in string.whitespace:
+                    temp_line.insert(2, '-')
+
+            output_line = dict(zip(headers, temp_line))
+            raw_output.append(output_line)
 
         # strip whitespace from beginning and end of all string values
         for row in raw_output:
