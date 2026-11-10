@@ -121,6 +121,8 @@ class MyTests(unittest.TestCase):
         )
         parsed = jc.parsers.top.parse(summary_only, quiet=True)
         self.assertIsInstance(parsed, list)
+        self.assertEqual(parsed[0]['tasks_total'], 123)
+        self.assertNotIn('processes', parsed[0])
 
 
 if __name__ == '__main__':

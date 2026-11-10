@@ -141,5 +141,21 @@ class MyTests(unittest.TestCase):
                          ('1234567894', '1234567895', '1234567896', '1234567897'))
 
 
+    def test_top_s_no_process_table(self):
+        """
+        Test 'top -b -n1' output cut before the process table, e.g.
+        `top -b -n1 | head -5 | jc --top-s`. _process() used to index
+        proc_data['processes'] unconditionally and raise KeyError.
+        """
+        summary_only = (
+            'top - 10:00:00 up 1 day,  2:03,  1 user,  load average: 0.00, 0.01, 0.05\n'
+            'Tasks: 123 total,   1 running, 122 sleeping,   0 stopped,   0 zombie\n'
+        )
+        result = list(jc.parsers.top_s.parse(summary_only.splitlines(True), quiet=True))
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['tasks_total'], 123)
+        self.assertNotIn('processes', result[0])
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -70,6 +70,8 @@ class MyTests(unittest.TestCase):
         parsed = jc.parsers.systeminfo.parse(truncated, quiet=True)
         self.assertEqual(parsed['host_name'], 'WIN-ABC123')
         self.assertEqual(parsed['os_name'], 'Microsoft Windows 10 Pro')
+        self.assertNotIn('network_cards', parsed)
+        self.assertNotIn('system_boot_time_epoch', parsed)
 
 
 if __name__ == "__main__":
