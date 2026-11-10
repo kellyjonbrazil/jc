@@ -67,6 +67,7 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.wc.parse(self.generic_wc_line_separator, quiet=True), self.generic_wc_line_separator_json)
 
     def test_wc_preserves_leading_filename_whitespace(self):
+        """Test 'wc' preserves leading filename whitespace"""
         data = (
             ' 1  2  4   quarterly.csv\n'
             ' 1  2  4 \tarchive.csv\n'
