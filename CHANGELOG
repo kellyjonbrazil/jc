@@ -1,6 +1,11 @@
 jc changelog
 
-20261106 v1.26.3
+20261111 v1.26.3
+- Enhance `ics` parser to add calculated epoch timestamp fields for dates and
+  times, including `TZID` times resolved with the file's `VTIMEZONE` component
+- Enhance CLI and streaming parser error messages to show only the first line
+  of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
+  full message
 - Fix `date` parser to raise a parse error instead of crashing on input it
   cannot parse
 - Fix `date` parser and the timestamp utility so a time of exactly the Unix
@@ -11,9 +16,13 @@ jc changelog
 - Fix `host` parser to skip a truncated SOA record instead of crashing
 - Fix `id` parser to not crash on an SELinux context with fewer than four
   fields (e.g. no level)
-- Enhance CLI and streaming parser error messages to show only the first line
-  of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
-  full message
+- Fix `path` parser to remove CRLF line endings from Windows paths
+- Fix `proc` parser to identify `/proc` files that have CRLF line endings
+- Fix `systeminfo`, `top`, and `top-s` parsers to not crash on output that was
+  cut short (e.g. no network cards, time zone, or process table)
+- Fix `w` parser to raise a parse error when the header line is missing and
+  to not crash on blank rows or rows that were cut short
+- Fix `wc` parser to keep leading whitespace in file names
 
 20261029 v1.26.2
 Note: this release changes the output schema of some parsers:
