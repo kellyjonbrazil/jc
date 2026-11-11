@@ -262,6 +262,20 @@ class MyTests(unittest.TestCase):
             self.assertEqual(jc.parsers.proc.parse(self.f_in[in_], quiet=True),
                                                    self.f_json[expected])
 
+    def test_proc_file_signature_detection_crlf(self):
+        """
+        Test proc parser file signature detection with CRLF line endings
+        """
+        for name, data in self.f_in.items():
+            # this fixture deliberately contains a newline inside the comm field
+            if name == 'pid_stat_w_space_and_nl_in_comm':
+                continue
+
+            crlf_data = data.replace('\r\n', '\n').replace('\n', '\r\n')
+            self.assertEqual(jc.parsers.proc.parse(crlf_data, quiet=True),
+                             jc.parsers.proc.parse(data, quiet=True),
+                             f'CRLF input was not detected as {name}')
+
     def test_proc_file_signature_detection_long_fields(self):
         """
         Test proc parser file signature detection on files with a long field
