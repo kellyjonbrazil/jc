@@ -1,0 +1,29 @@
+{
+  "variables": [],
+  "schedule": [
+    {
+      "minute": [
+        "5"
+      ],
+      "hour": [
+        "0"
+      ],
+      "day_of_month": [
+        "*"
+      ],
+      "month": [
+        "*"
+      ],
+      "day_of_week": [
+        "*"
+      ],
+      "user": "root",
+      "command": "/usr/bin/backup"
+    },
+    {
+      "occurrence": "reboot",
+      "user": null,
+      "command": null
+    }
+  ]
+}

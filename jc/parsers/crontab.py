@@ -174,7 +174,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`crontab` command and file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -278,7 +278,10 @@ def parse(data, raw=False, quiet=False):
             if line.strip().startswith('@'):
                 shortcut_line = line
                 occurrence = shortcut_line.split(maxsplit=1)[0].strip().lstrip('@')
-                cmd = shortcut_line.split(maxsplit=1)[1].strip()
+                # a run cut short can end the file on the shortcut token
+                # itself, before its command was written
+                shortcut_parts = shortcut_line.split(maxsplit=1)
+                cmd = shortcut_parts[1].strip() if len(shortcut_parts) > 1 else None
                 shortcut_list.append({'occurrence': occurrence,
                                       'command': cmd})
             else:

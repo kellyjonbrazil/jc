@@ -55,6 +55,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-no-normal-entries.json'), 'r', encoding='utf-8') as f:
         generic_crontab_u_no_normal_entries_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-cut-short-shortcut.out'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_cut_short_shortcut = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-cut-short-shortcut.json'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_cut_short_shortcut_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-var-fix.json'), 'r', encoding='utf-8') as f:
         generic_crontab_u_var_fix_json = json.loads(f.read())
 
@@ -218,6 +224,13 @@ class MyTests(unittest.TestCase):
         Test 'crontab' with user, with job lines that contain '=' and do not start with a digit
         """
         self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_job_with_equals, quiet=True), self.generic_crontab_u_job_with_equals_json)
+
+    def test_crontab_u_cut_short_shortcut(self):
+        """
+        Test 'crontab' with user, output cut short on a shortcut token with no
+        user or command, does not raise IndexError
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_cut_short_shortcut, quiet=True), self.generic_crontab_u_cut_short_shortcut_json)
 
     def test_crontab_u_quoted_variable_values(self):
         """
