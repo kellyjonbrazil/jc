@@ -166,7 +166,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nft` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -177,8 +177,9 @@ class info():
 
 __version__ = info.version
 
-# `nft -a` prints the object handle as a trailing comment
-_handle_pattern = re.compile(r'\s*#\s*handle\s+(?P<handle>\d+)\s*$')
+# `nft -a` prints the object handle as a trailing comment. The blanks before
+# the `#` are stripped by the caller, so the pattern starts at the `#`.
+_handle_pattern = re.compile(r'#\s*handle\s+(?P<handle>\d+)\s*$')
 
 _table_pattern = re.compile(r'^table\s+(?P<family>\S+)\s+(?P<name>\S+)\s*\{?$')
 _named_block_pattern = re.compile(r'^(?P<kind>chain|set|map|counter|quota|flowtable)\s+(?P<name>\S+)\s*\{$')
@@ -186,7 +187,8 @@ _ct_block_pattern = re.compile(r'^ct\s+(?:helper|timeout|expectation)\s+\S+\s*\{
 
 _chain_type_pattern = re.compile(r'^type\s+(?P<type>\S+)')
 _hook_pattern = re.compile(r'\bhook\s+(?P<hook>\S+)')
-_device_pattern = re.compile(r'\bdevices?\s*=?\s*(?P<devices>\{[^}]*\}|"[^"]*"|\S+)')
+# a quoted device name can contain `}`
+_device_pattern = re.compile(r'\bdevices?\s*(?:=\s*)?(?P<devices>\{(?:[^}"]|"[^"]*")*\}|"[^"]*"|\S+)')
 _priority_pattern = re.compile(r'\bpriority\s+(?P<priority>.+?);')
 _policy_pattern = re.compile(r'\bpolicy\s+(?P<policy>[^;]+)')
 
@@ -210,14 +212,11 @@ def _split_handle(statement: str) -> Tuple[str, Optional[str]]:
     return statement.strip(), None
 
 
-def _brace_depth(text: str) -> int:
+def _scan_braces(text: str, depth: int, in_quotes: bool) -> Tuple[int, bool]:
     """
-    Return the net number of open braces in a statement, ignoring braces that
-    appear inside a quoted string.
+    Continue counting open braces over `text`, ignoring braces that appear
+    inside a quoted string. Returns the updated `(depth, in_quotes)` state.
     """
-    depth = 0
-    in_quotes = False
-
     for char in text:
         if char == '"':
             in_quotes = not in_quotes
@@ -227,7 +226,7 @@ def _brace_depth(text: str) -> int:
             elif char == '}':
                 depth -= 1
 
-    return depth
+    return depth, in_quotes
 
 
 def _is_block_declaration(statement: str) -> bool:
@@ -244,37 +243,74 @@ def _is_block_declaration(statement: str) -> bool:
     )
 
 
-def _statements(data: str) -> Iterator[Tuple[str, Optional[str]]]:
+# A block opener (`table ... {`) or a lone closing brace is at most four
+# tokens long, plus a trailing `# handle N` comment, so it never spans more
+# than this many wrapped lines.
+_MAX_BLOCK_LINES = 8
+
+
+def _statements(data: str) -> Iterator[Tuple[Optional[str], Optional[str]]]:
     """
     Yield `(statement, handle)` pairs. Lines that wrap inside `{ }`, such as
     a long `elements = { ... }` list, are joined into a single statement.
+    A line break inside a quoted string (e.g. a multi-line comment) is part
+    of the string and does not end the statement. Yields `(None, None)` when
+    the input ends inside a quoted string.
     """
-    pending = ''
+    pending: List[str] = []
+    pending_lines = 0
+    depth = 0
+    in_quotes = False
 
-    for line in data.splitlines():
-        line = line.strip()
+    for raw_line in jc.utils.splitlines(data, keepends=True):
+        line = jc.utils.splitlines(raw_line)[0]
+        line_end = raw_line[len(line):]
+        continued = in_quotes
 
-        if not line:
+        if not continued:
+            line = line.lstrip()
+
+            if not line:
+                continue
+
+        depth, in_quotes = _scan_braces(line, depth, in_quotes)
+
+        if in_quotes:
+            piece = line + line_end
+        else:
+            piece = line.rstrip()
+
+        if continued:
+            pending.append(piece)
+        else:
+            if pending:
+                pending.append(' ')
+            pending.append(piece)
+            pending_lines += 1
+
+        # the statement can not end inside a quoted string
+        if in_quotes:
             continue
-
-        pending = f'{pending} {line}' if pending else line
-        statement, handle = _split_handle(pending)
 
         # a block declaration or a closing brace is complete even though its
         # brace is unbalanced
-        if statement == '}':
-            yield statement, handle
-            pending = ''
-            continue
+        if pending_lines <= _MAX_BLOCK_LINES:
+            statement, handle = _split_handle(''.join(pending))
 
-        if _is_block_declaration(statement):
-            yield statement, handle
-            pending = ''
-            continue
+            if statement == '}' or _is_block_declaration(statement):
+                yield statement, handle
+                pending = []
+                pending_lines = 0
+                depth = 0
+                continue
 
-        if _brace_depth(pending) == 0:
-            yield statement, handle
-            pending = ''
+        if depth == 0:
+            yield _split_handle(''.join(pending))
+            pending = []
+            pending_lines = 0
+
+    if in_quotes:
+        yield None, None
 
 
 def _comment_value(statement: str) -> str:
@@ -383,7 +419,8 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
         type_match = _chain_type_pattern.match(statement)
         hook_match = _hook_pattern.search(statement)
         device_match = _device_pattern.search(statement)
-        priority_match = _priority_pattern.search(statement)
+        # the priority always ends at a `;`, so only search up to the last one
+        priority_match = _priority_pattern.search(statement, 0, statement.rfind(';') + 1)
         policy_match = _policy_pattern.search(statement)
 
         if type_match:
@@ -409,11 +446,20 @@ def _parse_chain_line(chain: JSONDictType, statement: str, handle: Optional[str]
         return
 
     unquoted = _quoted_pattern.sub('""', statement)
-    counter_match = next(
-        (match for match in _counter_pattern.finditer(unquoted)
-         if _brace_depth(unquoted[:match.start()]) == 0),
-        None
-    )
+    counter_match = None
+    depth = 0
+    in_quotes = False
+    position = 0
+
+    # only a counter outside of any `{ }` belongs to the rule. Carry the brace
+    # state forward instead of rescanning from the start for each candidate.
+    for match in _counter_pattern.finditer(unquoted):
+        depth, in_quotes = _scan_braces(unquoted[position:match.start()], depth, in_quotes)
+        position = match.start()
+
+        if depth == 0:
+            counter_match = match
+            break
 
     chain['rules'].append({
         'rule': statement,
@@ -536,6 +582,10 @@ def parse(
     if jc.utils.has_data(data):
 
         for statement, handle in _statements(data):
+
+            if statement is None:
+                skipped = True
+                continue
 
             if statement == '}':
                 if stack:

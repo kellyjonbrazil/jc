@@ -33,7 +33,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('cef_s', cef_command_output.splitlines())
+    result = jc.parse('cef_s', cef_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -76,7 +76,8 @@ See: https://www.microfocus.com/documentation/arcsight/arcsight-smartconnectors-
         will be null if a UTC timezone cannot be extracted from the original
         timestamp string value.
     [3] This field exists if the CEF line is not parsable. The value
-        is the original syslog line.
+        is the original syslog line. With -qq or ignore_exceptions=True
+        the line is reported in the _jc_meta object instead.
 
 Examples:
 
@@ -98,7 +99,7 @@ Examples:
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+          ignore_exceptions: bool = False) -> Iterable[Dict] | tuple
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -106,7 +107,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -122,4 +123,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/cef_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/cef_s.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

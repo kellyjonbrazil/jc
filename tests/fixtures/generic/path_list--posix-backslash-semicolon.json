@@ -1,0 +1,16 @@
+[
+  {
+    "path": "/opt/x\\;/root/bin",
+    "parent": "/opt/x\\;/root",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "/",
+      "opt",
+      "x\\;",
+      "root",
+      "bin"
+    ]
+  }
+]

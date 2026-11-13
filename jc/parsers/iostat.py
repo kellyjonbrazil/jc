@@ -156,11 +156,12 @@ Examples:
 """
 import jc.utils
 import jc.parsers.universal
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`iostat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -218,6 +219,12 @@ def _create_obj_list(section_list, section_name):
     return output_list
 
 
+def _check_row(header, line):
+    # iostat values never contain spaces: one value per header column
+    if len(line.split()) != len(header.split()):
+        raise ParseError('Not iostat data')
+
+
 def parse(data, raw=False, quiet=False):
     """
     Main text parsing function
@@ -243,7 +250,11 @@ def parse(data, raw=False, quiet=False):
         cpu_list = []
         device_list = []
 
-        for line in filter(None, data.splitlines()):
+        for line in jc.utils.splitlines(data):
+            # skip blank lines
+            if not line.strip():
+                continue
+
             if line.startswith('avg-cpu:'):
                 if cpu_list:
                     raw_output.extend(_create_obj_list(cpu_list, 'cpu'))
@@ -276,9 +287,11 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             if section == 'cpu':
+                _check_row(headers, line)
                 cpu_list.append(line)
 
             if section == 'device':
+                _check_row(headers, line)
                 device_list.append(line)
 
         if cpu_list:

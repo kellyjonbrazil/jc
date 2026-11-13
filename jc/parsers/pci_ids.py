@@ -76,7 +76,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`pci.ids` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -142,7 +142,7 @@ def parse(
         class_sub_p = re.compile(r'^\t(?P<subclass_id>[0-9a-f]{2})\s+(?P<subclass_name>.+)')
         class_progif_p = re.compile(r'^\t\t(?P<prog_if_id>[0-9a-f]{2})\s+(?P<prog_if_name>.+)')
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             vdc_header = vdc_header_p.match(line)
             vdc_device = vdc_device_p.match(line)

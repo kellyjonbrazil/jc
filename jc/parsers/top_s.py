@@ -17,7 +17,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('top_s', top_command_output.splitlines())
+    result = jc.parse('top_s', top_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -162,6 +162,7 @@ Examples:
     {"time":"11:24:50","uptime":"2 min","users":"2","load_1m":"0.23","lo...}
     ...
 """
+import re
 from typing import List, Dict, Set, Iterable, Union
 import jc.utils
 from jc.streaming import (
@@ -174,7 +175,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`top -b` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -184,6 +185,16 @@ class info():
 
 
 __version__ = info.version
+
+
+# top pads its summary numbers to a fixed width, so a number that fills the
+# width (e.g. 100.0 or a large memory value) touches the text before it.
+_GLUED_RE = re.compile(r'(?:(?<=[A-Za-z]),|:|(?<=used)\.)(?=\S)')
+
+
+def _split_summary(line: str) -> List[str]:
+    """Split a summary line into fields, even if a number touches its label."""
+    return _GLUED_RE.sub(lambda m: m.group(0) + ' ', line).split()
 
 
 def _safe_split(string: str, path: str, delim: str = ' ', quiet=False) -> List[str]:
@@ -416,7 +427,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -441,13 +452,21 @@ def parse(
 
             if line.startswith('top - '):
                 if output_line:
-                    if process_list:
-                        output_line['processes'] = parse_table(process_list)
-                    yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+                    # reset the per-record state before processing so a
+                    # failed record does not carry into the next one
+                    finished_line = output_line
+                    finished_list = process_list
+                    finished_idx = idx
                     process_table = False
                     process_list = []
                     output_line = {}
                     idx += 1
+                    try:
+                        if finished_list:
+                            finished_line['processes'] = parse_table(finished_list)
+                        yield finished_line if raw else _process(finished_line, idx=finished_idx, quiet=quiet)
+                    except Exception as e:
+                        yield raise_or_yield(ignore_exceptions, e, line)
 
                 uptime_str = line[6:]
                 output_line.update(parse_uptime(uptime_str, raw=True, quiet=True))
@@ -455,7 +474,7 @@ def parse(
 
             if line.startswith('Tasks:'):
                 # Tasks: 112 total,   1 running, 111 sleeping,   0 stopped,   0 zombie
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'tasks_total': line_list[1],
@@ -469,7 +488,7 @@ def parse(
 
             if line.startswith('%Cpu(s):'):
                 # %Cpu(s):  5.9 us,  5.9 sy,  0.0 ni, 88.2 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'cpu_user': line_list[1],
@@ -486,7 +505,7 @@ def parse(
 
             if line[1:].startswith('iB Mem :'):
                 # KiB Mem :  3861332 total,  3446476 free,   216940 used,   197916 buff/cache
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'mem_unit': line_list[0],
@@ -500,7 +519,7 @@ def parse(
 
             if line[1:].startswith('iB Swap:'):
                 # KiB Swap:  2097148 total,  2097148 free,        0 used.  3419356 avail Mem
-                line_list = line.split()
+                line_list = _split_summary(line)
                 output_line.update(
                     {
                         'swap_unit': line_list[0],
@@ -528,9 +547,13 @@ def parse(
         except Exception as e:
             yield raise_or_yield(ignore_exceptions, e, line)
 
-    if output_line:
-        if process_list:
-            output_line['processes'] = parse_table(process_list)
-        yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+    try:
+        if output_line:
+            if process_list:
+                output_line['processes'] = parse_table(process_list)
+            yield output_line if raw else _process(output_line, idx=idx, quiet=quiet)
+
+    except Exception as e:
+        yield raise_or_yield(ignore_exceptions, e, line)
 
     return None

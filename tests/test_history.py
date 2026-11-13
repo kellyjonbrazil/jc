@@ -23,6 +23,15 @@ class MyTests(unittest.TestCase):
         ubuntu_18_4_history_json = json.loads(f.read())
 
 
+    def test_history_line_separators(self):
+        """
+        Test 'history' with line-break characters other than LF in a command
+        """
+        data = '    1  echo a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n    2  ls\n'
+        result = jc.parsers.history.parse(data, quiet=True)
+        self.assertEqual(result[0]['command'], 'echo a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['command'], 'ls')
+
     def test_history_nodata(self):
         """
         Test 'history' with no data

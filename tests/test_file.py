@@ -41,6 +41,15 @@ class MyTests(unittest.TestCase):
         osx_10_14_6_file3_json = json.loads(f.read())
 
 
+    def test_file_line_separators(self):
+        """
+        Test 'file' with line-break characters other than LF in a file name
+        """
+        data = 'bin:                          directory\na\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j:                       ASCII text\n'
+        result = jc.parsers.file.parse(data, quiet=True)
+        self.assertEqual(result[1]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['type'], 'ASCII text')
+
     def test_file_nodata(self):
         """
         Test 'file' with no data

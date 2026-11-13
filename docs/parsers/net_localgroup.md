@@ -78,4 +78,4 @@ Compatibility:  win32
 
 Source: [`jc/parsers/net_localgroup.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/net_localgroup.py)
 
-Version 1.0 by joehacksalot (joehacksalot@gmail.com)
+Version 1.1 by joehacksalot (joehacksalot@gmail.com)

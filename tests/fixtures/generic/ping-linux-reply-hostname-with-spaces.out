@@ -1,0 +1,8 @@
+PING target.example.net (203.0.113.10) 56(84) bytes of data.
+64 bytes from mgmt.example.net (10.0.0.1): icmp_seq=1 ttl=64 time=0.1 (203.0.113.10): icmp_seq=1 ttl=57 time=10.1 ms
+64 bytes from mgmt.example.net (10.0.0.1): icmp_seq=1 ttl=64 time=0.1 (203.0.113.10): icmp_seq=2 ttl=57 time=10.2 ms
+64 bytes from a b Destination Host Unreachable (203.0.113.10): icmp_seq=3 ttl=57 time=10.3 ms (DUP!)
+
+--- target.example.net ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 10.100/10.200/10.300/0.082 ms

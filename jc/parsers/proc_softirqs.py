@@ -61,7 +61,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/softirqs` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -113,7 +113,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata =  list(filter(None, data.splitlines()))
+        cleandata =  list(filter(None, jc.utils.splitlines(data)))
         cleandata[0] = 'counter ' + cleandata[0]
         raw_output = simple_table_parse(cleandata)
 
@@ -122,6 +122,9 @@ def parse(
                 item['counter'] = item['counter'][:-1]
 
             for key in item:
+                if key == 'counter':
+                    continue
+
                 try:
                     item[key] = int(item[key])
                 except Exception:

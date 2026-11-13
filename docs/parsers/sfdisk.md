@@ -227,4 +227,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/sfdisk.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/sfdisk.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

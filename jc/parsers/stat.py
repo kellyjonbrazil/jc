@@ -6,6 +6,10 @@ local time of the system the parser is run on)
 The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
 only available if the timezone field is UTC.
 
+Only symbolic links (`type` is `symbolic link`) have a `link_to` field. The
+`File:` line is split at the first ` -> `, so a link whose name contains
+` -> ` reports the rest of its name as part of `link_to`.
+
 Usage (cli):
 
     $ stat * | jc --stat
@@ -165,13 +169,23 @@ Examples:
       ...
     ]
 """
+import re
 import shlex
 import jc.utils
+
+# The default FreeBSD/macOS `stat` format: device, inode, mode, links, user,
+# group, rdev, size, four quoted timestamps, block size, blocks, flags, then
+# the file name, which is printed as is and can contain any character.
+_BSD_STAT_RE = re.compile(
+    r'(\d+) (\d+) (\S+) (\S+) (\S+) (\S+) (\S+) (\S+)'
+    r' "([^"]*)" "([^"]*)" "([^"]*)" "([^"]*)"'
+    r' (\S+) (\S+) (\S+) (.*)\Z'
+)
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.13'
+    version = '1.14'
     description = '`stat` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -181,6 +195,31 @@ class info():
 
 
 __version__ = info.version
+
+
+def _strip_quotes(name):
+    """Remove the curly quotes older versions of `stat` print around names."""
+    return name.strip('\u2018').rstrip('\u2019')
+
+
+def _add_link_to(output_line, file_field):
+    """
+    Split the `File:` field of a symbolic link into `file` and `link_to`.
+    `stat` prints 'name -> target'. A link name that contains ' -> ' is
+    ambiguous, so the field is split at the first ' -> '. Returns a new
+    dictionary with `link_to` directly after `file`.
+    """
+    if ' -> ' not in file_field:
+        return output_line
+
+    filename, link = file_field.split(' -> ', 1)
+    new_line = {'file': _strip_quotes(filename), 'link_to': _strip_quotes(link)}
+
+    for key, value in output_line.items():
+        if key != 'file':
+            new_line[key] = value
+
+    return new_line
 
 
 def _process(proc_data):
@@ -236,7 +275,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     # Clear any blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if not jc.utils.has_data(data):
         return raw_output
@@ -244,6 +283,7 @@ def parse(data, raw=False, quiet=False):
     # linux output
     if cleandata[0].startswith('  File: '):
         output_line = {}
+        file_field = ''
 
         # stats output contains 8 lines
         for line in cleandata:
@@ -253,19 +293,11 @@ def parse(data, raw=False, quiet=False):
                     raw_output.append(output_line)
                     output_line = {}
 
-                line_list = line.split(maxsplit=1)
-                output_line['file'] = line_list[1]
+                # the name can be only whitespace, so slice after the prefix
+                file_field = line[len('  File: '):]
 
-                # populate link_to field if -> found
-                if ' -> ' in output_line['file']:
-                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                    link = output_line['file'].split(' -> ')[1].strip('\u2018').rstrip('\u2019')
-                    output_line['file'] = filename
-                    output_line['link_to'] = link
-                else:
-                    filename = output_line['file'].split(' -> ')[0].strip('\u2018').rstrip('\u2019')
-                    output_line['file'] = filename
-
+                # link_to is split off once the file type is known
+                output_line['file'] = _strip_quotes(file_field)
                 continue
 
             # line #2
@@ -275,6 +307,10 @@ def parse(data, raw=False, quiet=False):
                 output_line['blocks'] = line_list[3]
                 output_line['io_blocks'] = line_list[6]
                 output_line['type'] = line_list[7]
+
+                if output_line['type'] == 'symbolic link':
+                    output_line = _add_link_to(output_line, file_field)
+
                 continue
 
             # line #3
@@ -327,9 +363,15 @@ def parse(data, raw=False, quiet=False):
     # FreeBSD/OSX output
     else:
         for line in cleandata:
-            value = shlex.split(line)
+            match = _BSD_STAT_RE.match(line)
+            if match:
+                value = list(match.groups())
+            else:
+                value = shlex.split(line)
+                value[15:] = [' '.join(value[15:])]
+
             output_line = {
-                'file': ' '.join(value[15:]),
+                'file': value[15],
                 'unix_device': value[0],
                 'inode': value[1],
                 'flags': value[2],

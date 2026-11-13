@@ -1,0 +1,22 @@
+wlan0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+	description: guest inet 10.9.9.9/8 ether 66:66:66:66:66:66
+	ether 00:1b:21:aa:bb:cc
+	inet 192.168.1.20 netmask 0xffffff00 broadcast 192.168.1.255
+	groups: wlan
+	ssid "inet 6.6.6.6/8" channel 6 (2437 MHz 11g) bssid 00:11:22:33:44:55
+	regdomain FCC country US authmode WPA privacy ON deftxkey UNDEF
+	media: IEEE 802.11 Wireless Ethernet OFDM/54Mbps mode 11g
+	status: associated
+	nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
+em0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+	options=4e524bb<RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,TSO4,TSO6,LRO,VLAN_HWFILTER,VLAN_HWTSO,RXCSUM_IPV6,TXCSUM_IPV6>
+	ether 00:1b:21:11:22:33
+	inet 10.0.0.5 netmask 0xffffff00 broadcast 10.0.0.255
+	media: Ethernet autoselect (1000baseT <full-duplex>)
+	status: active
+	nd6 options=29<PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL>
+wlan1: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> metric 0 mtu 1500
+	ether 00:1b:21:44:55:66
+	ssid "tun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> metric 0 mtu 1500" channel 11 (2462 MHz 11g) bssid 00:11:22:33:44:66
+	media: IEEE 802.11 Wireless Ethernet autoselect mode 11g
+	status: associated

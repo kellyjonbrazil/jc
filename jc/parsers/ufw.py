@@ -207,7 +207,7 @@ import ipaddress
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`ufw status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -422,7 +422,7 @@ def parse(data, raw=False, quiet=False):
 
         rule_lines = False
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.startswith('Status: '):
                 raw_output['status'] = line.split(': ', maxsplit=1)[1]

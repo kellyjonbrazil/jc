@@ -17,6 +17,15 @@ class MyTests(unittest.TestCase):
         centos_7_7_hash_json = json.loads(f.read())
 
 
+    def test_hash_line_separators(self):
+        """
+        Test 'hash' with line-break characters other than LF in a command path
+        """
+        data = 'hits\tcommand\n   2\t/usr/bin/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n   1\t/usr/bin/ls\n'
+        result = jc.parsers.hash.parse(data, quiet=True)
+        self.assertEqual(result[0]['command'], '/usr/bin/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['command'], '/usr/bin/ls')
+
     def test_hash_nodata(self):
         """
         Test 'hash' parser with no data

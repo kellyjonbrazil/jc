@@ -7,7 +7,8 @@ def normalize_headers(header):
     header = header.lower()
     header = header.replace('local address', 'local_address')
     header = header.replace('foreign address', 'foreign_address')
-    header = header.replace('pid/program name', 'program_name')
+    # keep the width so column positions still line up with the data rows
+    header = header.replace('pid/program name', 'program_name    ')
     header = header.replace('security context', 'security_context')
     header = header.replace('i-node', ' inode')
     header = header.replace('-', '_')
@@ -31,15 +32,68 @@ def normalize_interface_headers(header):
     return header
 
 
-def parse_network(headers, entry):
+NETWORK_HEADERS = ['proto', 'recv_q', 'send_q', 'local_address', 'foreign_address', 'state']
+NETWORK_OPTIONAL = ['user', 'inode', 'program_name', 'timer']
+SOCKET_HEADERS = ['proto', 'refcnt', 'flags', 'type', 'state', 'inode']
+SOCKET_OPTIONAL = ['program_name']
+ROUTE_HEADERS = ['destination', 'gateway', 'genmask', 'route_flags']
+ROUTE_OPTIONAL = ['metric', 'route_refs', 'use', 'mss', 'window', 'irtt', 'iface']
+INTERFACE_HEADERS = ['iface', 'mtu', 'rx_ok', 'rx_err', 'rx_drp', 'rx_ovr', 'tx_ok', 'tx_err', 'tx_drp', 'tx_ovr']
+INTERFACE_OPTIONAL = ['met', 'flg']
+
+
+def is_header(headers, required, optional, last=None):
+    """
+    Check that the normalized header words are a full header line: the
+    required columns first, then only known optional columns (each once),
+    and the last column, if given, at the end.
+    """
+    if headers[:len(required)] != required:
+        return False
+
+    rest = headers[len(required):]
+    if last:
+        if not rest or rest[-1] != last:
+            return False
+        rest = rest[:-1]
+
+    return len(set(rest)) == len(rest) and all(word in optional or word.endswith('_context') for word in rest)
+
+
+def is_network_header(headers):
+    return is_header(headers, NETWORK_HEADERS, NETWORK_OPTIONAL)
+
+
+def is_socket_header(headers):
+    return is_header(headers, SOCKET_HEADERS, SOCKET_OPTIONAL, last='path')
+
+
+def is_route_header(headers):
+    return 'iface' in headers and is_header(headers, ROUTE_HEADERS, ROUTE_OPTIONAL)
+
+
+def is_interface_header(headers):
+    return is_header(headers, INTERFACE_HEADERS, INTERFACE_OPTIONAL)
+
+
+def parse_network(headers, entry, has_user):
     LIST_OF_STATES = [
         "ESTABLISHED", "SYN_SENT", "SYN_RECV", "FIN_WAIT1", "FIN_WAIT2",
         "TIME_WAIT", "CLOSED", "CLOSE_WAIT", "LAST_ACK", "LISTEN", "CLOSING",
         "UNKNOWN", "7"
     ]
 
-    # split entry based on presence of value in "State" column
-    contains_state = any(re.search(rf"\b{re.escape(state)}\b", entry) for state in LIST_OF_STATES)
+    # split entry based on presence of value in "State" column. The first five
+    # columns never contain whitespace, so the state, if present, is the sixth
+    # word. The PID/Program name column is free text and is not searched.
+    words = entry.split(maxsplit=8)
+    contains_state = len(words) > 5 and words[5] in LIST_OF_STATES
+
+    # with the "User" and "Inode" columns (-e) the sixth word of a row without a
+    # state is the user, so also require the numeric inode in the eighth word
+    if contains_state and has_user:
+        contains_state = len(words) > 7 and words[7].isdigit()
+
     split_modifier = 1 if contains_state else 2
     entry = entry.split(maxsplit=len(headers) - split_modifier)
 
@@ -54,35 +108,59 @@ def parse_network(headers, entry):
     return output_line
 
 
-def parse_socket(header_text, headers, entry):
+def socket_columns(header_text):
+    """Find the column positions in the header once, not for every row."""
     # get the column # of first letter of "state"
     state_col = header_text.find('state')
     # get the program name column area
     pn_start = header_text.find('program_name')
     pn_end = header_text.find('path') - 1
 
-    # remove [ and ] from each line
-    entry = entry.replace('[ ]', '---')
-    entry = entry.replace('[', ' ').replace(']', ' ')
+    return state_col, pn_start, pn_end
 
-    # find program_name column area and substitute spaces with \u2063 there
-    old_pn = entry[pn_start:pn_end]
-    new_pn = old_pn.replace(' ', '\u2063')
-    entry = entry.replace(old_pn, new_pn)
 
-    entry_list = entry.split(maxsplit=len(headers) - 1)
-    # check column # to see if state column is populated
-    if entry[state_col] in string.whitespace:
+FLAGS_RE = re.compile(r'^([^ \t]+[ \t]+[^ \t]+[ \t]+)(\[[^\]]*\])')
+
+
+def parse_socket(headers, entry, columns):
+    state_col, pn_start, pn_end = columns
+
+    # Only the Flags column (the third) is bracketed and has blanks in it.
+    # Replace the brackets there, keeping the length so the column positions
+    # still match. Brackets in the program name and path are left alone.
+    m = FLAGS_RE.match(entry)
+    if m:
+        flags = m.group(2)
+        if flags[1:-1].strip(' ') == '':
+            flags = '-' * len(flags)
+        else:
+            flags = ' ' + flags[1:-1] + ' '
+        entry = m.group(1) + flags + entry[m.end():]
+
+    # find program_name column area and substitute whitespace with \u2063 there
+    old_pn = ''
+    new_pn = ''
+    if pn_start >= 0:
+        # the padding after the name stays a separator
+        old_pn = entry[pn_start:pn_end].rstrip(' ')
+        new_pn = re.sub(r'\s', '\u2063', old_pn)
+        entry = entry[:pn_start] + new_pn + entry[pn_start + len(old_pn):]
+
+    # check column # to see if state column is populated. Choose the split count
+    # before splitting so the spare split does not land inside the path.
+    has_state = entry[state_col] not in string.whitespace
+    entry_list = entry.split(maxsplit=len(headers) - (1 if has_state else 2))
+    if not has_state:
         entry_list.insert(4, None)
 
     output_line = dict(zip(headers, entry_list))
     output_line['kind'] = 'socket'
 
-    # fix program_name field to turn \u2063 back to spaces
+    # fix program_name field to restore the original column text
     if 'program_name' in output_line:
         if output_line['program_name']:
             old_d_pn = output_line['program_name']
-            new_d_pn = old_d_pn.replace('\u2063', ' ')
+            new_d_pn = old_d_pn.replace(new_pn, old_pn).replace('\u2063', ' ')
             output_line['program_name'] = new_d_pn
 
     return output_line
@@ -207,8 +285,15 @@ def parse(cleandata):
     routing_table = False
     interface_table = False
     headers = None
+    has_user = False
+    columns = None
 
     for line in cleandata:
+
+        # each section needs its own full header line
+        if line.startswith(('Active Internet', 'Active UNIX', 'Active Bluetooth',
+                            'Kernel IP routing table', 'Kernel Interface table')):
+            headers = None
 
         if line.startswith('Active Internet'):
             network = True
@@ -253,26 +338,52 @@ def parse(cleandata):
         # get headers
         if line.startswith('Proto'):
             header_text = normalize_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            # only a full header line starts a new section header
+            if not (is_network_header(new_headers) or is_socket_header(new_headers)):
+                continue
+
+            headers = new_headers
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
             continue
 
         if line.startswith('Destination '):
             header_text = normalize_route_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            if not is_route_header(new_headers):
+                continue
+
+            headers = new_headers
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
             continue
 
         if line.startswith('Iface '):
             header_text = normalize_interface_headers(line)
-            headers = header_text.split()
+            new_headers = header_text.split()
+
+            if not is_interface_header(new_headers):
+                continue
+
+            headers = new_headers
+            has_user = 'user' in headers
+            columns = socket_columns(header_text)
+            continue
+
+        # rows before any full header line are skipped
+        if headers is None:
             continue
 
         # parse items
         if network:
-            raw_output.append(parse_network(headers, line))
+            raw_output.append(parse_network(headers, line, has_user))
             continue
 
         if socket:
-            raw_output.append(parse_socket(header_text, headers, line))
+            raw_output.append(parse_socket(headers, line, columns))
             continue
 
         if bluetooth:

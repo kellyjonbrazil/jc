@@ -185,7 +185,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`rpm -qi` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -262,25 +262,30 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             split_line = line.split(': ', maxsplit=1)
 
-            if (split_line[0].startswith('Name') or split_line[0] == 'Package') and len(split_line) == 2:
+            # new entries start with the exact header line that rpm
+            # ('Name        : ') or deb control data ('Package: ') prints.
+            # Description text is never a header, except for the rpm one.
+            if (split_line[0] == 'Name        ' or
+                    (split_line[0] == 'Package' and not desc_entry)) and len(split_line) == 2:
                 if entry_obj:
                     if description:
                         entry_obj['description'] = ' '.join(description)
                     raw_output.append(entry_obj)
                     entry_obj = {}
+                    description = []
                     desc_entry = False
                     desc_en_entry = False
 
-            if line.startswith('Description :'):
+            if not desc_entry and line.startswith('Description :'):
                 desc_entry = True
                 description = []
                 continue
 
             # for apt-cache show output
-            if line.startswith('Description-en:'):
+            if not desc_entry and line.startswith('Description-en:'):
                 desc_en_entry = True
                 description = [split_line[1].strip()]
                 continue
@@ -293,9 +298,20 @@ def parse(data, raw=False, quiet=False):
                 description.append(line)
                 continue
 
+            # the description ends at the next field
+            desc_en_entry = False
+
+            # other indented lines continue the previous field and are not keys
+            if line.startswith((' ', '\t')):
+                continue
+
             if len(split_line) == 2:
                 keyname = jc.utils.normalize_key(split_line[0])
-                entry_obj[keyname] = split_line[1].strip()
+
+                # field names that normalize to the same key (e.g. 'Version'
+                # and 'Version_') don't replace the first value
+                if keyname not in entry_obj:
+                    entry_obj[keyname] = split_line[1].strip()
 
         if entry_obj:
             if description:

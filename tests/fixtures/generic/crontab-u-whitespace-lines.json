@@ -2,7 +2,7 @@
   "variables": [
     {
       "name": "MAILTO",
-      "value": "\"cron@example.com\""
+      "value": "cron@example.com"
     }
   ],
   "schedule": [

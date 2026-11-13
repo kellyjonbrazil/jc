@@ -124,7 +124,13 @@ Schema:
           "critical":                         boolean,
           "extn_value": {
             "key_identifier":                 string,  # [0]
-            "authority_cert_issuer":          string/null,
+            "authority_cert_issuer":          array/null,
+            "authority_cert_issuer_general_names": [  # [3]
+              {
+                "type":                       string,  # [4]
+                "value":                      string/object
+              }
+            ],
             "authority_cert_serial_number":   string/null
           }
         }
@@ -134,7 +140,28 @@ Schema:
           "extn_id":                          "subject_alt_name",
           "critical":                         boolean,
           "extn_value": [
-                                              string
+                                              string/object
+          ],
+          "extn_value_general_names": [  # [3]
+            {
+              "type":                         string,  # [4]
+              "value":                        string/object
+            }
+          ]
+        }
+
+        Issuer Alternative Name:
+        {
+          "extn_id":                          "issuer_alt_name",
+          "critical":                         boolean,
+          "extn_value": [
+                                              string/object
+          ],
+          "extn_value_general_names": [  # [3]
+            {
+              "type":                         string,  # [4]
+              "value":                        string/object
+            }
           ]
         }
 
@@ -161,6 +188,119 @@ Schema:
           "critical":                   boolean,
           "extn_value":                 string  # [0]
         }
+
+        Authority Information Access:
+        {
+          "extn_id":                          "authority_information_access",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "access_method":                string,
+              "access_location":              string/object,
+              "access_location_type":         string  # [4]
+            }
+          ]
+        }
+
+        Subject Information Access:
+        {
+          "extn_id":                          "subject_information_access",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "access_method":                string,
+              "access_location":              string/object,
+              "access_location_type":         string  # [4]
+            }
+          ]
+        }
+
+        CRL Distribution Points:
+        {
+          "extn_id":                          "crl_distribution_points",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "distribution_point": [
+                                              string/object
+              ],
+              "distribution_point_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ],
+              "reasons":                      array/null,
+              "crl_issuer": [
+                                              string/object
+              ],
+              "crl_issuer_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ]
+            }
+          ]
+        }
+
+        Freshest CRL:
+        {
+          "extn_id":                          "freshest_crl",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "distribution_point": [
+                                              string/object
+              ],
+              "distribution_point_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ],
+              "reasons":                      array/null,
+              "crl_issuer": [
+                                              string/object
+              ],
+              "crl_issuer_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ]
+            }
+          ]
+        }
+
+        Name Constraints:
+        {
+          "extn_id":                          "name_constraints",
+          "critical":                         boolean,
+          "extn_value": {
+            "permitted_subtrees": [
+              {
+                "base":                       string/object,
+                "base_type":                  string,  # [4]
+                "minimum":                    integer,
+                "maximum":                    integer/null
+              }
+            ],
+            "excluded_subtrees": [
+              {
+                "base":                       string/object,
+                "base_type":                  string,  # [4]
+                "minimum":                    integer,
+                "maximum":                    integer/null
+              }
+            ]
+          }
+        }
+
+    [3] present when the field before it is a list of GeneralNames
+    [4] GeneralName type: dns_name, rfc822_name, uniform_resource_identifier,
+        ip_address, directory_name, registered_id, other_name, x400_address
+        or edi_party_name
 
 Examples:
 
@@ -405,7 +545,7 @@ Examples:
 """
 import binascii
 from collections import OrderedDict
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List, Dict, Union
 import jc.utils
 from jc.parsers.asn1crypto import pem, x509, jc_global
@@ -413,7 +553,7 @@ from jc.parsers.asn1crypto import pem, x509, jc_global
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = 'X.509 PEM and DER certificate file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -457,11 +597,28 @@ def _b2a(byte_string: bytes) -> str:
       return colon_separated
 
 
+def _general_names(names: List) -> List[Dict]:
+    """
+    Convert the native value of a GeneralNames into a list of objects that
+    keep the GeneralName type next to each value
+    """
+    return [
+        {
+            'type': getattr(name, 'general_name_type', None),
+            'value': _fix_objects(name)
+        }
+        for name in names
+    ]
+
+
 def _fix_objects(obj):
     """
     Recursively traverse the nested dictionary or list and convert objects
     into JSON serializable types.
     """
+    if isinstance(obj, x509.TypedGeneralNameStr):
+        obj = str(obj)
+
     if isinstance(obj, tuple):
         obj = list(obj)
 
@@ -472,7 +629,16 @@ def _fix_objects(obj):
         obj = dict(obj)
 
     if isinstance(obj, dict):
+        # keys added after the key they describe: GeneralName types
+        added: Dict = {}
+
         for k, v in obj.copy().items():
+            if isinstance(v, x509.GeneralNamesList):
+                added[k] = {f'{k}_general_names': _general_names(v)}
+
+            elif isinstance(v, (x509.TypedGeneralNameStr, x509.TypedGeneralNameDict)):
+                added[k] = {f'{k}_type': v.general_name_type}
+
             if k == 'serial_number':
                 # according to the spec this field can be string or integer
                 if isinstance(v, int):
@@ -497,6 +663,11 @@ def _fix_objects(obj):
                 continue
 
             if isinstance(v, datetime):
+                # a GeneralizedTime without a time zone is returned as a
+                # naive datetime. Use UTC so the result does not depend on
+                # the local time zone.
+                if v.tzinfo is None:
+                    v = v.replace(tzinfo=timezone.utc)
                 iso = v.isoformat()
                 v = int(round(v.timestamp()))
                 obj.update({k: v, f'{k}_iso': iso})
@@ -529,6 +700,18 @@ def _fix_objects(obj):
                     newlist.append(_fix_objects(i))
                 obj.update({k: newlist})
                 continue
+
+            if isinstance(v, x509.TypedGeneralNameStr):
+                obj.update({k: str(v)})
+                continue
+
+        if added:
+            new_obj: Dict = {}
+            for k, v in obj.items():
+                new_obj[k] = v
+                if k in added:
+                    new_obj.update(added[k])
+            obj = new_obj
 
     if isinstance(obj, list):
         new_list = []
@@ -573,7 +756,7 @@ def parse(
         certs = []
         if pem.detect(der_bytes):
             for type_name, headers, der_bytes in pem.unarmor(der_bytes, multiple=True):
-                if type_name == 'CERTIFICATE':
+                if type_name in ('CERTIFICATE', 'X509 CERTIFICATE', 'TRUSTED CERTIFICATE'):
                     certs.append(x509.Certificate.load(der_bytes))
 
         else:

@@ -1,0 +1,8 @@
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path
+unix  2      [ ]         DGRAM                    40001    1898/systemd         /run/[a]/b
+unix  2      [ ]         DGRAM                    40002    1899/systemd         [/var/run/notify
+unix  2      [ ACC ]     STREAM     LISTENING     40003    31337/systemd        [/var/run/docker.sock
+unix  2      [ ACC ]     STREAM     LISTENING     40004    3138/sshd: u [pri]   /run/sshd/[x]
+unix  2      [ ]         DGRAM                    40005    3139/sshd: u [pri]   /run/sshd/notify]
+unix  2      [ W ]       STREAM     CONNECTING    40006    -                    @/tmp/[dbus]-x

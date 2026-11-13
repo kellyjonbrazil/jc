@@ -1,0 +1,67 @@
+[
+  {
+    "tbs_certificate": {
+      "version": "v3",
+      "serial_number": "36:f6:e8:a8:e1:00:51:38:db:03:d7:37:fb:92:20:50:a2:1b:b1:c6",
+      "signature": {
+        "algorithm": "sha256_ecdsa",
+        "parameters": null
+      },
+      "issuer": {
+        "country_name": "US",
+        "organization_name": "Example Org",
+        "common_name": "trusted.example.com"
+      },
+      "validity": {
+        "not_before": 1792901179,
+        "not_after": 2108261179,
+        "not_before_iso": "2026-10-25T04:06:19+00:00",
+        "not_after_iso": "2036-10-22T04:06:19+00:00"
+      },
+      "subject": {
+        "country_name": "US",
+        "organization_name": "Example Org",
+        "common_name": "trusted.example.com"
+      },
+      "subject_public_key_info": {
+        "algorithm": {
+          "algorithm": "ec",
+          "parameters": "secp256r1"
+        },
+        "public_key": "04:45:3e:2f:18:69:10:d8:fa:8e:5a:f6:f6:c0:32:52:9d:32:fb:ff:97:fa:2b:41:02:f4:f4:11:68:de:bc:05:37:a8:f8:57:4f:ce:99:9f:3c:a0:65:65:a3:41:ce:c8:52:da:3d:35:2c:08:f9:4f:a7:c8:96:b6:40:f9:7f:0e:da"
+      },
+      "issuer_unique_id": null,
+      "subject_unique_id": null,
+      "extensions": [
+        {
+          "extn_id": "key_identifier",
+          "critical": false,
+          "extn_value": "44:01:be:f4:94:0a:57:57:37:66:38:a9:fc:b0:19:9a:04:74:13:1f"
+        },
+        {
+          "extn_id": "authority_key_identifier",
+          "critical": false,
+          "extn_value": {
+            "key_identifier": "44:01:be:f4:94:0a:57:57:37:66:38:a9:fc:b0:19:9a:04:74:13:1f",
+            "authority_cert_issuer": null,
+            "authority_cert_serial_number": null
+          }
+        },
+        {
+          "extn_id": "basic_constraints",
+          "critical": true,
+          "extn_value": {
+            "ca": true,
+            "path_len_constraint": null
+          }
+        }
+      ],
+      "serial_number_str": "313791752460177625127634362945070657979518005702"
+    },
+    "signature_algorithm": {
+      "algorithm": "sha256_ecdsa",
+      "parameters": null
+    },
+    "signature_value": "30:45:02:21:00:91:d6:c4:78:cd:91:fe:e6:9c:f6:17:8f:51:4d:1d:64:a0:88:c9:85:a4:11:6a:9b:56:af:0a:a6:46:44:03:e1:02:20:73:4a:6a:e4:9b:fd:20:16:ea:39:76:12:4e:8f:c7:8d:5f:0c:29:3c:0e:18:b0:8d:b3:e1:1b:dc:2c:49:9a:a4"
+  }
+]

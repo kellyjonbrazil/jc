@@ -1,0 +1,8 @@
+PING fromage.example.com (198.51.100.7) 56(84) bytes of data.
+64 bytes from fromage.example.com (198.51.100.7): icmp_seq=1 ttl=57 time=23.4 ms
+64 bytes from fromage.example.com (198.51.100.7): icmp_seq=2 ttl=57 time=22.9 ms
+64 bytes from fromage.example.com (198.51.100.7): icmp_seq=3 ttl=57 time=23.1 ms
+
+--- fromage.example.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 22.900/23.133/23.400/0.205 ms

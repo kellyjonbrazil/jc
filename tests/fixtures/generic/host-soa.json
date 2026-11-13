@@ -1,0 +1,12 @@
+[
+  {
+    "zone": "example.com",
+    "mname": "ns.icann.org.",
+    "rname": "noc.dns.icann.org.",
+    "serial": 2025011653,
+    "refresh": 7200,
+    "retry": 3600,
+    "expire": 1209600,
+    "minimum": 3600
+  }
+]

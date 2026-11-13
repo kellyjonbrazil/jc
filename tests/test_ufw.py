@@ -47,6 +47,15 @@ class MyTests(unittest.TestCase):
         generic_ufw_inactive_json = json.loads(f.read())
 
 
+    def test_ufw_line_separators(self):
+        """
+        Test 'ufw status' with line-break characters other than LF in a rule comment
+        """
+        data = 'Status: active\n\nTo                         Action      From\n--                         ------      ----\n443/tcp                    DENY IN     192.168.0.1                # nice a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n22/tcp                     ALLOW IN    Anywhere\n'
+        result = jc.parsers.ufw.parse(data, quiet=True)
+        self.assertEqual(result['rules'][0]['comment'], 'nice a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['rules'][1]['to_ports'], [22])
+
     def test_ufw_nodata(self):
         """
         Test 'ufw' with no data

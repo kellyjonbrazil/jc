@@ -1,0 +1,34 @@
+Device D4:CA:6E:11:02:9A (random)
+	Name: Tag
+	Alias: Tag
+	Paired: no
+	Bonded: no
+	Trusted: no
+	Blocked: no
+	Connected: no
+	WakeAllowed: no
+	LegacyPairing: no
+	UUID: Battery Service           (0000180f-0000-1000-8000-00805f9b34fb)
+	ManufacturerData Key: 0x004c
+	ManufacturerData Value:
+  10 05 0b 1c 6f 9a 2c                             ....o.,         
+	ServiceData Key: 0000fe9f-0000-1000-8000-00805f9b34fb
+	ServiceData Value:
+  00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+	RSSI: -58
+	TxPower: 4
+	Battery Percentage: 0x5a (90)
+Device EB:06:EF:62:B3:33 not available
+Device 67:F6:B4:0E:5C:94 (public)
+	Name: WH-1000XM3
+	Alias: WH-1000XM3
+	Class: 0x00240404 (2360324)
+	Icon: audio-headset
+	Paired: yes
+	Bonded: yes
+	Trusted: yes
+	Blocked: no
+	Connected: no
+	LegacyPairing: no
+	UUID: Audio Sink                (0000110b-0000-1000-8000-00805f9b34fb)
+	Modalias: usb:v054Cp0CD3d0516

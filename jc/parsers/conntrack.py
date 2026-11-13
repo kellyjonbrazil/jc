@@ -75,7 +75,8 @@ Schema:
         "stop":              string,        # [14]
         "stop_epoch":        integer,       # [14]
         "id":                integer,       # [15]
-        "portid":            integer        # [16]
+        "portid":            integer,       # [16]
+        "progname":          string         # [16]
       }
     ]
 
@@ -140,7 +141,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`conntrack` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -178,8 +179,10 @@ _date_keys = {'start', 'stop'}
 _hex_keys = {'srckey', 'dstkey'}
 
 # `-o ktimestamp` prints `[start=...]`/`[stop=...]` as ctime() strings, so a
-# bracketed token can contain spaces and a line cannot be split on whitespace
-_token_re = re.compile(r'\[[^\]]*\]|\S+')
+# bracketed token can contain spaces and a line cannot be split on whitespace.
+# Brackets do not nest, so the search for the closing bracket stops at the next
+# opening one instead of rescanning the rest of the line for each `[`
+_token_re = re.compile(r'\[[^\[\]]*\]|\S+')
 
 # conntrack writes a trailing `N flow entries have been shown.` summary to
 # stderr, which lands in the data with `2>&1` or in saved output. It is not a
@@ -243,6 +246,16 @@ def _parse_line(line: str) -> Optional[Dict]:
     Parse a single `conntrack -L` or `conntrack -E` line. Returns `None` if
     the line is not a conntrack tuple.
     """
+    # `-o userspace` ends an event with `progname=<name>`, where the name is
+    # the process's comm printed unquoted, so it can contain spaces, brackets
+    # and `=`. Take everything after the first ` progname=` as the name.
+    progname = None
+    prog_idx = line.find(' progname=')
+
+    if prog_idx != -1:
+        progname = line[prog_idx + len(' progname='):]
+        line = line[:prog_idx]
+
     tokens = _token_re.findall(line)
 
     if not tokens:
@@ -339,6 +352,9 @@ def _parse_line(line: str) -> Optional[Dict]:
         else:
             return None
 
+    if progname is not None:
+        fields.append(('progname', progname))
+
     # a per-tuple zone sits inside the tuple it belongs to, so pull it out
     # before the reply tuple is compared with the original
     tuple_zones: Dict[str, str] = {}
@@ -346,7 +362,7 @@ def _parse_line(line: str) -> Optional[Dict]:
 
     for key, value in fields:
         if key in _tuple_zone_keys:
-            tuple_zones[key] = value
+            tuple_zones.setdefault(key, value)
         else:
             tuple_fields.append((key, value))
 
@@ -389,7 +405,10 @@ def _parse_line(line: str) -> Optional[Dict]:
     entry.update({f'reply_{key}': value for key, value in reply})
     if 'zone_reply' in tuple_zones:
         entry['reply_zone'] = tuple_zones['zone_reply']
-    entry.update({key: value for key, value in extra})
+
+    # a trailing field never replaces a field that is already set
+    for key, value in extra:
+        entry.setdefault(key, value)
 
     return entry
 
@@ -418,7 +437,7 @@ def parse(
     raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if _summary_re.search(line):
                 continue
 

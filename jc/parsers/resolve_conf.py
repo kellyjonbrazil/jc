@@ -60,7 +60,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/etc/resolve.conf` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -115,22 +115,21 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # comments start with # or ; and can be inline
-            if '#' in line or ';' in line:
-                userdata = list(filter(None, re.split("[#;]+", line, maxsplit=1)))
-                userdata = [x for x in userdata if x.strip()]
-                if len(userdata) <= 1:    # whole line is a comment
-                    continue
+            userdata_str = re.split(r'[#;]', line, maxsplit=1)[0].strip()
 
-                userdata_str = userdata[0].strip()
+            # whole line is a comment or blank
+            if not userdata_str:
+                continue
 
-            else:
-                userdata_str = line.strip()
+            # a keyword with no value
+            if len(userdata_str.split(maxsplit=1)) < 2:
+                continue
 
             if userdata_str.startswith('domain'):
-                raw_output['domain'] = userdata_str.split()[1].strip()
+                raw_output['domain'] = userdata_str.split()[1]
                 continue
 
             if userdata_str.startswith('search'):

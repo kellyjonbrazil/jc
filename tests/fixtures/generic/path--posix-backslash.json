@@ -1,0 +1,12 @@
+{
+  "path": "/x\\y/z.txt",
+  "parent": "/x\\y",
+  "filename": "z.txt",
+  "stem": "z",
+  "extension": "txt",
+  "path_list": [
+    "/",
+    "x\\y",
+    "z.txt"
+  ]
+}

@@ -1,0 +1,1 @@
+[{"filesystem": "/dev/disk3s1s1", "mount_point": "/", "options": ["apfs", "sealed", "local", "read-only", "journaled"]}, {"filesystem": "/dev/disk2s1", "mount_point": "/Volumes/a (hfs, local) b", "options": ["hfs", "local", "nodev", "nosuid", "journaled"]}]

@@ -1,5 +1,8 @@
 r"""jc - JSON Convert `dmidecode` command output parser
 
+> Note: `dmidecode -q` prints no Handle lines, so its entries have no
+> `handle`, `type` or `bytes` fields.
+
 Usage (cli):
 
     $ dmidecode | jc --dmidecode
@@ -120,12 +123,14 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`dmidecode` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,6 +140,9 @@ class info():
 
 
 __version__ = info.version
+
+# Handle 0x0000, DMI type 0, 24 bytes
+_handle_pattern = re.compile(r'Handle (0x[0-9A-Fa-f]{4}), DMI type ([0-9]+), ([0-9]+) bytes')
 
 
 def _process(proc_data):
@@ -195,14 +203,26 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        data = data.splitlines()
+        data = jc.utils.splitlines(data)
 
-        # remove header rows
-        for row in data.copy():
-            if row:
-                data.pop(0)
+        # `dmidecode -q` prints no header rows and no Handle lines, so the
+        # first line is the description of the first entry and the next
+        # line is one of its indented values
+        quiet_output = len(data) > 1 \
+            and not data[0].startswith('#') \
+            and data[1].startswith('\t') \
+            and not any(row.startswith('Handle ') for row in data)
+
+        if quiet_output:
+            data = [''] + data
+        else:
+            # remove header rows (everything before the first blank line)
+            for idx, row in enumerate(data):
+                if not row:
+                    data = data[idx:]
+                    break
             else:
-                break
+                data = []
 
         # main parsing loop
         for line in data:
@@ -232,11 +252,15 @@ def parse(data, raw=False, quiet=False):
             if line.startswith('Handle ') and line.endswith('bytes'):
 
                 # Handle 0x0000, DMI type 0, 24 bytes
-                header = line.replace(',', ' ').split()
+                handle_match = _handle_pattern.fullmatch(line)
+                if not handle_match:
+                    raise ParseError('Invalid Handle line. Expected format: Handle 0x0000, DMI type 0, 24 bytes')
+
+                header = handle_match.groups()
                 item = {
-                    'handle': header[1],
-                    'type': header[4],
-                    'bytes': header[5]
+                    'handle': header[0],
+                    'type': header[1],
+                    'bytes': header[2]
                 }
                 continue
 
@@ -263,13 +287,13 @@ def parse(data, raw=False, quiet=False):
                         item['values'][f'{key}_data'] = key_data
                     raw_output.append(item)
 
-                item = {
-                    'handle': header[1],
-                    'type': header[4],
-                    'bytes': header[5],
-                    'description': line,
-                    'values': {}
-                }
+                item = {}
+                if header:
+                    item['handle'] = header[0]
+                    item['type'] = header[1]
+                    item['bytes'] = header[2]
+                item['description'] = line
+                item['values'] = {}
 
                 key = None
                 val = None
@@ -330,8 +354,9 @@ def parse(data, raw=False, quiet=False):
             if item_values \
                and not value_list \
                and line.startswith('\t\t'):
-                if f'{key}_data' not in item['values']:
-                    item['values'][f'{key}_data'] = []
+                if not key_data:
+                    # share the list so data at the end of input is kept
+                    item['values'][f'{key}_data'] = key_data
                 key_data.append(line.strip())
                 continue
 

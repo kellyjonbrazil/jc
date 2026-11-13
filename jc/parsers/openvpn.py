@@ -156,7 +156,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'openvpn-status.log file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -279,24 +279,27 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
-            if line.startswith('OpenVPN CLIENT LIST'):
+            # section markers are whole lines, so a common name that starts
+            # with a marker word is treated as a normal row
+            if line.rstrip() == 'OpenVPN CLIENT LIST':
                 section = 'clients'
                 continue
 
-            if line.startswith('ROUTING TABLE'):
+            if line.rstrip() == 'ROUTING TABLE':
                 section = 'routing'
                 continue
 
-            if line.startswith('GLOBAL STATS'):
+            if line.rstrip() == 'GLOBAL STATS':
                 section = 'stats'
                 continue
 
-            if line.startswith('END'):
+            if line.rstrip() == 'END':
                 break
 
-            if section == 'clients' and line.startswith('Updated,'):
+            # the real Updated line has exactly one comma; client rows have more
+            if section == 'clients' and line.startswith('Updated,') and line.count(',') == 1:
                 _, updated = line.split(',', maxsplit=1)
                 continue
 
@@ -304,7 +307,7 @@ def parse(
                 continue
 
             if section == 'clients':
-                c_name, real_addr, r_bytes, s_bytes, connected = line.split(',', maxsplit=5)
+                c_name, real_addr, r_bytes, s_bytes, connected = line.split(',', maxsplit=4)
                 clients.append(
                     {
                         'common_name': c_name,
@@ -323,7 +326,7 @@ def parse(
             if section == 'routing':
                 # Virtual Address,Common Name,Real Address,Last Ref
                 # 192.168.255.118,baz@example.com,10.10.10.10:63414,Thu Jun 18 08:12:09 2015
-                virt_addr, c_name, real_addr, last_ref = line.split(',', maxsplit=4)
+                virt_addr, c_name, real_addr, last_ref = line.split(',', maxsplit=3)
                 route = {
                     'virtual_address': virt_addr,
                     'common_name': c_name,

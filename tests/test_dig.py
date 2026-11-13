@@ -81,6 +81,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-nsid.out'), 'r', encoding='utf-8') as f:
         generic_dig_nsid = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-no-section.out'), 'r', encoding='utf-8') as f:
+        generic_dig_answer_no_section = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/dig.json'), 'r', encoding='utf-8') as f:
         centos_7_7_dig_json = json.loads(f.read())
@@ -153,6 +156,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-nsid.json'), 'r', encoding='utf-8') as f:
         generic_dig_nsid_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/dig-answer-no-section.json'), 'r', encoding='utf-8') as f:
+        generic_dig_answer_no_section_json = json.loads(f.read())
 
 
     def test_dig_nodata(self):
@@ -304,6 +310,13 @@ class MyTests(unittest.TestCase):
         Test 'dig' with nsid info
         """
         self.assertEqual(jc.parsers.dig.parse(self.generic_dig_nsid, quiet=True), self.generic_dig_nsid_json)
+
+    def test_dig_answer_no_section(self):
+        """
+        Test 'dig' with entries whose answer lines are not preceded by an
+        ANSWER SECTION line (each entry should have its own answer list)
+        """
+        self.assertEqual(jc.parsers.dig.parse(self.generic_dig_answer_no_section, quiet=True), self.generic_dig_answer_no_section_json)
 
 
 if __name__ == '__main__':

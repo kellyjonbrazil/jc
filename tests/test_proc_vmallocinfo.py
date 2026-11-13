@@ -40,5 +40,25 @@ class MyTests(unittest.TestCase):
                                                            self.f_json['proc_vmallocinfo'])
 
 
+    def test_proc_vmallocinfo_details_stay_on_their_record(self):
+        """
+        Test '/proc/vmallocinfo' with phys= and pages= on the lines of their records
+        """
+        data = (
+            '0xffffb3c1c0000000-0xffffb3c1c0005000   20480 map_irq_stack+0x93/0xe0 vmap\n'
+            '0xffffb3c1c0005000-0xffffb3c1c0007000    8192 acpi_os_map_iomem+0x1ac/0x1c0 phys=0x00000000bfefe000 ioremap\n'
+            '0xffffb3c1c0007000-0xffffb3c1c0009000    8192 alloc_pages+0x1/0x2 pages=2 vmalloc N0=2 key=a=b\n'
+        )
+        result = jc.parsers.proc_vmallocinfo.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'start': '0xffffb3c1c0000000', 'end': '0xffffb3c1c0005000', 'size': 20480,
+             'caller': 'map_irq_stack+0x93/0xe0', 'options': ['vmap']},
+            {'start': '0xffffb3c1c0005000', 'end': '0xffffb3c1c0007000', 'size': 8192,
+             'caller': 'acpi_os_map_iomem+0x1ac/0x1c0', 'options': ['ioremap'], 'phys': '0x00000000bfefe000'},
+            {'start': '0xffffb3c1c0007000', 'end': '0xffffb3c1c0009000', 'size': 8192,
+             'caller': 'alloc_pages+0x1/0x2', 'options': ['vmalloc'], 'pages': 2, 'N0': 2, 'key': 'a=b'}
+        ])
+
+
 if __name__ == '__main__':
     unittest.main()

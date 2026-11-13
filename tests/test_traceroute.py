@@ -145,6 +145,19 @@ class MyTests(unittest.TestCase):
         generic_traceroute_long_ipv6_json = json.loads(f.read())
 
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-hops.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_hops = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-hops.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_hops_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-header.out'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_header = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/traceroute-long-header.json'), 'r', encoding='utf-8') as f:
+        generic_traceroute_long_header_json = json.loads(f.read())
+
+
     def test_traceroute_nodata(self):
         """
         Test 'traceroute' with no data
@@ -301,6 +314,18 @@ class MyTests(unittest.TestCase):
         Test 'traceroute6' with a long ipv6 response
         """
         self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_long_ipv6, quiet=True), self.generic_traceroute_long_ipv6_json)
+
+    def test_traceroute_long_hops(self):
+        """
+        Test 'traceroute' with a long run of digits, a long word and a long run of colons in hop lines
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_long_hops, quiet=True), self.generic_traceroute_long_hops_json)
+
+    def test_traceroute_long_header(self):
+        """
+        Test 'traceroute' with a long run of digits in the header line
+        """
+        self.assertEqual(jc.parsers.traceroute.parse(self.generic_traceroute_long_header, quiet=True), self.generic_traceroute_long_header_json)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,4 @@
+declare -A m=([123]="a" [b]="c" )
+declare -Ai n=([1]="5" [x]="7" )
+declare -A single=([1]="a" )
+declare -a idx=([0]="a" [1]="b" )

@@ -1,0 +1,29 @@
+commit 096fffdb79807d34b99985b38df0a3df7f6a86c7
+Author: Kelly Brazil <kellyjonbrazil@gmail.com>
+
+    use stat examples
+
+ docs/parsers/git_log.md | 78 +++++++++++++++++++++++++++++++++++++------------
+ jc/parsers/git_log.py   | 78 +++++++++++++++++++++++++++++++++++++------------
+ 2 files changed, 120 insertions(+), 36 deletions(-)
+
+commit 728d882ed007b3c8b785018874a0eb06e1143b66
+Author: Kelly Brazil <kellyjonbrazil@gmail.com>
+
+    add timestamp docs and examples
+
+ docs/big.md|9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.5 +++++++++++++++++++++++++++++++++++++++++++------
+ jc/parsers/git_log.py   | 51 +++++++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 90 insertions(+), 12 deletions(-)
+
+commit b53e42aca623181aa9bc72194e6eeef1e9a3a237
+Author: Kelly Brazil <kellyjonbrazil@gmail.com>
+
+    add calculated timestamp
+
+ docs/parsers/git_log.md |  8 ++++++++
+ docs/utils.md           |  4 ++--
+ jc/parsers/git_log.py   | 14 ++++++++++++++
+ jc/utils.py             |  7 ++++---
+ man/jc.1                |  2 +-
+ 5 files changed, 29 insertions(+), 6 deletions(-)

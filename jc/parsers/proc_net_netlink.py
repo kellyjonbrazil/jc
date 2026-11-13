@@ -106,7 +106,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/netlink` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -165,6 +165,6 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        raw_output = simple_table_parse(data.splitlines())
+        raw_output = simple_table_parse(jc.utils.splitlines(data))
 
     return raw_output if raw else _process(raw_output)

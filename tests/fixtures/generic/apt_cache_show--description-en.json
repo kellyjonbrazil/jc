@@ -1,0 +1,20 @@
+[
+  {
+    "package": "a",
+    "version": "1.0",
+    "depends": [
+      "libc6"
+    ],
+    "description_md5": "00000000000000000000000000000000",
+    "description": "AAA  more about a"
+  },
+  {
+    "package": "b",
+    "version": "2.0",
+    "description": "BBB"
+  },
+  {
+    "package": "c",
+    "version": "3.0"
+  }
+]

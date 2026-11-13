@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog [
+<!ELEMENT catalog (book+)>
+<!ATTLIST book
+    lang     CDATA   "en"
+    format   (hardcover|paperback) "paperback"
+    id       ID      #REQUIRED
+    note     CDATA   #IMPLIED
+    schema   CDATA   #FIXED "v2">
+<!ATTLIST catalog owner CDATA "library">
+]>
+<catalog>
+  <book id="b1"><title>One</title></book>
+  <book id="b2" lang="fr"><title>Deux</title></book>
+  <book id="b3" format="hardcover" note="signed"/>
+  <book id="b4">text <b>bold</b> tail</book>
+</catalog>

@@ -240,7 +240,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'URL string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -314,20 +314,22 @@ def parse(
         parts = urlsplit(unwrap(data))
         normalized = urlsplit(urlunsplit(parts))
 
-        quoted = normalized._replace(scheme=quote(normalized.scheme, safe=SCHEME_SAFE),
-                                     netloc=quote(normalized.netloc, safe=NETLOC_SAFE),
-                                     path=quote(normalized.path, safe=PATH_SAFE),
-                                     query=quote_plus(normalized.query, safe=QUERY_SAFE),
-                                     fragment=quote(normalized.fragment, safe=FRAGMENT_SAFE)).geturl()
-
-        unquoted = normalized._replace(scheme=unquote(normalized.scheme),
-                                       netloc=unquote(normalized.netloc),
-                                       path=unquote(normalized.path),
-                                       query=unquote_plus(normalized.query),
-                                       fragment=unquote(normalized.fragment)).geturl()
-
-        quoted_parts = urlsplit(quoted)
-        unquoted_parts = urlsplit(unquoted)
+        # Encode or decode each component of the already split URL. The
+        # results are used as they are and are not joined and split again,
+        # because a decoded component can contain a delimiter (`/`, `?`, `#`,
+        # `@`, `[`) that would then move text into a different component.
+        quoted_parts = normalized._replace(scheme=quote(normalized.scheme, safe=SCHEME_SAFE),
+                                           netloc=quote(normalized.netloc, safe=NETLOC_SAFE),
+                                           path=quote(normalized.path, safe=PATH_SAFE),
+                                           query=quote_plus(normalized.query, safe=QUERY_SAFE),
+                                           fragment=quote(normalized.fragment, safe=FRAGMENT_SAFE))
+        unquoted_parts = normalized._replace(scheme=unquote(normalized.scheme),
+                                             netloc=unquote(normalized.netloc),
+                                             path=unquote(normalized.path),
+                                             query=unquote_plus(normalized.query),
+                                             fragment=unquote(normalized.fragment))
+        quoted = quoted_parts.geturl()
+        unquoted = unquoted_parts.geturl()
 
         my_path = None
         encoded_path = None

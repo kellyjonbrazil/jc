@@ -69,14 +69,14 @@ Examples:
       ...
     ]
 """
+import re
 from typing import List, Dict
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/unix` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -135,6 +135,31 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        raw_output = simple_table_parse(data.splitlines())
+        # Every socket row starts with the fixed-width fields the kernel
+        # prints (see unix_seq_show()). The socket name is printed unescaped,
+        # so a name containing newlines continues on the following lines.
+        row_re = re.compile(r'''
+            ^(?P<Num>[0-9a-fA-F]+:)\s
+            (?P<RefCount>[0-9a-fA-F]{8})\s
+            (?P<Protocol>[0-9a-fA-F]{8})\s
+            (?P<Flags>[0-9a-fA-F]{8})\s
+            (?P<Type>[0-9a-fA-F]{4})\s
+            (?P<St>[0-9a-fA-F]{2})\s+
+            (?P<Inode>[0-9]+)
+            (?:\s(?P<Path>.*))?$
+            ''', re.VERBOSE | re.ASCII
+        )
+
+        lines = jc.utils.splitlines(data)
+
+        for line in lines[1:]:
+            row_match = row_re.match(line)
+
+            if row_match:
+                row = {k: v for k, v in row_match.groupdict().items() if v is not None}
+                raw_output.append(row)
+
+            elif raw_output and 'Path' in raw_output[-1]:
+                raw_output[-1]['Path'] += '\n' + line
 
     return raw_output if raw else _process(raw_output)

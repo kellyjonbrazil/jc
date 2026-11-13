@@ -1,0 +1,54 @@
+  File: arrowtarget -> a -> b
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 252,0	Inode: 30000837    Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-26 19:03:07.823850999 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.815850994 -0700
+  File: deploy.key
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: 252,0	Inode: 30000835    Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-01 12:00:00.000000000 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.810850991 -0700
+  File: deploy.key -> old
+  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: 252,0	Inode: 30000834    Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-01 12:00:00.000000000 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.810850991 -0700
+  File: dir -> y
+  Size: 6         	Blocks: 0          IO Block: 4096   directory
+Device: 252,0	Inode: 3428767     Links: 2
+Access: (0755/drwxr-xr-x)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-01 12:00:00.000000000 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.811850991 -0700
+  File: lnk -> x -> target
+  Size: 6         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 252,0	Inode: 30000836    Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-26 19:03:07.823850999 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.813850993 -0700
+  File: normallnk -> tgt
+  Size: 3         	Blocks: 0          IO Block: 4096   symbolic link
+Device: 252,0	Inode: 30000838    Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/ kbrazil)   Gid: ( 1000/ kbrazil)
+Context: unconfined_u:object_r:user_home_t:s0
+Access: 2026-10-26 19:03:07.823850999 -0700
+Modify: 2026-10-01 12:00:00.000000000 -0700
+Change: 2026-10-26 19:03:07.818850996 -0700
+ Birth: 2026-10-26 19:03:07.816850995 -0700

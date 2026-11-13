@@ -42,6 +42,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.csv'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe.csv'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe = f.read()
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.csv'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom = f.read()
 
@@ -91,6 +97,12 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-doublequoted.json'), 'r', encoding='utf-8') as f:
         generic_csv_doublequoted_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-apostrophes-pipe.json'), 'r', encoding='utf-8') as f:
+        generic_csv_apostrophes_pipe_json = json.loads(f.read())
+
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-utf-8-bom.json'), 'r', encoding='utf-8') as f:
         generic_csv_utf8_bom_json = json.loads(f.read())
 
@@ -109,6 +121,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/tsv_ih-simple-double-quote.json'), 'r', encoding='utf-8') as f:
         generic_tsv_simple_double_quote_json = json.loads(f.read())
 
+
+    def test_csv_line_separators(self):
+        """
+        Test 'csv' with a line-break character other than LF in the first data row
+        """
+        data = 'name;note\nfoo;a\u2028b,c\nbar;c\n'
+        result = jc.parsers.csv.parse(data, quiet=True)
+        self.assertEqual(result[0], {'name': 'foo', 'note': 'a\u2028b,c'})
+        self.assertEqual(result[1], {'name': 'bar', 'note': 'c'})
 
     def test_csv_nodata(self):
         """
@@ -211,6 +232,94 @@ class MyTests(unittest.TestCase):
         Test 'tsv_ih-simple-double-quote.tsv' file in implicit header mode.
         """
         self.assertEqual(jc.parsers.tsv_ih.parse(self.generic_tsv_simple_double_quote_csv, quiet=True), self.generic_tsv_simple_double_quote_json)
+
+
+    def test_csv_line_separator(self):
+        """
+        Test 'csv' with a line-break character other than LF inside a field
+        """
+        data = 'id,role,name,note\n1,admin,alice,x\n2,user,bob\x0c99,admin\n'
+        result = jc.parsers.csv.parse(data, quiet=True)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(result[1]['name'], 'bob\x0c99')
+
+    def test_csv_cr_line_endings(self):
+        """
+        Test 'csv-insurance.csv' with CR-only line endings (file read without newline translation)
+        """
+        with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/csv-insurance.csv'), 'r', encoding='utf-8', newline='') as f:
+            data = f.read()
+        self.assertIn('\r', data)
+        self.assertNotIn('\n', data)
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), self.generic_csv_insurance_json)
+
+
+    def test_csv_apostrophes(self):
+        """
+        Test 'csv-apostrophes.csv' file to ensure apostrophes in field values do not change the quote character
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_apostrophes, quiet=True), self.generic_csv_apostrophes_json)
+
+    def test_csv_apostrophes_pipe(self):
+        """
+        Test 'csv-apostrophes-pipe.csv' file to ensure apostrophes and delimiters in field values do not change the dialect
+        """
+        self.assertEqual(jc.parsers.csv.parse(self.generic_csv_apostrophes_pipe, quiet=True), self.generic_csv_apostrophes_pipe_json)
+
+    def test_csv_apostrophes_tab(self):
+        """
+        Test tab-delimited data with apostrophes in field values
+        """
+        data = 'id\tname\tnote\n1\talice\t"hi,\'x\',\'"\n2\tbob\tit\'s \'fine\', really\n'
+        expected = [
+            {'id': '1', 'name': 'alice', 'note': "hi,'x','"},
+            {'id': '2', 'name': 'bob', 'note': "it's 'fine', really"}
+        ]
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
+
+
+    def test_csv_multiline_cell(self):
+        """
+        Test 'csv' with line breaks and a blank line inside quoted fields and a blank line between rows
+        """
+        data = 'id,name,note\n7,"ad\nmin",x\n8,"para one\n\npara two",y\n\n9,z,"last"\n'
+        expected = [
+            {'id': '7', 'name': 'ad\nmin', 'note': 'x'},
+            {'id': '8', 'name': 'para one\n\npara two', 'note': 'y'},
+            {'id': '9', 'name': 'z', 'note': 'last'}
+        ]
+        self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
+
+    def test_csv_multiline_cell_crlf_cr(self):
+        """
+        Test 'csv' with line breaks inside quoted fields and blank lines in CRLF and CR-only files
+        """
+        for eol in ('\r\n', '\r'):
+            data = f'{eol}{eol}id,name{eol}{eol}7,"ad{eol}min"{eol}{eol}8,b{eol}'
+            expected = [
+                {'id': '7', 'name': f'ad{eol}min'},
+                {'id': '8', 'name': 'b'}
+            ]
+            self.assertEqual(jc.parsers.csv.parse(data, quiet=True), expected)
+
+    def test_csv_multiline_cell_wrappers(self):
+        """
+        Test 'tsv', 'csv_ih' and 'tsv_ih' with a line break inside a quoted field
+        """
+        self.assertEqual(jc.parsers.tsv.parse('a\tb\n1\t"x\ny"\n', quiet=True), [{'a': '1', 'b': 'x\ny'}])
+        self.assertEqual(jc.parsers.csv_ih.parse('1,"x\ny"\n2,z\n', quiet=True), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+        self.assertEqual(jc.parsers.tsv_ih.parse('1\t"x\ny"\n2\tz\n', quiet=True), [{'c0': '1', 'c1': 'x\ny'}, {'c0': '2', 'c1': 'z'}])
+
+    def test_tsv_ih_empty_first_row(self):
+        """
+        Test 'tsv_ih' with a first row of empty fields after leading blank lines
+        """
+        data = '\n\n\t\t\n1\t2\t3\n'
+        expected = [
+            {'c0': '', 'c1': '', 'c2': ''},
+            {'c0': '1', 'c1': '2', 'c2': '3'}
+        ]
+        self.assertEqual(jc.parsers.tsv_ih.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

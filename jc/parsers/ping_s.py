@@ -20,7 +20,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('ping_s', ping_command_output.splitlines())
+    result = jc.parse('ping_s', ping_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -88,7 +88,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`ping` and `ping6` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -98,6 +98,41 @@ class info():
 
 
 __version__ = info.version
+
+
+# Linux reply line: '[<timestamp>] <bytes> bytes from <name> (<ip>): icmp_seq=N ttl=N time=X ms ...'
+# The sender is either '<name> (<ip>)' or a bare '<ip>'. The name branch is
+# greedy so the last '(<ip>): icmp_seq=' on the line is used.
+_LINUX_REPLY_RE = re.compile(
+    r'^(?:\[(?P<timestamp>[^\] ]+)\] )?'
+    r'(?P<bytes>\d+) bytes from '
+    r'(?:.* \((?P<paren_ip>[^ ()]+)\)|(?P<bare_ip>[^ ()]+))'
+    r': (?:icmp_seq|icmp_req|seq)=(?P<icmp_seq>\d+)'
+    r'(?: (?:ttl|hlim)=(?P<ttl>\d+))?'
+    r'(?: time=(?P<time_ms>[0-9.]+) ms)?'
+    r'(?P<rest>(?:\D.*)?)$'
+)
+
+
+# Linux header line:
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n>(<m>) bytes of data.'
+#   'PING <host> (<ip>) [from <src> <dev>: ]<n> data bytes' (IPv6)
+#   'PING <host>(<ip>) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+#   'PING <host>(<name> (<ip>)) [from <src> <dev>: ]<n> data bytes' (older IPv6)
+# 'from' can be part of a host name, so the header is matched as a whole.
+_LINUX_HEADER_RE = re.compile(
+    r'^PING [^ ()]* ?\((?:[^ ()]+ \((?P<named_ip>[^ ()]+)\)|(?P<ip>[^ ()]+))\) '
+    r'(?:, flow 0x[0-9a-fA-F]+, )?'
+    r'(?:from [^ ]+ [^ ]*: )?'
+    r'(?P<data_bytes>\d+)(?:\(\d+\))? (?:bytes of data\.|data bytes)$'
+)
+
+
+# BSD header line:
+#   'PING <host> (<ip>)[ from <src>]: <n> data bytes'
+_BSD_HEADER_RE = re.compile(
+    r'^PING [^ ]+ \((?P<ip>[^ ()]+)\)(?: from [^ ]+)?: (?P<data_bytes>\d+) data bytes$'
+)
 
 
 def _process(proc_data):
@@ -170,15 +205,20 @@ def _ipv6_in(line):
 
 
 def _error_type_v4(line):
-    # from https://github.com/dgibson/iputils/blob/master/ping.c
-    # https://android.googlesource.com/platform/external/ping/+/8fc3c91cf9e7f87bc20b9e6d3ea2982d87b70d9a/ping.c
-    # https://opensource.apple.com/source/network_cmds/network_cmds-328/ping.tproj/ping.c
+    # IPv4 ICMP error messages from pr_icmph() in:
+    # https://github.com/iputils/iputils/blob/master/ping/ping.c
+    # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping.c
+    # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping.tproj/ping.c
+    # and IPv6 ICMP error messages from pr_icmph() in:
+    # https://github.com/freebsd/freebsd-src/blob/main/sbin/ping/ping6.c
+    # https://github.com/apple-oss-distributions/network_cmds/blob/main/ping6.tproj/ping6.c
     type_map = {
         'Destination Net Unreachable': 'destination_net_unreachable',
         'Destination Host Unreachable': 'destination_host_unreachable',
         'Destination Protocol Unreachable': 'destination_protocol_unreachable',
         'Destination Port Unreachable': 'destination_port_unreachable',
         'Frag needed and DF set': 'frag_needed_and_df_set',
+        'frag needed and DF set': 'frag_needed_and_df_set',
         'Source Route Failed': 'source_route_failed',
         'Destination Net Unknown': 'destination_net_unknown',
         'Destination Host Unknown': 'destination_host_unknown',
@@ -188,26 +228,40 @@ def _error_type_v4(line):
         'Destination Net Unreachable for Type of Service': 'destination_net_unreachable_for_type_of_service',
         'Destination Host Unreachable for Type of Service': 'destination_host_unreachable_for_type_of_service',
         'Packet filtered': 'packet_filtered',
+        'Communication prohibited by filter': 'communication_prohibited_by_filter',
         'Precedence Violation': 'precedence_violation',
         'Precedence Cutoff': 'precedence_cutoff',
         'Dest Unreachable, Bad Code': 'dest_unreachable_bad_code',
+        'Source Quench': 'source_quench',
         'Redirect Network': 'redirect_network',
         'Redirect Host': 'redirect_host',
         'Redirect Type of Service and Network': 'redirect_type_of_service_and_network',
+        'Redirect Type of Service and Host': 'redirect_type_of_service_and_host',
         'Redirect, Bad Code': 'redirect_bad_code',
         'Time to live exceeded': 'time_to_live_exceeded',
         'Frag reassembly time exceeded': 'frag_reassembly_time_exceeded',
-        'Time exceeded, Bad Code': 'time_exceeded_bad_code'
+        'Time exceeded, Bad Code': 'time_exceeded_bad_code',
+        'Parameter problem': 'parameter_problem',
+        # IPv6 messages of BSD ping6 that are not in the list above
+        'No Route to Destination': 'no_route_to_destination',
+        'Destination Administratively Unreachable': 'destination_administratively_unreachable',
+        'Destination Unreachable Beyond Scope': 'destination_unreachable_beyond_scope',
+        'Destination Unreachable, Bad Code': 'destination_unreachable_bad_code',
+        'Packet too big': 'packet_too_big'
     }
 
-    for err_type, code in type_map.items():
+    # longest first, so 'Destination Net Unreachable for Type of Service'
+    # is not taken for 'Destination Net Unreachable'
+    for err_type in sorted(type_map, key=len, reverse=True):
         if err_type in line:
-            return code
+            return type_map[err_type]
 
     return None
 
 
 def _error_type_v6(line):
+    # IPv6 ICMP error messages from pr_icmph() in:
+    # https://github.com/iputils/iputils/blob/master/ping/ping6_common.c
     type_map = {
         'Destination unreachable': 'destination_unreachable',
         'Packet too big': 'packet_too_big',
@@ -224,7 +278,7 @@ def _error_type_v6(line):
         },
         'time_exceeded': {
             'Hop limit': 'hop_limit',
-            'Fragment reassembly time exceeded': 'fragment_reassembly_time_exceeded',
+            'Defragmentation failure': 'fragment_reassembly_time_exceeded',
         },
     }
 
@@ -232,21 +286,59 @@ def _error_type_v6(line):
     for err_type, code in type_map.items():
         if err_type in line:
             return_code = code
-            for err_code, code_name in code_map[code].items():
+            for err_code, code_name in code_map.get(code, {}).items():
                 if err_code in line:
                     return_code += '_' + code_name
     return return_code
+
+
+def _bsd_error_sender(line):
+    # error lines are 'N bytes from <ip>: <message>' or, when the sender
+    # was resolved to a name, 'N bytes from <name> (<ip>): <message>'
+    line_list = line.split()
+    if len(line_list) > 4 and line_list[4].startswith('('):
+        return line_list[4].strip(':').strip('(').strip(')')
+
+    sender = line_list[3]
+    if sender.endswith(':'):
+        sender = sender[:-1]
+
+    return sender
+
+
+def _bsd_reply_fields(line):
+    # '<bytes> bytes from <ip>: icmp_seq=N ttl=N time=X ms' (IPv4) or
+    # '<bytes> bytes from <ip>, icmp_seq=N hlim=N time=X ms' (IPv6) once ':'
+    # or ',' and '=' are replaced with spaces. BusyBox prints 'seq=' for
+    # 'icmp_seq='. Error messages that are not in _error_type_v4() also start
+    # with '<bytes> bytes from <ip>: ', so check the labels.
+    fields = line.split()
+    if (len(fields) < 10
+            or fields[4] not in ('icmp_seq', 'seq')
+            or fields[6] not in ('ttl', 'hlim')
+            or fields[8] != 'time'):
+        # same exception as before the labels were checked
+        raise IndexError('list index out of range')
+    return fields
 
 
 def _bsd_parse(line, s):
     output_line = {}
 
     if line.startswith('PING '):
-        s.destination_ip = line.split()[2].lstrip('(').rstrip(':').rstrip(')')
-        s.sent_bytes = line.split()[3]
+        s.ipv4 = True
+        m = _BSD_HEADER_RE.match(line.strip())
+        if m:
+            s.destination_ip = m.group('ip')
+            s.sent_bytes = m.group('data_bytes')
+        else:
+            s.destination_ip = line.split()[2].lstrip('(').rstrip(':').rstrip(')')
+            s.sent_bytes = line.split()[3]
         return None
 
-    if line.startswith('PING6('):
+    # FreeBSD 13 and newer print 'PING(' instead of 'PING6('
+    if line.startswith(('PING6(', 'PING(')):
+        s.ipv4 = False
         line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
         s.source_ip = line.split()[4]
         s.destination_ip = line.split()[6]
@@ -257,6 +349,8 @@ def _bsd_parse(line, s):
         s.footer = True
         return None
 
+    # the summary is sent at the end of the stream: the round-trip line is
+    # missing with 100% packet loss and has no stddev value on BusyBox
     if s.footer:
         if 'packets transmitted' in line:
             if ' duplicates,' in line:
@@ -264,16 +358,20 @@ def _bsd_parse(line, s):
                 s.packets_received = line.split()[3]
                 s.packet_loss_percent = line.split()[8].rstrip('%')
                 s.duplicates = line.split()[6].lstrip('+')
-                return None
 
-            s.packets_transmitted = line.split()[0]
-            s.packets_received = line.split()[3]
-            s.packet_loss_percent = line.split()[6].rstrip('%')
-            s.duplicates = '0'
-            return None
+            else:
+                s.packets_transmitted = line.split()[0]
+                s.packets_received = line.split()[3]
+                s.packet_loss_percent = line.split()[6].rstrip('%')
+                s.duplicates = '0'
 
-        split_line = line.split(' = ')[1]
-        split_line = split_line.split('/')
+        else:
+            split_line = line.split(' = ')[1]
+            split_line = split_line.replace(' ms', '').split('/')
+            s.round_trip_ms_min = split_line[0]
+            s.round_trip_ms_avg = split_line[1]
+            s.round_trip_ms_max = split_line[2]
+            s.round_trip_ms_stddev = split_line[3] if len(split_line) == 4 else None
 
         output_line = {
             'type': 'summary',
@@ -284,20 +382,20 @@ def _bsd_parse(line, s):
             'packets_received': s.packets_received or None,
             'packet_loss_percent': s.packet_loss_percent or None,
             'duplicates': s.duplicates or None,
-            'round_trip_ms_min': split_line[0],
-            'round_trip_ms_avg': split_line[1],
-            'round_trip_ms_max': split_line[2],
-            'round_trip_ms_stddev': split_line[3].replace(' ms', '')
+            'round_trip_ms_min': s.round_trip_ms_min,
+            'round_trip_ms_avg': s.round_trip_ms_avg,
+            'round_trip_ms_max': s.round_trip_ms_max,
+            'round_trip_ms_stddev': s.round_trip_ms_stddev
         }
 
         return output_line
 
     # ping response lines
 
+    # ipv6 error lines. ipv4 error lines are matched below, so an ipv4
+    # 'Parameter problem: ...' is not taken for the ipv6 message.
     err = None
-    if s.ipv4:
-        err = _error_type_v4(line)
-    else:
+    if not s.ipv4:
         err = _error_type_v6(line)
 
     if err:
@@ -305,11 +403,28 @@ def _bsd_parse(line, s):
             'type': err
         }
         try:
-            output_line['sent_bytes'] = line.split()[0]
+            output_line['response_bytes'] = line.split()[0]
             output_line['destination_ip'] = s.destination_ip
-            output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
+            output_line['response_ip'] = _bsd_error_sender(line)
         except Exception:
             pass
+        return output_line
+
+    # error responses, also on IPv6 when the sender is a scoped address
+    # or the message is not in _error_type_v6()
+    err = _error_type_v4(line)
+    if err:
+        output_line = {
+            'type': err
+        }
+
+        try:
+            output_line['response_bytes'] = line.split()[0]
+            output_line['destination_ip'] = s.destination_ip
+            output_line['response_ip'] = _bsd_error_sender(line)
+        except Exception:
+            pass
+
         return output_line
 
     # ipv4 lines
@@ -327,36 +442,21 @@ def _bsd_parse(line, s):
 
             return output_line
 
-        # catch error responses
-        err = _error_type_v4(line)
-        if err:
-            output_line = {
-                'type': err
-            }
-
-            try:
-                output_line['bytes'] = line.split()[0]
-                output_line['destination_ip'] = s.destination_ip
-                output_line['response_ip'] = line.split()[4].strip(':').strip('(').strip(')')
-            except Exception:
-                pass
-
-            return output_line
-
         # normal response
         if ' bytes from ' in line:
             line = line.replace(':', ' ').replace('=', ' ')
+            fields = _bsd_reply_fields(line)
 
             output_line = {
                 'type': 'reply',
                 'destination_ip': s.destination_ip or None,
                 'sent_bytes': s.sent_bytes or None,
                 'pattern': s.pattern or None,
-                'response_bytes': line.split()[0],
-                'response_ip': line.split()[3],
-                'icmp_seq': line.split()[5],
-                'ttl': line.split()[7],
-                'time_ms': line.split()[9]
+                'response_bytes': fields[0],
+                'response_ip': fields[3],
+                'icmp_seq': fields[5],
+                'ttl': fields[7],
+                'time_ms': fields[9]
             }
 
             return output_line
@@ -364,17 +464,18 @@ def _bsd_parse(line, s):
     # ipv6 lines
     elif ' bytes from ' in line:
         line = line.replace(',', ' ').replace('=', ' ')
+        fields = _bsd_reply_fields(line)
 
         output_line = {
             'type': 'reply',
             'destination_ip': s.destination_ip or None,
             'sent_bytes': s.sent_bytes or None,
             'pattern': s.pattern or None,
-            'bytes': line.split()[0],
-            'response_ip': line.split()[3],
-            'icmp_seq': line.split()[5],
-            'ttl': line.split()[7],
-            'time_ms': line.split()[9]
+            'response_bytes': fields[0],
+            'response_ip': fields[3],
+            'icmp_seq': fields[5],
+            'ttl': fields[7],
+            'time_ms': fields[9]
         }
 
         return output_line
@@ -397,7 +498,7 @@ def _linux_parse(line, s):
 
     if line.startswith('PING '):
         s.ipv4 = 'bytes of data' in line
-        s.source_ip = 'from' in line
+        s.source_ip = ' from ' in line
 
         if s.ipv4 and line[5] not in string.digits:
             s.hostname = True
@@ -425,9 +526,15 @@ def _linux_parse(line, s):
             else:
                 dst_ip, dta_byts = (2, 3)
 
-        line = line.replace('(', ' ').replace(')', ' ')
-        s.destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
-        s.sent_bytes = line.split()[dta_byts]
+        m = _LINUX_HEADER_RE.match(line.strip())
+        if m:
+            s.destination_ip = m.group('named_ip') or m.group('ip')
+            s.sent_bytes = m.group('data_bytes')
+
+        else:
+            line = line.replace('(', ' ').replace(')', ' ')
+            s.destination_ip = line.split()[dst_ip].lstrip('(').rstrip(')')
+            s.sent_bytes = line.split()[dta_byts]
 
         return None
 
@@ -439,11 +546,11 @@ def _linux_parse(line, s):
         #
         # See: https://github.com/dgibson/iputils/blob/master/ping_common.c#L995
         #
-        m = re.search(r'(\d+) packets transmitted', line)
+        m = re.search(r'(?<!\d)(\d+) packets transmitted', line)
         if m:
             s.packets_transmitted = m.group(1)
 
-        m = re.search(r'(\d+) received,', line)
+        m = re.search(r'(?<!\d)(\d+) received,', line)
         if m:
             s.packets_received = m.group(1)
 
@@ -459,7 +566,7 @@ def _linux_parse(line, s):
         if m:
             s.errors = m.group(1)
 
-        m = re.search(r'([\d\.]+)% packet loss', line)
+        m = re.search(r'(?<![\d\.])([\d\.]+)% packet loss', line)
         if m:
             s.packet_loss_percent = m.group(1)
 
@@ -500,6 +607,26 @@ def _linux_parse(line, s):
 
     timestamp_offset = 1 if timestamp else 0
 
+    # normal responses
+    if ' bytes from ' in line:
+        m = _LINUX_REPLY_RE.match(line.strip())
+        if m:
+            output_line = {
+                'type': 'reply',
+                'destination_ip': s.destination_ip or None,
+                'sent_bytes': s.sent_bytes or None,
+                'pattern': s.pattern or None,
+                'timestamp': m.group('timestamp'),
+                'response_bytes': m.group('bytes'),
+                'response_ip': m.group('paren_ip') or m.group('bare_ip'),
+                'icmp_seq': m.group('icmp_seq'),
+                'ttl': m.group('ttl'),
+                'time_ms': m.group('time_ms'),
+                'duplicate': 'DUP!' in m.group('rest')
+            }
+
+            return output_line
+
     # ping response lines
     err = None
     if s.ipv4:
@@ -508,12 +635,21 @@ def _linux_parse(line, s):
         err = _error_type_v6(line)
 
     if err:
+        # if ping resolved the sender to a name then the address follows in
+        # parenthesis: 'From <name> (<ip>) icmp_seq=1 ...'
+        line_list = line.split()
+        shift = 0
+        response_ip = line_list[timestamp_offset + 1]
+        if len(line_list) > timestamp_offset + 2 and line_list[timestamp_offset + 2].startswith('('):
+            shift = 1
+            response_ip = line_list[timestamp_offset + 2].strip('()')
+
         output_line = {
             'type': err,
             'destination_ip': s.destination_ip or None,
             'sent_bytes': s.sent_bytes or None,
-            'response_ip': line.split()[timestamp_offset + 1] if type != 'timeout' else None,
-            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 3],
+            'response_ip': response_ip if type != 'timeout' else None,
+            'icmp_seq': line.replace('=', ' ').split()[timestamp_offset + 3 + shift],
             'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
         }
         return output_line
@@ -531,38 +667,11 @@ def _linux_parse(line, s):
 
         return output_line
 
-    # normal responses
+    # unrecognized reply lines raise the same exception type as before
     if ' bytes from ' in line:
+        raise IndexError('list index out of range')
 
-        line = line.replace('(', ' ').replace(')', ' ').replace('=', ' ')
-
-        # positions of items depend on whether ipv4/ipv6 and/or ip/hostname is used
-        param_positions = None
-        if s.ipv4 and not s.hostname:
-            param_positions = (0, 3, 5, 7, 9)
-        elif s.ipv4 and s.hostname:
-            param_positions = (0, 4, 7, 9, 11)
-        elif not s.ipv4 and not s.hostname:
-            param_positions = (0, 3, 5, 7, 9)
-        elif not s.ipv4 and s.hostname:
-            param_positions = (0, 4, 7, 9, 11)
-        bts, rip, iseq, t2l, tms = (x + timestamp_offset for x in param_positions)
-
-        output_line = {
-            'type': 'reply',
-            'destination_ip': s.destination_ip or None,
-            'sent_bytes': s.sent_bytes or None,
-            'pattern': s.pattern or None,
-            'timestamp': line.split()[0].lstrip('[').rstrip(']') if timestamp else None,
-            'response_bytes': line.split()[bts],
-            'response_ip': line.split()[rip].rstrip(':'),
-            'icmp_seq': line.split()[iseq],
-            'ttl': line.split()[t2l],
-            'time_ms': line.split()[tms],
-            'duplicate': 'DUP!' in line
-        }
-
-        return output_line
+    return None
 
 
 @add_jc_meta
@@ -573,7 +682,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -628,17 +737,16 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
             if s.os_detected and s.linux:
                 output_line = _linux_parse(line, s)
 
-                # summary can be multiple lines so don't output until the end
-                if output_line:
-                    if output_line.get('type', None) == 'summary':
-                        summary_obj = output_line
-                        continue
-
             elif s.os_detected and s.bsd:
                 output_line = _bsd_parse(line, s)
 
             else:
                 raise ParseError('Could not detect ping OS')
+
+            # summary can be multiple lines so don't output until the end
+            if output_line and output_line.get('type', None) == 'summary':
+                summary_obj = output_line
+                continue
 
             # yield the output line if it has data
             if output_line:

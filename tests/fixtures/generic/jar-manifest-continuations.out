@@ -1,0 +1,24 @@
+Archive:  a.jar
+  inflating: META-INF/MANIFEST.MF  
+Manifest-Version: 1.0
+A: x
+ y
+B: p
+ q
+ r
+Bundle-Description: first part, then
+  inflating: META-INF/MANIFEST.MF
+  and more
+Main-Class: com.example.Main
+Premain-Class: com.example.ag
+ ent.Premain
+ Agent
+
+Archive:  b.jar
+  inflating: META-INF/MANIFEST.MF  
+Manifest-Version: 1.0
+Class-Path: lib/one.jar 
+ lib/two.jar
+Created-By: 1.8
+
+2 archives were successfully processed.

@@ -46,18 +46,20 @@ Schema:
         "fs_type":                  string,
         "mount_source":             string,
         "super_options": [
-                                    integer    # [2]
+                                    string
         ],
         "super_options_fields": {
-          "<key>":                  string
+          "<key>":                  string/integer    # [2]
         }
       }
     ]
 
     [0] if empty, then private mount
     [1] unbindable will always have a value of 0
-    [2] integer conversions are attempted. Use --raw or raw=True for
-        original string values.
+    [2] integer conversions are attempted for values that are numbers,
+        optionally followed by a size suffix (k, M, G, etc.). Other values
+        are left as strings. Use --raw or raw=True for original string
+        values.
 
 Examples:
 
@@ -169,4 +171,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_pid_mountinfo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_pid_mountinfo.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

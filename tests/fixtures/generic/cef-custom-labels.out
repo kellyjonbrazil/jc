@@ -1,0 +1,2 @@
+CEF:0|Vendor|Product|1.0|100|Custom labels|5|cn1=42 cn1Label=Host ID cs1=abc cs1Label=Zone start=1604867400000 startLabel=Begin cfp1=1.5 cfp1Label=myFloat deviceCustomDate1=Nov 08 2020 20:30:00 deviceCustomDate1Label=myDate msg=plain
+CEF:0|Vendor|Product|1.0|101|Labels without values|3|cn2Label=Orphan cs2=lonely cs3=x cs3Label=Third

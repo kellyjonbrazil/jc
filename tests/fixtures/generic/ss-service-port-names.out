@@ -1,0 +1,4 @@
+Netid  State   Recv-Q  Send-Q   Local Address:Port    Peer Address:Port
+tcp    ESTAB   0       0        127.0.0.1:x11         127.0.0.1:pop3
+tcp    LISTEN  0       128      0.0.0.0:ssh           0.0.0.0:*
+tcp    ESTAB   0       0        127.0.0.1:8080        127.0.0.1:50000

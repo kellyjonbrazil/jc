@@ -145,4 +145,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/ics.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ics.py)
 
-Version 1.0 by Paolo Valletta (paolovalletta@hotmail.it)
+Version 1.1 by Paolo Valletta (paolovalletta@hotmail.it)

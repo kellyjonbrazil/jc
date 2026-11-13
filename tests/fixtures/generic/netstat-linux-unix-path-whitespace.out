@@ -1,0 +1,7 @@
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path
+unix  2      [ ]         DGRAM                    50001    1898/systemd         /run/bus/hidden/part
+unix  2      [ ACC ]     STREAM     LISTENING     50002    1899/systemd         /run/bus/hidden/part
+unix  2      [ ]         DGRAM                    50003    1900/systemd         /run/bus name/more part
+unix  2      [ ]         DGRAM                    50004    1901/systemd         /run/two  spaces/x
+unix  2      [ ]         DGRAM                    50005    1902/systemd         /run/plain

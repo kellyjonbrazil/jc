@@ -177,7 +177,7 @@ _DATETIME_RE = re.compile(
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ics` file parser'
     author = 'Paolo Valletta'
     author_email = 'paolovalletta@hotmail.it'
@@ -279,14 +279,20 @@ def _unfold(data: str) -> List[str]:
     """
     Unfold the continuation lines of RFC 5545 section 3.1.
     """
-    lines: List[str] = []
-    for line in data.replace('\r\n', '\n').replace('\r', '\n').split('\n'):
-        if line[:1] in (' ', '\t') and lines:
-            lines[-1] += line[1:]
-            continue
-        lines.append(line)
+    # a lone CR is only a line break in files that have no LF at all
+    # (CR-only line endings); otherwise it is part of the value
+    if '\n' not in data:
+        data = data.replace('\r', '\n')
 
-    return lines
+    # pieces of each logical line are joined once, after all are collected
+    pieces: List[List[str]] = []
+    for line in data.replace('\r\n', '\n').split('\n'):
+        if line[:1] in (' ', '\t') and pieces:
+            pieces[-1].append(line[1:])
+            continue
+        pieces.append([line])
+
+    return [''.join(piece) for piece in pieces]
 
 
 def _split_property(line: str) -> Optional[Tuple[str, Dict[str, str], str]]:
@@ -335,6 +341,7 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
     """
     components: List[Dict[str, Any]] = []
     stack: List[Dict[str, Any]] = []
+    open_kinds: Dict[str, int] = {}  # number of open components of each kind
     calendar = False
     entity = False
 
@@ -356,11 +363,12 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             calendar = calendar or kind == 'VCALENDAR'
             entity = entity or kind in _ENTITIES
             stack.append({'kind': kind, 'lines': [], 'alarms': []})
+            open_kinds[kind] = open_kinds.get(kind, 0) + 1
             continue
 
         if name == 'END':
             kind = value.upper()
-            if kind not in [component['kind'] for component in stack]:
+            if not open_kinds.get(kind):
                 if not quiet:
                     jc.utils.warning_message([f'END:{kind} without a matching BEGIN'])
                 continue
@@ -372,6 +380,7 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             # component, and named in a warning of its own
             while stack[-1]['kind'] != kind:
                 above = stack.pop()
+                open_kinds[above['kind']] -= 1
                 if above['kind'] == _ALARM:
                     if stack:
                         stack[-1]['alarms'].append(above)
@@ -379,6 +388,7 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
                     jc.utils.warning_message([
                         f'Unterminated BEGIN:{above["kind"]}: no END for the component'])
             component = stack.pop()
+            open_kinds[kind] -= 1
             if component['kind'] == _ALARM:
                 if stack:
                     stack[-1]['alarms'].append(component)

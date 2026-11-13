@@ -1,0 +1,8 @@
+PING localhost (127.0.0.1) 56(84) bytes of data.
+64 bytes from localhost (127.0.0.1): icmp_req=1 ttl=64 time=0.033 ms
+64 bytes from 127.0.0.1: icmp_req=2 ttl=64 time=0.041 ms
+64 bytes from localhost (127.0.0.1): icmp_req=2 ttl=64 time=0.052 ms (DUP!)
+
+--- localhost ping statistics ---
+2 packets transmitted, 2 received, +1 duplicates, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.033/0.042/0.052/0.007 ms

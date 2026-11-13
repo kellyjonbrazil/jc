@@ -50,7 +50,7 @@ Example:
 ```python
 def parse(data: str,
           raw: bool = False,
-          quiet: bool = False) -> List[Dict[str, Union[str, int]]]
+          quiet: bool = False) -> List[Dict[str, str | int]]
 ```
 
 Main text parsing function
@@ -70,4 +70,4 @@ Compatibility:  linux, freebsd
 
 Source: [`jc/parsers/swapon.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/swapon.py)
 
-Version 1.0 by Roey Darwish Dror (roey.ghost@gmail.com)
+Version 1.1 by Roey Darwish Dror (roey.ghost@gmail.com)

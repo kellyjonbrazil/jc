@@ -130,7 +130,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`traceroute` and `traceroute6` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -171,15 +171,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 '''
 
+# The lookbehinds keep a search from restarting at every offset of a long run of
+# the characters a pattern begins with. The RTT is `\d+(?:\.\d+)?` so that a
+# run of digits can only be read one way.
 RE_HEADER = re.compile(r'traceroute6? to (\S+)\s+\((\d+\.\d+\.\d+\.\d+|[0-9a-fA-F:]+)\)')
-RE_HEADER_HOPS_BYTES = re.compile(r'(\d+) hops max, (\d+) byte packets')
-RE_PROBE_NAME_IP = re.compile(r'(\S+)\s+\((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+)\)+')
+RE_HEADER_HOPS_BYTES = re.compile(r'(?<!\d)(\d+) hops max, (\d+) byte packets')
+RE_PROBE_NAME_IP = re.compile(r'(?<!\S)(\S+)\s+\((\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|[0-9a-fA-F:]+)\)+')
 RE_PROBE_IP_ONLY = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})\s+([^\(])')
-RE_PROBE_IPV6_ONLY = re.compile(r'(([a-f0-9]*:)+[a-f0-9]+)')
+RE_PROBE_IPV6_ONLY = re.compile(r'(?<![a-f0-9:])(([a-f0-9]*:)+[a-f0-9]+)')
 RE_PROBE_BSD_IPV6 = re.compile(r'\b(?:[A-Fa-f0-9]{1,4}:){7}[A-Fa-f0-9]{1,4}\b')
 RE_HOP = re.compile(r'^\s*(\d+)?\s+(.+)$')
 RE_PROBE_ASN = re.compile(r'\[AS(\d+)\]')
-RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(\d+(?:\.?\d+)?)\s+ms|(\s+\*\s+))\s*(!\S*)?')
+RE_PROBE_RTT_ANNOTATION = re.compile(r'(?:(?<!\d)(\d+(?:\.\d+)?)\s+ms|(?<!\s)(\s+\*\s+))\s*(!\S*)?')
 
 
 class _Traceroute(object):
@@ -305,7 +308,7 @@ def _loads(data: str, quiet: bool):
     lines = []
 
     # remove any warning lines
-    for data_line in data.splitlines():
+    for data_line in jc.utils.splitlines(data):
         if 'traceroute: Warning: ' not in data_line and 'traceroute6: Warning: ' not in data_line:
             lines.append(data_line)
         else:

@@ -1,0 +1,7 @@
+# names with spaces, tabs and other characters escaped as \ooo
+/dev/sdb1 /mnt/my\040disk ext4 defaults 0 2
+LABEL=my\040disk /mnt/x e\170t4 a\054b 0 0
+//server/My\040Share /mnt/share\011tab cifs credentials=/etc/cifs\134creds,uid=1000 0 0
+tmpfs /tmp tmpfs rw,noexec,nosuid,nodev,\145xec,\163uid,\144ev 0 0
+UUID=1234 /mnt/caf\303\251 ext4 defaults 0 0
+/dev/sdc1 /mnt/back\\040slash\12\089 ext4 defaults 0 0

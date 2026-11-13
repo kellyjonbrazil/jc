@@ -1,0 +1,4 @@
+a:
+	libc.so.6 => /lib/libc.so.6 (0x1)
+m/usr/bin/b:
+	libother.so => not found

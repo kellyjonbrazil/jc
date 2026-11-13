@@ -1,0 +1,48 @@
+version: "3.8"
+
+x-logging: &default-logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+x-service-defaults: &service-defaults
+  restart: unless-stopped
+  logging: *default-logging
+  networks:
+    - backend
+  environment: &common-env
+    TZ: UTC
+    LOG_LEVEL: info
+    DB_HOST: db
+
+services:
+  web:
+    <<: *service-defaults
+    image: nginx:1.25
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on: [api]
+  api:
+    <<: *service-defaults
+    image: example/api:2.1
+    environment:
+      <<: *common-env
+      LOG_LEVEL: debug
+      WORKERS: 4
+  worker:
+    <<: *service-defaults
+    image: example/worker:2.1
+    command: ["celery", "-A", "app", "worker"]
+  db:
+    image: postgres:16
+    logging: *default-logging
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+networks:
+  backend: {}
+
+volumes:
+  dbdata: {}

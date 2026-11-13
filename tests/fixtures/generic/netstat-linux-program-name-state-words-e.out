@@ -1,0 +1,5 @@
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       User       Inode      PID/Program name    
+tcp        0      0 0.0.0.0:631             0.0.0.0:*               LISTEN      7          20830      1029/cupsd          
+udp        0      0 192.168.71.131:68       0.0.0.0:*                           7          43856      31337/LISTEN 1/init 
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                           0          20832      -                   

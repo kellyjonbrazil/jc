@@ -156,4 +156,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/dpkg_l.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/dpkg_l.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

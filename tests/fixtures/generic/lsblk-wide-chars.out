@@ -1,0 +1,7 @@
+NAME   LABEL        FSTYPE MOUNTPOINTS
+sda
+├─sda1 boot         btrfs  /boot
+├─sda2 media​        btrfs  /data
+├─sda3 日本語ラベル ext4   /srv
+├─sda4 café         xfs    /home
+└─sda5 root         btrfs  /

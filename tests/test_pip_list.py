@@ -77,6 +77,24 @@ class MyTests(unittest.TestCase):
         """
         self.assertEqual(jc.parsers.pip_list.parse(self.osx_10_14_6_pip_list, quiet=True), self.osx_10_14_6_pip_list_json)
 
+    def test_pip_list_separator_lines(self):
+        """
+        Test 'pip list' with separator lines removed
+        """
+        data = 'Package    Version\n---------- -------\nfoo        1.0\nbar        2.0\n'
+        self.assertEqual(jc.parsers.pip_list.parse(data, raw=True, quiet=True),
+                         [{'package': 'foo', 'version': '1.0'}, {'package': 'bar', 'version': '2.0'}])
+
+    def test_pip_list_dashes_in_row(self):
+        """
+        Test 'pip list' with '---' inside a package row
+        """
+        data = 'Package   Version\n--------- -------\nmy---pkg  1.0\nother     2.0\n'
+        self.assertEqual(
+            jc.parsers.pip_list.parse(data, quiet=True),
+            [{'package': 'my---pkg', 'version': '1.0'}, {'package': 'other', 'version': '2.0'}]
+        )
+
 
 if __name__ == '__main__':
     unittest.main()

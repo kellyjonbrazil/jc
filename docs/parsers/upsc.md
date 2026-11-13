@@ -82,4 +82,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/upsc.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/upsc.py)
 
-Version 1.0 by Mayoka (j.mayoka@mayokajohn.com)
+Version 1.1 by Mayoka (j.mayoka@mayokajohn.com)
