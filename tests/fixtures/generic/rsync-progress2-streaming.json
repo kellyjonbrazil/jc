@@ -1,0 +1,82 @@
+[
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 32768,
+    "percent": 0,
+    "speed": "0.00kB/s",
+    "time": "0:00:00",
+    "transfer_number": null,
+    "check": null
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 3000000,
+    "percent": 9,
+    "speed": "202.13MB/s",
+    "time": "0:00:00",
+    "transfer_number": 1,
+    "check": "to-chk=5/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 9000000,
+    "percent": 28,
+    "speed": "213.80MB/s",
+    "time": "0:00:00",
+    "transfer_number": 2,
+    "check": "to-chk=4/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 18000000,
+    "percent": 57,
+    "speed": "219.68MB/s",
+    "time": "0:00:00",
+    "transfer_number": 3,
+    "check": "to-chk=3/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 30000000,
+    "percent": 96,
+    "speed": "225.03MB/s",
+    "time": "0:00:00",
+    "transfer_number": 4,
+    "check": "to-chk=2/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 31200000,
+    "percent": 100,
+    "speed": "223.48MB/s",
+    "time": "0:00:00",
+    "transfer_number": 5,
+    "check": "to-chk=0/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 31200000,
+    "percent": 100,
+    "speed": "223.48MB/s",
+    "time": "0:00:00",
+    "transfer_number": 5,
+    "check": "to-chk=0/7"
+  },
+  {
+    "type": "progress",
+    "filename": null,
+    "bytes": 31200000,
+    "percent": 100,
+    "speed": "221.82MB/s",
+    "time": "0:00:00",
+    "transfer_number": 5,
+    "check": "to-chk=0/7"
+  }
+]

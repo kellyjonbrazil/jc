@@ -1,0 +1,90 @@
+[
+  {
+    "playbook": "playbook.yaml",
+    "plays": [
+      {
+        "number": 1,
+        "hosts": [
+          "all",
+          "!this"
+        ],
+        "name": "all:!this",
+        "tags": [
+          "some",
+          "tag"
+        ],
+        "task_tags": [
+          "first",
+          "second",
+          "third"
+        ]
+      },
+      {
+        "number": 2,
+        "hosts": [
+          "all",
+          "!this",
+          "&that"
+        ],
+        "name": "some name here",
+        "tags": [],
+        "task_tags": [
+          "some",
+          "other"
+        ]
+      },
+      {
+        "number": 3,
+        "hosts": [
+          "this"
+        ],
+        "name": "this",
+        "tags": [],
+        "task_tags": [
+          "first",
+          "second",
+          "third"
+        ]
+      },
+      {
+        "number": 4,
+        "hosts": [
+          "that"
+        ],
+        "name": "that",
+        "tags": [
+          "that"
+        ],
+        "task_tags": [
+          "that"
+        ]
+      },
+      {
+        "number": 5,
+        "hosts": [
+          "this",
+          "&that"
+        ],
+        "name": "this:&that",
+        "tags": [],
+        "task_tags": []
+      }
+    ]
+  },
+  {
+    "playbook": "debug.yml",
+    "plays": [
+      {
+        "number": 1,
+        "hosts": [
+          "all"
+        ],
+        "name": "dump all vars",
+        "tags": [
+          "debug"
+        ],
+        "task_tags": []
+      }
+    ]
+  }
+]

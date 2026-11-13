@@ -1,0 +1,14 @@
+sending incremental file list
+created directory rsync-dst
+cd+++++++++ ./
+>f+++++++++ file1.bin
+         32,768   1%    0.00kB/s    0:00:00        3,000,000 100%  217.67MB/s    0:00:00 (xfr#1, to-chk=5/7)
+>f+++++++++ file2.bin
+         32,768   0%    2.40MB/s    0:00:02        6,000,000 100%  143.05MB/s    0:00:00 (xfr#2, to-chk=4/7)
+>f+++++++++ file3.bin
+         32,768   0%  800.00kB/s    0:00:11        9,000,000 100%  108.65MB/s    0:00:00 (xfr#3, to-chk=3/7)
+>f+++++++++ file4.bin
+         32,768   0%  400.00kB/s    0:00:29       12,000,000 100%   86.70MB/s    0:00:00 (xfr#4, to-chk=2/7)
+cd+++++++++ subdir/
+>f+++++++++ subdir/nested.bin
+         32,768   2%  240.60kB/s    0:00:04        1,200,000 100%    8.23MB/s    0:00:00 (xfr#5, to-chk=0/7)
