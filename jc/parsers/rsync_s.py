@@ -410,6 +410,14 @@ def parse(
                     last_process = process
                     summary = {}
 
+                # a new process id starts a new run: emit the summary of
+                # the previous run
+                if process != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = process
+                    summary = {}
+
                 output_line = {
                     'type': 'file',
                     'filename': filename,
@@ -440,6 +448,14 @@ def parse(
                 process = file_line_log_mac.group('process')
                 meta = file_line_log_mac.group('meta')
                 last_filename = filename
+
+                # a new process id starts a new run: emit the summary of
+                # the previous run
+                if process != last_process:
+                    if summary:
+                        yield summary if raw else _process(summary)
+                    last_process = process
+                    summary = {}
 
                 # a new process id starts a new run: emit the summary of
                 # the previous run
