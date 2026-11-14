@@ -26,6 +26,7 @@ parsers: List[str] = [
     'authorized-keys',
     'blkid',
     'bluetoothctl',
+    'brew-search',
     'cbt',
     'cef',
     'cef-s',

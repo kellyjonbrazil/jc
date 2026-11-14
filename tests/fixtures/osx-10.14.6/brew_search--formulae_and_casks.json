@@ -1,0 +1,50 @@
+[
+  {
+    "name": "bagit",
+    "type": "formula"
+  },
+  {
+    "name": "git-tig",
+    "type": "formula"
+  },
+  {
+    "name": "bash-git-prompt",
+    "type": "formula"
+  },
+  {
+    "name": "git-tools",
+    "type": "formula"
+  },
+  {
+    "name": "git",
+    "type": "formula"
+  },
+  {
+    "name": "gitup",
+    "type": "formula"
+  },
+  {
+    "name": "git-annex",
+    "type": "formula"
+  },
+  {
+    "name": "gitless",
+    "type": "formula"
+  },
+  {
+    "name": "adobe-digital-editions",
+    "type": "cask"
+  },
+  {
+    "name": "gitkraken",
+    "type": "cask"
+  },
+  {
+    "name": "caldigit-docking-utility",
+    "type": "cask"
+  },
+  {
+    "name": "gitkraken-cli",
+    "type": "cask"
+  }
+]
