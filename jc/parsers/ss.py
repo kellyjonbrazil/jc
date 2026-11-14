@@ -351,7 +351,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -629,7 +629,13 @@ def parse(data, raw=False, quiet=False):
             row_header = list(header_list)
             if entry[0] not in string.whitespace:
                 if not has_netid:
-                    entry = 'tcp    ' + entry
+                    # a unix socket's local address is a path, an abstract
+                    # name starting with '@', or '*'
+                    local = entry.split()[3] if len(entry.split()) > 3 else ''
+                    if local.startswith(('/', '@')) or local == '*':
+                        entry = 'u_str  ' + entry
+                    else:
+                        entry = 'tcp    ' + entry
 
                 # fix issue where recv-q can be too close to state
                 entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
