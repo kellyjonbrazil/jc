@@ -335,6 +335,24 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-service-name-protocol-prefix.json'), 'r', encoding='utf-8') as f:
         generic_netstat_windows_service_name_protocol_prefix_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-owner-line.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_owner_line = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-owner-line.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_owner_line_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-udp-before-pid.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_udp_before_pid = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-udp-before-pid.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_udp_before_pid_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-mid-address.out'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_mid_address = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-windows-cut-short-mid-address.json'), 'r', encoding='utf-8') as f:
+        generic_netstat_windows_cut_short_mid_address_json = json.loads(f.read())
+
     def test_netstat_nodata(self):
         """
         Test 'netstat' with no data
@@ -732,6 +750,27 @@ class MyTests(unittest.TestCase):
         Test Windows 'netstat -b' with service names that start with a protocol name
         """
         self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_windows_service_name_protocol_prefix, quiet=True), self.generic_netstat_windows_service_name_protocol_prefix_json)
+
+    def test_netstat_windows_cut_short_owner_line(self):
+        """
+        Test Windows 'netstat -b' output cut short on an owner line before any
+        connection line was seen does not raise IndexError
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_windows_cut_short_owner_line, quiet=True), self.generic_netstat_windows_cut_short_owner_line_json)
+
+    def test_netstat_windows_cut_short_udp_before_pid(self):
+        """
+        Test Windows 'netstat' output cut short at the end of a UDP row before
+        the PID column does not raise KeyError
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_windows_cut_short_udp_before_pid, quiet=True), self.generic_netstat_windows_cut_short_udp_before_pid_json)
+
+    def test_netstat_windows_cut_short_mid_address(self):
+        """
+        Test Windows 'netstat' output cut short in the middle of an address
+        before its port does not raise ValueError
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.generic_netstat_windows_cut_short_mid_address, quiet=True), self.generic_netstat_windows_cut_short_mid_address_json)
 
     def test_netstat_windows_service_name_protocol_prefix_fields(self):
         """
