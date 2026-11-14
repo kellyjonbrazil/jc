@@ -1,11 +1,13 @@
 jc changelog
 
-20261111 v1.26.3
+20261113 v1.26.3
 - Enhance `ics` parser to add calculated epoch timestamp fields for dates and
   times, including `TZID` times resolved with the file's `VTIMEZONE` component
 - Enhance CLI and streaming parser error messages to show only the first line
   of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
   full message
+- Fix `crontab` and `crontab-u` parsers to not crash on a shortcut line (e.g.
+  `@reboot`) that was cut short before its user or command
 - Fix `date` parser to raise a parse error instead of crashing on input it
   cannot parse
 - Fix `date` parser and the timestamp utility so a time of exactly the Unix
