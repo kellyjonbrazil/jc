@@ -57,6 +57,17 @@ class MyTests(unittest.TestCase):
             'sub': 'failed', 'description': 'Rotate log files'
         }])
 
+    def test_systemctl_no_units_listed(self):
+        """
+        Test 'systemctl --failed' with no failed units
+        """
+        data = (
+            '  UNIT LOAD ACTIVE SUB DESCRIPTION\n'
+            '\n'
+            '0 loaded units listed.\n'
+        )
+        self.assertEqual(jc.parsers.systemctl.parse(data, quiet=True), [])
+
     def test_systemctl_nodata(self):
         """
         Test 'systemctl' with no data
