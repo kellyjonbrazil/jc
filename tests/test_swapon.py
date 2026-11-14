@@ -40,6 +40,15 @@ class Swapon(unittest.TestCase):
             'name': '/swap.img', 'type': 'file', 'size': 4294967296, 'used': 2362232012, 'priority': -1
         }])
 
+    def test_swapon_bytes(self):
+        """
+        Test 'swapon --show --bytes', where sizes are plain byte counts
+        """
+        data = 'NAME      TYPE       SIZE      USED PRIO\n/swap.img file 8222928896 524288000   -2\n'
+        self.assertEqual(parse(data, quiet=True), [{
+            'name': '/swap.img', 'type': 'file', 'size': 8222928896, 'used': 524288000, 'priority': -2
+        }])
+
     def test_swapon_all(self):
         """
         Test 'swapon --output-all'
