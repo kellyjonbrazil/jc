@@ -1,0 +1,1 @@
+[{"name": "TYPES", "aliases": ["TYPES"], "description": {"address": [{"protocol": "tcp", "host": "types-svr", "port": "1521X"}], "connect_data": {"service_name": "types#1.example.com", "sid": "12345", "server": "DEDICATED"}}}]

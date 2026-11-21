@@ -1,0 +1,1 @@
+[{"name": "OK", "aliases": ["OK"], "description": {"address": [{"protocol": "tcp", "host": "ok-svr", "port": 1521}], "connect_data": {"service_name": "ok.example.com"}}}, {"name": "BROKEN", "aliases": ["BROKEN"], "description": {"address": [{"protocol": "tcp", "host": "broken-svr", "port": 1521}]}}]

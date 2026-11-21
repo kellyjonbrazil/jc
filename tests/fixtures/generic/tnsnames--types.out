@@ -1,0 +1,10 @@
+# A non-numeric PORT stays a string, a numeric-looking SID stays a string, and
+# a `#` inside quotation marks is part of the value.
+
+TYPES =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL = tcp)(HOST = types-svr)(PORT = 1521X))
+    (CONNECT_DATA =
+      (SERVICE_NAME = "types#1.example.com")
+      (SID = 12345)
+      (SERVER = DEDICATED)))
