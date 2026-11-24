@@ -51,6 +51,8 @@ class info():
 
     # tags options: generic, standard, file, string, binary, command, slurpable
     tags = ['command']
+
+    # also add each magic command to `_magic_commands` in jc/lib.py
     magic_commands = ['foo']
 
     # other attributes - only enable if needed
