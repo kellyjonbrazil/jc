@@ -989,9 +989,11 @@ class JcCli():
         sys.exit(exit_code)
 
     def _run(self) -> None:
-        # enable colors for Windows cmd.exe terminal
+        # enable colors for Windows cmd.exe terminal. Run cmd.exe without our
+        # STDIN: when STDIN is a redirected file, cmd.exe moves its position
+        # to the end and jc then reads no input.
         if sys.platform.startswith('win32'):
-            os.system('')
+            subprocess.run('', shell=True, stdin=subprocess.DEVNULL)
 
         # parse magic syntax first: e.g. jc -p ls -al
         self.args = sys.argv

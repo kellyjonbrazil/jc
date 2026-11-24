@@ -2,6 +2,7 @@ import contextlib
 import io
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import types
@@ -1232,6 +1233,33 @@ power management:
         records = self._streaming_ls_records(data)
         self.assertEqual(['aaa', 'mmm\\xff', 'zzz'], [x['filename'] for x in records])
         self.assertTrue(all(x['_jc_meta']['success'] for x in records))
+
+    def _run_jc_with_file_stdin(self, args, data):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'wb') as f:
+                f.write(data)
+            with open(path, 'rb') as stdin:
+                result = subprocess.run([sys.executable, '-m', 'jc', *args], stdin=stdin,
+                                        capture_output=True, check=True)
+        finally:
+            os.remove(path)
+        return result.stdout.decode()
+
+    def test_stdin_redirected_from_file(self):
+        """
+        Test that STDIN redirected from a file is read. On Windows, the cmd.exe call
+        that enables colors moved a file STDIN to its end, so jc parsed no input.
+        """
+        out = self._run_jc_with_file_stdin(['--kv'], b'key1=abc\nkey2=def\n')
+        self.assertEqual({'key1': 'abc', 'key2': 'def'}, json.loads(out))
+
+    def test_streaming_stdin_redirected_from_file(self):
+        """
+        Test that a streaming parser reads STDIN redirected from a file
+        """
+        out = self._run_jc_with_file_stdin(['--ls-s'], b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n')
+        self.assertEqual(['aaa'], [json.loads(x)['filename'] for x in out.splitlines()])
 
 if __name__ == '__main__':
     unittest.main()
