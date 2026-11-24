@@ -68,9 +68,14 @@ def parse_item(headers, entry, kind, flags):
         entry.insert(1, '')
         entry.insert(1, '')
 
-    # fixup interface records with no address field entry
-    if kind == 'interface' and len(entry) == 8:
-        entry.insert(3, None)
+    # fixup interface records with no address field entry. The Address column
+    # is empty on <Link#> rows, and the number of columns is not fixed:
+    # `netstat -i` on OSX has 9, `netstat -ib` on OSX has 11, and
+    # `netstat -ib` on FreeBSD has 12. Compare against the header width instead
+    # of a hardcoded count so the counters after the empty column do not shift
+    # into the wrong keys.
+    if kind == 'interface' and 'address' in headers and len(entry) == len(headers) - 1:
+        entry.insert(headers.index('address'), None)
 
     output_line = dict(zip(headers, entry))
     output_line['kind'] = kind
