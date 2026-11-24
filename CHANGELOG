@@ -1,6 +1,10 @@
 jc changelog
 
-20261113 v1.26.3
+20261124 v1.26.3
+- Enhance CLI startup time. Commands now start about 33 ms (43%) faster, and
+  magic syntax commands (e.g. `jc ls -l`) about 130 ms (74%) faster, since the
+  CLI no longer imports every parser to find the one for a magic command, and
+  loads the debug and color output modules only when they are used
 - Enhance `ics` parser to add calculated epoch timestamp fields for dates and
   times, including `TZID` times resolved with the file's `VTIMEZONE` component
 - Enhance CLI and streaming parser error messages to show only the first line
@@ -18,8 +22,17 @@ jc changelog
 - Fix `host` parser to skip a truncated SOA record instead of crashing
 - Fix `id` parser to not crash on an SELinux context with fewer than four
   fields (e.g. no level)
+- Fix `netstat` parser to not crash on Windows `netstat` output that was cut
+  short
 - Fix `path` parser to remove CRLF line endings from Windows paths
 - Fix `proc` parser to identify `/proc` files that have CRLF line endings
+- Fix `ss` parser to not crash when the `Netid` column is missing (e.g.
+  `ss -t` or `ss -u`)
+- Fix `swapon` parser to not crash on sizes that are not whole numbers (e.g.
+  `7.7G`)
+- Fix `systemctl` parser to not read the `Legend` footer or the
+  `N loaded units listed` line as units (e.g. `systemctl --failed` with no
+  failed units now returns an empty list)
 - Fix `systeminfo`, `top`, and `top-s` parsers to not crash on output that was
   cut short (e.g. no network cards, time zone, or process table)
 - Fix `w` parser to raise a parse error when the header line is missing and
