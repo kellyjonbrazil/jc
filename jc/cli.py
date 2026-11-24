@@ -17,8 +17,9 @@ from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
-    slurpable_parser_mod_list, _parser_is_slurpable, local_parsers, _magic_commands
+    slurpable_parser_mod_list, _parser_is_slurpable, local_parsers
 )
+from .magic_commands import magic_commands as _magic_commands
 from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (

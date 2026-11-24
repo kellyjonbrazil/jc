@@ -28,3 +28,7 @@ echo "All documentation updated"
 echo
 echo "Building shell completion scripts"
 ./build-completions.py && echo "++++ shell completion build successful" || echo "---- shell completion build failed"
+
+echo
+echo "Building magic command table"
+./build-magic-commands.py && echo "++++ magic command table build successful" || echo "---- magic command table build failed"

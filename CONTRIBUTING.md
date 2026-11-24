@@ -31,9 +31,9 @@ actively welcome your pull requests:
      to get started right away with just a standard `jc` installation.
    - Parser registry: Add the parser name to the `parsers` list in the
      [jc/lib.py](https://github.com/kellyjonbrazil/jc/blob/master/jc/lib.py)
-     file. If the parser has `magic_commands`, also add each command to the
-     `_magic_commands` dictionary in the same file, mapped to the parser
-     argument (e.g. `'ls': '--ls'`). A test checks that the two match.
+     file. If the parser has `magic_commands`, also run
+     `./build-magic-commands.py` to regenerate `jc/magic_commands.py`. A test
+     fails if that file is out of date.
 4. If you've added code that should be tested, add tests. All new parsers should
    have several sample outputs and tests.
    - Templates:
