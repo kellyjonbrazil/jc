@@ -8,6 +8,10 @@ or
 
     $ jc ansible-playbook --list-tags playbook.yaml
 
+The `hosts` field contains the play's host pattern split on top-level
+commas (`,`) only, so range patterns such as `web[0:1]` and IPv6
+addresses are preserved intact.
+
 Usage (module):
 
     import jc
@@ -20,11 +24,17 @@ Schema:
         "playbook":     string,
         "plays": [
           {
-            "number":    integer,
-            "hosts":     array,
-            "name":      string,
-            "tags":      array,
-            "task_tags": array
+            "number":     integer,
+            "hosts": [
+                                     string
+            ],
+            "name":       string,
+            "tags": [
+                                     string
+            ],
+            "task_tags": [
+                                     string
+            ]
           }
         ]
       }
@@ -58,22 +68,13 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`ansible-playbook --list-tags` command parser'
     author = 'Rahul Ranjan'
     author_email = '11793455+rahul05ranjan@users.noreply.github.com'
-    # details = 'enter any other details here'
-
-    # compatible options: linux, darwin, cygwin, win32, aix, freebsd
     compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
-
-    # tags options: generic, standard, file, string, binary, command, slurpable
-    tags = ['command']
     magic_commands = ['ansible-playbook --list-tags']
-
-    # other attributes - only enable if needed
-    deprecated = False
-    hidden = False
+    tags = ['command']
 
 
 __version__ = info.version
@@ -93,8 +94,12 @@ def _split_tags(tag_string: str) -> List[str]:
 
 
 def _split_hosts(pattern: str) -> List[str]:
-    """Split a play's host pattern into its host / group selectors."""
-    return [host for host in re.split(r'[,:]', pattern) if host]
+    """
+    Split a play's host pattern on top-level commas only. Colons are left
+    intact so range patterns (e.g. `web[0:1]`) and IPv6 addresses are not
+    broken up.
+    """
+    return [host.strip() for host in pattern.split(',') if host.strip()]
 
 
 def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
@@ -144,7 +149,7 @@ def parse(
         current_playbook: Dict = None
         current_play: Dict = None
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             stripped = line.strip()
 
             if not stripped:
