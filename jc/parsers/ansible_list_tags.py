@@ -2,20 +2,16 @@ r"""jc - JSON Convert `ansible-playbook --list-tags` command output parser
 
 Usage (cli):
 
-    $ ansible-playbook --list-tags playbook.yaml | jc --ansible-playbook-list-tags
+    $ ansible-playbook --list-tags playbook.yaml | jc --ansible-list-tags
 
 or
 
     $ jc ansible-playbook --list-tags playbook.yaml
 
-The `hosts` field contains the play's host pattern split on top-level
-commas (`,`) only, so range patterns such as `web[0:1]` and IPv6
-addresses are preserved intact.
-
 Usage (module):
 
     import jc
-    result = jc.parse('ansible_playbook_list_tags', ansible_playbook_command_output)
+    result = jc.parse('ansible_list_tags', ansible_playbook_command_output)
 
 Schema:
 
@@ -42,7 +38,7 @@ Schema:
 
 Examples:
 
-    $ ansible-playbook --list-tags playbook.yaml | jc --ansible-playbook-list-tags -p
+    $ ansible-playbook --list-tags playbook.yaml | jc --ansible-list-tags -p
     [
       {
         "playbook": "playbook.yaml",
@@ -68,7 +64,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.0'
     description = '`ansible-playbook --list-tags` command parser'
     author = 'Rahul Ranjan'
     author_email = '11793455+rahul05ranjan@users.noreply.github.com'

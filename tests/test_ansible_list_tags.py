@@ -8,15 +8,15 @@ sys.path.pop()
 
 class MyTests(unittest.TestCase):
 
-    def test_ansible_playbook_list_tags_nodata(self):
+    def test_ansible_list_tags_nodata(self):
         """
-        Test 'ansible_playbook_list_tags' with no data
+        Test 'ansible_list_tags' with no data
         """
         test_utils.run_no_data(self, __file__, [])
 
-    def test_ansible_playbook_list_tags_all_fixtures(self):
+    def test_ansible_list_tags_all_fixtures(self):
         """
-        Test 'ansible_playbook_list_tags' with various fixtures
+        Test 'ansible_list_tags' with various fixtures
         """
         test_utils.run_all_fixtures(self, __file__)
 
