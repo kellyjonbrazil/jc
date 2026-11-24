@@ -68,6 +68,27 @@ class MyTests(unittest.TestCase):
             resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
             self.assertEqual(expected, resulting_attributes)
 
+    def test_cli_magic_parser_with_local_plugins(self):
+        """
+        Test that magic syntax still finds the right parser when local plugin
+        parsers exist, since the magic commands are then read from every parser
+        """
+        commands = {
+            'jc -p systemctl list-jobs': ('--systemctl-lj', ['p'], ['systemctl', 'list-jobs']),
+            'jc -p systemctl': ('--systemctl', ['p'], ['systemctl']),
+            'jc -p ls -l': ('--ls', ['p'], ['ls', '-l']),
+            'jc -p nonexistent command': (None, ['p'], ['nonexistent', 'command'])
+        }
+
+        with mock.patch('jc.cli.local_parsers', ['some-plugin']), \
+             mock.patch('jc.cli._magic_commands', {}):
+            for command, expected in commands.items():
+                cli = JcCli()
+                cli.args = command.split()
+                cli.magic_parser()
+                resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
+                self.assertEqual(expected, resulting_attributes)
+
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_set_env_colors(self):
         """
