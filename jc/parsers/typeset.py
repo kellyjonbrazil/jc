@@ -232,6 +232,60 @@ _ANSI_C_PATTERN = re.compile(r"\$'((?:[^'\\]|\\.)*)'")
 _ARRAY_ANSI_C_PATTERN = re.compile(r"""\\.|"(?:[^"\\]|\\.)*"|'[^']*'|\$'((?:[^'\\]|\\.)*)'""")
 
 
+# Escape sequences in ANSI-C quoting. `\u[hex]` and `\x[hex]` are from ksh.
+# `\C-x`, `\M-x`, and `\M-\C-x` are from zsh.
+_ANSI_C_ESCAPE = re.compile(r"""
+    \\(?:
+        (?P<octal>[0-7]{1,3})
+      | x(?:\[(?P<kshhex>[0-9a-fA-F]{1,2})\]|(?P<hex>[0-9a-fA-F]{1,2}))
+      | u(?:\[(?P<kshuni>[0-9a-fA-F]{1,8})\]|(?P<uni4>[0-9a-fA-F]{1,4}))
+      | U(?P<uni8>[0-9a-fA-F]{1,8})
+      | (?P<meta>M-)(?:\\C-(?P<metacontrol>[?-_a-z])|(?P<metachar>[ -~]))
+      | (?:c|C-)(?P<control>[?-_a-z])
+      | (?P<char>[abeEfnrtv\\'"?])
+    )""", re.VERBOSE)
+
+_ANSI_C_CHARS = {
+    'a': '\a', 'b': '\b', 'e': '\x1b', 'E': '\x1b', 'f': '\f', 'n': '\n',
+    'r': '\r', 't': '\t', 'v': '\v', '\\': '\\', "'": "'", '"': '"', '?': '?'
+}
+
+
+def _decode_ansi_c(data: str) -> str:
+    """
+    Decode the content of a $'...' string. Octal and hex escapes are bytes of
+    the UTF-8 text, so the text is built as bytes first.
+    """
+    out = bytearray()
+    pos = 0
+
+    for match in _ANSI_C_ESCAPE.finditer(data):
+        out += data[pos:match.start()].encode('utf-8', 'backslashreplace')
+        pos = match.end()
+        esc = match.groupdict()
+        hex_byte = esc['kshhex'] or esc['hex']
+        control = esc['control'] or esc['metacontrol']
+        codepoint = int(esc['kshuni'] or esc['uni4'] or esc['uni8'] or '0', 16)
+
+        if esc['octal']:
+            out.append(int(esc['octal'], 8) & 0xff)
+        elif hex_byte:
+            out.append(int(hex_byte, 16))
+        elif control or esc['metachar']:
+            # `\C-?` is DEL
+            byte = ord(control.upper()) ^ 0x40 if control else ord(esc['metachar'])
+            out.append(byte | 0x80 if esc['meta'] else byte)
+        elif esc['char']:
+            out += _ANSI_C_CHARS[esc['char']].encode('utf-8')
+        elif codepoint <= 0x10ffff:
+            out += chr(codepoint).encode('utf-8', 'backslashreplace')
+        else:
+            out += match.group(0).encode('utf-8')
+
+    out += data[pos:].encode('utf-8', 'backslashreplace')
+    return out.decode('utf-8', 'backslashreplace')
+
+
 def _remove_ansi_c(line, shell_quote=False):
     def decode_ansi_c(match):
         inner_content = match.group(1)
@@ -242,7 +296,7 @@ def _remove_ansi_c(line, shell_quote=False):
         if _raw:   # global variable because of laziness
             decoded = inner_content
         else:
-            decoded = inner_content.encode('utf-8').decode('unicode_escape')
+            decoded = _decode_ansi_c(inner_content)
 
         if shell_quote:
             # array bodies are split with _shell_split() afterwards, so quote

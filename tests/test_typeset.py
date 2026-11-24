@@ -84,6 +84,24 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['value'], {'dave': "guest\n' [carol]='admin", 'alice': 'admin'})
         self.assertEqual(result[1]['value'], ['a', "b\n' [9]='c", 'z'])
 
+    def test_typeset_ansi_c_non_ascii(self):
+        """
+        Test 'declare -p' $'...' values with non-ASCII text (bash in a UTF-8
+        locale, bash in the C locale, zsh, and ksh)
+        """
+        data = "declare -- a=$'café\\n'\ndeclare -- b=$'caf\\303\\251\\n'\ntypeset c=$'日本\\n語'\nd=$'caf\\u[e9]\\n'\ne=$'caf\\xc3\\xa9\\n'\ndeclare -a f=([0]=$'x\\n\\303\\251')"
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual([x['value'] for x in result], ['café\n', 'café\n', '日本\n語', 'café\n', 'café\n', ['x\né']])
+
+    def test_typeset_ansi_c_control_characters(self):
+        """
+        Test 'declare -p' $'...' values with control characters (bash, zsh,
+        and ksh)
+        """
+        data = "declare -- a=$'\\E[31mred\\E[0m'\ntypeset b=$'\\C-[[0m\\C-A\\C-?'\nc=$'\\E[0m\\x01'\ntypeset m=$'\\M-C\\M-)\\M-\\C-?'\ndeclare -- d=$'1\\0057\\177'\ndeclare -- e=$'a\\\\303\\a'"
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual([x['value'] for x in result], ['\x1b[31mred\x1b[0m', '\x1b[0m\x01\x7f', '\x1b[0m\x01', 'é\\xff', '1\x057\x7f', 'a\\303\x07'])
+
     def test_typeset_ansi_c_in_double_quoted_array_value(self):
         """
         Test 'declare -p' array where a double-quoted value contains $'
