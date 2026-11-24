@@ -109,7 +109,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`airport -s` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -168,7 +168,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if jc.utils.has_data(data):
         # fix headers

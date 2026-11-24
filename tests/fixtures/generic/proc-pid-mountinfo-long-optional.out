@@ -1,0 +1,10 @@
+22 1 8:2 / / rw,relatime shared:1 - ext4 /dev/sda2 rw
+23 22 0:21 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw
+24 22 0:22 / /proc rw,nosuid,nodev,noexec,relatime shared:13 - proc proc rw
+25 22 0:5 / /dev rw,nosuid,relatime shared:2 - devtmpfs udev rw,size=4012345k,nr_inodes=1003086,mode=755,inode64
+26 25 0:23 / /dev/pts rw,nosuid,noexec,relatime shared:3 - devpts devpts rw,gid=5,mode=620,ptmxmode=000
+27 22 0:24 / /run rw,nosuid,nodev,noexec,relatime shared:5 - tmpfs tmpfs rw,size=812345k,mode=755,inode64
+29 25 0:25 / /dev/shm rw,nosuid,nodev shared:4 - tmpfs tmpfs rw,inode64
+31 23 0:27 / /sys/fs/cgroup rw,nosuid,nodev,noexec,relatime shared:9 - cgroup2 cgroup2 rw,nsdelegate,memory_recursiveprot
+612 22 0:52 / /mnt/data rw,relatime shared:301 master:302 shared:303 master:304 shared:305 master:306 shared:307 master:308 shared:309 master:310 shared:311 master:312 shared:313 master:314 shared:315 master:316 shared:317 master:318 shared:319 master:320
+640 22 0:60 / /mnt/backup rw,nosuid,nodev,relatime unbindable - ext4 /dev/sdb1 rw

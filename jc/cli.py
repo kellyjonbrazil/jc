@@ -4,6 +4,7 @@ JC cli module
 
 import io
 import sys
+import math
 import os
 import posixpath
 import re
@@ -11,7 +12,7 @@ from datetime import datetime, timezone
 import textwrap
 import shlex
 import subprocess
-from typing import List, Dict, Iterable, Union, Optional, TextIO, Tuple
+from typing import Any, List, Dict, Iterable, Union, Optional, TextIO, Tuple
 from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
@@ -45,7 +46,66 @@ JC_ERROR_EXIT: int = 100
 MAX_EXIT: int = 255
 SLICER_PATTERN: str = r'-?[0-9]*\:-?[0-9]*$'
 SLICER_RE = re.compile(SLICER_PATTERN)
+# DEL, C1 control characters and lone surrogates are written as \\u escapes
+# in JSON output. json.dumps() only escapes U+0000-U+001F when ensure_ascii
+# is off.
+JSON_ESCAPE_RE = re.compile('[\x7f-\x9f\ud800-\udfff]')
+# strings that YAML 1.1 readers load as booleans or sexagesimal numbers,
+# but that YAML 1.2 (and so ruamel.yaml) leaves unquoted
+YAML11_NON_STR_RE = re.compile(r'''^(?:y|Y|yes|Yes|YES|n|N|no|No|NO|on|On|ON|off|Off|OFF
+    |[-+]?[1-9][0-9_]*(?::[0-5]?[0-9])+                 # sexagesimal int
+    |[-+]?[0-9][0-9_]*(?::[0-5]?[0-9])+\.[0-9_]*)$''',  # sexagesimal float
+    re.VERBOSE)
 
+
+
+def _non_finite_to_null(data: Any) -> Any:
+    """
+    Return `data` with non-finite floats (inf, -inf, nan) in nested
+    dictionaries and lists replaced by None, since JSON has no such
+    numbers. Dictionaries and lists are changed in place and tuples are
+    turned into lists. Dictionary keys that are non-finite floats become
+    the strings json.dumps() would write for them.
+    """
+    def fix(value: Any) -> Any:
+        if isinstance(value, float) and not math.isfinite(value):
+            return None
+        if isinstance(value, tuple):
+            return list(value)
+        return value
+
+    def key_name(key: float) -> str:
+        if key != key:
+            return 'NaN'
+        return 'Infinity' if key > 0 else '-Infinity'
+
+    data = fix(data)
+    stack = [data]
+    seen = set()
+
+    # walk without recursion so deeply nested data cannot hit the limit
+    while stack:
+        obj = stack.pop()
+        if id(obj) in seen:
+            continue
+        seen.add(id(obj))
+
+        if isinstance(obj, dict):
+            items = []
+            for key, value in obj.items():
+                if isinstance(key, float) and not math.isfinite(key):
+                    key = key_name(key)
+                items.append((key, fix(value)))
+            obj.clear()
+            obj.update(items)
+            stack.extend(v for v in obj.values() if isinstance(v, (dict, list)))
+
+        elif isinstance(obj, list):
+            for index, value in enumerate(obj):
+                obj[index] = fix(value)
+            stack.extend(v for v in obj if isinstance(v, (dict, list)))
+
+    return data
 
 class info():
     version: str = __version__
@@ -77,7 +137,8 @@ class JcCli():
                  'version_info', 'yaml_output', 'bash_comp', 'zsh_comp', 'xonsh_comp',
                  'magic_found_parser', 'magic_options', 'magic_run_command',
                  'magic_run_command_str', 'magic_stdout', 'magic_stderr',
-                 'magic_returncode', 'slice_str', 'slice_start', 'slice_end')
+                 'magic_returncode', 'slice_str', 'slice_start', 'slice_end',
+                 'meta_replaced_warned')
 
     def __init__(self) -> None:
         self.data_in: Optional[Union[str, bytes, TextIO, Iterable[str]]] = None
@@ -111,6 +172,7 @@ class JcCli():
         self.help_me: bool = False
         self.pretty: bool = False
         self.quiet: bool = False
+        self.meta_replaced_warned: bool = False
         self.ignore_exceptions: bool = False
         self.raw: bool = False
         self.slurp: bool = False
@@ -365,15 +427,33 @@ class JcCli():
         if YAML_INSTALLED:
             y_string_buf = io.BytesIO()
 
-            # monkey patch to disable plugins since we don't use them and in
-            # ruamel.yaml versions prior to 0.17.0 the use of __file__ in the
-            # plugin code is incompatible with the pyoxidizer packager
-            YAML.official_plug_ins = lambda a: []  # type: ignore
+            # the changes below are made on subclasses so the ruamel.yaml
+            # classes stay unchanged for other code in the same process
 
-            # monkey patch to disable aliases
-            representer.RoundTripRepresenter.ignore_aliases = lambda x, y: True  # type: ignore
+            # disable plugins since we don't use them and in ruamel.yaml
+            # versions prior to 0.17.0 the use of __file__ in the plugin code
+            # is incompatible with the pyoxidizer packager
+            class JcYAML(YAML):
+                def official_plug_ins(self):
+                    return []
 
-            yaml = YAML()
+            # disable aliases
+            class JcRepresenter(representer.RoundTripRepresenter):
+                def ignore_aliases(self, data):
+                    return True
+
+            # quote strings that YAML 1.1 readers would load as booleans or
+            # numbers (e.g. yes, off, 1:30) so they stay strings for them too
+            def represent_str(rep, data):
+                style = None
+                if '\n' not in data and YAML11_NON_STR_RE.match(data):
+                    style = "'"
+                return rep.represent_scalar('tag:yaml.org,2002:str', data, style=style)
+
+            JcRepresenter.add_representer(str, represent_str)
+
+            yaml = JcYAML()
+            yaml.Representer = JcRepresenter
             yaml.default_flow_style = False
             yaml.explicit_start = True  # type: ignore
             yaml.allow_unicode = not self.ascii_only
@@ -407,13 +487,26 @@ class JcCli():
         def string_serializer(data):
             return str(data)
 
-        j_string = json.dumps(
-            self.data_out,
-            indent=self.json_indent,
-            separators=self.json_separators,
-            ensure_ascii=self.ascii_only,
-            default=string_serializer
-        )
+        def dumps(data: Any) -> str:
+            return json.dumps(
+                data,
+                indent=self.json_indent,
+                separators=self.json_separators,
+                ensure_ascii=self.ascii_only,
+                default=string_serializer,
+                allow_nan=False
+            )
+
+        try:
+            j_string = dumps(self.data_out)
+        except ValueError:
+            # JSON has no inf or nan: write them as null. Only done when
+            # needed, so normal output costs nothing extra.
+            self.data_out = _non_finite_to_null(self.data_out)
+            j_string = dumps(self.data_out)
+
+        # these characters can only appear inside JSON strings
+        j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)
 
         if not self.mono and PYGMENTS_INSTALLED:
             class JcStyle(Style):
@@ -517,7 +610,7 @@ class JcCli():
 
     @staticmethod
     def open_text_file(path_string: str) -> str:
-        with open(path_string, 'r') as f:
+        with open(path_string, 'r', newline='') as f:
             return f.read()
 
     def run_user_command(self) -> None:
@@ -530,12 +623,13 @@ class JcCli():
                 self.magic_run_command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                close_fds=False,           # Allows inheriting file descriptors
-                universal_newlines=True,   # which is useful for process substitution
-                encoding='UTF-8'
+                close_fds=False  # Allows inheriting file descriptors
+                                 # which is useful for process substitution
             )
 
-            self.magic_stdout, self.magic_stderr = proc.communicate()
+            stdout_bytes, stderr_bytes = proc.communicate()
+            self.magic_stdout = stdout_bytes.decode('utf-8')
+            self.magic_stderr = stderr_bytes.decode('utf-8')
             self.magic_stdout = self.magic_stdout or '\n'
             self.magic_returncode = proc.returncode
 
@@ -656,12 +750,15 @@ class JcCli():
             utils.error_message(['Missing piped data. Use "jc -h" for help.'])
             self.exit_error()
 
-    def add_metadata_to_output(self) -> None:
+    def add_metadata_to_output(self, merge: bool = False) -> None:
         """
         This function mutates self.data_out in place. If the _jc_meta field
-        does not already exist, it will be created with the metadata fields. If
-        the _jc_meta field already exists, the metadata fields will be added to
-        the existing object.
+        does not already exist, it will be created with the metadata fields.
+
+        If merge is True (streaming parsers, which add their own _jc_meta
+        object with ignore_exceptions), the metadata fields are added to an
+        existing _jc_meta object. Otherwise an existing _jc_meta field came
+        from the parsed data and is replaced, with a warning unless quiet.
 
         In the case of an empty list (no data), a dictionary with a _jc_meta
         object will be added to the list. This way you always get metadata,
@@ -683,10 +780,7 @@ class JcCli():
                 meta_obj['input_list'] = self.inputlist
 
             if isinstance(self.data_out, dict):
-                if '_jc_meta' not in self.data_out:
-                    self.data_out['_jc_meta'] = {}
-
-                self.data_out['_jc_meta'].update(meta_obj)
+                self._set_meta(self.data_out, meta_obj, merge)
 
             elif isinstance(self.data_out, list):
                 if not self.data_out:
@@ -694,17 +788,36 @@ class JcCli():
 
                 for item in self.data_out:
                     if isinstance(item, dict):
-                        if '_jc_meta' not in item:
-                            item['_jc_meta'] = {}
-
-                        item['_jc_meta'].update(meta_obj)
+                        self._set_meta(item, meta_obj, merge)
 
             else:
                 utils.error_message(['Parser returned an unsupported object type.'])
                 self.exit_error()
 
+    def _set_meta(self, item: Dict, meta_obj: JSONDictType, merge: bool) -> None:
+        """Add the metadata fields to the _jc_meta object of one item"""
+        existing = item.get('_jc_meta')
+
+        if merge and isinstance(existing, dict):
+            existing.update(meta_obj)
+            return
+
+        if '_jc_meta' in item and not self.quiet and not self.meta_replaced_warned:
+            utils.warning_message([
+                'The parsed data has a _jc_meta field. It is replaced by the jc metadata (-M).'
+            ])
+            self.meta_replaced_warned = True
+
+        item['_jc_meta'] = dict(meta_obj)
+
     def slicer(self) -> None:
         """Slice input data lazily, if possible. Updates self.data_in"""
+        if self.slice_str and isinstance(self.data_in, list) and self.inputlist:
+            utils.error_message([
+                'Line slicing is not supported with multiple /proc files.'
+            ])
+            self.exit_error()
+
         if self.slice_str:
             slice_start_str, slice_end_str = self.slice_str.split(':', maxsplit=1)
             if slice_start_str:
@@ -735,7 +848,7 @@ class JcCli():
 
             # single-line string parsers
             if isinstance(self.data_in, str):
-                items = self.data_in.splitlines()
+                items = utils.splitlines(self.data_in, split_cr=True)
                 self.inputlist = []
 
                 for line in items:
@@ -769,6 +882,10 @@ class JcCli():
 
                     self.data_out.append(parsed_line)
 
+            # input that could not be decoded as UTF-8 stays as bytes
+            else:
+                raise TypeError('Slurp input must be UTF-8 text.')
+
             if self.meta_out:
                 self.data_out = {"result": self.data_out}
                 self.run_timestamp = datetime.now(timezone.utc)
@@ -787,9 +904,36 @@ class JcCli():
                 self.run_timestamp = datetime.now(timezone.utc)
                 self.add_metadata_to_output()
 
+    @staticmethod
+    def stdin_lines(stdin: TextIO) -> Iterable[str]:
+        """
+        Lazily yield UTF-8 lines from the binary buffer of stdin. Lines end
+        at LF or CRLF only, and a CRLF ending is yielded as LF. Bytes that
+        cannot be decoded are shown as backslash escapes. Falls back to
+        iterating stdin directly if it has no binary buffer.
+        """
+        buffer = getattr(stdin, 'buffer', None)
+        if buffer is None:
+            yield from stdin
+            return
+
+        text = io.TextIOWrapper(buffer, encoding='utf-8',
+                                errors='backslashreplace', newline='\n')
+        try:
+            for line in text:
+                if line.endswith('\r\n'):
+                    line = line[:-2] + '\n'
+                yield line
+        finally:
+            # leave the underlying buffer open
+            try:
+                text.detach()
+            except ValueError:
+                pass
+
     def streaming_parse_and_print(self) -> None:
         """only supports UTF-8 string data for now"""
-        self.data_in = sys.stdin
+        self.data_in = self.stdin_lines(sys.stdin)
         self.slicer()
 
         if self.parser_module:
@@ -804,13 +948,18 @@ class JcCli():
                 self.data_out = line
                 if self.meta_out:
                     self.run_timestamp = datetime.now(timezone.utc)
-                    self.add_metadata_to_output()
+                    self.add_metadata_to_output(merge=True)
 
                 self.safe_print_out()
 
     def standard_parse_and_print(self) -> None:
         """supports binary and UTF-8 string data"""
-        self.data_in = self.magic_stdout or sys.stdin.buffer.read()
+        # magic output can be an empty string (e.g. an empty /proc file), so
+        # only read STDIN when the magic syntax was not used
+        if self.magic_stdout is None:
+            self.data_in = sys.stdin.buffer.read()
+        else:
+            self.data_in = self.magic_stdout
 
         # convert to UTF-8, if possible. Otherwise, leave as bytes
         try:
@@ -961,7 +1110,7 @@ class JcCli():
                     raise
 
                 streaming_msg = ''
-                if _parser_is_streaming(self.parser_module):
+                if _parser_is_streaming(self.parser_module) and not self.ignore_exceptions:
                     streaming_msg = 'Use the -qq option to ignore streaming parser errors.'
 
                 utils.error_message([

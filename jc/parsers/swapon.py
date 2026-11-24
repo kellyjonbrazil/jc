@@ -46,7 +46,7 @@ from typing import List, Dict, Union
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.0"
+    version = "1.1"
     description = "`swapon` command parser"
     author = "Roey Darwish Dror"
     author_email = "roey.ghost@gmail.com"
@@ -152,7 +152,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
     raw_output: List[dict] = []
 
     if jc.utils.has_data(data):
-        lines = iter(data.splitlines())
+        lines = iter(jc.utils.splitlines(data))
         headers = next(lines)
         columns = headers.split()
         for each_line in lines:

@@ -82,6 +82,12 @@ class MyTests(unittest.TestCase):
     ), 'r', encoding='utf-8') as f:
         whitespace_comments_json = json.loads(f.read())
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-job-with-equals.out'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_job_with_equals = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/crontab-u-job-with-equals.json'), 'r', encoding='utf-8') as f:
+        generic_crontab_u_job_with_equals_json = json.loads(f.read())
+
     def test_crontab_u_nodata(self):
         """
         Test 'crontab' with no data (has a user field)
@@ -185,6 +191,72 @@ class MyTests(unittest.TestCase):
             ),
             self.whitespace_comments_json
         )
+
+
+    def test_crontab_u_line_separator(self):
+        """
+        Test 'crontab_u' with a line-break character other than LF inside a field
+        """
+        data = '0 3 * * * root /usr/bin/backup;\x0c#$(/usr/bin/other)\n'
+        result = jc.parsers.crontab_u.parse(data, quiet=True)
+        self.assertEqual(len(result['schedule']), 1)
+        self.assertEqual(result['schedule'][0]['user'], 'root')
+        self.assertEqual(result['schedule'][0]['command'], '/usr/bin/backup;\x0c#$(/usr/bin/other)')
+
+    def test_crontab_u_mixed_lines_order(self):
+        """
+        Test 'crontab_u' with comments, variables, shortcuts and entries interleaved
+        """
+        data = '# c1\nA=1\n* * * * * root cmd1\n@daily root x\nB=2\n# c2\n@reboot root y z\n0 1 * * * u cmd2\n'
+        result = jc.parsers.crontab_u.parse(data, raw=True, quiet=True)
+        self.assertEqual(result['variables'], [{'name': 'B', 'value': '2'}, {'name': 'A', 'value': '1'}])
+        self.assertEqual([x['command'] for x in result['schedule']], ['cmd1', 'cmd2', 'y z', 'x'])
+        self.assertEqual([x['user'] for x in result['schedule']], ['root', 'u', 'root', 'root'])
+
+    def test_crontab_u_job_with_equals(self):
+        """
+        Test 'crontab' with user, with job lines that contain '=' and do not start with a digit
+        """
+        self.assertEqual(jc.parsers.crontab_u.parse(self.generic_crontab_u_job_with_equals, quiet=True), self.generic_crontab_u_job_with_equals_json)
+
+    def test_crontab_u_quoted_variable_values(self):
+        """
+        Test 'crontab' with user, with quoted variable values
+        """
+        data = ('PATH="/usr/local/bin:/usr/bin"\n'
+                "SHELL = '/bin/bash'\n"
+                'MAILTO=""\n'
+                'A="b\'\n'
+                'B=c "d"\n'
+                'C="\n'
+                'D=""e""\n'
+                '"NAME"=value\n'
+                '0 3 * * * root backup\n')
+        expected = [
+            {'name': '"NAME"', 'value': 'value'},
+            {'name': 'D', 'value': '"e"'},
+            {'name': 'C', 'value': '"'},
+            {'name': 'B', 'value': 'c "d"'},
+            {'name': 'A', 'value': '"b\''},
+            {'name': 'MAILTO', 'value': ''},
+            {'name': 'SHELL', 'value': '/bin/bash'},
+            {'name': 'PATH', 'value': '/usr/local/bin:/usr/bin'}
+        ]
+        result = jc.parsers.crontab_u.parse(data, quiet=True)
+        self.assertEqual(result['variables'], expected)
+        self.assertEqual(result['schedule'][0]['command'], 'backup')
+
+    def test_crontab_u_quoted_variable_values_raw(self):
+        """
+        Test 'crontab' with user, with quoted variable values and raw output
+        """
+        data = 'PATH="/usr/local/bin:/usr/bin"\nSHELL=\'/bin/bash\'\n0 3 * * * root backup\n'
+        expected = [
+            {'name': 'SHELL', 'value': "'/bin/bash'"},
+            {'name': 'PATH', 'value': '"/usr/local/bin:/usr/bin"'}
+        ]
+        result = jc.parsers.crontab_u.parse(data, raw=True, quiet=True)
+        self.assertEqual(result['variables'], expected)
 
 
 if __name__ == '__main__':

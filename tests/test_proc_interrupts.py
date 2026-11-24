@@ -39,6 +39,20 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_interrupts.parse(self.f_in['proc_interrupts'], quiet=True),
                                                           self.f_json['proc_interrupts'])
 
+    def test_proc_interrupts_line_shapes(self):
+        """
+        Test '/proc/interrupts' numeric, named and ERR/MIS lines
+        """
+        data = '           CPU0       CPU1\n  0:         10         20   IO-APIC   2-edge      timer\nNMI:          1          2   Non-maskable interrupts\nERR:          0\n'
+        result = jc.parsers.proc_interrupts.parse(data, quiet=True)
+        self.assertEqual(result[0]['interrupts'], [10, 20])
+        self.assertEqual(result[0]['type'], 'IO-APIC')
+        self.assertEqual(result[0]['device'], ['2-edge', 'timer'])
+        self.assertEqual(result[1]['interrupts'], [1, 2])
+        self.assertEqual(result[1]['type'], 'Non-maskable interrupts')
+        self.assertIsNone(result[1]['device'])
+        self.assertEqual(result[2]['interrupts'], [0])
+
 
 if __name__ == '__main__':
     unittest.main()

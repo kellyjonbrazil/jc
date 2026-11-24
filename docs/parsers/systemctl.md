@@ -83,4 +83,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/systemctl.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/systemctl.py)
 
-Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.6 by Kelly Brazil (kellyjonbrazil@gmail.com)

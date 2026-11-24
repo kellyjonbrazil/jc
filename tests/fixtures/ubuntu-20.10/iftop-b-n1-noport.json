@@ -28,6 +28,49 @@
       "last_10s": 33100,
       "last_40s": 42800
     },
-    "clients": []
+    "clients": [
+      {
+        "index": 1,
+        "connections": [
+          {
+            "host_name": "ubuntu-2004-clean-01",
+            "last_2s": 4820,
+            "last_10s": 4820,
+            "last_40s": 4820,
+            "cumulative": 9630,
+            "direction": "send"
+          },
+          {
+            "host_name": "10.10.15.72",
+            "last_2s": 14500,
+            "last_10s": 14500,
+            "last_40s": 14500,
+            "cumulative": 29100,
+            "direction": "receive"
+          }
+        ]
+      },
+      {
+        "index": 2,
+        "connections": [
+          {
+            "host_name": "ubuntu-2004-clean-02",
+            "last_2s": 0,
+            "last_10s": 0,
+            "last_40s": 0,
+            "cumulative": 0,
+            "direction": "send"
+          },
+          {
+            "host_name": "10.10.15.72",
+            "last_2s": 2020,
+            "last_10s": 2020,
+            "last_40s": 2020,
+            "cumulative": 4040,
+            "direction": "receive"
+          }
+        ]
+      }
+    ]
   }
 ]

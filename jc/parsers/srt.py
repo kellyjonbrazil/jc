@@ -28,9 +28,13 @@ Schema:
           "milliseconds":     int,
           "timestamp":        string
         },
-        "content":            string
+        "content":            string,
+        "proprietary":        string    # [0]
       }
     ]
+
+    [0] text after the end timestamp, such as positional coordinates.
+        Only present when there is such text.
 
 Examples:
 
@@ -94,7 +98,7 @@ from jc.jc_types import JSONDictType
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'SRT file parser'
     author = 'Mark Rotner'
     author_email = 'rotner.mr@gmail.com'
@@ -141,16 +145,24 @@ __version__ = info.version
 RGX_TIMESTAMP_MAGNITUDE_DELIM = r"[,.:，．。：]"
 RGX_POSITIVE_INT = r"[0-9]+"
 RGX_POSITIVE_INT_OPTIONAL = r"[0-9]*"
-RGX_TIMESTAMP = '{field}{separator}{field}{separator}{field}{separator}?{optional_field}'.format(
+# A timestamp or index only starts at the first digit of a run of digits, and
+# the optional trailing parts are only tried after their delimiter. This keeps
+# a long run of digits from being split between adjacent repetitions in every
+# possible way.
+RGX_TIMESTAMP = '(?<![0-9]){field}{separator}{field}{separator}{field}(?:{separator}{optional_field})?'.format(
     separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
     field=RGX_POSITIVE_INT,
     optional_field=RGX_POSITIVE_INT_OPTIONAL
 )
-RGX_INDEX = r"-?[0-9]+\.?[0-9]*"  # int\float\negative.
+RGX_INDEX = r"-?(?<![0-9])[0-9]+(?:\.[0-9]*)?"  # int\float\negative.
 RGX_CONTENT = r".*?"  # Anything(except newline) but lazy.
+RGX_PROPRIETARY = r"[^\r\n]*"  # The rest of the timestamp line.
 RGX_NEWLINE = r"\r?\n"  # Newline(CRLF\LF).
 SRT_REGEX = re.compile(
-    r"\s*(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?(?:{newline}|\Z)({content})"
+    # No leading whitespace: finditer() skips anything that does not match.
+    # Text after the end timestamp (e.g. positional coordinates like
+    # "X1:40 X2:600 Y1:20 Y2:50") is kept as proprietary data.
+    r"(?:({index})\s*{newline})?({ts}) *-[ -] *> *({ts}) ?({proprietary})(?:{newline}|\Z)({content})"
     # Many sub editors don't add a blank line to the end, and many editors and
     # players accept that. We allow it to be missing in input.
     #
@@ -170,13 +182,15 @@ SRT_REGEX = re.compile(
     r"(?=(?:(?:{index}\s*{newline})?{ts}|\Z))".format(
         index=RGX_INDEX,
         ts=RGX_TIMESTAMP,
+        proprietary=RGX_PROPRIETARY,
         content=RGX_CONTENT,
         newline=RGX_NEWLINE,
     ),
     re.DOTALL,
 )
 TIMESTAMP_REGEX = re.compile(
-    '^({field}){separator}({field}){separator}({field}){separator}?({optional_field})$'.format(
+    # The third field must take all of its digits when there is no delimiter.
+    '^({field}){separator}({field}){separator}({field})(?:{separator}|(?![0-9]))({optional_field})$'.format(
         separator=RGX_TIMESTAMP_MAGNITUDE_DELIM,
         field=RGX_POSITIVE_INT,
         optional_field=RGX_POSITIVE_INT_OPTIONAL
@@ -268,14 +282,17 @@ def parse(
         return raw_output
 
     for subtitle in SRT_REGEX.finditer(data):
-        index, start, end, content = subtitle.groups()
-        raw_output.append(
-            {
-                "index": index,
-                "start": parse_timestamp(start),
-                "end": parse_timestamp(end),
-                "content": content.replace("\r\n", "\n")
-            }
-        )
+        index, start, end, proprietary, content = subtitle.groups()
+        entry = {
+            "index": index,
+            "start": parse_timestamp(start),
+            "end": parse_timestamp(end),
+            "content": content.replace("\r\n", "\n")
+        }
+
+        if proprietary.strip():
+            entry["proprietary"] = proprietary.strip()
+
+        raw_output.append(entry)
 
     return raw_output if raw else _process(raw_output)

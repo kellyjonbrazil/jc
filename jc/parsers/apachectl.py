@@ -137,14 +137,14 @@ Examples:
     }
 """
 import re
-from typing import List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple
 from jc.jc_types import JSONDictType
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`apachectl -S` command parser'
     author = 'Tung Lam'
     author_email = '53996158+tunglambk@users.noreply.github.com'
@@ -172,8 +172,8 @@ _name_vhost = re.compile(
     r'\((?P<path>.+):(?P<line>\d+)\)\s*$'
 )
 
-_wild_alias = re.compile(r'^\s*wild alias\s+(?P<name>\S+)\s*$')
-_alias = re.compile(r'^\s*alias\s+(?P<name>\S+)\s*$')
+_wild_alias = re.compile(r'^\s*wild alias\s+(?P<name>\S.*?)\s*$')
+_alias = re.compile(r'^\s*alias\s+(?P<name>\S.*?)\s*$')
 
 _quoted_value = re.compile(
     r'^[A-Za-z][A-Za-z ]*:\s*"(?P<value>[^"]*)"(?P<not_used>\s+not_used)?\s*$'
@@ -184,7 +184,8 @@ _user_group = re.compile(
     r'(?P<not_used>\s+not_used)?\s*$'
 )
 
-_mutex = re.compile(r'^Mutex\s+(?P<name>\S+):\s+(?P<value>.*?)\s*$')
+# trailing whitespace is stripped from the value after matching
+_mutex = re.compile(r'^Mutex\s+(?P<name>\S+):\s+(?P<value>.*)$')
 _mutex_directory = re.compile(r'dir="(?P<directory>[^"]*)"')
 _mutex_mechanism = re.compile(r'mechanism=(?P<mechanism>\S+)')
 
@@ -250,16 +251,26 @@ def _new_vhost(address: str, port: str, name: str, path: str, line: str) -> JSON
     }
 
 
-def _mark_default(virtual_hosts: List[JSONDictType], default_key: Tuple[str, str, str]) -> None:
+def _mark_default(
+    group: Dict[Tuple[str, str, str], List[JSONDictType]],
+    default_key: Tuple[str, str, str]
+) -> None:
     """
-    Mark the virtual host named by a `default server` line. A server can be
-    the default in more than one address group, so every match is marked.
+    Mark the virtual hosts of the current address:port group that match a
+    `default server` line. Marked entries are dropped from the group index so
+    each entry is visited once.
     """
-    name, path, line = default_key
+    for vhost in group.pop(default_key, []):
+        vhost['default'] = True
 
-    for vhost in virtual_hosts:
-        if vhost['name'] == name and vhost['path'] == path and vhost['line'] == line:
-            vhost['default'] = True
+
+def _add_to_group(
+    group: Dict[Tuple[str, str, str], List[JSONDictType]],
+    vhost: JSONDictType
+) -> None:
+    """Record a virtual host in the index of the current address:port group."""
+    key = (vhost['name'], vhost['path'], vhost['line'])
+    group.setdefault(key, []).append(vhost)
 
 
 def _parse_mutex(line: str) -> Optional[JSONDictType]:
@@ -273,7 +284,7 @@ def _parse_mutex(line: str) -> Optional[JSONDictType]:
     if not match:
         return None
 
-    value = match.group('value')
+    value = match.group('value').rstrip()
     mutex: JSONDictType = {
         'name': match.group('name'),
         'using_defaults': False,
@@ -389,13 +400,15 @@ def parse(
         address: Optional[str] = None
         current_vhost: Optional[JSONDictType] = None
         default_key: Optional[Tuple[str, str, str]] = None
+        group: Dict[Tuple[str, str, str], List[JSONDictType]] = {}
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if _vhost_marker.match(line):
                 in_vhosts = True
                 address = None
                 current_vhost = None
                 default_key = None
+                group = {}
                 continue
 
             if not line.strip():
@@ -410,7 +423,7 @@ def parse(
                         default_match.group('path'),
                         default_match.group('line')
                     )
-                    _mark_default(virtual_hosts, default_key)
+                    _mark_default(group, default_key)
                     continue
 
                 name_vhost_match = _name_vhost.match(line)
@@ -430,9 +443,10 @@ def parse(
                     )
                     virtual_hosts.append(vhost)
                     current_vhost = vhost
+                    _add_to_group(group, vhost)
 
                     if default_key:
-                        _mark_default(virtual_hosts, default_key)
+                        _mark_default(group, default_key)
 
                     continue
 
@@ -456,6 +470,7 @@ def parse(
                     split = _split_address_port(header_match.group('address'))
                     current_vhost = None
                     default_key = None
+                    group = {}
 
                     if split is None:
                         continue
@@ -466,13 +481,15 @@ def parse(
                         address = split[0]
                     else:
                         address = None
-                        virtual_hosts.append(_new_vhost(
+                        header_vhost = _new_vhost(
                             split[0],
                             split[1],
                             header_match.group('name'),
                             header_match.group('path'),
                             header_match.group('line')
-                        ))
+                        )
+                        virtual_hosts.append(header_vhost)
+                        _add_to_group(group, header_vhost)
 
                     continue
 

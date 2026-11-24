@@ -83,7 +83,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`veracrypt` command parser'
     author = 'Jake Ob'
     author_email = 'iakopap at gmail.com'
@@ -233,11 +233,11 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
         jc.utils.compatibility(__name__, info.compatible, quiet)
         jc.utils.input_type_check(data)
 
-        linedata = data.splitlines()
+        linedata = jc.utils.splitlines(data)
 
         first_line = linedata[0]
-        line_mode = re.search(_volume_line_pattern, first_line)
-        verbose_mode = re.search(_volume_verbose_pattern, first_line)
+        line_mode = re.match(_volume_line_pattern, first_line)
+        verbose_mode = re.match(_volume_verbose_pattern, first_line)
 
         if not line_mode and not verbose_mode:
             return []

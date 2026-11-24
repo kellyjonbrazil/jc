@@ -56,6 +56,7 @@ Examples:
     }
 """
 from jc.jc_types import JSONDictType
+import jc.utils
 import jc.parsers.ini as ini
 
 
@@ -92,6 +93,5 @@ def parse(
         Dictionary. Raw or processed structured data.
     """
     # This parser is an alias of ini.py
-    ini.info = info  # type: ignore
-    ini.__name__ = __name__
-    return ini.parse(data, raw, quiet)
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    return ini.parse(data, raw, quiet=True)

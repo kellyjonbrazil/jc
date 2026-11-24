@@ -102,7 +102,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/numa_maps` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -126,8 +126,13 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
+    no_convert = {'address', 'policy'}
+
     for entry in proc_data:
         for key, val in entry.items():
+            if key in no_convert:
+                continue
+
             try:
                 entry[key] = int(val)
             except Exception:
@@ -164,11 +169,11 @@ def parse(
         header = 'address policy details\n'
         data = header + data
 
-        raw_output = simple_table_parse(data.splitlines())
+        raw_output = simple_table_parse(jc.utils.splitlines(data))
 
         for row in raw_output:
             if 'details' in row:
-                detail_split = row['details'].split()
+                detail_split = [x for x in row['details'].split(' ') if x]
 
                 options = []
                 for item in detail_split:

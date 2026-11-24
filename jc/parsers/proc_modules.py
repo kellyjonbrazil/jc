@@ -139,7 +139,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/modules` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -214,7 +214,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             module_info = line.split()
             module, size, used, used_by, status, location = module_info[:6]

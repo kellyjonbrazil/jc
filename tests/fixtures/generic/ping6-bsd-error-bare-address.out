@@ -1,0 +1,9 @@
+PING6(56=40+8+8 bytes) 2001:db8::5 --> 2001:db8::9
+72 bytes from 2001:db8::1: Destination unreachable: Address unreachable
+72 bytes from gw.example.net (2001:db8::1): Destination unreachable: No route
+72 bytes from 2001:db8::: Time exceeded: Hop limit
+16 bytes from 2001:db8::9, icmp_seq=3 hlim=64 time=0.412 ms
+
+--- 2001:db8::9 ping6 statistics ---
+4 packets transmitted, 1 packets received, 75.0% packet loss
+round-trip min/avg/max/std-dev = 0.412/0.412/0.412/0.000 ms

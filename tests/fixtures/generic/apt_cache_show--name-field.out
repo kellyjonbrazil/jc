@@ -1,0 +1,15 @@
+Package: openssl
+Version: 3.0.11-1
+Architecture: amd64
+Maintainer: Debian OpenSSL Team <pkg-openssl-devel@alioth-lists.debian.net>
+Description: Secure Sockets Layer toolkit - cryptographic utility
+Homepage: https://www.openssl.org/
+
+Package: pretty-themes
+Version: 0.1-1
+Architecture: all
+Name: Pretty Themes
+Name-Of-Theme: Midnight
+Nameserver: ns1.example.com
+Description: Some desktop themes
+Homepage: https://themes.example.com/

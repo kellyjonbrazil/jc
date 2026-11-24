@@ -160,7 +160,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -170,14 +170,19 @@ class info():
 
 __version__ = info.version
 
-VAR_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<val>[^(].*)$')
-SIMPLE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\[\d+\]=.+\))$')
+# The variable name is the word directly before the first `=` on the line, so
+# each pattern is tried once per line rather than at every offset of the value.
+NAME_PATTERN = r'^[^=]*(?<![a-zA-Z0-9_])(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)='
+# array definitions end the line with `)`; check that before matching the body
+ARRAY_NAME_PATTERN = NAME_PATTERN + r'(?=\(.*\)$)'
+VAR_DEF_PATTERN = re.compile(NAME_PATTERN + r'(?P<val>[^(].*)$')
+SIMPLE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\[\d+\]=.+\))$')
 # ksh/zsh print indexed arrays as bare values with no [index]= prefix
-BARE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*[^[].*\))$')
+BARE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\s*[^[].*\))$')
 # allow a leading space after the paren (zsh) and quoted keys
-ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=(?P<body>\(\s*\[.+\]=.+\))$')
-EMPTY_ARRAY_DEF_PATTERN = re.compile(r'(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)=\(\s*\)$')
-EMPTY_VAR_DEF_PATTERN = re.compile(r'(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
+ASSOCIATIVE_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'(?P<body>\(\s*\[.+\]=.+\))$')
+EMPTY_ARRAY_DEF_PATTERN = re.compile(ARRAY_NAME_PATTERN + r'\(\s*\)$')
+EMPTY_VAR_DEF_PATTERN = re.compile(r'^\s*(?:declare|typeset)\s.+\s(?P<name>[a-zA-Z_][a-zA-Z0-9_]*)$')
 
 _raw = False
 
@@ -219,26 +224,96 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     return proc_data
 
 
-def _remove_ansi_c(line):
-    pattern = r"\$'((?:[^'\\]|\\.)*)'"
+_ANSI_C_PATTERN = re.compile(r"\$'((?:[^'\\]|\\.)*)'")
 
+# For array bodies: backslash escapes and ordinary "..." and '...' strings are
+# matched first and kept as they are, so only a `$'` that starts a word is
+# taken as ANSI-C quoting.
+_ARRAY_ANSI_C_PATTERN = re.compile(r"""\\.|"(?:[^"\\]|\\.)*"|'[^']*'|\$'((?:[^'\\]|\\.)*)'""")
+
+
+def _remove_ansi_c(line, shell_quote=False):
     def decode_ansi_c(match):
         inner_content = match.group(1)
+
+        if inner_content is None:
+            return match.group(0)
 
         if _raw:   # global variable because of laziness
             decoded = inner_content
         else:
             decoded = inner_content.encode('utf-8').decode('unicode_escape')
 
+        if shell_quote:
+            # array bodies are split with _shell_split() afterwards, so quote
+            # the text to keep it one word
+            return shlex.quote(decoded)
+
         return f"'{decoded}'"
 
-    return re.sub(pattern, decode_ansi_c, line)
+    if shell_quote:
+        return _ARRAY_ANSI_C_PATTERN.sub(decode_ansi_c, line)
+
+    return _ANSI_C_PATTERN.sub(decode_ansi_c, line)
+
+
+# a word: runs of plain characters, quoted strings and escaped characters
+_SHELL_WORD = re.compile(r'''(?:[^ \t\r\n'"\\]+|'[^']*'|"(?:[^"\\]|\\.)*"|\\.)+''', re.DOTALL)
+_SHELL_PART = re.compile(r'''[^'"\\]+|'([^']*)'|"((?:[^"\\]|\\.)*)"|\\(.)''', re.DOTALL)
+_DQ_ESCAPE = re.compile(r'\\([\\"])')
+_DQ_TAIL = re.compile(r'(?:[^"\\]|\\.)*\\', re.DOTALL)
+
+
+def _shell_words(data):
+    """Split like shlex.split() (POSIX mode, no comments), keeping the quotes"""
+    words = []
+    pos = 0
+    end = len(data)
+    while True:
+        while pos < end and data[pos] in ' \t\r\n':
+            pos += 1
+        if pos >= end:
+            return words
+        match = _SHELL_WORD.match(data, pos)
+        stop = match.end() if match else pos
+        if stop < end and data[stop] not in ' \t\r\n':
+            # the same errors as shlex: the input ends after a backslash
+            # (outside of single quotes) or inside quotes
+            if data[stop] == '\\' or (data[stop] == '"' and _DQ_TAIL.fullmatch(data, stop + 1)):
+                raise ValueError('No escaped character')
+            raise ValueError('No closing quotation')
+        words.append(data[pos:stop])
+        pos = stop
+
+
+def _shell_unquote(word):
+    """Remove the quotes and escapes from a word of _shell_words()"""
+    result = []
+    for part in _SHELL_PART.finditer(word):
+        single, double, escaped = part.groups()
+        if single is not None:
+            result.append(single)
+        elif double is not None:
+            result.append(_DQ_ESCAPE.sub(r'\1', double))
+        elif escaped is not None:
+            result.append(escaped)
+        else:
+            result.append(part.group(0))
+    return ''.join(result)
+
+
+def _shell_split(data):
+    """
+    Same result as shlex.split(data), which takes quadratic time on a long
+    word
+    """
+    return [_shell_unquote(word) for word in _shell_words(data)]
 
 
 def _get_simple_array_vals(body: str) -> List[str]:
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    body_split = shlex.split(body)
+    body_split = _shell_split(body)
     values = []
     for item in body_split:
         _, val = item.split('=', maxsplit=1)
@@ -246,23 +321,61 @@ def _get_simple_array_vals(body: str) -> List[str]:
     return values
 
 
+def _split_key_value(word: str):
+    """
+    Split a `[key]=value` word at the first `]=` outside of quotes, so a key
+    can contain `=`. Returns None if there is no such `]=`.
+    """
+    if not word.startswith('['):
+        return None
+
+    for part in _SHELL_PART.finditer(word, 1):
+        if part.group(0)[0] not in '\'"\\':
+            idx = part.group(0).find(']=')
+            if idx != -1:
+                idx += part.start()
+                return _shell_unquote(word[1:idx]), _shell_unquote(word[idx + 2:])
+
+    return None
+
+
 def _get_associative_array_vals(body: str) -> Dict[str, str]:
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    body_split = shlex.split(body)
     values: Dict = {}
-    for item in body_split:
-        key, val = item.split('=', maxsplit=1)
-        key = _remove_bookends(key, '[', ']')
+    for word in _shell_words(body):
+        key_value = _split_key_value(word)
+        if key_value:
+            key, val = key_value
+        else:
+            key, val = _shell_unquote(word).split('=', maxsplit=1)
+            key = _remove_bookends(key, '[', ']')
         values.update({key: val})
     return values
 
 
 def _get_bare_array_vals(body: str) -> List[str]:
     # ksh/zsh indexed arrays are printed as bare values with no [index]=
-    body = _remove_ansi_c(body)
+    body = _remove_ansi_c(body, shell_quote=True)
     body = _remove_bookends(body)
-    return shlex.split(body)
+    return _shell_split(body)
+
+
+def _get_flags(line: str) -> str:
+    """Return the leading option flags of a declare/typeset/export line."""
+    tokens = line.split()
+    if not tokens or tokens[0] not in ('declare', 'typeset', 'export'):
+        return ''
+
+    # gather leading flag tokens; ksh may split them (e.g. `typeset -A -i`)
+    flags = ''
+    for tok in tokens[1:]:
+        if tok.startswith('-'):
+            flags += tok
+        else:
+            break
+
+    return flags
 
 
 def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
@@ -296,13 +409,7 @@ def _get_declare_options(line: str, type_hint: str = 'variable') -> Dict:
     if keyword == 'export':
         opts['exported'] = True
 
-    # gather leading flag tokens; ksh may split them (e.g. `typeset -A -i`)
-    flags = ''
-    for tok in tokens[1:]:
-        if tok.startswith('-'):
-            flags += tok
-        else:
-            break
+    flags = _get_flags(line)
 
     for char in flags:
         if char in opts_map:
@@ -366,7 +473,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             item = {
                 "name": '',
@@ -388,8 +495,11 @@ def parse(
                 raw_output.append(item)
                 continue
 
-            # simple array
-            simple_arr_def_match = re.search(SIMPLE_ARRAY_DEF_PATTERN, line)
+            # simple array. A line declared with -A is an associative array
+            # even when its first key is a number.
+            flags = _get_flags(line)
+            is_assoc = 'A' in flags and 'a' not in flags
+            simple_arr_def_match = None if is_assoc else re.search(SIMPLE_ARRAY_DEF_PATTERN, line)
             if simple_arr_def_match:
                 item['name'] = simple_arr_def_match['name']
                 item['value'] = _get_simple_array_vals(simple_arr_def_match['body'])

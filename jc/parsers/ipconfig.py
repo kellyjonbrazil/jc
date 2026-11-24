@@ -434,7 +434,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`ipconfig` Windows command parser'
     author = 'joehacksalot'
     author_email = 'joehacksalot@gmail.com'
@@ -578,7 +578,7 @@ def _parse(data):
         "extras": []  # To store unrecognized fields
     }
 
-    lines = data.splitlines()
+    lines = jc.utils.splitlines(data)
     lines = [line.rstrip() for line in lines if line.strip() != ""]
 
     line_iter = _PushbackIterator(iter(lines))
@@ -594,14 +594,15 @@ def _parse(data):
 
         # Header Section
         if not in_adapter_section:
-            if "Windows IP Configuration" in line:
-                continue
-            elif _is_adapter_start_line(line):
+            if _is_adapter_start_line(line):
                 # Start of Adapter Section
                 in_adapter_section = True
                 adapter_name = line.strip(":").strip()
                 adapter = _initialize_adapter(adapter_name)
                 parse_output["adapters"].append(adapter)
+            elif line.strip() == "Windows IP Configuration":
+                # banner line only; an adapter name can contain this text
+                continue
             elif line.startswith("   "):
                 key, value = _parse_line(line)
                 if key:
@@ -627,7 +628,10 @@ def _parse(data):
 
 def _is_adapter_start_line(line):
     # Detect adapter start lines, e.g., "Ethernet adapter Ethernet:"
-    return re.match(r"^[^\s].*adapter.*:", line, re.IGNORECASE)
+    # Match the text before the last colon so the pattern does not need a
+    # second open-ended `.*` after `adapter`
+    prefix, colon, _ = line.rpartition(":")
+    return bool(colon) and re.match(r"^[^\s].*adapter", prefix, re.IGNORECASE)
 
 
 def _initialize_adapter(adapter_name):

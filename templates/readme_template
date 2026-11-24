@@ -186,7 +186,8 @@ slicing. This allows you to skip lines at the beginning and/or end of the
 `START` and `STOP` can be positive or negative integers or blank and allow
 you to specify how many lines to skip and how many lines to process.
 Positive and blank slices are the most memory efficient. Any negative
-integers in the slice will use more memory.
+integers in the slice will use more memory. Lines are counted at LF and CRLF
+line endings; a lone CR does not start a new line.
 
 For example, to skip the first and last line of the following text, you
 could express the slice in a couple ways:
@@ -435,7 +436,7 @@ $ ping 1.1.1.1 | jc --ping-s -u | jq
 Streaming parsers accept any iterable object and return an iterable object
 allowing lazy processing of the data. The input data should iterate on lines
 of string data. Examples of good input data are `sys.stdin` or
-`str.splitlines()`.
+`str.split('\n')`.
 
 To use the returned iterable object in your code, simply loop through it or
 use the [next()](https://docs.python.org/3/library/functions.html#next)
@@ -443,7 +444,7 @@ builtin function:
 ```python
 import jc
 
-result = jc.parse('ls_s', ls_command_output.splitlines())
+result = jc.parse('ls_s', ls_command_output.split('\n'))
 for item in result:
     print(item["filename"])
 ```
@@ -486,7 +487,7 @@ $ export LANG=C
 $ export LC_NUMERIC=C
 ```
 
-On some older systems UTF-8 output will be downgraded to ASCII with `\\u`
+On some older systems UTF-8 output will be downgraded to ASCII with `\u`
 escape sequences if the `C` locale does not support UTF-8 encoding.
 
 #### Timezones
@@ -498,6 +499,19 @@ on the local timezone of the system the `jc` parser was run on).
 If a UTC timezone can be detected in the text of the command output, the
 timestamp will be timezone aware and have a `_utc` suffix on the key name.
 (e.g. `epoch_utc`) No other timezones are supported for aware timestamps.
+
+#### Line Endings
+
+`jc` passes input to the parser without translating line endings, whether it
+comes from `STDIN`, a "magic" command, or a `/proc` file. All line-based
+parsers split lines at LF and CRLF line endings only, so other characters that
+can appear inside a value, such as a lone CR, form feed, or Unicode line separator, stay
+part of that line. Parsers for file formats that can use CR-only line endings (`csv`,
+`hosts`, `jar-manifest`, and `m3u`) also accept a lone CR as a line ending.
+
+Streaming parsers split `STDIN` lines the same way (LF and CRLF only). Bytes
+in `STDIN` that are not valid UTF-8 are shown as backslash escapes (e.g.
+`\xff`) instead of stopping the parser.
 
 ## Use In Other Shells
 `jc` can be used in most any shell. Some modern shells have JSON deserialization

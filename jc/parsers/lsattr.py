@@ -69,7 +69,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`lsattr` command parser'
     author = 'Mark Rotner'
     author_email = 'rotner.mr@gmail.com'
@@ -159,7 +159,7 @@ def parse(
 
     output: List = []
 
-    cleandata = list(filter(None, data.splitlines()))
+    cleandata = list(filter(None, jc.utils.splitlines(data)))
 
     if not jc.utils.has_data(data):
         return output

@@ -1,0 +1,31 @@
+Name        : nss-tools
+Version     : 3.90.0
+Release     : 6.el9
+Architecture: x86_64
+Install Date: Mon 12 Feb 2024 10:21:42 AM PST
+Group       : Unspecified
+Size        : 1160660
+License     : MPLv2.0
+Signature   : RSA/SHA256, Thu 22 Aug 2023 02:34:59 PM PDT, Key ID 199e2f91fd431d51
+Source RPM  : nss-3.90.0-6.el9.src.rpm
+Build Date  : Thu 08 Aug 2023 05:47:25 PM PDT
+Build Host  : buildhw-x86-01.example.org
+Relocations : (not relocatable)
+Vendor      : Example Vendor
+URL         : http://www.mozilla.org/projects/security/pki/nss/
+Summary     : Tools for the Network Security Services
+Description :
+Support tools for the Network Security Services library.
+Names: certificates and keys are stored in the database
+Namespaces: are supported
+Version: 9.9 and later use the shared database
+Name: certutil
+Package: pk12util
+Name        : bash
+Version     : 5.1.8
+Release     : 6.el9
+Architecture: x86_64
+Summary     : The GNU Bourne Again shell
+Description :
+The GNU Bourne Again shell (Bash) is a shell or command language
+interpreter that is compatible with the Bourne shell (sh).

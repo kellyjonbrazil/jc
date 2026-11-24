@@ -1,0 +1,17 @@
+[
+  {
+    "Archive": "a.jar",
+    "Manifest_Version": "1.0",
+    "A": "xy",
+    "B": "pqr",
+    "Bundle_Description": "first part, then inflating: META-INF/MANIFEST.MF and more",
+    "Main_Class": "com.example.Main",
+    "Premain_Class": "com.example.agent.PremainAgent"
+  },
+  {
+    "Archive": "b.jar",
+    "Manifest_Version": "1.0",
+    "Class_Path": "lib/one.jar lib/two.jar",
+    "Created_By": "1.8"
+  }
+]

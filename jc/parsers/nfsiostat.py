@@ -203,7 +203,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`nfsiostat` command parser'
     author = 'Yang Bai'
     author_email = '271969568+ybai08@users.noreply.github.com'
@@ -215,11 +215,12 @@ class info():
 __version__ = info.version
 
 
-MOUNT_RE = re.compile(r'^(?P<filesystem>\S+) mounted on (?P<mount>.+):$')
+MOUNT_RE = re.compile(r'^(?P<filesystem>[^ \t]+) mounted on (?P<mount>.+):$')
 OP_HEADER_RE = re.compile(r'^(?P<op>[a-z]+):\s+ops/s\s')
 COLUMN_SPLIT_RE = re.compile(r'\s{2,}|\t')
 
 SKIP = '<skip>'
+MAX_LABEL_LEN = 256
 NO_MOUNTS_MESSAGE = 'No NFS mount points were found'
 KNOWN_OPS = {'read', 'write', 'getattr', 'access', 'lookup', 'readdir', 'readdirplus'}
 
@@ -266,6 +267,14 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
                         value[key] = jc.utils.convert_to_float(value[key])
 
     return proc_data
+
+
+def _mount_label(mount_name: str) -> str:
+    """Shorten a very long mount point name for use in warning messages."""
+    if len(mount_name) > MAX_LABEL_LEN:
+        return mount_name[:MAX_LABEL_LEN] + '...'
+
+    return mount_name
 
 
 def _parse_op_values(columns: List[str], line: str) -> Optional[Dict]:
@@ -321,7 +330,7 @@ def parse(
 
     def warn_if_values_line_missing() -> None:
         if section is not None:
-            warn(f'{mount["mount"]}: missing the values line after a header line')
+            warn(f'{_mount_label(mount["mount"])}: missing the values line after a header line')
 
     def end_of_mount_block() -> None:
         if not mount:
@@ -330,11 +339,11 @@ def parse(
         warn_if_values_line_missing()
 
         if not any(isinstance(value, dict) for value in mount.values()):
-            warn(f'{mount["mount"]}: no operation statistics found (truncated input?)')
+            warn(f'{_mount_label(mount["mount"])}: no operation statistics found (truncated input?)')
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             stripped = line.strip()
 
             if not stripped:
@@ -356,6 +365,8 @@ def parse(
 
             if stripped.startswith('ops/s') and 'rpc bklog' in stripped:
                 warn_if_values_line_missing()
+                if 'ops_sec' in mount:
+                    warn(f'{_mount_label(mount["mount"])}: more than one ops/s line in a mount block')
                 section = 'mount'
                 continue
 
@@ -367,7 +378,7 @@ def parse(
                     section = op
                     columns = COLUMN_SPLIT_RE.split(stripped.split(':', maxsplit=1)[1].strip())
                 else:
-                    warn(f'{mount["mount"]}: skipping unknown operation table: {op}')
+                    warn(f'{_mount_label(mount["mount"])}: skipping unknown operation table: {op}')
                     section = SKIP
                 continue
 
@@ -376,7 +387,7 @@ def parse(
                 if len(values) == 2:
                     mount['ops_sec'], mount['rpc_bklog'] = values
                 else:
-                    warn(f'{mount["mount"]}: unexpected number of fields: {stripped}')
+                    warn(f'{_mount_label(mount["mount"])}: unexpected number of fields: {stripped}')
                 section = None
                 continue
 
@@ -389,7 +400,7 @@ def parse(
                 if op_stats:
                     mount[section] = op_stats
                 else:
-                    warn(f'{mount["mount"]}: could not parse {section} values: {stripped}')
+                    warn(f'{_mount_label(mount["mount"])}: could not parse {section} values: {stripped}')
                 section = None
                 continue
 

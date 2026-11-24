@@ -142,4 +142,4 @@ Compatibility:  linux, aix, freebsd, darwin
 
 Source: [`jc/parsers/arp.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/arp.py)
 
-Version 1.12 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.13 by Kelly Brazil (kellyjonbrazil@gmail.com)

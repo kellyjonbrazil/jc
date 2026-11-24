@@ -92,4 +92,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/lsattr.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/lsattr.py)
 
-Version 1.2 by Mark Rotner (rotner.mr@gmail.com)
+Version 1.3 by Mark Rotner (rotner.mr@gmail.com)

@@ -22,7 +22,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('top_s', top_command_output.splitlines())
+    result = jc.parse('top_s', top_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -175,7 +175,7 @@ Examples:
 def parse(data: Iterable[str],
           raw: bool = False,
           quiet: bool = False,
-          ignore_exceptions: bool = False) -> Union[Iterable[Dict], tuple]
+          ignore_exceptions: bool = False) -> Iterable[Dict] | tuple
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -183,7 +183,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -199,4 +199,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/top_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/top_s.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

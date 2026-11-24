@@ -1,6 +1,7 @@
 """jc - JSON Convert utils"""
 import sys
 import re
+import math
 import locale
 import shutil
 from itertools import islice
@@ -49,6 +50,41 @@ def _safe_pager(string: str) -> None:
         pager(_asciify(string))
 
 
+# C0 controls (except tab and newline), DEL, and C1 controls are shown as
+# escapes in warning and error messages
+_CONTROL_CHAR_ESCAPES = {
+    c: f'\\x{c:02x}'
+    for c in list(range(0x00, 0x20)) + [0x7f] + list(range(0x80, 0xa0))
+    if c not in (0x09, 0x0a)
+}
+
+
+def _escape_controls(string: str) -> str:
+    """
+    Return the string with control characters other than tab and newline
+    replaced by visible `\\xNN` escapes.
+    """
+    return string.translate(_CONTROL_CHAR_ESCAPES)
+
+
+# message lines longer than this are shortened before they are wrapped.
+# TextWrapper takes time proportional to the square of the length of a
+# long unbroken word.
+_MAX_MESSAGE_LINE_LENGTH = 4096
+
+
+def _message_line(string: str) -> str:
+    """
+    Return a message line ready for wrapping: shortened with an ellipsis
+    and the original length if it is very long, and with control
+    characters escaped.
+    """
+    if len(string) > _MAX_MESSAGE_LINE_LENGTH:
+        string = f'{string[:_MAX_MESSAGE_LINE_LENGTH]}... ({len(string)} characters)'
+
+    return _escape_controls(string)
+
+
 def warning_message(message_lines: List[str]) -> None:
     """
     Prints warning message to `STDERR` for non-fatal issues. The first line
@@ -76,7 +112,7 @@ def warning_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 15,
                                subsequent_indent=' ' * 19)
 
-    first_line = message_lines.pop(0)
+    first_line = _message_line(message_lines.pop(0))
     first_str = f'jc:  Warning - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -84,7 +120,7 @@ def warning_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(line)
+        message = next_wrapper.fill(_message_line(line))
         _safe_print(message, file=sys.stderr)
 
 
@@ -108,7 +144,7 @@ def error_message(message_lines: List[str]) -> None:
     next_wrapper = TextWrapper(width=columns, initial_indent=' ' * 13,
                                subsequent_indent=' ' * 17)
 
-    first_line = message_lines.pop(0)
+    first_line = _message_line(message_lines.pop(0))
     first_str = f'jc:  Error - {first_line}'
     first_str = first_wrapper.fill(first_str)
     _safe_print(first_str, file=sys.stderr)
@@ -116,7 +152,7 @@ def error_message(message_lines: List[str]) -> None:
     for line in message_lines:
         if line == '':
             continue
-        message = next_wrapper.fill(line)
+        message = next_wrapper.fill(_message_line(line))
         _safe_print(message, file=sys.stderr)
 
 
@@ -209,6 +245,96 @@ def remove_quotes(data: str) -> str:
     return data
 
 
+_GIT_ESCAPES = {
+    'a': '\a', 'b': '\b', 'f': '\f', 'n': '\n', 'r': '\r', 't': '\t',
+    'v': '\v', '\\': '\\', '"': '"'
+}
+_git_escape_pattern = re.compile(r'\\([0-3][0-7]{2}|.)', re.DOTALL)
+
+
+def _git_quoted_end(data: str, start: int = 0) -> int:
+    """
+    Return the index of the double quote that closes the C-quoted string
+    that opens at data[start], or -1 if there is none.
+    """
+    i = start + 1
+    size = len(data)
+    while i < size:
+        char = data[i]
+        if char == '\\':
+            i += 2
+            continue
+        if char == '"':
+            return i
+        i += 1
+    return -1
+
+
+def _git_unquote_one(data: str) -> str:
+    """Decode the content of one C-quoted git path (quotes already removed)"""
+    out = bytearray()
+    pos = 0
+
+    for match in _git_escape_pattern.finditer(data):
+        out += data[pos:match.start()].encode('utf-8', 'backslashreplace')
+        pos = match.end()
+        esc = match.group(1)
+
+        if len(esc) == 3 and esc[0] in '0123':
+            out.append(int(esc, 8))
+        elif esc in _GIT_ESCAPES:
+            out += _GIT_ESCAPES[esc].encode('utf-8')
+        else:
+            out += match.group(0).encode('utf-8', 'backslashreplace')
+
+    out += data[pos:].encode('utf-8', 'backslashreplace')
+    return out.decode('utf-8', 'backslashreplace')
+
+
+def unquote_git_path(data: str) -> str:
+    """
+    Decode a file path as printed by git. By default (`core.quotePath`) git
+    wraps a path that has non-ASCII characters, double quotes, backslashes or
+    control characters in double quotes and C-style escapes those characters
+    (e.g. `"d\\303\\251ploy.yml"`). The escapes are decoded and the bytes are
+    interpreted as UTF-8. Invalid UTF-8 is shown as backslash escapes.
+
+    A path that is not quoted is returned unmodified. Each side of a rename
+    in the `"old" => new` or `old => "new"` form is decoded separately.
+
+    Parameters:
+
+        data:       (string) Input value
+
+    Returns:
+
+        string
+    """
+    if data.startswith('"'):
+        end = _git_quoted_end(data)
+        if end == len(data) - 1:
+            return _git_unquote_one(data[1:end])
+
+        if end > 0 and data.startswith(' => ', end + 1):
+            rest = data[end + 5:]
+            if rest.startswith('"') and _git_quoted_end(rest) == len(rest) - 1:
+                rest = _git_unquote_one(rest[1:-1])
+            return _git_unquote_one(data[1:end]) + ' => ' + rest
+
+        return data
+
+    if data.endswith('"'):
+        # a plain name can not contain a double quote, so the first one
+        # opens the quoted second name of the rename
+        idx = data.find(' => "')
+        if idx >= 0 and '"' not in data[:idx]:
+            start = idx + 4
+            if _git_quoted_end(data, start) == len(data) - 1:
+                return (data[:start] + _git_unquote_one(data[start + 1:-1]))
+
+    return data
+
+
 def normalize_key(data: str) -> str:
     r"""
     Normalize a key name by shifting to lower-case and converting special
@@ -267,16 +393,27 @@ def convert_to_int(value: object) -> Optional[int]:
         try:
             return int(str_val)
         except (ValueError, TypeError):
+            # also reached for digit strings longer than the int() digit
+            # limit (Python 3.11+), where float() overflows to inf
             try:
                 return int(float(str_val))
-            except (ValueError, TypeError):
+            except (ValueError, TypeError, OverflowError):
                 return None
 
     elif isinstance(value, (int, float)):
-        return int(value)
+        # int() raises on inf and nan
+        try:
+            return int(value)
+        except (ValueError, OverflowError):
+            return None
 
     else:
         return None
+
+
+def _str_to_float(value: str) -> float:
+    """float() of a string with all non-numeric characters removed"""
+    return float(re.sub(r'[^0-9\-\.]', '', value))
 
 
 def convert_to_float(value: object) -> Optional[float]:
@@ -290,19 +427,27 @@ def convert_to_float(value: object) -> Optional[float]:
 
     Returns:
 
-        float/None     Float if successful conversion, otherwise None
+        float/None     Float if successful conversion, otherwise None.
+                       Infinite and NaN results also return None.
     """
     if isinstance(value, str):
         try:
-            return float(re.sub(r'[^0-9\-\.]', '', value))
+            result = _str_to_float(value)
         except (ValueError, TypeError):
             return None
 
     elif isinstance(value, (int, float)):
-        return float(value)
+        try:
+            result = float(value)
+        except OverflowError:
+            return None
 
     else:
         return None
+
+    # JSON has no inf or nan, and a digit string that is too long for a
+    # float overflows to inf
+    return result if math.isfinite(result) else None
 
 
 def convert_to_bool(value: object) -> bool:
@@ -331,9 +476,9 @@ def convert_to_bool(value: object) -> bool:
 
     if isinstance(value, str):
         try:
-            test_value = convert_to_float(value)
-            if test_value is not None:
-                return bool(test_value)
+            # not convert_to_float(), which returns None for numbers too
+            # large for a float
+            return bool(_str_to_float(value))
         except Exception:
             pass
 
@@ -493,8 +638,313 @@ def input_type_check(data: object) -> None:
         raise TypeError("Input data must be a 'str' object.")
 
 
+# The output may be up to this many times the input size, plus a fixed
+# allowance, before `expansion_check()` raises `ParseError`.
+_EXPANSION_RATIO = 1000
+_EXPANSION_ALLOWANCE = 50 * 1000 * 1000
+
+
+def expansion_limit(input_size: int) -> int:
+    """
+    Return the largest output size (in characters of JSON) accepted for
+    an input of `input_size` characters or bytes. Used by parsers that
+    limit how much the output can grow from shared references or
+    declared default values.
+
+    Parameters:
+
+        input_size:  (int) length of the input data
+
+    Returns:
+
+        Integer      maximum accepted output size
+    """
+    return _EXPANSION_RATIO * input_size + _EXPANSION_ALLOWANCE
+
+
+def _scalar_json_size(obj: object) -> int:
+    """Estimate the JSON size of a value that is not a list or dict."""
+    if obj is None or obj is True:
+        return 4
+    if obj is False:
+        return 5
+    if isinstance(obj, str):
+        return len(obj) + 2
+    if isinstance(obj, int):
+        if obj.bit_length() <= 64:
+            return len(int.__repr__(obj))
+        return obj.bit_length() * 3 // 10 + 2
+    if isinstance(obj, float):
+        return len(float.__repr__(obj))
+    if isinstance(obj, (bytes, bytearray)):
+        return 4 * len(obj) + 3
+    return len(str(obj)) + 2
+
+
+def expansion_check(data: object, input_size: int) -> None:
+    """
+    Ensure the JSON output for `data` will not be far larger than the
+    input. Objects referenced more than once (e.g. YAML aliases or binary
+    plist object references) are counted once per reference, as they are
+    when serialized, but each object is only walked once. Raises
+    `ParseError` if the estimated output size is larger than
+    `expansion_limit(input_size)`.
+
+    Parameters:
+
+        data:        (object) parsed data (dictionaries, lists, scalars)
+        input_size:  (int) length of the input data
+
+    Returns:
+
+        None         raises `ParseError` if the output would be too large
+    """
+    from .exceptions import ParseError
+
+    limit = expansion_limit(input_size)
+
+    def too_large() -> ParseError:
+        return ParseError(
+            'Output would be too large: shared references or default values '
+            f'expand to more than {limit} characters.'
+        )
+
+    # sizes of objects already walked, keyed by id(). The object is kept
+    # in the value so its id cannot be reused during the walk.
+    sizes: Dict[int, Tuple[object, int]] = {}
+    in_progress: Set[int] = set()
+
+    def known_size(obj: object) -> Optional[int]:
+        """Return the size of a scalar or an already walked object, else None"""
+        if isinstance(obj, (dict, list, tuple)):
+            obj_id = id(obj)
+            if obj_id in sizes:
+                return sizes[obj_id][1]
+            if obj_id in in_progress:
+                # circular reference: cannot be serialized, so not counted
+                return 0
+            return None
+        if obj is None or isinstance(obj, (str, int, float, bytes)):
+            return _scalar_json_size(obj)
+        obj_id = id(obj)
+        if obj_id not in sizes:
+            sizes[obj_id] = (obj, _scalar_json_size(obj))
+        return sizes[obj_id][1]
+
+    def new_frame(obj: Any) -> List[Any]:
+        """[object, is_dict, iterator, running size]
+
+        Each item adds one separator (the opening bracket counts as the
+        first), so an empty container is fixed up when it is finished.
+        """
+        in_progress.add(id(obj))
+        if isinstance(obj, dict):
+            return [obj, True, iter(obj.items()), 1]
+        return [obj, False, iter(obj), 1]
+
+    size = known_size(data)
+    if size is not None:
+        if size > limit:
+            raise too_large()
+        return
+
+    stack = [new_frame(data)]
+
+    while stack:
+        frame = stack[-1]
+        descend = False
+
+        for item in frame[2]:
+            if frame[1]:
+                key, value = item
+                frame[3] += _scalar_json_size(key) + 2
+            else:
+                value = item
+                frame[3] += 1
+
+            size = known_size(value)
+            if size is None:
+                stack.append(new_frame(value))
+                descend = True
+                break
+
+            frame[3] += size
+            if frame[3] > limit:
+                raise too_large()
+
+        if descend:
+            continue
+
+        stack.pop()
+        obj = frame[0]
+        if not obj:
+            frame[3] += 1
+        in_progress.discard(id(obj))
+        sizes[id(obj)] = (obj, frame[3])
+
+        if stack:
+            stack[-1][3] += frame[3]
+            if stack[-1][3] > limit:
+                raise too_large()
+        elif frame[3] > limit:
+            raise too_large()
+
+
+class _StopDefaultsCheck(Exception):
+    pass
+
+
+def xml_defaults_check(data: Union[str, bytes]) -> None:
+    """
+    Ensure attribute default values declared in an XML document's DTD
+    (`<!ATTLIST>`) do not make the output far larger than the input. The
+    XML parser adds the defaults to every matching element, so they are
+    counted with a separate pass that keeps no per-element data. Raises
+    `ParseError` if they would add more than `expansion_limit(len(data))`
+    characters. Malformed documents and documents with entity declarations
+    are left for the XML library to report.
+
+    Parameters:
+
+        data:        (string, bytes) XML document. A string is parsed as
+                     UTF-8, bytes use the document's declared encoding.
+
+    Returns:
+
+        None         raises `ParseError` if the output would be too large
+    """
+    marker = '<!ATTLIST' if isinstance(data, str) else b'<!ATTLIST'
+    if marker not in data:  # type: ignore
+        return
+
+    from xml.parsers import expat
+    from .exceptions import ParseError
+
+    limit = expansion_limit(len(data))
+    added = 0
+
+    # element name -> {attribute name: output size of its default or 0}
+    # the first declaration of an attribute is the one that applies
+    declared: Dict[str, Dict[str, int]] = {}
+    element_size: Dict[str, int] = {}
+
+    def attlist_decl(elname, attname, attr_type, default, required):
+        attrs = declared.setdefault(elname, {})
+        if attname not in attrs:
+            # "@name":"value", plus a separator
+            attrs[attname] = 0 if default is None else len(attname) + len(default) + 7
+            element_size.pop(elname, None)
+
+    def start_element(name, attrs):
+        nonlocal added
+        defaults = declared.get(name)
+        if not defaults:
+            return
+
+        size = element_size.get(name)
+        if size is None:
+            size = element_size[name] = sum(defaults.values())
+
+        # attributes given in the document are not defaulted
+        for attname in attrs[0::2]:
+            size -= defaults.get(attname, 0)
+
+        added += size
+        if added > limit:
+            raise ParseError(
+                'Output would be too large: attribute default values expand '
+                f'to more than {limit} characters.'
+            )
+
+    def entity_decl(*args):
+        raise _StopDefaultsCheck()
+
+    if isinstance(data, str):
+        parser = expat.ParserCreate('utf-8')
+        xml_bytes = data.encode('utf-8')
+    else:
+        parser = expat.ParserCreate()
+        xml_bytes = data
+
+    # only attributes given in the document are passed to start_element
+    parser.ordered_attributes = True
+    parser.specified_attributes = True
+    parser.AttlistDeclHandler = attlist_decl
+    parser.StartElementHandler = start_element
+    parser.EntityDeclHandler = entity_decl
+
+    try:
+        parser.Parse(xml_bytes, True)
+    except ParseError:
+        raise
+    except Exception:
+        pass
+
+
+_LF_LINE_END_RE = re.compile(r'\r?\n')
+_CR_LF_LINE_END_RE = re.compile(r'\r\n|\r|\n')
+
+
+def splitlines(
+    text: str,
+    keepends: bool = False,
+    split_cr: bool = False
+) -> List[str]:
+    """
+    Split text into lines on LF and CRLF only (optionally also on a lone CR).
+
+    Unlike `str.splitlines()`, this does not treat VT, FF, FS, GS, RS,
+    NEL (U+0085), LINE SEPARATOR (U+2028) or PARAGRAPH SEPARATOR (U+2029)
+    as line terminators, so those characters stay inside the line. By
+    default a lone CR also stays inside the line.
+
+    Parameters:
+
+        text:        (string)  text to split
+        keepends:    (boolean) keep the line terminators if True
+        split_cr:    (boolean) also treat a lone CR as a line terminator
+                               if True (for files that may use CR-only
+                               line endings)
+
+    Returns:
+
+        List of strings. Like `str.splitlines()`, a trailing line terminator
+        does not produce an empty final line.
+    """
+    lines: List[str]
+
+    # fast path: str.split() is much faster than iterating regex matches
+    if not keepends:
+        if split_cr:
+            text = text.replace('\r\n', '\n').replace('\r', '\n')
+
+        lines = text.split('\n')
+        tail = lines.pop()
+
+        if not split_cr:
+            lines = [line[:-1] if line.endswith('\r') else line for line in lines]
+
+        if tail:
+            lines.append(tail)
+
+        return lines
+
+    line_end = _CR_LF_LINE_END_RE if split_cr else _LF_LINE_END_RE
+    lines = []
+    start = 0
+
+    for match in line_end.finditer(text):
+        lines.append(text[start:match.end()])
+        start = match.end()
+
+    if start < len(text):
+        lines.append(text[start:])
+
+    return lines
+
+
 def _lazy_splitlines(text: str) -> Iterable[str]:
-    NEWLINES_PATTERN: str = r'(\r\n|\r|\n)'
+    NEWLINES_PATTERN: str = r'\r?\n'
     NEWLINES_RE = re.compile(NEWLINES_PATTERN)
     start = 0
     for m in NEWLINES_RE.finditer(text):
@@ -572,6 +1022,10 @@ def line_slice(
 class timestamp:
     __slots__ = ('string', 'format', 'naive', 'utc', 'iso')
 
+    # no supported format matches a longer normalized string
+    _MAX_LENGTH = 100
+    _DIGIT = re.compile(r'\d')
+
     def __init__(self,
                  datetime_string: Optional[str],
                  format_hint: Optional[Iterable[int]] = None
@@ -615,7 +1069,15 @@ class timestamp:
         else:
             format_hint = tuple(format_hint)
 
-        dt = self._parse_dt(self.string, format_hint=format_hint)
+        if self._may_match(self.string):
+            dt = self._parse_dt(self.string, format_hint=format_hint)
+        else:
+            dt = {
+                'format': None,
+                'timestamp_naive': None,
+                'timestamp_utc': None,
+                'iso': None
+            }
         self.format = dt['format']
         self.naive = dt['timestamp_naive']
         self.utc = dt['timestamp_utc']
@@ -623,6 +1085,116 @@ class timestamp:
 
     def __repr__(self) -> str:
         return f'timestamp(string={self.string!r}, format={self.format}, naive={self.naive}, utc={self.utc}, iso={self.iso!r})'
+
+    @staticmethod
+    def _may_match(dt_string: Optional[str]) -> bool:
+        """
+        Quick check for strings that no supported format can match: strings
+        without a digit, or longer than 100 characters after normalization.
+        These strings are not passed to the cached parser.
+        """
+        if not isinstance(dt_string, str) or not dt_string:
+            return True
+
+        if not timestamp._DIGIT.search(dt_string):
+            return False
+
+        if len(dt_string) <= timestamp._MAX_LENGTH:
+            return True
+
+        normalized_datetime, _ = timestamp._normalize_dt_string(dt_string)
+        return len(normalized_datetime) <= timestamp._MAX_LENGTH
+
+    @staticmethod
+    def _normalize_dt_string(dt_string: Optional[str]) -> Tuple[str, bool]:
+        """
+        Normalize a datetime string before matching it against the supported
+        formats. Returns the normalized string and whether a UTC timezone was
+        detected.
+        """
+        # from https://www.timeanddate.com/time/zones/
+        # only removed UTC & GMT timezones and added known non-UTC offsets
+        tz_abbr: Set[str] = {
+            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
+            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
+            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
+            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
+            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
+            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
+            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
+            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
+            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
+            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
+            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
+            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
+            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
+            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
+            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
+            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
+            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
+            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
+            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
+            'YEKST', 'YEKT', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
+            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
+            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
+            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
+            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
+            'UTC+1345', 'UTC+1400'
+        }
+
+        offset_suffixes: Tuple[str, ...] = (
+            '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
+            '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
+            '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
+            '+05:00', '+05:30', '+05:45', '+06:00', '+06:30', '+07:00', '+08:00',
+            '+08:45', '+09:00', '+10:00', '+10:30', '+11:00', '+12:00', '+13:00',
+            '+13:45', '+14:00'
+        )
+
+        data: str = dt_string or ''
+        utc_tz: bool = False
+
+        # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
+        data = data.replace('Coordinated Universal Time', 'UTC')
+
+        # UTC can also be indicated with 'Z' for Zulu time (ISO-8601). Convert to 'UTC'
+        data = data.replace('Z', 'UTC')
+
+        # GMT and UTC are practically equivalent. Convert to 'UTC'
+        data = data.replace('GMT', 'UTC')
+
+        if 'UTC' in data:
+            utc_tz = True
+            if 'UTC+' in data or 'UTC-' in data:
+                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
+
+        elif '+0000' in data \
+             or '-0000' in data \
+             or '+00:00' in data \
+             or '-00:00' in data:
+            utc_tz = True
+            data = data.replace('+00:00', '+0000')  # fix for python 3.6
+
+        # normalize the timezone by taking out any timezone reference, except UTC
+        cleandata = data.replace('(', '').replace(')', '')
+        normalized_datetime_list: List[str] = []
+        for term in cleandata.split():
+            if term not in tz_abbr:
+                normalized_datetime_list.append(term)
+
+        normalized_datetime = ' '.join(normalized_datetime_list)
+
+        # remove non UTC offset suffixes at the end of the string
+        for suffix in offset_suffixes:
+            if normalized_datetime.endswith(suffix):
+                normalized_datetime = normalized_datetime[0:-len(suffix)]
+                break
+
+        # normalize further by converting any greater-than 6-digit subsecond to 6-digits
+        p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
+        normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
+
+        return normalized_datetime, utc_tz
 
     @staticmethod
     @lru_cache(maxsize=2048)
@@ -729,48 +1301,6 @@ class timestamp:
             remove_ids = {7250}
             formats = tuple((x for x in formats if x['id'] not in remove_ids))
 
-        # from https://www.timeanddate.com/time/zones/
-        # only removed UTC & GMT timezones and added known non-UTC offsets
-        tz_abbr: Set[str] = {
-            'A', 'ACDT', 'ACST', 'ACT', 'ACWST', 'ADT', 'AEDT', 'AEST', 'AET', 'AFT', 'AKDT',
-            'AKST', 'ALMT', 'AMST', 'AMT', 'ANAST', 'ANAT', 'AQTT', 'ART', 'AST', 'AT', 'AWDT',
-            'AWST', 'AZOST', 'AZOT', 'AZST', 'AZT', 'AoE', 'B', 'BNT', 'BOT', 'BRST', 'BRT', 'BST',
-            'BTT', 'C', 'CAST', 'CAT', 'CCT', 'CDT', 'CEST', 'CET', 'CHADT', 'CHAST', 'CHOST',
-            'CHOT', 'CHUT', 'CIDST', 'CIST', 'CKT', 'CLST', 'CLT', 'COT', 'CST', 'CT', 'CVT', 'CXT',
-            'ChST', 'D', 'DAVT', 'DDUT', 'E', 'EASST', 'EAST', 'EAT', 'ECT', 'EDT', 'EEST', 'EET',
-            'EGST', 'EGT', 'EST', 'ET', 'F', 'FET', 'FJST', 'FJT', 'FKST', 'FKT', 'FNT', 'G',
-            'GALT', 'GAMT', 'GET', 'GFT', 'GILT', 'GST', 'GYT', 'H', 'HDT', 'HKT', 'HOVST',
-            'HOVT', 'HST', 'I', 'ICT', 'IDT', 'IOT', 'IRDT', 'IRKST', 'IRKT', 'IRST', 'IST', 'JST',
-            'K', 'KGT', 'KOST', 'KRAST', 'KRAT', 'KST', 'KUYT', 'L', 'LHDT', 'LHST', 'LINT', 'M',
-            'MAGST', 'MAGT', 'MART', 'MAWT', 'MDT', 'MHT', 'MMT', 'MSD', 'MSK', 'MST', 'MT', 'MUT',
-            'MVT', 'MYT', 'N', 'NCT', 'NDT', 'NFDT', 'NFT', 'NOVST', 'NOVT', 'NPT', 'NRT', 'NST',
-            'NUT', 'NZDT', 'NZST', 'O', 'OMSST', 'OMST', 'ORAT', 'P', 'PDT', 'PET', 'PETST', 'PETT',
-            'PGT', 'PHOT', 'PHT', 'PKT', 'PMDT', 'PMST', 'PONT', 'PST', 'PT', 'PWT', 'PYST', 'PYT',
-            'Q', 'QYZT', 'R', 'RET', 'ROTT', 'S', 'SAKT', 'SAMT', 'SAST', 'SBT', 'SCT', 'SGT',
-            'SRET', 'SRT', 'SST', 'SYOT', 'T', 'TAHT', 'TFT', 'TJT', 'TKT', 'TLT', 'TMT', 'TOST',
-            'TOT', 'TRT', 'TVT', 'U', 'ULAST', 'ULAT', 'UYST', 'UYT', 'UZT', 'V', 'VET', 'VLAST',
-            'VLAT', 'VOST', 'VUT', 'W', 'WAKT', 'WARST', 'WAST', 'WAT', 'WEST', 'WET', 'WFT',
-            'WGST', 'WGT', 'WIB', 'WIT', 'WITA', 'WST', 'WT', 'X', 'Y', 'YAKST', 'YAKT', 'YAPT',
-            'YEKST', 'YEKT', 'UTC-1200', 'UTC-1100', 'UTC-1000', 'UTC-0930', 'UTC-0900',
-            'UTC-0800', 'UTC-0700', 'UTC-0600', 'UTC-0500', 'UTC-0400', 'UTC-0300', 'UTC-0230',
-            'UTC-0200', 'UTC-0100', 'UTC+0100', 'UTC+0200', 'UTC+0300', 'UTC+0400', 'UTC+0430',
-            'UTC+0500', 'UTC+0530', 'UTC+0545', 'UTC+0600', 'UTC+0630', 'UTC+0700', 'UTC+0800',
-            'UTC+0845', 'UTC+0900', 'UTC+1000', 'UTC+1030', 'UTC+1100', 'UTC+1200', 'UTC+1300',
-            'UTC+1345', 'UTC+1400'
-        }
-
-        offset_suffixes: Tuple[str, ...] = (
-            '-12:00', '-11:00', '-10:00', '-09:30', '-09:00',
-            '-08:00', '-07:00', '-06:00', '-05:00', '-04:00', '-03:00', '-02:30',
-            '-02:00', '-01:00', '+01:00', '+02:00', '+03:00', '+04:00', '+04:30',
-            '+05:00', '+05:30', '+05:45', '+06:00', '+06:30', '+07:00', '+08:00',
-            '+08:45', '+09:00', '+10:00', '+10:30', '+11:00', '+12:00', '+13:00',
-            '+13:45', '+14:00'
-        )
-
-        data: str = dt_string or ''
-        normalized_datetime: str = ''
-        utc_tz: bool = False
         dt: Optional[datetime] = None
         dt_utc: Optional[datetime] = None
         timestamp_naive: Optional[int] = None
@@ -789,45 +1319,7 @@ class timestamp:
         else:
             format_hint = tuple(format_hint)
 
-        # sometimes UTC is referenced as 'Coordinated Universal Time'. Convert to 'UTC'
-        data = data.replace('Coordinated Universal Time', 'UTC')
-
-        # UTC can also be indicated with 'Z' for Zulu time (ISO-8601). Convert to 'UTC'
-        data = data.replace('Z', 'UTC')
-
-        # GMT and UTC are practically equivalent. Convert to 'UTC'
-        data = data.replace('GMT', 'UTC')
-
-        if 'UTC' in data:
-            utc_tz = True
-            if 'UTC+' in data or 'UTC-' in data:
-                utc_tz = bool('UTC+0000' in data or 'UTC-0000' in data)
-
-        elif '+0000' in data \
-             or '-0000' in data \
-             or '+00:00' in data \
-             or '-00:00' in data:
-            utc_tz = True
-            data = data.replace('+00:00', '+0000')  # fix for python 3.6
-
-        # normalize the timezone by taking out any timezone reference, except UTC
-        cleandata = data.replace('(', '').replace(')', '')
-        normalized_datetime_list: List[str] = []
-        for term in cleandata.split():
-            if term not in tz_abbr:
-                normalized_datetime_list.append(term)
-
-        normalized_datetime = ' '.join(normalized_datetime_list)
-
-        # remove non UTC offset suffixes at the end of the string
-        for suffix in offset_suffixes:
-            if normalized_datetime.endswith(suffix):
-                normalized_datetime = normalized_datetime[0:-len(suffix)]
-                break
-
-        # normalize further by converting any greater-than 6-digit subsecond to 6-digits
-        p = re.compile(r'(\W\d\d:\d\d:\d\d\.\d{6})\d+\W')
-        normalized_datetime = p.sub(r'\g<1> ', normalized_datetime)
+        normalized_datetime, utc_tz = timestamp._normalize_dt_string(dt_string)
 
         # try format hints first, then fall back to brute-force method
         hint_obj_list: List[TimeStampFormatType] = []
@@ -868,3 +1360,85 @@ class timestamp:
             timestamp_obj['iso'] = iso_string
 
         return timestamp_obj
+
+
+def unescape_backslashes(
+    data: str,
+    octal_chars: Optional[str] = None,
+    escapes: Optional[Dict[str, str]] = None
+) -> str:
+    r"""
+    Decode the backslash escapes that tools such as `mount` (fstab, mtab),
+    `getfacl` and `md5sum` use for special characters in names. The input is
+    read from left to right in a single pass, so an escaped backslash is never
+    used to start another escape.
+
+    A backslash followed by three octal digits (`\040`) is decoded to the
+    byte it stands for (the value is masked to 8 bits, as in libmount). A run
+    of these bytes is interpreted as UTF-8 and invalid UTF-8 is shown as
+    backslash escapes. A backslash that is not followed by three octal digits
+    or by a key of `escapes` is kept as it is, along with the character after
+    it.
+
+    Parameters:
+
+        data:         (string) Input value
+        octal_chars:  (string) Decode an octal escape only when it stands for
+                      one of these characters and keep any other octal escape
+                      as it is. `None` (default) decodes every octal escape
+                      and an empty string decodes none.
+        escapes:      (dictionary) Maps the character that follows a
+                      backslash to its replacement, e.g. `{'\\': '\\'}`
+                      decodes `\\` to a single backslash. Octal escapes are
+                      checked first.
+
+    Returns:
+
+        string
+    """
+    if '\\' not in data:
+        return data
+
+    escapes = escapes or {}
+    result: List[str] = []
+    octal_run = bytearray()
+    start = 0
+    idx = data.find('\\')
+
+    while idx >= 0:
+        seq = data[idx + 1:idx + 4]
+
+        if (octal_chars != '' and len(seq) == 3
+                and all(char in '01234567' for char in seq)):
+            value = int(seq, 8) & 0xff
+
+            if octal_chars is None or (value < 0x80 and chr(value) in octal_chars):
+                if idx > start:
+                    if octal_run:
+                        result.append(octal_run.decode('utf-8', 'backslashreplace'))
+                        octal_run = bytearray()
+                    result.append(data[start:idx])
+
+                octal_run.append(value)
+                start = idx + 4
+                idx = data.find('\\', start)
+                continue
+
+        if seq[:1] and seq[:1] in escapes:
+            if octal_run:
+                result.append(octal_run.decode('utf-8', 'backslashreplace'))
+                octal_run = bytearray()
+
+            result.append(data[start:idx])
+            result.append(escapes[seq[:1]])
+            start = idx + 2
+            idx = data.find('\\', start)
+            continue
+
+        idx = data.find('\\', idx + 1)
+
+    if octal_run:
+        result.append(octal_run.decode('utf-8', 'backslashreplace'))
+
+    result.append(data[start:])
+    return ''.join(result)

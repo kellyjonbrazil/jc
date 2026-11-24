@@ -1,0 +1,3 @@
+CEF:0|Acme|Agent|1.0|200|Process started|3|suser=CORP\\root dproc=C:\\Windows\\System32\\rundll32.exe
+CEF:0|Acme|Agent|1.0|201|File written|3|fname=C:\\Temp\\#p.exe filePath=\\\\fileserver\\reports\\notes.txt
+CEF:0|Acme|Agent\\|1.0|202|Path C:\\new\|x|3|msg=a\=b\nc d\\\=e cs1=C:\\%TEMP%\\"q"\\]
