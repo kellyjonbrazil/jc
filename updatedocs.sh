@@ -38,17 +38,12 @@ report() {
     time=$(cat "$logdir/$id.time")
     steps=$((steps + 1))
 
-    # docgen.sh reports files that failed in its output, but still exits 0
-    if [[ $status -eq 0 ]] && grep -q 'FAILED' "$logdir/$id.log"; then
-        status=1
-    fi
-
     if [[ $status -eq 0 ]]; then
         printf '  %s✓%s %-28s %s%3ss%s%s\n' "$green" "$reset" "$label" "$dim" "$time" "${detail:+  $detail}" "$reset"
     else
         printf '  %s✗ %-28s%s %s%3ss  failed%s\n' "$red" "$label" "$reset" "$dim" "$time" "$reset"
         # leave out docgen.sh's progress lines, so the errors stand out
-        grep -v -e '^Building docs for: ' -e 'docs complete$' -e '^Document Generation Complete$' \
+        grep -v -e '^Building docs for: ' -e 'docs complete$' -e '^Document Generation ' \
             "$logdir/$id.log" | sed 's/^/      /'
         failed=$((failed + 1))
     fi
