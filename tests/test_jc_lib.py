@@ -235,11 +235,15 @@ class MyTests(unittest.TestCase):
         jc/magic_commands.py must match the magic_commands of the built-in
         parsers. Run ./build-magic-commands.py to regenerate it.
         """
-        self.assertEqual(
-            jc.lib._builtin_magic_commands(),
-            jc.magic_commands.magic_commands,
-            'jc/magic_commands.py is out of date: run ./build-magic-commands.py'
-        )
+        expected = jc.lib._builtin_magic_commands()
+        table = jc.magic_commands.magic_commands
+
+        if expected != table:
+            lines = ['jc/magic_commands.py is out of date. Run ./build-magic-commands.py to fix it.']
+            for command in sorted(set(expected) | set(table)):
+                if expected.get(command) != table.get(command):
+                    lines.append(f'  {command!r}: table has {table.get(command)!r}, parsers have {expected.get(command)!r}')
+            self.fail('\n'.join(lines))
 
 
 if __name__ == '__main__':
