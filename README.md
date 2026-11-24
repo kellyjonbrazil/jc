@@ -131,6 +131,7 @@ Output is compact JSON by default. Use `-p` to pretty-print it.
 |       `--airport` | `airport -I` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport)        |
 |     `--airport-s` | `airport -s` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/airport_s)      |
 |        `--amixer` | `amixer` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/amixer)         |
+| `--ansible-list-tags` | `ansible-playbook --list-tags` command parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ansible_list_tags) |
 |     `--apachectl` | `apachectl -S` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apachectl)      |
 | `--apt-cache-show` | `apt-cache show` command parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_cache_show) |
 |   `--apt-get-sqq` | `apt-get -sqq` command parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/apt_get_sqq)    |

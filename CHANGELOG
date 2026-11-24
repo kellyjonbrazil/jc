@@ -10,6 +10,7 @@ jc changelog
 - Enhance CLI and streaming parser error messages to show only the first line
   of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
   full message
+- Add `ansible-list-tags` command parser
 - Fix `crontab` and `crontab-u` parsers to not crash on a shortcut line (e.g.
   `@reboot`) that was cut short before its user or command
 - Fix `date` parser to raise a parse error instead of crashing on input it
