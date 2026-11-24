@@ -229,6 +229,26 @@ class MyTests(unittest.TestCase):
 
         self.assertEqual(len(result), 1)
 
+    def test_lib_magic_commands_table(self):
+        """
+        The prebuilt table of magic commands must match the magic_commands
+        of the built-in parsers that are not hidden or deprecated, as
+        all_parser_info() would return them
+        """
+        expected = {}
+        for p in jc.lib.parsers:
+            if p in jc.lib.local_parsers:
+                continue
+
+            parser = jc.lib.get_parser(p)
+            if jc.lib._parser_is_hidden(parser) or jc.lib._parser_is_deprecated(parser):
+                continue
+
+            for mc in getattr(parser.info, 'magic_commands', []):
+                expected[mc] = jc.lib._parser_argument(p)
+
+        self.assertEqual(expected, jc.lib._magic_commands)
+
 
 if __name__ == '__main__':
     unittest.main()

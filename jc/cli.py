@@ -17,7 +17,7 @@ from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
-    slurpable_parser_mod_list, _parser_is_slurpable
+    slurpable_parser_mod_list, _parser_is_slurpable, local_parsers, _magic_commands
 )
 from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
@@ -582,9 +582,15 @@ class JcCli():
             return
 
         # create a dictionary of magic_commands to their respective parsers.
-        magic_dict = {}
-        for entry in all_parser_info():
-            magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+        # Local plugin parsers can add or override magic commands, so only
+        # use the prebuilt table of built-in magic commands when there are
+        # none, since reading every parser's info imports every parser.
+        if local_parsers:
+            magic_dict = {}
+            for entry in all_parser_info():
+                magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+        else:
+            magic_dict = _magic_commands
 
         # set the command list and string
         self.magic_run_command = args_given
