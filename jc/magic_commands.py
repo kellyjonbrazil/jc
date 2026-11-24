@@ -10,6 +10,7 @@ magic_commands: Dict[str, str] = {
     'airport -I':                           '--airport',
     'airport -s':                           '--airport-s',
     'amixer':                               '--amixer',
+    'ansible-playbook --list-tags':         '--ansible-list-tags',
     'apache2 -S':                           '--apachectl',
     'apache2ctl -S':                        '--apachectl',
     'apachectl -S':                         '--apachectl',
