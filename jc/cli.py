@@ -26,7 +26,6 @@ from .cli_data import (
     slicetext_string, helptext_end_string
 )
 from .shell_completions import bash_completion, zsh_completion, xonsh_completion
-from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
 PYGMENTS_INSTALLED: bool = False
@@ -35,8 +34,8 @@ try:
     from pygments import highlight
     from pygments.style import Style
     from pygments.token import (Name, Number, String, Keyword)
-    from pygments.lexers.data import JsonLexer, YamlLexer
-    from pygments.formatters import Terminal256Formatter
+    # pygments.lexers and pygments.formatters are imported only when output
+    # is colored, since they add to the startup time
     PYGMENTS_INSTALLED = True
 except Exception:
     pass
@@ -462,6 +461,9 @@ class JcCli():
             y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
 
             if not self.mono:
+                from pygments.lexers.data import YamlLexer
+                from pygments.formatters import Terminal256Formatter
+
                 class JcStyle(Style):
                     styles: CustomColorType = self.custom_colors
 
@@ -509,6 +511,9 @@ class JcCli():
         j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)
 
         if not self.mono and PYGMENTS_INSTALLED:
+            from pygments.lexers.data import JsonLexer
+            from pygments.formatters import Terminal256Formatter
+
             class JcStyle(Style):
                 styles: CustomColorType = self.custom_colors
 
@@ -1039,6 +1044,8 @@ class JcCli():
             utils.CLI_QUIET = True
 
         if self.verbose_debug:
+            # imported only when needed, since it adds to the startup time
+            from . import tracebackplus
             tracebackplus.enable(context=11)  # type: ignore
 
         if self.about:
