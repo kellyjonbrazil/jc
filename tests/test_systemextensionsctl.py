@@ -1,140 +1,49 @@
-import os
-import json
 import unittest
+import os
+import sys
+sys.path.append(os.getcwd())
+from tests import utils_for_test as test_utils
+sys.path.pop()
 import jc.parsers.systemextensionsctl
-
-THIS_DIR = os.path.dirname(os.path.abspath(__file__))
+from jc.exceptions import ParseError
 
 
 class MyTests(unittest.TestCase):
-    # Input data from fixtures
-    with open(
-        os.path.join(
-            THIS_DIR, os.pardir, "tests/fixtures/generic/systemextensionsctl.out"
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_output = f.read()
-
-    with open(
-        os.path.join(
-            THIS_DIR,
-            os.pardir,
-            "tests/fixtures/generic/systemextensionsctl-no-extensions.out",
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_no_extensions_output = f.read()
-
-    with open(
-        os.path.join(
-            THIS_DIR,
-            os.pardir,
-            "tests/fixtures/generic/systemextensionsctl_enabled_active.out",
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_enabled_active_output = f.read()
-
-    # Expected output data from fixtures
-    with open(
-        os.path.join(
-            THIS_DIR, os.pardir, "tests/fixtures/generic/systemextensionsctl.json"
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_expected = json.loads(f.read())
-
-    with open(
-        os.path.join(
-            THIS_DIR,
-            os.pardir,
-            "tests/fixtures/generic/systemextensionsctl-no-extensions.json",
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_no_extensions_expected = json.loads(f.read())
-
-    with open(
-        os.path.join(
-            THIS_DIR,
-            os.pardir,
-            "tests/fixtures/generic/systemextensionsctl_enabled_active.json",
-        ),
-        "r",
-        encoding="utf-8",
-    ) as f:
-        systemextensionsctl_enabled_active_expected = json.loads(f.read())
-
-    def test_systemextensionsctl(self):
-        """
-        Test 'systemextensionsctl list' with placeholder data
-        """
-        self.assertEqual(
-            jc.parsers.systemextensionsctl.parse(
-                self.systemextensionsctl_output, quiet=True
-            ),
-            self.systemextensionsctl_expected,
-        )
-
-    def test_systemextensionsctl_empty(self):
-        """
-        Test 'systemextensionsctl list' with empty input
-        """
-        self.assertEqual(jc.parsers.systemextensionsctl.parse("", quiet=True), {})
-
-    def test_systemextensionsctl_no_extensions(self):
-        """
-        Test 'systemextensionsctl list' with no extensions
-        """
-        self.assertEqual(
-            jc.parsers.systemextensionsctl.parse(
-                self.systemextensionsctl_no_extensions_output, quiet=True
-            ),
-            self.systemextensionsctl_no_extensions_expected,
-        )
 
     def test_systemextensionsctl_nodata(self):
         """
-        Test 'systemextensionsctl list' with no data
+        Test 'systemextensionsctl' with no data
         """
-        self.assertEqual(jc.parsers.systemextensionsctl.parse("", quiet=True), {})
+        test_utils.run_no_data(self, __file__, [])
 
-    def test_systemextensionsctl_incorrect_format(self):
+    def test_systemextensionsctl_all_fixtures(self):
         """
-        Test 'systemextensionsctl list' with incorrect format
+        Test 'systemextensionsctl' with various fixtures
         """
-        incorrect_data = "This is not the correct format."
-        self.assertEqual(
-            jc.parsers.systemextensionsctl.parse(incorrect_data, quiet=True), {}
-        )
+        test_utils.run_all_fixtures(self, __file__)
 
-    def test_systemextensionsctl_trailing_newline(self):
+    def test_systemextensionsctl_raw(self):
         """
-        Test 'systemextensionsctl list' with trailing newline
+        Test 'systemextensionsctl list' raw output keeps the enabled and active
+        markers and the '-' team ID
         """
-        cmd_output = self.systemextensionsctl_output + "\n"
-        self.assertEqual(
-            jc.parsers.systemextensionsctl.parse(cmd_output, quiet=True),
-            self.systemextensionsctl_expected,
-        )
+        with open('tests/fixtures/generic/systemextensionsctl--list-team-id-dash.out', 'r', encoding='utf-8') as f:
+            data = f.read()
+        result = jc.parsers.systemextensionsctl.parse(data, raw=True, quiet=True)
+        self.assertEqual([(x['enabled'], x['active'], x['team_id']) for x in result],
+                         [('*', '*', 'G43BCU2T37'), ('*', '*', '-')])
 
-    def test_systemextensionsctl_enabled_active(self):
+    def test_systemextensionsctl_invalid_line(self):
         """
-        Test 'systemextensionsctl list' with enabled and active extensions
+        Test 'systemextensionsctl list' with lines that are not extension rows
         """
-        self.assertEqual(
-            jc.parsers.systemextensionsctl.parse(
-                self.systemextensionsctl_enabled_active_output, quiet=True
-            ),
-            self.systemextensionsctl_enabled_active_expected,
-        )
+        header = '1 extension(s)\n--- com.apple.system_extension.driver_extension\nenabled\tactive\tteamID\tbundleID (version)\tname\t[state]\n'
+        for line in ['*\t*\tG43BCU2T37\torg.example.ext (1.0)\tExt\t[activated enabled]',
+                     '*    *    G43BCU2T37    org.example.ext (1.0/1)    Ext    [activated enabled]']:
+            with self.subTest(line=line):
+                with self.assertRaises(ParseError):
+                    jc.parsers.systemextensionsctl.parse(header + line + '\n', quiet=True)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

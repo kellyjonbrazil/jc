@@ -1,239 +1,201 @@
-"""jc - JSON Convert `systemextensionsctl list` command output parser
+r"""jc - JSON Convert `systemextensionsctl list` command output parser
 
-Usage:
+Usage (cli):
 
     $ systemextensionsctl list | jc --systemextensionsctl
 
-Compatibility:
+or
 
-    macOS
+    $ jc systemextensionsctl list
 
-Example:
+Usage (module):
+
+    import jc
+    result = jc.parse('systemextensionsctl', systemextensionsctl_command_output)
+
+Schema:
+
+    [
+      {
+        "category":                 string,
+        "enabled":                  boolean,
+        "active":                   boolean,
+        "team_id":                  string/null,
+        "bundle_id":                string,
+        "version":                  string,
+        "build":                    string,
+        "name":                     string,
+        "state":                    string
+      }
+    ]
+
+Examples:
 
     $ systemextensionsctl list | jc --systemextensionsctl -p
-    {
-      "total_extensions": 1,
-      "sections": [
-        {
-          "category": "com.apple.system_extension.network_extension",
-          "description": "Go to 'System Settings > General > Login Items & Extensions > Network Extensions' to modify these system extension(s)",
-          "entries": [
-            {
-              "enabled": true,
-              "active": true,
-              "teamID": "XXX",
-              "bundleID": "YYY",
-              "version": "QQQ",
-              "name": "ZZZ",
-              "state": ["activated", "enabled"]
-            }
-          ]
-        }
-      ]
-    }
+    [
+      {
+        "category": "com.apple.system_extension.network_extension",
+        "enabled": true,
+        "active": true,
+        "team_id": "TZ3UEPFYKD",
+        "bundle_id": "com.checkpoint.fw.filter",
+        "version": "871010711",
+        "build": "6",
+        "name": "Check Point Firewall",
+        "state": "activated enabled"
+      },
+      {
+        "category": "com.apple.system_extension.network_extension",
+        "enabled": true,
+        "active": true,
+        "team_id": "UBF8T346G9",
+        "bundle_id": "com.microsoft.wdav.netext",
+        "version": "101.47.27",
+        "build": "101.47.27",
+        "name": "Microsoft Defender ATP Network Extension",
+        "state": "activated enabled"
+      },
+      {
+        "category": "com.apple.system_extension.endpoint_security",
+        "enabled": true,
+        "active": true,
+        "team_id": "UBF8T346G9",
+        "bundle_id": "com.microsoft.wdav.epsext",
+        "version": "101.47.27",
+        "build": "101.47.27",
+        "name": "Microsoft Defender ATP Endpoint Security Extension",
+        "state": "activated enabled"
+      },
+      {
+        "category": "com.apple.system_extension.driver_extension",
+        "enabled": true,
+        "active": true,
+        "team_id": "G43BCU2T37",
+        "bundle_id": "org.pqrs.Karabiner-DriverKit-VirtualHIDDevice",
+        "version": "1.0.0",
+        "build": "1.0.0",
+        "name": "org.pqrs.Karabiner-DriverKit-VirtualHIDDevice",
+        "state": "activated enabled"
+      }
+    ]
+
+    $ systemextensionsctl list | jc --systemextensionsctl -p -r
+    [
+      {
+        "category": "com.apple.system_extension.network_extension",
+        "enabled": "*",
+        "active": "*",
+        "team_id": "TZ3UEPFYKD",
+        "bundle_id": "com.checkpoint.fw.filter",
+        "version": "871010711",
+        "build": "6",
+        "name": "Check Point Firewall",
+        "state": "activated enabled"
+      },
+      ...
+    ]
 """
-
-import jc.utils
-import jc.parsers.universal
 import re
-from typing import List, Dict, Tuple, Optional, Iterator, Any
+from typing import List, Dict
+from jc.jc_types import JSONDictType
+from jc.exceptions import ParseError
+import jc.utils
 
 
-class info:
-    version = "1.0"
-    description = "`systemextensionsctl list` command parser"
-    author = "Ron Green"
-    author_email = "11993626+georgettica@users.noreply.github.com"
-    compatible = ["darwin"]
-    magic_commands = ["systemextensionsctl"]
+class info():
+    """Provides parser metadata (version, author, etc.)"""
+    version = '1.0'
+    description = '`systemextensionsctl list` command parser'
+    author = 'Ron Green'
+    author_email = '11993626+georgettica@users.noreply.github.com'
+    compatible = ['darwin']
+    magic_commands = ['systemextensionsctl list']
+    tags = ['command']
 
 
-def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict[str, Any]:
+__version__ = info.version
+
+
+# `--- com.apple.system_extension.network_extension` and, on newer macOS, a
+# description in parentheses after it
+_CATEGORY_RE = re.compile(r'--- (?P<category>\S+)')
+# `org.example.extension (1.2/3)`: the version and build number
+_BUNDLE_RE = re.compile(r'(?P<bundle_id>.*\S) \((?P<version>[^/()]*)/(?P<build>[^/()]*)\)')
+
+
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
-    Parses the output of `systemextensionsctl list` command.
+    Final processing to conform to the schema.
 
     Parameters:
-        data:   (str)  Text data to parse
-        raw:    (bool) Whether to return raw data
-        quiet:  (bool) Suppress error messages
+
+        proc_data:   (List of Dictionaries) raw structured data to process
 
     Returns:
-        Dict[str, Any]: Dictionary with parsed data
+
+        List of Dictionaries. Structured to conform to the schema.
+    """
+    for entry in proc_data:
+        entry['enabled'] = entry['enabled'] == '*'
+        entry['active'] = entry['active'] == '*'
+
+        if entry['team_id'] == '-':
+            entry['team_id'] = None
+
+    return proc_data
+
+
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
+    """
+    Main text parsing function
+
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) unprocessed output if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
-    if not jc.utils.has_data(data):
-        return {}
+    jc.utils.input_type_check(data)
 
-    lines = data.strip().splitlines()
-    total_extensions, remaining_lines = extract_total_extensions(lines)
+    raw_output: List[Dict] = []
+    category = None
 
-    if total_extensions is None:
-        return {}
-    elif total_extensions == 0:
-        return {"total_extensions": 0, "sections": []}
+    if jc.utils.has_data(data):
 
-    sections = process_sections(remaining_lines, total_extensions)
-    return {"total_extensions": total_extensions, "sections": sections}
+        for line in filter(None, jc.utils.splitlines(data)):
+            # the `N extension(s)` total and the column header lines
+            if line.endswith(' extension(s)') or line.startswith('enabled\tactive\t'):
+                continue
 
+            category_match = _CATEGORY_RE.match(line)
+            if category_match:
+                category = category_match.group('category')
+                continue
 
-def extract_total_extensions(lines: List[str]) -> Tuple[Optional[int], List[str]]:
-    """
-    Extracts the total number of extensions from the command output.
+            fields = line.split('\t')
+            bundle = _BUNDLE_RE.fullmatch(fields[3]) if len(fields) == 6 else None
+            if not category or not bundle:
+                raise ParseError(f'Unexpected line: {line}')
 
-    Parameters:
-        lines: List[str] - List of lines from the command output
+            raw_output.append({
+                'category': category,
+                'enabled': fields[0],
+                'active': fields[1],
+                'team_id': fields[2],
+                'bundle_id': bundle.group('bundle_id'),
+                'version': bundle.group('version'),
+                'build': bundle.group('build'),
+                'name': fields[4],
+                'state': fields[5].strip('[]')
+            })
 
-    Returns:
-        Tuple[Optional[int], List[str]]: Total number of extensions and remaining lines
-    """
-    total_extensions = None
-    remaining_lines = []
-    for line in lines:
-        stripped_line = line.strip()
-        if stripped_line.endswith("extension(s)"):
-            match = re.match(r"(\d+)\s+extension\(s\)", stripped_line)
-            if match:
-                total_extensions = int(match.group(1))
-        else:
-            remaining_lines.append(line)
-    return total_extensions, remaining_lines
-
-
-def process_sections(lines: List[str], total_extensions: int) -> List[Dict[str, Any]]:
-    """
-    Processes the sections of the command output.
-
-    Parameters:
-        lines: List[str] - List of lines from the command output
-        total_extensions: int - Total number of extensions
-
-    Returns:
-        List[Dict[str, Any]]: List of section dictionaries
-    """
-    sections = []
-    section = None
-    headers = None
-    line_iter = iter(lines)
-
-    for line in line_iter:
-        stripped_line = line.strip()
-        if stripped_line.startswith("--- ") and total_extensions > 0:
-            section, headers = create_section(stripped_line, line_iter)
-            if section and headers:
-                sections.append(section)
-        elif section and headers:
-            entry = parse_entry(stripped_line, headers)
-            if entry:
-                section["entries"].append(entry)
-
-    return sections
-
-
-def create_section(
-    line: str, line_iter: Iterator[str]
-) -> Tuple[Dict[str, Any], Optional[List[str]]]:
-    """
-    Creates a section dictionary from a section header line.
-
-    Parameters:
-        line: str - The section header line
-        line_iter: Iterator[str] - Iterator of the remaining lines
-
-    Returns:
-        Tuple[Dict[str, Any], Optional[List[str]]]: Section dictionary and headers list
-    """
-    category, description = extract_category_description(line)
-    section = {"category": category, "description": description, "entries": []}
-    try:
-        headers_line = next(line_iter).strip()
-        expected_headers = [
-            "enabled",
-            "active",
-            "teamID",
-            "bundleID (version)",
-            "name",
-            "[state]",
-        ]
-        actual_headers = [h.strip().lower() for h in headers_line.split("\t")]
-        if all(header.lower() in actual_headers for header in expected_headers):
-            headers = [h.strip() for h in headers_line.split("\t")]
-            return section, headers
-    except StopIteration:
-        pass
-    return section, None
-
-
-def extract_category_description(line: str) -> Tuple[str, str]:
-    """
-    Extracts category and description from a section header line.
-
-    Parameters:
-        line: str - The section header line
-
-    Returns:
-        Tuple[str, str]: Category and description
-    """
-    category_and_desc = line[4:]
-    if "(" in category_and_desc and ")" in category_and_desc:
-        category = category_and_desc.split("(")[0].strip()
-        description = category_and_desc[
-            category_and_desc.find("(") + 1 : category_and_desc.rfind(")")
-        ].strip()
-    else:
-        category = category_and_desc.strip()
-        description = ""
-    return category, description
-
-
-def parse_entry(line: str, headers: List[str]) -> Optional[Dict[str, Any]]:
-    """
-    Parses a single entry line into a dictionary.
-
-    Parameters:
-        line: str - The entry line
-        headers: List[str] - List of header names
-
-    Returns:
-        Optional[Dict[str, Any]]: Dictionary representing the entry or None
-    """
-    if not line:
-        return None
-    fields = line.split("\t")
-    fields += [""] * (len(headers) - len(fields))  # Pad fields if necessary
-    entry = dict(zip(headers, [f.strip() for f in fields]))
-    entry = process_entry_fields(entry)
-    return entry
-
-
-def process_entry_fields(entry: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Processes and cleans individual fields of an entry.
-
-    Parameters:
-        entry: Dict[str, Any] - The entry dictionary
-
-    Returns:
-        Dict[str, Any]: Processed entry dictionary
-    """
-    # Process 'bundleID (version)'
-    if "bundleID (version)" in entry:
-        bundleID_version = entry.pop("bundleID (version)")
-        match = re.match(r"(.+)\s+\((.+)\)", bundleID_version)
-        if match:
-            entry["bundleID"] = match.group(1).strip()
-            entry["version"] = match.group(2).strip()
-        else:
-            entry["bundleID"] = bundleID_version.strip()
-            entry["version"] = ""
-
-    # Process '[state]'
-    if "[state]" in entry:
-        state = entry.pop("[state]")
-        state = state.strip("[]").split()
-        entry["state"] = state
-
-    # Convert 'enabled' and 'active' to boolean
-    entry["enabled"] = entry.get("enabled") == "*"
-    entry["active"] = entry.get("active") == "*"
-
-    return entry
+    return raw_output if raw else _process(raw_output)
