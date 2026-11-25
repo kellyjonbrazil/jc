@@ -1,8 +1,5 @@
 r"""jc - JSON Convert `brew search` command output parser
 
-The `brew search` command has no machine-readable output, so this parser reads
-the `==> Formulae` and `==> Casks` sections of the default text output.
-
 Usage (cli):
 
     $ brew search git | jc --brew-search
@@ -21,9 +18,17 @@ Schema:
     [
       {
         "name":     string,
-        "type":     string    # formula or cask
+        "type":     string
       }
     ]
+
+    In piped output `brew search` prints bare names, one per line, with a
+    single blank line between the formulae and cask blocks. The kind can only
+    be determined when both blocks are present (formulae first, then casks).
+    When only one block is present the output does not say which kind it is,
+    so the `type` key is omitted from those entries.
+
+    Note: `brew search --desc` output is not supported.
 
 Examples:
 
@@ -95,27 +100,67 @@ def parse(data, raw=False, quiet=False):
 
     raw_output = []
     section_types = {'formulae': 'formula', 'casks': 'cask'}
-    current = None
 
     if jc.utils.has_data(data):
-        for line in jc.utils.splitlines(data):
-            line = line.strip()
+        lines = jc.utils.splitlines(data)
 
-            if not line:
-                continue
+        # `brew search` only prints the "==> Formulae" / "==> Casks" headers
+        # when stdout is a TTY, and jc normally reads a pipe.
+        if any(line.strip().startswith('==> ') for line in lines):
+            current = None
 
-            # section header: "==> Formulae" / "==> Casks"
-            if line.startswith('==> '):
-                current = section_types.get(line[4:].strip().lower())
-                continue
+            for line in lines:
+                line = line.strip()
 
-            # anything before the first header is not a result line
-            if not current:
-                continue
+                if not line:
+                    continue
 
-            # results are name columns, one or two per line
-            for name in line.split():
-                raw_output.append({'name': name, 'type': current})
+                # section header: "==> Formulae" / "==> Casks"
+                if line.startswith('==> '):
+                    current = section_types.get(line[4:].strip().lower())
+                    continue
+
+                # anything before the first header is not a result line
+                if not current:
+                    continue
+
+                # results are name columns, one or two per line
+                for name in line.split():
+                    raw_output.append({'name': name, 'type': current})
+        else:
+            # Piped output: bare names, one per line. A single blank line
+            # separates the formulae block from the cask block, and is only
+            # printed when both kinds matched (formulae first, then casks).
+            blocks = []
+            block = []
+
+            for line in lines:
+                line = line.strip()
+
+                if line:
+                    block.append(line)
+                elif block:
+                    blocks.append(block)
+                    block = []
+
+            if block:
+                blocks.append(block)
+
+            # With two blocks the types are known by position. With one block
+            # the output does not say which kind it is, so omit `type`.
+            if len(blocks) == 2:
+                kinds = ['formula', 'cask']
+            else:
+                kinds = [None] * len(blocks)
+
+            for block, kind in zip(blocks, kinds):
+                for name in block:
+                    entry = {'name': name}
+
+                    if kind:
+                        entry['type'] = kind
+
+                    raw_output.append(entry)
 
     if raw:
         return raw_output
