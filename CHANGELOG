@@ -1,6 +1,6 @@
 jc changelog
 
-20261124 v1.26.3
+20261125 v1.26.3
 - Enhance CLI startup time. Commands now start about 33 ms (43%) faster, and
   magic syntax commands (e.g. `jc ls -l`) about 130 ms (74%) faster, since the
   CLI no longer imports every parser to find the one for a magic command, and
@@ -11,6 +11,8 @@ jc changelog
   of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
   full message
 - Add `ansible-list-tags` command parser
+- Fix CLI on Windows to read STDIN redirected from a file (e.g.
+  `jc --kv < file.txt`), which gave empty output
 - Fix `crontab` and `crontab-u` parsers to not crash on a shortcut line (e.g.
   `@reboot`) that was cut short before its user or command
 - Fix `date` parser to raise a parse error instead of crashing on input it
@@ -36,6 +38,11 @@ jc changelog
   failed units now returns an empty list)
 - Fix `systeminfo`, `top`, and `top-s` parsers to not crash on output that was
   cut short (e.g. no network cards, time zone, or process table)
+- Fix `typeset` parser to decode `$'...'` values correctly, including
+  non-ASCII text, `\E` escapes, and the zsh and ksh escapes (e.g. `\C-x` and
+  `\u[e9]`)
+- Fix `typeset` parser to remove the backslash escapes in double-quoted values
+  (e.g. `\"` and `\$`), and to keep quotes that are part of a value
 - Fix `w` parser to raise a parse error when the header line is missing and
   to not crash on blank rows or rows that were cut short
 - Fix `wc` parser to keep leading whitespace in file names
