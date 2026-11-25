@@ -2,6 +2,7 @@ import contextlib
 import io
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import types
@@ -1253,6 +1254,56 @@ power management:
         records = self._streaming_ls_records(data)
         self.assertEqual(['aaa', 'mmm\\xff', 'zzz'], [x['filename'] for x in records])
         self.assertTrue(all(x['_jc_meta']['success'] for x in records))
+
+    def _run_jc_with_file_stdin(self, args, data):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'wb') as f:
+                f.write(data)
+            with open(path, 'rb') as stdin:
+                result = subprocess.run([sys.executable, '-m', 'jc', *args], stdin=stdin,
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        check=True)
+        finally:
+            os.remove(path)
+        return result.stdout.decode()
+
+    def test_stdin_redirected_from_file(self):
+        """
+        Test that STDIN redirected from a file is read
+        """
+        out = self._run_jc_with_file_stdin(['--kv'], b'key1=abc\nkey2=def\n')
+        self.assertEqual({'key1': 'abc', 'key2': 'def'}, json.loads(out))
+
+    def test_streaming_stdin_redirected_from_file(self):
+        """
+        Test that a streaming parser reads STDIN redirected from a file
+        """
+        out = self._run_jc_with_file_stdin(['--ls-s'], b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n')
+        self.assertEqual(['aaa'], [json.loads(x)['filename'] for x in out.splitlines()])
+
+    def _enable_windows_colors(self, platform, isatty):
+        stdout = mock.Mock()
+        stdout.isatty.return_value = isatty
+        with mock.patch('sys.platform', platform), mock.patch('sys.stdout', stdout), \
+             mock.patch('subprocess.run') as run:
+            JcCli.enable_windows_colors()
+        return run
+
+    def test_enable_windows_colors_on_console(self):
+        """
+        Test that cmd.exe enables colors on a Windows console without getting jc's
+        STDIN: when STDIN is a redirected file, cmd.exe moved its position to the end
+        """
+        run = self._enable_windows_colors('win32', isatty=True)
+        run.assert_called_once_with('', shell=True, stdin=subprocess.DEVNULL)
+
+    def test_enable_windows_colors_skipped(self):
+        """
+        Test that cmd.exe is not started when STDOUT is not a console or not on Windows
+        """
+        self._enable_windows_colors('win32', isatty=False).assert_not_called()
+        self._enable_windows_colors('linux', isatty=True).assert_not_called()
 
 if __name__ == '__main__':
     unittest.main()
