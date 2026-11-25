@@ -160,7 +160,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -314,7 +314,9 @@ def _remove_ansi_c(line, shell_quote=False):
 # a word: runs of plain characters, quoted strings and escaped characters
 _SHELL_WORD = re.compile(r'''(?:[^ \t\r\n'"\\]+|'[^']*'|"(?:[^"\\]|\\.)*"|\\.)+''', re.DOTALL)
 _SHELL_PART = re.compile(r'''[^'"\\]+|'([^']*)'|"((?:[^"\\]|\\.)*)"|\\(.)''', re.DOTALL)
-_DQ_ESCAPE = re.compile(r'\\([\\"])')
+# inside double quotes, bash only treats a backslash before these characters
+# as an escape (a backslash-newline is removed)
+_DQ_ESCAPE = re.compile(r'\\([\\"$`\n])')
 _DQ_TAIL = re.compile(r'(?:[^"\\]|\\.)*\\', re.DOTALL)
 
 
@@ -340,6 +342,11 @@ def _shell_words(data):
         pos = stop
 
 
+def _dq_unescape(match):
+    char = match.group(1)
+    return '' if char == '\n' else char
+
+
 def _shell_unquote(word):
     """Remove the quotes and escapes from a word of _shell_words()"""
     result = []
@@ -348,7 +355,7 @@ def _shell_unquote(word):
         if single is not None:
             result.append(single)
         elif double is not None:
-            result.append(_DQ_ESCAPE.sub(r'\1', double))
+            result.append(_DQ_ESCAPE.sub(_dq_unescape, double))
         elif escaped is not None:
             result.append(escaped)
         else:
@@ -359,9 +366,23 @@ def _shell_unquote(word):
 def _shell_split(data):
     """
     Same result as shlex.split(data), which takes quadratic time on a long
-    word
+    word, except that inside double quotes a backslash also escapes `$`,
+    `` ` ``, and a newline, as in bash
     """
     return [_shell_unquote(word) for word in _shell_words(data)]
+
+
+def _get_scalar_val(val: str) -> str:
+    """
+    Remove the quoting from a scalar value: `$'...'` (decoded), `"..."` (with
+    its backslash escapes), `'...'`, or several of them next to each other
+    """
+    quoted = _remove_ansi_c(val, shell_quote=True)
+    if _SHELL_WORD.fullmatch(quoted):
+        return _shell_unquote(quoted)
+
+    # not one shell word (e.g. an unclosed quote): only strip the quotes
+    return _remove_quotes(_remove_ansi_c(val))
 
 
 def _get_simple_array_vals(body: str) -> List[str]:
@@ -370,8 +391,10 @@ def _get_simple_array_vals(body: str) -> List[str]:
     body_split = _shell_split(body)
     values = []
     for item in body_split:
+        # _shell_split() already removed the quotes, so a value that itself
+        # starts and ends with a quote keeps it
         _, val = item.split('=', maxsplit=1)
-        values.append(_remove_quotes(val))
+        values.append(val)
     return values
 
 
@@ -592,8 +615,7 @@ def parse(
             var_def_match = re.search(VAR_DEF_PATTERN, line)
             if var_def_match:
                 item['name'] = var_def_match['name']
-                item['value'] = _remove_ansi_c(var_def_match['val'])
-                item['value'] = _remove_quotes(item['value'])
+                item['value'] = _get_scalar_val(var_def_match['val'])
                 item.update(_get_declare_options(line, 'variable'))
                 raw_output.append(item)
                 continue

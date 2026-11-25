@@ -60,7 +60,7 @@ class MyTests(unittest.TestCase):
         data = 'declare -- q="a=b c=\\"d\\" (e) \\$f"\nq=\'a=b c="d" (e) $f\'\ndeclare -- t=$\'x=1\\ty\'\ndeclare -- w="declare -x a b"\ndeclare -x FOO'
         result = jc.parsers.typeset.parse(data, quiet=True)
         self.assertEqual([x['name'] for x in result], ['q', 'q', 't', 'w', 'FOO'])
-        self.assertEqual([x['value'] for x in result], ['a=b c=\\"d\\" (e) \\$f', 'a=b c="d" (e) $f', 'x=1\ty', 'declare -x a b', None])
+        self.assertEqual([x['value'] for x in result], ['a=b c="d" (e) $f', 'a=b c="d" (e) $f', 'x=1\ty', 'declare -x a b', None])
         self.assertEqual([x['type'] for x in result], ['variable'] * 5)
 
     def test_typeset_array_values_like_array_definitions(self):
@@ -135,11 +135,13 @@ class MyTests(unittest.TestCase):
 
     def test_typeset_shell_split_like_shlex(self):
         """
-        Test 'typeset' array word splitting against shlex.split()
+        Test 'typeset' array word splitting against shlex.split(). Inside
+        double quotes, bash also treats a backslash before `$` and `` ` `` as an
+        escape, which shlex does not: see test_typeset_double_quoted_escapes.
         """
         samples = [
             '', '  ', 'a b', '[0]="a b" [1]=c', "[0]='a \\ b' [1]=\"x\\\"y\"",
-            'a"b c"d', "a'b c'd", '"\\$x" "\\\\" "\\n"', 'a\\ b\\\\ c', "'' \"\"",
+            'a"b c"d', "a'b c'd", '"\\\\" "\\n"', 'a\\ b\\\\ c', "'' \"\"",
             '\ta\r\nb\xa0c', '[k]="v" [a=b]="c"', '"a\\"', '"a', "'a", 'a\\', '"a\\',
             '[0]="' + 'x' * 1000 + '"'
         ]
@@ -154,6 +156,31 @@ class MyTests(unittest.TestCase):
                 except ValueError as e:
                     result = str(e)
                 self.assertEqual(result, expected)
+
+    def test_typeset_double_quoted_escapes(self):
+        """
+        Test 'declare -p' double-quoted values with backslash escapes (bash 5.3),
+        and a $'...' value that starts and ends with a double quote
+        """
+        data = (
+            'declare -- x="say \\"hi\\" \\$HOME \\`cmd\\` a\\\\b \\\\n"\n'
+            'declare -a a=([0]="say \\"hi\\" \\$HOME \\`cmd\\` a\\\\b \\\\n")\n'
+            'declare -A A=([k]="say \\"hi\\" \\$HOME \\`cmd\\` a\\\\b \\\\n" )\n'
+            'declare -- y=$\'"a\\n"\'\n'
+        )
+        value = 'say "hi" $HOME `cmd` a\\b \\n'
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual([x['value'] for x in result], [value, [value], {'k': value}, '"a\n"'])
+
+        self.assertEqual(jc.parsers.typeset._shell_split('"\\$x" "\\`y\\`" "a\\\nb"'), ['$x', '`y`', 'ab'])
+
+    def test_typeset_array_values_with_quotes(self):
+        """
+        Test 'declare -p' array values that start and end with a quote (bash 5.3)
+        """
+        data = 'declare -a x=([0]="\\"quoted\\"" [1]="\'single\'" [2]="z")\n'
+        result = jc.parsers.typeset.parse(data, quiet=True)
+        self.assertEqual(result[0]['value'], ['"quoted"', "'single'", 'z'])
 
     def test_typeset_associative_keys_with_equals(self):
         """
