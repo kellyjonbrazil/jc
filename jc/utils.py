@@ -389,6 +389,12 @@ def convert_to_int(value: object) -> Optional[int]:
         integer/None   Integer if successful conversion, otherwise None
     """
     if isinstance(value, str):
+        if ('e' in value or 'E' in value) and _EXPONENT_RE.fullmatch(value):
+            try:
+                return int(float(value))
+            except OverflowError:
+                return None
+
         str_val = re.sub(r'[^0-9\-\.]', '', value)
         try:
             return int(str_val)
@@ -411,8 +417,16 @@ def convert_to_int(value: object) -> Optional[int]:
         return None
 
 
+# a number in scientific notation, e.g. 1.5e+03. Converted with float() as is,
+# since removing the non-numeric characters would also remove the exponent.
+_EXPONENT_RE = re.compile(r'\s*[+-]?(?:\d+(?:\.\d*)?|\.\d+)[eE][+-]?\d+\s*')
+
+
 def _str_to_float(value: str) -> float:
     """float() of a string with all non-numeric characters removed"""
+    if ('e' in value or 'E' in value) and _EXPONENT_RE.fullmatch(value):
+        return float(value)
+
     return float(re.sub(r'[^0-9\-\.]', '', value))
 
 
