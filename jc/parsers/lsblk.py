@@ -387,8 +387,10 @@ def parse(data, raw=False, quiet=False):
 
         # find multiple mount points and add to a single entry
         for entry in raw_output:
-            # remove the tree characters, if any, before checking for a device
-            entry['name'] = _clean_name(entry['name'])
+            # remove the tree characters, if any, before checking for a device.
+            # Use .get() so a capture missing the NAME header (first data row
+            # treated as the header) does not raise KeyError here.
+            entry['name'] = _clean_name(entry.get('name', ''))
 
             if entry['name']:
                 if 'mountpoints' in entry:
