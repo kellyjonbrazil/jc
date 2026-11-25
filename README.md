@@ -246,6 +246,7 @@ Output is compact JSON by default. Use `-p` to pretty-print it.
 |     `--path-list` | POSIX path list string parser                           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/path_list)      |
 |       `--pci-ids` | `pci.ids` file parser                                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pci_ids)        |
 |        `--pgpass` | PostgreSQL password file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pgpass)         |
+|       `--php-fpm` | `php-fpm -tt` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/php_fpm)        |
 |       `--pidstat` | `pidstat -H` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat)        |
 |     `--pidstat-s` | `pidstat -H` command streaming parser                   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pidstat_s)      |
 |          `--ping` | `ping` and `ping6` command parser                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ping)           |
@@ -256,6 +257,7 @@ Output is compact JSON by default. Use `-p` to pretty-print it.
 | `--pkg-index-deb` | Debian Package Index file parser                        | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/pkg_index_deb)  |
 |         `--plist` | PLIST file parser                                       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/plist)          |
 |      `--postconf` | `postconf -M` command parser                            | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/postconf)       |
+|    `--prometheus` | Prometheus and OpenMetrics text format parser           | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/prometheus)     |
 |          `--proc` | `/proc/` file parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/proc)           |
 |            `--ps` | `ps` command parser                                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/ps)             |
 |  `--resolve-conf` | `/etc/resolve.conf` file parser                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/resolve_conf)   |

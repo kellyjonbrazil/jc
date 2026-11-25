@@ -116,6 +116,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--path-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/path_list.md): POSIX path list string parser (supports `--slurp`)
 - [--pci-ids](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pci_ids.md): `pci.ids` file parser
 - [--pgpass](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pgpass.md): PostgreSQL password file parser
+- [--php-fpm](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/php_fpm.md): `php-fpm -tt` command parser
 - [--pidstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pidstat.md): `pidstat -H` command parser (magic: `pidstat`; platforms: linux)
 - [--ping](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ping.md): `ping` and `ping6` command parser (magic: `ping`, `ping6`; platforms: linux, darwin, freebsd)
 - [--pip-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pip_list.md): `pip list` command parser (magic: `pip list`, `pip3 list`)
@@ -124,6 +125,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--pkg-index-deb](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pkg_index_deb.md): Debian Package Index file parser
 - [--plist](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/plist.md): PLIST file parser
 - [--postconf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/postconf.md): `postconf -M` command parser (magic: `postconf -M`; platforms: linux)
+- [--prometheus](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/prometheus.md): Prometheus and OpenMetrics text format parser
 - [--proc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc.md): `/proc/` file parser (platforms: linux; supports `--slurp`)
 - [--ps](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ps.md): `ps` command parser (magic: `ps`; platforms: linux, darwin, cygwin, aix, freebsd)
 - [--resolve-conf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/resolve_conf.md): `/etc/resolve.conf` file parser
