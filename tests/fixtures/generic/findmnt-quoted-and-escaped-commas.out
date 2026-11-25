@@ -1,0 +1,5 @@
+TARGET                SOURCE   FSTYPE   OPTIONS
+/run/containers/a/shm shm      tmpfs    rw,nosuid,nodev,noexec,relatime,context="system_u:object_r:container_file_t:s0:c12,c34",size=64000k
+/run/containers/b/shm shm      tmpfs    rw,nosuid,nodev,relatime,context="system_u:object_r:container_file_t:s0",size=64000k
+/var/lib/jobs/merged  overlay  overlay  rw,relatime,lowerdir=/golden/image,upperdir=/var/lib/jobs/pr-17\,noexec,workdir=/var/lib/jobs/work
+/mnt/share            //srv/a  cifs     rw,relatime,vers=3.0,username=bob"s,noperm

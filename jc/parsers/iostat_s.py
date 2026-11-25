@@ -20,7 +20,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('iostat_s', iostat_command_output.splitlines())
+    result = jc.parse('iostat_s', iostat_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -103,12 +103,11 @@ from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
 from jc.exceptions import ParseError
-import jc.parsers.universal
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`iostat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -158,11 +157,17 @@ def _normalize_headers(line):
     return line.replace('%', 'percent_').replace('/', '_').replace('-', '_').lower()
 
 
-def _create_obj_list(section_list, section_name):
-    output_list = jc.parsers.universal.simple_table_parse(section_list)
-    for item in output_list:
-        item['type'] = section_name
-    return output_list
+def _create_obj(header_list, line, section_name):
+    # same result as simple_table_parse([header, line])[0], but the header is
+    # split only once per header line instead of once per data line
+    # iostat values never contain spaces: one value per header column
+    row = line.split()
+    if len(row) != len(header_list):
+        raise ParseError('Not iostat data')
+
+    item = dict(zip(header_list, row))
+    item['type'] = section_name
+    return item
 
 
 @add_jc_meta
@@ -173,7 +178,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -187,9 +192,7 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
     streaming_input_type_check(data)
 
     section = ''  # either 'cpu' or 'device'
-    headers = ''
-    cpu_list = []
-    device_list = []
+    headers = []
 
     for line in data:
         try:
@@ -204,26 +207,20 @@ def parse(data, raw=False, quiet=False, ignore_exceptions=False):
                 section = 'cpu'
                 headers = _normalize_headers(line)
                 headers = headers.strip().split(':', maxsplit=1)[1:]
-                headers = ' '.join(headers)
+                headers = ' '.join(headers).split()
                 continue
 
             if line.startswith('Device'):
                 section = 'device'
                 headers = _normalize_headers(line)
-                headers = headers.replace(':', ' ')
+                headers = headers.replace(':', ' ').split()
                 continue
 
             if section == 'cpu':
-                cpu_list.append(headers)
-                cpu_list.append(line)
-                output_line = _create_obj_list(cpu_list, 'cpu')[0]
-                cpu_list = []
+                output_line = _create_obj(headers, line, 'cpu')
 
             if section == 'device':
-                device_list.append(headers)
-                device_list.append(line)
-                output_line = _create_obj_list(device_list, 'device')[0]
-                device_list = []
+                output_line = _create_obj(headers, line, 'device')
 
             if output_line:
                 yield output_line if raw else _process(output_line)

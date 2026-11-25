@@ -3,6 +3,10 @@ r"""jc - JSON Convert POSIX path list string parser
 Parse a colon-separated POSIX path list, commonly found in environment
 variables.
 
+> Note: An empty entry (for example `/usr/bin::/bin`) means the current
+> directory and is reported as `.`. An entry that only contains spaces
+> is kept as a path.
+
 Usage (cli):
 
     $ echo "/Users/admin/.docker/bin:/Users/admin/.asdf/shims" | jc --path-list
@@ -68,7 +72,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'POSIX path list string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
@@ -77,6 +81,19 @@ class info():
 
 
 __version__ = info.version
+
+
+def _is_windows(data: str) -> bool:
+    """
+    A path list is a Windows path list if an entry separated by ';' starts
+    with a drive letter or a UNC prefix, or if it contains backslashes and
+    no forward slash or colon. Everything else is a POSIX path list.
+    """
+    for entry in data.split(';'):
+        if path._WINDOWS_START.match(entry.strip()):
+            return True
+
+    return '\\' in data and '/' not in data and ':' not in data
 
 
 def parse(data, raw=False, quiet=False):
@@ -97,14 +114,22 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     # This parser uses path.py
-    path.info = info  # type: ignore
 
-    delimiter = ":" if "\\" not in data else ";"
+    raw_output = []
 
-    raw_output = [
-        path.parse(line, raw=raw, quiet=quiet)
-        for line in data.split(delimiter)
-        if jc.utils.has_data(data)
-    ]
+    # check the whole input once instead of for every entry
+    if jc.utils.has_data(data):
+        windows = _is_windows(data)
+        delimiter = ";" if windows else ":"
+
+        for line in data.rstrip('\r\n').split(delimiter):
+            line = line.rstrip('\n')
+
+            # an empty entry means the current directory. A whitespace-only
+            # entry is a valid directory name and is kept as is.
+            if line == '':
+                line = '.'
+
+            raw_output.append(path._parse_path(line, windows, raw))
 
     return raw_output

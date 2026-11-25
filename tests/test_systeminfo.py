@@ -42,6 +42,37 @@ class MyTests(unittest.TestCase):
 
             self.assertEqual(jc.parsers.systeminfo.parse(in_var, quiet=True), out_var)
 
+    def test_systeminfo_multiline_values(self):
+        """
+        Test 'systeminfo' values that span several lines
+        """
+        data = 'Host Name:                 H\nOS Name:                   X\nHotfix(s):                 2 Hotfix(s) Installed.\n                           [01]: KB1\n                           [02]: KB2\nBIOS Version:              abc\n                           def\n'
+        expected = {
+            'host_name': 'H',
+            'os_name': 'X',
+            'hotfixs': ['KB1', 'KB2'],
+            'bios_version': 'abc\n                           def'
+        }
+        self.assertEqual(jc.parsers.systeminfo.parse(data, raw=True, quiet=True), expected)
+
+    def test_systeminfo_truncated(self):
+        """
+        Test 'systeminfo' output cut short, e.g. `systeminfo | head -5 |
+        jc --systeminfo`. _process() used to assume every key it converts was
+        present, raising KeyError on 'network_cards' and then on the integer
+        fields, and UnboundLocalError when no time zone had been parsed.
+        """
+        truncated = (
+            'Host Name:                 WIN-ABC123\n'
+            'OS Name:                   Microsoft Windows 10 Pro\n'
+            'OS Version:                10.0.19042 N/A Build 19042\n'
+        )
+        parsed = jc.parsers.systeminfo.parse(truncated, quiet=True)
+        self.assertEqual(parsed['host_name'], 'WIN-ABC123')
+        self.assertEqual(parsed['os_name'], 'Microsoft Windows 10 Pro')
+        self.assertNotIn('network_cards', parsed)
+        self.assertNotIn('system_boot_time_epoch', parsed)
+
 
 if __name__ == "__main__":
     unittest.main()

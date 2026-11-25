@@ -1,0 +1,20 @@
+[
+  {
+    "proto": "TCP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "state": "LISTENING",
+    "pid": 1712,
+    "local_port": "135",
+    "foreign_port": "0",
+    "local_port_num": 135
+  },
+  {
+    "proto": "UDP",
+    "local_address": "0.0.0.0",
+    "foreign_address": "0.0.0.0",
+    "local_port": "5353",
+    "foreign_port": "*",
+    "local_port_num": 5353
+  }
+]

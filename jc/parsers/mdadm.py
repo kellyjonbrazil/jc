@@ -83,7 +83,7 @@ Schema:
       "device_role":                  string,
       "array_state":                  string,
       "array_state_list": [
-                                      string
+                                      string/null
       ],
       "member_arrays":                string,
       "member_arrays_list": [
@@ -221,7 +221,7 @@ Examples:
       ]
     }
 """
-from typing import Dict
+from typing import Dict, Optional, Tuple
 import re
 import jc.utils
 from jc.parsers.universal import sparse_table_parse
@@ -229,7 +229,7 @@ from jc.parsers.universal import sparse_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`mdadm` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -239,6 +239,32 @@ class info():
 
 
 __version__ = info.version
+
+_HOMEHOST_PREFIX = '(local to host '
+
+
+def _split_homehost(value: str) -> Tuple[str, Optional[str]]:
+    """
+    Split a trailing '(local to host <host>)' from a value. Returns the
+    remaining text and the host (None if there is no such suffix).
+    """
+    if not value.endswith(')'):
+        return value, None
+
+    start = value.find(_HOMEHOST_PREFIX)
+    while start != -1:
+        host_start = start + len(_HOMEHOST_PREFIX)
+        if (start == 0 or value[start - 1] in ' \t') and host_start < len(value) - 1:
+            return value[:start], value[host_start:-1]
+        start = value.find(_HOMEHOST_PREFIX, start + 1)
+
+    return value, None
+
+
+def _first_token(value: str) -> Optional[str]:
+    """Return the first whitespace-separated token, or None if there is none"""
+    tokens = value.split(maxsplit=1)
+    return tokens[0] if tokens else None
 
 
 def _process(proc_data: Dict) -> Dict:
@@ -267,39 +293,39 @@ def _process(proc_data: Dict) -> Dict:
     }
 
     # split combined values
-    if 'array_size' in proc_data:
-        proc_data['array_size_num'] = proc_data['array_size'].split(maxsplit=1)[0]
+    for key, new_key in (('array_size', 'array_size_num'),
+                         ('used_dev_size', 'used_dev_size_num'),
+                         ('avail_dev_size', 'avail_dev_size_num')):
+        if key in proc_data:
+            first = _first_token(proc_data[key])
+            if first is not None:
+                proc_data[new_key] = first
 
-    if 'used_dev_size' in proc_data:
-        proc_data['used_dev_size_num'] = proc_data['used_dev_size'].split(maxsplit=1)[0]
-
-    if 'avail_dev_size' in proc_data:
-        proc_data['avail_dev_size_num'] = proc_data['avail_dev_size'].split(maxsplit=1)[0]
-
-    if 'data_offset' in proc_data:
-        proc_data['data_offset'] = proc_data['data_offset'].split()[0]
-
-    if 'super_offset' in proc_data:
-        proc_data['super_offset'] = proc_data['super_offset'].split()[0]
+    for key in ('data_offset', 'super_offset'):
+        if key in proc_data:
+            first = _first_token(proc_data[key])
+            if first is not None:
+                proc_data[key] = first
 
     if 'unused_space' in proc_data:
-        unused_space_list = proc_data['unused_space'].split(',')
-        before_text = unused_space_list[0].strip()
-        after_text = unused_space_list[1].strip()
-        before = before_text.split('=')[1].split()[0]
-        after = after_text.split('=')[1].split()[0]
-        proc_data['unused_space_before'] = before
-        proc_data['unused_space_after'] = after
+        for part in proc_data['unused_space'].split(','):
+            if '=' in part:
+                part_key, part_val = part.split('=', maxsplit=1)
+                part_key = part_key.strip()
+                first = _first_token(part_val)
+                if first is not None and part_key in ('before', 'after'):
+                    proc_data['unused_space_' + part_key] = first
 
-    if 'name' in proc_data:
-        proc_data['name_val'] = proc_data['name'].split(maxsplit=1)[0]
-        if proc_data['name'].endswith(')'):
-            proc_data['homehost'] = proc_data['name'].rsplit(maxsplit=1)[1][0:-1]
+    for key in ('name', 'uuid'):
+        if key in proc_data:
+            value = proc_data[key]
+            value, homehost = _split_homehost(value)
+            if homehost is not None:
+                proc_data['homehost'] = homehost
 
-    if 'uuid' in proc_data:
-        proc_data['uuid_val'] = proc_data['uuid'].split(maxsplit=1)[0]
-        if proc_data['uuid'].endswith(')'):
-            proc_data['homehost'] = proc_data['uuid'].rsplit(maxsplit=1)[1][0:-1]
+            first = _first_token(value)
+            if first is not None:
+                proc_data[key + '_val'] = first
 
     if 'container' in proc_data:
         if ', member ' in proc_data['container']:
@@ -318,8 +344,10 @@ def _process(proc_data: Dict) -> Dict:
             proc_data['events_num'] = proc_data['events']
 
     if 'checksum' in proc_data:
-        proc_data['checksum_val'] = proc_data['checksum'].split(maxsplit=1)[0]
-        proc_data['checksum_state'] = proc_data['checksum'].split()[-1]
+        checksum_tokens = proc_data['checksum'].split()
+        if checksum_tokens:
+            proc_data['checksum_val'] = checksum_tokens[0]
+            proc_data['checksum_state'] = checksum_tokens[-1]
 
     if 'state' in proc_data:
         state_list = [x.strip() for x in proc_data['state'].split(',')]
@@ -333,10 +361,10 @@ def _process(proc_data: Dict) -> Dict:
 
     if 'array_state' in proc_data:
         array_state_list = []
-        array_state_text = proc_data['array_state'].split(maxsplit=1)[0]
+        array_state_text = _first_token(proc_data['array_state']) or ''
 
         for item in array_state_text:
-            array_state_list.append(array_state_map[item])
+            array_state_list.append(array_state_map.get(item))
 
         proc_data['array_state_list'] = array_state_list
 
@@ -404,7 +432,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             # device line
             if line.startswith('/') and line.endswith(':'):
                 raw_output['device'] = line[:-1]

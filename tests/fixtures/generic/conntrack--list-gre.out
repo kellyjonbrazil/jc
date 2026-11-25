@@ -1,0 +1,3 @@
+gre      47 30 src=10.0.0.1 dst=10.0.0.2 srckey=0x1a2b dstkey=0x0 src=10.0.0.2 dst=10.0.0.1 srckey=0x0 dstkey=0x1a2b mark=0 use=1
+gre      47 30 src=10.43.0.10 dst=10.0.0.2 srckey=0x2 dstkey=0xdeadbeef src=10.0.0.2 dst=10.43.0.10 srckey=0xdeadbeef dstkey=0x2 [UNREPLIED] mark=0 use=1
+conntrack v1.4.8 (conntrack-tools): 2 flow entries have been shown.

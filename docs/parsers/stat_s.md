@@ -14,6 +14,10 @@ local time of the system the parser is run on).
 The `xxx_epoch_utc` calculated timestamp fields are timezone-aware and are
 only available if the timezone field is UTC.
 
+Only symbolic links (`type` is `symbolic link`) have a `link_to` field. The
+`File:` line is split at the first ` -> `, so a link whose name contains
+` -> ` reports the rest of its name as part of `link_to`.
+
 Usage (cli):
 
     $ stat * | jc --stat-s
@@ -22,7 +26,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('stat_s', stat_command_output.splitlines())
+    result = jc.parse('stat_s', stat_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -87,7 +91,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
+) -> Iterator[Dict[str, Any] | Tuple[BaseException, str]]
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -95,7 +99,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -110,4 +114,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/stat_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/stat_s.py)
 
-Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)

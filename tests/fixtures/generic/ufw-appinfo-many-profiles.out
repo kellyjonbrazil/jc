@@ -1,0 +1,1387 @@
+Profile: App000
+Title: Application 0 server
+Description: Network service number 0 for testing
+
+Ports:
+  10255:10278/udp
+  143,2000:2100/udp
+
+--
+
+Profile: App001
+Title: Application 1 server
+Description: Network service number 1 for testing
+
+Ports:
+  10172:10248,any/tcp
+  2171/tcp
+
+--
+
+Profile: App002
+Title: Application 2 server
+Description: Network service number 2 for testing
+
+Ports:
+  30367:30637,5432/tcp
+  6103/tcp
+
+--
+
+Profile: App003
+Title: Application 3 server
+Description: Network service number 3 for testing
+
+Ports:
+  80,143,17182:17290,28309:28609/tcp
+  43433/tcp
+
+--
+
+Profile: App004
+Title: Application 4 server
+Description: Network service number 4 for testing
+
+Ports:
+  80,443/tcp
+  1991/tcp
+
+--
+
+Profile: App005
+Title: Application 5 server
+Description: Network service number 5 for testing
+
+Ports:
+  15334:15441,48853:49042,8080,32618:32640/tcp
+  17262/tcp
+
+--
+
+Profile: App006
+Title: Application 6 server
+Description: Network service number 6 for testing
+
+Ports:
+  32600:32762,any,any/udp
+  37716:37996,20362:20410,22/tcp
+  7292:7497,110,59015:59116/tcp
+  7471/tcp
+
+--
+
+Profile: App007
+Title: Application 7 server
+Description: Network service number 7 for testing
+
+Ports:
+  22,8759:8897,8080/tcp
+  53,56997:57075/tcp
+  3306/udp
+  any,5432,25/udp
+  498,2000:2100/udp
+
+--
+
+Profile: App008
+Title: Application 8 server
+Description: Network service number 8 for testing
+
+Ports:
+  any,17719:17970,31817:31996,25/tcp
+  22,5432,4300:4406/udp
+  51703/tcp
+
+--
+
+Profile: App009
+Title: Application 9 server
+Description: Network service number 9 for testing
+
+Ports:
+  37627:37890,57366:57624/udp
+  48019:48256,993/udp
+  21362/tcp
+
+--
+
+Profile: App010
+Title: Application 10 server
+Description: Network service number 10 for testing
+
+Ports:
+  23755:23854/udp
+  11914:11936,8810:9028,80,110/udp
+  13424/tcp
+
+--
+
+Profile: App011
+Title: Application 11 server
+Description: Network service number 11 for testing
+
+Ports:
+  16932:17070,55236:55256,5432/tcp
+  29523:29710,22,26199:26301/udp
+  110,25157:25215/tcp
+  any/tcp
+  57988/tcp
+
+--
+
+Profile: App012
+Title: Application 12 server
+Description: Network service number 12 for testing
+
+Ports:
+  19200:19293,25,110,55543:55546/udp
+  110,80,27464:27584/tcp
+  36474:36638,44955:45249/tcp
+  3306,110/tcp
+  44131/tcp
+
+--
+
+Profile: App013
+Title: Application 13 server
+Description: Network service number 13 for testing
+
+Ports:
+  443,80,15548:15759/tcp
+  any,443/tcp
+  25,5066:5234,993/tcp
+  21277:21438,27822:27938/udp
+  35291/tcp
+
+--
+
+Profile: App014
+Title: Application 14 server
+Description: Network service number 14 for testing
+
+Ports:
+  993,29861:30001/tcp
+  1246:1420,25,143,5432/udp
+  14274:14489,22,55998:56227/udp
+  443,3306,29081:29204,52454:52501/tcp
+  465,2000:2100/udp
+
+--
+
+Profile: App015
+Title: Application 15 server
+Description: Network service number 15 for testing
+
+Ports:
+  58076:58177,443,110/tcp
+  22349/tcp
+
+--
+
+Profile: App016
+Title: Application 16 server
+Description: Network service number 16 for testing
+
+Ports:
+  40202:40428,28562:28738,8080/udp
+  12128:12188,8114:8273,993/tcp
+  25,3306/udp
+  57036/tcp
+
+--
+
+Profile: App017
+Title: Application 17 server
+Description: Network service number 17 for testing
+
+Ports:
+  443,22,143/udp
+  51735:51902,5432,46752:46869/udp
+  3306,443/tcp
+  57110:57243,43372:43459,53,3306/tcp
+  47255/tcp
+
+--
+
+Profile: App018
+Title: Application 18 server
+Description: Network service number 18 for testing
+
+Ports:
+  any,3306,5432,443/udp
+  23045:23052,8080/udp
+  49972/tcp
+
+--
+
+Profile: App019
+Title: Application 19 server
+Description: Network service number 19 for testing
+
+Ports:
+  110,25/tcp
+  23688:23757,5682:5831,5287:5338,22/tcp
+  55568/tcp
+
+--
+
+Profile: App020
+Title: Application 20 server
+Description: Network service number 20 for testing
+
+Ports:
+  143,110/tcp
+  any/tcp
+  443/udp
+  10724/tcp
+
+--
+
+Profile: App021
+Title: Application 21 server
+Description: Network service number 21 for testing
+
+Ports:
+  3306/tcp
+  any,47236:47288,80,40757:40999/tcp
+  8080,110,42426:42713,80/udp
+  582,2000:2100/udp
+
+--
+
+Profile: App022
+Title: Application 22 server
+Description: Network service number 22 for testing
+
+Ports:
+  19427:19524/tcp
+  32155/tcp
+
+--
+
+Profile: App023
+Title: Application 23 server
+Description: Network service number 23 for testing
+
+Ports:
+  993,16290:16433,44395:44532,any/udp
+  25604:25707,5432,48647:48669/udp
+  1077/tcp
+
+--
+
+Profile: App024
+Title: Application 24 server
+Description: Network service number 24 for testing
+
+Ports:
+  39913:40155,3306,39528:39766/tcp
+  3306/udp
+  any/tcp
+  993,993,26696:26792,16111:16177/udp
+  39171/tcp
+
+--
+
+Profile: App025
+Title: Application 25 server
+Description: Network service number 25 for testing
+
+Ports:
+  110/udp
+  443/tcp
+  3306/udp
+  6204/tcp
+
+--
+
+Profile: App026
+Title: Application 26 server
+Description: Network service number 26 for testing
+
+Ports:
+  26215:26370,12188:12225,53,25442:25582/tcp
+  5432/tcp
+  32922:32946/tcp
+  25,50810:51102,22,5432/udp
+  13038/tcp
+
+--
+
+Profile: App027
+Title: Application 27 server
+Description: Network service number 27 for testing
+
+Ports:
+  25/udp
+  53/tcp
+  21130/tcp
+
+--
+
+Profile: App028
+Title: Application 28 server
+Description: Network service number 28 for testing
+
+Ports:
+  143,4244:4329,56319:56596/udp
+  52544:52661,43281:43294/udp
+  any,17353:17467,993/tcp
+  26733:27033/tcp
+  382,2000:2100/udp
+
+--
+
+Profile: App029
+Title: Application 29 server
+Description: Network service number 29 for testing
+
+Ports:
+  110,40598:40801,7382:7579,10880:11065/udp
+  117/tcp
+
+--
+
+Profile: App030
+Title: Application 30 server
+Description: Network service number 30 for testing
+
+Ports:
+  80/tcp
+  53598:53695,23429:23439,18042:18185/tcp
+  26046/tcp
+
+--
+
+Profile: App031
+Title: Application 31 server
+Description: Network service number 31 for testing
+
+Ports:
+  143,8080,38856:39019/udp
+  53189:53312,48027:48060,3567:3834/tcp
+  34740:34913,17469:17601,3306/udp
+  54870:55159/udp
+  63464/tcp
+
+--
+
+Profile: App032
+Title: Application 32 server
+Description: Network service number 32 for testing
+
+Ports:
+  8080,143,22/udp
+  8080,25,49996:50154,443/tcp
+  46213/tcp
+
+--
+
+Profile: App033
+Title: Application 33 server
+Description: Network service number 33 for testing
+
+Ports:
+  55779:55871,22,25/udp
+  5432,47348:47597,35947:36035,7262:7542/tcp
+  143,22/tcp
+  53,49012:49180,7428:7602/tcp
+  26365/tcp
+
+--
+
+Profile: App034
+Title: Application 34 server
+Description: Network service number 34 for testing
+
+Ports:
+  50175:50321,43279:43497,51735:51821/tcp
+  56860:57123,45120:45267/udp
+  13305/tcp
+
+--
+
+Profile: App035
+Title: Application 35 server
+Description: Network service number 35 for testing
+
+Ports:
+  46394:46631,21192:21286,17679:17937,53/tcp
+  45485:45730/udp
+  22/tcp
+  53,80,any/tcp
+  251,2000:2100/udp
+
+--
+
+Profile: App036
+Title: Application 36 server
+Description: Network service number 36 for testing
+
+Ports:
+  50965:51090,55537:55713,53,33409:33575/udp
+  8883/tcp
+
+--
+
+Profile: App037
+Title: Application 37 server
+Description: Network service number 37 for testing
+
+Ports:
+  13823:13949,110,40420:40712,110/tcp
+  4436:4577,25,14468:14651/tcp
+  4122:4353,8228:8335,143,any/tcp
+  28563/tcp
+
+--
+
+Profile: App038
+Title: Application 38 server
+Description: Network service number 38 for testing
+
+Ports:
+  25725:25816,5432,110,24482:24554/tcp
+  50724/tcp
+
+--
+
+Profile: App039
+Title: Application 39 server
+Description: Network service number 39 for testing
+
+Ports:
+  9930:9998,16748:16984,3306/tcp
+  38101:38148,3306,33229:33469/udp
+  42650/tcp
+
+--
+
+Profile: App040
+Title: Application 40 server
+Description: Network service number 40 for testing
+
+Ports:
+  30952:31096,80,23992:24201/udp
+  556/tcp
+
+--
+
+Profile: App041
+Title: Application 41 server
+Description: Network service number 41 for testing
+
+Ports:
+  36509:36776,24383:24643,80,53/tcp
+  80,443/udp
+  25,56657:56900/tcp
+  8831/tcp
+
+--
+
+Profile: App042
+Title: Application 42 server
+Description: Network service number 42 for testing
+
+Ports:
+  48930:49061,110,22/tcp
+  57376:57630/udp
+  8080,11637:11685,any/udp
+  36374:36464,26449:26675,53/tcp
+  212,2000:2100/udp
+
+--
+
+Profile: App043
+Title: Application 43 server
+Description: Network service number 43 for testing
+
+Ports:
+  47353:47475/tcp
+  22,45591:45628,23960:24227,993/tcp
+  2858:3122,8080,5432,10062:10319/tcp
+  5432,22,3306/udp
+  22844/tcp
+
+--
+
+Profile: App044
+Title: Application 44 server
+Description: Network service number 44 for testing
+
+Ports:
+  27855:27896/udp
+  any,5432,any/tcp
+  22,28589:28737,143,18887:19180/udp
+  422/tcp
+
+--
+
+Profile: App045
+Title: Application 45 server
+Description: Network service number 45 for testing
+
+Ports:
+  20491:20712/tcp
+  48817:49012,80,5432,3306/udp
+  6976:7214,53,993,5432/tcp
+  80,2329:2461,29848:30125/udp
+  1135/tcp
+
+--
+
+Profile: App046
+Title: Application 46 server
+Description: Network service number 46 for testing
+
+Ports:
+  5432,34217:34289,any/tcp
+  48188:48227,80/udp
+  143/tcp
+  32369/tcp
+
+--
+
+Profile: App047
+Title: Application 47 server
+Description: Network service number 47 for testing
+
+Ports:
+  80/tcp
+  993/udp
+  12974:12976/tcp
+  1221:1288,53/udp
+  13975/tcp
+
+--
+
+Profile: App048
+Title: Application 48 server
+Description: Network service number 48 for testing
+
+Ports:
+  27201:27460,13005:13227,34434:34612/udp
+  2802:2814,5432,33520:33767,9846:9870/tcp
+  8080/udp
+  24443/tcp
+
+--
+
+Profile: App049
+Title: Application 49 server
+Description: Network service number 49 for testing
+
+Ports:
+  43972:44106,29181:29345,25,3306/tcp
+  993/tcp
+  241,2000:2100/udp
+
+--
+
+Profile: App050
+Title: Application 50 server
+Description: Network service number 50 for testing
+
+Ports:
+  80,993,38041:38161,22418:22516/tcp
+  3505/tcp
+
+--
+
+Profile: App051
+Title: Application 51 server
+Description: Network service number 51 for testing
+
+Ports:
+  8080/udp
+  14104:14366,13896:13904,5432/tcp
+  53,443,53/tcp
+  31030/tcp
+
+--
+
+Profile: App052
+Title: Application 52 server
+Description: Network service number 52 for testing
+
+Ports:
+  24222:24243,993/tcp
+  2032:2191,43012:43081,5432/tcp
+  59978:60109/tcp
+  4782:4869,58014:58291,443,46758:47045/tcp
+  31719/tcp
+
+--
+
+Profile: App053
+Title: Application 53 server
+Description: Network service number 53 for testing
+
+Ports:
+  5432,9789:10011,31966:32183/udp
+  27857:28043,17017:17233/tcp
+  19996/tcp
+
+--
+
+Profile: App054
+Title: Application 54 server
+Description: Network service number 54 for testing
+
+Ports:
+  any/tcp
+  65353/tcp
+
+--
+
+Profile: App055
+Title: Application 55 server
+Description: Network service number 55 for testing
+
+Ports:
+  25,33420:33637/tcp
+  44333/tcp
+
+--
+
+Profile: App056
+Title: Application 56 server
+Description: Network service number 56 for testing
+
+Ports:
+  44635:44731,3306,25131:25277/udp
+  143/tcp
+  13754:13973,29909:30159,41933:41941/tcp
+  46074:46281,33642:33899,6439:6499,41823:42080/tcp
+  495,2000:2100/udp
+
+--
+
+Profile: App057
+Title: Application 57 server
+Description: Network service number 57 for testing
+
+Ports:
+  22968:22970,42937:43039/tcp
+  22,22/tcp
+  56564/tcp
+
+--
+
+Profile: App058
+Title: Application 58 server
+Description: Network service number 58 for testing
+
+Ports:
+  993,53934:53976,25/tcp
+  38456/tcp
+
+--
+
+Profile: App059
+Title: Application 59 server
+Description: Network service number 59 for testing
+
+Ports:
+  53,993,53/udp
+  4003/tcp
+
+--
+
+Profile: App060
+Title: Application 60 server
+Description: Network service number 60 for testing
+
+Ports:
+  80,22,34378:34454,45303:45525/tcp
+  54504/tcp
+
+--
+
+Profile: App061
+Title: Application 61 server
+Description: Network service number 61 for testing
+
+Ports:
+  25016:25148,8080/udp
+  25017/tcp
+
+--
+
+Profile: App062
+Title: Application 62 server
+Description: Network service number 62 for testing
+
+Ports:
+  143,36269:36293,993/udp
+  443/tcp
+  12308/tcp
+
+--
+
+Profile: App063
+Title: Application 63 server
+Description: Network service number 63 for testing
+
+Ports:
+  41771:41992,80,25,5432/tcp
+  10349:10593/tcp
+  3306,8080,5432/tcp
+  993,143,18768:18962/udp
+  770,2000:2100/udp
+
+--
+
+Profile: App064
+Title: Application 64 server
+Description: Network service number 64 for testing
+
+Ports:
+  20532:20612/tcp
+  40202:40450,80/tcp
+  143,45896:46116,31098:31368/udp
+  19732:19934/tcp
+  30308/tcp
+
+--
+
+Profile: App065
+Title: Application 65 server
+Description: Network service number 65 for testing
+
+Ports:
+  110,22,993,110/udp
+  2125:2216/tcp
+  8080/tcp
+  56273/tcp
+
+--
+
+Profile: App066
+Title: Application 66 server
+Description: Network service number 66 for testing
+
+Ports:
+  13089:13220,110,22,5432/tcp
+  18608/tcp
+
+--
+
+Profile: App067
+Title: Application 67 server
+Description: Network service number 67 for testing
+
+Ports:
+  5432,23911:24081/udp
+  29313/tcp
+
+--
+
+Profile: App068
+Title: Application 68 server
+Description: Network service number 68 for testing
+
+Ports:
+  110,44173:44342,993,110/udp
+  3306,18403:18663,34521:34551,30534:30816/tcp
+  31132:31138/tcp
+  53,993,53521:53771/tcp
+  27887/tcp
+
+--
+
+Profile: App069
+Title: Application 69 server
+Description: Network service number 69 for testing
+
+Ports:
+  443,110,16179:16458,11176:11177/tcp
+  21104:21382,22,110,3672:3946/tcp
+  8720/tcp
+
+--
+
+Profile: App070
+Title: Application 70 server
+Description: Network service number 70 for testing
+
+Ports:
+  31650:31802/tcp
+  36827:37025,993,25,8080/udp
+  135,2000:2100/udp
+
+--
+
+Profile: App071
+Title: Application 71 server
+Description: Network service number 71 for testing
+
+Ports:
+  8080,22/tcp
+  50138:50213,32801:33096,2018:2084,80/tcp
+  143,8080/tcp
+  31129/tcp
+
+--
+
+Profile: App072
+Title: Application 72 server
+Description: Network service number 72 for testing
+
+Ports:
+  52944:53126,14446:14664,36527:36698,52750:52797/udp
+  13115:13238/udp
+  48629:48737,34143:34380/tcp
+  58452:58505,5432,25/tcp
+  58718/tcp
+
+--
+
+Profile: App073
+Title: Application 73 server
+Description: Network service number 73 for testing
+
+Ports:
+  993/tcp
+  16928:16939,143,3306,22113:22393/tcp
+  53413:53649/tcp
+  58987/tcp
+
+--
+
+Profile: App074
+Title: Application 74 server
+Description: Network service number 74 for testing
+
+Ports:
+  45142:45258/tcp
+  993/udp
+  80,53,2648:2826/tcp
+  37825/tcp
+
+--
+
+Profile: App075
+Title: Application 75 server
+Description: Network service number 75 for testing
+
+Ports:
+  3306/tcp
+  5432,25,143,51445:51527/tcp
+  6452:6510,15676:15857,53944:53979/tcp
+  58306/tcp
+
+--
+
+Profile: App076
+Title: Application 76 server
+Description: Network service number 76 for testing
+
+Ports:
+  3306,993,59922:60027,9723:9738/tcp
+  53,any,any/tcp
+  23835/tcp
+
+--
+
+Profile: App077
+Title: Application 77 server
+Description: Network service number 77 for testing
+
+Ports:
+  18306:18602/tcp
+  970,2000:2100/udp
+
+--
+
+Profile: App078
+Title: Application 78 server
+Description: Network service number 78 for testing
+
+Ports:
+  53,5432/udp
+  any,any,1455:1729,443/tcp
+  33458:33479,53,23424:23611/tcp
+  4194/tcp
+
+--
+
+Profile: App079
+Title: Application 79 server
+Description: Network service number 79 for testing
+
+Ports:
+  23464:23703,25,41070:41188,14140:14176/tcp
+  8080,22,8717:8829,any/tcp
+  53594:53660,7018:7087,33175:33241,25/tcp
+  54383/tcp
+
+--
+
+Profile: App080
+Title: Application 80 server
+Description: Network service number 80 for testing
+
+Ports:
+  31843:31859,40539:40743/tcp
+  22507:22622,26866:26893/udp
+  52692/tcp
+
+--
+
+Profile: App081
+Title: Application 81 server
+Description: Network service number 81 for testing
+
+Ports:
+  32973:33038/udp
+  443,any,28789:29076,993/tcp
+  23049:23189/udp
+  60870/tcp
+
+--
+
+Profile: App082
+Title: Application 82 server
+Description: Network service number 82 for testing
+
+Ports:
+  1318:1518,45751:46051,22/udp
+  64006/tcp
+
+--
+
+Profile: App083
+Title: Application 83 server
+Description: Network service number 83 for testing
+
+Ports:
+  40537:40617,143,993/tcp
+  3306,143/tcp
+  17599/tcp
+
+--
+
+Profile: App084
+Title: Application 84 server
+Description: Network service number 84 for testing
+
+Ports:
+  110,993,36862:37075/tcp
+  31353:31479,53,3306/tcp
+  572,2000:2100/udp
+
+--
+
+Profile: App085
+Title: Application 85 server
+Description: Network service number 85 for testing
+
+Ports:
+  993,14096:14282/udp
+  110/tcp
+  7175:7197/tcp
+  22891/tcp
+
+--
+
+Profile: App086
+Title: Application 86 server
+Description: Network service number 86 for testing
+
+Ports:
+  12596:12788,22,5432,443/tcp
+  41547/tcp
+
+--
+
+Profile: App087
+Title: Application 87 server
+Description: Network service number 87 for testing
+
+Ports:
+  3306,143,59988:60071,3306/tcp
+  63833/tcp
+
+--
+
+Profile: App088
+Title: Application 88 server
+Description: Network service number 88 for testing
+
+Ports:
+  37494:37564,11836:11930/tcp
+  5432/tcp
+  50754:50946/tcp
+  11772/tcp
+
+--
+
+Profile: App089
+Title: Application 89 server
+Description: Network service number 89 for testing
+
+Ports:
+  5432,18336:18536,3306/tcp
+  5432,110/udp
+  55718/tcp
+
+--
+
+Profile: App090
+Title: Application 90 server
+Description: Network service number 90 for testing
+
+Ports:
+  5432,40517:40721/udp
+  48304:48370,13786:13864/tcp
+  7058:7343,3306/udp
+  52223/tcp
+
+--
+
+Profile: App091
+Title: Application 91 server
+Description: Network service number 91 for testing
+
+Ports:
+  9748:9965,110/tcp
+  25,55360:55548/udp
+  18077:18141,3306,443/tcp
+  3306,25/udp
+  750,2000:2100/udp
+
+--
+
+Profile: App092
+Title: Application 92 server
+Description: Network service number 92 for testing
+
+Ports:
+  8080,443,6325:6328,50591:50864/udp
+  993/tcp
+  7973:8257,any,40376:40661/tcp
+  31385/tcp
+
+--
+
+Profile: App093
+Title: Application 93 server
+Description: Network service number 93 for testing
+
+Ports:
+  34940:35139,25,443/udp
+  53,40917:41050,8080,40091:40114/udp
+  110,143/udp
+  24467/tcp
+
+--
+
+Profile: App094
+Title: Application 94 server
+Description: Network service number 94 for testing
+
+Ports:
+  35863:35923/tcp
+  39358:39417,27845:27952,30343:30481/tcp
+  993,5248:5440,46036:46324/tcp
+  any,993,19579:19685/tcp
+  19195/tcp
+
+--
+
+Profile: App095
+Title: Application 95 server
+Description: Network service number 95 for testing
+
+Ports:
+  1157:1174,44745:44907,443/tcp
+  22408:22568/tcp
+  6793:6820/tcp
+  993,37044:37221/tcp
+  7513/tcp
+
+--
+
+Profile: App096
+Title: Application 96 server
+Description: Network service number 96 for testing
+
+Ports:
+  993/tcp
+  23610/tcp
+
+--
+
+Profile: App097
+Title: Application 97 server
+Description: Network service number 97 for testing
+
+Ports:
+  2691:2761,6874:7060,110/tcp
+  25,37261:37420/udp
+  3306/tcp
+  38988/tcp
+
+--
+
+Profile: App098
+Title: Application 98 server
+Description: Network service number 98 for testing
+
+Ports:
+  8750:8817,143,8080/udp
+  53,5432/udp
+  143,143/tcp
+  29794:29945,5432/tcp
+  776,2000:2100/udp
+
+--
+
+Profile: App099
+Title: Application 99 server
+Description: Network service number 99 for testing
+
+Ports:
+  37129:37337,23709:23966/tcp
+  43200/tcp
+
+--
+
+Profile: App100
+Title: Application 100 server
+Description: Network service number 100 for testing
+
+Ports:
+  80,42212:42507/udp
+  5432/udp
+  80,53/tcp
+  7205/tcp
+
+--
+
+Profile: App101
+Title: Application 101 server
+Description: Network service number 101 for testing
+
+Ports:
+  80/udp
+  80,18507:18768/udp
+  43082:43314,any,34499:34714/udp
+  any,38432:38675/tcp
+  16368/tcp
+
+--
+
+Profile: App102
+Title: Application 102 server
+Description: Network service number 102 for testing
+
+Ports:
+  14214:14475/tcp
+  25,13053:13220,42480:42711,143/tcp
+  13047/tcp
+
+--
+
+Profile: App103
+Title: Application 103 server
+Description: Network service number 103 for testing
+
+Ports:
+  10099:10365,22/udp
+  5432,54634:54704,44251:44542,37817:37930/tcp
+  47897:48048,5432,48102:48167,25/tcp
+  993/udp
+  14783/tcp
+
+--
+
+Profile: App104
+Title: Application 104 server
+Description: Network service number 104 for testing
+
+Ports:
+  33047:33093/tcp
+  51263/tcp
+
+--
+
+Profile: App105
+Title: Application 105 server
+Description: Network service number 105 for testing
+
+Ports:
+  3306,110,38517:38667,53/udp
+  110/tcp
+  53,16391:16625/tcp
+  142,2000:2100/udp
+
+--
+
+Profile: App106
+Title: Application 106 server
+Description: Network service number 106 for testing
+
+Ports:
+  28297:28516/udp
+  5432,43524:43702/udp
+  8408/tcp
+
+--
+
+Profile: App107
+Title: Application 107 server
+Description: Network service number 107 for testing
+
+Ports:
+  31112:31116/udp
+  5372:5552,22336:22605/udp
+  52851:53119/udp
+  14565/tcp
+
+--
+
+Profile: App108
+Title: Application 108 server
+Description: Network service number 108 for testing
+
+Ports:
+  993/tcp
+  40906/tcp
+
+--
+
+Profile: App109
+Title: Application 109 server
+Description: Network service number 109 for testing
+
+Ports:
+  31358:31593,110,110/udp
+  57125:57157,28852:28983,6963:7126/tcp
+  45882/tcp
+
+--
+
+Profile: App110
+Title: Application 110 server
+Description: Network service number 110 for testing
+
+Ports:
+  5174:5372,993,5432,993/udp
+  61531/tcp
+
+--
+
+Profile: App111
+Title: Application 111 server
+Description: Network service number 111 for testing
+
+Ports:
+  143/udp
+  45589:45808,25,53,12599:12717/tcp
+  any,3306,12331:12558,6095:6263/udp
+  60616/tcp
+
+--
+
+Profile: App112
+Title: Application 112 server
+Description: Network service number 112 for testing
+
+Ports:
+  110,22,25,11712:11848/tcp
+  993,443/udp
+  110/udp
+  19478:19515,50571:50674,26509:26694/tcp
+  863,2000:2100/udp
+
+--
+
+Profile: App113
+Title: Application 113 server
+Description: Network service number 113 for testing
+
+Ports:
+  26622:26808,443,4421:4617/tcp
+  25158/tcp
+
+--
+
+Profile: App114
+Title: Application 114 server
+Description: Network service number 114 for testing
+
+Ports:
+  39196:39291,80,23935:24032/tcp
+  45922:46130,443,443/tcp
+  443,27992:28200/udp
+  37264:37512,49238:49458,25,22/udp
+  48285/tcp
+
+--
+
+Profile: App115
+Title: Application 115 server
+Description: Network service number 115 for testing
+
+Ports:
+  8080,8080,1706:1957,143/tcp
+  8080,5432,22,8080/tcp
+  46992/tcp
+
+--
+
+Profile: App116
+Title: Application 116 server
+Description: Network service number 116 for testing
+
+Ports:
+  110/tcp
+  18004/tcp
+
+--
+
+Profile: App117
+Title: Application 117 server
+Description: Network service number 117 for testing
+
+Ports:
+  22/tcp
+  993/udp
+  31731:31779,59408:59672,53/tcp
+  51278/tcp
+
+--
+
+Profile: App118
+Title: Application 118 server
+Description: Network service number 118 for testing
+
+Ports:
+  52044:52074,110/tcp
+  8080/udp
+  110/tcp
+  42092/tcp
+
+--
+
+Profile: App119
+Title: Application 119 server
+Description: Network service number 119 for testing
+
+Ports:
+  14769:14793,13423:13591/tcp
+  59591:59799/udp
+  39,2000:2100/udp
+
+--
+
+Profile: Wide
+Title: Wide range
+Description: very wide port range
+
+Ports:
+  1:65535/tcp
+  80,443,70000/udp
+  1:200000/udp

@@ -100,7 +100,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`cbt` (Google Bigtable) command parser'
     author = 'Andreas Weiden'
     author_email = 'andreas.weiden@gmail.com'
@@ -163,33 +163,48 @@ def parse(
     raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.split("-" * 40)):
-            key = None
-            cells = []
-            column_name = ""
-            timestamp = ""
-            value_next = False
-            for field in line.splitlines():
-                if not field.strip():
-                    continue
-                if field.startswith(" " * 4):
-                    value = field.strip(' "')
-                    if value_next:
-                        dt = jc.utils.timestamp(timestamp, format_hint=(1750, 1755))
-                        cells.append({
-                            "column_family": column_name.split(":", 1)[0],
-                            "column": column_name.split(":", 1)[1],
-                            "value": value,
-                            "timestamp_iso": dt.iso,
-                            "timestamp_epoch": dt.naive,
-                            "timestamp_epoch_utc": dt.utc
-                        })
-                elif field.startswith(" " * 2):
-                    column_name, timestamp = map(str.strip, field.split("@"))
-                    value_next = True
-                else:
-                    key = field
-            if key is not None:
-                raw_output.append({"key": key, "cells": cells})
+        separator = "-" * 40
+        key = None
+        cells: List[Dict] = []
+        column_name = ""
+        timestamp = ""
+        value_next = False
+
+        # a row starts after a line that is exactly the separator
+        for field in jc.utils.splitlines(data):
+            if field == separator:
+                if key is not None:
+                    raw_output.append({"key": key, "cells": cells})
+                key = None
+                cells = []
+                column_name = ""
+                timestamp = ""
+                value_next = False
+                continue
+            if not field.strip():
+                continue
+            if field.startswith(" " * 4):
+                # remove the indent and exactly one pair of surrounding quotes
+                value = field[4:]
+                if len(value) >= 2 and value.startswith('"') and value.endswith('"'):
+                    value = value[1:-1]
+                if value_next:
+                    dt = jc.utils.timestamp(timestamp, format_hint=(1750, 1755))
+                    cells.append({
+                        "column_family": column_name.split(":", 1)[0],
+                        "column": column_name.split(":", 1)[1],
+                        "value": value,
+                        "timestamp_iso": dt.iso,
+                        "timestamp_epoch": dt.naive,
+                        "timestamp_epoch_utc": dt.utc
+                    })
+            elif field.startswith(" " * 2):
+                column_name, timestamp = map(str.strip, field.split("@"))
+                value_next = True
+            else:
+                key = field
+
+        if key is not None:
+            raw_output.append({"key": key, "cells": cells})
 
     return raw_output if raw else _process(raw_output)

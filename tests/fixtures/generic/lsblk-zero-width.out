@@ -1,0 +1,5 @@
+NAME   LABEL FSTYPE MOUNTPOINTS
+sda
+├─sda1 boot  btrfs  /boot
+├─sda2 media​ btrfs  /data
+└─sda3 root  btrfs  /

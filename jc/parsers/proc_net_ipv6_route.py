@@ -65,7 +65,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/ipv6_route` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -119,6 +119,6 @@ def parse(
 
         header = 'dest_net dest_prefix source_net source_prefix next_hop metric ref_count use_count flags device\n'
         data = header + data
-        raw_output = simple_table_parse(data.splitlines())
+        raw_output = simple_table_parse(jc.utils.splitlines(data))
 
     return raw_output if raw else _process(raw_output)

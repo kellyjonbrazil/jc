@@ -42,7 +42,7 @@ Schema:
         "options": [
                                   string
         ],
-        "phys":                   string
+        "phys":                   string,
         "pages":                  integer,
         "N<id>":                  integer
       }
@@ -59,8 +59,7 @@ Examples:
         "caller": "map_irq_stack+0x93/0xe0",
         "options": [
           "vmap"
-        ],
-        "phys": "0x00000000bfefe000"
+        ]
       },
       {
         "start": "0xffffb3c1c0005000",
@@ -70,7 +69,7 @@ Examples:
         "options": [
           "ioremap"
         ],
-        "phys": "0x00000000bfeff000"
+        "phys": "0x00000000bfefe000"
       },
       ...
     ]
@@ -84,8 +83,7 @@ Examples:
         "caller": "map_irq_stack+0x93/0xe0",
         "options": [
           "vmap"
-        ],
-        "phys": "0x00000000bfefe000"
+        ]
       },
       {
         "start": "0xffffb3c1c0005000",
@@ -95,7 +93,7 @@ Examples:
         "options": [
           "ioremap"
         ],
-        "phys": "0x00000000bfeff000"
+        "phys": "0x00000000bfefe000"
       },
       ...
     ]
@@ -125,4 +123,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_vmallocinfo.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_vmallocinfo.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

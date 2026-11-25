@@ -1,0 +1,10 @@
+VirtualHost configuration:
+*:80                   is a NameVirtualHost
+         default server site.example.com (/etc/apache2/sites-enabled/site.conf:1)
+         port 80 namevhost site.example.com (/etc/apache2/sites-enabled/site.conf:1)
+         port 80 namevhost other.example.com (/etc/apache2/sites-enabled/other.conf:1)
+*:443                  is a NameVirtualHost
+         default server other.example.com (/etc/apache2/sites-enabled/other.conf:1)
+         port 443 namevhost site.example.com (/etc/apache2/sites-enabled/site.conf:1)
+         port 443 namevhost other.example.com (/etc/apache2/sites-enabled/other.conf:1)
+ServerRoot: "/etc/apache2"

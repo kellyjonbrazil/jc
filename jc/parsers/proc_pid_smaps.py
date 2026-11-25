@@ -168,7 +168,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`/proc/<pid>/smaps` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -292,15 +292,15 @@ def parse(
             ^(?P<start>[0-9a-f]{8,16})-
             (?P<end>[0-9a-f]{8,16})\s
             (?P<perms>[rwxsp\-]{4})\s
-            (?P<offset>[0-9a-f]{8,9})\s
-            (?P<maj>[0-9a-f]{2}):
-            (?P<min>[0-9a-f]{2})\s
+            (?P<offset>[0-9a-f]+)\s
+            (?P<maj>[0-9a-f]+):
+            (?P<min>[0-9a-f]+)\s
             (?P<inode>\d+)\s+
             (?P<pathname>.*)?
             ''', re.VERBOSE
         )
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             map_line_found = map_line.search(line)
 

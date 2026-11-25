@@ -1,0 +1,20 @@
+{
+  "PayloadCertificateFingerprint": "68:65:6c:6c:6f",
+  "TrustedCertificates": [
+    "68:65:6c:6c:6f",
+    "77:6f:72:6c:64"
+  ],
+  "ValidFrom": 1577865600,
+  "RotationDates": [
+    "2020-01-01T00:00:00",
+    {
+      "Renewed": 1623785400,
+      "Renewed_iso": "2021-06-15T12:30:00"
+    },
+    [
+      "01:02:03",
+      "2022-07-31T16:34:30"
+    ]
+  ],
+  "ValidFrom_iso": "2020-01-01T00:00:00"
+}

@@ -1,0 +1,8 @@
+PING fromage.example.com(fromage.example.com (2001:db8::1)) 56 data bytes
+64 bytes from fromage.example.com (2001:db8::1): icmp_seq=1 ttl=114 time=15.7 ms
+64 bytes from fromage.example.com (2001:db8::1): icmp_seq=2 ttl=114 time=15.3 ms
+64 bytes from fromage.example.com (2001:db8::1): icmp_seq=3 ttl=114 time=15.9 ms
+
+--- fromage.example.com ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 15.300/15.633/15.900/0.249 ms

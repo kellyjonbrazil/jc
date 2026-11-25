@@ -148,7 +148,7 @@ DeviceData = Dict[str, Union[Optional[str], Optional[int], Dict[str, PeerData]]]
 class info:
     """Provides parser metadata (version, author, etc.)"""
 
-    version = "1.0"
+    version = "1.2"
     description = "`wg show` command parser"
     author = "Hamza Saht"
     author_email = "hamzasaht01@gmail.com"
@@ -222,7 +222,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
     device_data: DeviceData = {}
 
     if jc.utils.has_data(data):
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             fields = re.split(r"\s+", line.strip())
             if len(fields) == 5:
                 device, private_key, public_key, listen_port, fwmark = fields
@@ -233,7 +233,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[JSONDictTyp
                     "private_key": private_key if private_key != "(none)" else None,
                     "public_key": public_key if public_key != "(none)" else None,
                     "listen_port": int(listen_port) if listen_port != "0" else None,
-                    "fwmark": int(fwmark) if fwmark != "off" else None,
+                    "fwmark": int(fwmark, 0) if fwmark != "off" else None,
                     "peers": {},
                 }
             elif len(fields) == 9:

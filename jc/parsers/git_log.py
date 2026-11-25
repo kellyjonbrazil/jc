@@ -19,6 +19,9 @@ local time of the system the parser is run on)
 The `epoch_utc` calculated timestamp field is timezone-aware and is
 only available if the timezone field is UTC.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git log | jc --git-log
@@ -229,13 +232,13 @@ from typing import List, Dict, Any
 import jc.utils
 
 hash_pattern = re.compile(r'(?:[0-9]|[a-f]){40}')
-changes_pattern = re.compile(r'\s(?P<files>\d+)\s+(files? changed)(?:,\s+(?P<insertions>\d+)\s+(insertions?\(\+\)))?(?:,\s+(?P<deletions>\d+)\s+(deletions?\(\-\)))?')
+changes_pattern = re.compile(r'^\s*(?P<files>\d+) files? changed(?:, (?P<insertions>\d+) insertions?\(\+\))?(?:, (?P<deletions>\d+) deletions?\(-\))?\s*$')
 numstat_pattern = re.compile(r'^(?P<insertions>\d+|-)\t(?P<deletions>\d+|-)\t(?P<name>.+)$')
 patch_start_pattern = re.compile(r'^diff --(?:git|cc|combined) ')
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`git log` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -346,7 +349,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             line_list = line.split(maxsplit=1)
 
             # oneline style
@@ -439,27 +442,36 @@ def parse(
             numstat = numstat_pattern.match(line)
             if numstat:
                 # this is a --numstat line
+                numstat_name = jc.utils.unquote_git_path(numstat['name'])
                 file_stats_list.append({
-                    'name': numstat['name'],
+                    'name': numstat_name,
                     'insertions': numstat['insertions'],
                     'deletions': numstat['deletions']
                 })
-                file_list.append(numstat['name'])
+                file_list.append(numstat_name)
                 output_line.setdefault('stats', {})
                 numstat_found = True
                 continue
 
-            if line.startswith(' ') and 'changed, ' not in line:
+            changes = changes_pattern.match(line) if line.startswith(' ') else None
+
+            if line.startswith(' ') and not changes:
                 # this is a file name from `--stat`. Ignore if `--numstat`
                 # output was already found for this commit since it is
                 # more detailed.
                 if numstat_found:
                     continue
 
-                file_line_split = line.split('|')
-                file_name = file_line_split[0].strip()
+                # git separates the name from the stats with the last ` | `
+                # (a name can contain ` | ` too)
+                if ' | ' in line:
+                    file_line_split = line.rsplit(' | ', maxsplit=1)
+                else:
+                    file_line_split = line.split('|')
+                file_name = jc.utils.unquote_git_path(file_line_split[0].strip())
                 file_list.append(file_name)
 
+                lines_changed_count_str = None
                 if len(file_line_split) > 1:
                     file_stats = file_line_split[1].strip()
                     lines_changed_str = file_stats.split(' ')
@@ -471,18 +483,12 @@ def parse(
                 file_stats_list.append(file_stat)
                 continue
 
-            if line.startswith(' ') and 'changed, ' in line:
+            if changes:
                 # this is the stat summary
-                changes = changes_pattern.match(line)
-                if changes:
-                    files = changes['files']
-                    insertions = changes['insertions']
-                    deletions = changes['deletions']
-
                 output_line['stats'] = {
-                    'files_changed': files or '0',
-                    'insertions': insertions or '0',
-                    'deletions':  deletions or '0'
+                    'files_changed': changes['files'],
+                    'insertions': changes['insertions'] or '0',
+                    'deletions': changes['deletions'] or '0'
                 }
 
     if output_line:

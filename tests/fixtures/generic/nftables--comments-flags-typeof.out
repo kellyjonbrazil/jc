@@ -1,0 +1,30 @@
+table inet filter {
+	flags dormant
+	comment "edge filter table"
+
+	set blocked {
+		type ipv4_addr
+		counter
+		comment "blocked hosts"
+	}
+
+	set allowed {
+		typeof ip saddr
+	}
+
+	map portmap {
+		typeof ip saddr : verdict
+		comment "service dispatch"
+	}
+
+	chain input {
+		comment "inbound traffic"
+		type filter hook input priority filter; policy accept;
+		ip saddr @blocked drop comment "drop blocked hosts"
+	}
+
+	chain audit {
+		comment "accounting chain"
+		tcp dport 22 accept
+	}
+}

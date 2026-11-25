@@ -101,7 +101,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.1'
+    version = '2.3'
     description = '`df` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -149,36 +149,33 @@ def _process(proc_data):
                 entry[k] = jc.utils.convert_to_int(entry[k])
 
         # remove percent sign from 'use_percent', 'capacity_percent', and 'iused_percent'
-        if 'use_percent' in entry:
+        # a row shorter than the header leaves the trailing fields as None
+        if entry.get('use_percent') is not None:
             entry['use_percent'] = entry['use_percent'].rstrip('%')
 
-        if 'capacity_percent' in entry:
+        if entry.get('capacity_percent') is not None:
             entry['capacity_percent'] = entry['capacity_percent'].rstrip('%')
 
-        if 'iused_percent' in entry:
+        if entry.get('iused_percent') is not None:
             entry['iused_percent'] = entry['iused_percent'].rstrip('%')
 
         # parse the size, used, and available fields to bytes
         for key in entry:
-            if key in size_list:
+            if key in size_list and entry[key] is not None:
                 entry[key] = jc.utils.convert_size_to_int(entry[key], posix_mode=posix_mode)
 
         # convert integers
         for key in entry:
-            if key in int_list:
+            if key in int_list and entry[key] is not None:
                 entry[key] = jc.utils.convert_to_int(entry[key])
 
     return proc_data
 
 
-def _long_filesystem_hash(header, line):
+def _filesystem_col_len(header):
     """
-    Returns truncated hash and value of the filesystem field if it is too
-    long for the column.
+    Returns the length of the filesystem column, derived from the header.
     """
-    filesystem_field = line.split()[0]
-
-    # get length of filesystem column
     space_count = 0
     for char in header[10:]:
         if char == ' ':
@@ -187,7 +184,15 @@ def _long_filesystem_hash(header, line):
 
         break
 
-    filesystem_col_len = space_count + 9
+    return space_count + 9
+
+
+def _long_filesystem_hash(filesystem_col_len, line):
+    """
+    Returns truncated hash and value of the filesystem field if it is too
+    long for the column.
+    """
+    filesystem_field = line.split()[0]
 
     # return the hash and value if the field data is longer than the column length
     if len(filesystem_field) > filesystem_col_len:
@@ -214,8 +219,8 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    # remove blank lines
-    cleandata = list(filter(None, data.splitlines()))
+    # remove blank and whitespace-only lines
+    cleandata = [x for x in jc.utils.splitlines(data) if x.strip()]
 
     fix_data = []
     raw_output = []
@@ -231,11 +236,12 @@ def parse(data, raw=False, quiet=False):
         # fix long filesystem data in some older versions of df
         header = cleandata[0]
         fix_data.append(header)
+        filesystem_col_len = _filesystem_col_len(header)
         for line in cleandata[1:]:
-            field_hash, field_value = _long_filesystem_hash(header, line)
+            field_hash, field_value = _long_filesystem_hash(filesystem_col_len, line)
             if field_hash:
                 filesystem_map.update({field_hash: field_value})
-                newline = line.replace(field_value, field_hash)
+                newline = line.replace(field_value, field_hash, 1)
                 fix_data.append(newline)
             else:
                 fix_data.append(line)

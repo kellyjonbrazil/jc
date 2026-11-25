@@ -8,6 +8,24 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
+    def test_du_filename_whitespace(self):
+        names = [' leading.txt', 'trailing.txt ', '\u00a0report.txt',
+                 'name\twith\ttabs', 'plain.txt']
+        data = ''.join('5\t' + name + '\n' for name in names)
+        for raw in (False, True):
+            with self.subTest(raw=raw):
+                result = jc.parsers.du.parse(data, raw=raw, quiet=True)
+                expected_size = '5' if raw else 5
+                self.assertEqual(result, [
+                    {'size': expected_size, 'name': name} for name in names
+                ])
+
+    def test_du_space_separated_input(self):
+        self.assertEqual(
+            jc.parsers.du.parse('5 name with spaces\n', quiet=True),
+            [{'size': 5, 'name': 'name with spaces'}]
+        )
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/du.out'), 'r', encoding='utf-8') as f:
         centos_7_7_du = f.read()
@@ -34,6 +52,15 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/du.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_du_json = json.loads(f.read())
 
+
+    def test_du_line_separators(self):
+        """
+        Test 'du' with line-break characters other than LF in a file name
+        """
+        data = '134164\t/usr/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\n43188\t/usr/sbin\n'
+        result = jc.parsers.du.parse(data, quiet=True)
+        self.assertEqual(result[0]['name'], '/usr/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[1]['name'], '/usr/sbin')
 
     def test_du_nodata(self):
         """

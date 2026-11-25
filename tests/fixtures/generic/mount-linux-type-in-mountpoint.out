@@ -1,0 +1,4 @@
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+/dev/sdb1 on /mnt/a type xfs (rw) type ext4 (ro,relatime)
+/dev/sdc1 on /media/kbrazil/Backup type ext4 (rw,nosuid,nodev,relatime) [Backup (old)]
+/dev/sdd1 on /srv/x type btrfs (rw) y type btrfs (rw,relatime,space_cache) [Data]

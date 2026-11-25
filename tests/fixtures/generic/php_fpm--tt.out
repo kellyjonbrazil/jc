@@ -1,0 +1,63 @@
+
+[25-Feb-2024 20:25:25] NOTICE: [global]
+[25-Feb-2024 20:25:25] NOTICE:  pid = /run/php/php8.2-fpm.pid
+[25-Feb-2024 20:25:25] NOTICE:  error_log = /var/log/php8.2-fpm.log
+[25-Feb-2024 20:25:25] NOTICE:  syslog.ident = php-fpm
+[25-Feb-2024 20:25:25] NOTICE:  syslog.facility = 24
+[25-Feb-2024 20:25:25] NOTICE:  log_buffering = yes
+[25-Feb-2024 20:25:25] NOTICE:  log_level = unknown value
+[25-Feb-2024 20:25:25] NOTICE:  log_limit = 1024
+[25-Feb-2024 20:25:25] NOTICE:  emergency_restart_interval = 0s
+[25-Feb-2024 20:25:25] NOTICE:  emergency_restart_threshold = 0
+[25-Feb-2024 20:25:25] NOTICE:  process_control_timeout = 0s
+[25-Feb-2024 20:25:25] NOTICE:  process.max = 0
+[25-Feb-2024 20:25:25] NOTICE:  process.priority = undefined
+[25-Feb-2024 20:25:25] NOTICE:  daemonize = yes
+[25-Feb-2024 20:25:25] NOTICE:  rlimit_files = 0
+[25-Feb-2024 20:25:25] NOTICE:  rlimit_core = 0
+[25-Feb-2024 20:25:25] NOTICE:  events.mechanism = epoll
+[25-Feb-2024 20:25:25] NOTICE:  systemd_interval = 10s
+[25-Feb-2024 20:25:25] NOTICE:  
+[25-Feb-2024 20:29:38] NOTICE: [www]
+[25-Feb-2024 20:29:38] NOTICE:  prefix = undefined
+[25-Feb-2024 20:29:38] NOTICE:  user = www-data
+[25-Feb-2024 20:29:38] NOTICE:  group = www-data
+[25-Feb-2024 20:29:38] NOTICE:  listen = /run/php/php8.2-fpm.sock
+[25-Feb-2024 20:29:38] NOTICE:  listen.backlog = -1
+[25-Feb-2024 20:29:38] NOTICE:  listen.acl_users = undefined
+[25-Feb-2024 20:29:38] NOTICE:  listen.acl_groups = undefined
+[25-Feb-2024 20:29:38] NOTICE:  listen.owner = www-data
+[25-Feb-2024 20:29:38] NOTICE:  listen.group = www-data
+[25-Feb-2024 20:29:38] NOTICE:  listen.mode = undefined
+[25-Feb-2024 20:29:38] NOTICE:  listen.allowed_clients = undefined
+[25-Feb-2024 20:29:38] NOTICE:  process.priority = undefined
+[25-Feb-2024 20:29:38] NOTICE:  process.dumpable = no
+[25-Feb-2024 20:29:38] NOTICE:  pm = dynamic
+[25-Feb-2024 20:29:38] NOTICE:  pm.max_children = 4
+[25-Feb-2024 20:29:38] NOTICE:  pm.start_servers = 1
+[25-Feb-2024 20:29:38] NOTICE:  pm.min_spare_servers = 1
+[25-Feb-2024 20:29:38] NOTICE:  pm.max_spare_servers = 1
+[25-Feb-2024 20:29:38] NOTICE:  pm.max_spawn_rate = 32
+[25-Feb-2024 20:29:38] NOTICE:  pm.process_idle_timeout = 10
+[25-Feb-2024 20:29:38] NOTICE:  pm.max_requests = 1000
+[25-Feb-2024 20:29:38] NOTICE:  pm.status_path = undefined
+[25-Feb-2024 20:29:38] NOTICE:  pm.status_listen = undefined
+[25-Feb-2024 20:29:38] NOTICE:  ping.path = undefined
+[25-Feb-2024 20:29:38] NOTICE:  ping.response = undefined
+[25-Feb-2024 20:29:38] NOTICE:  access.log = undefined
+[25-Feb-2024 20:29:38] NOTICE:  access.format = undefined
+[25-Feb-2024 20:29:38] NOTICE:  slowlog = undefined
+[25-Feb-2024 20:29:38] NOTICE:  request_slowlog_timeout = 0s
+[25-Feb-2024 20:29:38] NOTICE:  request_slowlog_trace_depth = 20
+[25-Feb-2024 20:29:38] NOTICE:  request_terminate_timeout = 0s
+[25-Feb-2024 20:29:38] NOTICE:  request_terminate_timeout_track_finished = no
+[25-Feb-2024 20:29:38] NOTICE:  rlimit_files = 0
+[25-Feb-2024 20:29:38] NOTICE:  rlimit_core = 0
+[25-Feb-2024 20:29:38] NOTICE:  chroot = undefined
+[25-Feb-2024 20:29:38] NOTICE:  chdir = undefined
+[25-Feb-2024 20:29:38] NOTICE:  catch_workers_output = no
+[25-Feb-2024 20:29:38] NOTICE:  decorate_workers_output = yes
+[25-Feb-2024 20:29:38] NOTICE:  clear_env = yes
+[25-Feb-2024 20:29:38] NOTICE:  security.limit_extensions = .php .phar
+[25-Feb-2024 20:29:38] NOTICE:  
+[25-Feb-2024 20:29:38] NOTICE: configuration file /etc/php/8.2/fpm/php-fpm.conf test is successful

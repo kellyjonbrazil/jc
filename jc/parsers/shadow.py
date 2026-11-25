@@ -101,7 +101,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`/etc/shadow` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -154,16 +154,20 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     # Clear any blank lines
-    cleandata = [line for line in data.splitlines() if line.strip()]
+    cleandata = [line for line in jc.utils.splitlines(data) if line.strip()]
 
     if jc.utils.has_data(data):
 
         for entry in cleandata:
-            if entry.startswith('#'):
+            # an entry ends at the first NUL byte, as it does in the C library
+            entry = entry.split('\0', maxsplit=1)[0]
+
+            if not entry or entry.startswith('#'):
                 continue
 
             output_line = {}
             fields = entry.split(':')
+            fields.extend([''] * (8 - len(fields)))
 
             output_line['username'] = fields[0]
             output_line['password'] = fields[1]

@@ -1,0 +1,4 @@
+Active Internet connections
+Socket           Flowhash Proto Recv-Q Send-Q  Local Address      Foreign Address                           (state)    
+7fb03cb94d505aed cedd0cbf tcp4       0      0  192.168.1.221.5486 udp-relay.example.com.443                 ESTABLISHED
+7fb03cb93c70600d 777662f1 udp4       0      0  *.58043            *.*                                       

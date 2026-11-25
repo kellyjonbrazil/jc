@@ -80,14 +80,15 @@ Examples:
       }
     ]
 """
-import shlex
+import re
 from typing import List, Dict
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/consoles` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -97,6 +98,9 @@ class info():
 
 
 __version__ = info.version
+
+# device, operations, (flags) and major:minor. The flags can contain spaces.
+_line_pattern = re.compile(r'[ \t]*([^ \t]+)[ \t]+([^ \t]+)[ \t]+\(([^()]*)\)[ \t]+([^ \t]+)[ \t]*')
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -161,12 +165,13 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
-            # since parens are acting like quotation marks, use shlex.split()
-            # after converting parens to quotes.
-            line = line.replace('(', '"'). replace(')', '"')
-            device, operations, flags, maj_min = shlex.split(line)
+            fields = _line_pattern.fullmatch(line)
+            if not fields:
+                raise ParseError('Unexpected /proc/consoles line format.')
+
+            device, operations, flags, maj_min = fields.groups()
 
             operations_str = operations.replace('-', '')
             operations_list = [operations_map[i] for i in operations_str]

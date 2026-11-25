@@ -3,6 +3,7 @@
 """
 Convert parser doc string to markdown
 """
+import re
 import sys
 import importlib
 from inspect import isfunction, signature, cleandoc
@@ -14,6 +15,55 @@ ignore_lib_functions = [
     'lru_cache',
     'namedtuple'
 ]
+
+_UNION_RE = re.compile(r'(?<![\w.])(Union|Optional)\[')
+
+
+def _split_args(text):
+    """Split type arguments on the commas that are not inside brackets."""
+    args = []
+    depth = 0
+    start = 0
+    for i, char in enumerate(text):
+        if char == '[':
+            depth += 1
+        elif char == ']':
+            depth -= 1
+        elif char == ',' and depth == 0:
+            args.append(text[start:i].strip())
+            start = i + 1
+    args.append(text[start:].strip())
+    return args
+
+
+def pep604(sig):
+    """
+    Rewrite Union[...] and Optional[...] as X | Y, the way Python 3.14+
+    prints them, so the docs look the same on any Python version.
+    """
+    match = _UNION_RE.search(sig)
+    while match:
+        start = match.end()
+        end = start
+        depth = 1
+        while depth:
+            if sig[end] == '[':
+                depth += 1
+            elif sig[end] == ']':
+                depth -= 1
+            end += 1
+
+        args = [pep604(arg) for arg in _split_args(sig[start:end - 1])]
+        args = ['None' if arg == 'NoneType' else arg for arg in args]
+        if match.group(1) == 'Optional':
+            args.append('None')
+
+        union = ' | '.join(args)
+        sig = sig[:match.start()] + union + sig[end:]
+        match = _UNION_RE.search(sig, match.start() + len(union))
+
+    return sig
+
 
 mod_path = sys.argv[1]
 mod_name = mod_path.split('.')[-1]
@@ -52,7 +102,7 @@ for api in functions:
     api_function = getattr(module, api)
 
     this_header = f'<a id="{mod_path}.{api}"></a>\n\n### {api}\n'
-    this_sig = str(signature(api_function))
+    this_sig = pep604(str(signature(api_function)))
     formatted_sig = yapf.yapf_api.FormatCode(f'def {api_function.__name__}{this_sig}:\n    pass' )
     formatted_sig = formatted_sig[0].split(':\n    pass')[0]
     this_name_and_sig = f'{this_header}\n```python\n{formatted_sig}\n```'

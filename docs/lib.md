@@ -47,7 +47,7 @@ Parameters:
 ### get_help
 
 ```python
-def get_help(parser_mod_name: Union[str, module]) -> None
+def get_help(parser_mod_name: str | module) -> None
 ```
 
 Show help screen for the selected parser.
@@ -61,7 +61,7 @@ parser module object.
 ### get_parser
 
 ```python
-def get_parser(parser_mod_name: Union[str, module]) -> module
+def get_parser(parser_mod_name: str | module) -> module
 ```
 
 Return the parser module object and check that the module is a valid
@@ -94,13 +94,13 @@ Raises:
 
 ```python
 def parse(
-    parser_mod_name: Union[str, module],
-    data: Union[str, bytes, Iterable[str]],
+    parser_mod_name: str | module,
+    data: str | bytes | Iterable[str],
     quiet: bool = False,
     raw: bool = False,
-    ignore_exceptions: Optional[bool] = None,
+    ignore_exceptions: bool | None = None,
     **kwargs
-) -> Union[Dict[str, Any], List[Dict[str, Any]], Iterator[Dict[str, Any]]]
+) -> Dict[str, Any] | List[Dict[str, Any]] | Iterator[Dict[str, Any]]
 ```
 
 Parse the data (string or bytes) using the supplied parser (string or
@@ -195,7 +195,7 @@ Returns:
 ### parser_info
 
 ```python
-def parser_info(parser_mod_name: Union[str, module],
+def parser_info(parser_mod_name: str | module,
                 documentation: bool = False) -> jc.jc_types.ParserInfoType
 ```
 
