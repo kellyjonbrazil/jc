@@ -1,88 +1,149 @@
-"""
-`php-fpm -tt` command parser
+r"""jc - JSON Convert `php-fpm -tt` command output parser
 
-Parses the configuration dump written to standard error by versioned and
-unversioned PHP-FPM executables when invoked with the `-tt` option.
+Usage (cli):
 
-The output schema is:
+    $ php-fpm8.2 -tt 2>&1 | jc --php-fpm
 
-    {
-      "POOL_NAME": {
-        "DIRECTIVE_NAME": "value"
+Usage (module):
+
+    import jc
+    result = jc.parse('php_fpm', php_fpm_command_output)
+
+Schema:
+
+    [
+      {
+        "type":                   string,
+        "<directive>":            string
       }
-    }
+    ]
 
-All directive values are retained as strings. The same representation is used
-when `raw=True`.
+Examples:
+
+    $ php-fpm8.2 -tt 2>&1 | jc --php-fpm -p
+    [
+      {
+        "type": "global",
+        "pid": "/run/php/php8.2-fpm.pid",
+        "error_log": "/var/log/php8.2-fpm.log",
+        "syslog.ident": "php-fpm",
+        "syslog.facility": "24",
+        "log_buffering": "yes",
+        "log_level": "unknown value",
+        "log_limit": "1024",
+        "emergency_restart_interval": "0s",
+        "emergency_restart_threshold": "0",
+        "process_control_timeout": "0s",
+        "process.max": "0",
+        "process.priority": "undefined",
+        "daemonize": "yes",
+        "rlimit_files": "0",
+        "rlimit_core": "0",
+        "events.mechanism": "epoll",
+        "systemd_interval": "10s"
+      },
+      {
+        "type": "www",
+        "prefix": "undefined",
+        "user": "www-data",
+        "group": "www-data",
+        "listen": "/run/php/php8.2-fpm.sock",
+        "listen.backlog": "-1",
+        "pm": "dynamic",
+        "pm.max_children": "4",
+        "pm.start_servers": "1",
+        "pm.min_spare_servers": "1",
+        "pm.max_spare_servers": "1",
+        ...
+        "security.limit_extensions": ".php .phar"
+      }
+    ]
 """
 import re
-from typing import Dict, Optional, Union
+from typing import List, Dict, Optional
+from jc.jc_types import JSONDictType
+import jc.utils
 
 
-class info:
+class info():
+    """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
     description = '`php-fpm -tt` command parser'
-    author = 'JC Contributors'
-    author_email = ''
-    compatible = ['linux']
+    author = 'chensimian'
+    author_email = 'chensimian@users.noreply.github.com'
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
     tags = ['command']
 
 
-_NOTICE_RE = re.compile(
-    r'^\[[^\]]+\]\s+NOTICE:\s?(?P<payload>.*)$'
-)
-_SECTION_RE = re.compile(r'^\[(?P<section>[^\]]+)\]$')
-_SUCCESS_RE = re.compile(r'^configuration file .+ test is successful$')
+__version__ = info.version
 
 
-def parse(
-    data: Union[str, bytes],
-    raw: bool = False,
-    quiet: bool = False
-) -> Dict[str, Dict[str, str]]:
+# each line is a log message, e.g. `[25-Feb-2024 20:25:25] NOTICE:  pm = dynamic`
+_NOTICE_RE = re.compile(r'\[[^\]]*\]\s+NOTICE:\s?(?P<message>.*)')
+_SECTION_RE = re.compile(r'\[(?P<section>[^\]]+)\]')
+
+
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
-    Convert `php-fpm -tt` output to a dictionary.
+    Final processing to conform to the schema.
 
     Parameters:
 
-        data:   `php-fpm -tt` output as a string or bytes
-        raw:    ignored because values are always retained as strings
-        quiet:  accepted for parser API compatibility
+        proc_data:   (List of Dictionaries) raw structured data to process
 
     Returns:
 
-        Dictionary keyed by PHP-FPM configuration section or pool name.
+        List of Dictionaries. Structured to conform to the schema.
     """
-    del raw, quiet
+    return proc_data
 
-    if isinstance(data, bytes):
-        data = data.decode('utf-8')
 
-    output: Dict[str, Dict[str, str]] = {}
-    current_section: Optional[str] = None
+def parse(
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
+    """
+    Main text parsing function
 
-    for line in data.splitlines():
-        notice = _NOTICE_RE.match(line)
-        if not notice:
-            continue
+    Parameters:
 
-        payload = notice.group('payload').strip()
-        if not payload or _SUCCESS_RE.match(payload):
-            continue
+        data:        (string)  text data to parse
+        raw:         (boolean) unprocessed output if True
+        quiet:       (boolean) suppress warning messages if True
 
-        section = _SECTION_RE.match(payload)
-        if section:
-            current_section = section.group('section').strip()
-            output.setdefault(current_section, {})
-            continue
+    Returns:
 
-        if current_section is None or '=' not in payload:
-            continue
+        List of Dictionaries. Raw or processed structured data.
+    """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
 
-        key, value = payload.split('=', 1)
-        key = key.strip()
-        value = value.strip()
-        if key:
-            output[current_section][key] = value
+    raw_output: List[Dict] = []
+    section: Optional[Dict] = None
 
-    return output
+    if jc.utils.has_data(data):
+
+        for line in filter(None, jc.utils.splitlines(data)):
+            notice = _NOTICE_RE.fullmatch(line.rstrip())
+            if not notice:
+                continue
+
+            message = notice.group('message')
+
+            # `[global]` or a pool name such as `[www]`
+            section_match = _SECTION_RE.fullmatch(message.strip())
+            if section_match:
+                section = {'type': section_match.group('section')}
+                raw_output.append(section)
+                continue
+
+            # directives are indented (`key = value`). Other messages, such as
+            # `[pool www] pm.start_servers is not set...` or the
+            # "configuration file ... test is successful" line, are skipped.
+            if section is not None and message[:1].isspace() and '=' in message:
+                key, value = message.split('=', maxsplit=1)
+                if key.strip():
+                    section[key.strip()] = value.strip()
+
+    return raw_output if raw else _process(raw_output)

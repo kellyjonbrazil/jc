@@ -1,0 +1,19 @@
+[26-Nov-2026 10:00:00] NOTICE: [global]
+[26-Nov-2026 10:00:00] NOTICE: 	pid = /run/php-fpm/php-fpm.pid
+[26-Nov-2026 10:00:00] NOTICE: 	process.priority = undefined
+[26-Nov-2026 10:00:00] NOTICE:  
+[26-Nov-2026 10:00:00] NOTICE: [pool my-app.example] pm.start_servers is not set. It's been set to 2.
+[26-Nov-2026 10:00:00] WARNING: [pool my-app.example] 'user' directive is ignored when FPM is not running as root
+[26-Nov-2026 10:00:00] NOTICE: [my-app.example]
+[26-Nov-2026 10:00:00] NOTICE: 	user = nobody
+[26-Nov-2026 10:00:00] NOTICE: 	listen = 127.0.0.1:9000
+[26-Nov-2026 10:00:00] NOTICE: 	access.format = %R - %u %t "%m %r%Q%q" %s
+[26-Nov-2026 10:00:00] NOTICE: 	security.limit_extensions = .php
+[26-Nov-2026 10:00:00] NOTICE: 	env[PATH] = /usr/local/bin:/usr/bin:/bin
+[26-Nov-2026 10:00:00] NOTICE: 	env[QUERY] = a=1&b=2
+[26-Nov-2026 10:00:00] NOTICE: 	php_value[session.save_path] = /var/lib/php/session
+[26-Nov-2026 10:00:00] NOTICE: 	php_admin_value[error_log] = /var/log/php-fpm/www-error.log
+[26-Nov-2026 10:00:00] NOTICE: 	php_admin_value[memory_limit] = 
+[26-Nov-2026 10:00:00] NOTICE:  
+[26-Nov-2026 10:00:00] NOTICE: configuration file /etc/php-fpm.conf test is successful
+
