@@ -1,5 +1,6 @@
 import unittest
 import jc.streaming
+from jc.exceptions import ParseError
 
 
 class MyTests(unittest.TestCase):
@@ -39,6 +40,35 @@ class MyTests(unittest.TestCase):
                         'line': 'this is a test'
                     }
             }
+        )
+
+
+    def test_stream_error_parse_error_short_message(self):
+        """
+        Test that a long or multi-line ParseError message is shortened in _jc_meta
+        """
+        msg = 'Unable to parse line: ' + 'a' * 1000 + '\nsecond line'
+        self.assertEqual(jc.streaming.stream_error(
+            ParseError(msg), 'this is a test'),
+            {
+                '_jc_meta':
+                    {
+                        'success': False,
+                        'error': 'ParseError: ' + msg[:500] + '...',
+                        'line': 'this is a test'
+                    }
+            }
+        )
+
+
+    def test_stream_error_other_exception_full_message(self):
+        """
+        Test that exceptions other than ParseError keep their full message in _jc_meta
+        """
+        msg = 'b' * 1000
+        self.assertEqual(
+            jc.streaming.stream_error(ValueError(msg), 'x')['_jc_meta']['error'],
+            'ValueError: ' + msg
         )
 
 

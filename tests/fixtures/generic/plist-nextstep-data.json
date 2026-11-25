@@ -1,0 +1,8 @@
+{
+  "name": "example",
+  "data": "01:02:03:04",
+  "items": [
+    "ff:00",
+    "text"
+  ]
+}

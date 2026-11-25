@@ -1,0 +1,1 @@
+[{"name": "sda", "label": null, "fstype": null, "mountpoints": []}, {"name": "sda1", "label": "boot", "fstype": "btrfs", "mountpoints": ["/boot"]}, {"name": "sda2", "label": "media​", "fstype": "btrfs", "mountpoints": ["/data"]}, {"name": "sda3", "label": "root", "fstype": "btrfs", "mountpoints": ["/"]}]

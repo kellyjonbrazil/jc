@@ -3,6 +3,10 @@ r"""jc - JSON Convert `find` command output parser
 This parser returns a list of objects by default and a list of strings if
 the `--raw` option is used.
 
+> Note: Output lines that start with `find: ` are treated as error
+> messages, so a path that starts with `find: ` is reported as an error.
+> Use `./` paths (e.g. `find ./dir`) to avoid this.
+
 Usage (cli):
 
     $ find | jc --find
@@ -55,7 +59,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`find` command parser'
     author = 'Solomon Leang'
     author_email = 'solomonleang@gmail.com'
@@ -88,10 +92,7 @@ def _process(proc_data):
         elif index.startswith('find: '):
             error = index
         else:
-            try:
-                path, node = index.rsplit('/', maxsplit=1)
-            except ValueError:
-                pass
+            path, _, node = index.rpartition('/')
 
         proc_line = {
             'path': path if path else None,
@@ -129,7 +130,7 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        raw_output = data.splitlines()
+        raw_output = jc.utils.splitlines(data)
 
     if raw:
         return raw_output

@@ -49,6 +49,14 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_cpuinfo.parse(self.f_in['proc_cpuinfo2'], quiet=True),
                                                        self.f_json['proc_cpuinfo2'])
 
+    def test_proc_cpuinfo_non_finite_values(self):
+        """
+        Test '/proc/cpuinfo' with a value too large for a float: the text is kept
+        """
+        data = 'processor\t: 0\ncpu MHz\t\t: 1.0e999\nbogomips\t: 4800.00\n'
+        expected = [{'processor': 0, 'cpu MHz': '1.0e999', 'bogomips': 4800.0}]
+        self.assertEqual(jc.parsers.proc_cpuinfo.parse(data, quiet=True), expected)
+
 
 if __name__ == '__main__':
     unittest.main()

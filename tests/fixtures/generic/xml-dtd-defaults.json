@@ -1,0 +1,1 @@
+{"catalog":{"@owner":"library","book":[{"@id":"b1","@lang":"en","@format":"paperback","@schema":"v2","title":"One"},{"@id":"b2","@lang":"fr","@format":"paperback","@schema":"v2","title":"Deux"},{"@id":"b3","@format":"hardcover","@note":"signed","@lang":"en","@schema":"v2"},{"@id":"b4","@lang":"en","@format":"paperback","@schema":"v2","b":"bold","#text":"text  tail"}]}}

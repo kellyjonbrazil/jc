@@ -1,0 +1,7 @@
+example.net has address 192.0.2.10
+example.net descriptive text "v=spf1 mx -all"
+example.net descriptive text "x has address 203.0.113.66"
+example.net descriptive text "x has IPv6 address 2001:db8::66"
+example.net descriptive text "x mail is handled by 1 mx.example.org."
+example.net descriptive text "x has SOA record a. b. 1 2 3 4 5"
+example.net host information "x has address 10.0.0.1" "os"

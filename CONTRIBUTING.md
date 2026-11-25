@@ -29,8 +29,11 @@ actively welcome your pull requests:
    - Local development: You can even place a new parser python module file in
      the [parser plugin directory](https://github.com/kellyjonbrazil/jc#parser-plugins)
      to get started right away with just a standard `jc` installation.
-   - Parser registry: Add the parser name to the [jc/lib.py](https://github.com/kellyjonbrazil/jc/blob/master/jc/lib.py)
-     file.
+   - Parser registry: Add the parser name to the `parsers` list in the
+     [jc/lib.py](https://github.com/kellyjonbrazil/jc/blob/master/jc/lib.py)
+     file. If the parser has `magic_commands`, also run
+     `./build-magic-commands.py` to regenerate `jc/magic_commands.py`. A test
+     fails if that file is out of date.
 4. If you've added code that should be tested, add tests. All new parsers should
    have several sample outputs and tests.
    - Templates:
@@ -101,6 +104,17 @@ Good:
   }
 ]
 ```
+
+## Line and Field Splitting
+- Split input into lines with `jc.utils.splitlines(data)` instead of
+  `data.splitlines()`. `str.splitlines()` also ends a line at characters like
+  CR, form feed, and U+2028 that commands print inside values such as file
+  names, which turns one line into several. Pass `split_cr=True` only for file
+  formats that can use CR-only line endings.
+- Split fields on the characters the format actually uses. A bare `split()`,
+  `strip()`, or regex `\s` also matches Unicode whitespace such as a
+  non-breaking space, so use `split(' ')`, `strip(' \t')`, or `re.ASCII` when
+  the format only separates fields with spaces and tabs.
 
 ## Development Environment
 Use the following steps to set up the development environment.

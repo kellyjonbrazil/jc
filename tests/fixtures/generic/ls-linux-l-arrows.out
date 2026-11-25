@@ -1,0 +1,7 @@
+total 0
+lrwxrwxrwx. 1 kbrazil kbrazil 6 Oct  1 12:00 arrowtarget -> a -> b
+-rw-r--r--. 1 kbrazil kbrazil 0 Oct  1 12:00 deploy.key
+-rw-r--r--. 1 kbrazil kbrazil 0 Oct  1 12:00 deploy.key -> old
+drwxr-xr-x. 2 kbrazil kbrazil 6 Oct  1 12:00 dir -> y
+lrwxrwxrwx. 1 kbrazil kbrazil 6 Oct  1 12:00 lnk -> x -> target
+lrwxrwxrwx. 1 kbrazil kbrazil 3 Oct  1 12:00 normallnk -> tgt

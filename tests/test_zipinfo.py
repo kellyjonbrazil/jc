@@ -29,6 +29,15 @@ class MyTests(unittest.TestCase):
         rhel_8_zipinfo_space_in_name_json = json.loads(f.read())
 
 
+    def test_zipinfo_line_separators(self):
+        """
+        Test 'zipinfo' with line-break characters other than LF in a file name
+        """
+        data = 'Archive:  log4j-core-2.16.0.jar\nZip file size: 1789565 bytes, number of entries: 2\n-rw-r--r--  2.0 unx    19810 bl defN 21-Dec-12 23:35 META-INF/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\ndrwxr-xr-x  2.0 unx        0 b- stor 21-Dec-12 23:35 org/\n2 files, 19810 bytes uncompressed, 19810 bytes compressed:  0.0%\n'
+        result = jc.parsers.zipinfo.parse(data, quiet=True)
+        self.assertEqual(result[0]['files'][0]['filename'], 'META-INF/a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result[0]['files'][1]['filename'], 'org/')
+
     def test_zipinfo_nodata(self):
         """
         Test 'zipinfo' parser with no data
@@ -52,6 +61,13 @@ class MyTests(unittest.TestCase):
         Test 'zipinfo' on Red Hat 8 with spaces in the file path
         """
         self.assertEqual(jc.parsers.zipinfo.parse(self.rhel_8_zipinfo_space_in_name, quiet=True), self.rhel_8_zipinfo_space_in_name_json)
+
+    def test_zipinfo_unzip_summary_line(self):
+        """
+        Test 'zipinfo' with the unzip summary line, which is not a file
+        """
+        data = self.rhel_8_zipinfo + '\n2 archives were successfully processed.\n'
+        self.assertEqual(jc.parsers.zipinfo.parse(data, quiet=True), self.rhel_8_zipinfo_json)
 
 
 if __name__ == '__main__':

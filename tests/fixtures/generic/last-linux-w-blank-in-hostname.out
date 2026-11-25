@@ -1,0 +1,6 @@
+kbrazil  pts/1        mosh [2340]      Tue Nov 14 14:13 - 14:19  (00:06)
+kbrazil  pts/2        192.168.1.20 via mosh [1234] Tue Nov 14 14:10   still logged in
+kbrazil  pts/0        Mon Jan  1 00:00 Tue Nov 14 14:00 - 14:05  (00:05)
+reboot   system boot  6.1.0-13-amd64   Tue Nov 14 13:59   still running
+
+wtmp begins Tue Nov 14 13:59:20 2023

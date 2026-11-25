@@ -66,7 +66,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`~/.ssh/authorized_keys` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -78,15 +78,26 @@ __version__ = info.version
 
 # the boundary between the optional leading `options` field and the key
 # `type` field is the first unquoted whitespace character, so any token
-# that doesn't look like a known key type must be the `options` field
-_KEY_TYPE_PREFIXES = ('ssh-', 'ecdsa-sha2-', 'sk-ecdsa-sha2-', 'sk-ssh-')
+# that doesn't look like a known key type must be the `options` field.
+# The signature algorithm names (e.g. `rsa-sha2-512`) are also accepted as
+# key type names, as are the `webauthn-sk-*` names.
+_KEY_TYPE_PREFIXES = (
+    'ssh-', 'ecdsa-sha2-', 'sk-ecdsa-sha2-', 'sk-ssh-',
+    'rsa-sha2-', 'webauthn-sk-'
+)
+
+# a base64 encoded public key blob always starts with the length of the key
+# type name, so it starts with this prefix. No key type name does, so a
+# token followed by a key blob is the key type.
+_KEY_BLOB_PREFIX = 'AAAA'
 
 
 def _quote_aware_split(text, is_delimiter):
     """
     Split text on characters accepted by `is_delimiter`, leaving
     double-quoted spans (which may contain delimiters and
-    backslash-escaped quotes) intact.
+    backslash-escaped quotes) intact. As in sshd, a backslash is only
+    special when it is directly followed by a double quote.
     """
     tokens = []
     current = []
@@ -95,9 +106,10 @@ def _quote_aware_split(text, is_delimiter):
 
     for char in text:
         if escaped:
-            current.append(char)
             escaped = False
-            continue
+            if char == '"':
+                current.append(char)
+                continue
 
         if char == '\\':
             current.append(char)
@@ -164,15 +176,16 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             line = line.strip()
 
             if not line or line.startswith('#'):
                 continue
 
-            tokens = _quote_aware_split(line, str.isspace)
+            tokens = _quote_aware_split(line, lambda c: c in ' \t')
 
-            if tokens[0].startswith(_KEY_TYPE_PREFIXES):
+            if tokens[0].startswith(_KEY_TYPE_PREFIXES) \
+               or (len(tokens) > 1 and tokens[1].startswith(_KEY_BLOB_PREFIX)):
                 options = None
                 key_type = tokens[0]
                 remaining = tokens[1:]
@@ -182,6 +195,8 @@ def parse(data, raw=False, quiet=False):
                 remaining = tokens[2:]
 
             if not key_type or not remaining:
+                if not quiet:
+                    jc.utils.warning_message([f'Skipping line without a key: {line}'])
                 continue
 
             key = remaining[0]

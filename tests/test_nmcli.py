@@ -258,5 +258,74 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.nmcli.parse(self.generic_nmcli_device_wifi_list, quiet=True), self.generic_nmcli_device_wifi_list_json)
 
 
+    def test_nmcli_line_separator(self):
+        """
+        Test 'nmcli' with a line-break character other than LF inside a field
+        """
+        data = 'GENERAL.DEVICE:      wlan0\nGENERAL.CONNECTION:  Cafe\x0cGENERAL.DEVICE:tun0\nIP4.ADDRESS[1]:      10.0.0.5/24\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]['device'], 'wlan0')
+        self.assertEqual(result[0]['connection'], 'Cafe\x0cGENERAL.DEVICE:tun0')
+
+    def test_nmcli_remove_text_long_blank_run(self):
+        """
+        Test removing a trailing '(text)' summary from values with long runs of blanks
+        """
+        blanks = ' ' * 20000
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('x' + blanks + 'y (b)'), 'x' + blanks + 'y')
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('100' + blanks + '(connected)'), '100')
+        self.assertEqual(jc.parsers.nmcli._remove_text_from_value('x' + blanks + 'y'), 'x' + blanks + 'y')
+
+
+    def test_nmcli_quoted_values(self):
+        """
+        Test 'nmcli' with values that contain double quote characters
+        """
+        data = 'connection.id:                          "CorpNet"\nconnection.uuid:                        ""\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(result[0]['connection_id'], '"CorpNet"')
+        self.assertEqual(result[0]['connection_uuid'], '')
+
+        data = 'NAME       UUID  TYPE  DEVICE\n"CorpNet"  a1    wifi  wlp1\nCorpNet    b2    wifi  wlp2\n'
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual([x['name'] for x in result], ['"CorpNet"', 'CorpNet'])
+
+    def test_nmcli_non_finite_values(self):
+        """
+        Test 'nmcli device show' with values too large for a float: the text is kept
+        """
+        data = (
+            'GENERAL.DEVICE:                         enp0s3\n'
+            'GENERAL.TYPE:                           1.0e999\n'
+            'GENERAL.MTU:                            1500\n'
+            'IP4.ROUTE[1]:                           dst = 0.0.0.0/0, nh = 1.0e999, mt = 100\n'
+        )
+        expected = [{
+            'device': 'enp0s3',
+            'type': '1.0e999',
+            'mtu': 1500,
+            'ip4_route_1': {'dst': '0.0.0.0/0', 'nh': '1.0e999', 'mt': 100}
+        }]
+        self.assertEqual(jc.parsers.nmcli.parse(data, quiet=True), expected)
+
+    def test_nmcli_equals_in_values(self):
+        """
+        Test 'nmcli' with '=' characters in DHCP option and route values
+        """
+        data = (
+            'GENERAL.DEVICE:                         ens33\n'
+            'IP4.ADDRESS[1]:                         192.168.71.180/24\n'
+            'DHCP4.OPTION[1]:                        domain_search = a=b.example.com\n'
+            'DHCP4.OPTION[2]:                        ip_address = 192.168.71.180\n'
+            'IP4.ROUTE[1]:                           dst = 192.168.71.0/24, nh = 0.0.0.0, mt = 100\n'
+        )
+        result = jc.parsers.nmcli.parse(data, quiet=True)
+        self.assertEqual(result[0]['dhcp4_option_1'], {'name': 'domain_search', 'value': 'a=b.example.com'})
+        self.assertEqual(result[0]['dhcp4_option_2'], {'name': 'ip_address', 'value': '192.168.71.180'})
+        self.assertEqual(result[0]['ip4_route_1'], {'dst': '192.168.71.0/24', 'nh': '0.0.0.0', 'mt': 100})
+        self.assertEqual(jc.parsers.nmcli._split_routes('dst = 1.2.3.0/24, nh = a=b, mt = 100'), {'dst': '1.2.3.0/24', 'nh': 'a=b', 'mt': '100'})
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -29,52 +29,58 @@ or
 
 Schema:
 
-    {
-      "sk":                     string,
-      "RefCnt":                 integer,
-      "Type":                   integer,
-      "Proto":                  string,
-      "Iface":                  integer,
-      "R":                      integer,
-      "Rmem":                   integer,
-      "User":                   integer,
-      "Inode":                  integer
-    }
+    [
+      {
+        "sk":                     string,
+        "RefCnt":                 integer,
+        "Type":                   integer,
+        "Proto":                  string,
+        "Iface":                  integer,
+        "R":                      integer,
+        "Rmem":                   integer,
+        "User":                   integer,
+        "Inode":                  integer
+      }
+    ]
 
 Examples:
 
     $ cat /proc/net/packet | jc --proc -p
-    {
-      "sk": "ffff9b61b56c1800",
-      "RefCnt": 3,
-      "Type": 3,
-      "Proto": "88cc",
-      "Iface": 2,
-      "R": 1,
-      "Rmem": 0,
-      "User": 101,
-      "Inode": 34754
-    }
+    [
+      {
+        "sk": "ffff9b61b56c1800",
+        "RefCnt": 3,
+        "Type": 3,
+        "Proto": "88cc",
+        "Iface": 2,
+        "R": 1,
+        "Rmem": 0,
+        "User": 101,
+        "Inode": 34754
+      }
+    ]
 
     $ cat /proc/net/packet | jc --proc-net-packet -p -r
-    {
-      "sk": "ffff9b61b56c1800",
-      "RefCnt": "3",
-      "Type": "3",
-      "Proto": "88cc",
-      "Iface": "2",
-      "R": "1",
-      "Rmem": "0",
-      "User": "101",
-      "Inode": "34754"
-    }
+    [
+      {
+        "sk": "ffff9b61b56c1800",
+        "RefCnt": "3",
+        "Type": "3",
+        "Proto": "88cc",
+        "Iface": "2",
+        "R": "1",
+        "Rmem": "0",
+        "User": "101",
+        "Inode": "34754"
+      }
+    ]
 
 <a id="jc.parsers.proc_net_packet.parse"></a>
 
 ### parse
 
 ```python
-def parse(data: str, raw: bool = False, quiet: bool = False) -> Dict
+def parse(data: str, raw: bool = False, quiet: bool = False) -> List[Dict]
 ```
 
 Main text parsing function
@@ -87,11 +93,11 @@ Parameters:
 
 Returns:
 
-    Dictionary. Raw or processed structured data.
+    List of Dictionaries. Raw or processed structured data.
 
 ### Parser Information
 Compatibility:  linux
 
 Source: [`jc/parsers/proc_net_packet.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_net_packet.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

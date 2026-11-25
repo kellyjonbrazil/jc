@@ -1,0 +1,2 @@
+<165>1 2003-10-11T22:14:15.003Z host app 1 ID1 [ex@32473 path="C:\\]x" user="CORP\\root"] path C:\\"x\\]
+<165>1 2003-10-11T22:14:15.003Z host app 1 ID2 [ex@32473 dir="C:\\Temp\\"] escaped \] and \" and \\\"

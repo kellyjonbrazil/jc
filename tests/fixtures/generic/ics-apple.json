@@ -1,0 +1,663 @@
+[
+  {
+    "type": "VEVENT",
+    "uid": "D1305E3B-3AF0-4AC5-BBEA-BAD7E768FE36",
+    "summary": "event1",
+    "transp": "OPAQUE",
+    "dtstart": "2027-07-01T09:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1814457600,
+    "dtend": "2027-07-01T10:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1814461200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:36:11Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794180971,
+    "last_modified": "2026-11-08T23:36:11Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794180971,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "54C28F44-8FAC-4693-B595-6C8D8DF3DFC8",
+    "summary": "event2",
+    "transp": "OPAQUE",
+    "dtstart": "2027-12-20T09:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1829322000,
+    "dtend": "2027-12-20T10:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1829325600,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:36:40Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181000,
+    "last_modified": "2026-11-08T23:36:40Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181000,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "B92DBF53-0C73-4726-AE4F-E465D6D1D372",
+    "summary": "event3",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T09:00:00",
+    "dtstart_tzid": "Europe/Berlin",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799049600,
+    "dtend": "2027-01-04T10:00:00",
+    "dtend_tzid": "Europe/Berlin",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799053200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:37:42Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181062,
+    "last_modified": "2026-11-08T23:38:54Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181134,
+    "sequence": 1,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "FDE440F7-31C0-4A82-AF81-ADA769339AB2",
+    "summary": "event4",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T09:00:00",
+    "dtstart_tzid": "Australia/Sydney",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799013600,
+    "dtend": "2027-01-04T10:00:00",
+    "dtend_tzid": "Australia/Sydney",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799017200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:40:02Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181202,
+    "last_modified": "2026-11-08T23:40:02Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181202,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "597CA627-E5BF-4741-B5E1-C46050C4B023",
+    "summary": "event5",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T05:30:00",
+    "dtstart_tzid": "Asia/Kolkata",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799020800,
+    "dtend": "2027-01-04T06:30:00",
+    "dtend_tzid": "Asia/Kolkata",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799024400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:41:38Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181298,
+    "last_modified": "2026-11-08T23:41:38Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181298,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "9DD8B223-B090-486C-85DC-1C940BEDEA99",
+    "summary": "event6",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T05:45:00",
+    "dtstart_tzid": "Asia/Kathmandu",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799020800,
+    "dtend": "2027-01-04T06:45:00",
+    "dtend_tzid": "Asia/Kathmandu",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799024400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:42:05Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181325,
+    "last_modified": "2026-11-08T23:42:05Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181325,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "2F716E3F-BDC3-4A51-9842-690A4B80798C",
+    "summary": "event7",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T09:00:00",
+    "dtstart_tzid": "America/Phoenix",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799078400,
+    "dtend": "2027-01-04T10:00:00",
+    "dtend_tzid": "America/Phoenix",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799082000,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:42:39Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181359,
+    "last_modified": "2026-11-08T23:42:39Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181359,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "430D7EB4-1B69-41E6-BD64-BA41CEB9B0E6",
+    "summary": "event8",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T10:00:00Z",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799056800,
+    "dtend": "2027-01-04T11:00:00Z",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799060400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:43:04Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181384,
+    "last_modified": "2026-11-08T23:43:04Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181384,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "6BB679DD-DDBC-4454-B82E-1F0BD84B6CBA",
+    "summary": "event9",
+    "transp": "OPAQUE",
+    "dtstart": "2027-03-14T01:30:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1805016600,
+    "dtend": "2027-03-14T03:30:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1805020200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:43:44Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181424,
+    "last_modified": "2026-11-08T23:43:44Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181424,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "C2B3FE51-10F5-469B-BF80-BB0AB1DE4881",
+    "summary": "event10",
+    "transp": "OPAQUE",
+    "dtstart": "2027-03-14T03:30:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1805020200,
+    "dtend": "2027-03-14T04:30:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1805023800,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:44:39Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181479,
+    "last_modified": "2026-11-08T23:44:39Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181479,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "65754E7D-7760-4614-AAF7-7E013178A308",
+    "summary": "event11",
+    "transp": "OPAQUE",
+    "dtstart": "2027-11-07T01:30:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1825576200,
+    "dtend": "2027-11-07T02:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1825581600,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:45:24Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181524,
+    "last_modified": "2026-11-08T23:45:24Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181524,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "B3B0B34B-0F1F-4565-A44D-C9C5FD908A0C",
+    "summary": "event12",
+    "transp": "OPAQUE",
+    "dtstart": "2027-11-06T14:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1825534800,
+    "dtend": "2027-11-07T16:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1825632000,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:46:14Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181574,
+    "last_modified": "2026-11-08T23:46:14Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181574,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "7B297603-FF86-4C70-ADCB-82AEE7CCF41A",
+    "summary": "Holiday Freeze - event13",
+    "transp": "TRANSPARENT",
+    "dtstart": "2027-12-18",
+    "dtstart_epoch": 1829116800,
+    "dtstart_epoch_utc": null,
+    "dtend": "2028-01-05",
+    "dtend_epoch": 1830672000,
+    "dtend_epoch_utc": null,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:47:28Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181648,
+    "last_modified": "2026-11-08T23:47:28Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181648,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15H"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "20A8F0A4-103F-48CE-8BDC-595954013663",
+    "summary": "Holiday Freeze - event 14",
+    "transp": "TRANSPARENT",
+    "dtstart": "2027-12-16",
+    "dtstart_epoch": 1828944000,
+    "dtstart_epoch_utc": null,
+    "dtend": "2027-12-17",
+    "dtend_epoch": 1829030400,
+    "dtend_epoch_utc": null,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:47:57Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181677,
+    "last_modified": "2026-11-08T23:47:57Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181677,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15H"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "47A0C185-4D78-4B6D-9A7A-DC16E8D2FD6E",
+    "summary": "event 15 reocurring",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-05T08:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799164800,
+    "dtend": "2027-01-05T09:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799168400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:48:59Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181739,
+    "last_modified": "2026-11-08T23:49:35Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181775,
+    "sequence": 0,
+    "rrule": "FREQ=WEEKLY",
+    "exdate": [
+      "2027-02-02T08:00:00"
+    ],
+    "exdate_tzid": "America/Los_Angeles",
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "47A0C185-4D78-4B6D-9A7A-DC16E8D2FD6E",
+    "summary": "event 15 reocurring",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-19T11:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1800385200,
+    "dtend": "2027-01-19T12:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1800388800,
+    "recurrence_id": "2027-01-19T08:00:00",
+    "recurrence_id_tzid": "America/Los_Angeles",
+    "recurrence_id_epoch": null,
+    "recurrence_id_epoch_utc": 1800374400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:49:24Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181764,
+    "last_modified": "2026-11-08T23:49:24Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181764,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "8B21D3FA-FD5D-49AC-A48F-BE116F2B082E",
+    "summary": "event 16 reocurring yearly",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-04T12:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1799092800,
+    "dtend": "2027-01-04T13:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1799096400,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:50:19Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181819,
+    "last_modified": "2026-11-08T23:51:04Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181864,
+    "sequence": 0,
+    "rrule": "FREQ=YEARLY",
+    "exdate": [
+      "2029-01-04T12:00:00"
+    ],
+    "exdate_tzid": "America/Los_Angeles",
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "8B21D3FA-FD5D-49AC-A48F-BE116F2B082E",
+    "summary": "event 16 reocurring yearly",
+    "transp": "OPAQUE",
+    "dtstart": "2028-01-04T14:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1830636000,
+    "dtend": "2028-01-04T15:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1830639600,
+    "recurrence_id": "2028-01-04T12:00:00",
+    "recurrence_id_tzid": "America/Los_Angeles",
+    "recurrence_id_epoch": null,
+    "recurrence_id_epoch_utc": 1830628800,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:50:48Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794181848,
+    "last_modified": "2026-11-08T23:50:48Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794181848,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "6F7F0CE2-6CEB-4266-814F-D2B905A8B39C",
+    "summary": "event17 floating",
+    "transp": "OPAQUE",
+    "dtstart": "2027-01-06T11:00:00",
+    "dtstart_epoch": 1799262000,
+    "dtstart_epoch_utc": null,
+    "dtend": "2027-01-06T12:00:00",
+    "dtend_epoch": 1799265600,
+    "dtend_epoch_utc": null,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:53:22Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794182002,
+    "last_modified": "2026-11-08T23:53:22Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794182002,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "743B6A07-4FCB-4F59-9EE2-059D4666FFE2",
+    "summary": "event18",
+    "transp": "OPAQUE",
+    "dtstart": "2006-04-01T12:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1143921600,
+    "dtend": "2006-04-01T13:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1143925200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:54:21Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794182061,
+    "last_modified": "2026-11-08T23:54:48Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794182088,
+    "sequence": 1,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  },
+  {
+    "type": "VEVENT",
+    "uid": "1B2E4301-D0B3-4E73-8A6B-DD601D009E88",
+    "summary": "event19",
+    "transp": "OPAQUE",
+    "dtstart": "2019-07-01T12:00:00",
+    "dtstart_tzid": "America/Los_Angeles",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1562007600,
+    "dtend": "2019-07-01T13:00:00",
+    "dtend_tzid": "America/Los_Angeles",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1562011200,
+    "dtstamp": "2026-11-08T23:56:24Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1794182184,
+    "created": "2026-11-08T23:55:40Z",
+    "created_epoch": null,
+    "created_epoch_utc": 1794182140,
+    "last_modified": "2026-11-08T23:55:40Z",
+    "last_modified_epoch": null,
+    "last_modified_epoch_utc": 1794182140,
+    "sequence": 0,
+    "alarms": [
+      {
+        "action": "DISPLAY",
+        "description": "Reminder",
+        "trigger": "-PT15M"
+      }
+    ]
+  }
+]

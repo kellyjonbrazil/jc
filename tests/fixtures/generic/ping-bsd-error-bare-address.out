@@ -1,0 +1,19 @@
+PING 192.168.1.220 (192.168.1.220): 56 data bytes
+Request timeout for icmp_seq 0
+92 bytes from 192.168.1.254: Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 567b   0 0000  3f  01 a024 192.168.1.221  192.168.1.220 
+
+92 bytes from gw.example.net (192.168.1.254): Destination Host Unreachable
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 2e6f   0 0000  3f  01 c830 192.168.1.221  192.168.1.220 
+
+36 bytes from 10.0.0.1: Time to live exceeded
+Vr HL TOS  Len   ID Flg  off TTL Pro  cks      Src      Dst
+ 4  5  00 5400 9d1c   0 0000  01  01 7a2e 192.168.1.221  192.168.1.220 
+
+64 bytes from 192.168.1.220: icmp_seq=4 ttl=64 time=0.512 ms
+
+--- 192.168.1.220 ping statistics ---
+5 packets transmitted, 1 packets received, 80.0% packet loss
+round-trip min/avg/max/stddev = 0.512/0.512/0.512/0.000 ms

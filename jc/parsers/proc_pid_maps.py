@@ -96,12 +96,11 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/<pid>/maps` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -185,8 +184,15 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        header = 'address           perms offset  dev   inode      pathname\n'
-        data = header + data
-        raw_output = simple_table_parse(data.splitlines())
+        headers = ['address', 'perms', 'offset', 'dev', 'inode', 'pathname']
+
+        # Only the first five columns are separated by padding. Everything
+        # after the padding that follows the inode is the pathname, including
+        # any trailing white space, so the rows are not stripped.
+        for line in jc.utils.splitlines(data):
+            if not line.strip():
+                continue
+
+            raw_output.append(dict(zip(headers, line.lstrip().split(None, 5))))
 
     return raw_output if raw else _process(raw_output)

@@ -108,7 +108,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Syslog RFC 5424 string parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -126,6 +126,18 @@ escape_map = {
     r'\"': '"',
     r'\]': ']'
 }
+
+# a backslash and the character after it
+_escape_re = re.compile(r'\\.', re.DOTALL)
+
+
+def _unescape(string: str) -> str:
+    """
+    Decode escape sequences in one left-to-right pass so the backslash
+    from an escaped backslash does not start another escape sequence.
+    Unknown escape sequences are left as-is.
+    """
+    return _escape_re.sub(lambda m: escape_map.get(m.group(), m.group()), string)
 
 
 def _extract_structs(structs_string: str) -> List[str]:
@@ -149,7 +161,8 @@ def _extract_ident(struct_string) -> Optional[str]:
 
 
 def _extract_kv(struct_string) -> List[Dict]:
-    key_vals = re.compile(r'(?P<key>\w+)=(?P<val>\"[^\"]*\")')
+    # PARAM-VALUE can contain the escapes \", \\ and \]
+    key_vals = re.compile(r'\b(?P<key>\w+)=(?P<val>"(?:[^"\\]|\\.)*")', re.DOTALL)
     key_vals_match = key_vals.findall(struct_string)
     kv_list = []
 
@@ -158,8 +171,7 @@ def _extract_kv(struct_string) -> List[Dict]:
             key, val = kv
 
             # fixup escaped characters
-            for esc, esc_sub in escape_map.items():
-                val = val.replace(esc, esc_sub)
+            val = _unescape(val)
 
             kv_list.append({key: val[1:-1]})
 
@@ -195,8 +207,7 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         # fixup escaped characters
         if 'message' in item and item['message']:
-            for esc, esc_sub in escape_map.items():
-                item['message'] = item['message'].replace(esc, esc_sub)
+            item['message'] = _unescape(item['message'])
 
         # parse identity and key value pairs in the structured data section
         if 'structured_data' in item and item['structured_data']:
@@ -274,7 +285,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             syslog_match = syslog.match(line)
             if syslog_match:
                 syslog_dict = syslog_match.groupdict()

@@ -1,0 +1,30 @@
+
+192.168.1.10:/export/home mounted on /home:
+
+           ops/s       rpc bklog
+           2.110           0.000
+
+lookup:            ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.014           0.007           0.476        0 (0.0%)           0.500           0.537           0.006       52 (4.3%)
+readdir:           ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.001           0.011          12.277        0 (0.0%)           1.208           1.286           0.013        0 (0.0%)
+
+4410 open operations (pathname lookups)
+8890 dentry revalidates and 1270 vfs lookup requests
+resulted in 1210 LOOKUPs on the wire
+77 vfs getdents calls resulted in 77 READDIRs on the wire
+
+nas01.example.com:/volume1/archive mounted on /mnt/archive:
+
+           ops/s       rpc bklog
+          53.469           0.000
+
+lookup:            ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.375           0.178           0.476        0 (0.0%)           0.500           0.539           0.005       59 (4.4%)
+readdir:           ops/s            kB/s           kB/op         retrans    avg RTT (ms)    avg exe (ms)  avg queue (ms)          errors
+                   0.023           0.286          12.249        0 (0.0%)           1.190           1.262           0.012        0 (0.0%)
+
+4830 open operations (pathname lookups)
+9730 dentry revalidates and 1445 vfs lookup requests
+resulted in 1350 LOOKUPs on the wire
+84 vfs getdents calls resulted in 84 READDIRs on the wire

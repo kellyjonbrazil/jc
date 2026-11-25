@@ -28,6 +28,14 @@ Schema:
       "<key>":          string,
       "_options": [
                         string
+      ],
+      "_repeated": {
+        "<key>": [
+                        string
+        ]
+      },
+      "_init_args": [
+                        string
       ]
     }
 
@@ -66,6 +74,25 @@ Examples:
       ]
     }
 
+    $ cat /proc/cmdline | jc --proc -p
+    {
+      "BOOT_IMAGE": "/vmlinuz",
+      "root": "/dev/sda1",
+      "console": "ttyS0",
+      "_options": [
+        "ro"
+      ],
+      "_repeated": {
+        "console": [
+          "tty0",
+          "ttyS0"
+        ]
+      },
+      "_init_args": [
+        "single"
+      ]
+    }
+
 <a id="jc.parsers.proc_cmdline.parse"></a>
 
 ### parse
@@ -91,4 +118,4 @@ Compatibility:  linux
 
 Source: [`jc/parsers/proc_cmdline.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/proc_cmdline.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

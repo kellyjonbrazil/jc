@@ -118,10 +118,16 @@ Examples:
 import re
 import jc.utils
 
+# date, time, AM/PM, and size or <DIR> (or another <...> type) columns
+_ROW_RE = re.compile(r'(\d{2}/\d{2}/\d{4})[ \t]+([^ \t]+)[ \t]+([^ \t]+)[ \t]+([^ \t]+)')
+
+# the <DIR> column is padded to this width, followed by one space
+_TYPE_COLUMN_WIDTH = 14
+
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.7'
+    version = '1.8'
     description = '`dir` command parser'
     author = 'Rasheed Elsaleh'
     author_email = 'rasheed@rebelliondefense.com'
@@ -130,6 +136,24 @@ class info():
 
 
 __version__ = info.version
+
+
+def _filename(line, match):
+    """
+    Return the filename that follows the columns matched by _ROW_RE.
+    `dir` prints one space after the right-aligned size, or pads the
+    <DIR> column to a fixed width, so the filename keeps any whitespace
+    it starts with or contains.
+    """
+    size_start, size_end = match.span(4)
+    pad = 1
+
+    if match.group(4).startswith('<'):
+        pad = max(size_start + _TYPE_COLUMN_WIDTH - size_end, 0) + 1
+
+    rest = line[size_end:]
+    spaces = len(rest) - len(rest.lstrip(' '))
+    return rest[min(spaces, pad):]
 
 
 def _process(proc_data):
@@ -182,7 +206,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if line.startswith(" Directory of "):
                 parent_dir = line[len(" Directory of "):]
                 continue
@@ -191,7 +215,15 @@ def parse(data, raw=False, quiet=False):
                 continue
 
             output_line = {}
-            parsed_line = line.split()
+            match = _ROW_RE.match(line)
+
+            if match:
+                parsed_line = list(match.groups())
+                filename = _filename(line, match)
+            else:
+                parsed_line = line.split()
+                filename = " ".join(parsed_line[4:])
+
             output_line["date"] = parsed_line[0]
             output_line["time"] = " ".join(parsed_line[1:3])
             output_line.setdefault("dir", False)
@@ -201,7 +233,7 @@ def parse(data, raw=False, quiet=False):
             else:
                 output_line["size"] = parsed_line[3]
 
-            output_line["filename"] = " ".join(parsed_line[4:])
+            output_line["filename"] = filename
             output_line["parent"] = parent_dir
 
             raw_output.append(output_line)

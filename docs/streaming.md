@@ -100,7 +100,7 @@ Add `_jc_meta` object to output line if `ignore_exceptions=True`
 ### streaming_input_type_check
 
 ```python
-def streaming_input_type_check(data: Iterable[Union[str, bytes]]) -> None
+def streaming_input_type_check(data: Iterable[str | bytes]) -> None
 ```
 
 Ensure input data is an iterable, but not a string or bytes. Raises

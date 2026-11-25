@@ -1,0 +1,4 @@
+declare -A user_roles=([dave]=$'guest\n\' [carol]=\'admin' [alice]="admin" [bob]="guest" )
+declare -A printable_roles=([dave]="\$'\" [carol]=\"admin\" [x]=\"'" [alice]="admin" )
+declare -a notes=([0]="a" [1]=$'it\'s\n' [2]=$'b\n\' [9]=\'c' [3]="z")
+declare -- motd=$'Welcome\n\' [x]=\'y'

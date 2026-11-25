@@ -212,7 +212,7 @@ import jc.utils
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.3"
+    version = "1.5"
     description = "`systeminfo` command parser"
     author = "Jon Smith"
     author_email = "jon@rebelliondefense.com"
@@ -265,7 +265,10 @@ def _process(proc_data):
         if isinstance(proc_data[item], str) and not proc_data[item]:
             proc_data[item] = None
 
-    for i, nic in enumerate(proc_data["network_cards"]):
+    # A run cut short (`systeminfo | head -20 | jc --systeminfo`, a closed
+    # pipe) parses only the fields it received, so nothing below can assume
+    # a given key is present.
+    for i, nic in enumerate(proc_data.get("network_cards") or []):
         proc_data["network_cards"][i]["dhcp_enabled"] = jc.utils.convert_to_bool(
             nic["dhcp_enabled"]
         )
@@ -276,18 +279,25 @@ def _process(proc_data):
                 proc_data["network_cards"][i][item] = None
 
     for key in int_list:
-        proc_data[key] = jc.utils.convert_to_int(proc_data[key])
+        if key in proc_data:
+            proc_data[key] = jc.utils.convert_to_int(proc_data[key])
 
     for key in dt_list:
         tz = proc_data.get("time_zone", "")
-        if tz:
-            # convert
-            # from: (UTC-08:00) Pacific Time (US & Canada)
-            # to: (UTC-0800)
-            tz_fields = tz.split()
-            tz = " " + tz_fields[0].replace(":", "")
-            ts_formats = (1700, 1705, 1710)
-            ts = jc.utils.timestamp(f"{proc_data.get(key)}{tz}", format_hint=ts_formats)
+        if not tz:
+            # `ts` is only built when a time zone is present, so the two
+            # assignments below would otherwise read an unbound name. Without a
+            # zone there is nothing to anchor the timestamp to, so the epoch
+            # fields are left off rather than guessed.
+            continue
+
+        # convert
+        # from: (UTC-08:00) Pacific Time (US & Canada)
+        # to: (UTC-0800)
+        tz_fields = tz.split()
+        tz = " " + tz_fields[0].replace(":", "")
+        ts_formats = (1700, 1705, 1710)
+        ts = jc.utils.timestamp(f"{proc_data.get(key)}{tz}", format_hint=ts_formats)
         proc_data[key + '_epoch'] = ts.naive
         proc_data[key + '_epoch_utc'] = ts.utc
 
@@ -323,7 +333,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
         # keepends = True, so that multiline data retains return chars
-        lines = [line for line in data.splitlines(keepends=True) if line.strip() != ""]
+        lines = [line for line in jc.utils.splitlines(data, keepends=True) if line.strip() != ""]
 
         # find the character position of the value in the k/v pair of the first line
         # all subsequent lines of data use the same character position
@@ -339,11 +349,14 @@ def parse(data, raw=False, quiet=False):
                 # the value data doesn't start where it should
                 # so this is multiline data
                 if delim not in key:
-                    raw_data[last_key] += line
+                    raw_data[last_key].append(line)
                     continue
 
-            raw_data[key] = value
+            raw_data[key] = [value]
             last_key = key
+
+        # join the collected lines of each value once
+        raw_data = {k: ''.join(v) for k, v in raw_data.items()}
 
     # clean up keys; strip values
     raw_output = {}
@@ -391,7 +404,7 @@ def _parse_hotfixs_or_processors(data):
         data: (string) Input string
     """
     arr_output = []
-    for i, l in enumerate(data.splitlines()):
+    for i, l in enumerate(jc.utils.splitlines(data)):
         # skip line that says how many are installed
         if i == 0:
             continue
@@ -415,7 +428,7 @@ def _parse_hyperv_requirements(data):
         data: (string) Input string
     """
     output = {}
-    for i, l in enumerate(data.splitlines()):
+    for i, l in enumerate(jc.utils.splitlines(data)):
         if ":" in l:
             k, v = l.split(":")
             # discard the number sequence
@@ -437,7 +450,7 @@ def _parse_network_cards(data):
     is_ip = False
     nic_value_pos = 0
 
-    for i, line in enumerate(data.splitlines()):
+    for i, line in enumerate(jc.utils.splitlines(data)):
         # skip first line
         if i == 0:
             continue

@@ -1,0 +1,14 @@
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4121
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; ANSWER SECTION:
+example.com.		3600	IN	A	93.184.216.34
+
+;; Query time: 12 msec
+
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4122
+;; Got answer:
+www.example.org.	300	IN	A	192.0.2.10
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4123
+;; Got answer:
+mail.example.org.	300	IN	A	192.0.2.20

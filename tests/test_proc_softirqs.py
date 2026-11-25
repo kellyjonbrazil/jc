@@ -40,5 +40,14 @@ class MyTests(unittest.TestCase):
                                                         self.f_json['proc_softirqs'])
 
 
+    def test_proc_softirqs_counter_name_that_looks_like_a_number(self):
+        """
+        Test '/proc/softirqs' with a counter name that looks like a number
+        """
+        data = '                    CPU0       CPU1\n          007:          1          2\n'
+        result = jc.parsers.proc_softirqs.parse(data, quiet=True)
+        self.assertEqual(result, [{'counter': '007', 'CPU0': 1, 'CPU1': 2}])
+
+
 if __name__ == '__main__':
     unittest.main()

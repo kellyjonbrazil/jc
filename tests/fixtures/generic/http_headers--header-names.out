@@ -1,0 +1,9 @@
+HTTP/1.1 301 Moved Permanently
+Location:https://example.com/?a: b
+Trace: a b
+HTTP/1.1: 503 x
+Server:nginx
+Set-Cookie:id=1; Path=/
+X-Empty:
+Content-Length: 0
+

@@ -42,5 +42,95 @@ class MyTests(unittest.TestCase):
             self.assertEqual(parse(data_in, quiet=True), expected)
 
 
+    def test_proc_cmdline_kernel_quoting(self):
+        """
+        Test 'proc_cmdline' with kernel quoting rules
+        """
+        data = "tag='x selinux=0 y' note=it's initrd=\\EFI\\arch\\x.img \"a=b c\" d=\"e f\" g=\"h\x0bi\" j=\"unclosed k=l\n"
+        expected = {
+            "tag": "'x",
+            "selinux": "0",
+            "note": "it's",
+            "initrd": "\\EFI\\arch\\x.img",
+            "a": "b c",
+            "d": "e f",
+            "g": "h\x0bi",
+            "j": "unclosed k=l",
+            "_options": ["y'"]
+        }
+        self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_proc_cmdline_whitespace_separators(self):
+        """
+        Test 'proc_cmdline' with kernel whitespace separators
+        """
+        self.assertEqual(
+            parse('a=1\x0bb=2\x0cc=3\td=4\r\ne', quiet=True),
+            {"a": "1", "b": "2", "c": "3", "d": "4", "_options": ["e"]}
+        )
+
+    def test_proc_cmdline_init_args(self):
+        """
+        Test 'proc_cmdline' with init arguments after --
+        """
+        data = 'root=/dev/sda1 ro -- single x="a b" -- z\n'
+        expected = {
+            "root": "/dev/sda1",
+            "_options": ["ro"],
+            "_init_args": ["single", "x=a b"]
+        }
+        self.assertEqual(parse(data, quiet=True), expected)
+        self.assertEqual(parse('ro --\n', quiet=True), {"_options": ["ro"], "_init_args": []})
+        self.assertNotIn('_init_args', parse('ro a=--', quiet=True))
+
+    def test_proc_cmdline_reserved_keys(self):
+        """
+        Test 'proc_cmdline' with parameters named like the reserved keys
+        """
+        data = '_options=x _repeated=1 _init_args=2 ro -- init'
+        expected = {
+            "_options": ["_options=x", "_repeated=1", "_init_args=2", "ro"],
+            "_init_args": ["init"]
+        }
+        self.assertEqual(parse(data, quiet=True), expected)
+
+    def test_proc_cmdline_repeated(self):
+        """
+        Test 'proc_cmdline' with repeated parameters
+        """
+        data = 'console=tty0 ro quiet console=ttyS0 ro a=1 b=2 a=3 console=hvc0'
+        expected = {
+            "console": "hvc0",
+            "a": "3",
+            "b": "2",
+            "_options": ["ro", "quiet", "ro"],
+            "_repeated": {
+                "console": ["tty0", "ttyS0", "hvc0"],
+                "a": ["1", "3"]
+            }
+        }
+        self.assertEqual(parse(data, quiet=True), expected)
+
+
+    def test_proc_cmdline_empty_parameters(self):
+        """
+        Test 'proc_cmdline' with empty parameters like the kernel
+        """
+        self.assertEqual(
+            parse('a=1 "" ro -- "" b "', quiet=True),
+            {"a": "1", "_options": ["", "ro"], "_init_args": ["", "b", ""]}
+        )
+        self.assertEqual(parse('" x', quiet=True), {"_options": [" x"]})
+
+    def test_proc_cmdline_second_dashes(self):
+        """
+        Test 'proc_cmdline' with a second -- in the init arguments
+        """
+        self.assertEqual(
+            parse('ro -- one -- two three', quiet=True),
+            {"_options": ["ro"], "_init_args": ["one"]}
+        )
+
+
 if __name__ == '__main__':
     unittest.main()

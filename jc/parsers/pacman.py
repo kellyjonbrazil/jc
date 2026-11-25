@@ -180,7 +180,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`pacman` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -237,7 +237,7 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
             if key in name_description_fields and isinstance(val, list):
                 new_list = []
                 for name_desc in val:
-                    n, *d = name_desc.split(': ')
+                    n, *d = name_desc.split(': ', maxsplit=1)
                     if d == []:
                         d = ''
                     else:
@@ -289,27 +289,36 @@ def parse(
     raw_output: List[Dict] = []
     entry_obj: Dict = {}
     multiline_fields = {'required_by', 'optional_deps', 'backup_files'}
+    # items of these fields are separated by two spaces
+    list_fields = {
+        'licenses', 'groups', 'provides', 'depends_on', 'optional_for',
+        'conflicts_with', 'replaces', 'validated_by', 'extended_data'
+    }
     multiline_list: List = []
     multiline_key = ''
+    last_key = ''
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             splitline = line.split(' : ', maxsplit=1)
 
-            if len(splitline) == 2:
+            # keys always start in the first column. Indented lines (for
+            # example, optional deps entries) continue the previous field.
+            if len(splitline) == 2 and not line.startswith((' ', '\t')):
                 # this is a key/value pair
                 key, val = splitline
                 key = key.strip()
                 key = jc.utils.normalize_key(key)
                 val = val.strip()
+                last_key = key
 
                 # new entries can start with "Repository" or "Name"
                 if (key == 'name' or key == 'repository') and len(entry_obj) > 2:
                     if multiline_list:
                         entry_obj[multiline_key] = multiline_list
                         multiline_list = []
-                        multiline_key = ''
+                    multiline_key = ''
                     if entry_obj:
                         raw_output.append(entry_obj)
                     entry_obj = {}
@@ -329,12 +338,24 @@ def parse(
                     if multiline_list:
                         entry_obj[multiline_key] = multiline_list
                         multiline_list = []
-                        multiline_key = ''
+                    multiline_key = ''
                     entry_obj[key] = val if val != 'None' else None
                     continue
 
             # multiline field continuation lines
-            multiline_list.append(line.strip())
+            if multiline_key:
+                multiline_list.append(line.strip())
+                continue
+
+            # any other field can be wrapped to the terminal width: join the
+            # line to that field the way pacman prints it unwrapped
+            if last_key in entry_obj:
+                prev_val = entry_obj[last_key]
+                if prev_val is None:
+                    entry_obj[last_key] = line.strip()
+                else:
+                    sep = '  ' if last_key in list_fields else ' '
+                    entry_obj[last_key] = prev_val + sep + line.strip()
             continue
 
         # grab the last entry
