@@ -1,0 +1,5 @@
+Inter-| sta-|   Quality        |   Discarded packets               | Missed | WE
+ face | tus | link level noise |  nwid  crypt   frag  retry   misc | beacon | 22
+wlp0s20f3: 0000   58.  -52.  -256        0      0      0     12      7        0
+ wlan0: 0000    0     0     0        0      0      0      0      0        0
+ wlan1: 000a   70.  -40.  -95.       3      1      0   1543    210       18

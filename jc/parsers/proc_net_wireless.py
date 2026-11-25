@@ -26,73 +26,95 @@ Schema:
 
     [
       {
-        "Iface":                  string,
-        "Status":                 integer,
-        "QualityLink":            integer,
-        "QualityLevel":           integer,
-        "QualityNoise":           integer,
-        "DiscPktNwid":            integer,
-        "DiscPktCrypt":           integer,
-        "DiscPktFrag":            integer,
-        "DiscPktRetry":           integer,
-        "DiscPktMisc":            integer,
-        "MissedBeacon":           integer,
+        "interface":                  string,
+        "status":                     integer,
+        "quality_link":               integer,
+        "quality_link_updated":       boolean,
+        "quality_level":              integer,
+        "quality_level_updated":      boolean,
+        "quality_noise":              integer,
+        "quality_noise_updated":      boolean,
+        "discarded_nwid":             integer,
+        "discarded_crypt":            integer,
+        "discarded_frag":             integer,
+        "discarded_retry":            integer,
+        "discarded_misc":             integer,
+        "missed_beacon":              integer
       }
-  ]
+    ]
 
 Examples:
 
     $ cat /proc/net/wireless | jc --proc -p
     [
       {
-        "interface": "lo",
-        "r_bytes": 13222,
-        "r_packets": 152,
-        "r_errs": 0,
-        "r_drop": 0,
-        "r_fifo": 0,
-        "r_frame": 0,
-        "r_compressed": 0,
-        "r_multicast": 0,
-        "t_bytes": 13222,
-        "t_packets": 152,
-        "t_errs": 0,
-        "t_drop": 0,
-        "t_fifo": 0,
-        "t_colls": 0,
-        "t_carrier": 0,
-        "t_compressed": 0
+        "interface": "wlp0s20f3",
+        "status": 0,
+        "quality_link": 58,
+        "quality_link_updated": true,
+        "quality_level": -52,
+        "quality_level_updated": true,
+        "quality_noise": -256,
+        "quality_noise_updated": false,
+        "discarded_nwid": 0,
+        "discarded_crypt": 0,
+        "discarded_frag": 0,
+        "discarded_retry": 12,
+        "discarded_misc": 7,
+        "missed_beacon": 0
       },
-      ...
+      {
+        "interface": "wlan1",
+        "status": 10,
+        "quality_link": 70,
+        "quality_link_updated": true,
+        "quality_level": -40,
+        "quality_level_updated": true,
+        "quality_noise": -95,
+        "quality_noise_updated": true,
+        "discarded_nwid": 3,
+        "discarded_crypt": 1,
+        "discarded_frag": 0,
+        "discarded_retry": 1543,
+        "discarded_misc": 210,
+        "missed_beacon": 18
+      }
     ]
 
     $ cat /proc/net/wireless | jc --proc-net-wireless -p -r
     [
       {
-        "interface": "lo:",
-        "r_bytes": "13222",
-        "r_packets": "152",
-        "r_errs": "0",
-        "r_drop": "0",
-        "r_fifo": "0",
-        "r_frame": "0",
-        "r_compressed": "0",
-        "r_multicast": "0",
-        "t_bytes": "13222",
-        "t_packets": "152",
-        "t_errs": "0",
-        "t_drop": "0",
-        "t_fifo": "0",
-        "t_colls": "0",
-        "t_carrier": "0",
-        "t_compressed": "0"
+        "interface": "wlp0s20f3",
+        "status": "0000",
+        "quality_link": "58.",
+        "quality_level": "-52.",
+        "quality_noise": "-256",
+        "discarded_nwid": "0",
+        "discarded_crypt": "0",
+        "discarded_frag": "0",
+        "discarded_retry": "12",
+        "discarded_misc": "7",
+        "missed_beacon": "0"
       },
-      ...
+      {
+        "interface": "wlan1",
+        "status": "000a",
+        "quality_link": "70.",
+        "quality_level": "-40.",
+        "quality_noise": "-95.",
+        "discarded_nwid": "3",
+        "discarded_crypt": "1",
+        "discarded_frag": "0",
+        "discarded_retry": "1543",
+        "discarded_misc": "210",
+        "missed_beacon": "18"
+      }
     ]
 """
 from typing import List, Dict
+from jc.jc_types import JSONDictType
+from jc.exceptions import ParseError
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
@@ -100,7 +122,7 @@ class info():
     version = '1.0'
     description = '`/proc/net/wireless` file parser'
     author = 'Michael Klemm'
-    author_email = 'kellyjonbrazil@gmail.com'
+    author_email = 'MichaelKlemm@users.noreply.github.com'
     compatible = ['linux']
     tags = ['file']
     hidden = True
@@ -109,7 +131,15 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: List[Dict]) -> List[Dict]:
+_FIELDS = (
+    'status', 'quality_link', 'quality_level', 'quality_noise', 'discarded_nwid',
+    'discarded_crypt', 'discarded_frag', 'discarded_retry', 'discarded_misc',
+    'missed_beacon'
+)
+_QUALITY_FIELDS = ('quality_link', 'quality_level', 'quality_noise')
+
+
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     """
     Final processing to conform to the schema.
 
@@ -121,24 +151,36 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
 
         List of Dictionaries. Structured to conform to the schema.
     """
-    for item in proc_data:
-        if 'interface' in item:
-            item['interface'] = item['interface'][:-1]
+    processed: List[JSONDictType] = []
 
-        for key, val in item.items():
-            try:
-                item[key] = int(val.rstrip('.'))
-            except Exception:
-                pass
+    for entry in proc_data:
+        item: Dict = {'interface': entry['interface']}
 
-    return proc_data
+        # the status is printed in hex
+        try:
+            item['status'] = int(entry['status'], 16)
+        except ValueError:
+            item['status'] = None
+
+        for key in _FIELDS[1:]:
+            # a quality value ends with a dot if it was updated since the
+            # last read
+            if key in _QUALITY_FIELDS:
+                item[key] = jc.utils.convert_to_int(entry[key].rstrip('.'))
+                item[key + '_updated'] = entry[key].endswith('.')
+            else:
+                item[key] = jc.utils.convert_to_int(entry[key])
+
+        processed.append(item)
+
+    return processed
 
 
 def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> List[Dict]:
+) -> List[JSONDictType]:
     """
     Main text parsing function
 
@@ -155,14 +197,19 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: List = []
+    raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
 
-        header = 'Iface Status QualityLink QualityLevel QualityNoise DiscPktNwid DiscPktCrypt DiscPktFrag DiscPktRetry DiscPktMisc MissedBeacon'
-        data_splitlines = data.splitlines()
-        data_splitlines.pop(0)
-        data_splitlines[0] = header
-        raw_output = simple_table_parse(data_splitlines)
+        # skip the two header lines
+        for line in filter(None, jc.utils.splitlines(data)[2:]):
+            interface, colon, values = line.partition(':')
+            fields = values.split()
+            if not colon or len(fields) != len(_FIELDS):
+                raise ParseError(f'Unexpected line: {line}')
+
+            entry = {'interface': interface.strip()}
+            entry.update(zip(_FIELDS, fields))
+            raw_output.append(entry)
 
     return raw_output if raw else _process(raw_output)

@@ -190,6 +190,9 @@ class MyTests(unittest.TestCase):
             'proc_net_unix': (
                 'fixtures/linux-proc/net_unix',
                 'fixtures/linux-proc/net_unix.json'),
+            'proc_net_wireless': (
+                'fixtures/linux-proc/net_wireless',
+                'fixtures/linux-proc/net_wireless.json'),
 
             'proc_pid_fdinfo': (
                 'fixtures/linux-proc/pid_fdinfo',
