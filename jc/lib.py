@@ -143,6 +143,7 @@ parsers: List[str] = [
     'pkg-index-deb',
     'plist',
     'postconf',
+    'prometheus',
     'proc',
     'proc-buddyinfo',
     'proc-cmdline',
