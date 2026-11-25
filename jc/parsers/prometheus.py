@@ -132,7 +132,6 @@ Examples:
       ...
     ]
 """
-import math
 import re
 from typing import List, Dict, Optional, Tuple
 from jc.jc_types import JSONDictType
@@ -173,19 +172,6 @@ _ALL_SUFFIXES = {x for suffixes in _TYPE_SUFFIXES.values() for x in suffixes}
 def _unescape(value: str) -> str:
     """Decode the `\\n`, `\\"`, and `\\\\` escapes, keeping other backslashes"""
     return _UNESCAPE.sub(lambda m: {'n': '\n', '"': '"', '\\': '\\'}.get(m.group(1), m.group(0)), value)
-
-
-def _to_float(value: Optional[str]) -> Optional[float]:
-    """Convert a number to a float. NaN and +/-Inf have no JSON value, so they are None."""
-    if value is None:
-        return None
-
-    try:
-        number = float(value)
-    except ValueError:
-        return None
-
-    return number if math.isfinite(number) else None
 
 
 def _parse_label_set(line: str, pos: int, allow_name: bool) -> Tuple[Optional[str], Dict[str, str], int]:
@@ -306,8 +292,8 @@ def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
     for entry in proc_data:
         for item in (entry, entry['exemplar']):
             if item:
-                item['value_float'] = _to_float(item['value'])
-                item['timestamp_float'] = _to_float(item['timestamp'])
+                item['value_float'] = jc.utils.convert_to_float(item['value'])
+                item['timestamp_float'] = jc.utils.convert_to_float(item['timestamp'])
 
     return proc_data
 
