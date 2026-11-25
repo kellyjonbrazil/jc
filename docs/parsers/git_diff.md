@@ -7,6 +7,9 @@ jc - JSON Convert `git diff --name-status` command output parser
 
 Only the `--name-status` output format is currently supported.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git diff --name-status | jc --git-diff
@@ -103,4 +106,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/git_diff.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/git_diff.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

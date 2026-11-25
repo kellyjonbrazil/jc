@@ -1,0 +1,3 @@
+# m h dom mon dow user command
+5 0 * * * root /usr/bin/backup
+@reboot

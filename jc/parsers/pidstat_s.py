@@ -21,7 +21,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('pidstat_s', pidstat_command_output.splitlines())
+    result = jc.parse('pidstat_s', pidstat_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -81,13 +81,12 @@ import jc.utils
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
-from jc.parsers.universal import simple_table_parse
 from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`pidstat -H` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,12 +131,54 @@ def _process(proc_data: Dict) -> Dict:
     return proc_data
 
 
+# id columns: one of these is in every pidstat header
+_ID_COLUMNS = {'PID', 'UID', 'TGID', 'TID', 'USER'}
+
+
+def _is_header(line: str) -> bool:
+    """
+    True for a pidstat -h header line such as
+    '#      Time   UID       PID    %usr ... Command'. Other lines that start
+    with '#' (e.g. part of a command name) are not headers.
+    """
+    if not line.startswith('#'):
+        return False
+
+    words = line[1:].split()
+    return (
+        len(words) > 2
+        and words[0] == 'Time'
+        and words[-1] == 'Command'
+        and any(w in _ID_COLUMNS for w in words)
+    )
+
+
 def normalize_header(header: str) -> str:
     return header.replace('#', ' ')\
                  .replace('-', '_')\
                  .replace('/', '_')\
                  .replace('%', 'percent_')\
                  .lower()
+
+
+def _parse_row(header_list: List[str], line: str) -> Dict:
+    """
+    Same result as `simple_table_parse([header, line])[0]` for a header that
+    has already been split into `header_list`.
+    """
+    return dict(zip(header_list, line.strip().split(None, len(header_list) - 1)))
+
+
+def _check_row(header_list: List[str], line: str) -> None:
+    """
+    The last column (Command) takes the rest of the line, so a row can have
+    more fields than the header, and may have no Command at all, but it
+    cannot have fewer fields than that. The Time column of `pidstat -h` is
+    always an epoch integer.
+    """
+    fields = line.split()
+    if len(fields) < len(header_list) - 1 or not fields[0].isdecimal():
+        raise ParseError('Not pidstat data')
 
 
 @add_jc_meta
@@ -153,7 +194,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -168,6 +209,7 @@ def parse(
 
     table_list: List = []
     header: str = ''
+    header_list: List[str] = []
 
     for line in data:
         try:
@@ -178,19 +220,22 @@ def parse(
                 # skip blank lines
                 continue
 
-            if line.startswith('#'):
+            if _is_header(line):
                 if len(table_list) > 1:
-                    output_line = simple_table_parse(table_list)[0]
+                    output_line = _parse_row(table_list[0].split(), table_list[1])
                     yield output_line if raw else _process(output_line)
                     header = ''
 
                 header = normalize_header(line)
+                header_list = header.split()
                 table_list = [header]
                 continue
 
-            if header:
+            # a data row never starts with '#'
+            if header and not line.startswith('#'):
+                _check_row(header_list, line)
                 table_list.append(line)
-                output_line = simple_table_parse(table_list)[0]
+                output_line = _parse_row(header_list, table_list[1])
                 yield output_line if raw else _process(output_line)
                 table_list = [header]
                 continue
@@ -200,7 +245,7 @@ def parse(
 
     try:
         if len(table_list) > 1:
-            output_line = simple_table_parse(table_list)[0]
+            output_line = _parse_row(table_list[0].split(), table_list[1])
             yield output_line if raw else _process(output_line)
 
     except Exception as e:

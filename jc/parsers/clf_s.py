@@ -28,7 +28,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('clf_s', common_log_file_output.splitlines())
+    result = jc.parse('clf_s', common_log_file_output.split('\n'))
     for item in result:
         # do something
 
@@ -60,11 +60,20 @@ Schema:
       "epoch":                        integer,  # [0]
       "epoch_utc":                    integer,  # [1]
       "unparsable":                   string    # [2]
+
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] naive timestamp
     [1] timezone-aware timestamp. Only available if timezone field is UTC
-    [2] exists if the line was not able to be parsed
+    [2] exists if the line was not able to be parsed. With -qq or
+        ignore_exceptions=True the line is reported in the _jc_meta object
+        instead.
 
 Examples:
 
@@ -90,7 +99,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Common and Combined Log Format file streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -148,7 +157,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -162,10 +171,13 @@ def parse(
     jc.utils.compatibility(__name__, info.compatible, quiet)
     streaming_input_type_check(data)
 
+    # quoted fields end at the first quote that is not escaped with a
+    # backslash. The plain lazy match is kept as a fallback for logs that
+    # do not escape quotes.
     clf_pattern = re.compile(r'''
         ^(?P<host>-|\S+)\s
         (?P<ident>-|\S+)\s
-        (?P<authuser>-|\S+)\s
+        (?P<authuser>-|\S+|(?<=\s-\s)(?:\\"|[^"])+?)\s  # spaces allowed if ident is '-'
         \[
         (?P<date>
             (?P<day>\d+)/
@@ -177,11 +189,11 @@ def parse(
             (?P<tz>\S+)
         )
         \]\s
-        \"(?P<request>.*?)\"\s
+        \"(?P<request>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s
         (?P<status>-|\d\d\d)\s
         (?P<bytes>-|\d+)\s?
-        (?:\"(?P<referer>.*?)\"\s?)?
-        (?:\"(?P<user_agent>.*?)\"\s?)?
+        (?:\"(?P<referer>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
+        (?:\"(?P<user_agent>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
         (?P<extra>.*)
         ''', re.VERBOSE
     )
@@ -196,6 +208,10 @@ def parse(
     for line in data:
         try:
             streaming_line_input_type_check(line)
+            if line.endswith('\r\n'):
+                line = line[:-2] + '\n'
+            elif line.endswith('\r'):
+                line = line[:-1]
             output_line: Dict = {}
 
             if not line.strip():
@@ -211,6 +227,9 @@ def parse(
                     request_match = re.match(request_pattern, request_string)
                     if request_match:
                          output_line.update(request_match.groupdict())
+
+            elif ignore_exceptions:
+                raise ParseError('Not Common Log Format data')
 
             else:
                 output_line = {"unparsable": line.strip()}

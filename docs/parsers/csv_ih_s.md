@@ -23,7 +23,7 @@ Usage (cli):
 Usage (module):
 
     import jc
-    result = jc.parse('csv_ih', csv_output.splitlines())
+    result = jc.parse('csv_ih_s', csv_output.split('\n'))
 
 Schema:
 
@@ -61,7 +61,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False,
           ignore_exceptions: bool = False) -> List[Dict[str, Any]]

@@ -34,11 +34,38 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-10.14.6/sum.json'), 'r', encoding='utf-8') as f:
         osx_10_14_6_sum_json = json.loads(f.read())
 
+    def test_cksum_line_separators(self):
+        """
+        Test 'cksum' with line-break characters other than LF in a file name
+        """
+        data = '3194693727 24150660 a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.rpm\n1851496064 1196 digout\n'
+        result = jc.parsers.cksum.parse(data, quiet=True)
+        self.assertEqual(result[0]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.rpm')
+        self.assertEqual(result[1]['filename'], 'digout')
+
     def test_cksum_nodata(self):
         """
         Test 'cksum' parser with no data
         """
         self.assertEqual(jc.parsers.cksum.parse('', quiet=True), [])
+
+    def test_cksum_stdin_no_filename(self):
+        """
+        Test 'cksum' output from a pipe (checksum and blocks only, no filename)
+        """
+        self.assertEqual(
+            jc.parsers.cksum.parse('1479881546 3', quiet=True),
+            [{'filename': None, 'checksum': 1479881546, 'blocks': 3}]
+        )
+
+    def test_sum_stdin_no_filename(self):
+        """
+        Test 'sum' output from a pipe (checksum and blocks only, no filename)
+        """
+        self.assertEqual(
+            jc.parsers.cksum.parse('32856 1', quiet=True),
+            [{'filename': None, 'checksum': 32856, 'blocks': 1}]
+        )
 
     def test_cksum_centos_7_7(self):
         """

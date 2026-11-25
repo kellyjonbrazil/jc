@@ -174,7 +174,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = 'Common and Combined Log Format file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -243,10 +243,13 @@ def parse(
     raw_output: List[Dict] = []
     output_line: Dict = {}
 
+    # quoted fields end at the first quote that is not escaped with a
+    # backslash. The plain lazy match is kept as a fallback for logs that
+    # do not escape quotes.
     clf_pattern = re.compile(r'''
         ^(?P<host>-|\S+)\s
         (?P<ident>-|\S+)\s
-        (?P<authuser>-|\S+)\s
+        (?P<authuser>-|\S+|(?<=\s-\s)(?:\\"|[^"])+?)\s  # spaces allowed if ident is '-'
         \[
         (?P<date>
             (?P<day>\d+)/
@@ -258,11 +261,11 @@ def parse(
             (?P<tz>\S+)
         )
         \]\s
-        \"(?P<request>.*?)\"\s
+        \"(?P<request>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s
         (?P<status>-|\d\d\d)\s
         (?P<bytes>-|\d+)\s?
-        (?:\"(?P<referer>.*?)\"\s?)?
-        (?:\"(?P<user_agent>.*?)\"\s?)?
+        (?:\"(?P<referer>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
+        (?:\"(?P<user_agent>[^"\\]*(?:\\.[^"\\]*)*|.*?)\"\s?)?
         (?P<extra>.*)
         ''', re.VERBOSE
     )
@@ -276,7 +279,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             output_line = {}
             clf_match = re.match(clf_pattern, line)
 

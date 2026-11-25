@@ -2,6 +2,9 @@ r"""jc - JSON Convert `git diff --name-status` command output parser
 
 Only the `--name-status` output format is currently supported.
 
+> Note: File names that git quotes (e.g. non-ASCII characters) are
+> decoded to the actual name.
+
 Usage (cli):
 
     $ git diff --name-status | jc --git-diff
@@ -78,7 +81,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`git diff --name-status` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -142,13 +145,13 @@ def parse(data, raw=False, quiet=False):
     raw_output = []
 
     if jc.utils.has_data(data):
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             if not line.strip():
                 continue
 
             fields = line.split('\t')
             status = fields[0]
-            paths = fields[1:]
+            paths = [jc.utils.unquote_git_path(x) for x in fields[1:]]
 
             entry = {
                 'status': status,

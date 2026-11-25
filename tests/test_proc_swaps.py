@@ -39,6 +39,21 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.proc_swaps.parse(self.f_in['proc_swaps'], quiet=True),
                                                      self.f_json['proc_swaps'])
 
+    def test_proc_swaps_octal_escapes(self):
+        """
+        Test '/proc/swaps' with octal escapes in the file name
+        """
+        data = (
+            'Filename\t\t\t\tType\t\tSize\t\tUsed\t\tPriority\n'
+            '/my\\040swap\\011file\\134x\t\t\t\tfile\t\t1048572\t\t0\t\t-2\n'
+            '/dev/dm-1                               partition\t8388604\t\t512\t\t-3\n'
+        )
+        result = jc.parsers.proc_swaps.parse(data, quiet=True)
+        self.assertEqual(result, [
+            {'filename': '/my swap\tfile\\x', 'type': 'file', 'size': 1048572, 'used': 0, 'priority': -2},
+            {'filename': '/dev/dm-1', 'type': 'partition', 'size': 8388604, 'used': 512, 'priority': -3}
+        ])
+
 
 if __name__ == '__main__':
     unittest.main()

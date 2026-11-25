@@ -133,11 +133,12 @@ Examples:
     ]
 """
 import jc.utils
+from bisect import bisect_right
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`ufw app info [application]` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -147,6 +148,28 @@ class info():
 
 
 __version__ = info.version
+
+
+def _merge_ranges(ranges):
+    """
+    Return a sorted list of [start, end] spans, with overlapping and
+    adjacent ranges merged. Ranges that end before they start are empty.
+    """
+    merged = []
+    for start, end in sorted((r['start'], r['end']) for r in ranges if r['start'] <= r['end']):
+        if merged and start <= merged[-1][1] + 1:
+            if end > merged[-1][1]:
+                merged[-1][1] = end
+        else:
+            merged.append([start, end])
+
+    return merged
+
+
+def _in_spans(spans, span_starts, port):
+    """Return True if the port is inside one of the sorted, merged spans."""
+    index = bisect_right(span_starts, port) - 1
+    return index >= 0 and port <= spans[index][1]
 
 
 def _process(proc_data):
@@ -179,34 +202,27 @@ def _process(proc_data):
                             profile[protocol + '_ranges'][i][key] = int(profile[protocol + '_ranges'][i][key])
 
         # create normalized port lists and port ranges (remove duplicates and merge ranges)
-        # dump ranges into a set of 0 - 65535
-        # if items in the port list are in the set, then remove them
-        # iterate through the set to find gaps and create new ranges based on them
+        # merge the ranges into sorted, non-touching spans
+        # if items in the port list are inside a span, then remove them
+        # the spans are the new ranges
         for protocol in ['tcp', 'udp']:
-            port_set = set()
+            spans = []
             if protocol + '_ranges' in profile:
-                for item in profile[protocol + '_ranges']:
-                    port_set.update(range(item['start'], item['end'] + 1))
+                spans = _merge_ranges(profile[protocol + '_ranges'])
 
             if protocol + '_list' in profile:
-                new_port_list = sorted(set([p for p in profile[protocol + '_list'] if p not in port_set]))
+                span_starts = [span[0] for span in spans]
+                new_port_list = sorted(set([p for p in profile[protocol + '_list'] if not _in_spans(spans, span_starts, p)]))
                 if new_port_list:
                     profile['normalized_' + protocol + '_list'] = new_port_list
 
-            new_port_ranges = []
-            state = 'findstart'                 # 'findstart' or 'findend'
-            for port in range(0, 65535 + 2):
-                if state == 'findstart':
-                    port_range_obj = {}
-                    if port in port_set:
-                        port_range_obj['start'] = port
-                        state = 'findend'
-                        continue
-                if state == 'findend':
-                    if port not in port_set:
-                        port_range_obj['end'] = port - 1
-                        new_port_ranges.append(port_range_obj)
-                        state = 'findstart'
+            # only ranges that begin and end within 0 - 65535 are kept. The
+            # part of a range below 0 is cut off.
+            new_port_ranges = [
+                {'start': max(span[0], 0), 'end': span[1]}
+                for span in spans
+                if 0 <= span[1] <= 65535
+            ]
 
             if new_port_ranges:
                 profile['normalized_' + protocol + '_ranges'] = new_port_ranges
@@ -223,7 +239,7 @@ def _parse_port_list(data, port_list=None):
         port_list = []
 
     data = data.split(',')
-    data_list = [p.strip() for p in data if ':' not in p and 'any' not in p]
+    data_list = [p.strip() for p in data if ':' not in p and p.strip() and p.strip() != 'any']
     port_list.extend(data_list)
 
     return port_list
@@ -241,7 +257,7 @@ def _parse_port_range(data, range_list=None):
     ranges = [p.strip() for p in data if ':' in p]
     range_obj = {}
 
-    if 'any' in data:
+    if 'any' in [p.strip() for p in data]:
         range_list.append(
             {
                 'start': 0,
@@ -283,7 +299,7 @@ def parse(data, raw=False, quiet=False):
 
         ports = False
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             if line.startswith('--'):
                 if item_obj:
@@ -311,21 +327,21 @@ def parse(data, raw=False, quiet=False):
             if ports:
                 line_list = line.rsplit('/', maxsplit=1)
                 if len(line_list) == 2:
-                    if line_list[1] == 'tcp':
-                        tcp_prot_list = _parse_port_list(line_list[0])
+                    if line_list[1].strip() == 'tcp':
+                        tcp_prot_list = _parse_port_list(line_list[0], item_obj.get('tcp_list', []))
                         if tcp_prot_list:
                             item_obj['tcp_list'] = tcp_prot_list
 
-                        tcp_prot_range = _parse_port_range(line_list[0])
+                        tcp_prot_range = _parse_port_range(line_list[0], item_obj.get('tcp_ranges', []))
                         if tcp_prot_range:
                             item_obj['tcp_ranges'] = tcp_prot_range
 
-                    elif line_list[1] == 'udp':
-                        udp_prot_list = _parse_port_list(line_list[0])
+                    elif line_list[1].strip() == 'udp':
+                        udp_prot_list = _parse_port_list(line_list[0], item_obj.get('udp_list', []))
                         if udp_prot_list:
                             item_obj['udp_list'] = udp_prot_list
 
-                        udp_prot_range = _parse_port_range(line_list[0])
+                        udp_prot_range = _parse_port_range(line_list[0], item_obj.get('udp_ranges', []))
                         if udp_prot_range:
                             item_obj['udp_ranges'] = udp_prot_range
 

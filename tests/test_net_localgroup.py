@@ -175,5 +175,23 @@ class MyTests(unittest.TestCase):
         )
 
 
+    def test_net_localgroup_line_separator(self):
+        """
+        Test 'net_localgroup' with a line-break character other than LF inside a field
+        """
+        data = 'Alias name     Administrators\r\nComment\r\n\r\nMembers\r\n\r\n-------------------------------------------------------------------------------\r\nAdministrator\r\nCORP\\aa\u2028The command completed successfully.\u2028x\r\nCORP\\Domain Admins\r\nuser1\r\nThe command completed successfully.\r\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result['groups'][0]['members'], ['Administrator', 'CORP\\aa\u2028The command completed successfully.\u2028x', 'CORP\\Domain Admins', 'user1'])
+
+
+    def test_net_localgroup_other_whitespace_in_name(self):
+        """
+        Test 'net_localgroup' only trims space and tab from member names
+        """
+        data = 'Alias name     Server Admins\nComment\n\nMembers\n\n-------------------------------------------------------------------------------\n\xa0\nalice\xa0\nThe command completed successfully.\xa0\nbob\nThe command completed successfully.\n'
+        result = parse(data, quiet=True)
+        self.assertEqual(result['groups'], [{'name': 'Server Admins', 'members': ['\xa0', 'alice\xa0', 'The command completed successfully.\xa0', 'bob']}])
+
+
 if __name__ == '__main__':
     unittest.main()

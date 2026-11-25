@@ -40,5 +40,14 @@ some_vals:3
         self.assertEqual(jc.parsers.kv_dup.parse(data, quiet=True), expected)
 
 
+    def test_kv_dup_comment_in_multiline_value(self):
+        """
+        Test 'kv_dup' with a full-line comment inside a multi-line value
+        """
+        data = 'bio = first line\n\t#\n\trole = admin\nrole = user\n'
+        expected = {'bio': ['first line', 'role = admin'], 'role': ['user']}
+        self.assertEqual(jc.parsers.kv_dup.parse(data, quiet=True), expected)
+
+
 if __name__ == '__main__':
     unittest.main()

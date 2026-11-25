@@ -1,0 +1,85 @@
+[
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 34693,
+    "program_name": "aaaaaaaaaa xxx",
+    "path": "/run/user/1000/systemd/notify",
+    "kind": "socket",
+    "pid": 1898
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 34694,
+    "program_name": "aaaaaaaaaaa xx",
+    "path": "/run/user/1000/systemd/notify",
+    "kind": "socket",
+    "pid": 1899
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 34695,
+    "program_name": "aaaaaaaaaaaa x",
+    "path": "/run/user/1000/systemd/private",
+    "kind": "socket",
+    "pid": 1900
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 34696,
+    "program_name": "aaaaaaaaaaa xx",
+    "path": "/run/user/1000/bus",
+    "kind": "socket",
+    "pid": 1901
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 34697,
+    "program_name": "avahi-daemon: r",
+    "path": "/run/avahi-daemon/socket",
+    "kind": "socket",
+    "pid": 902
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": null,
+    "type": "DGRAM",
+    "state": null,
+    "inode": 34698,
+    "program_name": "avahi-daemon: r",
+    "path": "/run/avahi-daemon/notify",
+    "kind": "socket",
+    "pid": 903
+  },
+  {
+    "proto": "unix",
+    "refcnt": 2,
+    "flags": "ACC",
+    "type": "STREAM",
+    "state": "LISTENING",
+    "inode": 34699,
+    "program_name": null,
+    "path": "/run/dbus/system_bus_socket",
+    "kind": "socket"
+  }
+]

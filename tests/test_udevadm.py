@@ -39,6 +39,15 @@ class MyTests(unittest.TestCase):
         self.assertEqual(jc.parsers.udevadm.parse(self.f_in['udevadm'], quiet=True),
                                                   self.f_json['udevadm'])
 
+    def test_udevadm_equals_in_value(self):
+        """
+        Test 'udevadm' with an '=' character in an environment value
+        """
+        data = 'P: /devices/x\nE: ID_FS_LABEL=backup=2\nE: DEVTYPE=disk\n'
+        result = jc.parsers.udevadm.parse(data, quiet=True)
+        self.assertEqual(result['E']['ID_FS_LABEL'], 'backup=2')
+        self.assertEqual(result['E']['DEVTYPE'], 'disk')
+
 
 if __name__ == '__main__':
     unittest.main()

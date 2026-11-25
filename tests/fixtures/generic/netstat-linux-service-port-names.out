@@ -1,0 +1,5 @@
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State
+tcp        0      0 localhost:x11           localhost:pop3          ESTABLISHED
+tcp        0      0 0.0.0.0:ssh             0.0.0.0:*               LISTEN
+tcp        0      0 localhost:8080          localhost:50000         ESTABLISHED

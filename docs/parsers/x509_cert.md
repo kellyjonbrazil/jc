@@ -129,7 +129,13 @@ Schema:
           "critical":                         boolean,
           "extn_value": {
             "key_identifier":                 string,  # [0]
-            "authority_cert_issuer":          string/null,
+            "authority_cert_issuer":          array/null,
+            "authority_cert_issuer_general_names": [  # [3]
+              {
+                "type":                       string,  # [4]
+                "value":                      string/object
+              }
+            ],
             "authority_cert_serial_number":   string/null
           }
         }
@@ -139,7 +145,28 @@ Schema:
           "extn_id":                          "subject_alt_name",
           "critical":                         boolean,
           "extn_value": [
-                                              string
+                                              string/object
+          ],
+          "extn_value_general_names": [  # [3]
+            {
+              "type":                         string,  # [4]
+              "value":                        string/object
+            }
+          ]
+        }
+
+        Issuer Alternative Name:
+        {
+          "extn_id":                          "issuer_alt_name",
+          "critical":                         boolean,
+          "extn_value": [
+                                              string/object
+          ],
+          "extn_value_general_names": [  # [3]
+            {
+              "type":                         string,  # [4]
+              "value":                        string/object
+            }
           ]
         }
 
@@ -166,6 +193,119 @@ Schema:
           "critical":                   boolean,
           "extn_value":                 string  # [0]
         }
+
+        Authority Information Access:
+        {
+          "extn_id":                          "authority_information_access",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "access_method":                string,
+              "access_location":              string/object,
+              "access_location_type":         string  # [4]
+            }
+          ]
+        }
+
+        Subject Information Access:
+        {
+          "extn_id":                          "subject_information_access",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "access_method":                string,
+              "access_location":              string/object,
+              "access_location_type":         string  # [4]
+            }
+          ]
+        }
+
+        CRL Distribution Points:
+        {
+          "extn_id":                          "crl_distribution_points",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "distribution_point": [
+                                              string/object
+              ],
+              "distribution_point_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ],
+              "reasons":                      array/null,
+              "crl_issuer": [
+                                              string/object
+              ],
+              "crl_issuer_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ]
+            }
+          ]
+        }
+
+        Freshest CRL:
+        {
+          "extn_id":                          "freshest_crl",
+          "critical":                         boolean,
+          "extn_value": [
+            {
+              "distribution_point": [
+                                              string/object
+              ],
+              "distribution_point_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ],
+              "reasons":                      array/null,
+              "crl_issuer": [
+                                              string/object
+              ],
+              "crl_issuer_general_names": [  # [3]
+                {
+                  "type":                     string,  # [4]
+                  "value":                    string/object
+                }
+              ]
+            }
+          ]
+        }
+
+        Name Constraints:
+        {
+          "extn_id":                          "name_constraints",
+          "critical":                         boolean,
+          "extn_value": {
+            "permitted_subtrees": [
+              {
+                "base":                       string/object,
+                "base_type":                  string,  # [4]
+                "minimum":                    integer,
+                "maximum":                    integer/null
+              }
+            ],
+            "excluded_subtrees": [
+              {
+                "base":                       string/object,
+                "base_type":                  string,  # [4]
+                "minimum":                    integer,
+                "maximum":                    integer/null
+              }
+            ]
+          }
+        }
+
+    [3] present when the field before it is a list of GeneralNames
+    [4] GeneralName type: dns_name, rfc822_name, uniform_resource_identifier,
+        ip_address, directory_name, registered_id, other_name, x400_address
+        or edi_party_name
 
 Examples:
 
@@ -413,7 +553,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
+def parse(data: str | bytes,
           raw: bool = False,
           quiet: bool = False) -> List[Dict]
 ```
@@ -435,4 +575,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/x509_cert.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/x509_cert.py)
 
-Version 1.4 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.5 by Kelly Brazil (kellyjonbrazil@gmail.com)

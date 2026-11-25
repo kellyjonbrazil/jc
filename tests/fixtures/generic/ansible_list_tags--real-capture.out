@@ -1,0 +1,16 @@
+
+playbook: real_capture.yaml
+
+  play #1 (localhost): Configure webservers	TAGS: [webservices]
+      TASK TAGS: [install, service, web, webservices]
+
+  play #2 (localhost): localhost	TAGS: []
+      TASK TAGS: []
+
+  play #3 (web[0:1]): Range pattern play	TAGS: []
+      TASK TAGS: [configure]
+
+playbook: extra_playbook.yaml
+
+  play #1 (localhost,web[0:1]): Comma pattern play	TAGS: []
+      TASK TAGS: [mixed]

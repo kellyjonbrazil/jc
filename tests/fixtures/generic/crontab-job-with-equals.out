@@ -1,0 +1,5 @@
+SHELL=/bin/sh
+MAILTO = "cron@example.com"
+~ 3 * * * /usr/local/bin/backup --mode=quiet
+H 5 * * * /usr/bin/report --out=/var/tmp/r.txt
+0 1 * * * /usr/bin/true

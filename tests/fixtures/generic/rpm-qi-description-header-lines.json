@@ -1,0 +1,33 @@
+[
+  {
+    "name": "nss-tools",
+    "version": "3.90.0",
+    "release": "6.el9",
+    "architecture": "x86_64",
+    "install_date": "Mon 12 Feb 2024 10:21:42 AM PST",
+    "group": "Unspecified",
+    "size": 1160660,
+    "license": "MPLv2.0",
+    "signature": "RSA/SHA256, Thu 22 Aug 2023 02:34:59 PM PDT, Key ID 199e2f91fd431d51",
+    "source_rpm": "nss-3.90.0-6.el9.src.rpm",
+    "build_date": "Thu 08 Aug 2023 05:47:25 PM PDT",
+    "build_host": "buildhw-x86-01.example.org",
+    "relocations": "(not relocatable)",
+    "vendor": "Example Vendor",
+    "url": "http://www.mozilla.org/projects/security/pki/nss/",
+    "summary": "Tools for the Network Security Services",
+    "description": "Support tools for the Network Security Services library. Names: certificates and keys are stored in the database Namespaces: are supported Version: 9.9 and later use the shared database Name: certutil Package: pk12util",
+    "build_epoch": 1691542045,
+    "build_epoch_utc": null,
+    "install_date_epoch": 1707762102,
+    "install_date_epoch_utc": null
+  },
+  {
+    "name": "bash",
+    "version": "5.1.8",
+    "release": "6.el9",
+    "architecture": "x86_64",
+    "summary": "The GNU Bourne Again shell",
+    "description": "The GNU Bourne Again shell (Bash) is a shell or command language interpreter that is compatible with the Bourne shell (sh)."
+  }
+]

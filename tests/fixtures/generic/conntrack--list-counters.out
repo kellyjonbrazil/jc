@@ -1,0 +1,2 @@
+tcp      6 431982 ESTABLISHED src=192.168.2.100 dst=123.59.27.117 sport=34846 dport=993 packets=169 bytes=14322 src=123.59.27.117 dst=192.168.2.100 sport=993 dport=34846 packets=113 bytes=34787 [ASSURED] mark=0 use=1
+conntrack v1.4.6 (conntrack-tools): 1 flow entries have been shown.

@@ -1,0 +1,14 @@
+[
+  {
+    "_type": "response",
+    "_response_version": "HTTP/1.1",
+    "_response_status": 451,
+    "_response_reason": [
+      "Unavailable For Legal Reasons"
+    ],
+    "date": "Mon, 26 Oct 2026 12:00:00 GMT",
+    "content-type": "text/html",
+    "content-length": 1256,
+    "date_epoch_utc": 1793016000
+  }
+]

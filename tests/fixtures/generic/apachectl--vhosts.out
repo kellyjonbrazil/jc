@@ -1,0 +1,36 @@
+VirtualHost configuration:
+127.0.0.1:80           localhost (/etc/apache2/sites-enabled/localhost.conf:4)
+*:80                   is a NameVirtualHost
+         default server wsh.webarchitects.org.uk (/etc/apache2/conf-enabled/webarch.conf:113)
+         port 80 namevhost wsh.webarchitects.org.uk (/etc/apache2/conf-enabled/webarch.conf:113)
+                 alias www.wsh.webarchitects.org.uk
+         port 80 namevhost nextcloud.wsh.webarchitects.org.uk (/etc/apache2/sites-enabled/cloud.conf:22)
+                 alias cloud.wsh.webarchitects.org.uk
+                 alias www.nextcloud.wsh.webarchitects.org.uk
+         port 80 namevhost wiki.wsh.webarchitects.org.uk (/etc/apache2/sites-enabled/wiki.conf:22)
+                 wild alias *.wiki.wsh.webarchitects.org.uk
+*:*                    is a NameVirtualHost
+         default server fallback.webarchitects.org.uk (/etc/apache2/sites-enabled/fallback.conf:1)
+         port * namevhost fallback.webarchitects.org.uk (/etc/apache2/sites-enabled/fallback.conf:1)
+*:443                  is a NameVirtualHost
+         default server wsh.webarchitects.org.uk (/etc/apache2/conf-enabled/webarch.conf:152)
+         port 443 namevhost wsh.webarchitects.org.uk (/etc/apache2/conf-enabled/webarch.conf:152)
+                 alias www.wsh.webarchitects.org.uk
+ServerRoot: "/etc/apache2"
+Main DocumentRoot: "/var/www/html"
+Main ErrorLog: "/var/log/apache2/error.log"
+ScoreBoardFile: "/var/run/apache2/apache2.scoreboard"
+Mutex fcgid-proctbl: using_defaults
+Mutex ssl-stapling: using_defaults
+Mutex proxy: using_defaults
+Mutex ssl-cache: using_defaults
+Mutex default: dir="/var/run/apache2/" mechanism=default 
+Mutex fcgid-pipe: using_defaults
+Mutex watchdog-callback: using_defaults
+Mutex rewrite-map: using_defaults
+PidFile: "/var/run/apache2/apache2.pid"
+Define: DUMP_VHOSTS
+Define: DUMP_RUN_CFG
+User: name="www-data" id=33
+Group: name="www-data" id=33
+ChrootDir: "/chroots/www-data"

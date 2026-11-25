@@ -1,0 +1,11 @@
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      1234/cupsd
+tcp        0      0 10.0.0.2:22             10.0.0.9:50000          ESTABLISHED 2345/odd
+Proto sent as part of a name
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      3456/httpd
+Active UNIX domain sockets (servers and established)
+Proto RefCnt Flags       Type       State         I-Node   PID/Program name     Path
+unix  2      [ ACC ]     STREAM     LISTENING     16789    1/systemd            /run/systemd/private
+Proto not a header either
+unix  2      [ ACC ]     STREAM     LISTENING     16790    1/systemd            /run/systemd/other

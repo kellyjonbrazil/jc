@@ -1,0 +1,19 @@
+Chain INPUT (policy DROP)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+badpkts    all  --  anywhere             anywhere
+targets    all  --  anywhere             anywhere
+numbers    all  --  anywhere             anywhere
+Chain      all  --  anywhere             anywhere
+Chain1     all  --  anywhere             anywhere
+ACCEPT     tcp  --  anywhere             anywhere             tcp dpt:ssh
+ACCEPT     all  --  203.0.113.7          anywhere
+ChainVPN   all  --  anywhere             anywhere
+
+Chain badpkts (1 references)
+target     prot opt source               destination
+DROP       all  --  anywhere             anywhere
+
+Chain ChainVPN (1 references)
+target     prot opt source               destination
+ACCEPT     all  --  anywhere             anywhere
