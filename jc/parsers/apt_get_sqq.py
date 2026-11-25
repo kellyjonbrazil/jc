@@ -174,7 +174,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`apt-get -sqq` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -246,7 +246,7 @@ def parse(
 
         line_re = re.compile(r'(?P<operation>Inst|Conf|Remv)\s(?P<package>\S+)(?P<broken>\s+\[\S*?\])?\s\((?P<packages_pe>.*?)\[(?P<architecture>\w*)\]\)')
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             broken_val = None
             packages_pe = None
             proposed_pkg_ver = None

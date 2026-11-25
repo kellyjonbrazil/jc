@@ -13,7 +13,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('mpstat_s', mpstat_command_output.splitlines())
+    result = jc.parse('mpstat_s', mpstat_command_output.split('\n'))
     for item in result:
         # do something
 
@@ -90,9 +90,8 @@ Examples:
     {"cpu":"all","intr_s":"37.61","type":"interrupts","time":"03:15:06 PM"}
     ...
 """
-from typing import Dict, Iterable, Union
+from typing import Dict, Iterable, List, Union
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 from jc.streaming import (
     add_jc_meta, streaming_input_type_check, streaming_line_input_type_check, raise_or_yield
 )
@@ -101,7 +100,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`mpstat` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -141,6 +140,19 @@ def _process(proc_data: Dict) -> Dict:
     return proc_data
 
 
+def _parse_row(header_list: List[str], line: str) -> Dict:
+    """
+    Same result as `simple_table_parse([header, line])[0]` for a header that
+    has already been split into `header_list`.
+    """
+    # mpstat values never contain spaces: one value per header column
+    row = line.split()
+    if len(row) != len(header_list):
+        raise ParseError('Not mpstat data')
+
+    return dict(zip(header_list, row))
+
+
 @add_jc_meta
 def parse(
     data: Iterable[str],
@@ -154,7 +166,7 @@ def parse(
     Parameters:
 
         data:              (iterable)  line-based text data to parse
-                                       (e.g. sys.stdin or str.splitlines())
+                                       (e.g. sys.stdin or str.split('\\n'))
 
         raw:               (boolean)   unprocessed output if True
         quiet:             (boolean)   suppress warning messages if True
@@ -168,6 +180,7 @@ def parse(
     streaming_input_type_check(data)
 
     header_found: bool = False
+    header_list: List[str] = []
 
     for line in data:
         try:
@@ -196,11 +209,12 @@ def parse(
                     header_start = line.find('NODE ')
 
                 header_text = header_text[header_start:]
+                header_list = header_text.split()
                 continue
 
             # data line - pull time from beginning and then parse as a table
             if header_found:
-                output_line = simple_table_parse([header_text, line[header_start:]])[0]
+                output_line = _parse_row(header_list, line[header_start:])
                 output_line['type'] = stat_type
                 item_time = line[:header_start].strip()
                 if 'Average:' not in item_time:

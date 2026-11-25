@@ -60,6 +60,7 @@ Examples:
       ...
     ]
 """
+import re
 from typing import List, Dict
 import jc.utils
 from jc.parsers.universal import simple_table_parse
@@ -67,7 +68,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/swaps` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -77,6 +78,23 @@ class info():
 
 
 __version__ = info.version
+
+# matches a run of `\ooo` octal escapes
+_OCTAL_RUN = re.compile(r'(?:\\[0-7]{3})+')
+
+
+def _unescape(field: str) -> str:
+    r"""Decode the `\ooo` octal escapes the kernel writes for special characters"""
+    # can switch to jc.utils.unescape_backslashes() once it is available
+    if '\\' not in field:
+        return field
+
+    def _decode(match):
+        octets = bytes(int(match.group(0)[i + 1:i + 4], 8) & 0xff
+                       for i in range(0, len(match.group(0)), 4))
+        return octets.decode('utf-8', 'backslashreplace')
+
+    return _OCTAL_RUN.sub(_decode, field)
 
 
 def _process(proc_data: List[Dict]) -> List[Dict]:
@@ -126,8 +144,12 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        cleandata = list(filter(None, data.splitlines()))
+        cleandata = list(filter(None, jc.utils.splitlines(data)))
         cleandata[0] = cleandata[0].lower()
         raw_output = simple_table_parse(cleandata)
+
+        for entry in raw_output:
+            if entry.get('filename'):
+                entry['filename'] = _unescape(entry['filename'])
 
     return raw_output if raw else _process(raw_output)

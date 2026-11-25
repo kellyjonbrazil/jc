@@ -1,0 +1,48 @@
+[
+  {
+    "path": "/tmp/a",
+    "parent": "/tmp",
+    "filename": "a",
+    "stem": "a",
+    "extension": "",
+    "path_list": [
+      "/",
+      "tmp",
+      "a"
+    ]
+  },
+  {
+    "path": "/usr/bin",
+    "parent": "/usr",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "/",
+      "usr",
+      "bin"
+    ]
+  },
+  {
+    "path": "/bin",
+    "parent": "/",
+    "filename": "bin",
+    "stem": "bin",
+    "extension": "",
+    "path_list": [
+      "/",
+      "bin"
+    ]
+  },
+  {
+    "path": "/x\\y",
+    "parent": "/",
+    "filename": "x\\y",
+    "stem": "x\\y",
+    "extension": "",
+    "path_list": [
+      "/",
+      "x\\y"
+    ]
+  }
+]

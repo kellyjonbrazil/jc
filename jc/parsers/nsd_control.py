@@ -69,7 +69,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`nsd-control` command parser'
     author = 'Pettai'
     author_email = 'pettai@sunet.se'
@@ -127,7 +127,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False):
         itrparse = False
         itr: Dict = {}
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             line = line.strip()
 
             # default 'ok'

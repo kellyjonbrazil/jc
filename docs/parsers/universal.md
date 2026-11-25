@@ -38,10 +38,10 @@ Example Table:
 Parameters:
 
     data:   (iter)   Text data to parse that has been split into lines
-                     via .splitlines(). Item 0 must be the header row.
-                     Any spaces in header names should be changed to
-                     underscore '_'. You should also ensure headers are
-                     lowercase by using .lower().
+                     via jc.utils.splitlines(). Item 0 must be the
+                     header row. Any spaces in header names should be
+                     changed to underscore '_'. You should also ensure
+                     headers are lowercase by using .lower().
 
                      Also, ensure there are no blank rows in the data.
 
@@ -62,6 +62,11 @@ Parse tables with missing column data or with spaces in column data.
 Blank cells are converted to None in the resulting dictionary. Data
 elements must line up within column boundaries.
 
+Column positions are measured in display cells: East Asian wide and
+fullwidth characters count as two cells, combining characters and
+zero-width format characters count as zero cells, and all other
+characters count as one cell.
+
 Example Table:
 
     col_1        col_2     col_3     col_4         col_5
@@ -78,7 +83,7 @@ Example Table:
 
 Parameters:
 
-    data:   (iter)   An iterable of string lines (e.g. str.splitlines())
+    data:   (iter)   An iterable of string lines (e.g. jc.utils.splitlines())
                      Item 0 must be the header row. Any spaces in header
                      names should be changed to underscore '_'. You
                      should also ensure headers are lowercase by using
@@ -87,11 +92,9 @@ Parameters:
 
                      Also, ensure there are no blank line items.
 
-    delim:  (string) Delimiter to use. By default `u\2063`
-                     (invisible separator) is used since it is unlikely
-                     to ever be seen in terminal output. You can change
-                     this for troubleshooting purposes or if there is a
-                     delimiter conflict with your data.
+    delim:  (string) Not used. Rows are sliced at the column
+                     positions, so any character can appear in the
+                     data. Kept for compatibility with existing callers.
 
 Returns:
 

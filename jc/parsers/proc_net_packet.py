@@ -24,54 +24,60 @@ or
 
 Schema:
 
-    {
-      "sk":                     string,
-      "RefCnt":                 integer,
-      "Type":                   integer,
-      "Proto":                  string,
-      "Iface":                  integer,
-      "R":                      integer,
-      "Rmem":                   integer,
-      "User":                   integer,
-      "Inode":                  integer
-    }
+    [
+      {
+        "sk":                     string,
+        "RefCnt":                 integer,
+        "Type":                   integer,
+        "Proto":                  string,
+        "Iface":                  integer,
+        "R":                      integer,
+        "Rmem":                   integer,
+        "User":                   integer,
+        "Inode":                  integer
+      }
+    ]
 
 Examples:
 
     $ cat /proc/net/packet | jc --proc -p
-    {
-      "sk": "ffff9b61b56c1800",
-      "RefCnt": 3,
-      "Type": 3,
-      "Proto": "88cc",
-      "Iface": 2,
-      "R": 1,
-      "Rmem": 0,
-      "User": 101,
-      "Inode": 34754
-    }
+    [
+      {
+        "sk": "ffff9b61b56c1800",
+        "RefCnt": 3,
+        "Type": 3,
+        "Proto": "88cc",
+        "Iface": 2,
+        "R": 1,
+        "Rmem": 0,
+        "User": 101,
+        "Inode": 34754
+      }
+    ]
 
     $ cat /proc/net/packet | jc --proc-net-packet -p -r
-    {
-      "sk": "ffff9b61b56c1800",
-      "RefCnt": "3",
-      "Type": "3",
-      "Proto": "88cc",
-      "Iface": "2",
-      "R": "1",
-      "Rmem": "0",
-      "User": "101",
-      "Inode": "34754"
-    }
+    [
+      {
+        "sk": "ffff9b61b56c1800",
+        "RefCnt": "3",
+        "Type": "3",
+        "Proto": "88cc",
+        "Iface": "2",
+        "R": "1",
+        "Rmem": "0",
+        "User": "101",
+        "Inode": "34754"
+      }
+    ]
 """
-from typing import Dict
+from typing import List, Dict
 import jc.utils
 from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/packet` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -83,7 +89,7 @@ class info():
 __version__ = info.version
 
 
-def _process(proc_data: Dict) -> Dict:
+def _process(proc_data: List[Dict]) -> List[Dict]:
     """
     Final processing to conform to the schema.
 
@@ -93,13 +99,14 @@ def _process(proc_data: Dict) -> Dict:
 
     Returns:
 
-        Dictionary. Structured to conform to the schema.
+        List of Dictionaries. Structured to conform to the schema.
     """
     int_list = {'RefCnt', 'Type', 'Iface', 'R', 'Rmem', 'User', 'Inode'}
 
-    for key, val in proc_data.items():
-        if key in int_list:
-            proc_data[key] = int(val)
+    for entry in proc_data:
+        for key, val in entry.items():
+            if key in int_list:
+                entry[key] = int(val)
 
     return proc_data
 
@@ -108,7 +115,7 @@ def parse(
     data: str,
     raw: bool = False,
     quiet: bool = False
-) -> Dict:
+) -> List[Dict]:
     """
     Main text parsing function
 
@@ -120,16 +127,14 @@ def parse(
 
     Returns:
 
-        Dictionary. Raw or processed structured data.
+        List of Dictionaries. Raw or processed structured data.
     """
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    raw_output: Dict = {}
+    raw_output: List[Dict] = []
 
     if jc.utils.has_data(data):
-
-        raw_output_list = simple_table_parse(data.splitlines())
-        raw_output = raw_output_list[0]
+        raw_output = simple_table_parse(jc.utils.splitlines(data))
 
     return raw_output if raw else _process(raw_output)

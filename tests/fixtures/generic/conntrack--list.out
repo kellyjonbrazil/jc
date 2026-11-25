@@ -1,0 +1,7 @@
+tcp      6 86396 ESTABLISHED src=172.18.0.1 dst=172.18.0.2 sport=51814 dport=6379 src=172.18.0.2 dst=172.18.0.1 sport=6379 dport=51814 [ASSURED] mark=0 use=1
+tcp      6 97 TIME_WAIT src=10.42.0.1 dst=10.42.0.102 sport=55352 dport=8080 src=10.42.0.102 dst=10.42.0.1 sport=8080 dport=55352 [ASSURED] mark=0 use=1
+udp      17 17 src=10.42.0.55 dst=10.43.0.10 sport=48629 dport=53 src=10.42.0.188 dst=10.42.0.55 sport=53 dport=48629 mark=0 use=1
+tcp      6 23 SYN_SENT src=192.168.114.132 dst=130.89.148.77 sport=35446 dport=443 [UNREPLIED] src=130.89.148.77 dst=192.168.114.132 sport=443 dport=35446 mark=0 use=1
+icmp     1 28 src=192.168.114.132 dst=8.8.8.8 type=8 code=0 id=7 src=8.8.8.8 dst=192.168.114.132 type=0 code=0 id=7 mark=0 use=1
+icmpv6   58 29 src=::1 dst=::1 type=128 code=0 id=9 src=::1 dst=::1 type=129 code=0 id=9 mark=0 use=1
+conntrack v1.4.9 (conntrack-tools): 6 flow entries have been shown.

@@ -1,0 +1,16 @@
+[
+  {
+    "playbook": "site.yml",
+    "plays": [
+      {
+        "number": 1,
+        "hosts": [
+          "all"
+        ],
+        "name": "all",
+        "tags": [],
+        "task_tags": []
+      }
+    ]
+  }
+]

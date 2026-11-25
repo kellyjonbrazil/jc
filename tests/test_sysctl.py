@@ -35,6 +35,15 @@ class MyTests(unittest.TestCase):
         freebsd12_sysctl_json = json.loads(f.read())
 
 
+    def test_sysctl_line_separators(self):
+        """
+        Test 'sysctl' with line-break characters other than LF in a value
+        """
+        data = 'kernel.hostname = ha\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j\nkernel.ostype = Linux\n'
+        result = jc.parsers.sysctl.parse(data, quiet=True)
+        self.assertEqual(result['kernel.hostname'], 'ha\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j')
+        self.assertEqual(result['kernel.ostype'], 'Linux')
+
     def test_sysctl_nodata(self):
         """
         Test plain 'sysctl' with no data
@@ -64,6 +73,28 @@ class MyTests(unittest.TestCase):
         Test plain 'sysctl' on FreeBSD12
         """
         self.assertEqual(jc.parsers.sysctl.parse(self.freebsd12_sysctl, quiet=True), self.freebsd12_sysctl_json)
+
+    def test_sysctl_repeated_and_continued_values(self):
+        """
+        Test 'sysctl' repeated keys and continuation lines
+        """
+        data = 'a.b = 1\na.b = 2\nc.d = 3\nmore\nnodelim\n'
+        self.assertEqual(jc.parsers.sysctl.parse(data, raw=True, quiet=True), {'a.b': '1\n2', 'c.d': '3\nmore\nnodelim'})
+
+    def test_sysctl_continuation_without_key(self):
+        """
+        Test 'sysctl' continuation line before any key
+        """
+        with self.assertRaises(IndexError):
+            jc.parsers.sysctl.parse('nodelim\na.b = 1\n', quiet=True)
+
+    def test_sysctl_non_finite_values(self):
+        """
+        Test 'sysctl -a' with values of nan and inf: the text is kept
+        """
+        data = 'kernel.hostname = nan\nkernel.domainname = inf\nvm.x = 1.5\nvm.y = 12\n'
+        expected = {'kernel.hostname': 'nan', 'kernel.domainname': 'inf', 'vm.x': 1.5, 'vm.y': 12}
+        self.assertEqual(jc.parsers.sysctl.parse(data, quiet=True), expected)
 
 
 if __name__ == '__main__':

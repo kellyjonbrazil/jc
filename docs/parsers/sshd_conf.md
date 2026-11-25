@@ -506,4 +506,4 @@ Compatibility:  linux, darwin, freebsd
 
 Source: [`jc/parsers/sshd_conf.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/sshd_conf.py)
 
-Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)

@@ -85,7 +85,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`/etc/fstab` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -94,6 +94,11 @@ class info():
 
 
 __version__ = info.version
+
+
+def _unescape(field):
+    r"""Decode `\ooo` octal escapes like libmount (a decoded NUL ends the field)"""
+    return jc.utils.unescape_backslashes(field).split('\x00', 1)[0]
 
 
 def _process(proc_data):
@@ -136,7 +141,7 @@ def parse(data, raw=False, quiet=False):
     jc.utils.input_type_check(data)
 
     raw_output = []
-    cleandata = data.splitlines()
+    cleandata = jc.utils.splitlines(data)
 
     # Clear any blank lines
     cleandata = [line for line in cleandata if line.strip()]
@@ -146,19 +151,19 @@ def parse(data, raw=False, quiet=False):
         for line in cleandata:
             output_line = {}
             # ignore commented lines
-            if line.strip().startswith('#'):
+            if line.strip(' \t').startswith('#'):
                 continue
 
-            line_list = line.split(maxsplit=6)
+            line_list = [field for field in line.replace('\t', ' ').split(' ') if field]
 
             # fs_freq and fs_passno are optional and default to 0 (man 5 fstab)
             if len(line_list) in (4, 5):
                 line_list += ['0'] * (6 - len(line_list))
 
-            fs_spec = line_list[0]
-            fs_file = line_list[1]
-            fs_vfstype = line_list[2]
-            fs_mntops = line_list[3]
+            fs_spec = _unescape(line_list[0])
+            fs_file = _unescape(line_list[1])
+            fs_vfstype = _unescape(line_list[2])
+            fs_mntops = _unescape(line_list[3])
             fs_freq = line_list[4]
             fs_passno = line_list[5]
 

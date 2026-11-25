@@ -203,7 +203,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.3'
+    version = '1.4'
     description = '`sfdisk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -283,7 +283,7 @@ def parse(data, raw=False, quiet=False):
 
     if jc.utils.has_data(data):
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             # deprecated - only for older versions of util-linux
             if line.startswith('# partition table of'):
                 if item:
@@ -315,6 +315,12 @@ def parse(data, raw=False, quiet=False):
                     continue
 
             else:
+                # the model string comes from the device, so check for this
+                # line before the "Disk <device>:" header lines below
+                if line.startswith('Disk model: '):
+                    item['disk_model'] = line.split(':', maxsplit=1)[1].strip()
+                    continue
+
                 # older versions of util-linux
                 # Disk /dev/sda: 2610 cylinders, 255 heads, 63 sectors/track
                 if line.startswith('Disk ') and 'sectors/track' in line:
@@ -345,10 +351,6 @@ def parse(data, raw=False, quiet=False):
                     item['disk_size'] = ' '.join(fields[2:4])
                     item['bytes'] = fields[4]
                     item['sectors'] = fields[6]
-                    continue
-
-                if line.startswith('Disk model: '):
-                    item['disk_model'] = line.split(':', maxsplit=1)[1].strip()
                     continue
 
                 if line.startswith('Sector size (logical/physical)'):

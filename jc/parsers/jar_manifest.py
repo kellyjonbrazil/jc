@@ -78,7 +78,7 @@ import re
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '0.01'
+    version = '0.2'
     description = 'Java MANIFEST.MF file parser'
     author = 'Matt J'
     author_email = 'https://github.com/listuser'
@@ -126,10 +126,12 @@ def parse(data, raw=False, quiet=False):
     archives = []
 
     if jc.utils.has_data(data):
-        datalines = data.splitlines()
+        datalines = jc.utils.splitlines(data, split_cr=True)
 
-        # remove last line of multi-archive output since it is not needed
-        if datalines[-1].endswith('archives were successfully processed.'):
+        # remove last line of multi-archive output since it is not needed.
+        # match the whole unzip summary line so other text that ends with
+        # the same words is kept
+        if re.match(r'\d+ archives? (?:was|were) successfully processed\.$', datalines[-1]):
             datalines.pop(-1)
 
         # extract each archive into its own list of lines.
@@ -148,70 +150,54 @@ def parse(data, raw=False, quiet=False):
 
         # iterate through list of archives and parse
         for archive_item in archives:
+            if not archive_item:
+                continue
 
-            manifests = []
-            this_manifest = {}
-            plines = []
+            attributes = []
+            unzip_status_line = False
+
+            # an unzip "inflating" status line is only recognized when it
+            # directly follows the unindented "Archive:" line that starts
+            # the section.
+            unzip_header = bool(re.match(r'Archive\s*:', archive_item[0]))
 
             for i, line in enumerate(archive_item):
-                last = archive_item[-1]
+                # a line starting with a single space continues the
+                # previous attribute. Drop the one space and append the
+                # rest directly to that attribute's value.
+                if line.startswith(' '):
+                    if (i == 1 and unzip_header and
+                            re.match(r'\s+\w+\s*:\s*META-INF/MANIFEST\.MF', line, re.IGNORECASE)):
+                        unzip_status_line = True
+                        continue
 
-                # remove line since it is not needed and starts with "space"
-                if (re.match(r'^\s+inflating\s*:\s*META-INF/MANIFEST.MF', line, re.IGNORECASE)):
-                    archive_item.pop(i)
+                    if attributes:
+                        attributes[-1][1].append(line[1:])
                     continue
 
-                # if line starts with "space"
-                # begin key multiline value pair concatenation
-                if (re.match(r'\s', line)):
-
-                    # expectation is this "if" sets a key once
-                    if (not this_manifest):
-                        # previous line contains a key
-                        k, v = archive_item[i - 1].split(":", maxsplit=1)
-                        v = v + line
-                        v = re.sub(r'\s', '', v)
-                        this_manifest = {k: v}
-                        plines.append(i - 1)
-                        plines.append(i)
-
-                    # continue key multiline value pair concatenation
-                    else:
-                        plines.append(i)
-                        linecmp = line
-                        for k, v in this_manifest.items():
-                            line = v + line
-                            line = re.sub(r'\s', '', line)
-                        this_manifest.update({k:line})
-
-                        if linecmp is not last:
-                            nextline = archive_item[i + 1]
-                            # if next line starts with not "space",
-                            # end key multiline value pair concatenation
-                            if (re.match(r'\S', nextline)):
-                                manifests.append(this_manifest)
-                                this_manifest = False
-                            else:
-                                manifests.append(this_manifest)
-
-            # pop key multiline value pair lines
-            if plines:
-                for p in reversed(plines):
-                    archive_item.pop(p)
-
-            # all other key value pairs
-            for i, line in enumerate(archive_item):
                 k, v = line.split(":", maxsplit=1)
-                v = v.strip()
-                manifests.append({k: v})
+                attributes.append((k, [v]))
 
-            if manifests:
+            if attributes:
                 this_manifest = {}
-                for d in manifests:
-                    for k, v in d.items():
-                        k = re.sub(r'\s', '', k)
-                        k = re.sub(r'-', '_', k)
-                        this_manifest.update({k: v})
+                raw_keys = {}
+                for index, (raw_key, parts) in enumerate(attributes):
+                    k = re.sub(r'\s', '', raw_key)
+                    k = re.sub(r'-', '_', k)
+
+                    if k in raw_keys:
+                        # a manifest attribute named "Archive" must not
+                        # replace the file name from the unzip header line
+                        if unzip_status_line and raw_keys[k] == 0:
+                            continue
+
+                        # keys that only differ in "-" and "_" (e.g.
+                        # Main-Class and Main_Class): keep the first one
+                        if attributes[raw_keys[k]][0] != raw_key:
+                            continue
+
+                    raw_keys[k] = index
+                    this_manifest[k] = ''.join(parts).strip()
                 raw_output.append(this_manifest)
 
     return raw_output if raw else _process(raw_output)

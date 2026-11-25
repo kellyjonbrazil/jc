@@ -1,0 +1,22 @@
+interface: enp0s3
+IP address is: 10.10.15.129
+MAC address is: 08:00:27:c0:4a:4f
+Listening on enp0s3
+   # Host name (port/service if enabled)            last 2s   last 10s   last 40s cumulative
+--------------------------------------------------------------------------------------------
+   1 2001:db8::10                             =>     34.1Kb     34.1Kb     34.1Kb     8.53KB
+     2001:db8::1:2                            <=     23.2Kb     23.2Kb     23.2Kb     5.79KB
+   2 [2001:db8::10]:ssh                       =>       448b       448b       448b       112B
+     [2001:db8::1:2]:40876                    <=       208b       208b       208b        52B
+   3 [2001:db8:aaaa:bbbb:cccc:dddd:eeee:10]:44822 =>       100b       100b       100b        25B
+     [2001:db8:aaaa:bbbb:cccc:dddd:eeee:f:https <=       200b       200b       200b        50B
+   4 ::ffff:10.10.15.129                      =>         0B         0B         0B         0B
+     fe80::1                                  <=     2.02KB     2.02KB     2.02KB     4.04KB
+--------------------------------------------------------------------------------------------
+Total send rate:                                      34.6Kb     34.6Kb     34.6Kb
+Total receive rate:                                   39.9Kb     39.9Kb     39.9Kb
+Total send and receive rate:                          74.5Kb     74.5Kb     74.5Kb
+--------------------------------------------------------------------------------------------
+Peak rate (sent/received/total):                      34.6Kb     39.9Kb     74.5Kb
+Cumulative (sent/received/total):                     8.67KB     9.93KB     18.6KB
+============================================================================================

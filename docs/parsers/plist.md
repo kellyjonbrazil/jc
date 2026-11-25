@@ -11,7 +11,11 @@ Binary values are converted into an ASCII hex representation.
 
 Datetime objects are converted into Unix epoch timestamps and ISO strings.
 The timestamp and ISO string will maintain the same naive or timezone-aware
-properties as the object in the original PLIST file.
+properties as the object in the original PLIST file. Datetime objects inside
+arrays are converted into ISO strings.
+
+UID objects (binary PLIST files) are converted into `{"CF$UID": <integer>}`
+objects.
 
 Usage (cli):
 
@@ -54,9 +58,7 @@ Examples:
 ### parse
 
 ```python
-def parse(data: Union[str, bytes],
-          raw: bool = False,
-          quiet: bool = False) -> Dict
+def parse(data: str | bytes, raw: bool = False, quiet: bool = False) -> Dict
 ```
 
 Main text parsing function
@@ -76,4 +78,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/plist.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/plist.py)
 
-Version 1.2 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.3 by Kelly Brazil (kellyjonbrazil@gmail.com)

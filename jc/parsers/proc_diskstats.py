@@ -178,7 +178,7 @@ from jc.parsers.universal import simple_table_parse
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/diskstats` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -243,7 +243,7 @@ def parse(
             'flushing_time_ms\n'
         )
         data = header + data
-        cleandata = filter(None, data.splitlines())
+        cleandata = filter(None, jc.utils.splitlines(data))
         raw_output = simple_table_parse(cleandata)
 
     return raw_output if raw else _process(raw_output)

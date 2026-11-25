@@ -1,0 +1,1 @@
+[{"perms": ["read", "private"], "offset": "00000000", "inode": 4321, "pathname": "/usr/lib/lib\u20287f0000000000-7f0000001000 rwxs 00000000 08:01 1234   other.so", "start": "7f0000000000", "end": "7f0000001000", "maj": "08", "min": "01"}]

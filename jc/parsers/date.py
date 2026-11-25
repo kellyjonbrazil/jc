@@ -74,11 +74,12 @@ Examples:
 """
 from datetime import datetime, timezone
 import jc.utils
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.6'
+    version = '2.7'
     description = '`date` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -165,13 +166,20 @@ def parse(data, raw=False, quiet=False):
         dt_utc = None
 
         timestamp = jc.utils.timestamp(data, format_hint=(1000, 6000, 7000))
-        if timestamp.naive:
+        if timestamp.naive is not None:
             dt = datetime.fromtimestamp(timestamp.naive)
-        if timestamp.utc:
+        if timestamp.utc is not None:
             dt_utc = datetime.fromtimestamp(timestamp.utc, timezone.utc)
 
         if dt_utc:
             dt = dt_utc
+
+        if dt is None:
+            raise ParseError(
+                'Could not parse the date string. If you are not using the C '
+                'locale, try prepending LC_ALL=C to the date command '
+                '(e.g. LC_ALL=C date).'
+            )
 
         raw_output = {
             'year': dt.year,
@@ -192,7 +200,7 @@ def parse(data, raw=False, quiet=False):
             'iso': dt.isoformat(),
             'epoch': timestamp.naive,
             'epoch_utc': timestamp.utc,
-            'timezone_aware': True if timestamp.utc else False
+            'timezone_aware': timestamp.utc is not None
         }
 
     if raw:

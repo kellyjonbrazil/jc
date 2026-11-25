@@ -40,5 +40,14 @@ class MyTests(unittest.TestCase):
                                                           self.f_json['proc_partitions'])
 
 
+    def test_proc_partitions_name_that_looks_like_a_number(self):
+        """
+        Test '/proc/partitions' with a device name that looks like a number
+        """
+        data = 'major minor  #blocks  name\n\n   7        0      56896 007\n'
+        result = jc.parsers.proc_partitions.parse(data, quiet=True)
+        self.assertEqual(result, [{'major': 7, 'minor': 0, 'num_blocks': 56896, 'name': '007'}])
+
+
 if __name__ == '__main__':
     unittest.main()

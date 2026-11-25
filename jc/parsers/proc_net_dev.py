@@ -98,12 +98,11 @@ Examples:
 """
 from typing import List, Dict
 import jc.utils
-from jc.parsers.universal import simple_table_parse
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`/proc/net/dev` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -132,6 +131,9 @@ def _process(proc_data: List[Dict]) -> List[Dict]:
             item['interface'] = item['interface'][:-1]
 
         for key, val in item.items():
+            if key == 'interface':
+                continue
+
             try:
                 item[key] = int(val)
             except Exception:
@@ -166,9 +168,18 @@ def parse(
     if jc.utils.has_data(data):
 
         header = 'interface r_bytes r_packets r_errs r_drop r_fifo r_frame r_compressed r_multicast t_bytes t_packets t_errs t_drop t_fifo t_colls t_carrier t_compressed'
-        data_splitlines = data.splitlines()
-        data_splitlines.pop(0)
-        data_splitlines[0] = header
-        raw_output = simple_table_parse(data_splitlines)
+        headers = header.split()
+        data_splitlines = jc.utils.splitlines(data)
+
+        for line in data_splitlines[2:]:
+            # interface names can't contain ':', but can contain other
+            # characters that str.split() treats as whitespace
+            if ':' in line:
+                name, _, values = line.partition(':')
+                row = [name.lstrip(' ') + ':'] + values.split(None, len(headers) - 2)
+            else:
+                row = line.strip().split(None, len(headers) - 1)
+
+            raw_output.append(dict(zip(headers, row)))
 
     return raw_output if raw else _process(raw_output)

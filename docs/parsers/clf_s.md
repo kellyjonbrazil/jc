@@ -33,7 +33,7 @@ Usage (module):
 
     import jc
 
-    result = jc.parse('clf_s', common_log_file_output.splitlines())
+    result = jc.parse('clf_s', common_log_file_output.split('\n'))
     for item in result:
         # do something
 
@@ -65,11 +65,20 @@ Schema:
       "epoch":                        integer,  # [0]
       "epoch_utc":                    integer,  # [1]
       "unparsable":                   string    # [2]
+
+      # below object only exists if using -qq or ignore_exceptions=True
+      "_jc_meta": {
+        "success":      boolean,     # false if error parsing
+        "error":        string,      # exists if "success" is false
+        "line":         string       # exists if "success" is false
+      }
     }
 
     [0] naive timestamp
     [1] timezone-aware timestamp. Only available if timezone field is UTC
-    [2] exists if the line was not able to be parsed
+    [2] exists if the line was not able to be parsed. With -qq or
+        ignore_exceptions=True the line is reported in the _jc_meta object
+        instead.
 
 Examples:
 
@@ -93,7 +102,7 @@ def parse(
     raw: bool = False,
     quiet: bool = False,
     ignore_exceptions: bool = False
-) -> Iterator[Union[Dict[str, Any], Tuple[BaseException, str]]]
+) -> Iterator[Dict[str, Any] | Tuple[BaseException, str]]
 ```
 
 Main text parsing generator function. Returns an iterable object.
@@ -101,7 +110,7 @@ Main text parsing generator function. Returns an iterable object.
 Parameters:
 
     data:              (iterable)  line-based text data to parse
-                                   (e.g. sys.stdin or str.splitlines())
+                                   (e.g. sys.stdin or str.split('\n'))
 
     raw:               (boolean)   unprocessed output if True
     quiet:             (boolean)   suppress warning messages if True
@@ -117,4 +126,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/clf_s.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/clf_s.py)
 
-Version 1.0 by Kelly Brazil (kellyjonbrazil@gmail.com)
+Version 1.1 by Kelly Brazil (kellyjonbrazil@gmail.com)

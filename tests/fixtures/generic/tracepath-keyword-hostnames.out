@@ -1,0 +1,8 @@
+ 1?: [LOCALHOST]                                         pmtu 1500
+ 1:  dsldevice.attlocal.net                                4.063ms 
+ 2:  reached.example.net                                  24.092ms 
+ 3:  asymm                                     asymm  4   26.511ms 
+ 4:  12.34ms.example.net                                  31.207ms 
+ 5:  pmtu.example.net                                     33.918ms pmtu 1480
+ 6:  reachedhost.example.net                              35.002ms reached
+     Resume: pmtu 1480 hops 6 back 7 

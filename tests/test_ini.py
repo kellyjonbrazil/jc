@@ -1,12 +1,21 @@
 import os
 import unittest
 import json
+from jc.exceptions import ParseError
 import jc.parsers.ini
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class MyTests(unittest.TestCase):
+
+    # new input/output fixtures
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-many-keys.ini'), 'r', encoding='utf-8') as f:
+        generic_ini_many_keys = f.read()
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-many-keys.json'), 'r', encoding='utf-8') as f:
+        generic_ini_many_keys_json = json.loads(f.read())
+
 
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ini-test.ini'), 'r', encoding='utf-8') as f:
@@ -125,6 +134,44 @@ novalue
 '''
         expected = {"data":{"novalue":""}}
         self.assertEqual(jc.parsers.ini.parse(data, quiet=True), expected)
+
+
+    def test_ini_many_keys(self):
+        """
+        Test 'ini' with many sections and keys, including keys with no value
+        """
+        self.assertEqual(jc.parsers.ini.parse(self.generic_ini_many_keys, quiet=True), self.generic_ini_many_keys_json)
+
+    def test_ini_empty_key(self):
+        """
+        Test 'ini' with a line that has a delimiter but no key (raises ParseError)
+        """
+        for data in ('[a]\nx=1\n=oops\n y\n: z\n', 'x=1\n=oops\n', '[a]\n  = oops\n'):
+            with self.subTest(data):
+                with self.assertRaises(ParseError):
+                    jc.parsers.ini.parse(data, quiet=True)
+
+    def test_ini_many_empty_keys(self):
+        """
+        Test 'ini' with many lines that have a delimiter but no key (raises ParseError)
+        """
+        data = '[a]\nx=1\n' + '=oops\n' * 20000
+        with self.assertRaises(ParseError):
+            jc.parsers.ini.parse(data, quiet=True)
+
+    def test_ini_empty_value_is_not_empty_key(self):
+        """
+        Test 'ini' with keys that have an empty value
+        """
+        self.assertEqual(jc.parsers.ini.parse('[a]\nx=\ny:\nz\n', quiet=True), {'a': {'x': '', 'y': '', 'z': ''}})
+
+
+    def test_ini_utf8_bom(self):
+        """
+        Test 'ini-test.ini' and a file without sections with a leading UTF-8 BOM
+        """
+        self.assertEqual(jc.parsers.ini.parse('\ufeff' + self.generic_ini_test, quiet=True), self.generic_ini_test_json)
+        self.assertEqual(jc.parsers.ini.parse('\ufeffNAME="Debian"\nID=debian\n', quiet=True), {'NAME': 'Debian', 'ID': 'debian'})
 
 
 if __name__ == '__main__':

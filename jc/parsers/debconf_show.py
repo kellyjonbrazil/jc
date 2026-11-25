@@ -79,7 +79,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.0'
+    version = '1.1'
     description = '`debconf-show` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -131,7 +131,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
             output_line: Dict = {}
             splitline = line.split(':', maxsplit=1)
 

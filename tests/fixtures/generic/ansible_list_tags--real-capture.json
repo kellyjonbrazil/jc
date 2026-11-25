@@ -1,0 +1,60 @@
+[
+  {
+    "playbook": "real_capture.yaml",
+    "plays": [
+      {
+        "number": 1,
+        "hosts": [
+          "localhost"
+        ],
+        "name": "Configure webservers",
+        "tags": [
+          "webservices"
+        ],
+        "task_tags": [
+          "install",
+          "service",
+          "web",
+          "webservices"
+        ]
+      },
+      {
+        "number": 2,
+        "hosts": [
+          "localhost"
+        ],
+        "name": "localhost",
+        "tags": [],
+        "task_tags": []
+      },
+      {
+        "number": 3,
+        "hosts": [
+          "web[0:1]"
+        ],
+        "name": "Range pattern play",
+        "tags": [],
+        "task_tags": [
+          "configure"
+        ]
+      }
+    ]
+  },
+  {
+    "playbook": "extra_playbook.yaml",
+    "plays": [
+      {
+        "number": 1,
+        "hosts": [
+          "localhost",
+          "web[0:1]"
+        ],
+        "name": "Comma pattern play",
+        "tags": [],
+        "task_tags": [
+          "mixed"
+        ]
+      }
+    ]
+  }
+]

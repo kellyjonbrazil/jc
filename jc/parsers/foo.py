@@ -51,6 +51,8 @@ class info():
 
     # tags options: generic, standard, file, string, binary, command, slurpable
     tags = ['command']
+
+    # after changing magic_commands, run ./build-magic-commands.py
     magic_commands = ['foo']
 
     # other attributes - only enable if needed
@@ -107,7 +109,7 @@ def parse(
 
     if jc.utils.has_data(data):
 
-        for line in filter(None, data.splitlines()):
+        for line in filter(None, jc.utils.splitlines(data)):
 
             # parse the content here
             # check out helper functions in jc.utils

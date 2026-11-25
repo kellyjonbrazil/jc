@@ -1,0 +1,11 @@
+[
+  {
+    "codes": "ii",
+    "name": "3cpio",
+    "version": "0.14.0-1ubuntu1",
+    "architecture": "amd64",
+    "description": "Manage initrd cpio archives",
+    "desired": "install",
+    "status": "installed"
+  }
+]

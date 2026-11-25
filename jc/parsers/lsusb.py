@@ -360,7 +360,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '2.0'
+    version = '2.1'
     description = '`lsusb` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -662,7 +662,7 @@ def parse(data, raw=False, quiet=False):
         # fix known too-long field names
         data = data.replace('bmNetworkCapabilities', 'bmNetworkCapabilit   ')
 
-        for line in data.splitlines():
+        for line in jc.utils.splitlines(data):
             # only -v option or no options are supported
             if line.startswith('/'):
                 raise ParseError('Only `lsusb` or `lsusb -v` are supported.')

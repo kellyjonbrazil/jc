@@ -1,0 +1,181 @@
+COMMAND    PID  TID    USER   FD      TYPE             DEVICE  SIZE/OFF       NODE NAME
+systemd      1         root  cwd       DIR              253,0       224         64 /
+systemd      1         root  rtd       DIR              253,0       224         64 /
+systemd      1         root  txt       REG              253,0   1624520   50360451 /usr/lib/systemd/systemd
+systemd      1         root  mem       REG              253,0     20064       8146 /usr/lib64/libuuid.so.1.3.0
+systemd      1         root  mem       REG              253,0    265600       8147 /usr/lib64/libblkid.so.1.1.0
+systemd      1         root  mem       REG              253,0     90248       8171 /usr/lib64/libz.so.1.2.7
+systemd      1         root  mem       REG              253,0    157424       9974 /usr/lib64/liblzma.so.5.2.2
+systemd      1         root  mem       REG              253,0     23968      10009 /usr/lib64/libcap-ng.so.0.0.0
+systemd      1         root  mem       REG              253,0     19896       9831 /usr/lib64/libattr.so.1.1.0
+systemd      1         root  mem       REG              253,0     19288      34141 /usr/lib64/libdl-2.17.so
+systemd      1         root  mem       REG              253,0    402384       9847 /usr/lib64/libpcre.so.1.2.0
+systemd      1         root  mem       REG              253,0   2156160      24399 /usr/lib64/libc-2.17.so
+systemd      1         root  mem       REG              253,0    142232     503071 /usr/lib64/libpthread-2.17.so
+systemd      1         root  mem       REG              253,0     88776       8134 /usr/lib64/libgcc_s-4.8.5-20150702.so.1
+systemd      1         root  mem       REG              253,0     43776     503075 /usr/lib64/librt-2.17.so
+systemd      1         root  mem       REG              253,0    277808       8164 /usr/lib64/libmount.so.1.1.0
+systemd      1         root  mem       REG              253,0     91800      32817 /usr/lib64/libkmod.so.2.2.10
+systemd      1         root  mem       REG              253,0    127184       1475 /usr/lib64/libaudit.so.1.0.0
+systemd      1         root  mem       REG              253,0     61672      10149 /usr/lib64/libpam.so.0.83.1
+systemd      1         root  mem       REG              253,0     20048       8119 /usr/lib64/libcap.so.2.22
+systemd      1         root  mem       REG              253,0    155784       9857 /usr/lib64/libselinux.so.1
+systemd      1         root  mem       REG              253,0    163400       7824 /usr/lib64/ld-2.17.so
+systemd      1         root  mem       REG              253,0     45344   50610926 /etc/selinux/targeted/contexts/files/file_contexts.homedirs.bin
+systemd      1         root  mem       REG              253,0   1431995   50392663 /etc/selinux/targeted/contexts/files/file_contexts.bin
+systemd      1         root    0u      CHR                1,3       0t0       6485 /dev/null
+systemd      1         root    1u      CHR                1,3       0t0       6485 /dev/null
+systemd      1         root    2u      CHR                1,3       0t0       6485 /dev/null
+systemd      1         root    3u  a_inode               0,10         0       6481 [timerfd]
+systemd      1         root    4u  a_inode               0,10         0       6481 [eventpoll]
+systemd      1         root    5u  a_inode               0,10         0       6481 [signalfd]
+systemd      1         root    6r      DIR               0,22         0       8688 /sys/fs/cgroup/systemd
+systemd      1         root    7u  a_inode               0,10         0       6481 [timerfd]
+systemd      1         root    8u  netlink                          0t0      13770 KOBJECT_UEVENT
+systemd      1         root    9r      REG                0,3         0       8964 /proc/1/mountinfo
+systemd      1         root   10r  a_inode               0,10         0       6481 inotify
+systemd      1         root   11r      REG                0,3         0 4026532019 /proc/swaps
+systemd      1         root   12u     unix 0xffff96aeb677f000       0t0      13771 /run/systemd/private
+systemd      1         root   14r  a_inode               0,10         0       6481 inotify
+systemd      1         root   19u  netlink                          0t0      13776 AUDIT
+systemd      1         root   20u     unix 0xffff96aeb677c400       0t0      13851 /run/lvm/lvmpolld.socket
+systemd      1         root   21u     FIFO               0,20       0t0      13862 /run/dmeventd-server
+systemd      1         root   22u     FIFO               0,20       0t0      13863 /run/dmeventd-client
+systemd      1         root   23u     unix 0xffff96afb3392000       0t0       8971 /run/systemd/notify
+systemd      1         root   24u     unix 0xffff96afb3391c00       0t0       8973 /run/systemd/cgroups-agent
+systemd      1         root   25u     unix 0xffff96aeb677bc00       0t0      13864 /run/systemd/shutdownd
+systemd      1         root   26r      CHR             10,235       0t0       8458 /dev/autofs
+systemd      1         root   27r     FIFO                0,9       0t0      13903 pipe
+systemd      1         root   28u     unix 0xffff96afb3393400       0t0       8991 /run/systemd/journal/stdout
+systemd      1         root   29u     unix 0xffff96afb3393800       0t0       8994 /run/systemd/journal/socket
+systemd      1         root   30u     unix 0xffff96afb3393c00       0t0       8996 /dev/log
+systemd      1         root   31u     unix 0xffff96aeb677a800       0t0      13918 /run/lvm/lvmetad.socket
+systemd      1         root   32u     unix 0xffff96aeb6788000       0t0      13962 /run/udev/control
+systemd      1         root   33r  a_inode               0,10         0       6481 inotify
+systemd      1         root   34u  netlink                          0t0      14051 KOBJECT_UEVENT
+systemd      1         root   35u     FIFO               0,20       0t0      14170 /run/systemd/initctl/fifo
+systemd      1         root   36u     unix 0xffff96aeb6715800       0t0      14252 socket
+systemd      1         root   37u     unix 0xffff96afb4d62400       0t0      17785 /run/dbus/system_bus_socket
+systemd      1         root   38u     unix 0xffff96aeb6713c00       0t0      14409 /run/systemd/journal/stdout
+systemd      1         root   39u     unix 0xffff96afb4d67000       0t0      17796 socket
+postgres  1404       postgres  12u      REG              253,0   8388608   67149128 /var/lib/containers/storage/overlay/layer000-aaaaaaaaaaaa/layer001-bbbbbbbbbbbb/layer002-cccccccccccc/layer003-dddddddddddd/layer004-eeeeeeeeeeee/layer005-ffffffffffff/layer006-000000000000/layer007-111111111111/layer008-222222222222/layer009-333333333333/layer010-444444444444/layer011-555555555555/layer012-666666666666/layer013-777777777777/layer014-888888888888/layer015-999999999999/layer016-aaaaaaaaaaaa/layer017-bbbbbbbbbbbb/layer018-cccccccccccc/layer019-dddddddddddd/layer020-eeeeeeeeeeee/layer021-ffffffffffff/layer022-000000000000/layer023-111111111111/layer024-222222222222/layer025-333333333333/layer026-444444444444/layer027-555555555555/layer028-666666666666/layer029-777777777777/layer030-888888888888/layer031-999999999999/layer032-aaaaaaaaaaaa/layer033-bbbbbbbbbbbb/layer034-cccccccccccc/layer035-dddddddddddd/layer036-eeeeeeeeeeee/layer037-ffffffffffff/layer038-000000000000/layer039-111111111111/layer040-222222222222/layer041-333333333333/layer042-444444444444/layer043-555555555555/layer044-666666666666/layer045-777777777777/layer046-888888888888/layer047-999999999999/layer048-aaaaaaaaaaaa/layer049-bbbbbbbbbbbb/layer050-cccccccccccc/layer051-dddddddddddd/layer052-eeeeeeeeeeee/layer053-ffffffffffff/layer054-000000000000/layer055-111111111111/layer056-222222222222/layer057-333333333333/layer058-444444444444/layer059-555555555555/layer060-666666666666/layer061-777777777777/layer062-888888888888/layer063-999999999999/layer064-aaaaaaaaaaaa/layer065-bbbbbbbbbbbb/layer066-cccccccccccc/layer067-dddddddddddd/layer068-eeeeeeeeeeee/layer069-ffffffffffff/layer070-000000000000/layer071-111111111111/layer072-222222222222/layer073-333333333333/layer074-444444444444/layer075-555555555555/layer076-666666666666/layer077-777777777777/layer078-888888888888/layer079-999999999999/layer080-aaaaaaaaaaaa/layer081-bbbbbbbbbbbb/layer082-cccccccccccc/layer083-dddddddddddd/layer084-eeeeeeeeeeee/layer085-ffffffffffff/layer086-000000000000/layer087-111111111111/layer088-222222222222/layer089-333333333333/layer090-444444444444/layer091-555555555555/layer092-666666666666/layer093-777777777777/layer094-888888888888/layer095-999999999999/layer096-aaaaaaaaaaaa/layer097-bbbbbbbbbbbb/layer098-cccccccccccc/layer099-dddddddddddd/layer100-eeeeeeeeeeee/layer101-ffffffffffff/layer102-000000000000/layer103-111111111111/layer104-222222222222/layer105-333333333333/layer106-444444444444/layer107-555555555555/layer108-666666666666/layer109-777777777777/layer110-888888888888/layer111-999999999999/layer112-aaaaaaaaaaaa/layer113-bbbbbbbbbbbb/layer114-cccccccccccc/layer115-dddddddddddd/layer116-eeeeeeeeeeee/layer117-ffffffffffff/layer118-000000000000/layer119-111111111111/layer120-222222222222/layer121-333333333333/layer122-444444444444/layer123-555555555555/layer124-666666666666/layer125-777777777777/layer126-888888888888/layer127-999999999999/layer128-aaaaaaaaaaaa/layer129-bbbbbbbbbbbb/layer130-cccccccccccc/layer131-dddddddddddd/layer132-eeeeeeeeeeee/layer133-ffffffffffff/layer134-000000000000/layer135-111111111111/layer136-222222222222/layer137-333333333333/layer138-444444444444/layer139-555555555555/layer140-666666666666/layer141-777777777777/layer142-888888888888/layer143-999999999999/layer144-aaaaaaaaaaaa/layer145-bbbbbbbbbbbb/layer146-cccccccccccc/layer147-dddddddddddd/layer148-eeeeeeeeeeee/layer149-ffffffffffff/layer150-000000000000/layer151-111111111111/layer152-222222222222/layer153-333333333333/layer154-444444444444/layer155-555555555555/layer156-666666666666/layer157-777777777777/layer158-888888888888/layer159-999999999999/layer160-aaaaaaaaaaaa/layer161-bbbbbbbbbbbb/layer162-cccccccccccc/layer163-dddddddddddd/layer164-eeeeeeeeeeee/layer165-ffffffffffff/layer166-000000000000/layer167-111111111111/layer168-222222222222/layer169-333333333333/layer170-444444444444/layer171-555555555555/layer172-666666666666/layer173-777777777777/layer174-888888888888/layer175-999999999999/layer176-aaaaaaaaaaaa/layer177-bbbbbbbbbbbb/layer178-cccccccccccc/layer179-dddddddddddd/layer180-eeeeeeeeeeee/layer181-ffffffffffff/layer182-000000000000/layer183-111111111111/layer184-222222222222/layer185-333333333333/layer186-444444444444/layer187-555555555555/layer188-666666666666/layer189-777777777777/layer190-888888888888/layer191-999999999999/layer192-aaaaaaaaaaaa/layer193-bbbbbbbbbbbb/layer194-cccccccccccc/layer195-dddddddddddd/layer196-eeeeeeeeeeee/layer197-ffffffffffff/layer198-000000000000/layer199-111111111111/layer200-222222222222/layer201-333333333333/layer202-444444444444/layer203-555555555555/layer204-666666666666/layer205-777777777777/layer206-888888888888/layer207-999999999999/layer208-aaaaaaaaaaaa/layer209-bbbbbbbbbbbb/layer210-cccccccccccc/layer211-dddddddddddd/layer212-eeeeeeeeeeee/layer213-ffffffffffff/layer214-000000000000/layer215-111111111111/layer216-222222222222/layer217-333333333333/layer218-444444444444/layer219-555555555555/layer220-666666666666/layer221-777777777777/layer222-888888888888/layer223-999999999999/layer224-aaaaaaaaaaaa/layer225-bbbbbbbbbbbb/layer226-cccccccccccc/layer227-dddddddddddd/layer228-eeeeeeeeeeee/layer229-ffffffffffff/layer230-000000000000/layer231-111111111111/layer232-222222222222/layer233-333333333333/layer234-444444444444/layer235-555555555555/layer236-666666666666/layer237-777777777777/layer238-888888888888/layer239-999999999999/layer240-aaaaaaaaaaaa/layer241-bbbbbbbbbbbb/layer242-cccccccccccc/layer243-dddddddddddd/layer244-eeeeeeeeeeee/layer245-ffffffffffff/layer246-000000000000/layer247-111111111111/layer248-222222222222/layer249-333333333333/layer250-444444444444/layer251-555555555555/layer252-666666666666/layer253-777777777777/layer254-888888888888/layer255-999999999999/layer256-aaaaaaaaaaaa/layer257-bbbbbbbbbbbb/layer258-cccccccccccc/layer259-dddddddddddd/layer260-eeeeeeeeeeee/layer261-ffffffffffff/layer262-000000000000/layer263-111111111111/layer264-222222222222/layer265-333333333333/layer266-444444444444/layer267-555555555555/layer268-666666666666/layer269-777777777777/layer270-888888888888/layer271-999999999999/layer272-aaaaaaaaaaaa/layer273-bbbbbbbbbbbb/layer274-cccccccccccc/layer275-dddddddddddd/layer276-eeeeeeeeeeee/layer277-ffffffffffff/layer278-000000000000/layer279-111111111111/layer280-222222222222/layer281-333333333333/layer282-444444444444/layer283-555555555555/layer284-666666666666/layer285-777777777777/layer286-888888888888/layer287-999999999999/layer288-aaaaaaaaaaaa/layer289-bbbbbbbbbbbb/layer290-cccccccccccc/layer291-dddddddddddd/layer292-eeeeeeeeeeee/layer293-ffffffffffff/layer294-000000000000/layer295-111111111111/layer296-222222222222/layer297-333333333333/layer298-444444444444/layer299-555555555555/data.db
+systemd      1         root   40u     unix 0xffff96aeb677e000       0t0      14760 /run/systemd/journal/stdout
+systemd      1         root   41u  a_inode               0,10         0       6481 [timerfd]
+systemd      1         root   42u     unix 0xffff96afb4d63400       0t0      17845 /run/systemd/journal/stdout
+systemd      1         root   43u     unix 0xffff96afb4d71800       0t0      18956 /run/systemd/journal/stdout
+systemd      1         root   44u  netlink                          0t0      14577 SELINUX
+systemd      1         root   48u     unix 0xffff96afb5775c00       0t0      18141 /run/systemd/journal/stdout
+systemd      1         root   51u     unix 0xffff96afb5767800       0t0      18419 /run/systemd/journal/stdout
+systemd      1         root   52u     unix 0xffff96af33931800       0t0      21303 /run/systemd/journal/stdout
+systemd      1         root   53u     unix 0xffff96afb573b800       0t0      21448 /run/systemd/journal/stdout
+systemd      1         root   54u     unix 0xffff96afb573d800       0t0      21430 /run/systemd/journal/stdout
+kthreadd     2         root  cwd       DIR              253,0       224         64 /
+kthreadd     2         root  rtd       DIR              253,0       224         64 /
+kthreadd     2         root  txt   unknown                                         /proc/2/exe
+kworker/0    4         root  cwd       DIR              253,0       224         64 /
+kworker/0    4         root  rtd       DIR              253,0       224         64 /
+kworker/0    4         root  txt   unknown                                         /proc/4/exe
+kworker/u    5         root  cwd       DIR              253,0       224         64 /
+kworker/u    5         root  rtd       DIR              253,0       224         64 /
+kworker/u    5         root  txt   unknown                                         /proc/5/exe
+ksoftirqd    6         root  cwd       DIR              253,0       224         64 /
+ksoftirqd    6         root  rtd       DIR              253,0       224         64 /
+ksoftirqd    6         root  txt   unknown                                         /proc/6/exe
+migration    7         root  cwd       DIR              253,0       224         64 /
+migration    7         root  rtd       DIR              253,0       224         64 /
+migration    7         root  txt   unknown                                         /proc/7/exe
+rcu_bh       8         root  cwd       DIR              253,0       224         64 /
+rcu_bh       8         root  rtd       DIR              253,0       224         64 /
+rcu_bh       8         root  txt   unknown                                         /proc/8/exe
+rcu_sched    9         root  cwd       DIR              253,0       224         64 /
+rcu_sched    9         root  rtd       DIR              253,0       224         64 /
+rcu_sched    9         root  txt   unknown                                         /proc/9/exe
+lru-add-d   10         root  cwd       DIR              253,0       224         64 /
+lru-add-d   10         root  rtd       DIR              253,0       224         64 /
+lru-add-d   10         root  txt   unknown                                         /proc/10/exe
+watchdog/   11         root  cwd       DIR              253,0       224         64 /
+watchdog/   11         root  rtd       DIR              253,0       224         64 /
+watchdog/   11         root  txt   unknown                                         /proc/11/exe
+kdevtmpfs   13         root  cwd       DIR                0,5      3180          3 /
+kdevtmpfs   13         root  rtd       DIR                0,5      3180          3 /
+kdevtmpfs   13         root  txt   unknown                                         /proc/13/exe
+netns       14         root  cwd       DIR              253,0       224         64 /
+netns       14         root  rtd       DIR              253,0       224         64 /
+netns       14         root  txt   unknown                                         /proc/14/exe
+khungtask   15         root  cwd       DIR              253,0       224         64 /
+khungtask   15         root  rtd       DIR              253,0       224         64 /
+khungtask   15         root  txt   unknown                                         /proc/15/exe
+writeback   16         root  cwd       DIR              253,0       224         64 /
+writeback   16         root  rtd       DIR              253,0       224         64 /
+writeback   16         root  txt   unknown                                         /proc/16/exe
+kintegrit   17         root  cwd       DIR              253,0       224         64 /
+kintegrit   17         root  rtd       DIR              253,0       224         64 /
+kintegrit   17         root  txt   unknown                                         /proc/17/exe
+bioset      18         root  cwd       DIR              253,0       224         64 /
+bioset      18         root  rtd       DIR              253,0       224         64 /
+bioset      18         root  txt   unknown                                         /proc/18/exe
+bioset      19         root  cwd       DIR              253,0       224         64 /
+bioset      19         root  rtd       DIR              253,0       224         64 /
+bioset      19         root  txt   unknown                                         /proc/19/exe
+bioset      20         root  cwd       DIR              253,0       224         64 /
+bioset      20         root  rtd       DIR              253,0       224         64 /
+bioset      20         root  txt   unknown                                         /proc/20/exe
+kblockd     21         root  cwd       DIR              253,0       224         64 /
+kblockd     21         root  rtd       DIR              253,0       224         64 /
+kblockd     21         root  txt   unknown                                         /proc/21/exe
+md          22         root  cwd       DIR              253,0       224         64 /
+md          22         root  rtd       DIR              253,0       224         64 /
+md          22         root  txt   unknown                                         /proc/22/exe
+edac-poll   23         root  cwd       DIR              253,0       224         64 /
+edac-poll   23         root  rtd       DIR              253,0       224         64 /
+edac-poll   23         root  txt   unknown                                         /proc/23/exe
+watchdogd   24         root  cwd       DIR              253,0       224         64 /
+watchdogd   24         root  rtd       DIR              253,0       224         64 /
+watchdogd   24         root  txt   unknown                                         /proc/24/exe
+kswapd0     30         root  cwd       DIR              253,0       224         64 /
+kswapd0     30         root  rtd       DIR              253,0       224         64 /
+kswapd0     30         root  txt   unknown                                         /proc/30/exe
+ksmd        31         root  cwd       DIR              253,0       224         64 /
+ksmd        31         root  rtd       DIR              253,0       224         64 /
+ksmd        31         root  txt   unknown                                         /proc/31/exe
+khugepage   32         root  cwd       DIR              253,0       224         64 /
+khugepage   32         root  rtd       DIR              253,0       224         64 /
+khugepage   32         root  txt   unknown                                         /proc/32/exe
+crypto      33         root  cwd       DIR              253,0       224         64 /
+crypto      33         root  rtd       DIR              253,0       224         64 /
+crypto      33         root  txt   unknown                                         /proc/33/exe
+kthrotld    41         root  cwd       DIR              253,0       224         64 /
+kthrotld    41         root  rtd       DIR              253,0       224         64 /
+kthrotld    41         root  txt   unknown                                         /proc/41/exe
+kworker/u   42         root  cwd       DIR              253,0       224         64 /
+kworker/u   42         root  rtd       DIR              253,0       224         64 /
+kworker/u   42         root  txt   unknown                                         /proc/42/exe
+kmpath_rd   43         root  cwd       DIR              253,0       224         64 /
+kmpath_rd   43         root  rtd       DIR              253,0       224         64 /
+kmpath_rd   43         root  txt   unknown                                         /proc/43/exe
+kaluad      44         root  cwd       DIR              253,0       224         64 /
+kaluad      44         root  rtd       DIR              253,0       224         64 /
+kaluad      44         root  txt   unknown                                         /proc/44/exe
+kpsmoused   45         root  cwd       DIR              253,0       224         64 /
+kpsmoused   45         root  rtd       DIR              253,0       224         64 /
+kpsmoused   45         root  txt   unknown                                         /proc/45/exe
+ipv6_addr   47         root  cwd       DIR              253,0       224         64 /
+ipv6_addr   47         root  rtd       DIR              253,0       224         64 /
+ipv6_addr   47         root  txt   unknown                                         /proc/47/exe
+deferwq     60         root  cwd       DIR              253,0       224         64 /
+deferwq     60         root  rtd       DIR              253,0       224         64 /
+deferwq     60         root  txt   unknown                                         /proc/60/exe
+kauditd     95         root  cwd       DIR              253,0       224         64 /
+kauditd     95         root  rtd       DIR              253,0       224         64 /
+kauditd     95         root  txt   unknown                                         /proc/95/exe
+mpt_poll_  272         root  cwd       DIR              253,0       224         64 /
+mpt_poll_  272         root  rtd       DIR              253,0       224         64 /
+mpt_poll_  272         root  txt   unknown                                         /proc/272/exe
+mpt/0      273         root  cwd       DIR              253,0       224         64 /
+mpt/0      273         root  rtd       DIR              253,0       224         64 /
+mpt/0      273         root  txt   unknown                                         /proc/273/exe
+ata_sff    274         root  cwd       DIR              253,0       224         64 /
+ata_sff    274         root  rtd       DIR              253,0       224         64 /
+ata_sff    274         root  txt   unknown                                         /proc/274/exe
+nfit       275         root  cwd       DIR              253,0       224         64 /
+nfit       275         root  rtd       DIR              253,0       224         64 /
