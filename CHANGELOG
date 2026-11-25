@@ -22,6 +22,8 @@ jc changelog
   `null`
 - Fix `df` parser to not crash on a row that is shorter than the header
 - Fix `du` parser to keep whitespace in file names
+- Fix `free` parser to not crash on output with more than one sample (e.g.
+  `free -s 1`), which has a blank line and the header repeated between samples
 - Fix `host` parser to skip a truncated SOA record instead of crashing
 - Fix `id` parser to not crash on an SELinux context with fewer than four
   fields (e.g. no level)
