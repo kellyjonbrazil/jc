@@ -1,41 +1,44 @@
-"""jc - JSON Convert Prometheus and OpenMetrics parser
-
-This parser converts the Prometheus text exposition format and OpenMetrics
-text format into a list of metric samples. Prometheus metadata is added to
-each associated sample when available.
+r"""jc - JSON Convert Prometheus and OpenMetrics text format parser
 
 Usage (cli):
+
+    $ curl -s http://localhost:9100/metrics | jc --prometheus
+
+or
 
     $ cat metrics.txt | jc --prometheus
 
 Usage (module):
 
-    >>> import jc
-    >>> jc.parse('prometheus', metrics_data)
+    import jc
+    result = jc.parse('prometheus', prometheus_metrics_text)
 
 Schema:
 
     [
       {
-        "name":             string,
-        "labels":           object,
-        "value":            integer, float, or string,
-        "timestamp":        integer or float,
-        "help":             string,
-        "type":             string,
-        "unit":             string,
+        "name":                     string,
+        "labels": {
+          "<label>":                string
+        },
+        "value":                    string,
+        "value_float":              float,
+        "timestamp":                string,
+        "timestamp_float":          float,
+        "help":                     string,
+        "type":                     string,
+        "unit":                     string,
         "exemplar": {
-          "labels":         object,
-          "value":          integer, float, or string,
-          "timestamp":      integer or float
+          "labels": {
+            "<label>":              string
+          },
+          "value":                  string,
+          "value_float":            float,
+          "timestamp":              string,
+          "timestamp_float":        float
         }
       }
     ]
-
-The ``timestamp``, metadata, and ``exemplar`` fields are omitted when they
-are not present. ``NaN``, ``+Inf``, and ``-Inf`` values are retained as
-strings so generated JSON remains standards compliant. With ``raw=True``,
-values and timestamps are not converted to numbers.
 
 Examples:
 
@@ -47,243 +50,328 @@ Examples:
           "method": "post",
           "code": "200"
         },
-        "value": 1027,
-        "timestamp": 1395066363000,
+        "value": "1027",
+        "timestamp": "1395066363000",
         "help": "The total number of HTTP requests.",
-        "type": "counter"
-      }
+        "type": "counter",
+        "unit": null,
+        "exemplar": null,
+        "value_float": 1027.0,
+        "timestamp_float": 1395066363000.0
+      },
+      {
+        "name": "something_weird",
+        "labels": {
+          "problem": "division by zero"
+        },
+        "value": "+Inf",
+        "timestamp": "-3982045",
+        "help": null,
+        "type": null,
+        "unit": null,
+        "exemplar": null,
+        "value_float": null,
+        "timestamp_float": -3982045.0
+      },
+      {
+        "name": "http_request_duration_seconds_bucket",
+        "labels": {
+          "le": "0.05"
+        },
+        "value": "24054",
+        "timestamp": null,
+        "help": "A histogram of the request duration.",
+        "type": "histogram",
+        "unit": null,
+        "exemplar": null,
+        "value_float": 24054.0,
+        "timestamp_float": null
+      },
+      ...
+    ]
+
+    $ cat metrics.txt | jc --prometheus -p -r
+    [
+      {
+        "name": "http_requests_total",
+        "labels": {
+          "method": "post",
+          "code": "200"
+        },
+        "value": "1027",
+        "timestamp": "1395066363000",
+        "help": "The total number of HTTP requests.",
+        "type": "counter",
+        "unit": null,
+        "exemplar": null
+      },
+      {
+        "name": "something_weird",
+        "labels": {
+          "problem": "division by zero"
+        },
+        "value": "+Inf",
+        "timestamp": "-3982045",
+        "help": null,
+        "type": null,
+        "unit": null,
+        "exemplar": null
+      },
+      {
+        "name": "http_request_duration_seconds_bucket",
+        "labels": {
+          "le": "0.05"
+        },
+        "value": "24054",
+        "timestamp": null,
+        "help": "A histogram of the request duration.",
+        "type": "histogram",
+        "unit": null,
+        "exemplar": null
+      },
+      ...
     ]
 """
+import math
 import re
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import List, Dict, Optional, Tuple
+from jc.jc_types import JSONDictType
+from jc.exceptions import ParseError
+import jc.utils
 
 
-class info:
-    """Provides parser metadata."""
-    magic_commands = []
-    type = 'file'
-    arguments = None
+class info():
+    """Provides parser metadata (version, author, etc.)"""
     version = '1.0'
-    description = 'Prometheus metrics and OpenMetrics text parser'
-    author = 'JC Maintainers'
-    author_email = None
-    compatible = ['linux', 'aix', 'freebsd', 'darwin', 'win32']
-    tags = ['file']
+    description = 'Prometheus and OpenMetrics text format parser'
+    author = 'chensimian'
+    author_email = 'chensimian@users.noreply.github.com'
+    compatible = ['linux', 'darwin', 'cygwin', 'win32', 'aix', 'freebsd']
+    tags = ['file', 'string']
 
 
-_METRIC_NAME = r'[a-zA-Z_:][a-zA-Z0-9_:]*'
-_LABEL_NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
-_NUMBER = re.compile(r'^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$')
-_INTEGER = re.compile(r'^[+-]?\d+$')
-_METADATA = re.compile(
-    r'^#\s*(HELP|TYPE|UNIT)\s+(' + _METRIC_NAME + r')(?:\s+(.*))?$'
-)
-_NAME = re.compile(r'^(' + _METRIC_NAME + r')')
-_LABEL = re.compile(
-    r'\s*(' + _LABEL_NAME + r')\s*=\s*"((?:\\.|[^"\\])*)"\s*'
-)
-_FAMILY_SUFFIXES = ('_total', '_created', '_bucket', '_sum', '_count', '_info')
+__version__ = info.version
+
+
+_IDENTIFIER = re.compile(r'[a-zA-Z_:][a-zA-Z0-9_:]*')
+_QUOTED = re.compile(r'"((?:[^"\\]|\\.)*)"')
+_METADATA = re.compile(r'#\s*(HELP|TYPE|UNIT)\s+([a-zA-Z_:][a-zA-Z0-9_:]*|"(?:[^"\\]|\\.)*")(?:\s+(.*))?')
+_UNESCAPE = re.compile(r'\\(.)')
+
+# sample name suffixes of each metric type. A sample gets the HELP, TYPE, and
+# UNIT of the metric family whose name it has, with one of these suffixes.
+_TYPE_SUFFIXES = {
+    'counter': ('_total', '_created'),
+    'histogram': ('_bucket', '_sum', '_count', '_created'),
+    'gaugehistogram': ('_bucket', '_gsum', '_gcount'),
+    'summary': ('_sum', '_count', '_created'),
+    'info': ('_info',)
+}
+_ALL_SUFFIXES = {x for suffixes in _TYPE_SUFFIXES.values() for x in suffixes}
 
 
 def _unescape(value: str) -> str:
-    """Unescape the sequences supported by the exposition formats."""
-    output: List[str] = []
-    index = 0
+    """Decode the `\\n`, `\\"`, and `\\\\` escapes, keeping other backslashes"""
+    return _UNESCAPE.sub(lambda m: {'n': '\n', '"': '"', '\\': '\\'}.get(m.group(1), m.group(0)), value)
 
-    while index < len(value):
-        if value[index] != '\\' or index + 1 == len(value):
-            output.append(value[index])
-            index += 1
-            continue
 
-        escaped = value[index + 1]
-        if escaped == 'n':
-            output.append('\n')
-        elif escaped in ('\\', '"'):
-            output.append(escaped)
+def _to_float(value: Optional[str]) -> Optional[float]:
+    """Convert a number to a float. NaN and +/-Inf have no JSON value, so they are None."""
+    if value is None:
+        return None
+
+    try:
+        number = float(value)
+    except ValueError:
+        return None
+
+    return number if math.isfinite(number) else None
+
+
+def _parse_label_set(line: str, pos: int, allow_name: bool) -> Tuple[Optional[str], Dict[str, str], int]:
+    """
+    Parse the `{...}` label set that starts at line[pos]. With allow_name, the
+    first item can be a quoted metric name. Returns the metric name (or None),
+    the labels, and the position after the closing brace.
+    """
+    name: Optional[str] = None
+    labels: Dict[str, str] = {}
+    pos += 1
+    first = True
+
+    while True:
+        while pos < len(line) and line[pos] in ' \t':
+            pos += 1
+
+        if pos < len(line) and line[pos] == '}':
+            return name, labels, pos + 1
+
+        quoted = _QUOTED.match(line, pos)
+        bare = None if quoted else _IDENTIFIER.match(line, pos)
+        token = quoted or bare
+        if not token:
+            raise ParseError('invalid label set')
+
+        key = _unescape(quoted.group(1)) if quoted else token.group(0)
+        pos = token.end()
+        while pos < len(line) and line[pos] in ' \t':
+            pos += 1
+
+        if pos < len(line) and line[pos] == '=':
+            value = _QUOTED.match(line, pos + 1)
+            if not value:
+                raise ParseError('invalid label value')
+            if key in labels:
+                raise ParseError(f'duplicate label: {key}')
+            labels[key] = _unescape(value.group(1))
+            pos = value.end()
+        elif quoted and first and allow_name:
+            # {"my.dotted.metric", ...}
+            name = key
         else:
-            output.extend(('\\', escaped))
-        index += 2
+            raise ParseError('invalid label set')
 
-    return ''.join(output)
+        first = False
+        while pos < len(line) and line[pos] in ' \t':
+            pos += 1
 
-
-def _convert_number(value: str, raw: bool) -> Union[str, int, float]:
-    if raw or value in ('NaN', '+Inf', '-Inf', 'Inf'):
-        return value
-
-    if not _NUMBER.match(value):
-        raise ValueError('invalid numeric value: {}'.format(value))
-
-    if _INTEGER.match(value):
-        return int(value)
-
-    return float(value)
+        if pos < len(line) and line[pos] == ',':
+            pos += 1
+        elif pos >= len(line) or line[pos] != '}':
+            raise ParseError('invalid label set')
 
 
-def _find_closing_brace(value: str, start: int) -> int:
-    quoted = False
-    escaped = False
-
-    for index in range(start + 1, len(value)):
-        character = value[index]
-        if escaped:
-            escaped = False
-        elif character == '\\' and quoted:
-            escaped = True
-        elif character == '"':
-            quoted = not quoted
-        elif character == '}' and not quoted:
-            return index
-
-    raise ValueError('unterminated label set')
-
-
-def _parse_labels(value: str) -> Dict[str, str]:
+def _parse_sample(line: str) -> Dict:
+    """Parse a sample line: name, labels, value, timestamp, and exemplar"""
+    name: Optional[str] = None
     labels: Dict[str, str] = {}
-    position = 0
+    pos = 0
 
-    while position < len(value):
-        match = _LABEL.match(value, position)
-        if not match:
-            raise ValueError('invalid label set')
+    bare = _IDENTIFIER.match(line)
+    if bare:
+        name = bare.group(0)
+        pos = bare.end()
 
-        name, label_value = match.groups()
-        if name in labels:
-            raise ValueError('duplicate label: {}'.format(name))
-        labels[name] = _unescape(label_value)
-        position = match.end()
+    if pos < len(line) and line[pos] == '{':
+        quoted_name, labels, pos = _parse_label_set(line, pos, allow_name=name is None)
+        name = name or quoted_name
 
-        if position == len(value):
-            break
-        if value[position] != ',':
-            raise ValueError('invalid label separator')
-        position += 1
-        if not value[position:].strip():
-            break
+    if not name or (pos < len(line) and line[pos] not in ' \t'):
+        raise ParseError('invalid metric name')
 
-    return labels
-
-
-def _parse_identifier(value: str) -> Tuple[str, Dict[str, str], str]:
-    match = _NAME.match(value)
-    if not match:
-        raise ValueError('invalid metric name')
-
-    name = match.group(1)
-    position = match.end()
-    labels: Dict[str, str] = {}
-
-    if position < len(value) and value[position] == '{':
-        end = _find_closing_brace(value, position)
-        labels = _parse_labels(value[position + 1:end])
-        position = end + 1
-
-    if position < len(value) and not value[position].isspace():
-        raise ValueError('invalid character after metric identifier')
-
-    return name, labels, value[position:].strip()
-
-
-def _parse_exemplar(value: str, raw: bool) -> Dict[str, Any]:
-    value = value.strip()
-    if not value.startswith('{'):
-        raise ValueError('invalid exemplar')
-
-    end = _find_closing_brace(value, 0)
-    labels = _parse_labels(value[1:end])
-    fields = value[end + 1:].split()
+    rest, _, exemplar_text = line[pos:].partition('#')
+    fields = rest.split()
     if len(fields) not in (1, 2):
-        raise ValueError('invalid exemplar fields')
+        raise ParseError('a sample needs a value and an optional timestamp')
 
-    exemplar: Dict[str, Any] = {
-        'labels': labels,
-        'value': _convert_number(fields[0], raw)
-    }
-    if len(fields) == 2:
-        exemplar['timestamp'] = _convert_number(fields[1], raw)
+    exemplar = None
+    if exemplar_text.strip():
+        exemplar_text = exemplar_text.strip()
+        if not exemplar_text.startswith('{'):
+            raise ParseError('invalid exemplar')
+        _, exemplar_labels, end = _parse_label_set(exemplar_text, 0, allow_name=False)
+        exemplar_fields = exemplar_text[end:].split()
+        if len(exemplar_fields) not in (1, 2):
+            raise ParseError('invalid exemplar')
+        exemplar = {
+            'labels': exemplar_labels,
+            'value': exemplar_fields[0],
+            'timestamp': exemplar_fields[1] if len(exemplar_fields) == 2 else None
+        }
 
-    return exemplar
-
-
-def _parse_sample(line: str, raw: bool) -> Dict[str, Any]:
-    name, labels, remainder = _parse_identifier(line)
-    exemplar_text: Optional[str] = None
-
-    if '#' in remainder:
-        remainder, marker, exemplar_text = remainder.partition('#')
-        if marker != '#' or not exemplar_text.strip():
-            raise ValueError('invalid exemplar')
-
-    fields = remainder.split()
-    if len(fields) not in (1, 2):
-        raise ValueError('sample must contain a value and optional timestamp')
-
-    sample: Dict[str, Any] = {
+    return {
         'name': name,
         'labels': labels,
-        'value': _convert_number(fields[0], raw)
+        'value': fields[0],
+        'timestamp': fields[1] if len(fields) == 2 else None,
+        'help': None,
+        'type': None,
+        'unit': None,
+        'exemplar': exemplar
     }
-    if len(fields) == 2:
-        sample['timestamp'] = _convert_number(fields[1], raw)
-    if exemplar_text is not None:
-        sample['exemplar'] = _parse_exemplar(exemplar_text, raw)
-
-    return sample
 
 
-def _metadata_for(
-    name: str,
-    metadata: Dict[str, Dict[str, str]]
-) -> Optional[Dict[str, str]]:
-    if name in metadata:
-        return metadata[name]
+def _process(proc_data: List[JSONDictType]) -> List[JSONDictType]:
+    """
+    Final processing to conform to the schema.
 
-    for suffix in _FAMILY_SUFFIXES:
-        if name.endswith(suffix) and name[:-len(suffix)] in metadata:
-            return metadata[name[:-len(suffix)]]
+    Parameters:
 
-    return None
+        proc_data:   (List of Dictionaries) raw structured data to process
+
+    Returns:
+
+        List of Dictionaries. Structured to conform to the schema.
+    """
+    for entry in proc_data:
+        for item in (entry, entry['exemplar']):
+            if item:
+                item['value_float'] = _to_float(item['value'])
+                item['timestamp_float'] = _to_float(item['timestamp'])
+
+    return proc_data
 
 
 def parse(
-    data: Union[str, bytes],
-    quiet: bool = False,
-    raw: bool = False
-) -> List[Dict[str, Any]]:
-    """Parse Prometheus or OpenMetrics text exposition data."""
-    del quiet
-    if isinstance(data, bytes):
-        data = data.decode('utf-8')
-    if not isinstance(data, str):
-        raise TypeError('data must be a string or bytes')
+    data: str,
+    raw: bool = False,
+    quiet: bool = False
+) -> List[JSONDictType]:
+    """
+    Main text parsing function
 
+    Parameters:
+
+        data:        (string)  text data to parse
+        raw:         (boolean) unprocessed output if True
+        quiet:       (boolean) suppress warning messages if True
+
+    Returns:
+
+        List of Dictionaries. Raw or processed structured data.
+    """
+    jc.utils.compatibility(__name__, info.compatible, quiet)
+    jc.utils.input_type_check(data)
+
+    raw_output: List[Dict] = []
     metadata: Dict[str, Dict[str, str]] = {}
-    samples: List[Dict[str, Any]] = []
 
-    for line_number, original_line in enumerate(data.splitlines(), 1):
-        line = original_line.strip()
-        if not line:
-            continue
+    if jc.utils.has_data(data):
 
-        metadata_match = _METADATA.match(line)
-        if metadata_match:
-            kind, name, value = metadata_match.groups()
-            key = kind.lower()
-            metadata.setdefault(name, {})[key] = _unescape(value or '')
-            continue
+        for line_num, line in enumerate(jc.utils.splitlines(data), 1):
+            line = line.strip()
+            if not line:
+                continue
 
-        if line.startswith('#'):
-            continue
+            if line.startswith('#'):
+                # HELP, TYPE, and UNIT lines. Other comments (and # EOF) are skipped.
+                meta = _METADATA.fullmatch(line)
+                if meta:
+                    kind, name, text = meta.groups()
+                    if name.startswith('"'):
+                        name = _unescape(name[1:-1])
+                    metadata.setdefault(name, {})[kind.lower()] = _unescape(text or '')
+                continue
 
-        try:
-            samples.append(_parse_sample(line, raw))
-        except ValueError as error:
-            raise ValueError('line {}: {}'.format(line_number, error))
+            try:
+                raw_output.append(_parse_sample(line))
+            except ParseError as e:
+                raise ParseError(f'Line {line_num}: {e}: {line}')
 
-    for sample in samples:
-        sample_metadata = _metadata_for(sample['name'], metadata)
-        if sample_metadata:
-            sample.update(sample_metadata)
+        # add the HELP, TYPE, and UNIT of each sample's metric family
+        for entry in raw_output:
+            name = entry['name']
+            family = metadata.get(name)
+            if family is None:
+                for suffix in _ALL_SUFFIXES:
+                    if name.endswith(suffix):
+                        meta = metadata.get(name[:-len(suffix)], {})
+                        if suffix in _TYPE_SUFFIXES.get(meta.get('type', ''), ()):
+                            family = meta
+                            break
 
-    return samples
+            if family:
+                for key in ('help', 'type', 'unit'):
+                    entry[key] = family.get(key)
+
+    return raw_output if raw else _process(raw_output)
