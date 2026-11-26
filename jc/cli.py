@@ -365,7 +365,7 @@ class JcCli():
         otherwise the general help text is printed.
         """
         self.indent = 2
-        self.pad = 21
+        self.pad = 22
 
         if self.show_categories:
             utils._safe_print(self.parser_categories_text())
