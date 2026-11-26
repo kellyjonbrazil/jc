@@ -49,12 +49,14 @@ Examples:
       ...
     ]
 """
+import re
+
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`cksum` and `sum` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -110,11 +112,14 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
 
         for line in filter(None, jc.utils.splitlines(data)):
-            fields = line.split(maxsplit=2)
+            checksum, rest = re.split(r'[ \t]+', line.lstrip(' \t'), maxsplit=1)
+            # Consume only the delimiter after the blocks field so whitespace
+            # at the start of the filename is kept.
+            blocks, *filename = re.split(r'[ \t]', rest, maxsplit=1)
             item = {
-                'filename': fields[2] if len(fields) > 2 else None,
-                'checksum': fields[0],
-                'blocks': fields[1]
+                'filename': (filename[0] or None) if filename else None,
+                'checksum': checksum,
+                'blocks': blocks
             }
             raw_output.append(item)
 
