@@ -8,6 +8,24 @@ THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
 class MyTests(unittest.TestCase):
 
+    def test_du_filename_whitespace(self):
+        names = [' leading.txt', 'trailing.txt ', '\u00a0report.txt',
+                 'name\twith\ttabs', 'plain.txt']
+        data = ''.join('5\t' + name + '\n' for name in names)
+        for raw in (False, True):
+            with self.subTest(raw=raw):
+                result = jc.parsers.du.parse(data, raw=raw, quiet=True)
+                expected_size = '5' if raw else 5
+                self.assertEqual(result, [
+                    {'size': expected_size, 'name': name} for name in names
+                ])
+
+    def test_du_space_separated_input(self):
+        self.assertEqual(
+            jc.parsers.du.parse('5 name with spaces\n', quiet=True),
+            [{'size': 5, 'name': 'name with spaces'}]
+        )
+
     # input
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/du.out'), 'r', encoding='utf-8') as f:
         centos_7_7_du = f.read()

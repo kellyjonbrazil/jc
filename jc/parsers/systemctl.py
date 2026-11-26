@@ -53,12 +53,13 @@ Examples:
       ...
     ]
 """
+import re
 import jc.utils
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.6'
+    version = '1.7'
     description = '`systemctl` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -120,7 +121,7 @@ def parse(data, raw=False, quiet=False):
         raw_output = []
 
         for entry in cleandata[1:]:
-            if entry.startswith('LOAD   = '):
+            if entry.startswith(('LOAD   = ', 'Legend:')) or re.match(r'\d+ loaded units listed', entry):
                 break
 
             else:

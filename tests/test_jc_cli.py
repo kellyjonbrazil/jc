@@ -2,6 +2,7 @@ import contextlib
 import io
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import types
@@ -67,6 +68,27 @@ class MyTests(unittest.TestCase):
             cli.magic_parser()
             resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
             self.assertEqual(expected, resulting_attributes)
+
+    def test_cli_magic_parser_with_local_plugins(self):
+        """
+        Test that magic syntax still finds the right parser when local plugin
+        parsers exist, since the magic commands are then read from every parser
+        """
+        commands = {
+            'jc -p systemctl list-jobs': ('--systemctl-lj', ['p'], ['systemctl', 'list-jobs']),
+            'jc -p systemctl': ('--systemctl', ['p'], ['systemctl']),
+            'jc -p ls -l': ('--ls', ['p'], ['ls', '-l']),
+            'jc -p nonexistent command': (None, ['p'], ['nonexistent', 'command'])
+        }
+
+        with mock.patch('jc.cli.local_parsers', ['some-plugin']), \
+             mock.patch('jc.cli._magic_commands', {}):
+            for command, expected in commands.items():
+                cli = JcCli()
+                cli.args = command.split()
+                cli.magic_parser()
+                resulting_attributes = (cli.magic_found_parser, cli.magic_options, cli.magic_run_command)
+                self.assertEqual(expected, resulting_attributes)
 
     @unittest.skipIf(not PYGMENTS_INSTALLED, 'pygments library not installed')
     def test_cli_set_env_colors(self):
@@ -991,6 +1013,38 @@ power management:
             self.assertIn('ls-s parser could not parse the input data', err.getvalue())
             self.assertEqual(hint, 'Use the -qq option' in err.getvalue())
 
+    def test_parse_error_short_message(self):
+        """
+        Test that a long ParseError message is shortened in the CLI error and shown in full with -d
+        """
+        msg = 'Unable to parse line: ' + 'a' * 1000 + '\nsecond line'
+
+        err = io.StringIO()
+        # STDIN must look piped, or run() stops at 'Missing piped data' when
+        # the tests are run from a terminal
+        with mock.patch('sys.argv', ['jc', '--date']), \
+             mock.patch('sys.stdin', io.StringIO()), \
+             mock.patch.object(JcCli, 'standard_parse_and_print', side_effect=ParseError(msg)), \
+             mock.patch('shutil.get_terminal_size', return_value=os.terminal_size((2000, 24))), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+        self.assertEqual(100, cm.exception.code)
+        self.assertIn('ParseError: ' + msg[:500] + '...', err.getvalue())
+        self.assertNotIn('a' * 501, err.getvalue())
+        self.assertNotIn('second line', err.getvalue())
+
+        for option in ('-d', '-dd'):
+            with mock.patch('sys.argv', ['jc', option, '--date']), \
+                 mock.patch('sys.stdin', io.StringIO()), \
+                 mock.patch.object(JcCli, 'standard_parse_and_print', side_effect=ParseError(msg)), \
+                 contextlib.redirect_stdout(io.StringIO()), \
+                 contextlib.redirect_stderr(io.StringIO()):
+                with self.assertRaises(ParseError) as cm:
+                    JcCli().run()
+            self.assertEqual(msg, str(cm.exception))
+
     def test_slice_multiple_proc_files(self):
         """
         Test that line slicing a list of /proc files exits with an error
@@ -1200,6 +1254,70 @@ power management:
         records = self._streaming_ls_records(data)
         self.assertEqual(['aaa', 'mmm\\xff', 'zzz'], [x['filename'] for x in records])
         self.assertTrue(all(x['_jc_meta']['success'] for x in records))
+
+    def _run_jc_with_file_stdin(self, args, data):
+        fd, path = tempfile.mkstemp()
+        try:
+            with os.fdopen(fd, 'wb') as f:
+                f.write(data)
+            with open(path, 'rb') as stdin:
+                result = subprocess.run([sys.executable, '-m', 'jc', *args], stdin=stdin,
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                        check=True)
+        finally:
+            os.remove(path)
+        return result.stdout.decode()
+
+    def test_stdin_redirected_from_file(self):
+        """
+        Test that STDIN redirected from a file is read
+        """
+        out = self._run_jc_with_file_stdin(['--kv'], b'key1=abc\nkey2=def\n')
+        self.assertEqual({'key1': 'abc', 'key2': 'def'}, json.loads(out))
+
+    def test_streaming_stdin_redirected_from_file(self):
+        """
+        Test that a streaming parser reads STDIN redirected from a file
+        """
+        out = self._run_jc_with_file_stdin(['--ls-s'], b'-rw-r--r-- 1 root root 0 Jan  1 00:00 aaa\n')
+        self.assertEqual(['aaa'], [json.loads(x)['filename'] for x in out.splitlines()])
+
+    def _enable_windows_colors(self, platform, isatty):
+        stdout = mock.Mock()
+        stdout.isatty.return_value = isatty
+        with mock.patch('sys.platform', platform), mock.patch('sys.stdout', stdout), \
+             mock.patch('subprocess.run') as run:
+            JcCli.enable_windows_colors()
+        return run
+
+    def test_enable_windows_colors_on_console(self):
+        """
+        Test that cmd.exe enables colors on a Windows console without getting jc's
+        STDIN: when STDIN is a redirected file, cmd.exe moved its position to the end
+        """
+        run = self._enable_windows_colors('win32', isatty=True)
+        run.assert_called_once_with('', shell=True, stdin=subprocess.DEVNULL)
+
+    def test_enable_windows_colors_skipped(self):
+        """
+        Test that cmd.exe is not started when STDOUT is not a console or not on Windows
+        """
+        self._enable_windows_colors('win32', isatty=False).assert_not_called()
+        self._enable_windows_colors('linux', isatty=True).assert_not_called()
+
+    def test_help_text_fits_80_columns(self):
+        """
+        Test that every line of the help text (-h, -hh, and -hhh) fits in 80
+        columns, so a long parser name or description cannot push the help
+        text past the width of a standard terminal
+        """
+        for option in ('-h', '-hh', '-hhh'):
+            result = subprocess.run([sys.executable, '-m', 'jc', option],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            lines = result.stdout.decode('utf-8').splitlines()
+            with self.subTest(option=option):
+                self.assertGreater(len(lines), 20)
+                self.assertEqual([x for x in lines if len(x) > 80], [])
 
 if __name__ == '__main__':
     unittest.main()

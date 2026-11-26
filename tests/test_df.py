@@ -206,6 +206,18 @@ class MyTests(unittest.TestCase):
         self.assertEqual([x['filesystem'] for x in result], ['/dev/sda1', 'tmpfs'])
         self.assertEqual(result[1]['mounted_on'], '/tmp')
 
+    def test_df_short_row(self):
+        """
+        Test 'df' with a row shorter than the header
+        """
+        data = 'Filesystem      Size  Used Avail Use% Mounted on\n/dev/sdd       1008'
+        result = jc.parsers.df.parse(data, quiet=True)
+        self.assertEqual(result[0]['filesystem'], '/dev/sdd')
+        self.assertEqual(result[0]['size'], 1008)
+        self.assertIsNone(result[0]['used'])
+        self.assertIsNone(result[0]['use_percent'])
+        self.assertIsNone(result[0]['mounted_on'])
+
 
 if __name__ == '__main__':
     unittest.main()

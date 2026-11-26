@@ -1,6 +1,6 @@
 # jc parser index
 
-> Every parser in `jc` 1.26.2, generated from the parser metadata. `jc` converts the output of command-line tools, file types, and strings to JSON. See [llms.txt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/llms.txt) for usage and options.
+> Every parser in `jc` 1.26.3, generated from the parser metadata. `jc` converts the output of command-line tools, file types, and strings to JSON. See [llms.txt](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/llms.txt) for usage and options.
 
 Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands marked "magic", let `jc` run the command itself (`jc COMMAND`). In Python use `jc.parse('MODULE', text)`, where MODULE is the flag without its leading dashes and with any remaining dashes turned into underscores (`--ls-s` is `ls_s`). Each link is that parser's documentation page, which has the schema, the options the source command must be run with, and examples.
 
@@ -10,6 +10,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--airport](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport.md): `airport -I` command parser (magic: `airport -I`; platforms: darwin)
 - [--airport-s](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/airport_s.md): `airport -s` command parser (magic: `airport -s`; platforms: darwin)
 - [--amixer](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/amixer.md): `amixer` command parser (magic: `amixer`; platforms: linux)
+- [--ansible-list-tags](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ansible_list_tags.md): `ansible-playbook --list-tags` command parser (magic: `ansible-playbook --list-tags`)
 - [--apachectl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apachectl.md): `apachectl -S` command parser (magic: `apachectl -S`, `apache2ctl -S`, `apache2 -S`, `httpd -S`)
 - [--apt-cache-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_cache_show.md): `apt-cache show` command parser (magic: `apt-cache show`; platforms: linux)
 - [--apt-get-sqq](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/apt_get_sqq.md): `apt-get -sqq` command parser (magic: `apt-get -sqq`; platforms: linux)
@@ -115,6 +116,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--path-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/path_list.md): POSIX path list string parser (supports `--slurp`)
 - [--pci-ids](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pci_ids.md): `pci.ids` file parser
 - [--pgpass](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pgpass.md): PostgreSQL password file parser
+- [--php-fpm](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/php_fpm.md): `php-fpm -tt` command parser
 - [--pidstat](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pidstat.md): `pidstat -H` command parser (magic: `pidstat`; platforms: linux)
 - [--ping](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ping.md): `ping` and `ping6` command parser (magic: `ping`, `ping6`; platforms: linux, darwin, freebsd)
 - [--pip-list](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pip_list.md): `pip list` command parser (magic: `pip list`, `pip3 list`)
@@ -123,6 +125,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--pkg-index-deb](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/pkg_index_deb.md): Debian Package Index file parser
 - [--plist](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/plist.md): PLIST file parser
 - [--postconf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/postconf.md): `postconf -M` command parser (magic: `postconf -M`; platforms: linux)
+- [--prometheus](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/prometheus.md): Prometheus and OpenMetrics text format parser
 - [--proc](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc.md): `/proc/` file parser (platforms: linux; supports `--slurp`)
 - [--ps](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/ps.md): `ps` command parser (magic: `ps`; platforms: linux, darwin, cygwin, aix, freebsd)
 - [--resolve-conf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/resolve_conf.md): `/etc/resolve.conf` file parser
@@ -146,6 +149,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--systemctl-lj](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_lj.md): `systemctl list-jobs` command parser (magic: `systemctl list-jobs`; platforms: linux)
 - [--systemctl-ls](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_ls.md): `systemctl list-sockets` command parser (magic: `systemctl list-sockets`; platforms: linux)
 - [--systemctl-luf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_luf.md): `systemctl list-unit-files` command parser (magic: `systemctl list-unit-files`; platforms: linux)
+- [--systemextensionsctl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemextensionsctl.md): `systemextensionsctl list` command parser (magic: `systemextensionsctl list`; platforms: darwin)
 - [--systeminfo](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systeminfo.md): `systeminfo` command parser (magic: `systeminfo`; platforms: win32)
 - [--time](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/time.md): `/usr/bin/time` command parser (platforms: linux, darwin, cygwin, aix, freebsd)
 - [--timedatectl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/timedatectl.md): `timedatectl status` command parser (magic: `timedatectl`, `timedatectl status`; platforms: linux)
@@ -176,7 +180,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--wg-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/wg_show.md): `wg show` command parser (magic: `wg show`)
 - [--who](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/who.md): `who` command parser (magic: `who`; platforms: linux, darwin, cygwin, aix, freebsd)
 - [--x509-cert](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_cert.md): X.509 PEM and DER certificate file parser
-- [--x509-crl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_crl.md): X.509 PEM and DER certificate revocation list file parser
+- [--x509-crl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_crl.md): X.509 PEM/DER certificate revocation list file parser
 - [--x509-csr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_csr.md): X.509 PEM and DER certificate request file parser
 - [--xml](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xml.md): XML file parser
 - [--xrandr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xrandr.md): `xrandr` command parser (magic: `xrandr`; platforms: linux, darwin, cygwin, aix, freebsd)
@@ -212,4 +216,4 @@ These process input line by line and output JSON Lines instead of a single JSON 
 
 ## /proc Files
 
-`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 52 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).
+`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 53 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).

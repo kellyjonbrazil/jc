@@ -3,7 +3,7 @@ import sys
 import os
 import re
 import importlib
-from typing import List, Iterable, Optional, Union, Iterator
+from typing import Dict, List, Iterable, Optional, Union, Iterator
 from types import ModuleType
 from .jc_types import ParserInfoType, JSONDictType
 from jc import appdirs
@@ -17,6 +17,7 @@ parsers: List[str] = [
     'airport',
     'airport-s',
     'amixer',
+    'ansible-list-tags',
     'apachectl',
     'apt-cache-show',
     'apt-get-sqq',
@@ -132,6 +133,7 @@ parsers: List[str] = [
     'path-list',
     'pci-ids',
     'pgpass',
+    'php-fpm',
     'pidstat',
     'pidstat-s',
     'ping',
@@ -142,6 +144,7 @@ parsers: List[str] = [
     'pkg-index-deb',
     'plist',
     'postconf',
+    'prometheus',
     'proc',
     'proc-buddyinfo',
     'proc-cmdline',
@@ -186,6 +189,7 @@ parsers: List[str] = [
     'proc-net-tcp',
     'proc-net-udp',
     'proc-net-unix',
+    'proc-net-wireless',
     'proc-pid-fdinfo',
     'proc-pid-io',
     'proc-pid-maps',
@@ -221,6 +225,7 @@ parsers: List[str] = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'systemextensionsctl',
     'systeminfo',
     'time',
     'timedatectl',
@@ -314,6 +319,28 @@ def _parser_argument(parser_mod_name: str) -> str:
     """Return short name of the parser with dashes and with -- prefix"""
     parser = _modname_to_cliname(parser_mod_name)
     return f'--{parser}'
+
+
+def _builtin_magic_commands() -> Dict[str, str]:
+    """
+    Return a dictionary of the magic commands of the built-in parsers that
+    are not hidden or deprecated, mapped to the parser argument. This
+    imports every built-in parser, so it is slow: build-magic-commands.py
+    uses it to generate jc/magic_commands.py, which the CLI reads instead.
+    """
+    magic_dict: Dict[str, str] = {}
+    for p in parsers:
+        if p in local_parsers:
+            continue
+
+        parser = get_parser(p)
+        if _parser_is_hidden(parser) or _parser_is_deprecated(parser):
+            continue
+
+        for mc in getattr(parser.info, 'magic_commands', []):
+            magic_dict[mc] = _parser_argument(p)
+
+    return magic_dict
 
 def get_parser(parser_mod_name: Union[str, ModuleType]) -> ModuleType:
     """

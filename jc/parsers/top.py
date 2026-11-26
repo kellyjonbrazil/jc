@@ -330,7 +330,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`top -b` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -489,7 +489,9 @@ def _process(proc_data: List[Dict], quiet=False) -> List[Dict]:
             if key in float_list:
                 item[key] = jc.utils.convert_to_float(item[key])
 
-        for p_idx, proc in enumerate(item['processes']):
+        # top cut before the process table (`top -b -n1 | head -5`) yields
+        # summary items carrying no processes key.
+        for p_idx, proc in enumerate(item.get('processes') or []):
             # rename processes keys to conform to schema
             proc_copy = proc.copy()
             for old_key in proc_copy.keys():

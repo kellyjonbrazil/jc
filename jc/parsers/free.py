@@ -75,7 +75,7 @@ import jc.parsers.universal
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.9'
+    version = '1.10'
     description = '`free` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -126,10 +126,14 @@ def parse(data, raw=False, quiet=False):
     jc.utils.compatibility(__name__, info.compatible, quiet)
     jc.utils.input_type_check(data)
 
-    cleandata = jc.utils.splitlines(data)
+    cleandata = [line for line in jc.utils.splitlines(data) if line.strip()]
     raw_output = []
 
-    if jc.utils.has_data(data):
+    if cleandata:
+        # `free -s` repeats the table (separated by blank lines). Keep the
+        # first header and drop the repeated ones.
+        header = cleandata[0].split()
+        cleandata = [cleandata[0]] + [line for line in cleandata[1:] if line.split() != header]
 
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace('buff/cache', 'buff_cache')

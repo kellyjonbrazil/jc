@@ -6,6 +6,7 @@ import unittest
 from typing import Generator
 from types import ModuleType
 import jc.lib
+import jc.magic_commands
 import jc.parsers.csv as csv_parser
 import jc.parsers.disabled_parser as disabled_parser
 
@@ -228,6 +229,21 @@ class MyTests(unittest.TestCase):
         jc.lib.get_parser = old_get_parser
 
         self.assertEqual(len(result), 1)
+
+    def test_lib_magic_commands_table(self):
+        """
+        jc/magic_commands.py must match the magic_commands of the built-in
+        parsers. Run ./build-magic-commands.py to regenerate it.
+        """
+        expected = jc.lib._builtin_magic_commands()
+        table = jc.magic_commands.magic_commands
+
+        if expected != table:
+            lines = ['jc/magic_commands.py is out of date. Run ./build-magic-commands.py to fix it.']
+            for command in sorted(set(expected) | set(table)):
+                if expected.get(command) != table.get(command):
+                    lines.append(f'  {command!r}: table has {table.get(command)!r}, parsers have {expected.get(command)!r}')
+            self.fail('\n'.join(lines))
 
 
 if __name__ == '__main__':

@@ -12,9 +12,15 @@
     "geo": "41.9028;12.4964",
     "dtstart": "2026-10-15T09:00:00",
     "dtstart_tzid": "Europe/Rome",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1792051200,
     "dtend": "2026-10-15T09:15:00",
     "dtend_tzid": "Europe/Rome",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1792052100,
     "dtstamp": "2026-10-14T08:00:00Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1791964800,
     "sequence": 2,
     "categories": [
       "MEETING",
@@ -65,18 +71,30 @@
     "status": "CONFIRMED",
     "dtstart": "2026-10-22T10:00:00",
     "dtstart_tzid": "Europe/Rome",
+    "dtstart_epoch": null,
+    "dtstart_epoch_utc": 1792659600,
     "dtend": "2026-10-22T10:15:00",
     "dtend_tzid": "Europe/Rome",
+    "dtend_epoch": null,
+    "dtend_epoch_utc": 1792660500,
     "recurrence_id": "2026-10-22T09:00:00",
     "recurrence_id_tzid": "Europe/Rome",
-    "dtstamp": "2026-10-14T08:00:00Z"
+    "recurrence_id_epoch": null,
+    "recurrence_id_epoch_utc": 1792656000,
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1791964800
   },
   {
     "type": "VEVENT",
     "uid": "floating-1@example.com",
     "summary": "Floating time",
     "dtstart": "2026-10-16T10:00:00",
-    "dtstamp": "2026-10-14T08:00:00Z"
+    "dtstart_epoch": 1792170000,
+    "dtstart_epoch_utc": null,
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1791964800
   },
   {
     "type": "VTODO",
@@ -84,8 +102,14 @@
     "summary": "Send the report",
     "status": "NEEDS-ACTION",
     "due": "2026-10-20",
+    "due_epoch": 1792479600,
+    "due_epoch_utc": null,
     "dtstamp": "2026-10-14T08:00:00Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1791964800,
     "completed": "2026-10-14T12:00:00Z",
+    "completed_epoch": null,
+    "completed_epoch_utc": 1791979200,
     "priority": 5,
     "percent_complete": 40
   },
@@ -94,6 +118,8 @@
     "uid": "note-1@example.com",
     "summary": "Note",
     "description": "Journal entry",
-    "dtstamp": "2026-10-14T08:00:00Z"
+    "dtstamp": "2026-10-14T08:00:00Z",
+    "dtstamp_epoch": null,
+    "dtstamp_epoch_utc": 1791964800
   }
 ]

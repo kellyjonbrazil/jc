@@ -351,7 +351,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.10'
+    version = '1.11'
     description = '`ss` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -594,6 +594,12 @@ def parse(data, raw=False, quiet=False):
     if jc.utils.has_data(data):
         header_text = cleandata[0].lower()
 
+        # `ss -t` and `ss -u` leave out the Netid column. Parse the rows as if
+        # it were there, with a same-width stand-in, and drop it again below.
+        has_netid = header_text.startswith('netid')
+        if not has_netid:
+            header_text = 'netid  ' + header_text
+
         # get the position of Recv-Q since sometimes it doesn't leave enough space
         # to parse. need at least two spaces between main fields to differentiate
         # from opt fields, which are only separated by one space
@@ -622,6 +628,15 @@ def parse(data, raw=False, quiet=False):
             output_line = {}
             row_header = list(header_list)
             if entry[0] not in string.whitespace:
+                if not has_netid:
+                    # a unix socket's local address is a path, an abstract
+                    # name starting with '@', or '*'
+                    local = entry.split()[3] if len(entry.split()) > 3 else ''
+                    if local.startswith(('/', '@')) or local == '*':
+                        entry = 'u_str  ' + entry
+                    else:
+                        entry = 'tcp    ' + entry
+
                 # fix issue where recv-q can be too close to state
                 entry = entry[:recv_q_position] + '  ' + entry[recv_q_position:]
 
@@ -739,6 +754,9 @@ def parse(data, raw=False, quiet=False):
 
             if output_line['netid'] not in contains_colon:
                 output_line['path'] = output_line.pop('local_address')
+
+            if not has_netid:
+                del output_line['netid']
 
             raw_output.append(output_line)
 

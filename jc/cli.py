@@ -17,8 +17,9 @@ from types import ModuleType
 from .lib import (
     __version__, parser_info, all_parser_info, parsers, get_parser, _parser_is_streaming,
     parser_mod_list, standard_parser_mod_list, plugin_parser_mod_list, streaming_parser_mod_list,
-    slurpable_parser_mod_list, _parser_is_slurpable
+    slurpable_parser_mod_list, _parser_is_slurpable, local_parsers
 )
+from .magic_commands import magic_commands as _magic_commands
 from .jc_types import JSONDictType, CustomColorType, ParserInfoType
 from . import utils
 from .cli_data import (
@@ -26,7 +27,6 @@ from .cli_data import (
     slicetext_string, helptext_end_string
 )
 from .shell_completions import bash_completion, zsh_completion, xonsh_completion
-from . import tracebackplus
 from .exceptions import LibraryNotInstalled, ParseError
 
 PYGMENTS_INSTALLED: bool = False
@@ -35,8 +35,8 @@ try:
     from pygments import highlight
     from pygments.style import Style
     from pygments.token import (Name, Number, String, Keyword)
-    from pygments.lexers.data import JsonLexer, YamlLexer
-    from pygments.formatters import Terminal256Formatter
+    # pygments.lexers and pygments.formatters are imported only when output
+    # is colored, since they add to the startup time
     PYGMENTS_INSTALLED = True
 except Exception:
     pass
@@ -365,7 +365,7 @@ class JcCli():
         otherwise the general help text is printed.
         """
         self.indent = 2
-        self.pad = 21
+        self.pad = 22
 
         if self.show_categories:
             utils._safe_print(self.parser_categories_text())
@@ -462,6 +462,9 @@ class JcCli():
             y_string = y_string_buf.getvalue().decode('utf-8')[:-1]
 
             if not self.mono:
+                from pygments.lexers.data import YamlLexer
+                from pygments.formatters import Terminal256Formatter
+
                 class JcStyle(Style):
                     styles: CustomColorType = self.custom_colors
 
@@ -509,6 +512,9 @@ class JcCli():
         j_string = JSON_ESCAPE_RE.sub(lambda m: '\\u{:04x}'.format(ord(m.group())), j_string)
 
         if not self.mono and PYGMENTS_INSTALLED:
+            from pygments.lexers.data import JsonLexer
+            from pygments.formatters import Terminal256Formatter
+
             class JcStyle(Style):
                 styles: CustomColorType = self.custom_colors
 
@@ -582,9 +588,15 @@ class JcCli():
             return
 
         # create a dictionary of magic_commands to their respective parsers.
-        magic_dict = {}
-        for entry in all_parser_info():
-            magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+        # Local plugin parsers can add or override magic commands, so only
+        # use the prebuilt table of built-in magic commands when there are
+        # none, since reading every parser's info imports every parser.
+        if local_parsers:
+            magic_dict = {}
+            for entry in all_parser_info():
+                magic_dict.update({mc: entry['argument'] for mc in entry.get('magic_commands', [])})
+        else:
+            magic_dict = _magic_commands
 
         # set the command list and string
         self.magic_run_command = args_given
@@ -988,10 +1000,19 @@ class JcCli():
         exit_code = min(exit_code, MAX_EXIT)
         sys.exit(exit_code)
 
+    @staticmethod
+    def enable_windows_colors() -> None:
+        """
+        Enable colors in a Windows cmd.exe terminal. Only needed when STDOUT
+        is a console. cmd.exe does not get our STDIN: when STDIN is a
+        redirected file, cmd.exe moves its position to the end and jc then
+        reads no input.
+        """
+        if sys.platform.startswith('win32') and sys.stdout.isatty():
+            subprocess.run('', shell=True, stdin=subprocess.DEVNULL)
+
     def _run(self) -> None:
-        # enable colors for Windows cmd.exe terminal
-        if sys.platform.startswith('win32'):
-            os.system('')
+        self.enable_windows_colors()
 
         # parse magic syntax first: e.g. jc -p ls -al
         self.args = sys.argv
@@ -1039,6 +1060,8 @@ class JcCli():
             utils.CLI_QUIET = True
 
         if self.verbose_debug:
+            # imported only when needed, since it adds to the startup time
+            from . import tracebackplus
             tracebackplus.enable(context=11)  # type: ignore
 
         if self.about:
@@ -1099,7 +1122,7 @@ class JcCli():
 
                 utils.error_message([
                     f'Parser issue with {self.parser_name}:',
-                    f'{e.__class__.__name__}: {e}',
+                    f'{e.__class__.__name__}: {getattr(e, "short_message", e)}',
                     'If this is the correct parser, try setting the locale to C (LC_ALL=C).',
                     f'For details use the -d or -dd option. Use "jc -h --{self.parser_name}" for help.'
                 ])
@@ -1135,7 +1158,7 @@ class JcCli():
 
             utils.error_message([
                 'Exit due to unexpected error:',
-                f'{e.__class__.__name__}: {e}'
+                f'{e.__class__.__name__}: {getattr(e, "short_message", e)}'
             ])
             self.exit_error()
 

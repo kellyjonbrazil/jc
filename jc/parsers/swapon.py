@@ -41,12 +41,12 @@ Example:
 from enum import Enum
 from jc.exceptions import ParseError
 import jc.utils
-from typing import List, Dict, Union
+from typing import List, Dict, Optional, Union
 
 
 class info:
     """Provides parser metadata (version, author, etc.)"""
-    version = "1.1"
+    version = "1.2"
     description = "`swapon` command parser"
     author = "Roey Darwish Dror"
     author_email = "roey.ghost@gmail.com"
@@ -57,7 +57,7 @@ class info:
 
 __version__ = info.version
 
-_Value = Union[str, int]
+_Value = Union[str, int, None]
 _Entry = Dict[str, _Value]
 
 
@@ -90,27 +90,18 @@ class _Column(Enum):
             raise ParseError(f"Unknown header: {header}")
 
 
-def _parse_size(size: str) -> int:
-    power = None
-    if size[-1] == "B":
-        power = 0
-    if size[-1] == "K":
-        power = 1
-    elif size[-1] == "M":
-        power = 2
-    elif size[-1] == "G":
-        power = 3
-    elif size[-1] == "T":
-        power = 4
+def _parse_size(size: str, kib: bool) -> Optional[int]:
+    # `swapon -s` (and /proc/swaps) print sizes in KiB with no unit. `swapon
+    # --show` prints sizes with binary one-letter units, or bytes with --bytes.
+    if kib and size.isdigit():
+        return int(size) * 1024
 
-    multiplier = 1024**power if power is not None else 1024
-
-    return (int(size[:-1]) if power is not None else int(size)) * multiplier
+    return jc.utils.convert_size_to_int(size, posix_mode=True)
 
 
-def _value(value: str, column: _Column) -> _Value:
+def _value(value: str, column: _Column, kib: bool) -> _Value:
     if column == _Column.SIZE or column == _Column.USED:
-        return _parse_size(value)
+        return _parse_size(value, kib)
     elif column == _Column.PRIO:
         return int(value)
     else:
@@ -155,6 +146,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
         lines = iter(jc.utils.splitlines(data))
         headers = next(lines)
         columns = headers.split()
+        kib = "Size" in columns
         for each_line in lines:
             line = each_line.split()
             diff = len(columns) - len(line)
@@ -166,7 +158,7 @@ def parse(data: str, raw: bool = False, quiet: bool = False) -> List[_Entry]:
             document: _Entry = {}
             for each_column, value in zip(columns, line):
                 column = _Column.from_header(each_column)
-                document[column.value] = _value(value, column)
+                document[column.value] = _value(value, column, kib)
 
             raw_output.append(document)
 

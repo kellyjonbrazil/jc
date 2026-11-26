@@ -49,7 +49,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = 'POSIX path string parser'
     author = 'Michael Nietzold'
     author_email = 'https://github.com/muescha'
@@ -99,9 +99,10 @@ def parse(data, raw=False, quiet=False):
     if not jc.utils.has_data(data):
         return {}
 
-    data = data.rstrip("\n")
+    windows = _is_windows(data)
+    data = data.rstrip('\r\n') if windows else data.rstrip('\n')
 
-    return _parse_path(data, _is_windows(data), raw)
+    return _parse_path(data, windows, raw)
 
 
 def _is_windows(data: str) -> bool:

@@ -1,5 +1,67 @@
 jc changelog
 
+20261125 v1.26.3
+- Enhance CLI startup time. Commands now start about 33 ms (43%) faster, and
+  magic syntax commands (e.g. `jc ls -l`) about 130 ms (74%) faster, since the
+  CLI no longer imports every parser to find the one for a magic command, and
+  loads the debug and color output modules only when they are used
+- Enhance `ics` parser to add calculated epoch timestamp fields for dates and
+  times, including `TZID` times resolved with the file's `VTIMEZONE` component
+- Enhance CLI and streaming parser error messages to show only the first line
+  of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
+  full message
+- Add `ansible-list-tags` command parser
+- Add `php-fpm` command parser for `php-fpm -tt` output
+- Add `proc-net-wireless` parser for `/proc/net/wireless` (also used by
+  `jc --proc`)
+- Add `prometheus` parser for Prometheus and OpenMetrics text format metrics
+- Add `systemextensionsctl` command parser for `systemextensionsctl list`
+  output on macOS
+- Fix CLI on Windows to read STDIN redirected from a file (e.g.
+  `jc --kv < file.txt`), which gave empty output
+- Fix `crontab` and `crontab-u` parsers to not crash on a shortcut line (e.g.
+  `@reboot`) that was cut short before its user or command
+- Fix `date` parser to raise a parse error instead of crashing on input it
+  cannot parse
+- Fix `date` parser and the timestamp utility so a time of exactly the Unix
+  epoch (`1970-01-01 00:00:00 UTC`) gets an epoch value of `0` instead of
+  `null`
+- Fix `df` parser to not crash on a row that is shorter than the header
+- Fix `du` parser to keep whitespace in file names
+- Fix `free` parser to not crash on output with more than one sample (e.g.
+  `free -s 1`), which has a blank line and the header repeated between samples
+- Fix `host` parser to skip a truncated SOA record instead of crashing
+- Fix `id` parser to not crash on an SELinux context with fewer than four
+  fields (e.g. no level)
+- Fix `lsblk` parser to not crash on output without a `NAME` column (e.g.
+  `lsblk -o SIZE,TYPE,MOUNTPOINTS`), and to raise a parse error on output
+  that is missing its header line
+- Fix `netstat` parser to not crash on Windows `netstat` output that was cut
+  short
+- Fix number conversion utilities (`jc.utils.convert_to_float()`,
+  `convert_to_int()`, and `convert_to_bool()`) to keep the exponent of
+  numbers in scientific notation (e.g. `1.5e+3` was converted to `1.53`)
+- Fix `path` parser to remove CRLF line endings from Windows paths
+- Fix `proc` parser to identify `/proc` files that have CRLF line endings
+- Fix `ss` parser to not crash when the `Netid` column is missing (e.g.
+  `ss -t` or `ss -u`)
+- Fix `swapon` parser to not crash on sizes that are not whole numbers (e.g.
+  `7.7G`)
+- Fix `systemctl` parser to not read the `Legend` footer or the
+  `N loaded units listed` line as units (e.g. `systemctl --failed` with no
+  failed units now returns an empty list)
+- Fix `systeminfo`, `top`, and `top-s` parsers to not crash on output that was
+  cut short (e.g. no network cards, time zone, or process table)
+- Fix `typeset` parser to decode `$'...'` values correctly, including
+  non-ASCII text, `\E` escapes, and the zsh and ksh escapes (e.g. `\C-x` and
+  `\u[e9]`)
+- Fix `typeset` parser to remove the backslash escapes in double-quoted values
+  (e.g. `\"` and `\$`), and to keep quotes that are part of a value
+- Fix `w` parser to raise a parse error when the header line is missing and
+  to not crash on blank rows or rows that were cut short
+- Fix `wc` parser to keep leading whitespace in file names
+- Fix `wg-show` parser to not crash on a hex `fwmark` value (e.g. `0xca6c`)
+
 20261029 v1.26.2
 Note: this release changes the output schema of some parsers:
   `x509-cert`/`x509-csr`/`x509-crl`, `proc-net-packet`, `proc-pid-fdinfo`, `ssh-conf`, `iw-scan`, `ping-s`, `proc-pid-numa-maps`, `plist`, and `ifconfig`. Please see the parsers' documentation for the updated schemas.

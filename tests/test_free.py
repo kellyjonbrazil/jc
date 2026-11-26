@@ -27,6 +27,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-w.out'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_free_w = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/free--repeated-samples.out'), 'r', encoding='utf-8') as f:
+        generic_free_repeated_samples = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/centos-7.7/free.json'), 'r', encoding='utf-8') as f:
         centos_7_7_free_json = json.loads(f.read())
@@ -45,6 +48,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/ubuntu-18.04/free-w.json'), 'r', encoding='utf-8') as f:
         ubuntu_18_4_free_w_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/free--repeated-samples.json'), 'r', encoding='utf-8') as f:
+        generic_free_repeated_samples_json = json.loads(f.read())
 
     def test_free_nodata(self):
         """
@@ -87,6 +93,24 @@ class MyTests(unittest.TestCase):
         Test 'free -w' on Ubuntu 18.4
         """
         self.assertEqual(jc.parsers.free.parse(self.ubuntu_18_4_free_w, quiet=True), self.ubuntu_18_4_free_w_json)
+
+    def test_free_repeated_samples(self):
+        """
+        Test 'free -s' output: blank lines between samples and repeated headers
+        """
+        self.assertEqual(jc.parsers.free.parse(self.generic_free_repeated_samples, quiet=True), self.generic_free_repeated_samples_json)
+
+    def test_free_trailing_blank_lines(self):
+        """
+        Test 'free' output followed by blank lines
+        """
+        self.assertEqual(jc.parsers.free.parse(self.centos_7_7_free + '\n\n', quiet=True), self.centos_7_7_free_json)
+
+    def test_free_leading_blank_line(self):
+        """
+        Test 'free' output preceded by a blank line
+        """
+        self.assertEqual(jc.parsers.free.parse('\n' + self.centos_7_7_free, quiet=True), self.centos_7_7_free_json)
 
 
 if __name__ == '__main__':

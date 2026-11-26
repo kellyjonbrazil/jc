@@ -126,7 +126,7 @@ from jc.exceptions import ParseError
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.5'
+    version = '1.6'
     description = '`/proc/` file parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -204,6 +204,7 @@ def parse(
         net_tcp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode *(?:\n|$)')
         net_udp_p = re.compile(r'^\s+sl\s+local_address\s+(?:rem_address|remote_address)\s+st\s+tx_queue\s+rx_queue\s+tr\s+tm->when\s+retrnsmt\s+uid\s+timeout\s+inode\s+ref\s+pointer\s+drops *(?:\n|$)')
         net_unix_p = re.compile(r'^Num       RefCount Protocol Flags    Type St Inode Path\n')
+        net_wireless = re.compile(r'^Inter-\|\s+sta-\|\s+Quality\s+\|\s+Discarded packets\s+\|\s+Missed\s+\|\s+WE\n')
 
         pid_fdinfo_p = re.compile(r'^pos:\t\d+\nflags:\t\d+\nmnt_id:\t\d+\n')
         pid_io_p = re.compile(r'^rchar: \d+\nwchar: \d+\nsyscr: \d+\n')
@@ -264,6 +265,7 @@ def parse(
             net_unix_p: 'proc_net_unix',
             net_ipv6_route_p: 'proc_net_ipv6_route',  # before net_dev_mcast
             net_dev_mcast_p: 'proc_net_dev_mcast',    # after net_ipv6_route
+            net_wireless: 'proc_net_wireless',
 
             pid_fdinfo_p: 'proc_pid_fdinfo',
             pid_io_p: 'proc_pid_io',
@@ -279,8 +281,13 @@ def parse(
             # scsi_scsi_p: 'proc_scsi_scsi'
         }
 
+        # The detection patterns below are written against LF line endings, while
+        # jc.utils.splitlines() accepts CRLF as well. Normalize the terminator
+        # before matching so a CRLF capture is identified as the same file type.
+        detect_data = data.replace('\r\n', '\n')
+
         for reg_pattern, parse_mod in procmap.items():
-            if reg_pattern.search(data):
+            if reg_pattern.search(detect_data):
                 try:
                     procparser = get_parser(parse_mod)
                     return procparser.parse(data, quiet=quiet, raw=raw)

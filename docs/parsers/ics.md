@@ -30,16 +30,32 @@ Schema:
         "geo":                      string,
         "dtstart":                  string,   # [1]
         "dtstart_tzid":             string,   # [2]
+        "dtstart_epoch":            integer,  # [7]
+        "dtstart_epoch_utc":        integer,  # [8]
         "dtend":                    string,   # [1]
         "dtend_tzid":               string,   # [2]
+        "dtend_epoch":              integer,  # [7]
+        "dtend_epoch_utc":          integer,  # [8]
         "due":                      string,   # [1]
         "due_tzid":                 string,   # [2]
+        "due_epoch":                integer,  # [7]
+        "due_epoch_utc":            integer,  # [8]
         "recurrence_id":            string,   # [1]
         "recurrence_id_tzid":       string,   # [2]
+        "recurrence_id_epoch":      integer,  # [7]
+        "recurrence_id_epoch_utc":  integer,  # [8]
         "dtstamp":                  string,   # [1]
+        "dtstamp_epoch":            integer,  # [7]
+        "dtstamp_epoch_utc":        integer,  # [8]
         "created":                  string,   # [1]
+        "created_epoch":            integer,  # [7]
+        "created_epoch_utc":        integer,  # [8]
         "last_modified":            string,   # [1]
+        "last_modified_epoch":      integer,  # [7]
+        "last_modified_epoch_utc":  integer,  # [8]
         "completed":                string,   # [1]
+        "completed_epoch":          integer,  # [7]
+        "completed_epoch_utc":      integer,  # [8]
         "duration":                 string,
         "sequence":                 integer,
         "priority":                 integer,
@@ -96,6 +112,15 @@ Schema:
         boolean in the processed output, while `raw=True` keeps the
         iCalendar `TRUE`/`FALSE` value
     [6] passed through, not expanded into occurrences
+    [7] calculated naive timestamp (based on the local time zone of the
+        system jc runs on) of a floating time or a `DATE` value, otherwise
+        `null`. Not in the `raw=True` output
+    [8] calculated timezone-aware timestamp of a UTC time, a time with a UTC
+        offset, or a time with a `TZID`, otherwise `null`. A `TZID` is
+        resolved with the `VTIMEZONE` component of the same name in the file,
+        so the timestamp is `null` when that component is missing (except
+        for `UTC` and `GMT`) or uses an `RRULE` other than a yearly rule by
+        month and day. Not in the `raw=True` output
 
 Examples:
 
@@ -114,7 +139,9 @@ Examples:
         "type": "VEVENT",
         "uid": "42",
         "summary": "Standup",
-        "dtstart": "2026-10-15T09:00:00Z"
+        "dtstart": "2026-10-15T09:00:00Z",
+        "dtstart_epoch": null,
+        "dtstart_epoch_utc": 1792054800
       }
     ]
 
@@ -145,4 +172,4 @@ Compatibility:  linux, darwin, cygwin, win32, aix, freebsd
 
 Source: [`jc/parsers/ics.py`](https://github.com/kellyjonbrazil/jc/blob/master/jc/parsers/ics.py)
 
-Version 1.1 by Paolo Valletta (paolovalletta@hotmail.it)
+Version 1.2 by Paolo Valletta (paolovalletta@hotmail.it)

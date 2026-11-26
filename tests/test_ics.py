@@ -28,6 +28,10 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.ics'), 'r', encoding='utf-8', newline='') as f:
         generic_ics_google_export = f.read()
 
+    # newline='' keeps the CRLF line endings of the export
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-apple.ics'), 'r', encoding='utf-8', newline='') as f:
+        generic_ics_apple_export = f.read()
+
     # output
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-test.json'), 'r', encoding='utf-8') as f:
         generic_ics_test_json = json.loads(f.read())
@@ -46,6 +50,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-outlook-shape.json'), 'r', encoding='utf-8') as f:
         generic_ics_outlook_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-apple.json'), 'r', encoding='utf-8') as f:
+        generic_ics_apple_json = json.loads(f.read())
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ics-google.json'), 'r', encoding='utf-8') as f:
         generic_ics_google_json = json.loads(f.read())
@@ -135,6 +142,22 @@ class MyTests(unittest.TestCase):
         self.assertEqual(
             jc.parsers.ics.parse(self.generic_ics_google_export, quiet=True),
             self.generic_ics_google_json
+        )
+
+
+    def test_ics_apple_export(self):
+        """
+        Test a file exported from Apple Calendar: CRLF line endings,
+        VTIMEZONEs written as RDATE lists (Phoenix, Kathmandu, Kolkata) and as
+        yearly rules that end with UNTIL followed by new ones (Los Angeles),
+        times next to DST changes, all-day, floating and UTC events, and
+        recurring events with EXDATE and RECURRENCE-ID
+        """
+        self.assertIn('\r\n', self.generic_ics_apple_export)
+
+        self.assertEqual(
+            jc.parsers.ics.parse(self.generic_ics_apple_export, quiet=True),
+            self.generic_ics_apple_json
         )
 
 
@@ -426,6 +449,163 @@ class MyTests(unittest.TestCase):
         data = 'BEGIN:VCALENDAR\nBEGIN:VEVENT\nUID:1\nSUMMARY:a\n b\n\tc\nBEGIN:VALARM\nBEGIN:VALARM\nACTION:DISPLAY\nEND:VALARM\nEND:VEVENT\nEND:VEVENT\nEND:VCALENDAR\n'
         expected = [{'type': 'VEVENT', 'uid': '1', 'summary': 'abc', 'alarms': [{}]}]
         self.assertEqual(jc.parsers.ics.parse(data, raw=True, quiet=True), expected)
+
+
+    _LA_VTIMEZONE = (
+        'BEGIN:VTIMEZONE\n'
+        'TZID:America/Los_Angeles\n'
+        'BEGIN:DAYLIGHT\n'
+        'TZOFFSETFROM:-0800\n'
+        'TZOFFSETTO:-0700\n'
+        'DTSTART:19700308T020000\n'
+        'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU\n'
+        'END:DAYLIGHT\n'
+        'BEGIN:STANDARD\n'
+        'TZOFFSETFROM:-0700\n'
+        'TZOFFSETTO:-0800\n'
+        'DTSTART:19701101T020000\n'
+        'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\n'
+        'END:STANDARD\n'
+        'END:VTIMEZONE\n'
+    )
+
+    @staticmethod
+    def _events(*dtstarts, vtimezone=''):
+        """
+        Return a calendar with one VEVENT for each DTSTART line
+        """
+        events = ''.join(
+            f'BEGIN:VEVENT\nUID:{i}\n{dtstart}\nEND:VEVENT\n' for i, dtstart in enumerate(dtstarts)
+        )
+        return f'BEGIN:VCALENDAR\n{vtimezone}{events}END:VCALENDAR\n'
+
+    def _epochs(self, data):
+        return [(c['dtstart_epoch'], c['dtstart_epoch_utc']) for c in jc.parsers.ics.parse(data, quiet=True)]
+
+    def test_ics_epoch_utc_and_offset(self):
+        """
+        Test 'ics' epoch timestamps of UTC times and times with a UTC offset
+        """
+        data = self._events(
+            'DTSTART:20261220T170000Z',
+            'DTSTART:20261220T090000-0800',
+            'DTSTART:20261220T223000+0530',
+            'DTSTART:20261220T090000+9900'
+        )
+        self.assertEqual(
+            self._epochs(data),
+            [(None, 1797786000), (None, 1797786000), (None, 1797786000), (None, None)]
+        )
+
+    def test_ics_epoch_tzid(self):
+        """
+        Test 'ics' epoch timestamps of TZID times, resolved with the
+        VTIMEZONE of the file, in summer and winter time
+        """
+        data = self._events(
+            'DTSTART;TZID=America/Los_Angeles:20260701T090000',
+            'DTSTART;TZID=America/Los_Angeles:20261220T090000',
+            vtimezone=self._LA_VTIMEZONE
+        )
+        self.assertEqual(self._epochs(data), [(None, 1782921600), (None, 1797786000)])
+
+    def test_ics_epoch_tzid_skipped_and_repeated_times(self):
+        """
+        Test 'ics' TZID times skipped or repeated by a DST change: a skipped
+        time uses the offset before the change and a repeated time its first
+        occurrence (RFC 5545 section 3.3.5)
+        """
+        data = self._events(
+            'DTSTART;TZID=America/Los_Angeles:20260308T023000',
+            'DTSTART;TZID=America/Los_Angeles:20261101T013000',
+            vtimezone=self._LA_VTIMEZONE
+        )
+        self.assertEqual(self._epochs(data), [(None, 1772965800), (None, 1793521800)])
+
+    def test_ics_epoch_tzid_rule_change(self):
+        """
+        Test 'ics' TZID times in a VTIMEZONE whose rules changed: yearly rules
+        ending with UNTIL, followed by new rules, one written with BYDAY and
+        BYMONTHDAY
+        """
+        vtimezone = (
+            'BEGIN:VTIMEZONE\n'
+            'TZID:US-Eastern\n'
+            'BEGIN:DAYLIGHT\n'
+            'TZOFFSETFROM:-0500\n'
+            'TZOFFSETTO:-0400\n'
+            'DTSTART:19870405T020000\n'
+            'RRULE:FREQ=YEARLY;UNTIL=20060402T070000Z;BYMONTH=4;BYDAY=1SU\n'
+            'END:DAYLIGHT\n'
+            'BEGIN:STANDARD\n'
+            'TZOFFSETFROM:-0400\n'
+            'TZOFFSETTO:-0500\n'
+            'DTSTART:19671029T020000\n'
+            'RRULE:FREQ=YEARLY;UNTIL=20061029T060000Z;BYMONTH=10;BYDAY=-1SU\n'
+            'END:STANDARD\n'
+            'BEGIN:DAYLIGHT\n'
+            'TZOFFSETFROM:-0500\n'
+            'TZOFFSETTO:-0400\n'
+            'DTSTART:20070311T020000\n'
+            'RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=SU;BYMONTHDAY=8,9,10,11,12,13,14\n'
+            'END:DAYLIGHT\n'
+            'BEGIN:STANDARD\n'
+            'TZOFFSETFROM:-0400\n'
+            'TZOFFSETTO:-0500\n'
+            'DTSTART:20071104T020000\n'
+            'RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU\n'
+            'END:STANDARD\n'
+            'END:VTIMEZONE\n'
+        )
+        data = self._events(
+            'DTSTART;TZID=US-Eastern:20060401T120000',
+            'DTSTART;TZID=US-Eastern:20070320T120000',
+            vtimezone=vtimezone
+        )
+        self.assertEqual(self._epochs(data), [(None, 1143910800), (None, 1174406400)])
+
+    def test_ics_epoch_tzid_unresolved(self):
+        """
+        Test 'ics' TZID times that can't be resolved: no VTIMEZONE for the
+        TZID, or a VTIMEZONE with an unsupported RRULE
+        """
+        vtimezone = self._LA_VTIMEZONE.replace('TZID:America/Los_Angeles', 'TZID:Monthly').replace(
+            'FREQ=YEARLY;BYMONTH=3;BYDAY=2SU', 'FREQ=MONTHLY;BYDAY=2SU')
+        data = self._events(
+            'DTSTART;TZID=America/Los_Angeles:20261220T090000',
+            'DTSTART;TZID=Monthly:20261220T090000',
+            'DTSTART:20261220T170000Z',
+            vtimezone=vtimezone
+        )
+        self.assertEqual(self._epochs(data), [(None, None), (None, None), (None, 1797786000)])
+
+    def test_ics_epoch_tzid_utc_without_vtimezone(self):
+        """
+        Test 'ics' TZID=UTC and TZID=Etc/GMT times without a VTIMEZONE
+        """
+        data = self._events(
+            'DTSTART;TZID=UTC:20261220T170000',
+            'DTSTART;TZID=Etc/GMT:20261220T170000'
+        )
+        self.assertEqual(self._epochs(data), [(None, 1797786000), (None, 1797786000)])
+
+    def test_ics_epoch_floating_and_date(self):
+        """
+        Test 'ics' naive epoch timestamps of floating times and DATE values
+        (tests run in the America/Los_Angeles time zone)
+        """
+        data = self._events('DTSTART:20261220T090000', 'DTSTART;VALUE=DATE:20261220')
+        self.assertEqual(self._epochs(data), [(1797786000, None), (1797753600, None)])
+
+    def test_ics_epoch_not_in_raw_output(self):
+        """
+        Test that the 'ics' raw output has no epoch timestamps
+        """
+        data = self._events('DTSTART:20261220T170000Z')
+        self.assertEqual(
+            jc.parsers.ics.parse(data, raw=True, quiet=True),
+            [{'type': 'VEVENT', 'uid': '0', 'dtstart': '20261220T170000Z'}]
+        )
 
 
 if __name__ == '__main__':

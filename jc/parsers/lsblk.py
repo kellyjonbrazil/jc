@@ -297,11 +297,12 @@ Examples:
 import re
 import jc.utils
 import jc.parsers.universal
+from jc.exceptions import ParseError
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.11'
+    version = '1.12'
     description = '`lsblk` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -348,6 +349,10 @@ def _process(proc_data):
     return proc_data
 
 
+# lsblk column headers are upper case (e.g. NAME, MAJ:MIN, FSUSE%, LOG-SEC)
+_HEADER_RE = re.compile(r'[A-Z][A-Z0-9:%_.-]*')
+
+
 def _clean_name(name):
     """Remove the ASCII or Unicode tree-drawing prefix from a NAME cell"""
     return _TREE_RE.sub('', name) if name else name
@@ -379,6 +384,13 @@ def parse(data, raw=False, quiet=False):
 
         cleandata = jc.utils.splitlines(data)
 
+        # `lsblk -o` can leave out the NAME column, so only check that the
+        # first line is a header, e.g. not a data row from a capture that is
+        # missing its header line
+        header = cleandata[0].split()
+        if 'NAME' not in header and not all(_HEADER_RE.fullmatch(x) for x in header):
+            raise ParseError('No lsblk header line found.')
+
         cleandata[0] = cleandata[0].lower()
         cleandata[0] = cleandata[0].replace(':', '_')
         cleandata[0] = cleandata[0].replace('-', '_')
@@ -387,10 +399,16 @@ def parse(data, raw=False, quiet=False):
 
         # find multiple mount points and add to a single entry
         for entry in raw_output:
-            # remove the tree characters, if any, before checking for a device
-            entry['name'] = _clean_name(entry['name'])
+            if 'name' in entry:
+                # remove the tree characters, if any, before checking for a device
+                entry['name'] = _clean_name(entry['name'])
+                is_device = bool(entry['name'])
+            else:
+                # custom -o column list without NAME: a row is a device unless
+                # it only carries a continuation mount point
+                is_device = any(v for k, v in entry.items() if k != 'mountpoints')
 
-            if entry['name']:
+            if is_device:
                 if 'mountpoints' in entry:
                     if entry['mountpoints']:
                         entry['mountpoints'] = [entry['mountpoints']]

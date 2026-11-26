@@ -25,16 +25,32 @@ Schema:
         "geo":                      string,
         "dtstart":                  string,   # [1]
         "dtstart_tzid":             string,   # [2]
+        "dtstart_epoch":            integer,  # [7]
+        "dtstart_epoch_utc":        integer,  # [8]
         "dtend":                    string,   # [1]
         "dtend_tzid":               string,   # [2]
+        "dtend_epoch":              integer,  # [7]
+        "dtend_epoch_utc":          integer,  # [8]
         "due":                      string,   # [1]
         "due_tzid":                 string,   # [2]
+        "due_epoch":                integer,  # [7]
+        "due_epoch_utc":            integer,  # [8]
         "recurrence_id":            string,   # [1]
         "recurrence_id_tzid":       string,   # [2]
+        "recurrence_id_epoch":      integer,  # [7]
+        "recurrence_id_epoch_utc":  integer,  # [8]
         "dtstamp":                  string,   # [1]
+        "dtstamp_epoch":            integer,  # [7]
+        "dtstamp_epoch_utc":        integer,  # [8]
         "created":                  string,   # [1]
+        "created_epoch":            integer,  # [7]
+        "created_epoch_utc":        integer,  # [8]
         "last_modified":            string,   # [1]
+        "last_modified_epoch":      integer,  # [7]
+        "last_modified_epoch_utc":  integer,  # [8]
         "completed":                string,   # [1]
+        "completed_epoch":          integer,  # [7]
+        "completed_epoch_utc":      integer,  # [8]
         "duration":                 string,
         "sequence":                 integer,
         "priority":                 integer,
@@ -91,6 +107,15 @@ Schema:
         boolean in the processed output, while `raw=True` keeps the
         iCalendar `TRUE`/`FALSE` value
     [6] passed through, not expanded into occurrences
+    [7] calculated naive timestamp (based on the local time zone of the
+        system jc runs on) of a floating time or a `DATE` value, otherwise
+        `null`. Not in the `raw=True` output
+    [8] calculated timezone-aware timestamp of a UTC time, a time with a UTC
+        offset, or a time with a `TZID`, otherwise `null`. A `TZID` is
+        resolved with the `VTIMEZONE` component of the same name in the file,
+        so the timestamp is `null` when that component is missing (except
+        for `UTC` and `GMT`) or uses an `RRULE` other than a yearly rule by
+        month and day. Not in the `raw=True` output
 
 Examples:
 
@@ -109,11 +134,16 @@ Examples:
         "type": "VEVENT",
         "uid": "42",
         "summary": "Standup",
-        "dtstart": "2026-10-15T09:00:00Z"
+        "dtstart": "2026-10-15T09:00:00Z",
+        "dtstart_epoch": null,
+        "dtstart_epoch_utc": 1792054800
       }
     ]
 """
+import bisect
+import calendar
 import re
+from datetime import datetime, timedelta
 from typing import Any, Dict, List, Optional, Tuple
 
 from jc.jc_types import JSONDictType
@@ -121,6 +151,8 @@ import jc.utils
 
 _ENTITIES = ('VEVENT', 'VTODO', 'VJOURNAL')
 _ALARM = 'VALARM'
+_TIMEZONE = 'VTIMEZONE'
+_OBSERVANCES = ('STANDARD', 'DAYLIGHT')
 
 # Properties copied as-is but for the TEXT escaping.
 _TEXT_PROPS = {
@@ -173,11 +205,29 @@ _DATETIME_RE = re.compile(
     r'T(?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})'
     r'(?P<tz>Z|[+-]\d{4})?$'
 )
+_OFFSET_RE = re.compile(
+    r'^(?P<sign>[+-])(?P<hour>\d{2})(?P<minute>\d{2})(?P<second>\d{2})?$'
+)
+_BYDAY_RE = re.compile(r'^(?P<nth>[+-]?\d{1,2})?(?P<day>MO|TU|WE|TH|FR|SA|SU)$')
+_WEEKDAYS = {'MO': 0, 'TU': 1, 'WE': 2, 'TH': 3, 'FR': 4, 'SA': 5, 'SU': 6}
+
+# real time zones change their offset at most a few times a year and have
+# a few dozen yearly rules at most, so more transitions than this within a
+# day of a time, or more yearly rules than this, leave it unresolved
+_MAX_NEARBY = 16
+_MAX_RULES = 64
+
+# TZIDs that mean UTC even without a VTIMEZONE component
+_UTC_TZIDS = {'UTC', 'Etc/UTC', 'GMT', 'Etc/GMT'}
+
+# RRULE parts a VTIMEZONE observance may use here; any other rule leaves the
+# time zone unresolved
+_RULE_PARTS = {'FREQ', 'INTERVAL', 'BYMONTH', 'BYDAY', 'BYMONTHDAY', 'UNTIL', 'WKST'}
 
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.1'
+    version = '1.2'
     description = '`ics` file parser'
     author = 'Paolo Valletta'
     author_email = 'paolovalletta@hotmail.it'
@@ -275,6 +325,345 @@ def _iso(value: str) -> str:
     return value
 
 
+def _local(value: str) -> Optional[datetime]:
+    """
+    Return the date and time of a `DATE-TIME` value, ignoring its UTC
+    designator or offset.
+    """
+    match = _DATETIME_RE.match(value)
+    if not match:
+        return None
+
+    try:
+        return datetime(
+            int(match.group('year')), int(match.group('month')), int(match.group('day')),
+            int(match.group('hour')), int(match.group('minute')), int(match.group('second'))
+        )
+    except ValueError:
+        return None
+
+
+def _offset(value: str) -> Optional[int]:
+    """
+    Return a UTC offset such as `-0800` or `+053000` in seconds.
+    """
+    match = _OFFSET_RE.match(value.strip())
+    if not match:
+        return None
+
+    hour, minute = int(match.group('hour')), int(match.group('minute'))
+    second = int(match.group('second') or 0)
+    if hour > 23 or minute > 59 or second > 59:
+        return None
+
+    seconds = hour * 3600 + minute * 60 + second
+
+    return -seconds if match.group('sign') == '-' else seconds
+
+
+def _yearly_rule(rrule: str, start: datetime) -> Optional[Dict[str, Any]]:
+    """
+    Read the yearly RRULE of a VTIMEZONE observance, such as
+    `FREQ=YEARLY;BYMONTH=3;BYDAY=2SU`. Returns None for other rules.
+    """
+    parts: Dict[str, str] = {}
+    for part in rrule.split(';'):
+        key, _, value = part.partition('=')
+        parts[key.strip().upper()] = value.strip().upper()
+
+    if (parts.get('FREQ') != 'YEARLY' or parts.get('INTERVAL', '1') != '1'
+            or set(parts) - _RULE_PARTS):
+        return None
+
+    rule: Dict[str, Any] = {
+        'month': start.month, 'weekday': None, 'nth': None,
+        'monthdays': [start.day], 'until': None, 'until_utc': False
+    }
+
+    try:
+        if 'BYMONTH' in parts:
+            rule['month'] = int(parts['BYMONTH'])
+            if not 1 <= rule['month'] <= 12:
+                return None
+
+        if 'BYDAY' in parts:
+            match = _BYDAY_RE.match(parts['BYDAY'])
+            if not match:
+                return None
+            rule['weekday'] = _WEEKDAYS[match.group('day')]
+            if match.group('nth'):
+                rule['nth'] = int(match.group('nth'))
+                if rule['nth'] == 0 or not -5 <= rule['nth'] <= 5:
+                    return None
+            else:
+                rule['monthdays'] = list(range(1, 32))
+
+        if 'BYMONTHDAY' in parts:
+            rule['monthdays'] = sorted(int(day) for day in parts['BYMONTHDAY'].split(','))
+            if not all(1 <= day <= 31 for day in rule['monthdays']):
+                return None
+
+    except ValueError:
+        return None
+
+    if 'UNTIL' in parts:
+        match = _DATE_RE.match(parts['UNTIL'])
+        if match:
+            try:
+                rule['until'] = datetime(int(match.group('year')), int(match.group('month')),
+                                         int(match.group('day')), 23, 59, 59)
+            except ValueError:
+                return None
+        else:
+            rule['until'] = _local(parts['UNTIL'])
+            if rule['until'] is None:
+                return None
+            rule['until_utc'] = parts['UNTIL'].endswith('Z')
+
+    return rule
+
+
+def _rule_day(rule: Dict[str, Any], year: int) -> Optional[int]:
+    """
+    Return the day of the month a yearly rule falls on in the given year.
+    """
+    days = calendar.monthrange(year, rule['month'])[1]
+    weekday = rule['weekday']
+    nth = rule['nth']
+
+    if nth is not None:
+        if nth > 0:
+            first = calendar.weekday(year, rule['month'], 1)
+            day = 1 + (weekday - first) % 7 + (nth - 1) * 7
+        else:
+            last = calendar.weekday(year, rule['month'], days)
+            day = days - (last - weekday) % 7 - (-nth - 1) * 7
+        return day if 1 <= day <= days else None
+
+    for day in rule['monthdays']:
+        if day <= days and (weekday is None or calendar.weekday(year, rule['month'], day) == weekday):
+            return day
+
+    return None
+
+
+def _timezone(component: Dict[str, Any]) -> Tuple[Optional[str], Optional[Dict[str, Any]]]:
+    """
+    Read a VTIMEZONE component. Returns its TZID and its UTC offset
+    transitions, or None for the transitions when they can't be read.
+    """
+    tzid = None
+    for name, params, value in component['lines']:
+        if name == 'TZID':
+            tzid = value
+
+    fixed: List[Tuple[datetime, int, int]] = []
+    rules: List[Tuple[Dict[str, Any], datetime, int, int]] = []
+
+    for observance in component['observances']:
+        start = before = after = rrule = None
+        onsets: List[Optional[datetime]] = []
+        for name, params, value in observance['lines']:
+            if name == 'DTSTART':
+                start = _local(value)
+            elif name == 'TZOFFSETFROM':
+                before = _offset(value)
+            elif name == 'TZOFFSETTO':
+                after = _offset(value)
+            elif name == 'RRULE':
+                rrule = value
+            elif name == 'RDATE':
+                onsets.extend(_local(item) for item in _split_list(value))
+
+        if start is None or before is None or after is None or None in onsets:
+            return tzid, None
+
+        onsets.append(start)
+
+        try:
+            for onset in onsets:
+                fixed.append((onset - timedelta(seconds=before), before, after))
+        except OverflowError:
+            return tzid, None
+
+        if rrule is not None:
+            rule = _yearly_rule(rrule, start)
+            if rule is None:
+                return tzid, None
+            rules.append((rule, start, before, after))
+
+    if not fixed or len(rules) > _MAX_RULES:
+        return tzid, None
+
+    fixed = sorted(set(fixed), key=lambda transition: transition[0])
+
+    return tzid, {'fixed': fixed, 'fixed_utc': [t[0] for t in fixed], 'rules': rules, 'years': {}}
+
+
+def _rule_transitions(zone: Dict[str, Any], year: int) -> Tuple[List[Tuple[datetime, int, int]], List[datetime]]:
+    """
+    Return the transitions of the yearly rules of a time zone from the year
+    before to the year after the given year, plus the last transition of
+    each rule that ended earlier, sorted, with their UTC times. Cached per
+    year.
+    """
+    if year in zone['years']:
+        return zone['years'][year]
+
+    transitions: List[Tuple[datetime, int, int]] = []
+    for rule, start, before, after in zone['rules']:
+        years = set(range(max(start.year, year - 1), min(9999, year + 1) + 1))
+        if rule['until'] is not None and rule['until'].year < year - 1:
+            years.update(range(max(start.year, rule['until'].year - 1), rule['until'].year + 1))
+
+        for rule_year in sorted(years):
+            day = _rule_day(rule, rule_year)
+            if day is None:
+                continue
+            onset = datetime(rule_year, rule['month'], day, start.hour, start.minute, start.second)
+            if onset < start:
+                continue
+            try:
+                utc = onset - timedelta(seconds=before)
+            except OverflowError:
+                continue
+            if rule['until'] is not None and (utc if rule['until_utc'] else onset) > rule['until']:
+                continue
+            transitions.append((utc, before, after))
+
+    transitions.sort(key=lambda transition: transition[0])
+    zone['years'][year] = (transitions, [t[0] for t in transitions])
+    return zone['years'][year]
+
+
+def _offset_at(zone: Dict[str, Any], rules: Tuple[List[Tuple[datetime, int, int]], List[datetime]], utc: datetime) -> int:
+    """
+    Return the UTC offset of a time zone at a UTC date and time.
+    """
+    latest = None
+    index = bisect.bisect_right(zone['fixed_utc'], utc) - 1
+    if index >= 0:
+        latest = zone['fixed'][index]
+
+    index = bisect.bisect_right(rules[1], utc) - 1
+    if index >= 0 and (latest is None or rules[0][index][0] >= latest[0]):
+        latest = rules[0][index]
+
+    if latest is None:
+        return zone['fixed'][0][1]
+
+    return latest[2]
+
+
+def _zone_offset(zone: Dict[str, Any], local: datetime) -> Optional[int]:
+    """
+    Return the UTC offset of a local date and time in a time zone. A time
+    that occurs twice takes its first occurrence, and a time skipped by a
+    transition takes the offset from before the transition (RFC 5545 section
+    3.3.5).
+    """
+    rules = _rule_transitions(zone, local.year)
+    day = timedelta(days=1)
+
+    try:
+        # offsets are under a day, so only the transitions within a day of
+        # the local time and the offset in effect before them can apply
+        nearby: List[Tuple[datetime, int, int]] = []
+        for transitions, utcs in ((zone['fixed'], zone['fixed_utc']), rules):
+            first = bisect.bisect_left(utcs, local - day)
+            last = bisect.bisect_right(utcs, local + day)
+            if last - first > _MAX_NEARBY:
+                return None
+            nearby.extend(transitions[first:last])
+
+        offsets = {_offset_at(zone, rules, local - day)}
+        offsets.update(offset for transition in nearby for offset in transition[1:])
+
+        # a larger offset is the earlier of two occurrences
+        for offset in sorted(offsets, reverse=True):
+            if _offset_at(zone, rules, local - timedelta(seconds=offset)) == offset:
+                return offset
+
+        for utc, before, after in nearby:
+            if utc + timedelta(seconds=before) <= local < utc + timedelta(seconds=after):
+                return before
+
+    except OverflowError:
+        return None
+
+    return None
+
+
+def _epochs(
+    value: str,
+    tzid: Optional[str],
+    zones: Dict[str, Optional[Dict[str, Any]]]
+) -> Tuple[Optional[int], Optional[int]]:
+    """
+    Return the naive and the UTC epoch timestamps of a `DATE` or
+    `DATE-TIME` value. Only one of them is set, or neither when the value
+    can't be converted.
+    """
+    try:
+        match = _DATE_RE.match(value)
+        if match:
+            day = datetime(int(match.group('year')), int(match.group('month')), int(match.group('day')))
+            return int(day.timestamp()), None
+
+        match = _DATETIME_RE.match(value)
+        local = _local(value)
+        if match is None or local is None:
+            return None, None
+
+        tz = match.group('tz')
+        if tz == 'Z':
+            return None, calendar.timegm(local.timetuple())
+
+        if tz:
+            offset = _offset(tz)
+            if offset is None:
+                return None, None
+            return None, calendar.timegm(local.timetuple()) - offset
+
+        if tzid is None:
+            return int(local.timestamp()), None
+
+        if tzid in _UTC_TZIDS and tzid not in zones:
+            return None, calendar.timegm(local.timetuple())
+
+        zone = zones.get(tzid)
+        offset = _zone_offset(zone, local) if zone else None
+        if offset is None:
+            return None, None
+
+        return None, calendar.timegm(local.timetuple()) - offset
+
+    except (ValueError, OverflowError, OSError):
+        return None, None
+
+
+def _add_epochs(
+    components: List[JSONDictType],
+    zones: Dict[str, Optional[Dict[str, Any]]]
+) -> List[JSONDictType]:
+    """
+    Add the calculated epoch timestamps after each date and time (and its
+    TZID) of the components.
+    """
+    for i, component in enumerate(components):
+        out: JSONDictType = {}
+        for key, value in component.items():
+            out[key] = value
+            base = key[:-5] if key.endswith('_tzid') else key
+            if base in _DATE_KEYS and (key != base or f'{base}_tzid' not in component):
+                naive, utc = _epochs(component[base], component.get(f'{base}_tzid'), zones)
+                out[f'{base}_epoch'] = naive
+                out[f'{base}_epoch_utc'] = utc
+        components[i] = out
+
+    return components
+
+
 def _unfold(data: str) -> List[str]:
     """
     Unfold the continuation lines of RFC 5545 section 3.1.
@@ -335,11 +724,16 @@ def _split_property(line: str) -> Optional[Tuple[str, Dict[str, str], str]]:
     return name, params, value
 
 
-def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
+def _components(
+    lines: List[str],
+    quiet: bool = False
+) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]]]:
     """
-    Collect the components of the calendar, with their alarms.
+    Collect the components of the calendar, with their alarms, and the
+    VTIMEZONE components with their observances.
     """
     components: List[Dict[str, Any]] = []
+    timezones: List[Dict[str, Any]] = []
     stack: List[Dict[str, Any]] = []
     open_kinds: Dict[str, int] = {}  # number of open components of each kind
     calendar = False
@@ -362,7 +756,7 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             kind = value.upper()
             calendar = calendar or kind == 'VCALENDAR'
             entity = entity or kind in _ENTITIES
-            stack.append({'kind': kind, 'lines': [], 'alarms': []})
+            stack.append({'kind': kind, 'lines': [], 'alarms': [], 'observances': []})
             open_kinds[kind] = open_kinds.get(kind, 0) + 1
             continue
 
@@ -392,6 +786,11 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             if component['kind'] == _ALARM:
                 if stack:
                     stack[-1]['alarms'].append(component)
+            elif component['kind'] in _OBSERVANCES:
+                if stack:
+                    stack[-1]['observances'].append(component)
+            elif component['kind'] == _TIMEZONE:
+                timezones.append(component)
             elif component['kind'] in _ENTITIES:
                 components.append(component)
             continue
@@ -414,7 +813,7 @@ def _components(lines: List[str], quiet: bool = False) -> List[Dict[str, Any]]:
             jc.utils.warning_message([
                 'No VEVENT, VTODO or VJOURNAL components found'])
 
-    return components
+    return components, timezones
 
 
 def _alarm(component: Dict[str, Any]) -> JSONDictType:
@@ -580,10 +979,14 @@ def parse(
     jc.utils.input_type_check(data)
 
     raw_output: List[JSONDictType] = []
+    zones: Dict[str, Optional[Dict[str, Any]]] = {}
 
     if jc.utils.has_data(data):
-        raw_output = [
-            _component(component) for component in _components(_unfold(data), quiet)
-        ]
+        components, timezones = _components(_unfold(data), quiet)
+        raw_output = [_component(component) for component in components]
+        for timezone in timezones:
+            tzid, zone = _timezone(timezone)
+            if tzid is not None:
+                zones[tzid] = zone
 
-    return raw_output if raw else _process(raw_output)
+    return raw_output if raw else _process(_add_epochs(raw_output, zones))

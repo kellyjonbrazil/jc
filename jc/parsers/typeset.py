@@ -160,7 +160,7 @@ import jc.utils
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.2'
+    version = '1.3'
     description = '`typeset` and `declare` command parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -232,6 +232,60 @@ _ANSI_C_PATTERN = re.compile(r"\$'((?:[^'\\]|\\.)*)'")
 _ARRAY_ANSI_C_PATTERN = re.compile(r"""\\.|"(?:[^"\\]|\\.)*"|'[^']*'|\$'((?:[^'\\]|\\.)*)'""")
 
 
+# Escape sequences in ANSI-C quoting. `\u[hex]` and `\x[hex]` are from ksh.
+# `\C-x`, `\M-x`, and `\M-\C-x` are from zsh.
+_ANSI_C_ESCAPE = re.compile(r"""
+    \\(?:
+        (?P<octal>[0-7]{1,3})
+      | x(?:\[(?P<kshhex>[0-9a-fA-F]{1,2})\]|(?P<hex>[0-9a-fA-F]{1,2}))
+      | u(?:\[(?P<kshuni>[0-9a-fA-F]{1,8})\]|(?P<uni4>[0-9a-fA-F]{1,4}))
+      | U(?P<uni8>[0-9a-fA-F]{1,8})
+      | (?P<meta>M-)(?:\\C-(?P<metacontrol>[?-_a-z])|(?P<metachar>[ -~]))
+      | (?:c|C-)(?P<control>[?-_a-z])
+      | (?P<char>[abeEfnrtv\\'"?])
+    )""", re.VERBOSE)
+
+_ANSI_C_CHARS = {
+    'a': '\a', 'b': '\b', 'e': '\x1b', 'E': '\x1b', 'f': '\f', 'n': '\n',
+    'r': '\r', 't': '\t', 'v': '\v', '\\': '\\', "'": "'", '"': '"', '?': '?'
+}
+
+
+def _decode_ansi_c(data: str) -> str:
+    """
+    Decode the content of a $'...' string. Octal and hex escapes are bytes of
+    the UTF-8 text, so the text is built as bytes first.
+    """
+    out = bytearray()
+    pos = 0
+
+    for match in _ANSI_C_ESCAPE.finditer(data):
+        out += data[pos:match.start()].encode('utf-8', 'backslashreplace')
+        pos = match.end()
+        esc = match.groupdict()
+        hex_byte = esc['kshhex'] or esc['hex']
+        control = esc['control'] or esc['metacontrol']
+        codepoint = int(esc['kshuni'] or esc['uni4'] or esc['uni8'] or '0', 16)
+
+        if esc['octal']:
+            out.append(int(esc['octal'], 8) & 0xff)
+        elif hex_byte:
+            out.append(int(hex_byte, 16))
+        elif control or esc['metachar']:
+            # `\C-?` is DEL
+            byte = ord(control.upper()) ^ 0x40 if control else ord(esc['metachar'])
+            out.append(byte | 0x80 if esc['meta'] else byte)
+        elif esc['char']:
+            out += _ANSI_C_CHARS[esc['char']].encode('utf-8')
+        elif codepoint <= 0x10ffff:
+            out += chr(codepoint).encode('utf-8', 'backslashreplace')
+        else:
+            out += match.group(0).encode('utf-8')
+
+    out += data[pos:].encode('utf-8', 'backslashreplace')
+    return out.decode('utf-8', 'backslashreplace')
+
+
 def _remove_ansi_c(line, shell_quote=False):
     def decode_ansi_c(match):
         inner_content = match.group(1)
@@ -242,7 +296,7 @@ def _remove_ansi_c(line, shell_quote=False):
         if _raw:   # global variable because of laziness
             decoded = inner_content
         else:
-            decoded = inner_content.encode('utf-8').decode('unicode_escape')
+            decoded = _decode_ansi_c(inner_content)
 
         if shell_quote:
             # array bodies are split with _shell_split() afterwards, so quote
@@ -260,7 +314,9 @@ def _remove_ansi_c(line, shell_quote=False):
 # a word: runs of plain characters, quoted strings and escaped characters
 _SHELL_WORD = re.compile(r'''(?:[^ \t\r\n'"\\]+|'[^']*'|"(?:[^"\\]|\\.)*"|\\.)+''', re.DOTALL)
 _SHELL_PART = re.compile(r'''[^'"\\]+|'([^']*)'|"((?:[^"\\]|\\.)*)"|\\(.)''', re.DOTALL)
-_DQ_ESCAPE = re.compile(r'\\([\\"])')
+# inside double quotes, bash only treats a backslash before these characters
+# as an escape (a backslash-newline is removed)
+_DQ_ESCAPE = re.compile(r'\\([\\"$`\n])')
 _DQ_TAIL = re.compile(r'(?:[^"\\]|\\.)*\\', re.DOTALL)
 
 
@@ -286,6 +342,11 @@ def _shell_words(data):
         pos = stop
 
 
+def _dq_unescape(match):
+    char = match.group(1)
+    return '' if char == '\n' else char
+
+
 def _shell_unquote(word):
     """Remove the quotes and escapes from a word of _shell_words()"""
     result = []
@@ -294,7 +355,7 @@ def _shell_unquote(word):
         if single is not None:
             result.append(single)
         elif double is not None:
-            result.append(_DQ_ESCAPE.sub(r'\1', double))
+            result.append(_DQ_ESCAPE.sub(_dq_unescape, double))
         elif escaped is not None:
             result.append(escaped)
         else:
@@ -305,9 +366,23 @@ def _shell_unquote(word):
 def _shell_split(data):
     """
     Same result as shlex.split(data), which takes quadratic time on a long
-    word
+    word, except that inside double quotes a backslash also escapes `$`,
+    `` ` ``, and a newline, as in bash
     """
     return [_shell_unquote(word) for word in _shell_words(data)]
+
+
+def _get_scalar_val(val: str) -> str:
+    """
+    Remove the quoting from a scalar value: `$'...'` (decoded), `"..."` (with
+    its backslash escapes), `'...'`, or several of them next to each other
+    """
+    quoted = _remove_ansi_c(val, shell_quote=True)
+    if _SHELL_WORD.fullmatch(quoted):
+        return _shell_unquote(quoted)
+
+    # not one shell word (e.g. an unclosed quote): only strip the quotes
+    return _remove_quotes(_remove_ansi_c(val))
 
 
 def _get_simple_array_vals(body: str) -> List[str]:
@@ -316,8 +391,10 @@ def _get_simple_array_vals(body: str) -> List[str]:
     body_split = _shell_split(body)
     values = []
     for item in body_split:
+        # _shell_split() already removed the quotes, so a value that itself
+        # starts and ends with a quote keeps it
         _, val = item.split('=', maxsplit=1)
-        values.append(_remove_quotes(val))
+        values.append(val)
     return values
 
 
@@ -538,8 +615,7 @@ def parse(
             var_def_match = re.search(VAR_DEF_PATTERN, line)
             if var_def_match:
                 item['name'] = var_def_match['name']
-                item['value'] = _remove_ansi_c(var_def_match['val'])
-                item['value'] = _remove_quotes(item['value'])
+                item['value'] = _get_scalar_val(var_def_match['val'])
                 item.update(_get_declare_options(line, 'variable'))
                 raw_output.append(item)
                 continue

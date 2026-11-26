@@ -4,12 +4,26 @@ import os
 import contextlib
 import locale
 import unittest
+from datetime import datetime
 from unittest import mock
 import jc.utils
 from jc.exceptions import ParseError
 
 
 class MyTests(unittest.TestCase):
+
+    @unittest.skipIf(
+        sys.platform == 'win32',
+        'Windows timestamp() does not support these epoch boundary dates'
+    )
+    def test_utils_timestamp_epoch_zero(self):
+        local_epoch = datetime.fromtimestamp(0)
+        result = jc.utils.timestamp(
+            local_epoch.strftime('%a %b %d %H:%M:%S %Y')
+        )
+        self.assertEqual(result.naive, 0)
+        self.assertIsNone(result.utc)
+        self.assertEqual(result.iso, local_epoch.isoformat())
 
     def test_utils_timestamp(self):
         """
@@ -181,6 +195,33 @@ class MyTests(unittest.TestCase):
 
         for input_string, expected_output in io_map.items():
             self.assertEqual(jc.utils.convert_to_float(input_string), expected_output)
+
+    def test_utils_convert_scientific_notation(self):
+        """
+        Test converting numbers in scientific notation, which used to lose
+        their exponent (e.g. 1.5e+3 became 1.53)
+        """
+        io_map = {
+            '1e3': (1000.0, 1000, True),
+            '1.5e+3': (1500.0, 1500, True),
+            '2.5E-2': (0.025, 0, True),
+            '-3e2': (-300.0, -300, True),
+            '.5e1': (5.0, 5, True),
+            ' 1.458255915e9 ': (1458255915.0, 1458255915, True),
+            '0e5': (0.0, 0, False),
+            '1e400': (None, None, True),
+            # not a number in scientific notation: unchanged
+            '1e': (1.0, 1, True),
+            'abc1e3': (13.0, 13, True),
+            '45%': (45.0, 45, True),
+            '1,024.5': (1024.5, 1024, True)
+        }
+
+        for input_string, (as_float, as_int, as_bool) in io_map.items():
+            with self.subTest(input_string=input_string):
+                self.assertEqual(jc.utils.convert_to_float(input_string), as_float)
+                self.assertEqual(jc.utils.convert_to_int(input_string), as_int)
+                self.assertEqual(jc.utils.convert_to_bool(input_string), as_bool)
 
     def test_utils_convert_to_int_non_finite(self):
         """

@@ -1,0 +1,4 @@
+playbook: site.yml
+
+  play #1 (all): all	TAGS: []
+      TASK TAGS: []

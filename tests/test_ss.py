@@ -94,6 +94,34 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/ss-linux-detail-lines.json'), 'r', encoding='utf-8') as f:
         generic_ss_linux_detail_lines_json = json.loads(f.read())
 
+    def test_ss_no_netid_column(self):
+        """
+        Test 'ss -tln', which leaves out the Netid column
+        """
+        data = (
+            'State  Recv-Q Send-Q Local Address:Port  Peer Address:Port\n'
+            'LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*   \n'
+        )
+        self.assertEqual(jc.parsers.ss.parse(data, quiet=True), [{
+            'state': 'LISTEN', 'recv_q': 0, 'send_q': 4096,
+            'local_address': '0.0.0.0', 'local_port': '22', 'peer_address': '0.0.0.0',
+            'peer_port': '*', 'local_port_num': 22
+        }])
+
+    def test_ss_no_netid_column_unix(self):
+        """
+        Test 'ss -A unix_stream -a', which also leaves out the Netid column
+        """
+        data = (
+            'State  Recv-Q Send-Q        Local Address:Port     Peer Address:Port    \n'
+            'LISTEN 0      4096   /run/systemd/private 20472               * 0       \n'
+        )
+        self.assertEqual(jc.parsers.ss.parse(data, quiet=True), [{
+            'state': 'LISTEN', 'recv_q': 0, 'send_q': 4096, 'local_port': '20472',
+            'peer_address': '*', 'peer_port': '0', 'path': '/run/systemd/private',
+            'local_port_num': 20472, 'peer_port_num': 0
+        }])
+
     def test_ss_nodata(self):
         """
         Test 'ss' with no data

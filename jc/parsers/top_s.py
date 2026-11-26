@@ -175,7 +175,7 @@ from jc.parsers.universal import sparse_table_parse as parse_table
 
 class info():
     """Provides parser metadata (version, author, etc.)"""
-    version = '1.4'
+    version = '1.5'
     description = '`top -b` command streaming parser'
     author = 'Kelly Brazil'
     author_email = 'kellyjonbrazil@gmail.com'
@@ -333,7 +333,7 @@ def _process(proc_data: Dict, idx=0, quiet=False) -> Dict:
         if key in float_list:
             proc_data[key] = jc.utils.convert_to_float(proc_data[key])
 
-    for p_idx, proc in enumerate(proc_data['processes']):
+    for p_idx, proc in enumerate(proc_data.get('processes') or []):
         # rename processes keys to conform to schema
         proc_copy = proc.copy()
         for old_key in proc_copy.keys():
