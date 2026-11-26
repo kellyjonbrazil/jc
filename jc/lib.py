@@ -188,6 +188,7 @@ parsers: List[str] = [
     'proc-net-tcp',
     'proc-net-udp',
     'proc-net-unix',
+    'proc-net-wireless',
     'proc-pid-fdinfo',
     'proc-pid-io',
     'proc-pid-maps',
