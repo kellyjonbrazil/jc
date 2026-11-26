@@ -223,6 +223,7 @@ parsers: List[str] = [
     'systemctl-lj',
     'systemctl-ls',
     'systemctl-luf',
+    'systemextensionsctl',
     'systeminfo',
     'time',
     'timedatectl',

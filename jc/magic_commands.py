@@ -120,6 +120,7 @@ magic_commands: Dict[str, str] = {
     'systemctl list-jobs':                  '--systemctl-lj',
     'systemctl list-sockets':               '--systemctl-ls',
     'systemctl list-unit-files':            '--systemctl-luf',
+    'systemextensionsctl list':             '--systemextensionsctl',
     'systeminfo':                           '--systeminfo',
     'timedatectl':                          '--timedatectl',
     'timedatectl status':                   '--timedatectl',

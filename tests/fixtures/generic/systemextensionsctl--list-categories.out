@@ -1,0 +1,11 @@
+4 extension(s)
+--- com.apple.system_extension.network_extension
+enabled	active	teamID	bundleID (version)	name	[state]
+*	*	TZ3UEPFYKD	com.checkpoint.fw.filter (871010711/6)	Check Point Firewall	[activated enabled]
+*	*	UBF8T346G9	com.microsoft.wdav.netext (101.47.27/101.47.27)	Microsoft Defender ATP Network Extension	[activated enabled]
+--- com.apple.system_extension.endpoint_security
+enabled	active	teamID	bundleID (version)	name	[state]
+*	*	UBF8T346G9	com.microsoft.wdav.epsext (101.47.27/101.47.27)	Microsoft Defender ATP Endpoint Security Extension	[activated enabled]
+--- com.apple.system_extension.driver_extension
+enabled	active	teamID	bundleID (version)	name	[state]
+*	*	G43BCU2T37	org.pqrs.Karabiner-DriverKit-VirtualHIDDevice (1.0.0/1.0.0)	org.pqrs.Karabiner-DriverKit-VirtualHIDDevice	[activated enabled]
