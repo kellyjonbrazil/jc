@@ -43,6 +43,30 @@ class MyTests(unittest.TestCase):
         self.assertEqual(result[0]['filename'], 'a\rb\x0bc\x0cd\x1ce\x1df\x1eg\x85h\u2028i\u2029j.rpm')
         self.assertEqual(result[1]['filename'], 'digout')
 
+    def test_cksum_preserves_leading_filename_whitespace(self):
+        """
+        Test 'cksum' and 'sum' keep whitespace at the start of a file name
+        """
+        data = (
+            '4294967295 0  quarterly.csv\n'
+            '4294967295 0 \tarchive.csv\n'
+            '4294967295 0 \u00a0exports.csv\n'
+            '4294967295 0  \n'
+            '00000     0  report.txt\n'
+            '0 0  notes.txt\n'
+        )
+        self.assertEqual(
+            jc.parsers.cksum.parse(data, quiet=True),
+            [
+                {'filename': ' quarterly.csv', 'checksum': 4294967295, 'blocks': 0},
+                {'filename': '\tarchive.csv', 'checksum': 4294967295, 'blocks': 0},
+                {'filename': '\u00a0exports.csv', 'checksum': 4294967295, 'blocks': 0},
+                {'filename': ' ', 'checksum': 4294967295, 'blocks': 0},
+                {'filename': ' report.txt', 'checksum': 0, 'blocks': 0},
+                {'filename': ' notes.txt', 'checksum': 0, 'blocks': 0},
+            ]
+        )
+
     def test_cksum_nodata(self):
         """
         Test 'cksum' parser with no data
