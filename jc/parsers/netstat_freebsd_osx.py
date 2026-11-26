@@ -9,6 +9,11 @@ _INTERFACE_HEADER_RE = re.compile(r'Name\s+Mtu\s+Network\s+Address\s')
 _TRANSPORT_SUFFIX_RE = re.compile(r'(tcp|udp|sctp)(46|4|6)')
 
 
+def is_counter(value):
+    """True for a value that can only come from a counter column (`-` or digits)."""
+    return value == '-' or value.isdigit()
+
+
 def normalize_headers(header):
     header = header.lower()
     header = header.replace('local address', 'local_address')
@@ -73,9 +78,14 @@ def parse_item(headers, entry, kind, flags):
     # `netstat -i` on OSX has 9, `netstat -ib` on OSX has 11, and
     # `netstat -ib` on FreeBSD has 12. Compare against the header width instead
     # of a hardcoded count so the counters after the empty column do not shift
-    # into the wrong keys.
+    # into the wrong keys. Only insert when the value sitting where the address
+    # belongs is a counter value: a row that has lost a different column (an
+    # empty Coll, for example) still has its address in place, and inserting
+    # there would push the address out of its key.
     if kind == 'interface' and 'address' in headers and len(entry) == len(headers) - 1:
-        entry.insert(headers.index('address'), None)
+        address_index = headers.index('address')
+        if address_index < len(entry) and is_counter(entry[address_index]):
+            entry.insert(address_index, None)
 
     output_line = dict(zip(headers, entry))
     output_line['kind'] = kind
