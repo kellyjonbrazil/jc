@@ -1,0 +1,11 @@
+# Two ADDRESS_LISTs under one DESCRIPTION. Each one is a separate item in the
+# `address_list` list, the same as when there is only one.
+
+DUAL =
+  (DESCRIPTION =
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = dual1-svr)(PORT = 1521)))
+    (ADDRESS_LIST =
+      (ADDRESS = (PROTOCOL = tcp)(HOST = dual2-svr)(PORT = 1521)))
+    (CONNECT_DATA =
+      (SERVICE_NAME = dual.example.com)))
