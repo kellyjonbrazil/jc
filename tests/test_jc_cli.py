@@ -1305,5 +1305,19 @@ power management:
         self._enable_windows_colors('win32', isatty=False).assert_not_called()
         self._enable_windows_colors('linux', isatty=True).assert_not_called()
 
+    def test_help_text_fits_80_columns(self):
+        """
+        Test that every line of the help text (-h, -hh, and -hhh) fits in 80
+        columns, so a long parser name or description cannot push the help
+        text past the width of a standard terminal
+        """
+        for option in ('-h', '-hh', '-hhh'):
+            result = subprocess.run([sys.executable, '-m', 'jc', option],
+                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+            lines = result.stdout.decode('utf-8').splitlines()
+            with self.subTest(option=option):
+                self.assertGreater(len(lines), 20)
+                self.assertEqual([x for x in lines if len(x) > 80], [])
+
 if __name__ == '__main__':
     unittest.main()
