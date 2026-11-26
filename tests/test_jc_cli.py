@@ -31,6 +31,15 @@ import jc.parsers.proc as proc_parser
 import jc.parsers.ls_s as ls_s_parser
 
 
+class StdinWithBuffer(io.StringIO):
+    """
+    A `sys.stdin` stand-in that also exposes the `buffer` attribute some parsers read
+    """
+    def __init__(self, data):
+        super().__init__(data)
+        self.buffer = io.BytesIO(data.encode())
+
+
 class MyTests(unittest.TestCase):
     def test_cli_magic_parser(self):
         """
@@ -975,6 +984,80 @@ power management:
         cli.data_in = b'https://a.example/a\n\xff\n'
         with self.assertRaises(TypeError):
             cli.create_slurp_output()
+
+    def test_unknown_long_option_is_an_error(self):
+        """
+        Test that an unrecognized long option is reported instead of being ignored
+        """
+        err = io.StringIO()
+        with mock.patch('sys.argv', ['jc', '--ls', '--nonsense']), \
+             mock.patch('sys.stdin', io.StringIO('a.txt')), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+
+        self.assertEqual(100, cm.exception.code)
+        self.assertIn('Unrecognized option(s): --nonsense.', err.getvalue())
+        self.assertIn('"jc -h"', err.getvalue())
+
+    def test_unknown_long_options_are_reported_on_one_line(self):
+        """
+        Test that several unrecognized long options are named on a single error line
+        """
+        err = io.StringIO()
+        with mock.patch('sys.argv', ['jc', '--ls', '--sllurp', '--yaml_out', '--nonsense']), \
+             mock.patch('sys.stdin', io.StringIO('a.txt')), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+
+        self.assertEqual(100, cm.exception.code)
+        error_lines = [ln for ln in err.getvalue().splitlines() if 'Unrecognized' in ln]
+        self.assertEqual(1, len(error_lines))
+        self.assertIn('--sllurp', error_lines[0])
+        self.assertIn('--yaml_out', error_lines[0])
+        self.assertIn('--nonsense', error_lines[0])
+
+    def test_parser_argument_with_underscores_is_accepted(self):
+        """
+        Test that the underscore form of a parser argument is still accepted
+        """
+        err = io.StringIO()
+        meminfo = (
+            'MemTotal:       16384000 kB\n'
+            'MemFree:         8192000 kB\n'
+            'MemAvailable:    9000000 kB\n'
+            'Buffers:          100000 kB\n'
+            'Cached:          2000000 kB\n'
+            'SwapTotal:             0 kB\n'
+            'SwapFree:              0 kB\n'
+        )
+        with mock.patch('sys.argv', ['jc', '--proc_meminfo']), \
+             mock.patch('sys.stdin', StdinWithBuffer(meminfo)), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+
+        self.assertEqual(0, cm.exception.code)
+        self.assertNotIn('Unrecognized', err.getvalue())
+
+    def test_valid_long_options_with_parser_argument(self):
+        """
+        Test that regular long options and a parser argument can be mixed
+        """
+        err = io.StringIO()
+        with mock.patch('sys.argv', ['jc', '-p', '--ls', '--meta-out', '0:1']), \
+             mock.patch('sys.stdin', StdinWithBuffer('a.txt\n')), \
+             contextlib.redirect_stdout(io.StringIO()), \
+             contextlib.redirect_stderr(err):
+            with self.assertRaises(SystemExit) as cm:
+                JcCli().run()
+
+        self.assertEqual(0, cm.exception.code)
+        self.assertNotIn('Unrecognized', err.getvalue())
 
     def test_slurp_non_utf8_exit_code(self):
         """

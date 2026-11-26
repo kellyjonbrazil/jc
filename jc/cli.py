@@ -1023,6 +1023,7 @@ class JcCli():
 
         # find options if magic_parser did not find a command
         if not self.magic_found_parser:
+            unknown_options: List[str] = []
             for opt in self.args:
                 if SLICER_RE.match(opt):
                     self.slice_str = opt
@@ -1032,6 +1033,24 @@ class JcCli():
 
                 if opt.startswith('-') and not opt.startswith('--'):
                     self.options.extend(opt[1:])
+
+                if (
+                    opt.startswith('--')
+                    and opt != '--'
+                    and opt not in long_options_map
+                    and self.parser_shortname(opt) not in parsers
+                ):
+                    unknown_options.append(opt)
+
+            if unknown_options:
+                utils.error_message(
+                    [
+                        'Unrecognized option(s): '
+                        + ', '.join(unknown_options)
+                        + '. Use "jc -h" for help.'
+                    ]
+                )
+                self.exit_error()
 
         self.about = 'a' in self.options
         self.debug = 'd' in self.options
