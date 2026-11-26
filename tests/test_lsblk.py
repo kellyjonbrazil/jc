@@ -2,6 +2,7 @@ import os
 import json
 import unittest
 import jc.parsers.lsblk
+from jc.exceptions import ParseError
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -162,15 +163,41 @@ sr0                   11:0    1    1073741312  0 rom'''
         self.assertEqual([(d['name'], d['mountpoints']) for d in result], [('sda', ['/x'])])
 
 
-    def test_lsblk_missing_name_header(self):
+    def test_lsblk_missing_header(self):
         """
-        Test lsblk output whose `NAME MAJ:MIN ...` header line was dropped, so
-        the first data row is treated as the header and no `name` column
-        exists. This used to raise `KeyError: 'name'`; it should now parse
-        without crashing.
+        Test lsblk output whose header line is missing, and text that is not
+        lsblk output: a ParseError is raised instead of returning no rows
         """
-        data = 'sda      8:0   0  20G  0 disk\nsda1     8:1   0  10G  0 part\n'
-        self.assertEqual(jc.parsers.lsblk.parse(data, quiet=True), [])
+        for data in ['sda      8:0   0  20G  0 disk\nsda1     8:1   0  10G  0 part\n', 'hello world\nfoo bar\n']:
+            with self.subTest(data=data):
+                with self.assertRaises(ParseError):
+                    jc.parsers.lsblk.parse(data, quiet=True)
+
+    def test_lsblk_o_without_name_column(self):
+        """
+        Test 'lsblk -o SIZE,TYPE,MOUNTPOINTS' (util-linux 2.41), which has no
+        NAME column, and a device with two mount points, where the second one
+        is printed on its own line
+        """
+        data = (
+            '  SIZE TYPE MOUNTPOINTS\n'
+            '931.5G disk \n'
+            '  600M part /boot/efi\n'
+            '    2G part /boot\n'
+            '928.9G part \n'
+            '  7.7G disk [SWAP]\n'
+            '   15G lvm  /\n'
+        )
+        result = jc.parsers.lsblk.parse(data, quiet=True)
+        self.assertEqual(
+            [(x['size'], x['type'], x['mountpoints']) for x in result],
+            [('931.5G', 'disk', []), ('600M', 'part', ['/boot/efi']), ('2G', 'part', ['/boot']),
+             ('928.9G', 'part', []), ('7.7G', 'disk', ['[SWAP]']), ('15G', 'lvm', ['/'])]
+        )
+
+        data = '  SIZE TYPE MOUNTPOINTS\n928.9G part /home\n            /\n  7.7G disk [SWAP]\n'
+        result = jc.parsers.lsblk.parse(data, quiet=True)
+        self.assertEqual([x['mountpoints'] for x in result], [['/home', '/'], ['[SWAP]']])
 
 
 if __name__ == '__main__':
