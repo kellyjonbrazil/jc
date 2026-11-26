@@ -1,0 +1,838 @@
+[
+  {
+    "name": "atomgit-cli",
+    "type": "formula"
+  },
+  {
+    "name": "bagit",
+    "type": "formula"
+  },
+  {
+    "name": "bash-git-prompt",
+    "type": "formula"
+  },
+  {
+    "name": "bit-git",
+    "type": "formula"
+  },
+  {
+    "name": "cgit",
+    "type": "formula"
+  },
+  {
+    "name": "cocogitto",
+    "type": "formula"
+  },
+  {
+    "name": "digitemp",
+    "type": "formula"
+  },
+  {
+    "name": "forgit",
+    "type": "formula"
+  },
+  {
+    "name": "git",
+    "type": "formula"
+  },
+  {
+    "name": "git-absorb",
+    "type": "formula"
+  },
+  {
+    "name": "git-annex",
+    "type": "formula"
+  },
+  {
+    "name": "git-annex-remote-rclone",
+    "type": "formula"
+  },
+  {
+    "name": "git-appraise",
+    "type": "formula"
+  },
+  {
+    "name": "git-archive-all",
+    "type": "formula"
+  },
+  {
+    "name": "git-big-picture",
+    "type": "formula"
+  },
+  {
+    "name": "git-branchless",
+    "type": "formula"
+  },
+  {
+    "name": "git-bug",
+    "type": "formula"
+  },
+  {
+    "name": "git-cal",
+    "type": "formula"
+  },
+  {
+    "name": "git-cinnabar",
+    "type": "formula"
+  },
+  {
+    "name": "git-cliff",
+    "type": "formula"
+  },
+  {
+    "name": "git-codereview",
+    "type": "formula"
+  },
+  {
+    "name": "git-cola",
+    "type": "formula"
+  },
+  {
+    "name": "git-credential-libsecret",
+    "type": "formula"
+  },
+  {
+    "name": "git-credential-oauth",
+    "type": "formula"
+  },
+  {
+    "name": "git-crypt",
+    "type": "formula"
+  },
+  {
+    "name": "git-delete-merged-branches",
+    "type": "formula"
+  },
+  {
+    "name": "git-delta",
+    "type": "formula"
+  },
+  {
+    "name": "git-extras",
+    "type": "formula"
+  },
+  {
+    "name": "git-filter-repo",
+    "type": "formula"
+  },
+  {
+    "name": "git-fixup",
+    "type": "formula"
+  },
+  {
+    "name": "git-flow",
+    "type": "formula"
+  },
+  {
+    "name": "git-flow-next",
+    "type": "formula"
+  },
+  {
+    "name": "git-format-staged",
+    "type": "formula"
+  },
+  {
+    "name": "git-fresh",
+    "type": "formula"
+  },
+  {
+    "name": "git-ftp",
+    "type": "formula"
+  },
+  {
+    "name": "git-game",
+    "type": "formula"
+  },
+  {
+    "name": "git-gerrit",
+    "type": "formula"
+  },
+  {
+    "name": "git-get",
+    "type": "formula"
+  },
+  {
+    "name": "git-grab",
+    "type": "formula"
+  },
+  {
+    "name": "git-graph",
+    "type": "formula"
+  },
+  {
+    "name": "git-gui",
+    "type": "formula"
+  },
+  {
+    "name": "git-hooks-go",
+    "type": "formula"
+  },
+  {
+    "name": "git-hound",
+    "type": "formula"
+  },
+  {
+    "name": "git-if",
+    "type": "formula"
+  },
+  {
+    "name": "git-ignore",
+    "type": "formula"
+  },
+  {
+    "name": "git-imerge",
+    "type": "formula"
+  },
+  {
+    "name": "git-integration",
+    "type": "formula"
+  },
+  {
+    "name": "git-interactive-rebase-tool",
+    "type": "formula"
+  },
+  {
+    "name": "git-lfs",
+    "type": "formula"
+  },
+  {
+    "name": "git-machete",
+    "type": "formula"
+  },
+  {
+    "name": "git-mediate",
+    "type": "formula"
+  },
+  {
+    "name": "git-mob",
+    "type": "formula"
+  },
+  {
+    "name": "git-multipush",
+    "type": "formula"
+  },
+  {
+    "name": "git-now",
+    "type": "formula"
+  },
+  {
+    "name": "git-number",
+    "type": "formula"
+  },
+  {
+    "name": "git-octopus",
+    "type": "formula"
+  },
+  {
+    "name": "git-open",
+    "type": "formula"
+  },
+  {
+    "name": "git-pages",
+    "type": "formula"
+  },
+  {
+    "name": "git-pages-cli",
+    "type": "formula"
+  },
+  {
+    "name": "git-pkgs",
+    "type": "formula"
+  },
+  {
+    "name": "git-pkgs-brief",
+    "type": "formula"
+  },
+  {
+    "name": "git-pkgs-forge",
+    "type": "formula"
+  },
+  {
+    "name": "git-pkgs-proxy",
+    "type": "formula"
+  },
+  {
+    "name": "git-plus",
+    "type": "formula"
+  },
+  {
+    "name": "git-quick-stats",
+    "type": "formula"
+  },
+  {
+    "name": "git-recent",
+    "type": "formula"
+  },
+  {
+    "name": "git-remote-codecommit",
+    "type": "formula"
+  },
+  {
+    "name": "git-remote-gcrypt",
+    "type": "formula"
+  },
+  {
+    "name": "git-remote-hg",
+    "type": "formula"
+  },
+  {
+    "name": "git-review",
+    "type": "formula"
+  },
+  {
+    "name": "git-revise",
+    "type": "formula"
+  },
+  {
+    "name": "git-secret",
+    "type": "formula"
+  },
+  {
+    "name": "git-secrets",
+    "type": "formula"
+  },
+  {
+    "name": "git-series",
+    "type": "formula"
+  },
+  {
+    "name": "git-sizer",
+    "type": "formula"
+  },
+  {
+    "name": "git-spice",
+    "type": "formula"
+  },
+  {
+    "name": "git-split-diffs",
+    "type": "formula"
+  },
+  {
+    "name": "git-standup",
+    "type": "formula"
+  },
+  {
+    "name": "git-subrepo",
+    "type": "formula"
+  },
+  {
+    "name": "git-svn",
+    "type": "formula"
+  },
+  {
+    "name": "git-svn-abandon",
+    "type": "formula"
+  },
+  {
+    "name": "git-sync",
+    "type": "formula"
+  },
+  {
+    "name": "git-tig",
+    "type": "formula"
+  },
+  {
+    "name": "git-tools",
+    "type": "formula"
+  },
+  {
+    "name": "git-town",
+    "type": "formula"
+  },
+  {
+    "name": "git-tracker",
+    "type": "formula"
+  },
+  {
+    "name": "git-trim",
+    "type": "formula"
+  },
+  {
+    "name": "git-url-sub",
+    "type": "formula"
+  },
+  {
+    "name": "git-vendor",
+    "type": "formula"
+  },
+  {
+    "name": "git-when-merged",
+    "type": "formula"
+  },
+  {
+    "name": "git-who",
+    "type": "formula"
+  },
+  {
+    "name": "git-workspace",
+    "type": "formula"
+  },
+  {
+    "name": "git-xargs",
+    "type": "formula"
+  },
+  {
+    "name": "git-xet",
+    "type": "formula"
+  },
+  {
+    "name": "gita",
+    "type": "formula"
+  },
+  {
+    "name": "gitbackup",
+    "type": "formula"
+  },
+  {
+    "name": "gitbatch",
+    "type": "formula"
+  },
+  {
+    "name": "gitbucket",
+    "type": "formula"
+  },
+  {
+    "name": "gitea",
+    "type": "formula"
+  },
+  {
+    "name": "gitea-cli",
+    "type": "formula"
+  },
+  {
+    "name": "gitea-importer",
+    "type": "formula"
+  },
+  {
+    "name": "gitea-mcp-server",
+    "type": "formula"
+  },
+  {
+    "name": "gitea-runner",
+    "type": "formula"
+  },
+  {
+    "name": "gitg",
+    "type": "formula"
+  },
+  {
+    "name": "github-keygen",
+    "type": "formula"
+  },
+  {
+    "name": "github-markdown-toc",
+    "type": "formula"
+  },
+  {
+    "name": "github-mcp-server",
+    "type": "formula"
+  },
+  {
+    "name": "github-release",
+    "type": "formula"
+  },
+  {
+    "name": "gitingest",
+    "type": "formula"
+  },
+  {
+    "name": "gitlab-ci-linter",
+    "type": "formula"
+  },
+  {
+    "name": "gitlab-ci-local",
+    "type": "formula"
+  },
+  {
+    "name": "gitlab-gem",
+    "type": "formula"
+  },
+  {
+    "name": "gitlab-release-cli",
+    "type": "formula"
+  },
+  {
+    "name": "gitlab-runner",
+    "type": "formula"
+  },
+  {
+    "name": "gitleaks",
+    "type": "formula"
+  },
+  {
+    "name": "gitlint",
+    "type": "formula"
+  },
+  {
+    "name": "gitlogue",
+    "type": "formula"
+  },
+  {
+    "name": "gitmoji",
+    "type": "formula"
+  },
+  {
+    "name": "gitmux",
+    "type": "formula"
+  },
+  {
+    "name": "gitnr",
+    "type": "formula"
+  },
+  {
+    "name": "gitoxide",
+    "type": "formula"
+  },
+  {
+    "name": "gitql",
+    "type": "formula"
+  },
+  {
+    "name": "gitsign",
+    "type": "formula"
+  },
+  {
+    "name": "gitslave",
+    "type": "formula"
+  },
+  {
+    "name": "gitter-cli",
+    "type": "formula"
+  },
+  {
+    "name": "gittuf",
+    "type": "formula"
+  },
+  {
+    "name": "gittype",
+    "type": "formula"
+  },
+  {
+    "name": "gitu",
+    "type": "formula"
+  },
+  {
+    "name": "gitui",
+    "type": "formula"
+  },
+  {
+    "name": "gitup",
+    "type": "formula"
+  },
+  {
+    "name": "gitversion",
+    "type": "formula"
+  },
+  {
+    "name": "gitwatch",
+    "type": "formula"
+  },
+  {
+    "name": "lazygit",
+    "type": "formula"
+  },
+  {
+    "name": "legit",
+    "type": "formula"
+  },
+  {
+    "name": "legitify",
+    "type": "formula"
+  },
+  {
+    "name": "libgit2",
+    "type": "formula"
+  },
+  {
+    "name": "libgit2-glib",
+    "type": "formula"
+  },
+  {
+    "name": "libgit2@1.7",
+    "type": "formula"
+  },
+  {
+    "name": "libgit2@1.8",
+    "type": "formula"
+  },
+  {
+    "name": "literate-git",
+    "type": "formula"
+  },
+  {
+    "name": "multi-git-status",
+    "type": "formula"
+  },
+  {
+    "name": "multi-gitter",
+    "type": "formula"
+  },
+  {
+    "name": "pass-git-helper",
+    "type": "formula"
+  },
+  {
+    "name": "pygit2",
+    "type": "formula"
+  },
+  {
+    "name": "pygitup",
+    "type": "formula"
+  },
+  {
+    "name": "sagittarius-scheme",
+    "type": "formula"
+  },
+  {
+    "name": "stgit",
+    "type": "formula"
+  },
+  {
+    "name": "topgit",
+    "type": "formula"
+  },
+  {
+    "name": "ugit",
+    "type": "formula"
+  },
+  {
+    "name": "ungit",
+    "type": "formula"
+  },
+  {
+    "name": "willgit",
+    "type": "formula"
+  },
+  {
+    "name": "zsh-git-prompt",
+    "type": "formula"
+  },
+  {
+    "name": "gist",
+    "type": "formula"
+  },
+  {
+    "name": "gat",
+    "type": "formula"
+  },
+  {
+    "name": "gwt",
+    "type": "formula"
+  },
+  {
+    "name": "gut",
+    "type": "formula"
+  },
+  {
+    "name": "grt",
+    "type": "formula"
+  },
+  {
+    "name": "gmt",
+    "type": "formula"
+  },
+  {
+    "name": "got",
+    "type": "formula"
+  },
+  {
+    "name": "bit",
+    "type": "formula"
+  },
+  {
+    "name": "lit",
+    "type": "formula"
+  },
+  {
+    "name": "pit",
+    "type": "formula"
+  },
+  {
+    "name": "vit",
+    "type": "formula"
+  },
+  {
+    "name": "adobe-digital-editions",
+    "type": "cask"
+  },
+  {
+    "name": "caldigit-docking-utility",
+    "type": "cask"
+  },
+  {
+    "name": "caldigit-thunderbolt-charging",
+    "type": "cask"
+  },
+  {
+    "name": "caldigit-usb-hub-support-driver",
+    "type": "cask"
+  },
+  {
+    "name": "deepgit",
+    "type": "cask"
+  },
+  {
+    "name": "digital",
+    "type": "cask"
+  },
+  {
+    "name": "font-digital-numbers",
+    "type": "cask"
+  },
+  {
+    "name": "font-elice-digital-baeum",
+    "type": "cask"
+  },
+  {
+    "name": "git-credential-manager",
+    "type": "cask"
+  },
+  {
+    "name": "git-it",
+    "type": "cask"
+  },
+  {
+    "name": "gitahead",
+    "type": "cask"
+  },
+  {
+    "name": "gitblade",
+    "type": "cask"
+  },
+  {
+    "name": "gitbutler",
+    "type": "cask"
+  },
+  {
+    "name": "gitcomet",
+    "type": "cask"
+  },
+  {
+    "name": "gitdifferent",
+    "type": "cask"
+  },
+  {
+    "name": "gitdock",
+    "type": "cask"
+  },
+  {
+    "name": "gitfiend",
+    "type": "cask"
+  },
+  {
+    "name": "gitfinder",
+    "type": "cask"
+  },
+  {
+    "name": "gitfit",
+    "type": "cask"
+  },
+  {
+    "name": "gitfox",
+    "type": "cask"
+  },
+  {
+    "name": "github",
+    "type": "cask"
+  },
+  {
+    "name": "github-copilot-app",
+    "type": "cask"
+  },
+  {
+    "name": "github-copilot-for-xcode",
+    "type": "cask"
+  },
+  {
+    "name": "github@beta",
+    "type": "cask"
+  },
+  {
+    "name": "gitify",
+    "type": "cask"
+  },
+  {
+    "name": "gitkraken",
+    "type": "cask"
+  },
+  {
+    "name": "gitkraken-cli",
+    "type": "cask"
+  },
+  {
+    "name": "gitkraken-on-premise-serverless",
+    "type": "cask"
+  },
+  {
+    "name": "gitlight",
+    "type": "cask"
+  },
+  {
+    "name": "gittyup",
+    "type": "cask"
+  },
+  {
+    "name": "gitup-app",
+    "type": "cask"
+  },
+  {
+    "name": "gitx",
+    "type": "cask"
+  },
+  {
+    "name": "logitech-camera-settings",
+    "type": "cask"
+  },
+  {
+    "name": "logitech-g-hub",
+    "type": "cask"
+  },
+  {
+    "name": "logitech-options",
+    "type": "cask"
+  },
+  {
+    "name": "logitech-presentation",
+    "type": "cask"
+  },
+  {
+    "name": "logitune",
+    "type": "cask"
+  },
+  {
+    "name": "plotdigitizer",
+    "type": "cask"
+  },
+  {
+    "name": "smartgit",
+    "type": "cask"
+  },
+  {
+    "name": "smartgit@preview",
+    "type": "cask"
+  },
+  {
+    "name": "snagit",
+    "type": "cask"
+  },
+  {
+    "name": "sourcegit",
+    "type": "cask"
+  },
+  {
+    "name": "subgit",
+    "type": "cask"
+  },
+  {
+    "name": "tencent-ugit",
+    "type": "cask"
+  },
+  {
+    "name": "tng-digital-mini-program-studio",
+    "type": "cask"
+  },
+  {
+    "name": "xit",
+    "type": "cask"
+  }
+]

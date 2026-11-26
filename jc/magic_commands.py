@@ -19,6 +19,7 @@ magic_commands: Dict[str, str] = {
     'arp':                                  '--arp',
     'blkid':                                '--blkid',
     'bluetoothctl':                         '--bluetoothctl',
+    'brew search':                          '--brew-search',
     'cbt':                                  '--cbt',
     'certbot':                              '--certbot',
     'chage --list':                         '--chage',

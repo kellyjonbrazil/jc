@@ -1,7 +1,7 @@
 ==> Formulae
 bagit                                    git-tig
 bash-git-prompt                          git-tools
-git                                      gitup
+git ✔                                    gitup
 git-annex                                gitless
 
 ==> Casks

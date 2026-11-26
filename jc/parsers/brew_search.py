@@ -18,22 +18,18 @@ Schema:
     [
       {
         "name":     string,
-        "type":     string
+        "type":     string/null
       }
     ]
-
-    In piped output `brew search` prints bare names, one per line, with a
-    single blank line between the formulae and cask blocks. The kind can only
-    be determined when both blocks are present (formulae first, then casks).
-    When only one block is present the output does not say which kind it is,
-    so the `type` key is omitted from those entries.
-
-    Note: `brew search --desc` output is not supported.
 
 Examples:
 
     $ brew search git | jc --brew-search -p
     [
+      {
+        "name": "atomgit-cli",
+        "type": "formula"
+      },
       {
         "name": "bagit",
         "type": "formula"
@@ -41,10 +37,6 @@ Examples:
       {
         "name": "bash-git-prompt",
         "type": "formula"
-      },
-      {
-        "name": "gitkraken",
-        "type": "cask"
       }
     ]
 """
@@ -126,6 +118,11 @@ def parse(data, raw=False, quiet=False):
 
                 # results are name columns, one or two per line
                 for name in line.split():
+                    # installed packages are marked with a trailing check mark
+                    # in TTY output (e.g. "git ✔"); it is not part of the name
+                    if name == '✔':
+                        continue
+
                     raw_output.append({'name': name, 'type': current})
         else:
             # Piped output: bare names, one per line. A single blank line
@@ -147,7 +144,7 @@ def parse(data, raw=False, quiet=False):
                 blocks.append(block)
 
             # With two blocks the types are known by position. With one block
-            # the output does not say which kind it is, so omit `type`.
+            # the output does not say which kind it is, so set `type` to null.
             if len(blocks) == 2:
                 kinds = ['formula', 'cask']
             else:
@@ -155,12 +152,7 @@ def parse(data, raw=False, quiet=False):
 
             for block, kind in zip(blocks, kinds):
                 for name in block:
-                    entry = {'name': name}
-
-                    if kind:
-                        entry['type'] = kind
-
-                    raw_output.append(entry)
+                    raw_output.append({'name': name, 'type': kind})
 
     if raw:
         return raw_output
