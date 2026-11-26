@@ -912,6 +912,11 @@ Prometheus and OpenMetrics text format parser
 
 .TP
 .B
+\fB--proc-net-wireless\fP
+`/proc/net/wireless` file parser
+
+.TP
+.B
 \fB--proc-pid-fdinfo\fP
 `/proc/<pid>/fdinfo/<fd>` file parser
 
@@ -1084,6 +1089,11 @@ Syslog RFC 3164 string streaming parser
 .B
 \fB--systemctl-luf\fP
 `systemctl list-unit-files` command parser
+
+.TP
+.B
+\fB--systemextensionsctl\fP
+`systemextensionsctl list` command parser
 
 .TP
 .B
@@ -1263,7 +1273,7 @@ X.509 PEM and DER certificate file parser
 .TP
 .B
 \fB--x509-crl\fP
-X.509 PEM and DER certificate revocation list file parser
+X.509 PEM/DER certificate revocation list file parser
 
 .TP
 .B

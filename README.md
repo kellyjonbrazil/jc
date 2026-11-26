@@ -285,6 +285,7 @@ Output is compact JSON by default. Use `-p` to pretty-print it.
 |  `--systemctl-lj` | `systemctl list-jobs` command parser                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_lj)   |
 |  `--systemctl-ls` | `systemctl list-sockets` command parser                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_ls)   |
 | `--systemctl-luf` | `systemctl list-unit-files` command parser              | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemctl_luf)  |
+| `--systemextensionsctl` | `systemextensionsctl list` command parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systemextensionsctl) |
 |    `--systeminfo` | `systeminfo` command parser                             | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/systeminfo)     |
 |          `--time` | `/usr/bin/time` command parser                          | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/time)           |
 |   `--timedatectl` | `timedatectl status` command parser                     | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/timedatectl)    |
@@ -320,7 +321,7 @@ Output is compact JSON by default. Use `-p` to pretty-print it.
 |       `--wg-show` | `wg show` command parser                                | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/wg_show)        |
 |           `--who` | `who` command parser                                    | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/who)            |
 |     `--x509-cert` | X.509 PEM and DER certificate file parser               | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_cert)      |
-|      `--x509-crl` | X.509 PEM and DER certificate revocation list file parser | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_crl)       |
+|      `--x509-crl` | X.509 PEM/DER certificate revocation list file parser   | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_crl)       |
 |      `--x509-csr` | X.509 PEM and DER certificate request file parser       | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/x509_csr)       |
 |           `--xml` | XML file parser                                         | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xml)            |
 |        `--xrandr` | `xrandr` command parser                                 | [details](https://kellyjonbrazil.github.io/jc/docs/parsers/xrandr)         |

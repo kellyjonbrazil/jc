@@ -9,7 +9,7 @@ _jc() {
              jc_help_options jc_help_options_describe \
              jc_special_options jc_special_options_describe
 
-    jc_commands=(acpi airport amixer ansible-playbook apache2 apache2ctl apachectl apt-cache apt-get arp blkid bluetoothctl cbt certbot chage cksum conntrack crontab curl date debconf-show df dig dmidecode dpkg du efibootmgr env ethtool file findmnt finger free getfacl git gpg hciconfig host httpd id ifconfig iostat ip ipconfig iptables iw iwconfig jobs last lastb ldd ls lsattr lsb_release lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat needrestart net netstat nfsiostat nft nmcli nsd-control ntpq os-prober pacman pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss ssh sshd stat sum swapon sysctl systemctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 tune2fs udevadm ufw uname update-alternatives upower upsc uptime vdir veracrypt vmstat w wc wg who xrandr yay zipinfo zpool)
+    jc_commands=(acpi airport amixer ansible-playbook apache2 apache2ctl apachectl apt-cache apt-get arp blkid bluetoothctl cbt certbot chage cksum conntrack crontab curl date debconf-show df dig dmidecode dpkg du efibootmgr env ethtool file findmnt finger free getfacl git gpg hciconfig host httpd id ifconfig iostat ip ipconfig iptables iw iwconfig jobs last lastb ldd ls lsattr lsb_release lsblk lsmod lsof lspci lsusb md5 md5sum mdadm mount mpstat needrestart net netstat nfsiostat nft nmcli nsd-control ntpq os-prober pacman pidstat ping ping6 pip pip3 postconf printenv ps route rpm rsync sfdisk sha1sum sha224sum sha256sum sha384sum sha512sum shasum ss ssh sshd stat sum swapon sysctl systemctl systemextensionsctl systeminfo timedatectl top tracepath tracepath6 traceroute traceroute6 tune2fs udevadm ufw uname update-alternatives upower upsc uptime vdir veracrypt vmstat w wc wg who xrandr yay zipinfo zpool)
     jc_commands_describe=(
         'acpi:run "acpi" command with magic syntax.'
         'airport:run "airport" command with magic syntax.'
@@ -111,6 +111,7 @@ _jc() {
         'swapon:run "swapon" command with magic syntax.'
         'sysctl:run "sysctl" command with magic syntax.'
         'systemctl:run "systemctl" command with magic syntax.'
+        'systemextensionsctl:run "systemextensionsctl" command with magic syntax.'
         'systeminfo:run "systeminfo" command with magic syntax.'
         'timedatectl:run "timedatectl" command with magic syntax.'
         'top:run "top" command with magic syntax.'
@@ -138,7 +139,7 @@ _jc() {
         'zipinfo:run "zipinfo" command with magic syntax.'
         'zpool:run "zpool" command with magic syntax.'
     )
-    jc_parsers=(--acpi --airport --airport-s --amixer --ansible-list-tags --apachectl --apt-cache-show --apt-get-sqq --arp --asciitable --asciitable-m --authorized-keys --blkid --bluetoothctl --cbt --cef --cef-s --certbot --chage --cksum --clf --clf-s --conntrack --crontab --crontab-u --csv --csv-ih --csv-s --csv-ih-s --curl-head --date --datetime-iso --debconf-show --df --dig --dir --dmidecode --dpkg-l --du --efibootmgr --email-address --env --ethtool --file --find --findmnt --finger --free --fstab --getfacl --git-diff --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --host --hosts --http-headers --ics --id --ifconfig --iftop --ini --ini-dup --iostat --iostat-s --ip-address --ipconfig --iptables --ip-route --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --kv-dup --last --ldd --ls --ls-s --lsattr --lsb-release --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --needrestart --netrc --netstat --net-localgroup --net-user --nfsiostat --nfsiostat-s --nftables --nmcli --nsd-control --ntpq --openvpn --os-prober --os-release --pacman --passwd --path --path-list --pci-ids --pgpass --php-fpm --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --pkg-index-apk --pkg-index-deb --plist --postconf --prometheus --proc --proc-buddyinfo --proc-cmdline --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-tcp --proc-net-udp --proc-net-unix --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --resolve-conf --route --route-print --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --srt --ss --ssh-conf --sshd-conf --stat --stat-s --swapon --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --traceroute-s --tsv --tsv-ih --tsv-s --tsv-ih-s --tune2fs --typeset --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --upsc --uptime --url --ver --veracrypt --vmstat --vmstat-s --w --wc --wg-show --who --x509-cert --x509-crl --x509-csr --xml --xrandr --yaml --zipinfo --zpool-iostat --zpool-status)
+    jc_parsers=(--acpi --airport --airport-s --amixer --ansible-list-tags --apachectl --apt-cache-show --apt-get-sqq --arp --asciitable --asciitable-m --authorized-keys --blkid --bluetoothctl --cbt --cef --cef-s --certbot --chage --cksum --clf --clf-s --conntrack --crontab --crontab-u --csv --csv-ih --csv-s --csv-ih-s --curl-head --date --datetime-iso --debconf-show --df --dig --dir --dmidecode --dpkg-l --du --efibootmgr --email-address --env --ethtool --file --find --findmnt --finger --free --fstab --getfacl --git-diff --git-log --git-log-s --git-ls-remote --gpg --group --gshadow --hash --hashsum --hciconfig --history --host --hosts --http-headers --ics --id --ifconfig --iftop --ini --ini-dup --iostat --iostat-s --ip-address --ipconfig --iptables --ip-route --iw-scan --iwconfig --jar-manifest --jobs --jwt --kv --kv-dup --last --ldd --ls --ls-s --lsattr --lsb-release --lsblk --lsmod --lsof --lspci --lsusb --m3u --mdadm --mount --mpstat --mpstat-s --needrestart --netrc --netstat --net-localgroup --net-user --nfsiostat --nfsiostat-s --nftables --nmcli --nsd-control --ntpq --openvpn --os-prober --os-release --pacman --passwd --path --path-list --pci-ids --pgpass --php-fpm --pidstat --pidstat-s --ping --ping-s --pip-list --pip-show --pkg-index-apk --pkg-index-deb --plist --postconf --prometheus --proc --proc-buddyinfo --proc-cmdline --proc-consoles --proc-cpuinfo --proc-crypto --proc-devices --proc-diskstats --proc-filesystems --proc-interrupts --proc-iomem --proc-ioports --proc-loadavg --proc-locks --proc-meminfo --proc-modules --proc-mtrr --proc-pagetypeinfo --proc-partitions --proc-slabinfo --proc-softirqs --proc-stat --proc-swaps --proc-uptime --proc-version --proc-vmallocinfo --proc-vmstat --proc-zoneinfo --proc-driver-rtc --proc-net-arp --proc-net-dev --proc-net-dev-mcast --proc-net-if-inet6 --proc-net-igmp --proc-net-igmp6 --proc-net-ipv6-route --proc-net-netlink --proc-net-netstat --proc-net-packet --proc-net-protocols --proc-net-route --proc-net-tcp --proc-net-udp --proc-net-unix --proc-net-wireless --proc-pid-fdinfo --proc-pid-io --proc-pid-maps --proc-pid-mountinfo --proc-pid-numa-maps --proc-pid-smaps --proc-pid-stat --proc-pid-statm --proc-pid-status --ps --resolve-conf --route --route-print --rpm-qi --rsync --rsync-s --semver --sfdisk --shadow --srt --ss --ssh-conf --sshd-conf --stat --stat-s --swapon --sysctl --syslog --syslog-s --syslog-bsd --syslog-bsd-s --systemctl --systemctl-lj --systemctl-ls --systemctl-luf --systemextensionsctl --systeminfo --time --timedatectl --timestamp --toml --top --top-s --tracepath --traceroute --traceroute-s --tsv --tsv-ih --tsv-s --tsv-ih-s --tune2fs --typeset --udevadm --ufw --ufw-appinfo --uname --update-alt-gs --update-alt-q --upower --upsc --uptime --url --ver --veracrypt --vmstat --vmstat-s --w --wc --wg-show --who --x509-cert --x509-crl --x509-csr --xml --xrandr --yaml --zipinfo --zpool-iostat --zpool-status)
     jc_parsers_describe=(
         '--acpi:`acpi` command parser'
         '--airport:`airport -I` command parser'
@@ -315,6 +316,7 @@ _jc() {
         '--proc-net-tcp:`/proc/net/tcp` and `/proc/net/tcp6` file parser'
         '--proc-net-udp:`/proc/net/udp` and `/proc/net/udp6` file parser'
         '--proc-net-unix:`/proc/net/unix` file parser'
+        '--proc-net-wireless:`/proc/net/wireless` file parser'
         '--proc-pid-fdinfo:`/proc/<pid>/fdinfo/<fd>` file parser'
         '--proc-pid-io:`/proc/<pid>/io` file parser'
         '--proc-pid-maps:`/proc/<pid>/maps` file parser'
@@ -350,6 +352,7 @@ _jc() {
         '--systemctl-lj:`systemctl list-jobs` command parser'
         '--systemctl-ls:`systemctl list-sockets` command parser'
         '--systemctl-luf:`systemctl list-unit-files` command parser'
+        '--systemextensionsctl:`systemextensionsctl list` command parser'
         '--systeminfo:`systeminfo` command parser'
         '--time:`/usr/bin/time` command parser'
         '--timedatectl:`timedatectl status` command parser'
@@ -385,7 +388,7 @@ _jc() {
         '--wg-show:`wg show` command parser'
         '--who:`who` command parser'
         '--x509-cert:X.509 PEM and DER certificate file parser'
-        '--x509-crl:X.509 PEM and DER certificate revocation list file parser'
+        '--x509-crl:X.509 PEM/DER certificate revocation list file parser'
         '--x509-csr:X.509 PEM and DER certificate request file parser'
         '--xml:XML file parser'
         '--xrandr:`xrandr` command parser'

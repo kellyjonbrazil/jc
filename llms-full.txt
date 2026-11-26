@@ -149,6 +149,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--systemctl-lj](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_lj.md): `systemctl list-jobs` command parser (magic: `systemctl list-jobs`; platforms: linux)
 - [--systemctl-ls](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_ls.md): `systemctl list-sockets` command parser (magic: `systemctl list-sockets`; platforms: linux)
 - [--systemctl-luf](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemctl_luf.md): `systemctl list-unit-files` command parser (magic: `systemctl list-unit-files`; platforms: linux)
+- [--systemextensionsctl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systemextensionsctl.md): `systemextensionsctl list` command parser (magic: `systemextensionsctl list`; platforms: darwin)
 - [--systeminfo](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/systeminfo.md): `systeminfo` command parser (magic: `systeminfo`; platforms: win32)
 - [--time](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/time.md): `/usr/bin/time` command parser (platforms: linux, darwin, cygwin, aix, freebsd)
 - [--timedatectl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/timedatectl.md): `timedatectl status` command parser (magic: `timedatectl`, `timedatectl status`; platforms: linux)
@@ -179,7 +180,7 @@ Use a parser by piping text into it (`COMMAND | jc --FLAG`) or, for the commands
 - [--wg-show](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/wg_show.md): `wg show` command parser (magic: `wg show`)
 - [--who](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/who.md): `who` command parser (magic: `who`; platforms: linux, darwin, cygwin, aix, freebsd)
 - [--x509-cert](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_cert.md): X.509 PEM and DER certificate file parser
-- [--x509-crl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_crl.md): X.509 PEM and DER certificate revocation list file parser
+- [--x509-crl](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_crl.md): X.509 PEM/DER certificate revocation list file parser
 - [--x509-csr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/x509_csr.md): X.509 PEM and DER certificate request file parser
 - [--xml](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xml.md): XML file parser
 - [--xrandr](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/xrandr.md): `xrandr` command parser (magic: `xrandr`; platforms: linux, darwin, cygwin, aix, freebsd)
@@ -215,4 +216,4 @@ These process input line by line and output JSON Lines instead of a single JSON 
 
 ## /proc Files
 
-`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 52 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).
+`--proc` picks the right parser for a `/proc` file from its path, so `jc /proc/meminfo` works without naming one. The 53 individual `/proc` parsers (for example `--proc-meminfo`) are hidden from `jc -h` and the README but can be used by name. Each has a documentation page named after its module, such as [proc_meminfo.md](https://raw.githubusercontent.com/kellyjonbrazil/jc/master/docs/parsers/proc_meminfo.md).
