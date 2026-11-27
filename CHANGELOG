@@ -10,6 +10,8 @@ jc changelog
 - Enhance CLI and streaming parser error messages to show only the first line
   of a parser error message, cut to 500 characters. Use `-d` or `-dd` for the
   full message
+- Enhance CLI to report unrecognized long options (e.g. a misspelled
+  `--slurp`) as an error instead of ignoring them
 - Add `ansible-list-tags` command parser
 - Add `php-fpm` command parser for `php-fpm -tt` output
 - Add `proc-net-wireless` parser for `/proc/net/wireless` (also used by
