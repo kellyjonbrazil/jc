@@ -94,6 +94,7 @@ parsers: List[str] = [
     'jar-manifest',
     'jobs',
     'jwt',
+    'known-hosts',
     'kv',
     'kv-dup',
     'last',
