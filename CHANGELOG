@@ -1,6 +1,6 @@
 jc changelog
 
-20261125 v1.26.3
+20261127 v1.26.3
 - Enhance CLI startup time. Commands now start about 33 ms (43%) faster, and
   magic syntax commands (e.g. `jc ls -l`) about 130 ms (74%) faster, since the
   CLI no longer imports every parser to find the one for a magic command, and
@@ -19,6 +19,7 @@ jc changelog
   output on macOS
 - Fix CLI on Windows to read STDIN redirected from a file (e.g.
   `jc --kv < file.txt`), which gave empty output
+- Fix `cksum` parser to keep leading whitespace in file names
 - Fix `crontab` and `crontab-u` parsers to not crash on a shortcut line (e.g.
   `@reboot`) that was cut short before its user or command
 - Fix `date` parser to raise a parse error instead of crashing on input it
