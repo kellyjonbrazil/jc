@@ -1,0 +1,654 @@
+[
+  {
+    "name": "atomgit-cli",
+    "type": null
+  },
+  {
+    "name": "bagit",
+    "type": null
+  },
+  {
+    "name": "bash-git-prompt",
+    "type": null
+  },
+  {
+    "name": "bit-git",
+    "type": null
+  },
+  {
+    "name": "cgit",
+    "type": null
+  },
+  {
+    "name": "cocogitto",
+    "type": null
+  },
+  {
+    "name": "digitemp",
+    "type": null
+  },
+  {
+    "name": "forgit",
+    "type": null
+  },
+  {
+    "name": "git",
+    "type": null
+  },
+  {
+    "name": "git-absorb",
+    "type": null
+  },
+  {
+    "name": "git-annex",
+    "type": null
+  },
+  {
+    "name": "git-annex-remote-rclone",
+    "type": null
+  },
+  {
+    "name": "git-appraise",
+    "type": null
+  },
+  {
+    "name": "git-archive-all",
+    "type": null
+  },
+  {
+    "name": "git-big-picture",
+    "type": null
+  },
+  {
+    "name": "git-branchless",
+    "type": null
+  },
+  {
+    "name": "git-bug",
+    "type": null
+  },
+  {
+    "name": "git-cal",
+    "type": null
+  },
+  {
+    "name": "git-cinnabar",
+    "type": null
+  },
+  {
+    "name": "git-cliff",
+    "type": null
+  },
+  {
+    "name": "git-codereview",
+    "type": null
+  },
+  {
+    "name": "git-cola",
+    "type": null
+  },
+  {
+    "name": "git-credential-libsecret",
+    "type": null
+  },
+  {
+    "name": "git-credential-oauth",
+    "type": null
+  },
+  {
+    "name": "git-crypt",
+    "type": null
+  },
+  {
+    "name": "git-delete-merged-branches",
+    "type": null
+  },
+  {
+    "name": "git-delta",
+    "type": null
+  },
+  {
+    "name": "git-extras",
+    "type": null
+  },
+  {
+    "name": "git-filter-repo",
+    "type": null
+  },
+  {
+    "name": "git-fixup",
+    "type": null
+  },
+  {
+    "name": "git-flow",
+    "type": null
+  },
+  {
+    "name": "git-flow-next",
+    "type": null
+  },
+  {
+    "name": "git-format-staged",
+    "type": null
+  },
+  {
+    "name": "git-fresh",
+    "type": null
+  },
+  {
+    "name": "git-ftp",
+    "type": null
+  },
+  {
+    "name": "git-game",
+    "type": null
+  },
+  {
+    "name": "git-gerrit",
+    "type": null
+  },
+  {
+    "name": "git-get",
+    "type": null
+  },
+  {
+    "name": "git-grab",
+    "type": null
+  },
+  {
+    "name": "git-graph",
+    "type": null
+  },
+  {
+    "name": "git-gui",
+    "type": null
+  },
+  {
+    "name": "git-hooks-go",
+    "type": null
+  },
+  {
+    "name": "git-hound",
+    "type": null
+  },
+  {
+    "name": "git-if",
+    "type": null
+  },
+  {
+    "name": "git-ignore",
+    "type": null
+  },
+  {
+    "name": "git-imerge",
+    "type": null
+  },
+  {
+    "name": "git-integration",
+    "type": null
+  },
+  {
+    "name": "git-interactive-rebase-tool",
+    "type": null
+  },
+  {
+    "name": "git-lfs",
+    "type": null
+  },
+  {
+    "name": "git-machete",
+    "type": null
+  },
+  {
+    "name": "git-mediate",
+    "type": null
+  },
+  {
+    "name": "git-mob",
+    "type": null
+  },
+  {
+    "name": "git-multipush",
+    "type": null
+  },
+  {
+    "name": "git-now",
+    "type": null
+  },
+  {
+    "name": "git-number",
+    "type": null
+  },
+  {
+    "name": "git-octopus",
+    "type": null
+  },
+  {
+    "name": "git-open",
+    "type": null
+  },
+  {
+    "name": "git-pages",
+    "type": null
+  },
+  {
+    "name": "git-pages-cli",
+    "type": null
+  },
+  {
+    "name": "git-pkgs",
+    "type": null
+  },
+  {
+    "name": "git-pkgs-brief",
+    "type": null
+  },
+  {
+    "name": "git-pkgs-forge",
+    "type": null
+  },
+  {
+    "name": "git-pkgs-proxy",
+    "type": null
+  },
+  {
+    "name": "git-plus",
+    "type": null
+  },
+  {
+    "name": "git-quick-stats",
+    "type": null
+  },
+  {
+    "name": "git-recent",
+    "type": null
+  },
+  {
+    "name": "git-remote-codecommit",
+    "type": null
+  },
+  {
+    "name": "git-remote-gcrypt",
+    "type": null
+  },
+  {
+    "name": "git-remote-hg",
+    "type": null
+  },
+  {
+    "name": "git-review",
+    "type": null
+  },
+  {
+    "name": "git-revise",
+    "type": null
+  },
+  {
+    "name": "git-secret",
+    "type": null
+  },
+  {
+    "name": "git-secrets",
+    "type": null
+  },
+  {
+    "name": "git-series",
+    "type": null
+  },
+  {
+    "name": "git-sizer",
+    "type": null
+  },
+  {
+    "name": "git-spice",
+    "type": null
+  },
+  {
+    "name": "git-split-diffs",
+    "type": null
+  },
+  {
+    "name": "git-standup",
+    "type": null
+  },
+  {
+    "name": "git-subrepo",
+    "type": null
+  },
+  {
+    "name": "git-svn",
+    "type": null
+  },
+  {
+    "name": "git-svn-abandon",
+    "type": null
+  },
+  {
+    "name": "git-sync",
+    "type": null
+  },
+  {
+    "name": "git-tig",
+    "type": null
+  },
+  {
+    "name": "git-tools",
+    "type": null
+  },
+  {
+    "name": "git-town",
+    "type": null
+  },
+  {
+    "name": "git-tracker",
+    "type": null
+  },
+  {
+    "name": "git-trim",
+    "type": null
+  },
+  {
+    "name": "git-url-sub",
+    "type": null
+  },
+  {
+    "name": "git-vendor",
+    "type": null
+  },
+  {
+    "name": "git-when-merged",
+    "type": null
+  },
+  {
+    "name": "git-who",
+    "type": null
+  },
+  {
+    "name": "git-workspace",
+    "type": null
+  },
+  {
+    "name": "git-xargs",
+    "type": null
+  },
+  {
+    "name": "git-xet",
+    "type": null
+  },
+  {
+    "name": "gita",
+    "type": null
+  },
+  {
+    "name": "gitbackup",
+    "type": null
+  },
+  {
+    "name": "gitbatch",
+    "type": null
+  },
+  {
+    "name": "gitbucket",
+    "type": null
+  },
+  {
+    "name": "gitea",
+    "type": null
+  },
+  {
+    "name": "gitea-cli",
+    "type": null
+  },
+  {
+    "name": "gitea-importer",
+    "type": null
+  },
+  {
+    "name": "gitea-mcp-server",
+    "type": null
+  },
+  {
+    "name": "gitea-runner",
+    "type": null
+  },
+  {
+    "name": "gitg",
+    "type": null
+  },
+  {
+    "name": "github-keygen",
+    "type": null
+  },
+  {
+    "name": "github-markdown-toc",
+    "type": null
+  },
+  {
+    "name": "github-mcp-server",
+    "type": null
+  },
+  {
+    "name": "github-release",
+    "type": null
+  },
+  {
+    "name": "gitingest",
+    "type": null
+  },
+  {
+    "name": "gitlab-ci-linter",
+    "type": null
+  },
+  {
+    "name": "gitlab-ci-local",
+    "type": null
+  },
+  {
+    "name": "gitlab-gem",
+    "type": null
+  },
+  {
+    "name": "gitlab-release-cli",
+    "type": null
+  },
+  {
+    "name": "gitlab-runner",
+    "type": null
+  },
+  {
+    "name": "gitleaks",
+    "type": null
+  },
+  {
+    "name": "gitlint",
+    "type": null
+  },
+  {
+    "name": "gitlogue",
+    "type": null
+  },
+  {
+    "name": "gitmoji",
+    "type": null
+  },
+  {
+    "name": "gitmux",
+    "type": null
+  },
+  {
+    "name": "gitnr",
+    "type": null
+  },
+  {
+    "name": "gitoxide",
+    "type": null
+  },
+  {
+    "name": "gitql",
+    "type": null
+  },
+  {
+    "name": "gitsign",
+    "type": null
+  },
+  {
+    "name": "gitslave",
+    "type": null
+  },
+  {
+    "name": "gitter-cli",
+    "type": null
+  },
+  {
+    "name": "gittuf",
+    "type": null
+  },
+  {
+    "name": "gittype",
+    "type": null
+  },
+  {
+    "name": "gitu",
+    "type": null
+  },
+  {
+    "name": "gitui",
+    "type": null
+  },
+  {
+    "name": "gitup",
+    "type": null
+  },
+  {
+    "name": "gitversion",
+    "type": null
+  },
+  {
+    "name": "gitwatch",
+    "type": null
+  },
+  {
+    "name": "lazygit",
+    "type": null
+  },
+  {
+    "name": "legit",
+    "type": null
+  },
+  {
+    "name": "legitify",
+    "type": null
+  },
+  {
+    "name": "libgit2",
+    "type": null
+  },
+  {
+    "name": "libgit2-glib",
+    "type": null
+  },
+  {
+    "name": "libgit2@1.7",
+    "type": null
+  },
+  {
+    "name": "libgit2@1.8",
+    "type": null
+  },
+  {
+    "name": "literate-git",
+    "type": null
+  },
+  {
+    "name": "multi-git-status",
+    "type": null
+  },
+  {
+    "name": "multi-gitter",
+    "type": null
+  },
+  {
+    "name": "pass-git-helper",
+    "type": null
+  },
+  {
+    "name": "pygit2",
+    "type": null
+  },
+  {
+    "name": "pygitup",
+    "type": null
+  },
+  {
+    "name": "sagittarius-scheme",
+    "type": null
+  },
+  {
+    "name": "stgit",
+    "type": null
+  },
+  {
+    "name": "topgit",
+    "type": null
+  },
+  {
+    "name": "ugit",
+    "type": null
+  },
+  {
+    "name": "ungit",
+    "type": null
+  },
+  {
+    "name": "willgit",
+    "type": null
+  },
+  {
+    "name": "zsh-git-prompt",
+    "type": null
+  },
+  {
+    "name": "gist",
+    "type": null
+  },
+  {
+    "name": "gat",
+    "type": null
+  },
+  {
+    "name": "gwt",
+    "type": null
+  },
+  {
+    "name": "gut",
+    "type": null
+  },
+  {
+    "name": "grt",
+    "type": null
+  },
+  {
+    "name": "gmt",
+    "type": null
+  },
+  {
+    "name": "got",
+    "type": null
+  },
+  {
+    "name": "bit",
+    "type": null
+  },
+  {
+    "name": "lit",
+    "type": null
+  },
+  {
+    "name": "pit",
+    "type": null
+  },
+  {
+    "name": "vit",
+    "type": null
+  }
+]
