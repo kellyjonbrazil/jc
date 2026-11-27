@@ -58,6 +58,7 @@ jc changelog
   `\u[e9]`)
 - Fix `typeset` parser to remove the backslash escapes in double-quoted values
   (e.g. `\"` and `\$`), and to keep quotes that are part of a value
+- Fix `url` parser to not crash on an invalid port on Python 3.16
 - Fix `w` parser to raise a parse error when the header line is missing and
   to not crash on blank rows or rows that were cut short
 - Fix `wc` parser to keep leading whitespace in file names
