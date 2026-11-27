@@ -58,6 +58,8 @@ Release notes are in the [Releases section](https://github.com/kellyjonbrazil/jc
 Try `jc` in the [web demo](https://jc-web.onrender.com/), or run it as a
 service with the [REST API](https://github.com/kellyjonbrazil/jc-restapi).
 
+[![Live demo by Demoshell](https://build.demoshell.com/v1/embed/badge.svg)](https://build.demoshell.com/launch?snapshot=demoshell%2Ftui%3Ajc&utm_source=badge)
+
 ## Further Reading
 - [Bringing the Unix Philosophy to the 21st Century](https://blog.kellybrazil.com/2019/11/26/bringing-the-unix-philosophy-to-the-21st-century/)
   (why `jc` exists) and an [interview with Console](https://console.substack.com/p/console-89)
