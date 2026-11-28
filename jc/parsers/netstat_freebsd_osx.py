@@ -9,7 +9,7 @@ _INTERFACE_HEADER_RE = re.compile(r'Name\s+Mtu\s+Network\s+Address\s')
 _TRANSPORT_SUFFIX_RE = re.compile(r'(tcp|udp|sctp)(46|4|6)')
 
 
-def is_counter(value):
+def _is_counter(value):
     """True for a value that can only come from a counter column (`-` or digits)."""
     return value == '-' or value.isdigit()
 
@@ -84,7 +84,7 @@ def parse_item(headers, entry, kind, flags):
     # there would push the address out of its key.
     if kind == 'interface' and 'address' in headers and len(entry) == len(headers) - 1:
         address_index = headers.index('address')
-        if address_index < len(entry) and is_counter(entry[address_index]):
+        if address_index < len(entry) and _is_counter(entry[address_index]):
             entry.insert(address_index, None)
 
     output_line = dict(zip(headers, entry))
