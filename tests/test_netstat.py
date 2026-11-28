@@ -168,6 +168,9 @@ class MyTests(unittest.TestCase):
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.out'), 'r', encoding='utf-8') as f:
         freebsd12_netstat_ib = f.read()
 
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-27.2.1/netstat-ibn.out'), 'r', encoding='utf-8') as f:
+        osx_27_2_1_netstat_ibn = f.read()
+
     #
     # output
     #
@@ -297,6 +300,9 @@ class MyTests(unittest.TestCase):
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/freebsd12/netstat-ib.json'), 'r', encoding='utf-8') as f:
         freebsd12_netstat_ib_json = json.loads(f.read())
+
+    with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/osx-27.2.1/netstat-ibn.json'), 'r', encoding='utf-8') as f:
+        osx_27_2_1_netstat_ibn_json = json.loads(f.read())
 
 
     with open(os.path.join(THIS_DIR, os.pardir, 'tests/fixtures/generic/netstat-linux-program-name-state-words.out'), 'r', encoding='utf-8') as f:
@@ -574,6 +580,31 @@ class MyTests(unittest.TestCase):
         Test 'netstat -i' on FreeBSD12
         """
         self.assertEqual(jc.parsers.netstat.parse(self.freebsd12_netstat_i, quiet=True), self.freebsd12_netstat_i_json)
+
+    def test_netstat_ibn_osx_27_2_1(self):
+        """
+        Test 'netstat -ibn' on OSX 27.2.1. The interface table header has 11
+        columns but <Link#> rows with no hardware address print only 10, so the
+        empty Address column has to be filled in without shifting the counters.
+        """
+        self.assertEqual(jc.parsers.netstat.parse(self.osx_27_2_1_netstat_ibn, quiet=True), self.osx_27_2_1_netstat_ibn_json)
+
+    def test_netstat_ibn_osx_truncated_counter(self):
+        """
+        Test that a row which is one field short because a counter (not the
+        Address) is empty keeps its address instead of having one inserted.
+        """
+        data = (
+            'Name       Mtu   Network       Address            Ipkts Ierrs     Ibytes    Opkts Oerrs     Obytes  Coll\n'
+            'en0        1500  <Link#11>   02:00:00:00:00:07 45957504     0 43554010692 35123912     0 16391416235\n'
+        )
+        expected = [{
+            'iface': 'en0', 'mtu': 1500, 'network': '<Link#11>',
+            'address': '02:00:00:00:00:07', 'ipkts': 45957504, 'ierrs': 0,
+            'ibytes': 43554010692, 'opkts': 35123912, 'oerrs': 0,
+            'obytes': 16391416235, 'kind': 'interface'
+        }]
+        self.assertEqual(jc.parsers.netstat.parse(data, quiet=True), expected)
 
     def test_netstat_ib_freebsd12(self):
         """
