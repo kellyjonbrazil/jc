@@ -121,17 +121,33 @@ def _sniff(data: str) -> Type[csv.Dialect]:
     they do not influence the detection. Raises an exception if the dialect
     cannot be detected.
     """
-    masked = re.sub(r'"[^"]*("|$)', '""', data[:1024]).replace("'", '')
-    rows = [row for row in jc.utils.splitlines(masked, split_cr=True) if row.strip()]
+    rows = []
+    # Mask quoted fields so the Sniffer sees no quote characters.
+    # Masking as empty quotes (`""`) fails in Python 3.16+ when the sample
+    # contains rows with a different field count, so fall back to masking
+    # as a single space.
+    for mask in ('""', ' '):
+        masked = re.sub(r'"[^"]*("|$)', mask, data[:1024]).replace("'", '')
+        rows = [row for row in jc.utils.splitlines(masked, split_cr=True) if row.strip()]
 
-    # the last row is incomplete if the sample was cut off
-    if len(data) > 1024 and len(rows) > 1:
-        rows.pop()
+        # the last row is incomplete if the sample was cut off
+        if len(data) > 1024 and len(rows) > 1:
+            rows.pop()
 
-    delimiters = re.sub(r'[\w"]', '', rows[0])
-    dialect = csv.Sniffer().sniff('\n'.join(rows), delimiters)
+        delimiters = re.sub(r'[\w"]', '', rows[0])
+        try:
+            dialect = csv.Sniffer().sniff('\n'.join(rows), delimiters)
+            break
+        except csv.Error:
+            continue
+    else:
+        raise csv.Error('Could not determine dialect')
     dialect.quotechar = '"'
     dialect.doublequote = True
+    # Python 3.16+ Sniffer detects skipinitialspace from the sample, which
+    # can differ from the detection in earlier Python versions. Always
+    # strip the leading spaces, like the previous Python versions did.
+    dialect.skipinitialspace = True
     return dialect
 
 
